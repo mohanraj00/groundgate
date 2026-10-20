@@ -96,7 +96,7 @@ The phase-specific stops are:
 | Phase | Stop and field state |
 |---|---|
 | Initial | An oversized initial chunk plan or prompt raises `ExtractInputError` before the first call. An aborted reply with no valid field disposition leads to `incomplete_no_disposition`. |
-| Targeted | Exhausted `max_calls` records `unsearched` for each skipped field and a `call_limit` event. If the regions do not fit the prompt budget, the worst-ranked region goes first and the search records `search_truncated`. If no region fits, the field and event record `search_limit`. A targeted quote outside the sent regions records `protocol_failure` for that field only; the run continues. |
+| Targeted | Exhausted `max_calls` records `unsearched` for each skipped field and a `call_limit` event. If the regions do not fit the prompt budget, the worst-ranked region goes first and the search records `search_truncated`. A region longer than `max_region_chars` is cut to a window around its best match. If no region fits, a second sweep sends the ranked regions in rank order, in at most `max_sweep_calls` calls. If it sends no call, the field and event record `search_limit`. A targeted quote outside the sent regions records `protocol_failure` for that field only; the run continues. |
 | Repair | An oversized prompt records `prompt_limit`; exhausted `max_calls` records `call_limit`. A completed run with an eligible candidate left after its repair rounds records `repair_limit`. |
 
 `proposed` and `model_not_found` can appear in the initial or targeted phase. A targeted

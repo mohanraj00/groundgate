@@ -128,6 +128,9 @@ def test_chunk_stop_utf8_and_degenerate_overlap_bound():
         {"drop_rounded": 1},
         {"overlap_chars": 12000},
         {"max_repair_rounds": -1},
+        {"max_region_chars": 0},
+        {"max_sweep_calls": -1},
+        {"max_sweep_calls": False},
     ],
 )
 def test_invalid_policy_fails_before_call(kwargs):
@@ -1135,7 +1138,7 @@ def test_record_is_a_hash_chained_log_and_inputs_are_objects():
     assert result.run_sha256 == lines[-1]["entry_sha256"]
     # Keys use the stable runner prefix, not the core digest that names the spec version.
     inputs = lines[0]["inputs"]
-    text_key = "sha256:" + hashlib.sha256(b"groundgate-run/2:text\0Amount 5.").hexdigest()
+    text_key = "sha256:" + hashlib.sha256(b"groundgate-run/3:text\0Amount 5.").hexdigest()
     assert inputs["document"] == {"kind": "text", "id": None, "source": None, "sha256": text_key}
     assert result.artifacts[text_key] == "Amount 5."
     assert result.receipt.document_sha256 != text_key
@@ -1367,7 +1370,7 @@ def test_replay_uses_the_recorded_rounding_setting():
         flipped = copy.deepcopy(result.record)
         flipped[0]["settings"]["drop_rounded"] = not settings.drop_rounded
         assert not replay(flipped, result.artifacts, text, ROUND_SCHEMA).ok
-        # A groundgate-run/2 record from before #331 has no such setting.
+        # A record from before #331 has no such setting.
         missing = copy.deepcopy(result.record)
         del missing[0]["settings"]["drop_rounded"]
         assert not replay(missing, result.artifacts, text, ROUND_SCHEMA).ok
@@ -1454,20 +1457,22 @@ def test_a_relation_checks_the_re_admit_after_rounding():
     assert_replays(result, text, RELATION_SCHEMA)
 
 
-def test_a_groundgate_run_1_record_fails_replay_with_a_version_message(tmp_path):
-    # 0.9.0 wrote groundgate-run/1 records. This runner writes groundgate-run/2 (#318, #319).
+@pytest.mark.parametrize("old_version", ["groundgate-run/1", "groundgate-run/2"])
+def test_an_older_record_fails_replay_with_a_version_message(tmp_path, old_version):
+    # 0.9.0 wrote groundgate-run/1 records and 0.10.0 wrote groundgate-run/2. This runner writes
+    # groundgate-run/3 (#382).
     result = execute("Amount 5.", Client(envelope(candidate())))
-    assert result.record[0]["runner"] == "groundgate-run/2"
+    assert result.record[0]["runner"] == "groundgate-run/3"
     old = copy.deepcopy(result.record)
-    old[0]["runner"] = "groundgate-run/1"
+    old[0]["runner"] = old_version
     verification = replay(old, result.artifacts, "Amount 5.", SCHEMA)
-    message = "runner version differs: the record is 'groundgate-run/1', this runner is "
+    message = f"runner version differs: the record is {old_version!r}, this runner is "
     assert not verification.ok
-    assert verification.problems == (message + "'groundgate-run/2'",)
+    assert verification.problems == (message + "'groundgate-run/3'",)
     result.write(tmp_path)
     log = tmp_path / "run.jsonl"
-    log.write_text(log.read_text().replace("groundgate-run/2", "groundgate-run/1", 1))
-    with pytest.raises(ValueError, match="the record is 'groundgate-run/1'"):
+    log.write_text(log.read_text().replace("groundgate-run/3", old_version, 1))
+    with pytest.raises(ValueError, match=f"the record is '{old_version}'"):
         RunResult.read(tmp_path)
 
 
@@ -1589,3 +1594,190 @@ def test_a_client_that_changes_the_schema_does_not_change_the_run():
     changed = execute(LAC_TEXT, Changer(envelope(candidate())), schema)
     assert changed.record == plain.record
     assert changed.receipt == plain.receipt
+
+
+# Region cuts and the second sweep (#382). The field "amount" has the description word "total",
+# so a match of "Amount" has rank 0 and a match of "total" has rank 1.
+SWEEP_SCHEMA = {"fields": {"amount": {"type": "integer", "description": "total"}}}
+
+
+def body(prompt):
+    return json.loads(prompt.split("\n", 1)[1])
+
+
+def test_a_large_region_is_cut_around_its_best_match():
+    text = "total " * 20 + "Amount 5 " + "total " * 20
+    client = Client(envelope(missing=("amount",)), envelope(candidate()))
+    settings = RunPolicy(search_context_chars=10, max_region_chars=40)
+    result = execute(text, client, SWEEP_SCHEMA, run_policy=settings)
+    sent = body(client.prompts[1])["sources"]
+    # The "total" windows merge with the "Amount" window into one region of the whole text.
+    assert len(sent) == 1 and len(sent[0]["text"]) == 40 and "Amount 5" in sent[0]["text"]
+    search = next(e for e in result.record if e["kind"] == "search")
+    middle = text.index("Amount") + len("Amount") // 2
+    assert search["cut_regions"] == [
+        {
+            "source": "document",
+            "start": 0,
+            "end": len(text),
+            "kept_start": middle - 20,
+            "kept_end": middle + 20,
+        }
+    ]
+    assert search["status"] == "search_truncated"
+    assert result.complete and result.receipt.decisions[0].outcome == "admitted"
+    assert not any(e["kind"] in {"sweep", "sweep_stop"} for e in result.record)
+    assert_replays(result, text, SWEEP_SCHEMA)
+
+
+def test_a_cut_stays_inside_its_region_at_the_edge():
+    text = "Amount 5 " + "total " * 20
+    client = Client(envelope(missing=("amount",)), envelope(candidate()))
+    settings = RunPolicy(search_context_chars=10, max_region_chars=30)
+    result = execute(text, client, SWEEP_SCHEMA, run_policy=settings)
+    assert body(client.prompts[1])["sources"][0]["text"] == text[:30]
+    search = next(e for e in result.record if e["kind"] == "search")
+    assert (search["cut_regions"][0]["kept_start"], search["cut_regions"][0]["kept_end"]) == (0, 30)
+    assert_replays(result, text, SWEEP_SCHEMA)
+
+
+# One run of "Amount" merges to one region that is cut to 400 characters. Each "total" is a
+# small region. The tests set a prompt limit where the large region does not fit, but small
+# regions do.
+SWEEP_TEXT = "total 1\nxxxxxxxx\n" + "Amount " * 80 + "\nxxxxxxxx\ntotal 2\nxxxxxxxx\ntotal 3\n"
+SWEEP = {"search_context_chars": 3, "max_region_chars": 400, "chunk_chars": 120, "overlap_chars": 0}
+NOT_FOUND = envelope(missing=("amount",))
+
+
+def sweep_sizes():
+    """The initial calls, the targeted prompt with no region, the entry size of each ranked
+    region in location order, and the largest initial prompt, from a run with no prompt
+    limit."""
+    chunks = len(_chunks(SWEEP_TEXT, RunPolicy(**SWEEP)))
+    client = Client(*[NOT_FOUND] * (chunks + 1))
+    execute(SWEEP_TEXT, client, SWEEP_SCHEMA, run_policy=RunPolicy(**SWEEP))
+    prompt = client.prompts[-1]
+    entries = [len(gg.jcs(e)) for e in body(prompt)["sources"]]
+    base = len(prompt) - sum(entries) - (len(entries) - 1)
+    return chunks, base, entries, max(len(p) for p in client.prompts[:-1])
+
+
+def sweep_limit(small):
+    """A prompt limit that fits exactly the first ``small`` small regions in one call, but not
+    the large region."""
+    _, base, entries, initial = sweep_sizes()
+    large = entries.pop(1)  # the "Amount" region is second in location order
+    limit = base + sum(entries[:small]) + small - 1
+    assert base + large > limit >= initial
+    return limit
+
+
+def test_search_limit_runs_a_second_sweep_in_rank_order():
+    chunks = sweep_sizes()[0]
+    limit = sweep_limit(2)
+    replies = [NOT_FOUND] * (chunks + 1) + [envelope(candidate("3", evidence=[item("3")]))]
+    client = Client(*replies)
+    settings = RunPolicy(**SWEEP, max_prompt_chars=limit)
+    result = execute(SWEEP_TEXT, client, SWEEP_SCHEMA, run_policy=settings)
+    assert all(len(p) <= limit for p in client.prompts)
+    # No region fits the first sweep. The second sweep skips the large region and sends the
+    # "total" regions in rank order: two in the first call, the last one in the second call.
+    search = next(e for e in result.record if e["kind"] == "search")
+    assert search["regions"] == [] and search["trimmed_regions"] == 4
+    assert len(search["cut_regions"]) == 1
+    sent = [[s["text"] for s in body(p)["sources"]] for p in client.prompts[chunks:]]
+    assert [len(texts) for texts in sent] == [2, 1]
+    assert "total 1" in sent[0][0] and "total 2" in sent[0][1] and "total 3" in sent[1][0]
+    sweeps = [e for e in result.record if e["kind"] == "sweep"]
+    assert [(e["sweep"], e["part"], len(e["regions"])) for e in sweeps] == [(2, 1, 2), (2, 2, 1)]
+    calls = [e for e in result.record if e["kind"] == "call" and e["phase"] == "targeted"]
+    assert [(e["sweep"], e["part"]) for e in calls] == [(2, 1), (2, 2)]
+    stop = next(e for e in result.record if e["kind"] == "sweep_stop")
+    summary = (stop["status"], stop["calls"], stop["skipped_regions"], stop["unsent_regions"])
+    assert summary == ("proposed", 2, 1, 1)
+    fields = result.record[-1]["fields"]["amount"]
+    assert fields[-2:] == ["targeted_not_found", "proposed"] and "search_limit" not in fields
+    assert result.complete and result.candidates[0]["value"] == "3"
+    assert_replays(result, SWEEP_TEXT, SWEEP_SCHEMA)
+
+
+def test_the_second_sweep_prompt_length_is_exact():
+    # The sweep adds the size of each entry to the prompt with no region. With room for
+    # exactly two entries, the first call holds two regions. With one character less, it holds
+    # one.
+    chunks = sweep_sizes()[0]
+    limit = sweep_limit(2)
+    for room, sizes in ((limit, [2, 1]), (limit - 1, [1, 1])):
+        client = Client(*[NOT_FOUND] * (chunks + 2))
+        settings = RunPolicy(**SWEEP, max_prompt_chars=room)
+        execute(SWEEP_TEXT, client, SWEEP_SCHEMA, run_policy=settings)
+        assert [len(body(p)["sources"]) for p in client.prompts[chunks:]] == sizes
+        assert all(len(p) <= room for p in client.prompts)
+
+
+def test_the_second_sweep_stops_at_max_sweep_calls():
+    chunks = sweep_sizes()[0]
+    client = Client(*[NOT_FOUND] * (chunks + 1))
+    settings = RunPolicy(
+        **SWEEP, max_prompt_chars=sweep_limit(2), max_target_regions=1, max_sweep_calls=1
+    )
+    result = execute(SWEEP_TEXT, client, SWEEP_SCHEMA, run_policy=settings)
+    stop = next(e for e in result.record if e["kind"] == "sweep_stop")
+    assert (stop["status"], stop["calls"], stop["unsent_regions"]) == ("sweep_limit", 1, 3)
+    # The sweep sent a call, so the field is not search_limit and the run is complete.
+    assert result.complete
+    assert result.record[-1]["fields"]["amount"][-1] == "targeted_not_found"
+    assert_replays(result, SWEEP_TEXT, SWEEP_SCHEMA)
+
+
+def test_a_second_sweep_that_sends_every_region_is_exhausted():
+    chunks = sweep_sizes()[0]
+    client = Client(*[NOT_FOUND] * (chunks + 1))
+    settings = RunPolicy(**SWEEP, max_prompt_chars=sweep_limit(3))
+    result = execute(SWEEP_TEXT, client, SWEEP_SCHEMA, run_policy=settings)
+    stop = next(e for e in result.record if e["kind"] == "sweep_stop")
+    assert (stop["status"], stop["calls"], stop["unsent_regions"]) == ("exhausted", 1, 1)
+    assert result.complete
+    assert_replays(result, SWEEP_TEXT, SWEEP_SCHEMA)
+
+
+def test_no_second_sweep_keeps_search_limit():
+    chunks = sweep_sizes()[0]
+    client = Client(*[NOT_FOUND] * chunks)
+    settings = RunPolicy(**SWEEP, max_prompt_chars=sweep_limit(2), max_sweep_calls=0)
+    result = execute(SWEEP_TEXT, client, SWEEP_SCHEMA, run_policy=settings)
+    assert not any(e["kind"] in {"sweep", "sweep_stop"} for e in result.record)
+    assert not result.complete
+    assert result.record[-1]["fields"]["amount"][-1] == "search_limit"
+    assert_replays(result, SWEEP_TEXT, SWEEP_SCHEMA)
+
+
+def test_a_second_sweep_with_no_room_records_search_limit():
+    # Only large regions: none fits alone, so the sweep sends no call.
+    text = "Amount " * 80 + "\n" * 20 + "Amount " * 80
+    count = len(_chunks(text, RunPolicy(**SWEEP)))
+    client = Client(*[NOT_FOUND] * count)
+    settings = RunPolicy(**SWEEP, max_prompt_chars=sweep_limit(2))
+    result = execute(text, client, SWEEP_SCHEMA, run_policy=settings)
+    stop = next(e for e in result.record if e["kind"] == "sweep_stop")
+    assert (stop["status"], stop["calls"], stop["skipped_regions"]) == ("no_room", 0, 2)
+    assert not result.complete
+    assert result.record[-1]["fields"]["amount"][-1] == "search_limit"
+    kinds = [(e["kind"], e.get("status")) for e in result.record]
+    assert kinds.index(("sweep_stop", "no_room")) + 1 == kinds.index(("limit", "search_limit"))
+    assert_replays(result, text, SWEEP_SCHEMA)
+
+
+def test_a_call_limit_in_the_second_sweep_is_not_unsearched():
+    chunks = sweep_sizes()[0]
+    client = Client(*[NOT_FOUND] * (chunks + 1))
+    settings = RunPolicy(
+        **SWEEP, max_prompt_chars=sweep_limit(2), max_target_regions=1, max_calls=chunks + 1
+    )
+    result = execute(SWEEP_TEXT, client, SWEEP_SCHEMA, run_policy=settings)
+    assert not result.complete
+    assert result.record[-1]["fields"]["amount"][-1] == "call_limit"
+    stop = next(e for e in result.record if e["kind"] == "limit")
+    assert (stop["status"], stop["sweep"], stop["part"]) == ("call_limit", 2, 2)
+    assert not any(e["kind"] == "sweep_stop" for e in result.record)
+    assert_replays(result, SWEEP_TEXT, SWEEP_SCHEMA)

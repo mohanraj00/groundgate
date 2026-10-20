@@ -27,9 +27,10 @@ from ..model import Decision, PacketError, Policy, Receipt, Schema, extractor_sc
 from ..text import canonical, quote_pattern, tokens
 
 Json = dict[str, Any]
-# groundgate-run/2 (#318, #319): a new prompt, field item causes and rounding lines. A
-# groundgate-run/1 record, as 0.9.0 wrote, fails replay with a version message.
-_VERSION = "groundgate-run/2"
+# groundgate-run/3 (#382): the search cuts large regions, and a second sweep can follow
+# `search_limit`. groundgate-run/2 (#318, #319) had a new prompt, field item causes and rounding
+# lines. An older record fails replay with a version message.
+_VERSION = "groundgate-run/3"
 _ROLES = {"value", "sign", "scale", "unit", "field", "key"}
 _SEARCH_MATCH_LIMIT = 1024
 # The rounding check (#319) reads only numbers with at most this many digits and this exponent.
@@ -108,6 +109,10 @@ class RunPolicy:
     max_admission_bytes: int = 8388608
     # The rounding rule of #319 trusts the document, so it is opt-in (#331).
     drop_rounded: bool = False
+    # A search region longer than this is cut to a window around its best match (#382).
+    max_region_chars: int = 6000
+    # The calls of the second sweep for one field after `search_limit`. Zero turns it off (#382).
+    max_sweep_calls: int = 2
 
     def __post_init__(self) -> None:
         for name, value in asdict(self).items():
@@ -115,7 +120,7 @@ class RunPolicy:
                 if not isinstance(value, bool):
                     raise ExtractInputError(f"{name} must be a boolean")
                 continue
-            floor = 0 if name in {"overlap_chars", "max_repair_rounds"} else 1
+            floor = 0 if name in {"overlap_chars", "max_repair_rounds", "max_sweep_calls"} else 1
             if type(value) is not int or not floor <= value <= 2**53 - 1:
                 raise ExtractInputError(f"{name} must be an integer at least {floor}")
         if self.overlap_chars >= self.chunk_chars:
@@ -527,6 +532,7 @@ class _Engine:
         self.last_candidates: list[Json] = []
         self.last_raw: dict[str, Json] = {}
         self.folded_sources: dict[str, _Folded] = {}
+        self.source_digests: dict[str, str] = {}
         self.calls = 0
         self.complete = True
         self.states: dict[str, list[str]] = {name: [] for name in schema.fields}
@@ -556,6 +562,13 @@ class _Engine:
             "text": self.sources[source][start:end],
         }
 
+    def source_entry(self, region: Json) -> Json:
+        """The prompt entry of one region."""
+        name = region["source"]
+        if name not in self.source_digests:
+            self.source_digests[name] = _hash("source", self.sources[name])
+        return {**region, "length": len(region["text"]), "sha256": self.source_digests[name]}
+
     def prompt(self, phase: str, fields: list[str], regions: list[Json], **extra: Any) -> str:
         refs = [r["id"] for r in self.references]
         body = {
@@ -563,14 +576,7 @@ class _Engine:
             "fields": fields,
             "schema": self.schema.to_dict(),
             "output_schema": _output_schema(self.schema, fields, refs),
-            "sources": [
-                {
-                    **r,
-                    "length": len(r["text"]),
-                    "sha256": _hash("source", self.sources[r["source"]]),
-                }
-                for r in regions
-            ],
+            "sources": [self.source_entry(r) for r in regions],
             **extra,
         }
         if phase == "repair":
@@ -584,7 +590,9 @@ class _Engine:
             self.complete = False
             status = "call_limit" if self.calls >= self.settings.max_calls else "prompt_limit"
             for name in fields:
-                state = "unsearched" if phase == "targeted" and status == "call_limit" else status
+                # A field that the second sweep searched is not unsearched (#382).
+                first = phase == "targeted" and metadata.get("sweep") != 2
+                state = "unsearched" if first and status == "call_limit" else status
                 self.states[name].append(state)
             self.event(kind="limit", phase=phase, fields=fields, status=status, **metadata)
             return None
@@ -798,10 +806,12 @@ class _Engine:
             )
         return self.decide(phase)
 
-    def search(self, name: str) -> list[Json]:
+    def search(self, name: str) -> tuple[list[Json], list[tuple[int, int, int, int, str]]]:
+        """The regions of the first sweep in location order. If no region fits the prompt, also
+        every ranked region in rank order, for the second sweep (#382)."""
         queries, omitted_queries = _queries(name, self.schema.to_dict()["fields"][name])
         matches: list[Json] = []
-        windows: dict[str, list[tuple[int, int, int]]] = {source: [] for source in self.sources}
+        windows: dict[str, list[tuple[int, int, int, int, int]]] = {s: [] for s in self.sources}
         omitted_matches = 0
         # Query order is priority: title, aliases, title words, then description words.
         # Stream all hits, but retain only a fixed-size pool before allocating windows.
@@ -827,18 +837,39 @@ class _Engine:
                             max(0, start - self.settings.search_context_chars),
                             min(len(text), end + self.settings.search_context_chars),
                             rank,
+                            start,
+                            end,
                         )
                     )
         ranked: list[tuple[int, int, int, int, str]] = []
+        cut_regions: list[Json] = []
+        size = self.settings.max_region_chars
         for source_order, (source, spans) in enumerate(windows.items()):
-            merged: list[tuple[int, int, int]] = []
-            for start, end, rank in sorted(spans):
+            # Each merged region keeps its best match: the best rank, then the first position.
+            merged: list[tuple[int, int, int, int, int]] = []
+            for start, end, rank, match_start, match_end in sorted(spans):
                 if merged and start <= merged[-1][1]:
                     previous = merged[-1]
-                    merged[-1] = (previous[0], max(end, previous[1]), min(rank, previous[2]))
+                    best = previous[2:] if previous[2] <= rank else (rank, match_start, match_end)
+                    merged[-1] = (previous[0], max(end, previous[1]), *best)
                 else:
-                    merged.append((start, end, rank))
-            ranked.extend((rank, source_order, start, end, source) for start, end, rank in merged)
+                    merged.append((start, end, rank, match_start, match_end))
+            for start, end, rank, match_start, match_end in merged:
+                if end - start > size:
+                    # A large region is cut to a window around its best match, not dropped.
+                    middle = (match_start + match_end) // 2
+                    left = min(max(start, middle - size // 2), end - size)
+                    cut_regions.append(
+                        {
+                            "source": source,
+                            "start": self.offsets[source].to_bytes(start),
+                            "end": self.offsets[source].to_bytes(end),
+                            "kept_start": self.offsets[source].to_bytes(left),
+                            "kept_end": self.offsets[source].to_bytes(left + size),
+                        }
+                    )
+                    start, end = left, left + size
+                ranked.append((rank, source_order, start, end, source))
         ranked.sort()
         selected = ranked[: self.settings.max_target_regions]
         # Within the selected pool, location order controls quote anchoring.
@@ -868,21 +899,84 @@ class _Engine:
             regions=copy.deepcopy(retained),
             omitted_regions=omitted_regions,
             trimmed_regions=trimmed_regions,
+            cut_regions=cut_regions,
             status=(
                 "search_truncated"
-                if omitted_regions or omitted_matches or omitted_queries or trimmed_regions
+                if omitted_regions
+                or omitted_matches
+                or omitted_queries
+                or trimmed_regions
+                or cut_regions
                 else "searched"
             ),
         )
-        if not retained and ranked:
-            self.complete = False
-            self.states[name].append("search_limit")
-            self.event(kind="limit", phase="targeted", fields=[name], status="search_limit")
-        elif not retained:
+        if not retained and not ranked:
             status = "search_no_terms" if not queries else "search_no_match"
             self.states[name].append(status)
             self.event(kind="not_found", phase="targeted", field=name, status=status)
-        return retained
+        return retained, [] if retained else ranked
+
+    def sweep(self, name: str, pool: list[tuple[int, int, int, int, str]]) -> bool | None:
+        """The second sweep (#382): no region of the first sweep fit the prompt. Send the ranked
+        regions in rank order, as many in each call as fit the prompt and ``max_target_regions``,
+        in at most ``max_sweep_calls`` calls. A region that does not fit alone is skipped. Stop
+        at the first reply with a candidate. Whether a call was sent, or None if the run
+        stops."""
+        settings = self.settings
+        # A prompt with n regions has the length of the prompt with none, plus each entry and a
+        # comma for each entry after the first.
+        total = len(self.prompt("targeted", [name], [])) - 1
+        index = calls = skipped = 0
+        status = "no_room"
+        while index < len(pool):
+            if calls >= settings.max_sweep_calls:
+                status = "sweep_limit"
+                break
+            batch: list[tuple[int, int, int, int, str]] = []
+            length = total
+            while index < len(pool) and len(batch) < settings.max_target_regions:
+                _, _, start, end, source = pool[index]
+                extra = len(jcs(self.source_entry(self.region(source, start, end)))) + 1
+                if length + extra <= settings.max_prompt_chars:
+                    batch.append(pool[index])
+                    length += extra
+                elif batch:
+                    break  # the next call starts with this region
+                else:
+                    skipped += 1
+                index += 1
+            if not batch:
+                break
+            calls += 1
+            batch.sort(key=lambda r: (r[1], r[2]))
+            regions = [self.region(source, start, end) for _, _, start, end, source in batch]
+            self.event(
+                kind="sweep",
+                field=name,
+                sweep=2,
+                part=calls,
+                regions=[{k: v for k, v in r.items() if k != "text"} for r in regions],
+            )
+            prompt = self.prompt("targeted", [name], regions)
+            parsed = self.call("targeted", [name], prompt, sweep=2, part=calls)
+            if parsed is None or not self.proposals(parsed, regions, "targeted"):
+                return None
+            if not parsed["not_found"]:
+                failed = self.states[name][-1] == "protocol_failure"
+                status = "protocol_failure" if failed else "proposed"
+                break
+            self.states[name].append("targeted_not_found")
+            status = "exhausted"
+        self.event(
+            kind="sweep_stop",
+            field=name,
+            sweep=2,
+            calls=calls,
+            skipped_regions=skipped,
+            unsent_regions=skipped + len(pool) - index,
+            status=status,
+        )
+        return calls > 0
 
     def stop(self, cid: str) -> None:
         group = self.groups[cid]
@@ -1124,10 +1218,22 @@ class _Engine:
                     self.states[field].append("unsearched")
                     self.event(kind="limit", phase="targeted", fields=[field], status="call_limit")
                     continue
-                regions = self.search(field)
+                regions, pool = self.search(field)
                 if not regions:
+                    if not pool:
+                        continue
+                    sent = self.sweep(field, pool) if self.settings.max_sweep_calls else False
+                    if sent is None:
+                        return self.finish()
+                    if not sent:
+                        self.complete = False
+                        self.states[field].append("search_limit")
+                        self.event(
+                            kind="limit", phase="targeted", fields=[field], status="search_limit"
+                        )
                     continue
-                parsed = self.call("targeted", [field], self.prompt("targeted", [field], regions))
+                prompt = self.prompt("targeted", [field], regions)
+                parsed = self.call("targeted", [field], prompt, sweep=1)
                 if parsed is None or not self.proposals(parsed, regions, "targeted"):
                     return self.finish()
                 if parsed["not_found"]:
