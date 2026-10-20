@@ -86,6 +86,9 @@ reference.
 | `keys` | `null` | The conditions a value can belong to, in the document's words. Each candidate names one as `key`. |
 | `aliases` | `null` | The field's names in the document's words, such as "loss from operations". A field item is checked against them (spec 0.5). |
 
+A field name has 1 to 64 characters: lowercase ASCII letters, digits and `_`, with a letter
+first, such as `net_sales_2024` (spec 0.11). Any other name makes the packet invalid.
+
 The comparator is how a field says "up to" is fine. `max_daily_dose` above is `le`, so "up to
 4,000 mg" admits; an `eq` field citing the same text is flagged.
 

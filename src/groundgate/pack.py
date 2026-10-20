@@ -70,6 +70,15 @@ COMPARATORS = ("approx", "gt", "lt", "ge", "le", "range")
 _ID = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*\Z")
 _VERSION = re.compile(r"(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)\Z")
 _HEADING_CODE = re.compile(r"[A-Z]{3}\Z")
+# a field name, and the name of a field template (SPEC §2.3, spec 0.11, #359)
+_FIELD_NAME = re.compile(r"[a-z][a-z0-9_]{0,63}\Z")
+
+
+def is_field_name(name: object) -> bool:
+    """True when ``name`` follows the rule of a field name (SPEC §2.3): 1 to 64 characters, each
+    a lowercase ASCII letter, a digit or "_", and a letter first."""
+    return type(name) is str and _FIELD_NAME.match(name) is not None
+
 
 # format 1 of a vocabulary pack: each group and its lists (SPEC §4.8). "words" is a list of
 # words, "powers" an object from a word to a power of ten, "comparators" an object from a
@@ -368,6 +377,8 @@ def _check_kind(pack: dict[str, Any]) -> None:
     if len(fields) > MAX_TEMPLATES:
         raise _fail(pack, f"a kind pack has more than {MAX_TEMPLATES} field templates (L4)")
     for name, t in fields.items():
+        if not is_field_name(name):
+            raise _fail(pack, f"template name {name!r} breaks the field name rule of §2.3 (L9)")
         if type(t) is not dict or set(t) - set(TEMPLATE_MEMBERS):
             raise _fail(pack, f"template {name!r} holds another member than the five (L9)")
         try:

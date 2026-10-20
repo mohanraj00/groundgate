@@ -99,6 +99,11 @@ boundaries. Heuristic windows in §4 are measured in Unicode code points.
 Defaults: `type` `"number"`, `unit` null, `comparator` `"eq"`, bounds null, `required` false, `multiple` false,
 `keys` null, `aliases` null.
 
+A field name (spec 0.11, #359) has 1 to 64 characters. Each character is a lowercase ASCII
+letter, a digit or `_`, and the first character is a letter. So `net_sales` and `e` are names,
+and `""`, `Net_sales`, `net sales`, `net-sales` and `2024_revenue` are not. The same rule
+applies to the name of a field template in a kind pack (§4.9).
+
 `description` is optional; when present, it must be a non-blank string, with no length limit.
 It has no effect on a decision, but is part of the schema digest.
 
@@ -164,10 +169,11 @@ relations, or with an empty list, has no `relations` member after defaults, so i
 change.
 
 The packet is invalid when the schema is not an object with a `fields` object, has keys other
-than `fields`, `units`, `relations` and `packs`, or a field is not an object, has other keys, has a `type` or
-`comparator` not listed above, a `unit` that is not a string or null, a bound that is not a
-decimal string or an integer that reads as a number (§4.1, so `"1,000"` is accepted), or a
-`required` or `multiple` that is not a boolean.
+than `fields`, `units`, `relations` and `packs`, or a field has a field name that breaks the
+rule above, is not an object, has other keys, has a `type` or `comparator` not listed above, a
+`unit` that is not a string or null, a bound that is not a decimal string or an integer that
+reads as a number (§4.1, so `"1,000"` is accepted), or a `required` or `multiple` that is not a
+boolean.
 
 ### 2.4 Policy
 
@@ -1185,7 +1191,7 @@ more limit. The packet is also invalid when a kind pack fails one of these check
 |---|---|
 | L4 size | more than 200 field templates |
 | L7 ids and versions | a `needs` entry with an id or a version of the wrong form; a `needs` entry and the schema, or two `needs` entries, that name one id in two versions |
-| L9 kind pack | a `needs` that is not a list of objects with only `id` and `version`; a `needs` entry that names the base pack, the pack itself, an id twice, a kind pack or a pack that is not given or built in; a `fields` that is not an object; a template member other than the five above; a template that breaks a rule of §2.3 |
+| L9 kind pack | a `needs` that is not a list of objects with only `id` and `version`; a `needs` entry that names the base pack, the pack itself, an id twice, a kind pack or a pack that is not given or built in; a `fields` that is not an object; a template name that breaks the field name rule of §2.3; a template member other than the five above; a template that breaks a rule of §2.3 |
 | L10 schema | a `template` that breaks a rule of §2.3, or a field that breaks a rule of §2.3 after it takes its template |
 
 ## 5. Receipt
