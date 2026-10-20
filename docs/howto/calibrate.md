@@ -201,7 +201,8 @@ Label every item before any judge answers. Run the label page:
 groundgate calibrate label --work W
 ```
 
-It serves a page at `http://localhost:8780`. Use `--port` to change the port. The page shows the
+It prints a start URL such as `http://127.0.0.1:8780/#<token>`. Open the full URL: the server
+refuses a request without the token. Use `--port` to change the port. The page shows the
 document, the marked value, the field and the options. It never shows a judge's answer. Each
 click saves the label in `W/labels.json`:
 

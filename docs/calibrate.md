@@ -35,9 +35,11 @@ groundgate calibrate report --work W        # REPORT.md, report.json
   replaces that field's schema description. Use it with spec 0.5 schemas, which have no
   `description`.
 
-- `label` serves the label page at `http://localhost:8780`. `--port` changes the port. Each
-  click saves a label in `W/labels.json`: `true`, `false` or `null` (not sure) for the field
-  question, and the list of the field's keys (empty for none) for the key question.
+- `label` serves the label page on `127.0.0.1`, port 8780. `--port` changes the port. It prints
+  a start URL such as `http://127.0.0.1:8780/#<token>`. Open that full URL: the page sends the
+  token with each request, and the server refuses a request without it. Each click saves a label
+  in `W/labels.json`: `true`, `false` or `null` (not sure) for the field question, and the list
+  of the field's keys (empty for none) for the key question.
 - `report --check` writes nothing. It fails when `REPORT.md` or `report.json` differs from what
   `W` gives, so a CI job can check a committed report.
 
@@ -72,6 +74,11 @@ documents for the ceiling that you need before you start.
 
 ## Rules that the tool keeps
 
+- **Labels only from the page.** The label server refuses a request whose `Host` is not
+  `127.0.0.1` and its port, so DNS rebinding cannot reach it. Each start makes a new random
+  token, and a request without it gets 403, so another web site cannot post a label. A label
+  must be `application/json` of 64 KiB at most. A Content-Security-Policy lets the page run only
+  its own script and style.
 - **Blind labels.** The label tool shows the document, the marked value, the field and the
   options. It never shows the candidate's key, groundgate's reading or a judge's answer.
 - **Split first.** `split` is written once, by document, on sha256 of the document name. It
