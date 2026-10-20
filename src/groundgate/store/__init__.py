@@ -235,8 +235,14 @@ class FolderStore:
     input never becomes a path. Each file and folder that the store makes has mode 0600 or 0700,
     or 0640 or 0750 with ``group_read``. A read takes only regular files of at most
     ``max_bytes`` bytes, and refuses a symlink or a FIFO before it reads. The first append to a
-    log makes ``<log>.lock``, and ``close`` removes it. The store trusts the processes that can
-    write to its folder."""
+    log makes ``<log>.lock`` with the process id, and ``close`` in that process removes it. A
+    crashed writer leaves its lock, and a person removes it: the message says if the process
+    is not running on this host. The store trusts the processes that can write to its folder.
+
+    ``read`` holds a log and its records in memory, so one read can use several times
+    ``max_bytes``. Choose a smaller ``max_bytes`` if the memory is small. Each append checks
+    the folders of the log again. Where ``os.O_NOFOLLOW`` is absent, the symlink refusal is
+    only a check before the open, and on Windows the file modes have no effect."""
 
     def __init__(
         self,
@@ -253,7 +259,8 @@ class FolderStore:
         self._clock = clock or (lambda: datetime.now(timezone.utc))
         # For each log that this writer holds: the next sequence, the head and the size.
         self._heads: dict[LogName, tuple[int, str | None, int]] = {}
-        self._locks: list[Path] = []
+        # Each lock that this writer made, with the id of the process that made it.
+        self._locks: dict[LogName, tuple[int, Path]] = {}
         self._broken: set[LogName] = set()  # logs with a partial line that could not be removed
 
     def __enter__(self) -> FolderStore:
@@ -263,10 +270,12 @@ class FolderStore:
         self.close()
 
     def close(self) -> None:
-        """Remove the locks of this writer."""
-        for lock in self._locks:
-            with contextlib.suppress(FileNotFoundError):
-                os.unlink(lock)
+        """Remove the locks of this writer. A child process after a fork keeps the locks of its
+        parent in place."""
+        for pid, lock in self._locks.values():
+            if pid == os.getpid():
+                with contextlib.suppress(FileNotFoundError):
+                    os.unlink(lock)
         self._locks.clear()
         self._heads.clear()
         self._broken.clear()
@@ -276,19 +285,23 @@ class FolderStore:
     def put(self, kind: str, data: bytes) -> str:
         """Write an object, and return its key. Equal bytes give the same key and one file. If
         the file of the key is a symlink, not a regular file, too large or has other bytes,
-        ``put`` puts a new file in its place. It never writes through a symlink."""
-        check_bytes(kind, data)
-        if len(data) > self.max_bytes:
+        ``put`` puts a new file in its place. It never writes through a symlink. A file with the
+        right bytes and another mode also gets a new file with the file mode."""
+        if not isinstance(data, bytes):
+            raise TypeError("the data must be bytes")
+        if len(data) > self.max_bytes:  # before the parse, so a large input uses no memory
             raise ValueError(f"the {kind} object is larger than max_bytes")
+        check_bytes(kind, data)
         k = key(kind, data)
         hexes = k[7:]
         folder = self._folder(["objects", hexes[:2]], make=True)
         path = folder / hexes[2:]
         try:
-            if self._file(path, f"objects/{hexes[:2]}/{hexes[2:]}") == data:
+            same = self._file(path, f"objects/{hexes[:2]}/{hexes[2:]}") == data
+            if same and stat.S_IMODE(os.lstat(path).st_mode) == self.file_mode:
                 return k
-        except StoreError:
-            pass  # absent, or bytes that do not match the key: write the object again
+        except (StoreError, FileNotFoundError):
+            pass  # absent, other bytes or another mode: write the object again
         self._replace(folder, path, data)
         return k
 
@@ -354,6 +367,10 @@ class FolderStore:
             raise StoreError(f"an earlier append to {rel} failed: check the log, then close")
         if log not in self._heads:
             self._take(log)
+        pid, _ = self._locks[log]
+        if pid != os.getpid():
+            raise StoreError(f"process {pid} holds the lock of {rel}: a forked child cannot append")
+        self._folder(parts, make=False)  # a folder of the log can become a symlink after the take
         sequence, previous, size = self._heads[log]
         entry = {**body, "sequence": sequence, "previous": previous}
         head = _entry_key(word, entry)
@@ -393,14 +410,12 @@ class FolderStore:
         try:
             fd = os.open(lock, os.O_WRONLY | os.O_CREAT | os.O_EXCL | _NOFOLLOW, self.file_mode)
         except FileExistsError as exc:
-            raise Locked(
-                f"{lock} exists: another writer has this log. If no writer runs, remove the lock."
-            ) from exc
+            raise Locked(f"{lock} exists: {self._holder(lock)}") from exc
         try:
-            os.write(fd, f"{os.getpid()}\n".encode())
-        finally:
-            os.close(fd)
-        try:
+            try:
+                os.write(fd, f"{os.getpid()}\n".encode())
+            finally:
+                os.close(fd)
             rel = "/".join([*parts, name + ".jsonl"])
             path = folder / f"{name}.jsonl"
             try:
@@ -417,9 +432,30 @@ class FolderStore:
             with contextlib.suppress(FileNotFoundError):
                 os.unlink(lock)
             raise
-        self._locks.append(lock)
+        self._locks[log] = (os.getpid(), lock)
         head = records[-1]["entry_sha256"] if records else None
         self._heads[log] = (len(records) + 1, head, len(data))
+
+    def _holder(self, lock: Path) -> str:
+        """Who holds a lock, as far as the store can tell."""
+        text = "another writer has this log."
+        try:
+            if os.lstat(lock).st_size > 32:  # a pid and a line break are short
+                raise ValueError("the lock is too large")
+            pid = int(self._file(lock, lock.name).decode("ascii").strip())
+            if pid <= 0:
+                raise ValueError("not a process id")
+        except (OSError, StoreError, ValueError):
+            return text + " If no writer runs, remove the lock."
+        text = f"process {pid} made the lock."
+        if os.name == "posix":  # on Windows, os.kill stops the process
+            try:
+                os.kill(pid, 0)
+            except ProcessLookupError:
+                return text + " That process is not running on this host: remove the lock."
+            except OSError:
+                pass
+        return text + " If it does not run, remove the lock."
 
     @staticmethod
     def _log_parts(log: LogName) -> tuple[list[str], str]:

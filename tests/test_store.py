@@ -276,3 +276,100 @@ def test_the_core_does_not_import_the_store() -> None:
     code = "import sys, groundgate, groundgate.cli; print('groundgate.store' in sys.modules)"
     out = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, check=True)
     assert out.stdout.strip() == "False"
+
+
+# The security review of #415
+
+
+def test_put_checks_the_size_before_it_parses(root: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    import groundgate.store as module
+
+    def parse(kind: str, data: bytes) -> None:
+        raise AssertionError("put parsed an input over the limit")
+
+    monkeypatch.setattr(module, "check_bytes", parse)
+    with pytest.raises(ValueError, match="larger than max_bytes"):
+        FolderStore(root, max_bytes=16).put("schema@1", b"[" + b"1," * 20 + b"1]")
+
+
+def test_a_failed_pid_write_leaves_no_lock(root: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    def fail(fd: int, data: object) -> int:
+        raise OSError(28, "No space left on device")
+
+    store = FolderStore(root)
+    monkeypatch.setattr(os, "write", fail)
+    with pytest.raises(OSError, match="No space"):
+        store.append(ANA, {"answer": "yes"})
+    monkeypatch.undo()
+    assert not (root / "logs" / "answers" / PACKET[7:] / (ANA[2][7:] + ".lock")).exists()
+    store.append(ANA, {"answer": "yes"})
+    store.close()
+
+
+def test_each_append_checks_the_folders_again(root: Path, tmp_path: Path) -> None:
+    with FolderStore(root) as store:
+        store.append(ANA, {"answer": "yes"})
+        folder = root / "logs" / "answers" / PACKET[7:]
+        outside = tmp_path / "outside"
+        folder.rename(outside)
+        folder.symlink_to(outside)
+        with pytest.raises(StoreError, match="is not a folder"):
+            store.append(ANA, {"answer": "no"})
+        assert len((outside / (ANA[2][7:] + ".jsonl")).read_text().splitlines()) == 1
+        folder.unlink()
+        outside.rename(folder)
+
+
+def test_a_symlink_is_refused_without_o_nofollow(
+    root: Path, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    import groundgate.store as module
+
+    monkeypatch.setattr(module, "_NOFOLLOW", 0)
+    store = FolderStore(root)
+    k = store.put("text@1", TEXT)
+    secret = tmp_path / "secret"
+    secret.write_bytes(TEXT)
+    _object(root, k).unlink()
+    _object(root, k).symlink_to(secret)
+    with pytest.raises(StoreError, match="is a symlink"):
+        store.get("text@1", k)
+
+
+def test_put_repairs_the_mode_of_a_file(root: Path) -> None:
+    store = FolderStore(root)
+    path = _object(root, store.put("text@1", TEXT))
+    path.chmod(0o644)
+    store.put("text@1", TEXT)
+    assert stat.S_IMODE(path.stat().st_mode) == 0o600
+
+
+def test_a_forked_child_keeps_the_locks_of_its_parent(
+    root: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    store = FolderStore(root)
+    store.append(ANA, {"answer": "yes"})
+    lock = root / "logs" / "answers" / PACKET[7:] / (ANA[2][7:] + ".lock")
+    parent = os.getpid()
+    monkeypatch.setattr(os, "getpid", lambda: parent + 1)  # the view of a child
+    with pytest.raises(StoreError, match="a forked child cannot append"):
+        store.append(ANA, {"answer": "no"})
+    store.close()
+    assert lock.exists()
+    monkeypatch.undo()
+    lock.unlink()
+
+
+@pytest.mark.skipif(os.name != "posix", reason="the check of a process is for POSIX")
+def test_a_stale_lock_names_a_process_that_is_not_running(root: Path) -> None:
+    with FolderStore(root) as store:
+        store.append(ANA, {"answer": "yes"})
+    child = subprocess.Popen([sys.executable, "-c", "pass"])
+    child.wait()
+    lock = root / "logs" / "answers" / PACKET[7:] / (ANA[2][7:] + ".lock")
+    lock.write_text(f"{child.pid}\n")
+    with pytest.raises(Locked, match=f"process {child.pid} made the lock. That process is not"):
+        FolderStore(root).append(ANA, {"answer": "no"})
+    lock.write_text(f"{os.getpid()}\n")
+    with pytest.raises(Locked, match="If it does not run, remove the lock"):
+        FolderStore(root).append(ANA, {"answer": "no"})
