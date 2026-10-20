@@ -323,6 +323,14 @@ def test_a_missing_or_stuck_codex_is_refused(tmp_path: Path, error: Exception) -
         c.version()
 
 
+def test_an_unusable_cache_folder_is_refused_before_any_call(tmp_path: Path) -> None:
+    (tmp_path / "cache").write_text("a file, not a folder")
+    fake = FakeCodex('{"choice": "c1", "confidence": 0.5}')
+    with pytest.raises(judge.JudgeError, match="as the cache"):
+        ask([item()], fake, tmp_path)
+    assert fake.commands == []
+
+
 def test_budget_guard(tmp_path: Path) -> None:
     fake = FakeCodex()
     with pytest.raises(judge.JudgeError, match="budget"):

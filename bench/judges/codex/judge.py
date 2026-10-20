@@ -401,20 +401,30 @@ class Cache:
             raise JudgeError(f"cache entry {path.name} has no reply or codex version")
         return entry
 
+    def open(self) -> None:
+        """Create the folder, before the first call, or JudgeError."""
+        try:
+            self.folder.mkdir(parents=True, exist_ok=True)
+        except OSError as e:
+            raise JudgeError(f"cannot use {self.folder} as the cache: {e}") from e
+
     def put(self, key: str, entry: Json) -> None:
-        self.folder.mkdir(parents=True, exist_ok=True)
+        self.open()
         body = dict(entry, entry_sha256=sha256(canonical(entry)))
         _write(self.path(key), json.dumps(body, ensure_ascii=False, indent=1, sort_keys=True))
 
 
 def _write(path: Path, body: str) -> None:
     """Write through a new file in the same folder, so a stopped run leaves no half file."""
+    tmp = None
     try:
         fd, tmp = tempfile.mkstemp(dir=path.parent, prefix=".tmp-", suffix=".json")
         with os.fdopen(fd, "w", encoding="utf-8") as f:
             f.write(body + "\n")
         os.replace(tmp, path)
     except OSError as e:
+        if tmp is not None:
+            Path(tmp).unlink(missing_ok=True)
         raise JudgeError(f"cannot write {path}: {e}") from e
 
 
@@ -518,6 +528,7 @@ def run(
     gate(items, splits, allow_heldout)
     for it in items:
         prompt(it)  # refuse a bad item before the first call
+    cache.open()
     version = codex.version()
     log: list[str] = []
     answers = {
