@@ -250,9 +250,11 @@
     "note": "Text files stay in local work storage with the original PDFs. Only their hashes are published."
   },
   "code_freeze": {
-    "commit": "c5ba774f07688c2fd155a023d4b1c9fd61d20fb3",
+    "commit": "829045079dd75d5dbdfb61220665e6648501703a",
     "frozen_on": "2026-10-20",
-    "note": "The 0.10 rules and the runner are merged at this commit. The run configuration pins the code by its code_sha256. A code change after this freeze voids it. The harness at this commit runs the baseline arm and the runner arm. The arm runner_drop_rounded needs a replay mode in bench/requested/run_set.py (#376). That change must merge before the first model call. Then the code freeze moves to its merge commit, and this manifest is pinned again before any model output."
+    "code_sha256": "sha256:0e6c6b2606db02e6e04ef79ea858afb35a885519b4912f78c9f83dd5852f0403",
+    "code_digest_method": "bench/requested/run_set.py source_code_digest(): the imported groundgate package (.py and .json) with run_set.py and metrics.py",
+    "note": "The 0.10 rules, the runner and the replay arm of the harness (#376) are merged at this commit. The run configuration pins this code_sha256. A code change after this freeze voids it. The reader code did not change from c5ba774, so the reader text hashes stay."
   },
   "arms": [
     {
@@ -268,7 +270,7 @@
     },
     {
       "id": "runner_drop_rounded",
-      "description": "The extract runner with RunPolicy drop_rounded on. The rounding step runs in finish(), after the last model call, and calls only admit. This arm uses the recorded replies of the runner arm.",
+      "description": "The extract runner with RunPolicy drop_rounded on. It takes no client. It reads the recorded calls of the runner arm of the same split in order, and checks each prompt against its record. A missing, extra or changed call stops the run. The rounding step runs in finish(), after the last model call, and calls only admit, so each prompt is the same as in the runner arm.",
       "drop_rounded": true,
       "model_calls": "none"
     }

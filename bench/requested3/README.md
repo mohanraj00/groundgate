@@ -84,18 +84,20 @@ bracketed total liabilities line. Revenue is negative in these three reports.
 
 ## Code freeze and arms
 
-The code freeze is origin/main c5ba774, where the 0.10 rules and the runner are merged. `groundgate.read` at that
-commit made the reader texts. The run configuration pins the code by its `code_sha256`, and a code
-change after the freeze voids it. The frozen manifest names three arms:
+The code freeze is origin/main 8290450, where the 0.10 rules, the runner and the replay arm of
+the harness (#376) are merged. Its `code_sha256` is
+`sha256:0e6c6b2606db02e6e04ef79ea858afb35a885519b4912f78c9f83dd5852f0403`. The run
+configuration pins this digest, and a code change after the freeze voids it. The reader code is
+the same as at c5ba774, where `groundgate.read` made the reader texts. The frozen manifest names
+three arms:
 
 | Arm | `drop_rounded` | Model calls |
 |---|---|---|
 | `baseline` | not used | new calls on the held-out split |
 | `runner` | off, the 0.10 default (main arm) | new calls on the held-out split |
-| `runner_drop_rounded` | on | none: it uses the recorded replies of `runner` |
+| `runner_drop_rounded` | on | none: it replays the recorded calls of `runner` |
 
 The rounding step runs in `finish()`, after the last model call, and it calls only `admit`. So the
-`runner_drop_rounded` arm sends the same prompts as `runner`, and the recorded replies answer
-them. The harness at c5ba774 runs only `baseline` and `runner`. The replay arm needs a change to
-`bench/requested/run_set.py` (#376), and that change must merge before the first model call. Then
-the code freeze moves to its merge commit, and I pin the manifest again before any model output.
+`runner_drop_rounded` arm sends the same prompts as `runner`. It takes no client. It reads the
+recorded calls of `runner` in order and checks each prompt against its record. A missing, extra or
+changed call stops the run.
