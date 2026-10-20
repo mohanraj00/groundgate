@@ -365,9 +365,7 @@ def test_cli(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
         judge.main([*args, "--out", str(out)], FakeCodex())  # the answers file is there already
     with pytest.raises(SystemExit, match="no folder"):
         judge.main([*args, "--out", str(tmp_path / "no" / "a.json")], FakeCodex())
-    # the default manifest, bench/requested4/manifest.json, is not there yet
-    with pytest.raises(SystemExit, match="no manifest"):
-        judge.main([*args[:9], "--out", str(tmp_path / "b.json")], FakeCodex())
+    assert judge.MANIFEST.parts[-3:] == ("bench", "requested4", "manifest.json")
 
 
 @pytest.mark.parametrize("body", ["{", '{"format": "codex-judge-items/1", "items": {}}'])
