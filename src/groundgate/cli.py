@@ -663,10 +663,10 @@ def _check(args: argparse.Namespace) -> int:
 def _read(args: argparse.Namespace) -> int:
     from .read import read
 
-    if args.layout and Path(args.file).suffix.lower() != ".pdf":  # before the store is written
-        print("groundgate: --layout needs a PDF", file=sys.stderr)
-        return 2
     if args.store is not None:
+        if args.layout and Path(args.file).suffix.lower() != ".pdf":  # before a store write
+            print("groundgate: --layout needs a PDF", file=sys.stderr)
+            return 2
         from .store.packets import put_reading
 
         with _store(args.store, make=True) as store:

@@ -305,6 +305,9 @@ def test_layout_needs_a_pdf_before_the_store_is_written(
     assert main(argv) == 2
     assert capsys.readouterr().err == "groundgate: --layout needs a PDF\n"
     assert not store.exists()
+    missing = ["read", str(tmp_path / "none.html"), "--layout", str(tmp_path / "l.json")]
+    assert main(missing) == 2  # without --store, the read error comes first, as before
+    assert "--layout needs a PDF" not in capsys.readouterr().err
 
 
 def test_store_options_need_their_mode(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
