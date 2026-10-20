@@ -110,6 +110,10 @@ def _text(value: Any, what: str, optional: bool = False) -> str | None:
         return None
     if not isinstance(value, str):
         raise JudgeError(f"{what} must be a string")
+    try:
+        value.encode("utf-8")
+    except UnicodeEncodeError as e:  # a lone surrogate, such as "\ud800" in JSON
+        raise JudgeError(f"{what} is not valid Unicode") from e
     return value
 
 
@@ -438,9 +442,12 @@ def manifest_splits(path: Path) -> tuple[dict[str, str], str]:
         raise JudgeError(f"cannot read {path.name}: {e}") from e
     try:
         manifest = json.loads(raw)
-        splits = {d["id"]: d["split"] for d in manifest["documents"]}
+        pairs = [(d["id"], d["split"]) for d in manifest["documents"]]
     except (ValueError, KeyError, TypeError) as e:
         raise JudgeError(f"{path.name} has no documents with an id and a split") from e
+    splits = dict(pairs)
+    if len(splits) != len(pairs):
+        raise JudgeError(f"{path.name} lists a document id more than once")
     if not all(isinstance(k, str) and v in SPLITS for k, v in splits.items()):
         raise JudgeError(f"{path.name} has a split that is not {' or '.join(SPLITS)}")
     return splits, "sha256:" + hashlib.sha256(raw).hexdigest()
@@ -477,7 +484,9 @@ def answer(
     entry = cache.get(key, text, expect)
     if entry is None:
         failures: list[str] = []
-        for _ in range(ATTEMPTS):
+        for attempt in range(ATTEMPTS):
+            if attempt:
+                time.sleep(codex.pause)
             if codex.calls >= max_calls:
                 raise JudgeError(f"the call budget of {max_calls} is spent")
             try:
@@ -486,7 +495,6 @@ def answer(
             except JudgeError as e:
                 failures.append(str(e)[:200])
                 log.append(f"{it['id']}: {e}")
-                time.sleep(codex.pause)
                 continue
             entry = expect | {
                 "prompt_sha256": sha256(text),

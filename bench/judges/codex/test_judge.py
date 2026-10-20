@@ -136,6 +136,7 @@ def test_byte_spans_become_code_point_spans() -> None:
     [
         {"split": "test"},
         {"doc": None},
+        {"text": TEXT + "\ud800"},  # a lone surrogate
         {"candidates": []},
         {"text": 5},
         {"candidates": [{"value": "1", "scale": None, "unit": None, "spans": [[0, 9999]]}]},
@@ -350,6 +351,11 @@ def test_the_manifest_sets_the_split(tmp_path: Path) -> None:
         ask([item(doc="doc-b")], fake, tmp_path)
     with pytest.raises(judge.JudgeError, match="no manifest"):
         ask([item()], fake, tmp_path, manifest=tmp_path / "missing.json")
+    twice = tmp_path / "twice.json"
+    docs = [{"id": "doc-a", "split": "heldout"}, {"id": "doc-a", "split": "development"}]
+    twice.write_text(json.dumps({"documents": docs}))
+    with pytest.raises(judge.JudgeError, match="more than once"):
+        ask([item()], fake, tmp_path, manifest=twice)
     assert fake.commands == []
     fake = FakeCodex('{"choice": "c1", "confidence": 0.5}')
     out = ask([item(split="heldout")], fake, tmp_path, manifest=held, allow_heldout=True)
