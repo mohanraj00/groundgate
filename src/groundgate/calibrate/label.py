@@ -190,17 +190,18 @@ def server(w: Work, port: int) -> tuple[ThreadingHTTPServer, str]:
             if kind != "application/json":
                 self.refuse(415, "the body must be application/json")
                 return
-            try:
-                size = int(self.headers.get("Content-Length", ""))
-            except ValueError:
+            length = self.headers.get("Content-Length", "")
+            # only digits: int() also takes "+5", "1_0" and spaces
+            if not (length.isascii() and length.isdigit()):
                 self.refuse(411, "the request needs a Content-Length")
                 return
-            if not 0 <= size <= MAX_BODY:
+            size = int(length)
+            if size > MAX_BODY:
                 self.refuse(413, f"the body must be {MAX_BODY} bytes at most")
                 return
             try:
                 body = json.loads(self.rfile.read(size))
-            except ValueError:
+            except (ValueError, RecursionError):  # deep nesting fits in 64 KiB
                 self.refuse(400, "the body is not JSON")
                 return
             it = by_id.get(body.get("id")) if isinstance(body, dict) else None

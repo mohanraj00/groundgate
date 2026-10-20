@@ -77,8 +77,9 @@ async function go(j) {
   const done = S.items.filter((x) => x.id in S.labels).length;
   $("progress").textContent = `${done} of ${S.items.length} labeled. This is item ${at + 1}.`;
   $("bar").style.width = `${(100 * done) / S.items.length}%`;
-  $("item").innerHTML = `<b></b> &nbsp;in ${it.doc}`;
-  $("item").querySelector("b").textContent = m.textContent;
+  const b = document.createElement("b");
+  b.textContent = m.textContent;
+  $("item").replaceChildren(b, `\u00a0in ${it.doc}`);  // a document name stays text
   if (isKey()) {
     $("desc").textContent = `Field: ${it.field}. ${it.description}`;
     $("opts").replaceChildren(...it.keys.map((k, i) => {

@@ -1012,6 +1012,8 @@ def test_the_label_server_refuses_a_body_that_is_not_json(tmp_path: Path, kind: 
         assert call("POST", "/label", sent, {"Content-Type": kind})[0] == 415
         assert call("POST", "/label", b"{not json", {"Content-Type": "application/json"})[0] == 400
         assert call("POST", "/label", b"[1]", {"Content-Type": "application/json"})[0] == 400
+        deep = b"[" * 60000  # deep nesting fits in 64 KiB and raises RecursionError
+        assert call("POST", "/label", deep, {"Content-Type": "application/json"})[0] == 400
     assert not (work.path / "labels.json").exists()
 
 
@@ -1027,6 +1029,7 @@ def test_the_label_server_refuses_a_body_over_64_kib(tmp_path: Path) -> None:
         # a Content-Length over the limit is refused before the server reads the body
         headers = {"Content-Type": "application/json", "Content-Length": str(10**9)}
         assert call("POST", "/label", b"{}", headers)[0] == 413
-        headers["Content-Length"] = "many"
-        assert call("POST", "/label", b"{}", headers)[0] == 411
+        for length in ("many", "+2", "2_0", "-1"):
+            headers["Content-Length"] = length
+            assert call("POST", "/label", b"{}", headers)[0] == 411
     assert work.read("labels.json") == {iid: True}
