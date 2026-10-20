@@ -356,6 +356,10 @@ def test_the_manifest_sets_the_split(tmp_path: Path) -> None:
     twice.write_text(json.dumps({"documents": docs}))
     with pytest.raises(judge.JudgeError, match="more than once"):
         ask([item()], fake, tmp_path, manifest=twice)
+    for bad in ({"id": ["x"], "split": "development"}, {"id": "doc-a", "split": "test"}):
+        twice.write_text(json.dumps({"documents": [bad]}))
+        with pytest.raises(judge.JudgeError, match="string id"):
+            ask([item()], fake, tmp_path, manifest=twice)
     assert fake.commands == []
     fake = FakeCodex('{"choice": "c1", "confidence": 0.5}')
     out = ask([item(split="heldout")], fake, tmp_path, manifest=held, allow_heldout=True)

@@ -445,11 +445,11 @@ def manifest_splits(path: Path) -> tuple[dict[str, str], str]:
         pairs = [(d["id"], d["split"]) for d in manifest["documents"]]
     except (ValueError, KeyError, TypeError) as e:
         raise JudgeError(f"{path.name} has no documents with an id and a split") from e
+    if not all(isinstance(k, str) and v in SPLITS for k, v in pairs):
+        raise JudgeError(f"{path.name} needs a string id and a split of {' or '.join(SPLITS)}")
     splits = dict(pairs)
     if len(splits) != len(pairs):
         raise JudgeError(f"{path.name} lists a document id more than once")
-    if not all(isinstance(k, str) and v in SPLITS for k, v in splits.items()):
-        raise JudgeError(f"{path.name} has a split that is not {' or '.join(SPLITS)}")
     return splits, "sha256:" + hashlib.sha256(raw).hexdigest()
 
 
