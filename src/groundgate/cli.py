@@ -7,6 +7,7 @@
   groundgate report   RECEIPT DOC SCHEMA CANDIDATES [--pack-dir DIR] -o report.html
   groundgate schema   SCHEMA                            > extractor.schema.json
   groundgate schema check SCHEMA
+  groundgate calibrate STEP ...                         (experimental; calibrate --help)
 
 DOC may be "-" to read the document from standard input. Exit codes: 0 success, 1 the receipt
 does not match its inputs (or schema check has a finding), 2 invalid input.
@@ -165,6 +166,13 @@ def _parser() -> argparse.ArgumentParser:
     r.add_argument("--layout", help="layout JSON from read, to show page numbers")
     r.add_argument("--title")
     r.add_argument("-o", "--output", help="write the HTML here instead of stdout")
+    # main() sends `calibrate` to groundgate.calibrate before this parser runs; the entry is here
+    # so that --help names the command
+    sub.add_parser(
+        "calibrate",
+        help="experimental: measure a judge's thresholds on your own documents",
+        add_help=False,
+    )
     return ap
 
 
@@ -194,6 +202,11 @@ def main(argv: list[str] | None = None) -> int:
             file=sys.stderr,
         )
         return 2
+    if argv[:1] == ["calibrate"]:
+        from .calibrate.cli import main as calibrate
+
+        calibrate(argv[1:])
+        return 0
     check = argv[:2] == ["schema", "check"]
     parser = _check_parser() if check else _parser()
     args = parser.parse_args(argv[2:] if check else argv)

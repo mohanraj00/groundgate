@@ -153,7 +153,7 @@ thresholds. This is built and experimental. The plan for it has two stages:
 2. **Clear on a measured route.** A judgment can move a value from needs_verification to admitted
    only on a route (kind of document, field, code) where its error rate has a measured bound.
    `clear.KEY_NOT_AT_VALUE` is the first clear. Its one measure on real extractor output is
-   the key clear on 10-K filings (#120, `bench/sec/results.json`). `groundgate-calibrate` (#112)
+   the key clear on 10-K filings (#120, `bench/sec/results.json`). `groundgate calibrate` (#112)
    measures the thresholds on the app's own documents, and #67 measures more questions.
 
 A judge never admits a value that a check rejects. The judge must be a different model, or at

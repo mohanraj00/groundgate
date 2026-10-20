@@ -21,6 +21,7 @@ page for your task.
 ## Reference
 
 - [guide.md](guide.md): every input, policy key, code, function and command, with defaults.
+- [calibrate.md](calibrate.md): the experimental `groundgate calibrate` command, step by step.
 - [SPEC.md](../SPEC.md): the normative rules of every decision. Another implementation conforms
   when it passes the vectors in [conformance/](../conformance).
 - [CONTEXT.md](../CONTEXT.md): the terms that the docs use.
