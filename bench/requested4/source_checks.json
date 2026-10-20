@@ -1,0 +1,3329 @@
+{
+ "format": "requested-source-checks/1",
+ "status": "selection_complete",
+ "inspection": "Source-only identity, period, notice and text-layer checks. No benchmark model call or requested-value label was used to choose these documents. Download approval does not assert a redistribution license. No source PDF, page image or source text is published.",
+ "documents": [
+  {
+   "id": "component-c01",
+   "source": "https://www.analog-micro.com/products/ics/uiconverter/am462/am462-datasheet.pdf",
+   "final_url": "https://www.analog-micro.com/products/ics/uiconverter/am462/am462-datasheet.pdf",
+   "approved_max_bytes": 301725,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 301725,
+   "source_sha256": "sha256:025ee4fb7f1671494cc87f148cf97deadd291065a63d6896776d3fda29b68251",
+   "source_pages": 20,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.analog-micro.com/en/company/imprint/",
+   "terms_note": "Terms group A: Imprint has no copy, reuse or robots clause; robots.txt has no disallow",
+   "identity": {
+    "publisher": "Analog Microelectronics GmbH",
+    "subject": "AM462 (industrial V/I converter and protector IC)",
+    "title": "Industrial V/I Converter and Protector IC AM462",
+    "period_or_revision": "Rev. 2.5, October 2007"
+   },
+   "text_layer": {
+    "pages_with_text": 20,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "component-c02",
+   "source": "https://www.analog-micro.com/products/ics/sensoramplifier/am401/am401-datasheet.pdf",
+   "final_url": "https://www.analog-micro.com/products/ics/sensoramplifier/am401/am401-datasheet.pdf",
+   "approved_max_bytes": 292481,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 292481,
+   "source_sha256": "sha256:69f1c45f4119608cc79a34929b8a0fda5fdce4e0403f56c8c04a37b324d3ed55",
+   "source_pages": 21,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.analog-micro.com/en/company/imprint/",
+   "terms_note": "Terms group A: Imprint has no copy, reuse or robots clause; robots.txt has no disallow",
+   "identity": {
+    "publisher": "Analog Microelectronics GmbH",
+    "subject": "AM401 (industrial voltage amplifier IC)",
+    "title": "Industrial Voltage Amplifier IC AM401",
+    "period_or_revision": "Rev. 2.3, March 2006"
+   },
+   "text_layer": {
+    "pages_with_text": 21,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "component-c03",
+   "source": "https://www.analog-micro.com/products/ics/sensoramplifier/am417/am417-datasheet.pdf",
+   "final_url": "https://www.analog-micro.com/products/ics/sensoramplifier/am417/am417-datasheet.pdf",
+   "approved_max_bytes": 271788,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 271788,
+   "source_sha256": "sha256:45fba4d8a55492e9c1d98d1a53d5b9ea320ec396017765446492ebba9198d098",
+   "source_pages": 18,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.analog-micro.com/en/company/imprint/",
+   "terms_note": "Terms group A: Imprint has no copy, reuse or robots clause; robots.txt has no disallow",
+   "identity": {
+    "publisher": "Analog Microelectronics GmbH",
+    "subject": "AM417 (ratiometric instrumentation amplifier)",
+    "title": "AM417 - Ratiometric instrumentation amplifier with adjustable output stage",
+    "period_or_revision": "Rev. 3.1, July 2008"
+   },
+   "text_layer": {
+    "pages_with_text": 18,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "component-c04",
+   "source": "https://www.analog-micro.com/products/pressure-sensors/board-mount-pressure-sensors/ams5915/ams5915-datasheet.pdf",
+   "final_url": "https://www.analog-micro.com/products/pressure-sensors/board-mount-pressure-sensors/ams5915/ams5915-datasheet.pdf",
+   "approved_max_bytes": 1220741,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 1220741,
+   "source_sha256": "sha256:cc0f33129b152ed3e2ca4730d4c4ea24607b21cc1baed32396d0b84cebfa183e",
+   "source_pages": 15,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.analog-micro.com/en/company/imprint/",
+   "terms_note": "Terms group A: Imprint has no copy, reuse or robots clause; robots.txt has no disallow",
+   "identity": {
+    "publisher": "Analog Microelectronics GmbH",
+    "subject": "AMS 5915 series (board mount pressure sensor, digital I2C output)",
+    "title": "Datasheet AMS 5915 Series - Board Mount Pressure Sensor with Digital I2C Output",
+    "period_or_revision": "Rev. 4.1, (c) 2023"
+   },
+   "text_layer": {
+    "pages_with_text": 15,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 15,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "component-c05",
+   "source": "https://global.sharp/products/device/lineup/data/pdf/datasheet/gp2y1010au_e.pdf",
+   "final_url": "https://global.sharp/products/device/lineup/data/pdf/datasheet/gp2y1010au_e.pdf",
+   "approved_max_bytes": 1392479,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 1392479,
+   "source_sha256": "sha256:40553915468e520a9765d2ecf734564e7f743acf7030a2ad60afe9dda65ceac1",
+   "source_pages": 9,
+   "download_status": "complete",
+   "selection_status": "hold",
+   "reason": "No text layer: 7 of 9 pages (1, 2, 5 to 9) have no text, which includes the title page.",
+   "terms_url": "https://global.sharp/policy-e.html",
+   "terms_note": "Terms group B: Download or copy only for personal or household use; robots.txt is 404",
+   "identity": {
+    "publisher": "Sharp Corporation",
+    "subject": "GP2Y1010AU0F (optical dust sensor)",
+    "title": "Dust Sensor GP2Y1010AU0F Datasheet (PDF title)",
+    "period_or_revision": null
+   },
+   "text_layer": {
+    "pages_with_text": 2,
+    "pages_without_text": [
+     1,
+     2,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": "Not readable: the pages without text can hold a notice."
+   }
+  },
+  {
+   "id": "component-c06",
+   "source": "https://global.sharp/products/device/lineup/data/pdf/datasheet/gp2ap002s30f_e.pdf",
+   "final_url": "https://global.sharp/products/device/lineup/data/pdf/datasheet/gp2ap002s30f_e.pdf",
+   "approved_max_bytes": 729965,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 729965,
+   "source_sha256": "sha256:545d470b75808ebe9116f9eed757df062414a106aea8b9b8e822b4fe7907e013",
+   "source_pages": 17,
+   "download_status": "complete",
+   "selection_status": "hold",
+   "reason": "The printed notice forbids reproduction without the express written permission of SHARP.",
+   "terms_url": "https://global.sharp/policy-e.html",
+   "terms_note": "Terms group B: Download or copy only for personal or household use; robots.txt is 404",
+   "identity": {
+    "publisher": "Sharp Corporation",
+    "subject": "GP2AP002S30F (proximity sensor)",
+    "title": "GP2AP002S30F Proximity Sensor",
+    "period_or_revision": "Sheet No. OP13036EN"
+   },
+   "text_layer": {
+    "pages_with_text": 17,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 17,
+    "restriction": "Printed notice: 'no part of this publication may be reproduced or transmitted' without SHARP's express written permission."
+   }
+  },
+  {
+   "id": "component-c07",
+   "source": "https://global.sharp/products/device/lineup/data/pdf/datasheet/gp2ap030a00f_e.pdf",
+   "final_url": "https://global.sharp/products/device/lineup/data/pdf/datasheet/gp2ap030a00f_e.pdf",
+   "approved_max_bytes": 384776,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 384776,
+   "source_sha256": "sha256:6747a7576f14c36b58a1e8b0fe1c8b63df9a8aa84c1e88087aaaff6ac6d70f4d",
+   "source_pages": 11,
+   "download_status": "complete",
+   "selection_status": "hold",
+   "reason": "The printed notice forbids reproduction without the express written permission of SHARP.",
+   "terms_url": "https://global.sharp/policy-e.html",
+   "terms_note": "Terms group B: Download or copy only for personal or household use; robots.txt is 404",
+   "identity": {
+    "publisher": "Sharp Corporation",
+    "subject": "GP2AP030A00F (proximity sensor with ambient light sensor)",
+    "title": "GP2AP030A00F Proximity Sensor with Ambient Light Sensor",
+    "period_or_revision": "Sheet No. OP13006EN"
+   },
+   "text_layer": {
+    "pages_with_text": 11,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 11,
+    "restriction": "Printed notice: 'no part of this publication may be reproduced or transmitted' without SHARP's express written permission."
+   }
+  },
+  {
+   "id": "component-c08",
+   "source": "https://global.sharp/products/device/lineup/data/pdf/datasheet/gp2ap054a00f_e.pdf",
+   "final_url": "https://global.sharp/products/device/lineup/data/pdf/datasheet/gp2ap054a00f_e.pdf",
+   "approved_max_bytes": 771686,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 771686,
+   "source_sha256": "sha256:8de49ae9f8fae9b29023678e979b7cc342d8087ba35e68ddde9368285d1cdcfe",
+   "source_pages": 17,
+   "download_status": "complete",
+   "selection_status": "hold",
+   "reason": "The printed notice forbids reproduction without the express written permission of SHARP.",
+   "terms_url": "https://global.sharp/policy-e.html",
+   "terms_note": "Terms group B: Download or copy only for personal or household use; robots.txt is 404",
+   "identity": {
+    "publisher": "Sharp Corporation",
+    "subject": "GP2AP054A00F (proximity/gesture sensor with integrated ambient light sensor)",
+    "title": "GP2AP054A00F Proximity/Gesture Sensor with Integrated Ambient Light Sensor",
+    "period_or_revision": "Sheet No. OP14042EN"
+   },
+   "text_layer": {
+    "pages_with_text": 17,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 17,
+    "restriction": "Printed notice: 'no part of this publication may be reproduced or transmitted' without SHARP's express written permission."
+   }
+  },
+  {
+   "id": "component-c09",
+   "source": "https://www.murata.com/-/media/webrenewal/products/sensor/pdf/datasheet/datasheet_sca3300-d01.ashx?la=en&cvid=20260615010000000000",
+   "final_url": "https://www.murata.com/-/media/webrenewal/products/sensor/pdf/datasheet/datasheet_sca3300-d01.ashx?la=en&cvid=20260615010000000000",
+   "approved_max_bytes": 1637711,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 1637711,
+   "source_sha256": "sha256:78652e22800057f48f9e4a407ae38483f29da5ffb7e1946ed6f2ae8ebcd79615",
+   "source_pages": 42,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.murata.com/en-global/sitepolicy",
+   "terms_note": "Terms group B: Private use permitted by law only; other use needs authorization",
+   "identity": {
+    "publisher": "Murata Electronics Oy (Murata Manufacturing Co., Ltd.)",
+    "subject": "SCA3300-D01 (3-axis industrial accelerometer, SPI)",
+    "title": "Data Sheet SCA3300-D01",
+    "period_or_revision": "Doc.No. 3165 Rev. 3"
+   },
+   "text_layer": {
+    "pages_with_text": 42,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 42,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "component-c10",
+   "source": "https://www.murata.com/-/media/webrenewal/products/sensor/pdf/datasheet/datasheet_scl3300-d01.ashx?la=en&cvid=20260615010000000000",
+   "final_url": "https://www.murata.com/-/media/webrenewal/products/sensor/pdf/datasheet/datasheet_scl3300-d01.ashx?la=en&cvid=20260615010000000000",
+   "approved_max_bytes": 1514212,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 1514212,
+   "source_sha256": "sha256:87a1ecf38d129a13964452a98f8610af3ea9102011c91f87e2b1aa50bf2558dd",
+   "source_pages": 48,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.murata.com/en-global/sitepolicy",
+   "terms_note": "Terms group B: Private use permitted by law only; other use needs authorization",
+   "identity": {
+    "publisher": "Murata Electronics Oy (Murata Manufacturing Co., Ltd.)",
+    "subject": "SCL3300-D01 (3-axis inclinometer with angle output, SPI)",
+    "title": "Data Sheet SCL3300-D01",
+    "period_or_revision": "Doc.No. 4921 Rev. 4"
+   },
+   "text_layer": {
+    "pages_with_text": 48,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 48,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "component-c11",
+   "source": "https://www.murata.com/-/media/webrenewal/products/sensor/pdf/datasheet/datasheet_scc2130-d08.ashx?la=en&cvid=20190118045358899200",
+   "final_url": "https://www.murata.com/-/media/webrenewal/products/sensor/pdf/datasheet/datasheet_scc2130-d08.ashx?la=en&cvid=20190118045358899200",
+   "approved_max_bytes": 1025613,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 1025613,
+   "source_sha256": "sha256:4370953ea788a87c5c33a79f36ffbd141a7952f4b9b6247acba8970daa145d13",
+   "source_pages": 38,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.murata.com/en-global/sitepolicy",
+   "terms_note": "Terms group B: Private use permitted by law only; other use needs authorization",
+   "identity": {
+    "publisher": "Murata Electronics Oy (Murata Manufacturing Co., Ltd.)",
+    "subject": "SCC2130-D08 (combined gyroscope and 3-axis accelerometer, SPI)",
+    "title": "Data Sheet SCC2130-D08",
+    "period_or_revision": "Doc.Nr. 82 1775 00 Rev. B0"
+   },
+   "text_layer": {
+    "pages_with_text": 38,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "component-c12",
+   "source": "https://www.murata.com/-/media/webrenewal/products/sensor/pdf/datasheet/datasheet-sca3400-d01.ashx?la=en&cvid=20250625064056000000",
+   "final_url": "https://www.murata.com/-/media/webrenewal/products/sensor/pdf/datasheet/datasheet-sca3400-d01.ashx?la=en&cvid=20250625064056000000",
+   "approved_max_bytes": 1794644,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 1794644,
+   "source_sha256": "sha256:0bec73a307129c54afbde7459c19171bd86d79cb9cad47646cbd8fdf2897d828",
+   "source_pages": 46,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.murata.com/en-global/sitepolicy",
+   "terms_note": "Terms group B: Private use permitted by law only; other use needs authorization",
+   "identity": {
+    "publisher": "Murata Electronics Oy (Murata Manufacturing Co., Ltd.)",
+    "subject": "SCA3400-D01 (digital 3-axis accelerometer)",
+    "title": "Data Sheet SCA3400-D01",
+    "period_or_revision": "Doc.No. 12324 Rev. 5"
+   },
+   "text_layer": {
+    "pages_with_text": 46,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 46,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "component-c17",
+   "source": "https://www.rakon.com/hubfs/Files/Product%20datasheets/TCXO/TCXO%20RST2016A.pdf",
+   "final_url": "https://www.rakon.com/hubfs/Files/Product%20datasheets/TCXO/TCXO%20RST2016A.pdf",
+   "approved_max_bytes": 416507,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 416507,
+   "source_sha256": "sha256:c246c54a5fe6046c3be2ef02ab0587e5cc5923e1725b0a57b951ee900f2a0084",
+   "source_pages": 2,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.rakon.com/terms-of-use",
+   "terms_note": "Terms group B: Download and print extracts only for personal, non-commercial use or private study",
+   "identity": {
+    "publisher": "Rakon Limited",
+    "subject": "RST2016A (SMD TCXO/VCTCXO)",
+    "title": "RST2016A High Stability SMD TCXO/VCTCXO",
+    "period_or_revision": "Issue A, 28 July 2022"
+   },
+   "text_layer": {
+    "pages_with_text": 2,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 1,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "component-c18",
+   "source": "https://www.rakon.com/hubfs/Files/Product%20datasheets/TCXO/TCXO%20RST2520A.pdf",
+   "final_url": "https://www.rakon.com/hubfs/Files/Product%20datasheets/TCXO/TCXO%20RST2520A.pdf",
+   "approved_max_bytes": 350456,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 350456,
+   "source_sha256": "sha256:402dd0fa12d8d7d364061ca6a31a9a2909772dc1dd4748af880d07db49786a0e",
+   "source_pages": 2,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.rakon.com/terms-of-use",
+   "terms_note": "Terms group B: Download and print extracts only for personal, non-commercial use or private study",
+   "identity": {
+    "publisher": "Rakon Limited",
+    "subject": "RST2520A (SMD TCXO/VCTCXO)",
+    "title": "RST2520A High Stability SMD TCXO/VCTCXO",
+    "period_or_revision": "Issue A, 28 July 2022"
+   },
+   "text_layer": {
+    "pages_with_text": 2,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 1,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "component-c19",
+   "source": "https://www.rakon.com/hubfs/Files/Product%20datasheets/TCXO/TCXO%20RST3225H.pdf",
+   "final_url": "https://www.rakon.com/hubfs/Files/Product%20datasheets/TCXO/TCXO%20RST3225H.pdf",
+   "approved_max_bytes": 415993,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 415993,
+   "source_sha256": "sha256:b66b7216318409c39e2a9fe732fed9d7b5d3f6b2aa7d215311b118bff839546b",
+   "source_pages": 2,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.rakon.com/terms-of-use",
+   "terms_note": "Terms group B: Download and print extracts only for personal, non-commercial use or private study",
+   "identity": {
+    "publisher": "Rakon Limited",
+    "subject": "RST3225H (high temperature SMD TCXO/VCTCXO)",
+    "title": "RST3225H High Stability SMD TCXO/VCTCXO",
+    "period_or_revision": "Issue A, 15 September 2022"
+   },
+   "text_layer": {
+    "pages_with_text": 2,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 1,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "component-c20",
+   "source": "https://www.prema.com/images/downloads/Datenblatt_PR4401_PR4402.pdf",
+   "final_url": "https://www.prema.com/images/downloads/Datenblatt_PR4401_PR4402.pdf",
+   "approved_max_bytes": 574371,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 574371,
+   "source_sha256": "sha256:939aeebd4a7f9ec217b36e840b878cb9b2c6eb6fd01952e1812d3a0165ffb041",
+   "source_pages": 12,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.prema.com/index.php/en/imprint",
+   "terms_note": "Terms group B: Imprint: downloads and copies only for private, non-commercial use",
+   "identity": {
+    "publisher": "PREMA Semiconductor GmbH",
+    "subject": "PR4401/PR4402 (0.9 V boost LED drivers)",
+    "title": "LED Driver PR4401 / PR4402",
+    "period_or_revision": "rev. 1014"
+   },
+   "text_layer": {
+    "pages_with_text": 12,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "component-c21",
+   "source": "https://www.prema.com/images/downloads/PR4403.pdf",
+   "final_url": "https://www.prema.com/images/downloads/PR4403.pdf",
+   "approved_max_bytes": 529869,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 529869,
+   "source_sha256": "sha256:f53573a1572ea70f86c069ce32f92b7c246db6f94ae2efc69eee8b361975debf",
+   "source_pages": 12,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.prema.com/index.php/en/imprint",
+   "terms_note": "Terms group B: Imprint: downloads and copies only for private, non-commercial use",
+   "identity": {
+    "publisher": "PREMA Semiconductor GmbH",
+    "subject": "PR4403 (0.9 V boost LED driver)",
+    "title": "LED Driver PR4403",
+    "period_or_revision": "rev. 1014"
+   },
+   "text_layer": {
+    "pages_with_text": 12,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "component-c22",
+   "source": "https://www.prema.com/images/downloads/PR4404_v1017.pdf",
+   "final_url": "https://www.prema.com/images/downloads/PR4404_v1017.pdf",
+   "approved_max_bytes": 389047,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 389047,
+   "source_sha256": "sha256:026e3712318f509f866f04b1419c90bfb85dd5cb05688c516400c50e461bfc86",
+   "source_pages": 12,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.prema.com/index.php/en/imprint",
+   "terms_note": "Terms group B: Imprint: downloads and copies only for private, non-commercial use",
+   "identity": {
+    "publisher": "PREMA Semiconductor GmbH",
+    "subject": "PR4404 (low voltage boost driver for power LEDs)",
+    "title": "LED Driver PR4404",
+    "period_or_revision": "rev. 1017"
+   },
+   "text_layer": {
+    "pages_with_text": 12,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "component-c23",
+   "source": "https://www.prisemi.com/pdf/4dcdyxp/PM5355.pdf",
+   "final_url": "https://www.prisemi.com/pdf/4dcdyxp/PM5355.pdf",
+   "approved_max_bytes": 925037,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 925037,
+   "source_sha256": "sha256:4ebba1d56a00c53cc813ffd28a276b0d1020cc1cdcf4c37fd88dc915db5c17db",
+   "source_pages": 14,
+   "download_status": "complete",
+   "selection_status": "hold",
+   "reason": "The datasheet is in Chinese, not English.",
+   "terms_url": "https://www.prisemi.com/law/",
+   "terms_note": "Terms group B: Legal notice: use for commercial or personal purpose; other use needs written consent",
+   "identity": {
+    "publisher": "Shanghai Prisemi Electronics Co., Ltd.",
+    "subject": "PM5355 (digitally programmable buck regulator)",
+    "title": "PM5355 (Chinese title)",
+    "period_or_revision": "Rev. 2.1"
+   },
+   "text_layer": {
+    "pages_with_text": 14,
+    "pages_without_text": [],
+    "language": "Chinese"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "component-c24",
+   "source": "https://www.prisemi.com/pdf/5fzkg/P1498.pdf",
+   "final_url": "https://www.prisemi.com/pdf/5fzkg/P1498.pdf",
+   "approved_max_bytes": 1302071,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 1302071,
+   "source_sha256": "sha256:1bdf813bff580b0043103221c5737ffbceaad74c6b42514af97356b293687bc1",
+   "source_pages": 13,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.prisemi.com/law/",
+   "terms_note": "Terms group B: Legal notice: use for commercial or personal purpose; other use needs written consent",
+   "identity": {
+    "publisher": "Shanghai Prisemi Electronics Co., Ltd.",
+    "subject": "P1498 (dual load switch with controlled turn-on)",
+    "title": "P1498 Dual Ultra-Low On-Resistance Load Switch with Controlled Turn-On",
+    "period_or_revision": "Rev 1.0"
+   },
+   "text_layer": {
+    "pages_with_text": 13,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 13,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "component-c25",
+   "source": "https://www.hamamatsu.com/content/dam/hamamatsu-photonics/sites/documents/99_SALES_LIBRARY/ssd/s9706_kpic1060e.pdf",
+   "final_url": "https://www.hamamatsu.com/content/dam/hamamatsu-photonics/sites/documents/99_SALES_LIBRARY/ssd/s9706_kpic1060e.pdf",
+   "approved_max_bytes": 570638,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 570638,
+   "source_sha256": "sha256:0e438ac0f2b509a42f2f9401491be73805011375efa4046c792cebe2dc63815c",
+   "source_pages": 6,
+   "download_status": "complete",
+   "selection_status": "hold",
+   "reason": "The printed notice prohibits copying or reprinting without prior permission.",
+   "terms_url": "https://www.hamamatsu.com/eu/en/website/terms-of-use.html",
+   "terms_note": "Terms group B: Reproduction beyond legal private use needs prior permission",
+   "identity": {
+    "publisher": "Hamamatsu Photonics K.K.",
+    "subject": "S9706 (digital color sensor)",
+    "title": "Color sensor S9706",
+    "period_or_revision": "Cat. No. KPIC1060E17, current as of July 2021"
+   },
+   "text_layer": {
+    "pages_with_text": 6,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 6,
+    "restriction": "Printed notice: 'Copying or reprinting the contents ... is prohibited without our prior permission.'"
+   }
+  },
+  {
+   "id": "component-c26",
+   "source": "https://www.hamamatsu.com/content/dam/hamamatsu-photonics/sites/documents/99_SALES_LIBRARY/ssd/s4282-51_etc_kpic1002e.pdf",
+   "final_url": "https://www.hamamatsu.com/content/dam/hamamatsu-photonics/sites/documents/99_SALES_LIBRARY/ssd/s4282-51_etc_kpic1002e.pdf",
+   "approved_max_bytes": 709838,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 709838,
+   "source_sha256": "sha256:c6d8a378b4725b8ca99be89b0e2309fda1c95d742c96fb2b0257a328a448cadd",
+   "source_pages": 10,
+   "download_status": "complete",
+   "selection_status": "hold",
+   "reason": "The printed notice prohibits copying or reprinting without prior permission.",
+   "terms_url": "https://www.hamamatsu.com/eu/en/website/terms-of-use.html",
+   "terms_note": "Terms group B: Reproduction beyond legal private use needs prior permission",
+   "identity": {
+    "publisher": "Hamamatsu Photonics K.K.",
+    "subject": "Light modulation photo IC family (includes S6986)",
+    "title": "Light modulation photo IC S4282-51, S6809, S6846, S6986, S7136/-10, S10053/-01DT",
+    "period_or_revision": "Cat. No. KPIC1002E15, April 2026"
+   },
+   "text_layer": {
+    "pages_with_text": 10,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 10,
+    "restriction": "Printed notice: 'Copying or reprinting the contents ... is prohibited without our prior permission.'"
+   }
+  },
+  {
+   "id": "component-c27",
+   "source": "https://www.semicon.sanken-ele.co.jp/sk_content/si-3011zd_ds_en.pdf",
+   "final_url": "https://www.semicon.sanken-ele.co.jp/sk_content/si-3011zd_ds_en.pdf",
+   "approved_max_bytes": 520937,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 520937,
+   "source_sha256": "sha256:9ac774ea6c6ee0b9b7be92d8b9b1a609f3e5b0ceecaebb96f0d66332e3512f33",
+   "source_pages": 15,
+   "download_status": "complete",
+   "selection_status": "hold",
+   "reason": "The printed notice forbids copy without the prior written consent of Sanken.",
+   "terms_url": "https://www.sanken-ele.co.jp/corp/en/sitepolicy/sitepolicy.htm",
+   "terms_note": "Terms group B: Use only within lawful exceptions such as personal use; other use needs consent",
+   "identity": {
+    "publisher": "Sanken Electric Co., Ltd.",
+    "subject": "SI-3011ZD (3 A linear regulator IC)",
+    "title": "SI-3011ZD Linear Regulator IC Data Sheet",
+    "period_or_revision": "SI-3011ZD-DSE Rev. 1.1, Sep. 11, 2020"
+   },
+   "text_layer": {
+    "pages_with_text": 15,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 15,
+    "restriction": "Printed notice: 'No information in this document can be transcribed or copied' without Sanken's prior written consent."
+   }
+  },
+  {
+   "id": "component-c28",
+   "source": "https://product.minebeamitsumi.com/en/product/category/ics/regulate/ldo/parts/download/__icsFiles/afieldfile/2025/12/26/41_download_01_8.pdf",
+   "final_url": "https://product.minebeamitsumi.com/en/product/category/ics/regulate/ldo/parts/download/__icsFiles/afieldfile/2025/12/26/41_download_01_8.pdf",
+   "approved_max_bytes": 507418,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 507418,
+   "source_sha256": "sha256:1964c4e46fdc7abebf1339a8d7fe5e3528f88fc35cee2d956b169ad17f332b5c",
+   "source_pages": 20,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://product.minebeamitsumi.com/en/use/index.html",
+   "terms_note": "Terms group B: Use of site content other than private use is prohibited",
+   "identity": {
+    "publisher": "Mitsumi Electric Co., Ltd. (MinebeaMitsumi Inc.)",
+    "subject": "MM3823 series (500 mA LDO with soft start)",
+    "title": "Soft start function 500mA LDO MM3823 Series",
+    "period_or_revision": "Rev. 1, Jan. 2021"
+   },
+   "text_layer": {
+    "pages_with_text": 20,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "component-c30",
+   "source": "https://www.euroquartz.co.uk/media/2379/cxolp-10225-rev-a.pdf",
+   "final_url": "https://www.euroquartz.co.uk/media/2379/cxolp-10225-rev-a.pdf",
+   "approved_max_bytes": 188626,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 188626,
+   "source_sha256": "sha256:d94c0c8c92669581bb85db37ecd67cb8b13c6df268cb8648e6bede4f3bd3e046",
+   "source_pages": 2,
+   "download_status": "complete",
+   "selection_status": "hold",
+   "reason": "Wrong publisher: the printed publisher is Statek Corporation, not Euroquartz Ltd.",
+   "terms_url": "https://www.euroquartz.co.uk/terms-of-use",
+   "terms_note": "Terms group B: One-off copies or extracts may be made for personal reference",
+   "identity": {
+    "publisher": "Statek Corporation",
+    "subject": "CXOLP (low power crystal oscillator)",
+    "title": "CXOLP Oscillator",
+    "period_or_revision": "10225 Rev A"
+   },
+   "text_layer": {
+    "pages_with_text": 2,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sbc-c01",
+   "source": "https://www.missoulacounty.gov/media/tpufxyax/standard-plan-summary-of-benefits-and-coverage-2026-2027.pdf",
+   "final_url": "https://www.missoulacounty.gov/media/tpufxyax/standard-plan-summary-of-benefits-and-coverage-2026-2027.pdf",
+   "approved_max_bytes": 318597,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 318597,
+   "source_sha256": "sha256:f52d8ec5ac9eb3b328f8d4161f7c5d03f4dd218ccb7b6102dd5ffa603f59b2fc",
+   "source_pages": 6,
+   "download_status": "complete",
+   "selection_status": "hold",
+   "reason": "No usable text layer: the text layer has a broken font encoding, so pdftotext gives unreadable characters on all 6 pages (identity read from a page image).",
+   "terms_url": "https://www.missoulacounty.gov/topics/disclaimer/",
+   "terms_note": "Terms group A: Disclaimer covers accuracy and links only; no ban on robots, download or copying",
+   "identity": {
+    "publisher": "Missoula County, Montana",
+    "subject": "Missoula County Employee Benefit Plan: Standard (PPO)",
+    "title": "Summary of Benefits and Coverage: What this Plan Covers & What You Pay for Covered Services",
+    "period_or_revision": "07/01/2026 - 06/30/2027"
+   },
+   "text_layer": {
+    "pages_with_text": 6,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sbc-c02",
+   "source": "https://www.missoulacounty.gov/media/lqqhbozj/high-deductible-plan-summary-of-benefits-and-coverage-2026-2027.pdf",
+   "final_url": "https://www.missoulacounty.gov/media/lqqhbozj/high-deductible-plan-summary-of-benefits-and-coverage-2026-2027.pdf",
+   "approved_max_bytes": 287760,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 287760,
+   "source_sha256": "sha256:5092d0623b15a8a3d95ea0dee9152aa9429558e6561aaa1e1cb03b48afeed359",
+   "source_pages": 5,
+   "download_status": "complete",
+   "selection_status": "hold",
+   "reason": "No usable text layer: the text layer has a broken font encoding, so pdftotext gives unreadable characters on all 5 pages (identity read from a page image).",
+   "terms_url": "https://www.missoulacounty.gov/topics/disclaimer/",
+   "terms_note": "Terms group A: Disclaimer covers accuracy and links only; no ban on robots, download or copying",
+   "identity": {
+    "publisher": "Missoula County, Montana",
+    "subject": "Missoula County Employee Benefit Plan: Non-HSA High Deductible (PPO)",
+    "title": "Summary of Benefits and Coverage: What this Plan Covers & What You Pay for Covered Services",
+    "period_or_revision": "07/01/2026 - 06/30/2027"
+   },
+   "text_layer": {
+    "pages_with_text": 5,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sbc-c03",
+   "source": "https://ogi.idaho.gov/wp-content/uploads/2026/04/FY27-Active-PPO-SBC.pdf",
+   "final_url": "https://ogi.idaho.gov/wp-content/uploads/2026/04/FY27-Active-PPO-SBC.pdf",
+   "approved_max_bytes": 798877,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 798877,
+   "source_sha256": "sha256:dda748da98e6884418a2fb25c01160d04dd99bcfb80c3ead7b9079275ddd2567",
+   "source_pages": 9,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.idaho.gov/about-us/legal-notices/",
+   "terms_note": "Terms group A: Legal notices: DMCA contact and all rights reserved only; no ban on robots or copying",
+   "identity": {
+    "publisher": "Regence BlueShield of Idaho, Inc. for the State of Idaho",
+    "subject": "State of Idaho PPO",
+    "title": "Summary of Benefits and Coverage: What this Plan Covers & What You Pay for Covered Services",
+    "period_or_revision": "07/01/2026 - 06/30/2027"
+   },
+   "text_layer": {
+    "pages_with_text": 9,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sbc-c04",
+   "source": "https://ogi.idaho.gov/wp-content/uploads/2027/FY27-Active-Trad-SBC.pdf?_t=1776369512",
+   "final_url": "https://ogi.idaho.gov/wp-content/uploads/2027/FY27-Active-Trad-SBC.pdf?_t=1776369512",
+   "approved_max_bytes": 792581,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 792581,
+   "source_sha256": "sha256:763860c1bfffe5ed5087f4f763e7950c7c30c5d8a9fc5ff51a270bb0c214c4df",
+   "source_pages": 8,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.idaho.gov/about-us/legal-notices/",
+   "terms_note": "Terms group A: Legal notices: DMCA contact and all rights reserved only; no ban on robots or copying",
+   "identity": {
+    "publisher": "Regence BlueShield of Idaho, Inc. for the State of Idaho",
+    "subject": "State of Idaho Traditional",
+    "title": "Summary of Benefits and Coverage: What this Plan Covers & What You Pay for Covered Services",
+    "period_or_revision": "07/01/2026 - 06/30/2027"
+   },
+   "text_layer": {
+    "pages_with_text": 8,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sbc-c05",
+   "source": "https://sonomacounty.gov/Main%20County%20Site/Administrative%20Support%20%26%20Fiscal%20Services/HR/Divisions%20%26%20Units/Benefits/Documents/SBC%27s/Anthem%20Medicare%20and%20CHP/2026%20County%20Health%20Plan%20EPO%20%28SBC%29.pdf",
+   "final_url": "https://sonomacounty.gov/Main%20County%20Site/Administrative%20Support%20%26%20Fiscal%20Services/HR/Divisions%20%26%20Units/Benefits/Documents/SBC%27s/Anthem%20Medicare%20and%20CHP/2026%20County%20Health%20Plan%20EPO%20%28SBC%29.pdf",
+   "approved_max_bytes": 334812,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 334812,
+   "source_sha256": "sha256:2305f79cf3f33cb778739fe599d5272344342825995a2fd356f7ea094bac4788",
+   "source_pages": 7,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://sonomacounty.gov/terms-of-use",
+   "terms_note": "Terms group A: Site info is public domain unless noted, may be copied as law permits; crawl-delay 10",
+   "identity": {
+    "publisher": "Anthem Blue Cross for the County of Sonoma",
+    "subject": "County of Sonoma Modified EPO E5 (500)",
+    "title": "Summary of Benefits and Coverage: What this Plan Covers & What You Pay for Covered Services",
+    "period_or_revision": "06/01/2026 - 05/31/2027"
+   },
+   "text_layer": {
+    "pages_with_text": 7,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sbc-c06",
+   "source": "https://sonomacounty.gov/Main%20County%20Site/Administrative%20Support%20%26%20Fiscal%20Services/HR/Divisions%20%26%20Units/Benefits/Documents/SBC%27s/Anthem%20Medicare%20and%20CHP/2026%20County%20Health%20Plan%20PPO%20%28SBC%29.pdf",
+   "final_url": "https://sonomacounty.gov/Main%20County%20Site/Administrative%20Support%20%26%20Fiscal%20Services/HR/Divisions%20%26%20Units/Benefits/Documents/SBC%27s/Anthem%20Medicare%20and%20CHP/2026%20County%20Health%20Plan%20PPO%20%28SBC%29.pdf",
+   "approved_max_bytes": 336382,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 336382,
+   "source_sha256": "sha256:804886a5afc41f4401f23d26e808f628f2b46fb06b70819e07eae963b67fbdaf",
+   "source_pages": 7,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://sonomacounty.gov/terms-of-use",
+   "terms_note": "Terms group A: Site info is public domain unless noted, may be copied as law permits; crawl-delay 10",
+   "identity": {
+    "publisher": "Anthem Blue Cross for the County of Sonoma",
+    "subject": "County of Sonoma Modified Premier PPO (300/20/90/60)",
+    "title": "Summary of Benefits and Coverage: What this Plan Covers & What You Pay for Covered Services",
+    "period_or_revision": "06/01/2026 - 05/31/2027"
+   },
+   "text_layer": {
+    "pages_with_text": 7,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sbc-c07",
+   "source": "https://www.scottsdaleaz.gov/docs/default-source/scottsdaleaz/hr/cigna-publications/cigna-oap-hsa-summary-of-benefits-coverage-fy-26-27.pdf?sfvrsn=571203cc_3",
+   "final_url": "https://www.scottsdaleaz.gov/docs/default-source/scottsdaleaz/hr/cigna-publications/cigna-oap-hsa-summary-of-benefits-coverage-fy-26-27.pdf?sfvrsn=571203cc_3",
+   "approved_max_bytes": 727597,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 727597,
+   "source_sha256": "sha256:68d653fe5bbe027e95971d82c4daf660ffcc244e20c128fd743e45f05da528f5",
+   "source_pages": 19,
+   "download_status": "complete",
+   "selection_status": "hold",
+   "reason": "Not the federal SBC form: the document is a Cigna 'Benefit Summary', not a Summary of Benefits and Coverage.",
+   "terms_url": "https://www.scottsdaleaz.gov/policies",
+   "terms_note": "Terms group A: No distribution, mirroring or re-use without permission; no commercial use; no copy ban",
+   "identity": {
+    "publisher": "Cigna Health and Life Insurance Co. for the City of Scottsdale",
+    "subject": "City of Scottsdale Open Access Plus HDHPQ Plan",
+    "title": "Benefit Summary (Cigna)",
+    "period_or_revision": "effective 07/01/2026"
+   },
+   "text_layer": {
+    "pages_with_text": 19,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sbc-c08",
+   "source": "https://www.scottsdaleaz.gov/docs/default-source/scottsdaleaz/hr/cigna-publications/cigna-oap-summary-of-benefits-coverage-fy-26-27.pdf?sfvrsn=c4d3c425_3",
+   "final_url": "https://www.scottsdaleaz.gov/docs/default-source/scottsdaleaz/hr/cigna-publications/cigna-oap-summary-of-benefits-coverage-fy-26-27.pdf?sfvrsn=c4d3c425_3",
+   "approved_max_bytes": 726720,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 726720,
+   "source_sha256": "sha256:8abbfc8e0533801ae1731f2794519aac1c9687a97f31adca320779e70e773e16",
+   "source_pages": 19,
+   "download_status": "complete",
+   "selection_status": "hold",
+   "reason": "Not the federal SBC form: the document is a Cigna 'Benefit Summary', not a Summary of Benefits and Coverage.",
+   "terms_url": "https://www.scottsdaleaz.gov/policies",
+   "terms_note": "Terms group A: No distribution, mirroring or re-use without permission; no commercial use; no copy ban",
+   "identity": {
+    "publisher": "Cigna Health and Life Insurance Co. for the City of Scottsdale",
+    "subject": "City of Scottsdale Open Access Plus Plan",
+    "title": "Benefit Summary (Cigna)",
+    "period_or_revision": "effective 07/01/2026"
+   },
+   "text_layer": {
+    "pages_with_text": 19,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sbc-c09",
+   "source": "https://www.cityoftulsa.org/media/30567/2026-bcbsok-hsa-sbc.pdf",
+   "final_url": "https://www.cityoftulsa.org/media/30567/2026-bcbsok-hsa-sbc.pdf",
+   "approved_max_bytes": 571501,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 571501,
+   "source_sha256": "sha256:d48a11d14b72b2da17afa41cc544b373245a8e58013e9b1ce853fccf86fb31c0",
+   "source_pages": 9,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.cityoftulsa.org/government/departments/communications/legal-disclaimer/",
+   "terms_note": "Terms group A: Disclaimer only (no liability for errors); no copy clause; no robots.txt file",
+   "identity": {
+    "publisher": "Blue Cross and Blue Shield of Oklahoma for the City of Tulsa",
+    "subject": "City of Tulsa BlueAdvantage Plan (HSA)",
+    "title": "Summary of Benefits and Coverage: What this Plan Covers & What You Pay for Covered Services",
+    "period_or_revision": "01/01/2026 - 12/31/2026"
+   },
+   "text_layer": {
+    "pages_with_text": 9,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sbc-c10",
+   "source": "https://www.cityoftulsa.org/media/30574/2026-sbc-ppo.pdf",
+   "final_url": "https://www.cityoftulsa.org/media/30574/2026-sbc-ppo.pdf",
+   "approved_max_bytes": 582854,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 582854,
+   "source_sha256": "sha256:0da22d0094a20176793bb07abfc55ba27d9501e54d2899715b39b513aa3f5a30",
+   "source_pages": 9,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.cityoftulsa.org/government/departments/communications/legal-disclaimer/",
+   "terms_note": "Terms group A: Disclaimer only (no liability for errors); no copy clause; no robots.txt file",
+   "identity": {
+    "publisher": "Blue Cross and Blue Shield of Oklahoma for the City of Tulsa",
+    "subject": "City of Tulsa BlueAdvantage PPO Plan",
+    "title": "Summary of Benefits and Coverage: What this Plan Covers & What You Pay for Covered Services",
+    "period_or_revision": "01/01/2026 - 12/31/2026"
+   },
+   "text_layer": {
+    "pages_with_text": 9,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sbc-c11",
+   "source": "https://www.nashville.gov/sites/default/files/2025-08/2026_SBC_PPO.pdf?ct=1756144882",
+   "final_url": "https://www.nashville.gov/sites/default/files/2025-08/2026_SBC_PPO.pdf?ct=1756144882",
+   "approved_max_bytes": 553084,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 553084,
+   "source_sha256": "sha256:3624590d2abc0dcc3473756c2f9363850cfeb72887f923491ff60b60f6e2d946",
+   "source_pages": 10,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.nashville.gov/departments/government/terms-service",
+   "terms_note": "Terms group A: No distribution, mirroring or re-use without permission; copies must keep notice",
+   "identity": {
+    "publisher": "Cigna Healthcare for the Metropolitan Government of Nashville and Davidson County",
+    "subject": "Open Access Plus PPO Plan",
+    "title": "Summary of Benefits and Coverage: What this Plan Covers & What You Pay for Covered Services",
+    "period_or_revision": "01/01/2026 - 12/31/2026"
+   },
+   "text_layer": {
+    "pages_with_text": 9,
+    "pages_without_text": [
+     8
+    ],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sbc-c12",
+   "source": "https://www.nashville.gov/sites/default/files/2025-08/2026_SBC_HRA.pdf?ct=1756144925",
+   "final_url": "https://www.nashville.gov/sites/default/files/2025-08/2026_SBC_HRA.pdf?ct=1756144925",
+   "approved_max_bytes": 551685,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 551685,
+   "source_sha256": "sha256:5d9ffb3bcc7cf5f0b81bf030ce239669ecf683e8b344a66412378903d61d6169",
+   "source_pages": 10,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.nashville.gov/departments/government/terms-service",
+   "terms_note": "Terms group A: No distribution, mirroring or re-use without permission; copies must keep notice",
+   "identity": {
+    "publisher": "Cigna Healthcare for the Metropolitan Government of Nashville and Davidson County",
+    "subject": "Open Access Plus HRA Plan",
+    "title": "Summary of Benefits and Coverage: What this Plan Covers & What You Pay for Covered Services",
+    "period_or_revision": "01/01/2026 - 12/31/2026"
+   },
+   "text_layer": {
+    "pages_with_text": 9,
+    "pages_without_text": [
+     8
+    ],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sbc-c13",
+   "source": "https://riversideca.gov/human/sites/riversideca.gov.human/files/pdf/Benefits/Open-enrollment/2026/2026%20Kaiser%20HMO%2015%20Summary%20of%20Benefits%20and%20Coverage_0.pdf",
+   "final_url": "https://riversideca.gov/human/sites/riversideca.gov.human/files/pdf/Benefits/Open-enrollment/2026/2026%20Kaiser%20HMO%2015%20Summary%20of%20Benefits%20and%20Coverage_0.pdf",
+   "approved_max_bytes": 844715,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 844715,
+   "source_sha256": "sha256:7eade2a7eabb5f4d5221a612a6b4169fcbad42dcbcf78ba36dc56a62ba52040a",
+   "source_pages": 14,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://riversideca.gov/website-disclaimer-limit-liability",
+   "terms_note": "Terms group A: Disclaimer and limit of liability only; no copy or robot clause",
+   "identity": {
+    "publisher": "Kaiser Permanente for the City of Riverside",
+    "subject": "City of Riverside Kaiser Traditional Plan HMO (file name: HMO 15)",
+    "title": "Summary of Benefits and Coverage: What this Plan Covers & What You Pay for Covered Services",
+    "period_or_revision": "01/01/2026 - 12/31/2026"
+   },
+   "text_layer": {
+    "pages_with_text": 14,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sbc-c14",
+   "source": "https://riversideca.gov/human/sites/riversideca.gov.human/files/pdf/Benefits/Open-enrollment/2026/2026%20Kaiser%20HMO%2030%20Summary%20of%20Benefits%20and%20Coverage_0.pdf",
+   "final_url": "https://riversideca.gov/human/sites/riversideca.gov.human/files/pdf/Benefits/Open-enrollment/2026/2026%20Kaiser%20HMO%2030%20Summary%20of%20Benefits%20and%20Coverage_0.pdf",
+   "approved_max_bytes": 845401,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 845401,
+   "source_sha256": "sha256:df9b61b88512b05a095a1ecbc901f5cf350b4fbdb142718a28d21c5e8ce1eb06",
+   "source_pages": 14,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://riversideca.gov/website-disclaimer-limit-liability",
+   "terms_note": "Terms group A: Disclaimer and limit of liability only; no copy or robot clause",
+   "identity": {
+    "publisher": "Kaiser Permanente for the City of Riverside",
+    "subject": "City of Riverside Kaiser Traditional Plan HMO (file name: HMO 30)",
+    "title": "Summary of Benefits and Coverage: What this Plan Covers & What You Pay for Covered Services",
+    "period_or_revision": "01/01/2026 - 12/31/2026"
+   },
+   "text_layer": {
+    "pages_with_text": 14,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sbc-c15",
+   "source": "https://oklahoma.gov/content/dam/ok/en/egid/documents/benefits-and-coverage/2026/2026-SBCHCHigh.pdf",
+   "final_url": "https://oklahoma.gov/content/dam/ok/en/egid/documents/benefits-and-coverage/2026/2026-SBCHCHigh.pdf",
+   "approved_max_bytes": 377508,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 377508,
+   "source_sha256": "sha256:05563741211b750e783868ba39b31b659e84f553d146a5b16b3b8f144454089a",
+   "source_pages": 8,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://oklahoma.gov/about/policy-disclaimers.html",
+   "terms_note": "Terms group A: Policy pages: DMCA notice, linking and privacy policies; no copy or robot limit",
+   "identity": {
+    "publisher": "HealthChoice, Oklahoma Employees Group Insurance Division (EGID)",
+    "subject": "HealthChoice High (PPO)",
+    "title": "Summary of Benefits and Coverage: What this Plan Covers & What You Pay for Covered Services",
+    "period_or_revision": "01/01/2026 - 12/31/2026"
+   },
+   "text_layer": {
+    "pages_with_text": 8,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sbc-c16",
+   "source": "https://oklahoma.gov/content/dam/ok/en/egid/documents/benefits-and-coverage/2026/2026-SBHCHDHP.pdf",
+   "final_url": "https://oklahoma.gov/content/dam/ok/en/egid/documents/benefits-and-coverage/2026/2026-SBHCHDHP.pdf",
+   "approved_max_bytes": 313017,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 313017,
+   "source_sha256": "sha256:e4fac04e8034992a0ba38195cac6e27da100a90bd20daae056bd1c379a3b0eb8",
+   "source_pages": 8,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://oklahoma.gov/about/policy-disclaimers.html",
+   "terms_note": "Terms group A: Policy pages: DMCA notice, linking and privacy policies; no copy or robot limit",
+   "identity": {
+    "publisher": "HealthChoice, Oklahoma Employees Group Insurance Division (EGID)",
+    "subject": "HealthChoice High Deductible Plan (HDHP)",
+    "title": "Summary of Benefits and Coverage: What this Plan Covers & What You Pay for Covered Services",
+    "period_or_revision": "01/01/2026 - 12/31/2026"
+   },
+   "text_layer": {
+    "pages_with_text": 8,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sbc-c17",
+   "source": "https://udel.edu/content/dam/udelImages/human-resources/benefits/aetna/SBC_UD_Aetna_CDHGoldPlan_2026_2027.pdf",
+   "final_url": "https://udel.edu/content/dam/udelImages/human-resources/benefits/aetna/SBC_UD_Aetna_CDHGoldPlan_2026_2027.pdf",
+   "approved_max_bytes": 1032780,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 1032780,
+   "source_sha256": "sha256:1adfb1aeb43198d9f707fdb1165b6714ef9b17ae51b04335693e34156930edd1",
+   "source_pages": 12,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.udel.edu/home/legal-notices/",
+   "terms_note": "Terms group A: Legal notices: disclaimer; redistribution or commercial use needs permission; no robot ban",
+   "identity": {
+    "publisher": "Aetna for the University of Delaware",
+    "subject": "Aetna HealthFund Open Choice - Aetna CDH Gold Plan (PPO)",
+    "title": "Summary of Benefits and Coverage: What this Plan Covers & What You Pay for Covered Services",
+    "period_or_revision": "07/01/2026 - 06/30/2027"
+   },
+   "text_layer": {
+    "pages_with_text": 12,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sbc-c18",
+   "source": "https://udel.edu/content/dam/udelImages/human-resources/benefits/aetna/SBC_UD_Aetna_HMOPlan_2026_2027.pdf",
+   "final_url": "https://udel.edu/content/dam/udelImages/human-resources/benefits/aetna/SBC_UD_Aetna_HMOPlan_2026_2027.pdf",
+   "approved_max_bytes": 1045857,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 1045857,
+   "source_sha256": "sha256:99fbb9cc9abf5bac5618256463e0776484edffe0862986e4cee4f1a258c1cd27",
+   "source_pages": 12,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.udel.edu/home/legal-notices/",
+   "terms_note": "Terms group A: Legal notices: disclaimer; redistribution or commercial use needs permission; no robot ban",
+   "identity": {
+    "publisher": "Aetna for the University of Delaware",
+    "subject": "Aetna HMO Plan",
+    "title": "Summary of Benefits and Coverage: What this Plan Covers & What You Pay for Covered Services",
+    "period_or_revision": "07/01/2026 - 06/30/2027"
+   },
+   "text_layer": {
+    "pages_with_text": 12,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sbc-c19",
+   "source": "https://hr.iastate.edu/files/documents/2025-09/Wellmark%20SBC%20PPO%201-1-2026.pdf",
+   "final_url": "https://hr.iastate.edu/files/documents/2025-09/Wellmark%20SBC%20PPO%201-1-2026.pdf",
+   "approved_max_bytes": 676221,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 676221,
+   "source_sha256": "sha256:59603a8e1ccb1c1616df3b60fee2aa1f87b92b80fc04f98dc443b7fee7946eeb",
+   "source_pages": 9,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.iastate.edu/disclaimers-and-terms",
+   "terms_note": "Terms group A: Disclaimers and terms: liability disclaimer only; no copy limit and no robot ban",
+   "identity": {
+    "publisher": "Wellmark Blue Cross and Blue Shield of Iowa for Iowa State University",
+    "subject": "Iowa State University Employee PPO",
+    "title": "Summary of Benefits and Coverage: What this Plan Covers & What You Pay for Covered Services",
+    "period_or_revision": "01/01/2026 - 12/31/2026"
+   },
+   "text_layer": {
+    "pages_with_text": 9,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sbc-c20",
+   "source": "https://hr.iastate.edu/files/documents/2025-09/Wellmark%20SBC%20HMO%201-1-2026.pdf",
+   "final_url": "https://hr.iastate.edu/files/documents/2025-09/Wellmark%20SBC%20HMO%201-1-2026.pdf",
+   "approved_max_bytes": 648824,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 648824,
+   "source_sha256": "sha256:030d3bdb1b76441e5b561bbdf79aa077e5414200976a98ddc57ff011ef2d3661",
+   "source_pages": 9,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.iastate.edu/disclaimers-and-terms",
+   "terms_note": "Terms group A: Disclaimers and terms: liability disclaimer only; no copy limit and no robot ban",
+   "identity": {
+    "publisher": "Wellmark Blue Cross and Blue Shield of Iowa for Iowa State University",
+    "subject": "Iowa State University Employee Blue HMO",
+    "title": "Summary of Benefits and Coverage: What this Plan Covers & What You Pay for Covered Services",
+    "period_or_revision": "01/01/2026 - 12/31/2026"
+   },
+   "text_layer": {
+    "pages_with_text": 9,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sbc-c21",
+   "source": "https://hr.unm.edu/docs/benefits/unm-lobohealth-summary-of-benefits-and-coverage-2026-2027.pdf",
+   "final_url": "https://hr.unm.edu/docs/benefits/unm-lobohealth-summary-of-benefits-and-coverage-2026-2027.pdf",
+   "approved_max_bytes": 706185,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 706185,
+   "source_sha256": "sha256:b124452e65f593eeeeca163cf2ea2572a88c6ffd3e45600b23e67f814684d26c",
+   "source_pages": 10,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "http://www.unm.edu/legal.html",
+   "terms_note": "Terms group B: Legal page: reproduce for noncommercial, personal or educational use only; no robot ban",
+   "identity": {
+    "publisher": "University of New Mexico (UNM LoboHealth, BCBS of New Mexico network)",
+    "subject": "UNM LoboHealth Plan (PPO)",
+    "title": "Summary of Benefits and Coverage: What this Plan Covers & What You Pay for Covered Services",
+    "period_or_revision": "07/01/2026 - 06/30/2027"
+   },
+   "text_layer": {
+    "pages_with_text": 10,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sbc-c22",
+   "source": "http://hr.unm.edu/docs/benefits/presbyterian-summary-of-benefits-and-coverage-2026-2027.pdf",
+   "final_url": "http://hr.unm.edu/docs/benefits/presbyterian-summary-of-benefits-and-coverage-2026-2027.pdf",
+   "approved_max_bytes": 569708,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 569708,
+   "source_sha256": "sha256:8548a75951b72ff4de5f1903da8f60a5c8c38ef07e5c3116890e122efaf69881",
+   "source_pages": 7,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "http://www.unm.edu/legal.html",
+   "terms_note": "Terms group B: Legal page: reproduce for noncommercial, personal or educational use only; no robot ban",
+   "identity": {
+    "publisher": "Presbyterian Health Plan for the University of New Mexico",
+    "subject": "UNM Presbyterian plan (PPO)",
+    "title": "Summary of Benefits and Coverage: What this Plan Covers & What You Pay for Covered Services",
+    "period_or_revision": "07/01/2026 - 06/30/2027"
+   },
+   "text_layer": {
+    "pages_with_text": 7,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sbc-c23",
+   "source": "https://hr.gwu.edu/sites/g/files/zaxdzs5691/files/2026-01/2026%20PPO.pdf",
+   "final_url": "https://hr.gwu.edu/sites/g/files/zaxdzs5691/files/2026-01/2026%20PPO.pdf",
+   "approved_max_bytes": 946135,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 946135,
+   "source_sha256": "sha256:97c3e3c9bffdcc37d7e488697b9e6ffe3538e6a3fe153f8e63e8de441745a34e",
+   "source_pages": 13,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.gwu.edu/terms-use",
+   "terms_note": "Terms group B: Terms of use allow copying of items for personal, noncommercial use; no robot ban",
+   "identity": {
+    "publisher": "Aetna for The George Washington University",
+    "subject": "Aetna Choice POS II - GW PPO Medical Plan",
+    "title": "Summary of Benefits and Coverage: What this Plan Covers & What You Pay for Covered Services",
+    "period_or_revision": "01/01/2026 - 12/31/2026"
+   },
+   "text_layer": {
+    "pages_with_text": 13,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sbc-c24",
+   "source": "https://hr.gwu.edu/sites/g/files/zaxdzs5691/files/2026-01/2026%20GW%20HSP%20Plan.pdf",
+   "final_url": "https://hr.gwu.edu/sites/g/files/zaxdzs5691/files/2026-01/2026%20GW%20HSP%20Plan.pdf",
+   "approved_max_bytes": 920501,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 920501,
+   "source_sha256": "sha256:30784da4ce32dbb880c6fe2967c09d02ed4e485b31aae883aba4e06566baaf76",
+   "source_pages": 13,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.gwu.edu/terms-use",
+   "terms_note": "Terms group B: Terms of use allow copying of items for personal, noncommercial use; no robot ban",
+   "identity": {
+    "publisher": "Aetna for The George Washington University",
+    "subject": "Aetna Choice POS II - GW HSP Medical Plan",
+    "title": "Summary of Benefits and Coverage: What this Plan Covers & What You Pay for Covered Services",
+    "period_or_revision": "01/01/2026 - 12/31/2026"
+   },
+   "text_layer": {
+    "pages_with_text": 13,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sbc-c25",
+   "source": "https://www.marquette.edu/human-resources/documents/sbc-01-01-2026-00-009-ppo.pdf",
+   "final_url": "https://www.marquette.edu/human-resources/documents/sbc-01-01-2026-00-009-ppo.pdf",
+   "approved_max_bytes": 323177,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 323177,
+   "source_sha256": "sha256:6cf9b4d8c5803313fadbd87bec247e1ae42793e9c504e9e6ff5ca7c2672e2293",
+   "source_pages": 8,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.marquette.edu/tools/legal.php",
+   "terms_note": "Terms group B: Legal disclaimer: download only for personal noncommercial use; no robot ban",
+   "identity": {
+    "publisher": "UMR for Marquette University",
+    "subject": "Marquette University PPO (group 7670-00-040178 009)",
+    "title": "Summary of Benefits and Coverage: What this Plan Covers & What You Pay for Covered Services",
+    "period_or_revision": "01/01/2026 - 12/31/2026"
+   },
+   "text_layer": {
+    "pages_with_text": 8,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sbc-c26",
+   "source": "https://www.marquette.edu/human-resources/documents/sbc-01-01-2026-00-010-hdhp.pdf",
+   "final_url": "https://www.marquette.edu/human-resources/documents/sbc-01-01-2026-00-010-hdhp.pdf",
+   "approved_max_bytes": 322331,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 322331,
+   "source_sha256": "sha256:5d3426867baddfcb804d5afc7684baf908122d5c2b9dc3a472211418fd845fbb",
+   "source_pages": 8,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.marquette.edu/tools/legal.php",
+   "terms_note": "Terms group B: Legal disclaimer: download only for personal noncommercial use; no robot ban",
+   "identity": {
+    "publisher": "UMR for Marquette University",
+    "subject": "Marquette University HDHP (group 7670-00-040178 010)",
+    "title": "Summary of Benefits and Coverage: What this Plan Covers & What You Pay for Covered Services",
+    "period_or_revision": "01/01/2026 - 12/31/2026"
+   },
+   "text_layer": {
+    "pages_with_text": 8,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sbc-c27",
+   "source": "https://www.bu.edu/hr/documents/2026_BCBS_PPO_SBC.pdf",
+   "final_url": "https://www.bu.edu/hr/documents/2026_BCBS_PPO_SBC.pdf",
+   "approved_max_bytes": 339150,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 339150,
+   "source_sha256": "sha256:470b755ad36152091148c233c543d5796c0d6818f12c5d37d75a92ddacf71919",
+   "source_pages": 9,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.bu.edu/hr/home/disclaimer/",
+   "terms_note": "Terms group B: HR disclaimer: information for internal use only; DMCA copyright page; no robot ban",
+   "identity": {
+    "publisher": "Blue Cross Blue Shield (Blue Care Elect) for Boston University",
+    "subject": "Blue Care Elect Deductible with HCCS (PPO Tiered)",
+    "title": "Summary of Benefits and Coverage: What this Plan Covers & What You Pay for Covered Services",
+    "period_or_revision": "on or after 01/01/2026"
+   },
+   "text_layer": {
+    "pages_with_text": 9,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sbc-c28",
+   "source": "https://www.bu.edu/hr/documents/2026_BU_Health_Savings_Plan_SBC.pdf",
+   "final_url": "https://www.bu.edu/hr/documents/2026_BU_Health_Savings_Plan_SBC.pdf",
+   "approved_max_bytes": 320553,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 320553,
+   "source_sha256": "sha256:2c67c6522ed890999aa56beacce399e95d321be72e1cea637f42ba8f7a7a4796",
+   "source_pages": 8,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.bu.edu/hr/home/disclaimer/",
+   "terms_note": "Terms group B: HR disclaimer: information for internal use only; DMCA copyright page; no robot ban",
+   "identity": {
+    "publisher": "Blue Cross Blue Shield (Blue Care Elect) for Boston University",
+    "subject": "Blue Care Elect Saver with Coinsurance (PPO)",
+    "title": "Summary of Benefits and Coverage: What this Plan Covers & What You Pay for Covered Services",
+    "period_or_revision": "on or after 01/01/2026"
+   },
+   "text_layer": {
+    "pages_with_text": 8,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sbc-c31",
+   "source": "https://www.saltlakecounty.gov/globalassets/1-site-files/human-resources/benefits/employee-benefits-details/medical/2026-selecthealth-ppo-sbc.pdf",
+   "final_url": "https://www.saltlakecounty.gov/globalassets/1-site-files/human-resources/benefits/employee-benefits-details/medical/2026-selecthealth-ppo-sbc.pdf",
+   "approved_max_bytes": 390979,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 390979,
+   "source_sha256": "sha256:e69dfab03e309aa6e71c6ba7fad94ac84446c8ceba745a7a5fc0fccb9dde8f58",
+   "source_pages": 2,
+   "download_status": "complete",
+   "selection_status": "hold",
+   "reason": "No text layer on both pages, and the document is a 2-page Select Health 'Schedule of Benefits', not the federal SBC form.",
+   "terms_url": "https://www.saltlakecounty.gov/copyright/",
+   "terms_note": "Terms group B: Copy and print for personal use, unmodified; no commercial use; no robots.txt file",
+   "identity": {
+    "publisher": "Select Health for Salt Lake County",
+    "subject": "Salt Lake County Option 3, Value and Med Networks",
+    "title": "Schedule of Benefits (Select Health)",
+    "period_or_revision": "01/01/2026"
+   },
+   "text_layer": {
+    "pages_with_text": 0,
+    "pages_without_text": [
+     1,
+     2
+    ],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sbc-c32",
+   "source": "https://www.saltlakecounty.gov/globalassets/1-site-files/human-resources/benefits/employee-benefits-details/medical/2026-selecthealth-hdhp-sbc.pdf",
+   "final_url": "https://www.saltlakecounty.gov/globalassets/1-site-files/human-resources/benefits/employee-benefits-details/medical/2026-selecthealth-hdhp-sbc.pdf",
+   "approved_max_bytes": 391864,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 391864,
+   "source_sha256": "sha256:1d92f0470bfcba2ffe872a4d870b71450faabba70b80a4fc4d77a907a5697ad1",
+   "source_pages": 2,
+   "download_status": "complete",
+   "selection_status": "hold",
+   "reason": "No text layer on both pages, and the document is a 2-page Select Health 'Schedule of Benefits', not the federal SBC form.",
+   "terms_url": "https://www.saltlakecounty.gov/copyright/",
+   "terms_note": "Terms group B: Copy and print for personal use, unmodified; no commercial use; no robots.txt file",
+   "identity": {
+    "publisher": "Select Health for Salt Lake County",
+    "subject": "Salt Lake County Option 3, Value and Med Networks / HSA Qualified",
+    "title": "Schedule of Benefits (Select Health)",
+    "period_or_revision": "01/01/2026"
+   },
+   "text_layer": {
+    "pages_with_text": 0,
+    "pages_without_text": [
+     1,
+     2
+    ],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "annual-c01",
+   "source": "https://www.results.philips.com/app/uploads/2026/04/PhilipsFullAnnualReport2025-English.pdf",
+   "final_url": "https://www.results.philips.com/app/uploads/2026/04/PhilipsFullAnnualReport2025-English.pdf",
+   "approved_max_bytes": 36925082,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 36925082,
+   "source_sha256": "sha256:ff527efe35aa923bd6b592c38549bf1f9f207ac3cef2cec6695a7b9cd93efc6d",
+   "source_pages": 306,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.philips.com/a-w/terms-of-use",
+   "terms_note": "Terms group A: No copy or robot limit on documents; only software copying is limited",
+   "identity": {
+    "publisher": "Koninklijke Philips N.V.",
+    "subject": "Annual report with group and company financial statements of Royal Philips (NL)",
+    "title": "Philips Annual Report 2025",
+    "period_or_revision": "FY ended 31 Dec 2025"
+   },
+   "text_layer": {
+    "pages_with_text": 306,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 306,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "annual-c02",
+   "source": "https://reports.beiersdorf.com/annual-report/2025/_assets/downloads/entire-beiersdorf-ar25.pdf?h=5y9hhLi9",
+   "final_url": "https://reports.beiersdorf.com/annual-report/2025/_assets/downloads/entire-beiersdorf-ar25.pdf?h=5y9hhLi9",
+   "approved_max_bytes": 14136691,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 14136691,
+   "source_sha256": "sha256:e72f6184b8bd6c03d3dfd4630b5ff43413a34f19988dc26472c2a1290242b61a",
+   "source_pages": 353,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.beiersdorf.com/meta-pages/conditions-of-use",
+   "terms_note": "Terms group B: Private use allowed without permission (downloads, reproductions)",
+   "identity": {
+    "publisher": "Beiersdorf AG",
+    "subject": "Annual report with consolidated financial statements of the Beiersdorf Group (DE)",
+    "title": "Beiersdorf Annual Report 2025",
+    "period_or_revision": "FY ended 31 Dec 2025"
+   },
+   "text_layer": {
+    "pages_with_text": 353,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "annual-c03",
+   "source": "https://www.glanbia.com/sites/glanbia-plc/files/glanbia/investors/annual-report/2026/Glanbia-Annual-Report-2025.pdf",
+   "final_url": "https://www.glanbia.com/sites/glanbia-plc/files/glanbia/investors/annual-report/2026/Glanbia-Annual-Report-2025.pdf",
+   "approved_max_bytes": 11074277,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 11074277,
+   "source_sha256": "sha256:a92dc6343761f7c314213845aca2af8b2de0fcceaf9173ddc4462f7289612ede",
+   "source_pages": 310,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.glanbia.com/terms-use",
+   "terms_note": "Terms group B: Download for own personal use or use in your organisation; no robot clause",
+   "identity": {
+    "publisher": "Glanbia plc",
+    "subject": "Annual report with group financial statements of Glanbia plc (IE)",
+    "title": "Glanbia plc Annual Report and Financial Statements 2025",
+    "period_or_revision": "FY 2025, 52 weeks ended 3 Jan 2026"
+   },
+   "text_layer": {
+    "pages_with_text": 309,
+    "pages_without_text": [
+     309
+    ],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "annual-c04",
+   "source": "https://www.empireco.ca/uploads/2026/07/Empire-2026-Annual-Report-English-SEDAR.pdf?var=0",
+   "final_url": "https://www.empireco.ca/uploads/2026/07/Empire-2026-Annual-Report-English-SEDAR.pdf?var=0",
+   "approved_max_bytes": 1788673,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 1788673,
+   "source_sha256": "sha256:8afba6b1431cb662678216f87ba60ff5f9c1a63e620af9f33ce57ed7dff34302",
+   "source_pages": 108,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.empireco.ca/legal-disclaimer",
+   "terms_note": "Terms group B: Personal non-commercial use; single copy or download allowed",
+   "identity": {
+    "publisher": "Empire Company Limited",
+    "subject": "Annual report with consolidated financial statements of Empire Company Limited (CA)",
+    "title": "Empire Company Limited Annual Report 2026",
+    "period_or_revision": "Fiscal 2026, 52 weeks ended 2 May 2026"
+   },
+   "text_layer": {
+    "pages_with_text": 104,
+    "pages_without_text": [
+     1,
+     106,
+     107,
+     108
+    ],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "annual-c05",
+   "source": "https://www.mapleleaffoods.com/wp-content/uploads/sites/6/2026/04/Financial-Statements12.31.2025-C.pdf",
+   "final_url": "https://www.mapleleaffoods.com/wp-content/uploads/sites/6/2026/04/Financial-Statements12.31.2025-C.pdf",
+   "approved_max_bytes": 1923607,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 1923607,
+   "source_sha256": "sha256:2f3f24b6b16907f8e2e7a1259bb840375a027d5060cb7779b565ddffcd0565af",
+   "source_pages": 60,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.mapleleaffoods.com/terms-of-use/",
+   "terms_note": "Terms group B: Licence to use materials for non-commercial and personal use only",
+   "identity": {
+    "publisher": "Maple Leaf Foods Inc.",
+    "subject": "Audited consolidated financial statements of Maple Leaf Foods Inc. (CA)",
+    "title": "Financial Statements For the Year Ended December 31, 2025",
+    "period_or_revision": "FY ended 31 Dec 2025"
+   },
+   "text_layer": {
+    "pages_with_text": 60,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "annual-c06",
+   "source": "https://dis-prod.assetful.loblaw.ca/content/dam/loblaw-companies-limited/creative-assets/loblaw-ca/investor-relations-reports/annual/2025/LCL_2025%20Annual%20Report.pdf",
+   "final_url": "https://dis-prod.assetful.loblaw.ca/content/dam/loblaw-companies-limited/creative-assets/loblaw-ca/investor-relations-reports/annual/2025/LCL_2025%20Annual%20Report.pdf",
+   "approved_max_bytes": 10000101,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 10000101,
+   "source_sha256": "sha256:2443b3ce2ebe0a103922ac50287b43a8884546909db612bf93fff45631834682",
+   "source_pages": 172,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.loblaw.ca/en/legal/",
+   "terms_note": "Terms group B: Copy in limited quantities for personal non-commercial use; HEAD gave no size",
+   "identity": {
+    "publisher": "Loblaw Companies Limited",
+    "subject": "Annual report with consolidated financial statements of Loblaw Companies Limited (CA)",
+    "title": "Loblaw Companies Limited 2025 Annual Report",
+    "period_or_revision": "FY 2025, 53 weeks ended 3 Jan 2026"
+   },
+   "text_layer": {
+    "pages_with_text": 171,
+    "pages_without_text": [
+     1
+    ],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "annual-c07",
+   "source": "https://www.mbll.ca/sites/mbll-ca/files/2026-09/MBLL-Annual-Report-25-26.pdf",
+   "final_url": "https://www.mbll.ca/sites/mbll-ca/files/2026-09/MBLL-Annual-Report-25-26.pdf",
+   "approved_max_bytes": 1548624,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 1548624,
+   "source_sha256": "sha256:dc3e3100de9912a87ff097cf975ba76e325e11cf5366f1bac554b05b4d94ba0e",
+   "source_pages": 61,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.mbll.ca/content/terms-and-conditions",
+   "terms_note": "Terms group A: Terms page has no copy, download or robot limit",
+   "identity": {
+    "publisher": "Manitoba Liquor & Lotteries Corporation",
+    "subject": "Annual report with consolidated financial statements of a Manitoba Crown corporation (CA)",
+    "title": "Manitoba Liquor & Lotteries Annual Report 2025-2026",
+    "period_or_revision": "FY ended 31 Mar 2026"
+   },
+   "text_layer": {
+    "pages_with_text": 61,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "annual-c08",
+   "source": "https://www.wesfarmers.com.au/docs/default-source/reports/wesfarmers-2026-annual-report.pdf?Status=Master&sfvrsn=2fa1afbb_1",
+   "final_url": "https://www.wesfarmers.com.au/docs/default-source/reports/wesfarmers-2026-annual-report.pdf?Status=Master&sfvrsn=2fa1afbb_1",
+   "approved_max_bytes": 15224214,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 15224214,
+   "source_sha256": "sha256:39386056c4ec96d4a7c039711a4c0d13fd439920ad63c4e5f3e0dcaa4eed07e0",
+   "source_pages": 211,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.wesfarmers.com.au/terms-of-use",
+   "terms_note": "Terms group A: Copy terms limit only gallery images and videos",
+   "identity": {
+    "publisher": "Wesfarmers Limited",
+    "subject": "Annual report with consolidated financial statements of Wesfarmers Limited (AU)",
+    "title": "Wesfarmers 2026 Annual Report",
+    "period_or_revision": "FY ended 30 Jun 2026"
+   },
+   "text_layer": {
+    "pages_with_text": 209,
+    "pages_without_text": [
+     1,
+     211
+    ],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "annual-c09",
+   "source": "https://a.storyblok.com/f/171317/x/83f39a3aa1/2026-annual-report.pdf",
+   "final_url": "https://a.storyblok.com/f/171317/x/83f39a3aa1/2026-annual-report.pdf",
+   "approved_max_bytes": 12404035,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 12404035,
+   "source_sha256": "sha256:68c879ac86383656c9a4d03218e16e949cddda1d293429d15d910afee937d771",
+   "source_pages": 199,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.tweglobal.com/en-us/terms-of-use",
+   "terms_note": "Terms group B: Download items licensed for own personal use; file on site CDN linked from IR page",
+   "identity": {
+    "publisher": "Treasury Wine Estates Limited",
+    "subject": "Annual report with consolidated financial statements of Treasury Wine Estates (AU)",
+    "title": "TWE 2026 Annual Report",
+    "period_or_revision": "FY ended 30 Jun 2026"
+   },
+   "text_layer": {
+    "pages_with_text": 189,
+    "pages_without_text": [
+     4,
+     13,
+     28,
+     29,
+     33,
+     40,
+     50,
+     59,
+     198,
+     199
+    ],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "annual-c10",
+   "source": "https://www.pamunewzealand.com/pamunewzealand-pmu3/downloads/2026-P%C4%81mu-Integrated-Annual-Report.pdf",
+   "final_url": "https://www.pamunewzealand.com/pamunewzealand-pmu3/downloads/2026-P%C4%81mu-Integrated-Annual-Report.pdf",
+   "approved_max_bytes": 5232681,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 5232681,
+   "source_sha256": "sha256:8e6565ff580c00a855552438dd3368feafb445b90802be9e81ef4c9cc048eaf7",
+   "source_pages": 98,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.pamunewzealand.com/disclaimer",
+   "terms_note": "Terms group B: No copy or storage for commercial or public purposes without consent",
+   "identity": {
+    "publisher": "Pamu (Landcorp Farming Limited)",
+    "subject": "Integrated report with group financial statements of the NZ state-owned farming enterprise",
+    "title": "Pamu Integrated Report 2026",
+    "period_or_revision": "FY ended 30 Jun 2026"
+   },
+   "text_layer": {
+    "pages_with_text": 97,
+    "pages_without_text": [
+     98
+    ],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "annual-c11",
+   "source": "https://www.shopriteholdings.co.za/docs/shp-afs-2026.pdf",
+   "final_url": "https://www.shopriteholdings.co.za/docs/shp-afs-2026.pdf",
+   "approved_max_bytes": 8408892,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": null,
+   "source_sha256": null,
+   "source_pages": null,
+   "download_status": "failed",
+   "selection_status": "hold",
+   "reason": "download failed: HTTP 403",
+   "terms_url": "https://www.shopriteholdings.co.za/copyright.html",
+   "terms_note": "Terms group A: Unlimited distribution permitted if unaltered and source acknowledged",
+   "identity": {
+    "publisher": "Shoprite Holdings Ltd",
+    "subject": "Annual financial statements FY2026 (ZA)",
+    "title": null,
+    "period_or_revision": null
+   },
+   "text_layer": {
+    "pages_with_text": null,
+    "pages_without_text": [],
+    "language": null
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "annual-c12",
+   "source": "https://clicksgroup.co.za/iar2025/wp-content/uploads/CGL-YE25-Annual-financial-statements.pdf",
+   "final_url": "https://clicksgroup.co.za/iar2025/wp-content/uploads/CGL-YE25-Annual-financial-statements.pdf",
+   "approved_max_bytes": 4326708,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 4326708,
+   "source_sha256": "sha256:664c3ce033c0d36157277ae5ef9f28a933edd4acebc8cec649069cd20d9c576d",
+   "source_pages": 53,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.clicksgroup.co.za/website-terms-and-conditions/",
+   "terms_note": "Terms group A: Terms have no copy or robot limit; downloading at own discretion",
+   "identity": {
+    "publisher": "Clicks Group Limited",
+    "subject": "Consolidated and separate annual financial statements of Clicks Group Limited (ZA)",
+    "title": "Clicks Group annual financial statements 2025",
+    "period_or_revision": "FY ended 31 Aug 2025"
+   },
+   "text_layer": {
+    "pages_with_text": 53,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "annual-c14",
+   "source": "https://www.airports.co.za/Documents/25246%20ACSA%20-%20AFS%202026%20V15.pdf",
+   "final_url": "https://www.airports.co.za/Documents/25246%20ACSA%20-%20AFS%202026%20V15.pdf",
+   "approved_max_bytes": 6565970,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 6565970,
+   "source_sha256": "sha256:cfc052e79ae45105e199b79f5e4ab9525cbd241a2a6447bc825551ef4d6acd2b",
+   "source_pages": 118,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.airports.co.za/globals/terms-and-conditions",
+   "terms_note": "Terms group B: View, copy, download for information and non-commercial use",
+   "identity": {
+    "publisher": "Airports Company South Africa SOC Ltd",
+    "subject": "Group and company annual financial statements of the ZA state-owned airports company",
+    "title": "ACSA Annual Financial Statements 2026",
+    "period_or_revision": "FY ended 31 Mar 2026"
+   },
+   "text_layer": {
+    "pages_with_text": 116,
+    "pages_without_text": [
+     2,
+     117
+    ],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "annual-c15",
+   "source": "https://storage.towngas.com/static-site/annual-report/eng/TGAR2025/E_2025AR.pdf",
+   "final_url": "https://storage.towngas.com/static-site/annual-report/eng/TGAR2025/E_2025AR.pdf",
+   "approved_max_bytes": 32526596,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 32526596,
+   "source_sha256": "sha256:ee06bb6c48f34d3a3dd3cb568ab224ec98115b9aca9ec4f2095000906e5ca67f",
+   "source_pages": 240,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.towngas.com/en/Info/Disclaimer",
+   "terms_note": "Terms group B: Download to local disk for personal use only; no retrieval-system storage",
+   "identity": {
+    "publisher": "The Hong Kong and China Gas Company Limited",
+    "subject": "Annual report with consolidated financial statements of Towngas (HK)",
+    "title": "The Hong Kong and China Gas Company Limited 2025 Annual Report",
+    "period_or_revision": "FY ended 31 Dec 2025"
+   },
+   "text_layer": {
+    "pages_with_text": 240,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "annual-c16",
+   "source": "https://www.ttigroup.com/sites/default/files/2026-03/ar2025.pdf",
+   "final_url": "https://www.ttigroup.com/sites/default/files/2026-03/ar2025.pdf",
+   "approved_max_bytes": 35980638,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 35980638,
+   "source_sha256": "sha256:3dfc4551717fbd30da0f2e4c8c9a6175c684127bb1b973e945d967f7b4b0a31c",
+   "source_pages": 184,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.ttigroup.com/terms-of-use",
+   "terms_note": "Terms group B: One print copy and downloaded extracts for personal use",
+   "identity": {
+    "publisher": "Techtronic Industries Co. Ltd",
+    "subject": "Annual report with consolidated financial statements of Techtronic Industries (HK)",
+    "title": "Techtronic Industries Annual Report 2025",
+    "period_or_revision": "FY ended 31 Dec 2025"
+   },
+   "text_layer": {
+    "pages_with_text": 182,
+    "pages_without_text": [
+     1,
+     184
+    ],
+    "language": "English"
+   },
+   "notice": {
+    "page": 183,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "annual-c17",
+   "source": "https://img.thehourglass.com/uploads/2026/06/FY2026_Annual-Report-1.pdf",
+   "final_url": "https://img.thehourglass.com/uploads/2026/06/FY2026_Annual-Report-1.pdf",
+   "approved_max_bytes": 1591352,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 1591352,
+   "source_sha256": "sha256:82ff19fb6963c3c5930eb31d0577c3a272247f79a7db94902c6d63781b189e7f",
+   "source_pages": 158,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.thehourglass.com/terms-and-conditions",
+   "terms_note": "Terms group B: Downloadable content for personal and non-commercial use",
+   "identity": {
+    "publisher": "The Hour Glass Limited",
+    "subject": "Annual report with consolidated financial statements of The Hour Glass Limited (SG)",
+    "title": "The Hour Glass Annual Report 2026",
+    "period_or_revision": "FY ended 31 Mar 2026"
+   },
+   "text_layer": {
+    "pages_with_text": 153,
+    "pages_without_text": [
+     2,
+     11,
+     154,
+     155,
+     156
+    ],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "annual-c18",
+   "source": "https://www.uol.com.sg/wp-content/uploads/uol-reports/files/UOL-Annual-Report-2025.pdf",
+   "final_url": "https://www.uol.com.sg/wp-content/uploads/uol-reports/files/UOL-Annual-Report-2025.pdf",
+   "approved_max_bytes": 11291243,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 11291243,
+   "source_sha256": "sha256:2b7c349f845e45bb13d3d1cc95e41ec954d4cd2a781eeab185a3da8da423ddc3",
+   "source_pages": 232,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.uol.com.sg/disclaimer/",
+   "terms_note": "Terms group B: No reproduction on other sites or public or commercial use without consent",
+   "identity": {
+    "publisher": "UOL Group Limited",
+    "subject": "Annual report with consolidated financial statements of UOL Group Limited (SG)",
+    "title": "UOL Group Annual Report 2025",
+    "period_or_revision": "FY ended 31 Dec 2025"
+   },
+   "text_layer": {
+    "pages_with_text": 229,
+    "pages_without_text": [
+     4,
+     7,
+     11
+    ],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "annual-c19",
+   "source": "https://bumitama-agri.com/wp-content/uploads/2026/04/BAL-Annual-Report-2025.pdf",
+   "final_url": "https://bumitama-agri.com/wp-content/uploads/2026/04/BAL-Annual-Report-2025.pdf",
+   "approved_max_bytes": 10911839,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 10911839,
+   "source_sha256": "sha256:de6a36f9361c99b9656c9e07282fb9ab5d39ce490362949426e99520620aa2b0",
+   "source_pages": 149,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://bumitama-agri.com/terms-of-use/",
+   "terms_note": "Terms group B: Download and copy for non-commercial personal purposes only",
+   "identity": {
+    "publisher": "Bumitama Agri Ltd",
+    "subject": "Annual report with consolidated financial statements of Bumitama Agri Ltd (SG)",
+    "title": "Bumitama Agri Ltd Annual Report 2025",
+    "period_or_revision": "FY ended 31 Dec 2025"
+   },
+   "text_layer": {
+    "pages_with_text": 149,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "annual-c20",
+   "source": "https://www.tataconsumer.com/sites/g/files/gfwrlq316/files/2026-06/INTEGRATED_ANNUAL_REPORT_F_Y_2025_26.pdf",
+   "final_url": "https://www.tataconsumer.com/sites/g/files/gfwrlq316/files/2026-06/INTEGRATED_ANNUAL_REPORT_F_Y_2025_26.pdf",
+   "approved_max_bytes": 23704375,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 23704375,
+   "source_sha256": "sha256:e5e1f09838183e22dbf3fc11056894b197401f462cc7966ff295419e4e660b8d",
+   "source_pages": 428,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.tataconsumer.com/disclaimer",
+   "terms_note": "Terms group B: Print and store files on your computer for personal use",
+   "identity": {
+    "publisher": "Tata Consumer Products Limited",
+    "subject": "Integrated annual report with standalone and consolidated financial statements (IN)",
+    "title": "Tata Consumer Products Integrated Annual Report 2025-26",
+    "period_or_revision": "FY ended 31 Mar 2026"
+   },
+   "text_layer": {
+    "pages_with_text": 424,
+    "pages_without_text": [
+     424,
+     425,
+     426,
+     427
+    ],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "annual-c21",
+   "source": "https://www.gn.com/-/media/Files/Financial-Download-Center/2026/Q1/GN-Annual-Report-2025.pdf",
+   "final_url": "https://www.gn.com/-/media/Files/Financial-Download-Center/2026/Q1/GN-Annual-Report-2025.pdf",
+   "approved_max_bytes": 14110699,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 14110699,
+   "source_sha256": "sha256:3deac8acec8e35cbd49fca178e9e21cff5a200801af61a5f18d87f789200e555",
+   "source_pages": 195,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.gn.com/Legal-notice",
+   "terms_note": "Terms group B: Download for non-commercial and personal use",
+   "identity": {
+    "publisher": "GN Store Nord A/S",
+    "subject": "Annual report with consolidated financial statements of GN Store Nord A/S (DK)",
+    "title": "GN Store Nord Annual Report 2025",
+    "period_or_revision": "FY ended 31 Dec 2025"
+   },
+   "text_layer": {
+    "pages_with_text": 195,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 195,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "annual-c22",
+   "source": "https://assets.www.essity.com/essity/Annual-Report-2025-digital-pdf-.pdf",
+   "final_url": "https://assets.www.essity.com/essity/Annual-Report-2025-digital-pdf-.pdf",
+   "approved_max_bytes": 16669256,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 16669256,
+   "source_sha256": "sha256:b71f102d5121fa0f7e50df9e69c30399d0c9bdae8dcdd4206eff062f46f8c5bc",
+   "source_pages": 192,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.essity.com/terms-and-conditions",
+   "terms_note": "Terms group B: Single copy licence; download of single copies allowed",
+   "identity": {
+    "publisher": "Essity AB",
+    "subject": "Annual and sustainability report with consolidated financial statements of Essity (SE)",
+    "title": "Essity Annual Report 2025",
+    "period_or_revision": "FY ended 31 Dec 2025"
+   },
+   "text_layer": {
+    "pages_with_text": 192,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "annual-c23",
+   "source": "https://www.nokia.com/system/files/2026-03/nokia-annual-report-2025.pdf",
+   "final_url": "https://www.nokia.com/system/files/2026-03/nokia-annual-report-2025.pdf",
+   "approved_max_bytes": 14181152,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 14181152,
+   "source_sha256": "sha256:fa6067b17c09d25b05571ceec218fb3f524054fc8cb7d8eb899221c7b7404455",
+   "source_pages": 295,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.nokia.com/notices/terms/",
+   "terms_note": "Terms group B: allowed: private, non-commercial use and personal copies; no robots clause",
+   "identity": {
+    "publisher": "Nokia Corporation",
+    "subject": "Annual report with consolidated financial statements of Nokia Corporation (FI)",
+    "title": "Nokia in 2025 (Annual Report 2025)",
+    "period_or_revision": "FY ended 31 Dec 2025"
+   },
+   "text_layer": {
+    "pages_with_text": 294,
+    "pages_without_text": [
+     1
+    ],
+    "language": "English"
+   },
+   "notice": {
+    "page": 295,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "annual-c24",
+   "source": "https://www.annualreport.sandvik/en/2025/_assets/downloads/entire-en-svk-ar25.pdf",
+   "final_url": "https://www.annualreport.sandvik/en/2025/_assets/downloads/entire-en-svk-ar25.pdf",
+   "approved_max_bytes": 17141297,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 17141297,
+   "source_sha256": "sha256:b3f7b20c4dc8a59fd92bc6a89ed5b8efa19a0328b816837cae7d8864438af165",
+   "source_pages": 180,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.home.sandvik/en/about-this-site/legal-notice/",
+   "terms_note": "Terms group B: allowed: no copying for commercial use; private use not limited; no robot clause",
+   "identity": {
+    "publisher": "Sandvik AB",
+    "subject": "Annual report with consolidated financial statements of Sandvik AB (SE)",
+    "title": "Sandvik Annual Report 2025",
+    "period_or_revision": "FY ended 31 Dec 2025"
+   },
+   "text_layer": {
+    "pages_with_text": 178,
+    "pages_without_text": [
+     32,
+     180
+    ],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "annual-c25",
+   "source": "https://www.bidvest.co.za/pdf/annual-reports/2025/bidvest-afs-2025.pdf",
+   "final_url": "https://www.bidvest.co.za/pdf/annual-reports/2025/bidvest-afs-2025.pdf",
+   "approved_max_bytes": 5596131,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 5596131,
+   "source_sha256": "sha256:b95bbe14f4581c538b3e09f28b9e0bfe0aa294508d39f2881bc3ceba97bba50e",
+   "source_pages": 144,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.bidvest.co.za/disclaimer",
+   "terms_note": "Terms group B: allowed: use of materials for internal business purposes; no robot clause",
+   "identity": {
+    "publisher": "The Bidvest Group Limited",
+    "subject": "Audited consolidated annual financial statements of The Bidvest Group Limited (ZA)",
+    "title": "Bidvest audited consolidated annual financial statements 2025",
+    "period_or_revision": "FY ended 30 Jun 2025"
+   },
+   "text_layer": {
+    "pages_with_text": 142,
+    "pages_without_text": [
+     141,
+     144
+    ],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "annual-c26",
+   "source": "https://www.husqvarnagroup.com/sites/husqvarna/files/pr/202603249629-1.pdf",
+   "final_url": "https://www.husqvarnagroup.com/sites/husqvarna/files/pr/202603249629-1.pdf",
+   "approved_max_bytes": 14294712,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 14294712,
+   "source_sha256": "sha256:33bef8acfbaaaba22e71b0096e146e81545687ce864e39f543752ec90affa57c",
+   "source_pages": 134,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.husqvarnagroup.com/en/terms-use",
+   "terms_note": "Terms group B: View and download for personal, non-commercial use",
+   "identity": {
+    "publisher": "Husqvarna AB",
+    "subject": "Annual report with consolidated financial statements of Husqvarna AB (SE)",
+    "title": "Husqvarna Group Annual Report 2025",
+    "period_or_revision": "FY ended 31 Dec 2025"
+   },
+   "text_layer": {
+    "pages_with_text": 133,
+    "pages_without_text": [
+     1
+    ],
+    "language": "English"
+   },
+   "notice": {
+    "page": 134,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "annual-c28",
+   "source": "https://www.huhtamaki.com/globalassets/global/investors/reports-and-presentations/en/2025/huhtamaki_annual-report-2025.pdf",
+   "final_url": "https://www.huhtamaki.com/globalassets/global/investors/reports-and-presentations/en/2025/huhtamaki_annual-report-2025.pdf",
+   "approved_max_bytes": 8206473,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 8206473,
+   "source_sha256": "sha256:48907673f30ee3e46d86fab1bf6abbb81092c5e6abff67c8f8390ca83fe75a8b",
+   "source_pages": 214,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.huhtamaki.com/en/legal-notice/",
+   "terms_note": "Terms group B: Store on your computer for personal use; public or commercial use barred",
+   "identity": {
+    "publisher": "Huhtamaki Oyj",
+    "subject": "Annual report with consolidated financial statements of Huhtamaki Oyj (FI)",
+    "title": "Huhtamaki Annual Report 2025",
+    "period_or_revision": "FY ended 31 Dec 2025"
+   },
+   "text_layer": {
+    "pages_with_text": 214,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sds-c01",
+   "source": "https://tuigarden.co.nz/media/molpetmf/tui-seaweed-fish-fertiliser-concentrate-sds.pdf",
+   "final_url": "https://tuigarden.co.nz/media/molpetmf/tui-seaweed-fish-fertiliser-concentrate-sds.pdf",
+   "approved_max_bytes": 167563,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 167563,
+   "source_sha256": "sha256:fca493363c08c155aa2a74c18f5f970eabb6c0a435e9aa68ba956a942f852809",
+   "source_pages": 5,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://tuigarden.co.nz/about-tui/terms-conditions/",
+   "terms_note": "Terms group B: View, download and print for personal, non-commercial use only; no reproduction.",
+   "identity": {
+    "publisher": "Tui Products Ltd. (Evergreen Garden Care New Zealand)",
+    "subject": "Tui Seaweed & Fish Fertiliser Concentrate",
+    "title": "Safety Data Sheet - Tui Seaweed & Fish Fertiliser Concentrate",
+    "period_or_revision": "Date of issue October 2025, version 4"
+   },
+   "text_layer": {
+    "pages_with_text": 5,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 4,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sds-c02",
+   "source": "https://tuigarden.co.nz/media/hapliteh/tui-indoor-plant-insect-spray-rtu-sds.pdf",
+   "final_url": "https://tuigarden.co.nz/media/hapliteh/tui-indoor-plant-insect-spray-rtu-sds.pdf",
+   "approved_max_bytes": 209647,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 209647,
+   "source_sha256": "sha256:9d67e75abe0dc151a70a815b01265c508c0de94fce62174d0a765e735e73f84e",
+   "source_pages": 6,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://tuigarden.co.nz/about-tui/terms-conditions/",
+   "terms_note": "Terms group B: View, download and print for personal, non-commercial use only; no reproduction.",
+   "identity": {
+    "publisher": "Evergreen Garden Care New Zealand Ltd (Tui Products Ltd.)",
+    "subject": "Tui Indoor Plant Insect Spray RTU",
+    "title": "Safety Data Sheet - Tui Indoor Plant Insect Spray RTU",
+    "period_or_revision": "Date of issue October 2025, version 3"
+   },
+   "text_layer": {
+    "pages_with_text": 6,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sds-c03",
+   "source": "https://www.gardenhealth.com/wp-content/uploads/2019/04/Resolva-Weedkiller-2-Action-Concentrate.pdf",
+   "final_url": "https://www.gardenhealth.com/wp-content/uploads/2019/04/Resolva-Weedkiller-2-Action-Concentrate.pdf",
+   "approved_max_bytes": 286913,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 286913,
+   "source_sha256": "sha256:a1eaf2447fce0e54ae004b41e20bfd13f4846e54e6755930eea750e78e6e4c1e",
+   "source_pages": 11,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.gardenhealth.com/terms-of-use",
+   "terms_note": "Terms group B: Download for non-commercial personal use only; no redistribution without written permission.",
+   "identity": {
+    "publisher": "Westland Horticulture Ltd",
+    "subject": "Resolva Weedkiller 2 Action Concentrate",
+    "title": "Safety Data Sheet (REACH) - Resolva Weedkiller 2 Action Concentrate",
+    "period_or_revision": "Revision date 21.01.2019 (header says version 1.0, footer says version 3.0)"
+   },
+   "text_layer": {
+    "pages_with_text": 11,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 7,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sds-c04",
+   "source": "https://www.gardenhealth.com/wp-content/uploads/2019/01/Resolva_Bug__Mildew_RTU.pdf",
+   "final_url": "https://www.gardenhealth.com/wp-content/uploads/2019/01/Resolva_Bug__Mildew_RTU.pdf",
+   "approved_max_bytes": 130318,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 130318,
+   "source_sha256": "sha256:3fb7c01e4a36c469f93419e992575f2a7ec9a5e701fd4ec3bf83d2a3cbe0d351",
+   "source_pages": 11,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.gardenhealth.com/terms-of-use",
+   "terms_note": "Terms group B: Download for non-commercial personal use only; no redistribution without written permission.",
+   "identity": {
+    "publisher": "Westland Horticulture Ltd",
+    "subject": "Resolva Bug & Mildew RTU",
+    "title": "Safety Data Sheet (REACH) - Resolva Bug & Mildew RTU",
+    "period_or_revision": "Revision date 6.2.2018, version 1.0"
+   },
+   "text_layer": {
+    "pages_with_text": 11,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 8,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sds-c05",
+   "source": "https://www.seasol.com.au/wp-content/uploads/2026/02/SEN000025-SEASOL_CONCENTRATE__HG_-AUS_GHS.pdf",
+   "final_url": "https://www.seasol.com.au/wp-content/uploads/2026/02/SEN000025-SEASOL_CONCENTRATE__HG_-AUS_GHS.pdf",
+   "approved_max_bytes": 497849,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 497849,
+   "source_sha256": "sha256:92baecde38e27870ad1899f885cf2451615614ddbb0e5f400ac60d3f4c45f2e1",
+   "source_pages": 7,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.seasol.com.au/site-terms/",
+   "terms_note": "Terms group B: Download in normal browsing for personal non-commercial use; no reproduction without consent.",
+   "identity": {
+    "publisher": "Seasol International, a division of DuluxGroup (Australia) Pty Ltd",
+    "subject": "Seasol Concentrate (home garden)",
+    "title": "Safety Data Sheet - SEASOL CONCENTRATE (HG)",
+    "period_or_revision": "Issued 12 March 2025, version 1.0"
+   },
+   "text_layer": {
+    "pages_with_text": 7,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 5,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sds-c06",
+   "source": "https://www.superiorpropane.com/-/media/01_propane_2024-02-11_en.ashx",
+   "final_url": "https://www.superiorpropane.com/-/media/01_propane_2024-02-11_en.ashx",
+   "approved_max_bytes": 425844,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 425844,
+   "source_sha256": "sha256:b53088b06744f9df17e5e8af2e942ca80742a4d1b5db390d1a5c8e3128d93de7",
+   "source_pages": 11,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.superiorpropane.com/terms-and-conditions",
+   "terms_note": "Terms group B: One downloaded copy on a single computer for personal, non-commercial use; .ashx URL, PDF type.",
+   "identity": {
+    "publisher": "Superior Propane",
+    "subject": "Propane",
+    "title": "Safety Data Sheet - Propane",
+    "period_or_revision": "Revision date 11/02/2024"
+   },
+   "text_layer": {
+    "pages_with_text": 11,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 9,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sds-c07",
+   "source": "https://www.superiorpropane.com/-/media/02_butane_07212025_en.ashx",
+   "final_url": "https://www.superiorpropane.com/-/media/02_butane_07212025_en.ashx",
+   "approved_max_bytes": 372857,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 372857,
+   "source_sha256": "sha256:59a5765194562018e07c4d615ea55db62d6b7a1ec4aee8429bd3acddb497999f",
+   "source_pages": 11,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.superiorpropane.com/terms-and-conditions",
+   "terms_note": "Terms group B: One downloaded copy on a single computer for personal, non-commercial use; .ashx URL, PDF type.",
+   "identity": {
+    "publisher": "Superior Propane",
+    "subject": "Butane",
+    "title": "Safety Data Sheet - Butane",
+    "period_or_revision": "Revision date 07/21/2025"
+   },
+   "text_layer": {
+    "pages_with_text": 11,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 8,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sds-c08",
+   "source": "https://plytix-files.com/api/v1.1/file/public_files/pim/assets/45/7d/ae/5f/5fae7d45c573435950d65e1e/texts/5a/7d/b5/67/67b57d5a941bdb08a4d69f39/56599-GB-GB.pdf",
+   "final_url": "https://plytix-files.com/api/v1.1/file/public_files/pim/assets/45/7d/ae/5f/5fae7d45c573435950d65e1e/texts/5a/7d/b5/67/67b57d5a941bdb08a4d69f39/56599-GB-GB.pdf",
+   "approved_max_bytes": 177892,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 177892,
+   "source_sha256": "sha256:50b7a4eeb454b5870c2afda5d1cbd3f5cc366070cb920f04b2c5133f9c8a8f8a",
+   "source_pages": 12,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://fernox.com/disclaimer/",
+   "terms_note": "Terms group A: Disclaimer has no copy clause; PDF on maker's Plytix PIM host, linked from product page",
+   "identity": {
+    "publisher": "Fernox (MacDermid / Element Solutions)",
+    "subject": "Fernox Central Heating Protector F1 500ml",
+    "title": "Safety Data Sheet 56599-GB-GB - Central Heating Protector F1 500ml",
+    "period_or_revision": "Date of issue/revision 1 June 2023, version 5.01"
+   },
+   "text_layer": {
+    "pages_with_text": 12,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 8,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sds-c09",
+   "source": "https://plytix-files.com/api/v1.1/file/public_files/pim/assets/45/7d/ae/5f/5fae7d45c573435950d65e1e/texts/58/7d/b5/67/67b57d58941bdb08a4d69ed8/56600-GB-GB.pdf",
+   "final_url": "https://plytix-files.com/api/v1.1/file/public_files/pim/assets/45/7d/ae/5f/5fae7d45c573435950d65e1e/texts/58/7d/b5/67/67b57d58941bdb08a4d69ed8/56600-GB-GB.pdf",
+   "approved_max_bytes": 167560,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 167560,
+   "source_sha256": "sha256:4726c2d30c42f9907bc47536561c584c026c737d3503755e1206c3248d4160e4",
+   "source_pages": 11,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://fernox.com/disclaimer/",
+   "terms_note": "Terms group A: Disclaimer has no copy clause; PDF on maker's Plytix PIM host, linked from product page",
+   "identity": {
+    "publisher": "Fernox (MacDermid / Element Solutions)",
+    "subject": "Fernox Central Heating Cleaner F3 500ml",
+    "title": "Safety Data Sheet 56600-GB-GB - Central Heating Cleaner F3 500ml",
+    "period_or_revision": "Date of issue/revision 1 June 2023, version 5.01"
+   },
+   "text_layer": {
+    "pages_with_text": 11,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 7,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sds-c10",
+   "source": "https://plytix-files.com/api/v1.1/file/public_files/pim/assets/45/7d/ae/5f/5fae7d45c573435950d65e1e/texts/54/7d/b5/67/67b57d54941bdb08a4d69e1b/56603-GB-GB.pdf",
+   "final_url": "https://plytix-files.com/api/v1.1/file/public_files/pim/assets/45/7d/ae/5f/5fae7d45c573435950d65e1e/texts/54/7d/b5/67/67b57d54941bdb08a4d69e1b/56603-GB-GB.pdf",
+   "approved_max_bytes": 159561,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 159561,
+   "source_sha256": "sha256:2c9afb63efc29523d59e3b21ccd15b1a429b65de9785d592fa25ca52f7deec10",
+   "source_pages": 10,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://fernox.com/disclaimer/",
+   "terms_note": "Terms group A: Disclaimer has no copy clause; PDF on maker's Plytix PIM host, linked from product page",
+   "identity": {
+    "publisher": "Fernox (MacDermid / Element Solutions)",
+    "subject": "Fernox Central Heating Leak Sealer F4",
+    "title": "Safety Data Sheet 56603-GB-GB - Central Heating Leak Sealer F4",
+    "period_or_revision": "Date of issue/revision 1 June 2023, version 5.01"
+   },
+   "text_layer": {
+    "pages_with_text": 10,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 7,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sds-c11",
+   "source": "https://www.clarkrubber.com.au/files/Page%20PDFs/Safety_Data_Sheet_Clark_Rubber_Filtrite_pH_Up.pdf",
+   "final_url": "https://www.clarkrubber.com.au/files/Page%20PDFs/Safety_Data_Sheet_Clark_Rubber_Filtrite_pH_Up.pdf",
+   "approved_max_bytes": 172482,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 172482,
+   "source_sha256": "sha256:cf23c5085df261691dd43b5a1ccb8f75a9b48c4b79fc9d3dac0c944502e4b158",
+   "source_pages": 6,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.clarkrubber.com.au/terms-conditions",
+   "terms_note": "Terms group B: Store, print and display for own personal use only; own-brand Filtrite SDS",
+   "identity": {
+    "publisher": "Clark Rubber",
+    "subject": "Filtrite pH Up",
+    "title": "Safety Data Sheet - 010 FILTRITE PH UP",
+    "period_or_revision": "Revision 23.05.2019"
+   },
+   "text_layer": {
+    "pages_with_text": 6,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 4,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sds-c12",
+   "source": "https://www.clarkrubber.com.au/files/Page%20PDFs/4671_FILTRITE_PH_DOWN_FILTRITE_SPA_PH_DOWN__AU.pdf",
+   "final_url": "https://www.clarkrubber.com.au/files/Page%20PDFs/4671_FILTRITE_PH_DOWN_FILTRITE_SPA_PH_DOWN__AU.pdf",
+   "approved_max_bytes": 172560,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 172560,
+   "source_sha256": "sha256:9c4e797ec2873ff0c69ce602485b6a81eb9463a7cc2f2a334894e94a3f7275cd",
+   "source_pages": 6,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.clarkrubber.com.au/terms-conditions",
+   "terms_note": "Terms group B: Store, print and display for own personal use only; own-brand Filtrite SDS",
+   "identity": {
+    "publisher": "Clark Rubber",
+    "subject": "Filtrite pH Down / Filtrite Spa pH Down",
+    "title": "Safety Data Sheet - FILTRITE PH DOWN / FILTRITE SPA PH DOWN",
+    "period_or_revision": "Revision 14.08.2019"
+   },
+   "text_layer": {
+    "pages_with_text": 6,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 4,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sds-c13",
+   "source": "https://www.clarkrubber.com.au/files/Page%20PDFs/Safety_Data_Sheet_Clark_Rubber_Filtrite_Tile_Vinyl_Cleaner.pdf",
+   "final_url": "https://www.clarkrubber.com.au/files/Page%20PDFs/Safety_Data_Sheet_Clark_Rubber_Filtrite_Tile_Vinyl_Cleaner.pdf",
+   "approved_max_bytes": 353806,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 353806,
+   "source_sha256": "sha256:54305cef84aa7c61b1fd5e45467392628fba54e0355a4b313a9133350614e674",
+   "source_pages": 6,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.clarkrubber.com.au/terms-conditions",
+   "terms_note": "Terms group B: Store, print and display for own personal use only; own-brand Filtrite SDS",
+   "identity": {
+    "publisher": "Clark Rubber",
+    "subject": "Filtrite Tile & Vinyl Cleaner",
+    "title": "Safety Data Sheet - FILTRITE TILE & VINYL CLEANER",
+    "period_or_revision": "Revision 22.09.2020"
+   },
+   "text_layer": {
+    "pages_with_text": 6,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 4,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sds-c14",
+   "source": "https://www.rustbullet.com/wp-content/uploads/SDS_Rust_Bullet.pdf",
+   "final_url": "https://www.rustbullet.com/wp-content/uploads/SDS_Rust_Bullet.pdf",
+   "approved_max_bytes": 745564,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 745564,
+   "source_sha256": "sha256:3020f5669bbe4ea07b76bec1ab16514fde551cc9290516eff595f6229aa806c1",
+   "source_pages": 10,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.rustbullet.com/terms-of-service",
+   "terms_note": "Terms group B: You may download or print materials for internal, non-commercial use with notices kept.",
+   "identity": {
+    "publisher": "Rust Bullet LLC",
+    "subject": "Rust Bullet metallic pigmented polyurethane coating",
+    "title": "Safety Data Sheet - Rust Bullet",
+    "period_or_revision": "Date of current revision March 12, 2025"
+   },
+   "text_layer": {
+    "pages_with_text": 10,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 3,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sds-c15",
+   "source": "https://www.rustbullet.com/wp-content/uploads/GHS_SDS_Rust_Bullet_Solvent.pdf",
+   "final_url": "https://www.rustbullet.com/wp-content/uploads/GHS_SDS_Rust_Bullet_Solvent.pdf",
+   "approved_max_bytes": 697807,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 697807,
+   "source_sha256": "sha256:b93bea14832b8bcb58c800e02d6ff807c21aecf548a5854eae8f161ad9c7d57e",
+   "source_pages": 8,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.rustbullet.com/terms-of-service",
+   "terms_note": "Terms group B: You may download or print materials for internal, non-commercial use with notices kept.",
+   "identity": {
+    "publisher": "Rust Bullet LLC",
+    "subject": "Rust Bullet Solvent",
+    "title": "Safety Data Sheet - Rust Bullet Solvent",
+    "period_or_revision": "Date of current revision December 19, 2022"
+   },
+   "text_layer": {
+    "pages_with_text": 8,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 3,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sds-c16",
+   "source": "https://www.rustbullet.com/wp-content/uploads/GHS_SDS_Metal_Blast.pdf",
+   "final_url": "https://www.rustbullet.com/wp-content/uploads/GHS_SDS_Metal_Blast.pdf",
+   "approved_max_bytes": 424572,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 424572,
+   "source_sha256": "sha256:0b7a118eb2050e877df57df10b9e48533cc1ec075ca5539726e0cc2817374fed",
+   "source_pages": 8,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.rustbullet.com/terms-of-service",
+   "terms_note": "Terms group B: You may download or print materials for internal, non-commercial use with notices kept.",
+   "identity": {
+    "publisher": "Rust Bullet LLC",
+    "subject": "Rust Bullet Metal Blast",
+    "title": "Safety Data Sheet - Rust Bullet Metal Blast",
+    "period_or_revision": "Date of current revision December 19, 2022"
+   },
+   "text_layer": {
+    "pages_with_text": 8,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 2,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sds-c17",
+   "source": "https://otistec.com/content/SDS%20-%20Otis%20Technology/SDS_OTIS_O85%20IP-902-085.pdf",
+   "final_url": "https://otistec.com/content/SDS%20-%20Otis%20Technology/SDS_OTIS_O85%20IP-902-085.pdf",
+   "approved_max_bytes": 420051,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 420051,
+   "source_sha256": "sha256:c48711e31439c0e90b224c756723d08b91539233d8cf5aa94bc6dcce67c35e5b",
+   "source_pages": 7,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://otistec.com/terms-and-conditions/",
+   "terms_note": "Terms group B: You may download or print portions solely for your own non-commercial use.",
+   "identity": {
+    "publisher": "Otis Technology, Inc. (manufacturer Chem-Pak Inc)",
+    "subject": "Otis O85 Ultra Bore cleaner",
+    "title": "Safety Data Sheet - Otis 085 Ultra Bore",
+    "period_or_revision": "Revision date 07/11/2016, version 6.0 (EN)"
+   },
+   "text_layer": {
+    "pages_with_text": 7,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 5,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sds-c18",
+   "source": "https://dustbane2025.objects.frb.io/uploads/files/sds/Degreaser.pdf?v=1760897349",
+   "final_url": "https://dustbane2025.objects.frb.io/uploads/files/sds/Degreaser.pdf?v=1760897349",
+   "approved_max_bytes": 243689,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 243689,
+   "source_sha256": "sha256:e598ac4ded82045c94d6e25964e44c4a1982acefc48b72da5439d8cfffbce790",
+   "source_pages": 9,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.dustbane.ca/terms-of-use",
+   "terms_note": "Terms group B: Internal business use: view, download, print allowed. No robot or scraping clause.",
+   "identity": {
+    "publisher": "Dustbane Products Ltd.",
+    "subject": "Dustbane Degreaser",
+    "title": "Safety Data Sheet / Fiche de donnees de securite - Degreaser",
+    "period_or_revision": "Revision date 10/02/2023"
+   },
+   "text_layer": {
+    "pages_with_text": 9,
+    "pages_without_text": [],
+    "language": "English and French (bilingual, side by side)"
+   },
+   "notice": {
+    "page": 7,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sds-c19",
+   "source": "https://dustbane2025.objects.frb.io/uploads/files/sds/Glass-Cleaner.pdf?v=1760897336",
+   "final_url": "https://dustbane2025.objects.frb.io/uploads/files/sds/Glass-Cleaner.pdf?v=1760897336",
+   "approved_max_bytes": 244700,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 244700,
+   "source_sha256": "sha256:0b0855b36df423ecedbf932b8da4aa3c46768c47dcd674598b5b07d87cdf102f",
+   "source_pages": 9,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.dustbane.ca/terms-of-use",
+   "terms_note": "Terms group B: Internal business use: view, download, print allowed. No robot or scraping clause.",
+   "identity": {
+    "publisher": "Dustbane Products Ltd.",
+    "subject": "Dustbane Glass Cleaner",
+    "title": "Safety Data Sheet / Fiche de donnees de securite - Glass Cleaner",
+    "period_or_revision": "Revision date 10/02/2023"
+   },
+   "text_layer": {
+    "pages_with_text": 9,
+    "pages_without_text": [],
+    "language": "English and French (bilingual, side by side)"
+   },
+   "notice": {
+    "page": 7,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sds-c20",
+   "source": "https://dustbane2025.objects.frb.io/uploads/files/sds/Oven_Cleaner.pdf?v=1760903942",
+   "final_url": "https://dustbane2025.objects.frb.io/uploads/files/sds/Oven_Cleaner.pdf?v=1760903942",
+   "approved_max_bytes": 291336,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 291336,
+   "source_sha256": "sha256:726d6d9b4da92e7143d74c59f0c8c2b2955227923849541f293e738de63629fd",
+   "source_pages": 12,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.dustbane.ca/terms-of-use",
+   "terms_note": "Terms group B: Internal business use: view, download, print allowed. No robot or scraping clause.",
+   "identity": {
+    "publisher": "Dustbane Products Ltd.",
+    "subject": "Dustbane Oven Cleaner",
+    "title": "Safety Data Sheet / Fiche de donnees de securite - Dustbane Oven Cleaner",
+    "period_or_revision": "Revision date 13/05/2024"
+   },
+   "text_layer": {
+    "pages_with_text": 12,
+    "pages_without_text": [],
+    "language": "English and French (bilingual, side by side)"
+   },
+   "notice": {
+    "page": 9,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sds-c21",
+   "source": "https://cdn.shopify.com/s/files/1/0440/7889/1168/files/Colourtrend_Gloss_2023.pdf?v=1683189333",
+   "final_url": "https://cdn.shopify.com/s/files/1/0440/7889/1168/files/Colourtrend_Gloss_2023.pdf?v=1683189333",
+   "approved_max_bytes": 1066769,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 1066769,
+   "source_sha256": "sha256:2c4006137ad36d900cbcd44f4009c528181874ed0640664b22321d2d0f7ebcf0",
+   "source_pages": 10,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://colourtrend.ie/policies/terms-of-service",
+   "terms_note": "Terms group B: Personal licence to view and download. No public reuse. No robot clause.",
+   "identity": {
+    "publisher": "General Paints Group (Colourtrend)",
+    "subject": "Colourtrend Gloss",
+    "title": "Safety Data Sheet - COLOURTREND GLOSS",
+    "period_or_revision": "Revision date 4/12/2023, version 7.2"
+   },
+   "text_layer": {
+    "pages_with_text": 10,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 6,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sds-c22",
+   "source": "https://cdn.shopify.com/s/files/1/0440/7889/1168/files/Colourtrend-Fungicidal-wash_-_MD.pdf?v=1607679388",
+   "final_url": "https://cdn.shopify.com/s/files/1/0440/7889/1168/files/Colourtrend-Fungicidal-wash_-_MD.pdf?v=1607679388",
+   "approved_max_bytes": 329739,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 329739,
+   "source_sha256": "sha256:d32aa480e67fe665b6f039e3ddc85333286ae16ccb95cc588484c0306aae52f0",
+   "source_pages": 6,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://colourtrend.ie/policies/terms-of-service",
+   "terms_note": "Terms group B: Personal licence to view and download. No public reuse. No robot clause.",
+   "identity": {
+    "publisher": "Colourtrend General Paints Ltd",
+    "subject": "Colourtrend Fungicidal Wash",
+    "title": "Safety Data Sheet - COLOURTREND FUNGICIDAL WASH",
+    "period_or_revision": "Revision date 24/07/20, revision no. 2"
+   },
+   "text_layer": {
+    "pages_with_text": 6,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 5,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sds-c23",
+   "source": "https://cdn.shopify.com/s/files/1/0440/7889/1168/files/Sustain_Epoxy_Floor_and_Wall_Paint_Activator_2023.pdf?v=1683189334",
+   "final_url": "https://cdn.shopify.com/s/files/1/0440/7889/1168/files/Sustain_Epoxy_Floor_and_Wall_Paint_Activator_2023.pdf?v=1683189334",
+   "approved_max_bytes": 838412,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 838412,
+   "source_sha256": "sha256:c8db1689efef69a8e78fb292c93a38fe4c7a322473de3577e5450ce469390464",
+   "source_pages": 9,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://colourtrend.ie/policies/terms-of-service",
+   "terms_note": "Terms group B: Personal licence to view and download. No public reuse. No robot clause.",
+   "identity": {
+    "publisher": "General Paints Group (Colourtrend)",
+    "subject": "Sustain Epoxy Floor and Wall Paint Activator",
+    "title": "Safety Data Sheet - SUSTAIN EPOXY FLOOR AND WALL PAINT ACTIVATOR",
+    "period_or_revision": "Revision date 4/11/2023, version 8.1"
+   },
+   "text_layer": {
+    "pages_with_text": 9,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 5,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sds-c24",
+   "source": "https://www.methanex.com/wp-content/uploads/UL-METHANOL-NA_Methanol_NGHS_English_01.31.2025v6.pdf",
+   "final_url": "https://www.methanex.com/wp-content/uploads/UL-METHANOL-NA_Methanol_NGHS_English_01.31.2025v6.pdf",
+   "approved_max_bytes": 379269,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 379269,
+   "source_sha256": "sha256:d4bdb9d8b795d1460bbc7986cdef89ca859c403de5d74df21086bea1efb45b17",
+   "source_pages": 14,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.methanex.com/terms-of-use/",
+   "terms_note": "Terms group A: View, copy, print allowed for informational purposes with notices kept. No robot clause.",
+   "identity": {
+    "publisher": "Methanex Corporation",
+    "subject": "Methanol (North America)",
+    "title": "Safety Data Sheet - Methanol",
+    "period_or_revision": "Revision date 31-Jan-2025, revision number 6"
+   },
+   "text_layer": {
+    "pages_with_text": 14,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 2,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sds-c25",
+   "source": "https://www.methanex.com/wp-content/uploads/FINAL-UL-METH-NA_Ammonia_NGHS_English_04.30.2025.pdf",
+   "final_url": "https://www.methanex.com/wp-content/uploads/FINAL-UL-METH-NA_Ammonia_NGHS_English_04.30.2025.pdf",
+   "approved_max_bytes": 373728,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 373728,
+   "source_sha256": "sha256:4a3aa46a3645271827c499560d11eb3d1a67d0faef7a547a4deeaa547907d5c1",
+   "source_pages": 13,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.methanex.com/terms-of-use/",
+   "terms_note": "Terms group A: View, copy, print allowed for informational purposes with notices kept. No robot clause.",
+   "identity": {
+    "publisher": "Methanex Corporation",
+    "subject": "Ammonia (North America)",
+    "title": "Safety Data Sheet - Ammonia",
+    "period_or_revision": "Revision date 30-Apr-2025, revision number 1"
+   },
+   "text_layer": {
+    "pages_with_text": 13,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 8,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sds-c32",
+   "source": "https://www.seasol.com.au/wp-content/uploads/2021/09/SEASOL_EARTHCARE_WHITE_OIL_CONCENTRATE-AUS_GHS-1.pdf",
+   "final_url": "https://www.seasol.com.au/wp-content/uploads/2021/09/SEASOL_EARTHCARE_WHITE_OIL_CONCENTRATE-AUS_GHS-1.pdf",
+   "approved_max_bytes": 490719,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 490719,
+   "source_sha256": "sha256:20409e724d9cf96774809e671ba44fe943f3110dab573808301b7b91b6e9c8cc",
+   "source_pages": 6,
+   "download_status": "complete",
+   "selection_status": "member",
+   "reason": "",
+   "terms_url": "https://www.seasol.com.au/site-terms/",
+   "terms_note": "Terms group B: Download in normal browsing for personal non-commercial use; no reproduction without consent.",
+   "identity": {
+    "publisher": "Seasol International, a division of DuluxGroup (Australia) Pty Ltd",
+    "subject": "Seasol Earthcare White Oil Concentrate",
+    "title": "Safety Data Sheet - SEASOL EARTHCARE WHITE OIL CONCENTRATE",
+    "period_or_revision": "Issued 4 December 2024, version 1.0"
+   },
+   "text_layer": {
+    "pages_with_text": 6,
+    "pages_without_text": [],
+    "language": "English"
+   },
+   "notice": {
+    "page": 4,
+    "restriction": ""
+   }
+  },
+  {
+   "id": "sds-c33",
+   "source": "https://otistec.com/content/SDS%20-%20Otis%20Technology/SDS_OTIS_GUN-OIL_REV251104_.pdf",
+   "final_url": "https://otistec.com/content/SDS%20-%20Otis%20Technology/SDS_OTIS_GUN-OIL_REV251104_.pdf",
+   "approved_max_bytes": 3349921,
+   "approval": "maintainer source-and-size approval, 2026-10-20 (#395)",
+   "source_bytes": 3349921,
+   "source_sha256": "sha256:639941da619fe923e829efebab85a2f1ec1c7818508221be55c4bc4bfa68e730",
+   "source_pages": 9,
+   "download_status": "complete",
+   "selection_status": "hold",
+   "reason": "On hold: no text layer on pages 2 to 8, so the 16 sections cannot be read or checked.",
+   "terms_url": "https://otistec.com/terms-and-conditions/",
+   "terms_note": "Terms group B: You may download or print portions solely for your own non-commercial use.",
+   "identity": {
+    "publisher": "Otis Technology",
+    "subject": "Otis Precision Gun Oil",
+    "title": "Precision Gun Oil (SDS file SDS_OTIS_GUN-OIL_REV251104)",
+    "period_or_revision": "11/04/2025 printed on the last page (file name REV251104); cannot confirm the label from text"
+   },
+   "text_layer": {
+    "pages_with_text": 2,
+    "pages_without_text": [
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "language": "English (pages 1 and 9 only)"
+   },
+   "notice": {
+    "page": null,
+    "restriction": ""
+   }
+  }
+ ]
+}
