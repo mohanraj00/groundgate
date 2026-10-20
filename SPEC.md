@@ -1,10 +1,10 @@
 # groundgate specification v0.10
 
 Status: released with groundgate 0.10.0. Version string: `groundgate/0.10`. Spec 0.9 was
-released with groundgate 0.9.0 and is in the `v0.9.0` tag. Spec 0.8 is in the `v0.8.0` tag, spec 0.7 in the
-`v0.7.0` tag, spec 0.6 in the `v0.6.0` tag, spec 0.5 in the `v0.5.0` tag, spec 0.4 in the
-`v0.4.0` tag, spec 0.3 in the `v0.3.0` tag, spec 0.2 in the `v0.2.0` tag, and spec 0.1 in the
-`v0.1.0` tag. Any change to how
+released with groundgate 0.9.0 and is in the `v0.9.0` tag. Spec 0.8 is in the `v0.8.0` tag,
+spec 0.7 in the `v0.7.0` tag, spec 0.6 in the `v0.6.0` tag, spec 0.5 in the `v0.5.0` tag, spec
+0.4 in the `v0.4.0` tag, spec 0.3 in the `v0.3.0` tag, spec 0.2 in the `v0.2.0` tag, and spec
+0.1 in the `v0.1.0` tag. Any change to how
 a candidate is decided is a new version with a new version string. An implementation conforms if
 it produces the outcome, codes and missing parts of every decision, the parts and the evidence
 units where a vector gives them, the coverage findings, and the relation results where a vector
