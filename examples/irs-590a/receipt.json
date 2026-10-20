@@ -1,44 +1,302 @@
 {
-  "groundgate": "0.10",
+  "groundgate": "0.11",
   "document": {
     "id": "irs-p590a-2025-pages-1-2",
-    "sha256": "sha256:70339a5e68f86776754c95c24f39dd3be63c653174373ae55fde4a3142f90658",
+    "sha256": "sha256:93e71e53d954f8c2c8000591f3b1724da6d44d2f5cd5a88ac210df554cc882d9",
     "source": null
   },
   "references": [],
   "packs": [],
-  "schema_sha256": "sha256:fcd49bcceff8ffb732e312a8ff10b19522a564e7ec8defa83ec2ec84396c7b63",
-  "policy_sha256": "sha256:d4c6df6d3ed31a1b880300040e6463a863030da8eb96bc2e3353aee5ed380eee",
+  "schema_sha256": "sha256:b762443c9d44709e717a2cd564752bffe5c47670d9bb4b21581869875e7f28f8",
+  "policy_sha256": "sha256:d52cf5f06551f779348eb996e821746c31b517db86cc356870e19184dd97d5e8",
   "decisions": [
     {
-      "candidate_id": "Gemini_3.6_Flash_Medium/13",
-      "candidate_sha256": "sha256:0011de869534eaba8379feeebb0f65d50c7948fa5c26fc70c7b2bf93c22262de",
-      "field": "ira_limit_age_50_2026",
+      "candidate_id": "Gemini_3.6_Flash_Medium/11",
+      "candidate_sha256": "sha256:01723ea1b9bf78a710f7b55422aa7aec78b29a22e54f932ed1f051ba691a1061",
+      "field": "roth_phaseout_single_2025_start",
       "key": null,
       "outcome": "admitted",
       "codes": [],
-      "value": "8600",
+      "value": "150000",
       "unit": "USD",
       "source": "document",
       "ref": null,
       "url": null,
       "evidence": {
-        "start": 5212,
-        "end": 5218
+        "start": 4748,
+        "end": 4756
       },
       "parts": [],
       "missing": [],
       "packs": []
     },
     {
-      "candidate_id": "GPT-OSS_120B_Medium/8",
-      "candidate_sha256": "sha256:0ee1face473d7d3a327dce3989c4572ed3a19cb60583e89c2dc8cf9eb85c2f48",
-      "field": "roth_phaseout_joint_2025_end",
+      "candidate_id": "Gemini_3.6_Flash_Medium/6",
+      "candidate_sha256": "sha256:05e91d472fd5215e338661b322e260706f9bdb75532aad51e0e5b30ab080a4aa",
+      "field": "traditional_phaseout_single_2025_end",
       "key": null,
-      "outcome": "needs_verification",
-      "codes": [
-        "QUALIFIED_VALUE"
-      ],
+      "outcome": "admitted",
+      "codes": [],
+      "value": "89000",
+      "unit": "USD",
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 3616,
+        "end": 3623
+      },
+      "parts": [],
+      "missing": [],
+      "packs": []
+    },
+    {
+      "candidate_id": "Gemini_3.6_Flash_Medium/24",
+      "candidate_sha256": "sha256:16be9f667506a0b0626cdca07fbeadebaae28c3cd489a765c060c6df5694c171",
+      "field": "roth_phaseout_single_2026_start",
+      "key": null,
+      "outcome": "admitted",
+      "codes": [],
+      "value": "153000",
+      "unit": "USD",
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 6850,
+        "end": 6858
+      },
+      "parts": [],
+      "missing": [],
+      "packs": []
+    },
+    {
+      "candidate_id": "Gemini_3.6_Flash_Medium/12",
+      "candidate_sha256": "sha256:1b4f31ae80fd7df0fe5e489611c593a4c2094161730556e82f2a2bc048f8a28b",
+      "field": "ira_limit_2026",
+      "key": null,
+      "outcome": "admitted",
+      "codes": [],
+      "value": "7500",
+      "unit": "USD",
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 5204,
+        "end": 5210
+      },
+      "parts": [],
+      "missing": [],
+      "packs": []
+    },
+    {
+      "candidate_id": "Gemini_3.6_Flash_Medium/0",
+      "candidate_sha256": "sha256:2246982c3b97fd33b0527dacbc4cfaf864bca0dc1958ac3b3bc2928331da8492",
+      "field": "ira_limit_2025",
+      "key": null,
+      "outcome": "admitted",
+      "codes": [],
+      "value": "7000",
+      "unit": "USD",
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 2317,
+        "end": 2323
+      },
+      "parts": [],
+      "missing": [],
+      "packs": []
+    },
+    {
+      "candidate_id": "GPT-OSS_120B_Medium/17",
+      "candidate_sha256": "sha256:24c5ef4700d425b7bdd907b93750509343ecd8a90a64db081408b7ff3659d721",
+      "field": "spousal_phaseout_2025_end",
+      "key": null,
+      "outcome": "admitted",
+      "codes": [],
+      "value": "246000",
+      "unit": "USD",
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 6176,
+        "end": 6184
+      },
+      "parts": [],
+      "missing": [],
+      "packs": []
+    },
+    {
+      "candidate_id": "Gemini_3.6_Flash_Medium/9",
+      "candidate_sha256": "sha256:24f02abb4dcb203251b6f049fcb15b5e43f41be1d942c8e2ebbd0913c7f3183a",
+      "field": "roth_phaseout_joint_2025_start",
+      "key": null,
+      "outcome": "admitted",
+      "codes": [],
+      "value": "236000",
+      "unit": "USD",
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 4477,
+        "end": 4485
+      },
+      "parts": [],
+      "missing": [],
+      "packs": []
+    },
+    {
+      "candidate_id": "GPT-OSS_120B_Medium/18",
+      "candidate_sha256": "sha256:26d50776dac03f835ebaa608a22278ae77dc1747a2fb2657099a41d67f42465e",
+      "field": "spousal_phaseout_2026_start",
+      "key": null,
+      "outcome": "admitted",
+      "codes": [],
+      "value": "242000",
+      "unit": "USD",
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 6107,
+        "end": 6115
+      },
+      "parts": [],
+      "missing": [],
+      "packs": []
+    },
+    {
+      "candidate_id": "GPT-OSS_120B_Medium/20",
+      "candidate_sha256": "sha256:28f176d48118e03e1f98bdb99672039b65338a44c34da951a05d14d7d9cd342f",
+      "field": "roth_phaseout_joint_2026_start",
+      "key": null,
+      "outcome": "admitted",
+      "codes": [],
+      "value": "242000",
+      "unit": "USD",
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 6578,
+        "end": 6586
+      },
+      "parts": [],
+      "missing": [],
+      "packs": []
+    },
+    {
+      "candidate_id": "GPT-OSS_120B_Medium/9",
+      "candidate_sha256": "sha256:2b0a773859d68c9423a646649313123649cf770dcc777c90818f764b6327b659",
+      "field": "roth_phaseout_single_2025_start",
+      "key": null,
+      "outcome": "admitted",
+      "codes": [],
+      "value": "150000",
+      "unit": "USD",
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 4748,
+        "end": 4756
+      },
+      "parts": [],
+      "missing": [],
+      "packs": []
+    },
+    {
+      "candidate_id": "GPT-OSS_120B_Medium/0",
+      "candidate_sha256": "sha256:2b502cd66e7ca2e8d8517482662299488c0ba6aac344bd73193000007dd87bc6",
+      "field": "ira_limit_2025",
+      "key": null,
+      "outcome": "admitted",
+      "codes": [],
+      "value": "7000",
+      "unit": "USD",
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 2317,
+        "end": 2323
+      },
+      "parts": [],
+      "missing": [],
+      "packs": []
+    },
+    {
+      "candidate_id": "Gemini_3.6_Flash_Medium/19",
+      "candidate_sha256": "sha256:2c867b8e3f39698b2d10bb750080657ba6d2c2206526e612bb7af871f9a16399",
+      "field": "spousal_phaseout_2025_start",
+      "key": null,
+      "outcome": "admitted",
+      "codes": [],
+      "value": "236000",
+      "unit": "USD",
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 6125,
+        "end": 6133
+      },
+      "parts": [],
+      "missing": [],
+      "packs": []
+    },
+    {
+      "candidate_id": "Gemini_3.6_Flash_Medium/16",
+      "candidate_sha256": "sha256:2f7ff9492d0880f8e9c392964f2fb15f4ae51dd1080be466ee29dd0644f8f4c1",
+      "field": "traditional_phaseout_single_2026_start",
+      "key": null,
+      "outcome": "admitted",
+      "codes": [],
+      "value": "81000",
+      "unit": "USD",
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 5677,
+        "end": 5684
+      },
+      "parts": [],
+      "missing": [],
+      "packs": []
+    },
+    {
+      "candidate_id": "Gemini_3.6_Flash_Medium/4",
+      "candidate_sha256": "sha256:313f2cf7aa83dfbbb3ed8d932e5cc292408385231073288d76140853590bf73c",
+      "field": "traditional_phaseout_joint_2025_end",
+      "key": null,
+      "outcome": "admitted",
+      "codes": [],
+      "value": "146000",
+      "unit": "USD",
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 3491,
+        "end": 3499
+      },
+      "parts": [],
+      "missing": [],
+      "packs": []
+    },
+    {
+      "candidate_id": "Gemini_3.6_Flash_Medium/8",
+      "candidate_sha256": "sha256:4178ecdc2c6b1e8c4b8ce476561522c086b47a3c524dab1240cca02e8686bd35",
+      "field": "spousal_phaseout_2025_end",
+      "key": null,
+      "outcome": "admitted",
+      "codes": [],
       "value": "246000",
       "unit": "USD",
       "source": "document",
@@ -53,20 +311,102 @@
       "packs": []
     },
     {
-      "candidate_id": "Gemini_3.6_Flash_Medium/3",
-      "candidate_sha256": "sha256:16ee5c15416ae03280ab9c052bd90cd5fbd5c5a693f2b398830f9333e1391dff",
-      "field": "traditional_phaseout_joint_2025_start",
+      "candidate_id": "GPT-OSS_120B_Medium/14",
+      "candidate_sha256": "sha256:41f2cb74bb8af178f3da94a74586e5a3629c3f8235bb907675bf36e0738fef3c",
+      "field": "traditional_phaseout_single_2026_start",
       "key": null,
       "outcome": "admitted",
       "codes": [],
-      "value": "126000",
+      "value": "81000",
       "unit": "USD",
       "source": "document",
       "ref": null,
       "url": null,
       "evidence": {
-        "start": 3468,
-        "end": 3476
+        "start": 5677,
+        "end": 5684
+      },
+      "parts": [],
+      "missing": [],
+      "packs": []
+    },
+    {
+      "candidate_id": "GPT-OSS_120B_Medium/1",
+      "candidate_sha256": "sha256:43f1f2a72a5acb7c8f28e13faba6ed336f4444928c9e6b9448c5e21823d6ec31",
+      "field": "ira_limit_age_50_2025",
+      "key": null,
+      "outcome": "admitted",
+      "codes": [],
+      "value": "8000",
+      "unit": "USD",
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 2325,
+        "end": 2331
+      },
+      "parts": [],
+      "missing": [],
+      "packs": []
+    },
+    {
+      "candidate_id": "GPT-OSS_120B_Medium/4",
+      "candidate_sha256": "sha256:44c5951b48f79817e9273a502e6fe0eea7c8f47877b11e0c2f7b44fc14b19a0a",
+      "field": "traditional_phaseout_joint_2025_end",
+      "key": null,
+      "outcome": "admitted",
+      "codes": [],
+      "value": "146000",
+      "unit": "USD",
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 3491,
+        "end": 3499
+      },
+      "parts": [],
+      "missing": [],
+      "packs": []
+    },
+    {
+      "candidate_id": "GPT-OSS_120B_Medium/7",
+      "candidate_sha256": "sha256:623825fb68880a909665562fb594b18024460923e28d130df50961aa090c9fe9",
+      "field": "roth_phaseout_joint_2025_start",
+      "key": null,
+      "outcome": "needs_verification",
+      "codes": [
+        "QUALIFIED_VALUE"
+      ],
+      "value": "236000",
+      "unit": "USD",
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 4016,
+        "end": 4024
+      },
+      "parts": [],
+      "missing": [],
+      "packs": []
+    },
+    {
+      "candidate_id": "GPT-OSS_120B_Medium/6",
+      "candidate_sha256": "sha256:64e4c8610a6955dc8d624dc4d61bdb4a705210d66dbfec999e1a1e33abcccf8b",
+      "field": "traditional_phaseout_single_2025_end",
+      "key": null,
+      "outcome": "admitted",
+      "codes": [],
+      "value": "89000",
+      "unit": "USD",
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 3616,
+        "end": 3623
       },
       "parts": [],
       "missing": [],
@@ -74,7 +414,7 @@
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/19",
-      "candidate_sha256": "sha256:1caf6a752cad0945ef44fd74791f646a31bfe72ee5cca35c7d2defc991b98163",
+      "candidate_sha256": "sha256:7997bfc01d19fba4b3d5047897278873c2d582f7963d887612c2f40fc162adff",
       "field": "spousal_phaseout_2026_end",
       "key": null,
       "outcome": "needs_verification",
@@ -95,28 +435,48 @@
       "packs": []
     },
     {
-      "candidate_id": "Gemini_3.6_Flash_Medium/25",
-      "candidate_sha256": "sha256:223194c901a890c3958304eb2a8ab094386d59c59831b1f3527627b32ef45c93",
-      "field": "roth_phaseout_single_2026_end",
+      "candidate_id": "Gemini_3.6_Flash_Medium/14",
+      "candidate_sha256": "sha256:7a64b0e65132f4422d57914305b009769d2a419efda7d7e40a04618989c0d93d",
+      "field": "traditional_phaseout_joint_2026_start",
       "key": null,
       "outcome": "admitted",
       "codes": [],
-      "value": "168000",
+      "value": "129000",
       "unit": "USD",
       "source": "document",
       "ref": null,
       "url": null,
       "evidence": {
-        "start": 6927,
-        "end": 6935
+        "start": 5551,
+        "end": 5559
       },
       "parts": [],
       "missing": [],
       "packs": []
     },
     {
-      "candidate_id": "Gemini_3.6_Flash_Medium/5",
-      "candidate_sha256": "sha256:2428dc1ec1d593fe45d371d8bdbbec789bd4312549f229c8dc5a3b77c273ba5c",
+      "candidate_id": "GPT-OSS_120B_Medium/16",
+      "candidate_sha256": "sha256:7c02ff86f57b4e77b857d4bc6947a59d260bd8ae4431a27d515812690220ab86",
+      "field": "spousal_phaseout_2025_start",
+      "key": null,
+      "outcome": "admitted",
+      "codes": [],
+      "value": "236000",
+      "unit": "USD",
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 6125,
+        "end": 6133
+      },
+      "parts": [],
+      "missing": [],
+      "packs": []
+    },
+    {
+      "candidate_id": "GPT-OSS_120B_Medium/5",
+      "candidate_sha256": "sha256:81672ad6e525937b8632995cf5153f725dde693c70fb4b024d493c45d3fad77d",
       "field": "traditional_phaseout_single_2025_start",
       "key": null,
       "outcome": "admitted",
@@ -135,108 +495,48 @@
       "packs": []
     },
     {
-      "candidate_id": "Gemini_3.6_Flash_Medium/10",
-      "candidate_sha256": "sha256:26c91a0cd6017c0951a50bd119dfe3366d18c1803c862e59ab99f1a06149b1b0",
-      "field": "roth_phaseout_joint_2025_end",
+      "candidate_id": "Gemini_3.6_Flash_Medium/3",
+      "candidate_sha256": "sha256:835099a067c25244b24617803188f399fe26128c72f15a2707ba8ca25baab559",
+      "field": "traditional_phaseout_joint_2025_start",
       "key": null,
       "outcome": "admitted",
       "codes": [],
-      "value": "246000",
+      "value": "126000",
       "unit": "USD",
       "source": "document",
       "ref": null,
       "url": null,
       "evidence": {
-        "start": 4552,
-        "end": 4560
+        "start": 3468,
+        "end": 3476
       },
       "parts": [],
       "missing": [],
       "packs": []
     },
     {
-      "candidate_id": "Gemini_3.6_Flash_Medium/6",
-      "candidate_sha256": "sha256:270447f3abfd859f056230fe4f20e743c02af258b9430ed8c8589c7af03bbde9",
-      "field": "traditional_phaseout_single_2025_end",
+      "candidate_id": "Gemini_3.6_Flash_Medium/25",
+      "candidate_sha256": "sha256:837d8709231dd76c85ddf3f2823dd0c9e61a4a4e3d9206c1377f971aa159a067",
+      "field": "roth_phaseout_single_2026_end",
       "key": null,
       "outcome": "admitted",
       "codes": [],
-      "value": "89000",
+      "value": "168000",
       "unit": "USD",
       "source": "document",
       "ref": null,
       "url": null,
       "evidence": {
-        "start": 3616,
-        "end": 3623
+        "start": 6927,
+        "end": 6935
       },
       "parts": [],
       "missing": [],
       "packs": []
     },
     {
-      "candidate_id": "Gemini_3.6_Flash_Medium/8",
-      "candidate_sha256": "sha256:272d0e9ae7fffb157e2ae6b537d850d6b533ecc573c2a3b7b3549b86b99474b3",
-      "field": "spousal_phaseout_2025_end",
-      "key": null,
-      "outcome": "admitted",
-      "codes": [],
-      "value": "246000",
-      "unit": "USD",
-      "source": "document",
-      "ref": null,
-      "url": null,
-      "evidence": {
-        "start": 4067,
-        "end": 4075
-      },
-      "parts": [],
-      "missing": [],
-      "packs": []
-    },
-    {
-      "candidate_id": "GPT-OSS_120B_Medium/10",
-      "candidate_sha256": "sha256:375a7e0445eb0b85656b4d881dedcfca6402f42dc64433990b8a43d8de6f525b",
-      "field": "ira_limit_2026",
-      "key": null,
-      "outcome": "admitted",
-      "codes": [],
-      "value": "7500",
-      "unit": "USD",
-      "source": "document",
-      "ref": null,
-      "url": null,
-      "evidence": {
-        "start": 5204,
-        "end": 5210
-      },
-      "parts": [],
-      "missing": [],
-      "packs": []
-    },
-    {
-      "candidate_id": "GPT-OSS_120B_Medium/18",
-      "candidate_sha256": "sha256:3f12fbe4d61dd4c804c51c8315dc6d8bead8dd2ccb9ad5d9dd7eb8f0a94a46fe",
-      "field": "spousal_phaseout_2026_start",
-      "key": null,
-      "outcome": "admitted",
-      "codes": [],
-      "value": "242000",
-      "unit": "USD",
-      "source": "document",
-      "ref": null,
-      "url": null,
-      "evidence": {
-        "start": 6107,
-        "end": 6115
-      },
-      "parts": [],
-      "missing": [],
-      "packs": []
-    },
-    {
-      "candidate_id": "GPT-OSS_120B_Medium/15",
-      "candidate_sha256": "sha256:42343533ad9ed7c300c1195e7e2333aaa4990a300ec8597bf550850d2ea36f21",
+      "candidate_id": "Gemini_3.6_Flash_Medium/17",
+      "candidate_sha256": "sha256:8b7de0b63f0e348cb37eea00b5c7cc2b4622126a2d1be732d26a660f09f664c1",
       "field": "traditional_phaseout_single_2026_end",
       "key": null,
       "outcome": "admitted",
@@ -255,49 +555,9 @@
       "packs": []
     },
     {
-      "candidate_id": "Gemini_3.6_Flash_Medium/20",
-      "candidate_sha256": "sha256:5120a54f00949a665c9a1afcfc4ec4a4aa771c6b7202ec15d08340a39c4f02e4",
-      "field": "spousal_phaseout_2026_end",
-      "key": null,
-      "outcome": "admitted",
-      "codes": [],
-      "value": "252000",
-      "unit": "USD",
-      "source": "document",
-      "ref": null,
-      "url": null,
-      "evidence": {
-        "start": 6158,
-        "end": 6166
-      },
-      "parts": [],
-      "missing": [],
-      "packs": []
-    },
-    {
-      "candidate_id": "Gemini_3.6_Flash_Medium/1",
-      "candidate_sha256": "sha256:52ba12d4e0e0b024bcd814668a06ca12a338d75f5ee0427c0196b2dcb1eb99d2",
-      "field": "ira_limit_age_50_2025",
-      "key": null,
-      "outcome": "admitted",
-      "codes": [],
-      "value": "8000",
-      "unit": "USD",
-      "source": "document",
-      "ref": null,
-      "url": null,
-      "evidence": {
-        "start": 2325,
-        "end": 2331
-      },
-      "parts": [],
-      "missing": [],
-      "packs": []
-    },
-    {
-      "candidate_id": "GPT-OSS_120B_Medium/20",
-      "candidate_sha256": "sha256:56072b73686091e8ba6fd3bedc38d3e056449ab98591cc4e3238fb03ff508e00",
-      "field": "roth_phaseout_joint_2026_start",
+      "candidate_id": "Gemini_3.6_Flash_Medium/18",
+      "candidate_sha256": "sha256:9029b7ded5504950fe6f900be1a3d9dce6c64102082900d6329215abae3b3a3b",
+      "field": "spousal_phaseout_2026_start",
       "key": null,
       "outcome": "admitted",
       "codes": [],
@@ -307,8 +567,8 @@
       "ref": null,
       "url": null,
       "evidence": {
-        "start": 6578,
-        "end": 6586
+        "start": 6107,
+        "end": 6115
       },
       "parts": [],
       "missing": [],
@@ -316,7 +576,7 @@
     },
     {
       "candidate_id": "GPT-OSS_120B_Medium/13",
-      "candidate_sha256": "sha256:5646003723f3cb8117ed03e0ee7148d84cf66af5e7052ad07a8f230220d0ee33",
+      "candidate_sha256": "sha256:904f56d2c08437d59e0b965e37f20caac7fde8e8df1ed7439dbe56863e9c86af",
       "field": "traditional_phaseout_joint_2026_end",
       "key": null,
       "outcome": "admitted",
@@ -335,100 +595,40 @@
       "packs": []
     },
     {
-      "candidate_id": "Gemini_3.6_Flash_Medium/9",
-      "candidate_sha256": "sha256:5791b28a22b1eb6bc229bd629b03c29297ca83718322537ba2055a2c18e514cf",
-      "field": "roth_phaseout_joint_2025_start",
+      "candidate_id": "GPT-OSS_120B_Medium/15",
+      "candidate_sha256": "sha256:9abc222926765ec5a0f5040219ceb787a933f9f0a90c7fdcfb874117b6e99fdd",
+      "field": "traditional_phaseout_single_2026_end",
       "key": null,
       "outcome": "admitted",
       "codes": [],
-      "value": "236000",
+      "value": "91000",
       "unit": "USD",
       "source": "document",
       "ref": null,
       "url": null,
       "evidence": {
-        "start": 4477,
-        "end": 4485
+        "start": 5699,
+        "end": 5706
       },
       "parts": [],
       "missing": [],
       "packs": []
     },
     {
-      "candidate_id": "GPT-OSS_120B_Medium/11",
-      "candidate_sha256": "sha256:57a55a4609fd501bbf56f668eaeda99b31596af2a48e6f1e9c09a332c0f12251",
-      "field": "ira_limit_age_50_2026",
+      "candidate_id": "Gemini_3.6_Flash_Medium/21",
+      "candidate_sha256": "sha256:a5503dabb5db3b3176f5d82b9766469bf2fbfa35e34e875b2f9ac7251f4a32f0",
+      "field": "spousal_phaseout_2025_end",
       "key": null,
       "outcome": "admitted",
       "codes": [],
-      "value": "8600",
+      "value": "246000",
       "unit": "USD",
       "source": "document",
       "ref": null,
       "url": null,
       "evidence": {
-        "start": 5212,
-        "end": 5218
-      },
-      "parts": [],
-      "missing": [],
-      "packs": []
-    },
-    {
-      "candidate_id": "GPT-OSS_120B_Medium/9",
-      "candidate_sha256": "sha256:5a6d4ac71f89158f97f60df061c37851c75b938218ebe0edca0c4a85ffae45ae",
-      "field": "roth_phaseout_single_2025_start",
-      "key": null,
-      "outcome": "admitted",
-      "codes": [],
-      "value": "150000",
-      "unit": "USD",
-      "source": "document",
-      "ref": null,
-      "url": null,
-      "evidence": {
-        "start": 4748,
-        "end": 4756
-      },
-      "parts": [],
-      "missing": [],
-      "packs": []
-    },
-    {
-      "candidate_id": "Gemini_3.6_Flash_Medium/7",
-      "candidate_sha256": "sha256:5c0771233f5723b8d06d6b012b44aa27f3fda6b4a0ce3d937ae58a6af1c7e512",
-      "field": "spousal_phaseout_2025_start",
-      "key": null,
-      "outcome": "admitted",
-      "codes": [],
-      "value": "236000",
-      "unit": "USD",
-      "source": "document",
-      "ref": null,
-      "url": null,
-      "evidence": {
-        "start": 4016,
-        "end": 4024
-      },
-      "parts": [],
-      "missing": [],
-      "packs": []
-    },
-    {
-      "candidate_id": "Gemini_3.6_Flash_Medium/0",
-      "candidate_sha256": "sha256:5e979a80d84382122107bfde9170109a675395e9c59448d4b2a7aba542218b02",
-      "field": "ira_limit_2025",
-      "key": null,
-      "outcome": "admitted",
-      "codes": [],
-      "value": "7000",
-      "unit": "USD",
-      "source": "document",
-      "ref": null,
-      "url": null,
-      "evidence": {
-        "start": 2317,
-        "end": 2323
+        "start": 6176,
+        "end": 6184
       },
       "parts": [],
       "missing": [],
@@ -436,7 +636,7 @@
     },
     {
       "candidate_id": "Gemini_3.6_Flash_Medium/23",
-      "candidate_sha256": "sha256:679f7b6d10f170c5fb18d679c3c85eac8ffecca3059d9ef4e0400cc98acc9b22",
+      "candidate_sha256": "sha256:a774e728abe0a79da4212759664995ae5724c007cd5407806839993210c56d16",
       "field": "roth_phaseout_joint_2026_end",
       "key": null,
       "outcome": "rejected",
@@ -457,34 +657,12 @@
       "packs": []
     },
     {
-      "candidate_id": "Gemini_3.6_Flash_Medium/16",
-      "candidate_sha256": "sha256:71398a9deea78235f133cc86235f5d20e6e64526ebab7afbe88ec790786131f0",
-      "field": "traditional_phaseout_single_2026_start",
+      "candidate_id": "Gemini_3.6_Flash_Medium/7",
+      "candidate_sha256": "sha256:ae001e4b798f7a9a00d039dc80d77715bb44e328d4c4df6874b9d57edbf700a9",
+      "field": "spousal_phaseout_2025_start",
       "key": null,
       "outcome": "admitted",
       "codes": [],
-      "value": "81000",
-      "unit": "USD",
-      "source": "document",
-      "ref": null,
-      "url": null,
-      "evidence": {
-        "start": 5677,
-        "end": 5684
-      },
-      "parts": [],
-      "missing": [],
-      "packs": []
-    },
-    {
-      "candidate_id": "GPT-OSS_120B_Medium/7",
-      "candidate_sha256": "sha256:7777f7eaae5c0143aabaad9340461be07c18e0c2e84789ba86ca275be141e149",
-      "field": "roth_phaseout_joint_2025_start",
-      "key": null,
-      "outcome": "needs_verification",
-      "codes": [
-        "QUALIFIED_VALUE"
-      ],
       "value": "236000",
       "unit": "USD",
       "source": "document",
@@ -499,88 +677,8 @@
       "packs": []
     },
     {
-      "candidate_id": "Gemini_3.6_Flash_Medium/18",
-      "candidate_sha256": "sha256:873046785d3b7340f7fa61bd8596894fc3d83d0fc439066967e06e0c1d0d76f6",
-      "field": "spousal_phaseout_2026_start",
-      "key": null,
-      "outcome": "admitted",
-      "codes": [],
-      "value": "242000",
-      "unit": "USD",
-      "source": "document",
-      "ref": null,
-      "url": null,
-      "evidence": {
-        "start": 6107,
-        "end": 6115
-      },
-      "parts": [],
-      "missing": [],
-      "packs": []
-    },
-    {
-      "candidate_id": "GPT-OSS_120B_Medium/14",
-      "candidate_sha256": "sha256:8b2cdc5fd5fbedd1fc12930d0f92ec389b5761984773b8e3b634d49ce93c580b",
-      "field": "traditional_phaseout_single_2026_start",
-      "key": null,
-      "outcome": "admitted",
-      "codes": [],
-      "value": "81000",
-      "unit": "USD",
-      "source": "document",
-      "ref": null,
-      "url": null,
-      "evidence": {
-        "start": 5677,
-        "end": 5684
-      },
-      "parts": [],
-      "missing": [],
-      "packs": []
-    },
-    {
-      "candidate_id": "Gemini_3.6_Flash_Medium/22",
-      "candidate_sha256": "sha256:92c912053fc109e76e71f2b9e756d1c938ad57c9e709a17f14b5a1a3e0d7c8e4",
-      "field": "roth_phaseout_joint_2026_start",
-      "key": null,
-      "outcome": "admitted",
-      "codes": [],
-      "value": "242000",
-      "unit": "USD",
-      "source": "document",
-      "ref": null,
-      "url": null,
-      "evidence": {
-        "start": 6578,
-        "end": 6586
-      },
-      "parts": [],
-      "missing": [],
-      "packs": []
-    },
-    {
-      "candidate_id": "Gemini_3.6_Flash_Medium/12",
-      "candidate_sha256": "sha256:9ff9797197934145ad287a4aa194e1c934a8dfe567d16e12cb579af86ae3ae1a",
-      "field": "ira_limit_2026",
-      "key": null,
-      "outcome": "admitted",
-      "codes": [],
-      "value": "7500",
-      "unit": "USD",
-      "source": "document",
-      "ref": null,
-      "url": null,
-      "evidence": {
-        "start": 5204,
-        "end": 5210
-      },
-      "parts": [],
-      "missing": [],
-      "packs": []
-    },
-    {
       "candidate_id": "GPT-OSS_120B_Medium/2",
-      "candidate_sha256": "sha256:ac87fcd8f87d36008a3ab6fbbbb13a697181c8ed13a928e755356e1db8de8747",
+      "candidate_sha256": "sha256:b1f55b63b5715a7b531cd4524aeb58deebc997477ee2dad160e6b3d85ff27a0b",
       "field": "trump_account_pilot_contribution",
       "key": null,
       "outcome": "admitted",
@@ -599,328 +697,8 @@
       "packs": []
     },
     {
-      "candidate_id": "Gemini_3.6_Flash_Medium/21",
-      "candidate_sha256": "sha256:b6c06805c17b67d9aa7d05792bef7e1502f8588b793688041f6bc7225aaeb5ad",
-      "field": "spousal_phaseout_2025_end",
-      "key": null,
-      "outcome": "admitted",
-      "codes": [],
-      "value": "246000",
-      "unit": "USD",
-      "source": "document",
-      "ref": null,
-      "url": null,
-      "evidence": {
-        "start": 6176,
-        "end": 6184
-      },
-      "parts": [],
-      "missing": [],
-      "packs": []
-    },
-    {
-      "candidate_id": "Gemini_3.6_Flash_Medium/19",
-      "candidate_sha256": "sha256:b81a71f8114ed8ace3e42dc2afb66a0387b236489553677611f812c05ac297ee",
-      "field": "spousal_phaseout_2025_start",
-      "key": null,
-      "outcome": "admitted",
-      "codes": [],
-      "value": "236000",
-      "unit": "USD",
-      "source": "document",
-      "ref": null,
-      "url": null,
-      "evidence": {
-        "start": 6125,
-        "end": 6133
-      },
-      "parts": [],
-      "missing": [],
-      "packs": []
-    },
-    {
-      "candidate_id": "GPT-OSS_120B_Medium/3",
-      "candidate_sha256": "sha256:bbbb2aa8e2f8aea1d802fe697309c2e96eb00644d476d04fb8dddebde01aeea5",
-      "field": "traditional_phaseout_joint_2025_start",
-      "key": null,
-      "outcome": "admitted",
-      "codes": [],
-      "value": "126000",
-      "unit": "USD",
-      "source": "document",
-      "ref": null,
-      "url": null,
-      "evidence": {
-        "start": 3468,
-        "end": 3476
-      },
-      "parts": [],
-      "missing": [],
-      "packs": []
-    },
-    {
-      "candidate_id": "GPT-OSS_120B_Medium/12",
-      "candidate_sha256": "sha256:bda098ecebff3ce56045736d5b65e892c790945f380ba11c06fd446975615cde",
-      "field": "traditional_phaseout_joint_2026_start",
-      "key": null,
-      "outcome": "admitted",
-      "codes": [],
-      "value": "129000",
-      "unit": "USD",
-      "source": "document",
-      "ref": null,
-      "url": null,
-      "evidence": {
-        "start": 5551,
-        "end": 5559
-      },
-      "parts": [],
-      "missing": [],
-      "packs": []
-    },
-    {
-      "candidate_id": "GPT-OSS_120B_Medium/4",
-      "candidate_sha256": "sha256:ca6e5ecd1fcaeb077e01487173dbfa8ba51857ef558a58004cd2c6f891a3164b",
-      "field": "traditional_phaseout_joint_2025_end",
-      "key": null,
-      "outcome": "admitted",
-      "codes": [],
-      "value": "146000",
-      "unit": "USD",
-      "source": "document",
-      "ref": null,
-      "url": null,
-      "evidence": {
-        "start": 3491,
-        "end": 3499
-      },
-      "parts": [],
-      "missing": [],
-      "packs": []
-    },
-    {
-      "candidate_id": "GPT-OSS_120B_Medium/17",
-      "candidate_sha256": "sha256:ce859d14a9151a33727fd9ad331ad5fc3d5a6be6f6a098dbe0a7fe97b7defa9b",
-      "field": "spousal_phaseout_2025_end",
-      "key": null,
-      "outcome": "admitted",
-      "codes": [],
-      "value": "246000",
-      "unit": "USD",
-      "source": "document",
-      "ref": null,
-      "url": null,
-      "evidence": {
-        "start": 6176,
-        "end": 6184
-      },
-      "parts": [],
-      "missing": [],
-      "packs": []
-    },
-    {
-      "candidate_id": "Gemini_3.6_Flash_Medium/2",
-      "candidate_sha256": "sha256:d82c94420472b89cc9a15a38cfda4f164e82d428018da5906eb456ab7f4bc992",
-      "field": "trump_account_pilot_contribution",
-      "key": null,
-      "outcome": "admitted",
-      "codes": [],
-      "value": "1000",
-      "unit": "USD",
-      "source": "document",
-      "ref": null,
-      "url": null,
-      "evidence": {
-        "start": 2785,
-        "end": 2791
-      },
-      "parts": [],
-      "missing": [],
-      "packs": []
-    },
-    {
-      "candidate_id": "Gemini_3.6_Flash_Medium/24",
-      "candidate_sha256": "sha256:df5968ea8d6f0cf69e862ff334aaa22d21d16bb95bc89510b3eb81f25d8d2c45",
-      "field": "roth_phaseout_single_2026_start",
-      "key": null,
-      "outcome": "admitted",
-      "codes": [],
-      "value": "153000",
-      "unit": "USD",
-      "source": "document",
-      "ref": null,
-      "url": null,
-      "evidence": {
-        "start": 6850,
-        "end": 6858
-      },
-      "parts": [],
-      "missing": [],
-      "packs": []
-    },
-    {
-      "candidate_id": "Gemini_3.6_Flash_Medium/17",
-      "candidate_sha256": "sha256:df7907d562338f0a1c9ad2ff387f64d6ab16751c5bbcec97f8b2db8b92b24bb2",
-      "field": "traditional_phaseout_single_2026_end",
-      "key": null,
-      "outcome": "admitted",
-      "codes": [],
-      "value": "91000",
-      "unit": "USD",
-      "source": "document",
-      "ref": null,
-      "url": null,
-      "evidence": {
-        "start": 5699,
-        "end": 5706
-      },
-      "parts": [],
-      "missing": [],
-      "packs": []
-    },
-    {
-      "candidate_id": "GPT-OSS_120B_Medium/6",
-      "candidate_sha256": "sha256:e1384513d834c3d22ed7b58d3949f19a206bd49b78cee5901273b9d3014ded43",
-      "field": "traditional_phaseout_single_2025_end",
-      "key": null,
-      "outcome": "admitted",
-      "codes": [],
-      "value": "89000",
-      "unit": "USD",
-      "source": "document",
-      "ref": null,
-      "url": null,
-      "evidence": {
-        "start": 3616,
-        "end": 3623
-      },
-      "parts": [],
-      "missing": [],
-      "packs": []
-    },
-    {
-      "candidate_id": "Gemini_3.6_Flash_Medium/4",
-      "candidate_sha256": "sha256:e458baad64272904a109128e58751f16c7d49173e5b93b8891a4602af4ba1659",
-      "field": "traditional_phaseout_joint_2025_end",
-      "key": null,
-      "outcome": "admitted",
-      "codes": [],
-      "value": "146000",
-      "unit": "USD",
-      "source": "document",
-      "ref": null,
-      "url": null,
-      "evidence": {
-        "start": 3491,
-        "end": 3499
-      },
-      "parts": [],
-      "missing": [],
-      "packs": []
-    },
-    {
-      "candidate_id": "Gemini_3.6_Flash_Medium/14",
-      "candidate_sha256": "sha256:e69750335fdcb19f6e11be8b32e5682ce95631dc4eee0bb8fbc703f316146a9a",
-      "field": "traditional_phaseout_joint_2026_start",
-      "key": null,
-      "outcome": "admitted",
-      "codes": [],
-      "value": "129000",
-      "unit": "USD",
-      "source": "document",
-      "ref": null,
-      "url": null,
-      "evidence": {
-        "start": 5551,
-        "end": 5559
-      },
-      "parts": [],
-      "missing": [],
-      "packs": []
-    },
-    {
-      "candidate_id": "GPT-OSS_120B_Medium/5",
-      "candidate_sha256": "sha256:ec602805a2ec54ad5a1bf1dcba80c43dab354e26b1742262a2d499ed9b95daab",
-      "field": "traditional_phaseout_single_2025_start",
-      "key": null,
-      "outcome": "admitted",
-      "codes": [],
-      "value": "79000",
-      "unit": "USD",
-      "source": "document",
-      "ref": null,
-      "url": null,
-      "evidence": {
-        "start": 3594,
-        "end": 3601
-      },
-      "parts": [],
-      "missing": [],
-      "packs": []
-    },
-    {
-      "candidate_id": "GPT-OSS_120B_Medium/21",
-      "candidate_sha256": "sha256:ee1bf0fe3ada264dcfa80c28f5f116b7520f1e2f6e6ab746f1d6e5d1e63b2532",
-      "field": "roth_phaseout_joint_2026_end",
-      "key": null,
-      "outcome": "admitted",
-      "codes": [],
-      "value": "252000",
-      "unit": "USD",
-      "source": "document",
-      "ref": null,
-      "url": null,
-      "evidence": {
-        "start": 6220,
-        "end": 6228
-      },
-      "parts": [],
-      "missing": [],
-      "packs": []
-    },
-    {
-      "candidate_id": "GPT-OSS_120B_Medium/0",
-      "candidate_sha256": "sha256:ee446abbb10b337b71987519db7456ccc13c9d5a54ca2d29ae32963e6eb0cfdd",
-      "field": "ira_limit_2025",
-      "key": null,
-      "outcome": "admitted",
-      "codes": [],
-      "value": "7000",
-      "unit": "USD",
-      "source": "document",
-      "ref": null,
-      "url": null,
-      "evidence": {
-        "start": 2317,
-        "end": 2323
-      },
-      "parts": [],
-      "missing": [],
-      "packs": []
-    },
-    {
-      "candidate_id": "Gemini_3.6_Flash_Medium/15",
-      "candidate_sha256": "sha256:f4ecd98a49292b2ea7a9ae84012855741016e771a542e767b059df36be5dcadd",
-      "field": "traditional_phaseout_joint_2026_end",
-      "key": null,
-      "outcome": "admitted",
-      "codes": [],
-      "value": "149000",
-      "unit": "USD",
-      "source": "document",
-      "ref": null,
-      "url": null,
-      "evidence": {
-        "start": 5574,
-        "end": 5582
-      },
-      "parts": [],
-      "missing": [],
-      "packs": []
-    },
-    {
-      "candidate_id": "GPT-OSS_120B_Medium/1",
-      "candidate_sha256": "sha256:f505f6051fa2e2d20d01ed41dea4af845f336f5e2fc500e6fb6b24b50dc289e2",
+      "candidate_id": "Gemini_3.6_Flash_Medium/1",
+      "candidate_sha256": "sha256:b464880ecae3479e19e0449d222b4aa97422938c61339f71369926624ecf57e2",
       "field": "ira_limit_age_50_2025",
       "key": null,
       "outcome": "admitted",
@@ -939,40 +717,262 @@
       "packs": []
     },
     {
-      "candidate_id": "GPT-OSS_120B_Medium/16",
-      "candidate_sha256": "sha256:f6513778ac6ec86fb3a0754a3d7cadde7e93efd195c26cd289201575f669e474",
-      "field": "spousal_phaseout_2025_start",
+      "candidate_id": "Gemini_3.6_Flash_Medium/13",
+      "candidate_sha256": "sha256:b70843db8413aa1e30e32bee795eb750e6a416188e219a9f62590e9250c59094",
+      "field": "ira_limit_age_50_2026",
       "key": null,
       "outcome": "admitted",
       "codes": [],
-      "value": "236000",
+      "value": "8600",
       "unit": "USD",
       "source": "document",
       "ref": null,
       "url": null,
       "evidence": {
-        "start": 6125,
-        "end": 6133
+        "start": 5212,
+        "end": 5218
       },
       "parts": [],
       "missing": [],
       "packs": []
     },
     {
-      "candidate_id": "Gemini_3.6_Flash_Medium/11",
-      "candidate_sha256": "sha256:f8d3d2373beaf0c170f28246591ab07ef8acd9bdd3620119c0d610dce1eb13ad",
-      "field": "roth_phaseout_single_2025_start",
+      "candidate_id": "Gemini_3.6_Flash_Medium/15",
+      "candidate_sha256": "sha256:b7d8449a17ad23a9ec02d579ff37dd0441f0013c6a2545f522c28a29c0d66e9e",
+      "field": "traditional_phaseout_joint_2026_end",
       "key": null,
       "outcome": "admitted",
       "codes": [],
-      "value": "150000",
+      "value": "149000",
       "unit": "USD",
       "source": "document",
       "ref": null,
       "url": null,
       "evidence": {
-        "start": 4748,
-        "end": 4756
+        "start": 5574,
+        "end": 5582
+      },
+      "parts": [],
+      "missing": [],
+      "packs": []
+    },
+    {
+      "candidate_id": "GPT-OSS_120B_Medium/8",
+      "candidate_sha256": "sha256:bba1e4c97bc3a7a11f3548802589fa5f6b4737f93d4e77f1a9d374093b0cd515",
+      "field": "roth_phaseout_joint_2025_end",
+      "key": null,
+      "outcome": "needs_verification",
+      "codes": [
+        "QUALIFIED_VALUE"
+      ],
+      "value": "246000",
+      "unit": "USD",
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 4067,
+        "end": 4075
+      },
+      "parts": [],
+      "missing": [],
+      "packs": []
+    },
+    {
+      "candidate_id": "GPT-OSS_120B_Medium/10",
+      "candidate_sha256": "sha256:cfa1d8e341959e2ce10aab0778a396f909368392d1da2f425ed8060717495deb",
+      "field": "ira_limit_2026",
+      "key": null,
+      "outcome": "admitted",
+      "codes": [],
+      "value": "7500",
+      "unit": "USD",
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 5204,
+        "end": 5210
+      },
+      "parts": [],
+      "missing": [],
+      "packs": []
+    },
+    {
+      "candidate_id": "GPT-OSS_120B_Medium/3",
+      "candidate_sha256": "sha256:d047a512aabb943dcce55f68126e1cb08c009166822f809fd820f0f5e7f291a5",
+      "field": "traditional_phaseout_joint_2025_start",
+      "key": null,
+      "outcome": "admitted",
+      "codes": [],
+      "value": "126000",
+      "unit": "USD",
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 3468,
+        "end": 3476
+      },
+      "parts": [],
+      "missing": [],
+      "packs": []
+    },
+    {
+      "candidate_id": "Gemini_3.6_Flash_Medium/20",
+      "candidate_sha256": "sha256:d37aee513d7395ed47b34685b9f942bfc077dcea175a37851985e264c4270e2b",
+      "field": "spousal_phaseout_2026_end",
+      "key": null,
+      "outcome": "admitted",
+      "codes": [],
+      "value": "252000",
+      "unit": "USD",
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 6158,
+        "end": 6166
+      },
+      "parts": [],
+      "missing": [],
+      "packs": []
+    },
+    {
+      "candidate_id": "Gemini_3.6_Flash_Medium/5",
+      "candidate_sha256": "sha256:d3a2ed252b942fd32b8c3132eef1b24632f7f80860e2d8c91d8a0dbbfc072960",
+      "field": "traditional_phaseout_single_2025_start",
+      "key": null,
+      "outcome": "admitted",
+      "codes": [],
+      "value": "79000",
+      "unit": "USD",
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 3594,
+        "end": 3601
+      },
+      "parts": [],
+      "missing": [],
+      "packs": []
+    },
+    {
+      "candidate_id": "Gemini_3.6_Flash_Medium/10",
+      "candidate_sha256": "sha256:df34b851e126570dc01a0bcfb220c4f3f4742859756d8eb529a17a5495c73dca",
+      "field": "roth_phaseout_joint_2025_end",
+      "key": null,
+      "outcome": "admitted",
+      "codes": [],
+      "value": "246000",
+      "unit": "USD",
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 4552,
+        "end": 4560
+      },
+      "parts": [],
+      "missing": [],
+      "packs": []
+    },
+    {
+      "candidate_id": "GPT-OSS_120B_Medium/21",
+      "candidate_sha256": "sha256:e3496ba03ad99bb42fa5c8bc8781fa7105211239a4433571c3d9f4a44500c85c",
+      "field": "roth_phaseout_joint_2026_end",
+      "key": null,
+      "outcome": "admitted",
+      "codes": [],
+      "value": "252000",
+      "unit": "USD",
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 6220,
+        "end": 6228
+      },
+      "parts": [],
+      "missing": [],
+      "packs": []
+    },
+    {
+      "candidate_id": "GPT-OSS_120B_Medium/11",
+      "candidate_sha256": "sha256:e644921dbbd072c82fb60ca0c2c034ee7fd97c7980cf832d8030bb93c4ff2e56",
+      "field": "ira_limit_age_50_2026",
+      "key": null,
+      "outcome": "admitted",
+      "codes": [],
+      "value": "8600",
+      "unit": "USD",
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 5212,
+        "end": 5218
+      },
+      "parts": [],
+      "missing": [],
+      "packs": []
+    },
+    {
+      "candidate_id": "Gemini_3.6_Flash_Medium/22",
+      "candidate_sha256": "sha256:e67f887a76cb16f1593ad6bf3bc8bbe9e88072d282ac42f20b2e77ede123cbce",
+      "field": "roth_phaseout_joint_2026_start",
+      "key": null,
+      "outcome": "admitted",
+      "codes": [],
+      "value": "242000",
+      "unit": "USD",
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 6578,
+        "end": 6586
+      },
+      "parts": [],
+      "missing": [],
+      "packs": []
+    },
+    {
+      "candidate_id": "Gemini_3.6_Flash_Medium/2",
+      "candidate_sha256": "sha256:fcfa742c71679678245a9bcbd441a100fbe2874db9301cdceb06c1d332c32685",
+      "field": "trump_account_pilot_contribution",
+      "key": null,
+      "outcome": "admitted",
+      "codes": [],
+      "value": "1000",
+      "unit": "USD",
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 2785,
+        "end": 2791
+      },
+      "parts": [],
+      "missing": [],
+      "packs": []
+    },
+    {
+      "candidate_id": "GPT-OSS_120B_Medium/12",
+      "candidate_sha256": "sha256:fe8e251c148fdded909743212d76e8eb8f67d0a75794f8815032a07fd22612f6",
+      "field": "traditional_phaseout_joint_2026_start",
+      "key": null,
+      "outcome": "admitted",
+      "codes": [],
+      "value": "129000",
+      "unit": "USD",
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 5551,
+        "end": 5559
       },
       "parts": [],
       "missing": [],
@@ -991,5 +991,5 @@
     "needs_verification": 3,
     "rejected": 1
   },
-  "receipt_sha256": "sha256:6d9eabe2b67f4dfa0297d5215c82c8f7ee775d419295d0fc79a7fcd9335c637f"
+  "receipt_sha256": "sha256:fb250b83490f09563f6d44f2b0819c503aa58ee56c0eca9aae9ed7e6b9af6591"
 }

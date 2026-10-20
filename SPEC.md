@@ -1,10 +1,10 @@
-# groundgate specification v0.10
+# groundgate specification v0.11 (draft)
 
-Status: released with groundgate 0.10.0. Version string: `groundgate/0.10`. Spec 0.9 was
-released with groundgate 0.9.0 and is in the `v0.9.0` tag. Spec 0.8 is in the `v0.8.0` tag,
-spec 0.7 in the `v0.7.0` tag, spec 0.6 in the `v0.6.0` tag, spec 0.5 in the `v0.5.0` tag, spec
-0.4 in the `v0.4.0` tag, spec 0.3 in the `v0.3.0` tag, spec 0.2 in the `v0.2.0` tag, and spec
-0.1 in the `v0.1.0` tag. Any change to how
+Status: draft, not released. Version string: `groundgate/0.11`. Spec 0.10 was released with
+groundgate 0.10.0 and is in the `v0.10.0` tag. Spec 0.9 is in the `v0.9.0` tag, spec 0.8 in the
+`v0.8.0` tag, spec 0.7 in the `v0.7.0` tag, spec 0.6 in the `v0.6.0` tag, spec 0.5 in the
+`v0.5.0` tag, spec 0.4 in the `v0.4.0` tag, spec 0.3 in the `v0.3.0` tag, spec 0.2 in the
+`v0.2.0` tag, and spec 0.1 in the `v0.1.0` tag. Any change to how
 a candidate is decided is a new version with a new version string. An implementation conforms if
 it produces the outcome, codes and missing parts of every decision, the parts and the evidence
 units where a vector gives them, the coverage findings, and the relation results where a vector
@@ -1167,7 +1167,7 @@ more limit. The packet is also invalid when a kind pack fails one of these check
 ## 5. Receipt
 
 ```json
-{"groundgate": "0.10",
+{"groundgate": "0.11",
  "document": {"id": null, "sha256": "sha256:...", "source": null},
  "references": [],
  "packs": [],
@@ -1284,10 +1284,10 @@ strings escaped as ECMAScript `JSON.stringify` does, numbers serialised as ECMAS
 `Number.prototype.toString`. NaN and infinities are not permitted. Integers outside
 [-(2^53-1), 2^53-1] are not permitted (they are not exactly representable).
 
-`digest(kind, obj) = "sha256:" + hex(SHA-256("groundgate/0.10:" + kind + "\0" + JCS(obj)))`, where
+`digest(kind, obj) = "sha256:" + hex(SHA-256("groundgate/0.11:" + kind + "\0" + JCS(obj)))`, where
 the prefix is ASCII and `JCS(obj)` is UTF-8.
 
-## 7. Non-goals for v0.10
+## 7. Non-goals for v0.11
 
 Semantic correctness (whether the sentence describes the field) by groundgate itself: a recorded
 `field_match` judgment can only add doubt, and a field item checks only the field's own aliases.

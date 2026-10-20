@@ -137,7 +137,7 @@ def serialized_layout(text: str, layout: Json) -> Json:
         raise DiagnosticError("oversized layout text")
     _object(layout, {"groundgate_layout", "document_sha256", "pages", "words"})
     if layout["groundgate_layout"] != "0.1" or layout["document_sha256"] not in {
-        core_digest(spec, "document", {"text": text}) for spec in ("0.8", "0.9", "0.10")
+        core_digest(spec, "document", {"text": text}) for spec in ("0.8", "0.9", "0.10", "0.11")
     }:
         raise DiagnosticError("layout text digest differs")
     raw = text.encode()

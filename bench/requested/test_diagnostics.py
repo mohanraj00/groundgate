@@ -815,7 +815,7 @@ print(json.dumps({'package_version': gg.__version__, 'spec_version': SPEC_VERSIO
     version = json.loads(
         subprocess.check_output([sys.executable, "-I", "-c", fingerprint_code], timeout=10)
     )
-    assert version["spec_version"] in {"0.8", "0.9", "0.10"}
+    assert version["spec_version"] in {"0.8", "0.9", "0.10", "0.11"}
     version.update(
         id=version["spec_version"],
         python=sys.executable,
