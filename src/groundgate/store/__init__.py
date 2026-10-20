@@ -144,7 +144,7 @@ def _check_key(k: object) -> str:
 
 def _check_log(log: object) -> tuple[str, list[str]]:
     """The log kind and the hex digits of each key in a log name."""
-    if not isinstance(log, tuple) or not log or log[0] not in LOGS:
+    if not isinstance(log, tuple) or not log or not isinstance(log[0], str) or log[0] not in LOGS:
         raise ValueError(f"{_short(log)} is not a log name such as ('answers', packet, reviewer)")
     word = log[0]
     if len(log) != 1 + LOGS[word]:
@@ -238,6 +238,8 @@ class FolderStore:
     log makes ``<log>.lock`` with the process id, and ``close`` in that process removes it. A
     crashed writer leaves its lock, and a person removes it: the message says if the process
     is not running on this host. The store trusts the processes that can write to its folder.
+    The root and its parents can be symlinks on purpose: the symlink checks start below the
+    root.
 
     ``read`` holds a log and its records in memory, so one read can use several times
     ``max_bytes``. Choose a smaller ``max_bytes`` if the memory is small. Each append checks
@@ -259,8 +261,8 @@ class FolderStore:
         self._clock = clock or (lambda: datetime.now(timezone.utc))
         # For each log that this writer holds: the next sequence, the head and the size.
         self._heads: dict[LogName, tuple[int, str | None, int]] = {}
-        # Each lock that this writer made, with the id of the process that made it.
-        self._locks: dict[LogName, tuple[int, Path]] = {}
+        # Each lock that this writer made: the process id, the path, and the device and inode.
+        self._locks: dict[LogName, tuple[int, Path, tuple[int, int]]] = {}
         self._broken: set[LogName] = set()  # logs with a partial line that could not be removed
 
     def __enter__(self) -> FolderStore:
@@ -271,11 +273,11 @@ class FolderStore:
 
     def close(self) -> None:
         """Remove the locks of this writer. A child process after a fork keeps the locks of its
-        parent in place."""
-        for pid, lock in self._locks.values():
+        parent in place. A lock that another writer made after a person removed this one stays,
+        because its device and inode differ."""
+        for pid, lock, ident in self._locks.values():
             if pid == os.getpid():
-                with contextlib.suppress(FileNotFoundError):
-                    os.unlink(lock)
+                _unlink_own(lock, ident)
         self._locks.clear()
         self._heads.clear()
         self._broken.clear()
@@ -302,7 +304,10 @@ class FolderStore:
                 return k
         except (StoreError, FileNotFoundError):
             pass  # absent, other bytes or another mode: write the object again
-        self._replace(folder, path, data)
+        try:
+            self._replace(folder, path, data)
+        except OSError as exc:  # for example a folder in the place of the object
+            raise StoreError(f"objects/{hexes[:2]}/{hexes[2:]} cannot be written: {exc}") from exc
         return k
 
     def get(self, kind: str, key: str) -> bytes:
@@ -327,14 +332,23 @@ class FolderStore:
         hexes = _check_key(key)
         if not isinstance(reason, str) or not reason:
             raise ValueError("forget needs a reason")
+        rel = f"objects/{hexes[:2]}/{hexes[2:]}"
         try:
             folder = self._folder(["objects", hexes[:2]], make=False)
-            os.lstat(folder / hexes[2:])
+            info = os.lstat(folder / hexes[2:])
         except (NotFound, FileNotFoundError) as exc:
             raise NotFound(f"object {key} is not in the store") from exc
+        # Check that the unlink can work before the record says that it did.
+        if not (stat.S_ISREG(info.st_mode) or stat.S_ISLNK(info.st_mode)):
+            raise StoreError(f"{rel} is not a file, so forget does not remove it")
+        if not os.access(folder, os.W_OK | os.X_OK):
+            raise StoreError(f"objects/{hexes[:2]} is not writable, so forget cannot remove {rel}")
         time = self._clock().astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
         self._append(("deleted",), {"key": key, "reason": reason, "time": time})
-        os.unlink(folder / hexes[2:])
+        try:
+            os.unlink(folder / hexes[2:])
+        except OSError as exc:
+            raise StoreError(f"{rel} is in the deleted log, but the unlink failed: {exc}") from exc
 
     # Logs
 
@@ -367,7 +381,7 @@ class FolderStore:
             raise StoreError(f"an earlier append to {rel} failed: check the log, then close")
         if log not in self._heads:
             self._take(log)
-        pid, _ = self._locks[log]
+        pid, _, _ = self._locks[log]
         if pid != os.getpid():
             raise StoreError(f"process {pid} holds the lock of {rel}: a forked child cannot append")
         self._folder(parts, make=False)  # a folder of the log can become a symlink after the take
@@ -412,6 +426,14 @@ class FolderStore:
         except FileExistsError as exc:
             raise Locked(f"{lock} exists: {self._holder(lock)}") from exc
         try:
+            info = os.fstat(fd)
+        except BaseException:
+            os.close(fd)
+            with contextlib.suppress(FileNotFoundError):
+                os.unlink(lock)
+            raise
+        ident = (info.st_dev, info.st_ino)
+        try:
             try:
                 os.write(fd, f"{os.getpid()}\n".encode())
             finally:
@@ -429,10 +451,9 @@ class FolderStore:
                     os.close(fd)
             records = _records(word, data, rel)
         except BaseException:
-            with contextlib.suppress(FileNotFoundError):
-                os.unlink(lock)
+            _unlink_own(lock, ident)
             raise
-        self._locks[log] = (os.getpid(), lock)
+        self._locks[log] = (os.getpid(), lock, ident)
         head = records[-1]["entry_sha256"] if records else None
         self._heads[log] = (len(records) + 1, head, len(data))
 
@@ -453,7 +474,7 @@ class FolderStore:
                 os.kill(pid, 0)
             except ProcessLookupError:
                 return text + " That process is not running on this host: remove the lock."
-            except OSError:
+            except (OSError, OverflowError):  # OverflowError: a pid that no process can have
                 pass
         return text + " If it does not run, remove the lock."
 
@@ -524,7 +545,7 @@ class FolderStore:
                 raise StoreError(f"{rel} is not a regular file")
             if info.st_size > self.max_bytes:
                 raise StoreError(f"{rel} is larger than max_bytes")
-            data = f.read(self.max_bytes + 1)
+            data = f.read(info.st_size + 1)  # not max_bytes + 1: the buffer has this size
         if len(data) > self.max_bytes:
             raise StoreError(f"{rel} is larger than max_bytes")
         return data
@@ -548,6 +569,17 @@ class FolderStore:
 
 _NOFOLLOW = getattr(os, "O_NOFOLLOW", 0)
 _NONBLOCK = getattr(os, "O_NONBLOCK", 0)
+
+
+def _unlink_own(lock: Path, ident: tuple[int, int]) -> None:
+    """Remove a lock only if it is still the file that this writer made."""
+    try:
+        info = os.lstat(lock)
+    except FileNotFoundError:
+        return
+    if (info.st_dev, info.st_ino) == ident:
+        with contextlib.suppress(FileNotFoundError):
+            os.unlink(lock)
 
 
 def _chmod(fd: int, path: Path, mode: int) -> None:

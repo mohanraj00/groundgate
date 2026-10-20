@@ -373,3 +373,65 @@ def test_a_stale_lock_names_a_process_that_is_not_running(root: Path) -> None:
     lock.write_text(f"{os.getpid()}\n")
     with pytest.raises(Locked, match="If it does not run, remove the lock"):
         FolderStore(root).append(ANA, {"answer": "no"})
+
+
+# The reviews of cff0ac0
+
+
+def test_a_lock_with_a_pid_too_large_for_a_process(root: Path) -> None:
+    with FolderStore(root) as store:
+        store.append(ANA, {"answer": "yes"})
+    lock = root / "logs" / "answers" / PACKET[7:] / (ANA[2][7:] + ".lock")
+    lock.write_text("99999999999999999999\n")
+    with pytest.raises(Locked, match="process 99999999999999999999 made the lock"):
+        FolderStore(root).append(ANA, {"answer": "no"})
+
+
+def test_put_over_a_folder_raises_a_store_error(root: Path) -> None:
+    store = FolderStore(root)
+    path = _object(root, key("text@1", TEXT))
+    path.mkdir(parents=True)
+    (path / "x").write_text("x")
+    with pytest.raises(StoreError, match="cannot be written"):
+        store.put("text@1", TEXT)
+
+
+def test_a_read_does_not_ask_for_max_bytes_of_memory(root: Path) -> None:
+    store = FolderStore(root, max_bytes=2**62)  # a buffer of this size cannot exist
+    k = store.put("text@1", TEXT)
+    assert store.get("text@1", k) == TEXT
+
+
+def test_forget_writes_no_record_when_it_cannot_remove(root: Path) -> None:
+    store = FolderStore(root)
+    k = key("text@1", TEXT)
+    _object(root, k).mkdir(parents=True)
+    with pytest.raises(StoreError, match="is not a file"):
+        store.forget(k, "test")
+    _object(root, k).rmdir()
+    k = store.put("text@1", TEXT)
+    if os.geteuid() == 0:
+        pytest.skip("root can write to any folder")
+    _object(root, k).parent.chmod(0o500)
+    try:
+        with pytest.raises(StoreError, match="is not writable"):
+            store.forget(k, "test")
+    finally:
+        _object(root, k).parent.chmod(0o700)
+    assert store.read(("deleted",)) == []
+    assert store.get("text@1", k) == TEXT
+
+
+def test_close_keeps_a_lock_that_another_writer_made(root: Path) -> None:
+    first = FolderStore(root)
+    first.append(ANA, {"answer": "yes"})
+    lock = root / "logs" / "answers" / PACKET[7:] / (ANA[2][7:] + ".lock")
+    lock.unlink()  # a person removes what looks like a stale lock
+    second = FolderStore(root)
+    second.append(ANA, {"answer": "no"})
+    first.close()
+    assert lock.exists()
+    with pytest.raises(Locked):
+        FolderStore(root).append(ANA, {"answer": "maybe"})
+    second.close()
+    assert not lock.exists()

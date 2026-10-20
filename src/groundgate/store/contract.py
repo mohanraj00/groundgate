@@ -115,6 +115,7 @@ def check_bad_logs(make: Make) -> None:
         ("../answers", _PACKET, good),
         ("deleted", good),
         ["answers", _PACKET, good],
+        (["answers"], _PACKET, good),
         "answers",
     ):
         _fails(ValueError, f"read {bad!r}", store.read, bad)
