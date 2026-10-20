@@ -290,8 +290,8 @@ print(gg.verify(receipt.to_dict(), text, schema, candidates).ok)
 ```
 
 ```text
-needs_verification  phaseout_start  79000  QUALIFIED_VALUE
 admitted            ira_limit       7000
+needs_verification  phaseout_start  79000  QUALIFIED_VALUE
 rejected            ira_limit       70000  VALUE_NOT_IN_EVIDENCE
 True
 ```
@@ -406,8 +406,8 @@ implementation can prove it agrees.
 ## Receipts
 
 ```json
-{"groundgate": "0.10",
- "document": {"id": "irs-p590a-2025-pages-1-2", "sha256": "sha256:70339a5e68f8...", "source": null},
+{"groundgate": "0.11",
+ "document": {"id": "irs-p590a-2025-pages-1-2", "sha256": "sha256:93e71e53d954...", "source": null},
  "references": [],
  "packs": [],
  "schema_sha256": "sha256:...", "policy_sha256": "sha256:...",
@@ -415,7 +415,7 @@ implementation can prove it agrees.
                 "outcome": "admitted", "codes": [], "value": "7000", "unit": "USD",
                 "source": "document", "ref": null, "url": null,
                 "evidence": {"start": 2317, "end": 2323}, "parts": [], "missing": [], "packs": [],
-                "candidate_sha256": "sha256:5e979a80..."},
+                "candidate_sha256": "sha256:2246982c..."},
                "..."],
  "coverage": [{"field": "roth_phaseout_single_2025_end", "code": "REQUIRED_FIELD_MISSING"}],
  "judgments": [],

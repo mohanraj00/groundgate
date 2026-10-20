@@ -1,5 +1,5 @@
 {
- "spec": "0.10",
+ "spec": "0.11",
  "source": "bench/afr, labels.json, text of bench/afr/tabs/docs",
  "seed": "322",
  "counts": {
