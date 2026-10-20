@@ -9,6 +9,7 @@ browser even if it slipped past escaping.
 
 from __future__ import annotations
 
+import os
 import re
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field
@@ -92,13 +93,15 @@ def render(
     references: Sequence[object] | None = None,
     document_source: str | None = None,
     packs: Sequence[object] = (),
+    pack_dir: str | os.PathLike[str] | None = None,
 ) -> str:
     """Render ``receipt`` over ``text``. ``candidates`` supply the quotes shown on each card.
 
     With ``schema`` (and ``policy``, ``judgments``, ``references``, ``document_source`` and
     ``packs`` if they were used), the receipt is re-derived first and the page says whether it
-    matched. Without them the page says it is unverified. The page shows the cited text of a
-    reference decision only when ``references`` holds that reference.
+    matched. Without them the page says it is unverified. ``pack_dir`` is a folder of pack
+    files, and ``verify`` reads it with the same rules (docs/design/packs.md §11). The page
+    shows the cited text of a reference decision only when ``references`` holds that reference.
     """
     verified = (
         None
@@ -113,6 +116,7 @@ def render(
             references=references,
             document_source=document_source,
             packs=packs,
+            pack_dir=pack_dir,
         ).ok
     )
     texts: dict[str, tuple[str, Offsets]] = {}
