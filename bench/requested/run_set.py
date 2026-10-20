@@ -291,6 +291,14 @@ def _archive_transport_error(document: Path, binding: str) -> bool:
     return True
 
 
+def _limits(record: Any) -> int:
+    """The search_limit fields of a groundgate-run/3 record; an older record stops the run."""
+    try:
+        return search_limit_fields(record)
+    except ValueError as exc:
+        raise CacheError("a projection needs groundgate-run/3 records: " + str(exc)) from exc
+
+
 def _settings(raw: Any) -> Json:
     """Check the frozen runner settings. ``drop_rounded`` is optional and must be false: the
     main runner arm keeps the 0.10 default, and only the replay arm turns the rule on (#376).
@@ -684,7 +692,9 @@ class FrozenSet:
 
         The run configuration, the manifest code_freeze and the imported code must have one
         code digest. The freeze names the last learning-loop record. The cache keeps one
-        held-out binding for the set: a held-out run measures a frozen change once. A set
+        held-out binding for the set: a held-out run measures a frozen change once. A run
+        publishes its split header after this check and before its first call, so each
+        started held-out run leaves its ``<binding>/<arm>/heldout`` folder. A set
         without a split_rule and without a held-out freeze keeps its earlier behavior.
         """
         freeze = self.manifest.get("code_freeze")
@@ -1064,9 +1074,7 @@ class FrozenSet:
                     "transport_error": calls.transport_error,
                     "transport_retries": _attempts((recorded if replayed else folder) / ident),
                     # The baseline arm has no targeted search, so no field stops there.
-                    "search_limit": 0
-                    if arm == "baseline"
-                    else search_limit_fields(local["record"]),
+                    "search_limit": 0 if arm == "baseline" else _limits(local["record"]),
                 }
             )
         if selected is not None:

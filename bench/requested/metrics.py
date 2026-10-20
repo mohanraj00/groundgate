@@ -108,7 +108,7 @@ def check_split_rule(manifest: dict[str, Any]) -> None:
         family = doc.get("source_family_group")
         if not isinstance(family, str) or not family.strip():
             raise ValueError("a split_rule needs a source_family_group on each document")
-        if doc.get("pilot", False) not in {True, False}:
+        if type(doc.get("pilot", False)) is not bool:
             raise ValueError("pilot must be true or false")
         families[family].append(doc)
     for family, docs in families.items():

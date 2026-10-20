@@ -586,6 +586,14 @@ def test_invalid_split_rule_is_refused(change: Any) -> None:
         check_split_rule({"split_rule": rule, "documents": []})
 
 
+@pytest.mark.parametrize("pilot", [1, 0, "yes", [], None])
+def test_pilot_must_be_a_boolean(pilot: Any) -> None:
+    manifest = family_set(RULE)
+    manifest["documents"][0]["pilot"] = pilot
+    with pytest.raises(ValueError, match="pilot"):
+        check_split_rule(manifest)
+
+
 def test_a_split_rule_needs_a_family_on_each_document() -> None:
     manifest = family_set(RULE)
     manifest["documents"][0].pop("source_family_group")

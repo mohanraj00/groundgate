@@ -64,6 +64,11 @@ def _splits(directory: Path) -> tuple[Json, set[str]]:
     return manifest, heldout
 
 
+def _development(directory: Path) -> set[str]:
+    manifest = json.loads(_read(directory / "manifest.json"))
+    return {d["id"] for d in manifest["documents"] if d["split"] == "development"}
+
+
 def review_codes(directory: Path, runs: dict[str, Json]) -> Json:
     """For each arm and review code: review decisions with a right value and with a wrong one.
 
@@ -236,6 +241,15 @@ def check_record(directory: Path, record: Json, iteration: int, heldout: set[str
             raise ValueError(f"{name(iteration)}: run {arm} is not a development run")
     if leaked := sorted(str(i) for i in named & heldout):
         raise ValueError(f"{name(iteration)}: names held-out documents: " + ", ".join(leaked))
+    # Also after the freeze, when results.json is not rescored: each run holds exactly the
+    # development documents of the manifest.
+    development = _development(directory)
+    for arm, (_, projection) in runs.items():
+        ids = [d.get("id") for d in projection.get("documents", [])]
+        if len(ids) != len(set(ids)) or set(ids) != development:
+            raise ValueError(f"{name(iteration)}: run {arm} is not the development documents")
+    if sorted(run["documents"]) != sorted(development):
+        raise ValueError(f"{name(iteration)}: the run documents are not the development split")
     for arm, (raw, projection) in runs.items():
         if (
             projection.get("binding_sha256") != run["binding_sha256"]

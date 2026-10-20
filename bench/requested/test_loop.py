@@ -174,6 +174,11 @@ def test_check_refuses_a_run_that_holds_a_heldout_document(tmp_path: Path) -> No
     with pytest.raises(ValueError, match="held-out documents: held"):
         loop.check(tmp_path)
     run["documents"].pop()
+    run["documents"][0]["id"] = "other"
+    (folder / "runs/runner.json").write_text(json.dumps(run))
+    with pytest.raises(ValueError, match="not the development documents"):
+        loop.check(tmp_path)
+    run["documents"][0]["id"] = "dev"
     run["split"] = "heldout"
     (folder / "runs/runner.json").write_text(json.dumps(run))
     with pytest.raises(ValueError, match="not a development run"):
@@ -219,7 +224,7 @@ def test_heldout_freeze_names_the_last_record_and_its_code(tmp_path: Path) -> No
             loop.check(tmp_path)
     freeze(tmp_path)
     manifest = json.loads((tmp_path / "manifest.json").read_text())
-    manifest["documents"][1]["split"] = "development"
+    manifest["documents"][1]["source"] = "https://example.org/other.pdf"
     (tmp_path / "manifest.json").write_text(json.dumps(manifest))
     with pytest.raises(ValueError, match="more than its code_freeze"):
         loop.check(tmp_path)
