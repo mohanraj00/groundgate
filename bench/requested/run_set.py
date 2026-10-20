@@ -21,7 +21,7 @@ from typing import Any
 
 import groundgate as gg
 
-from .metrics import measure, same_request
+from .metrics import ARMS, measure, same_request
 
 Json = dict[str, Any]
 _VERSION = "requested-run/1"
@@ -290,6 +290,12 @@ def _archive_transport_error(document: Path, binding: str) -> bool:
 
 
 def _settings(raw: Any) -> Json:
+    """Check the frozen runner settings. ``drop_rounded`` is optional and must be false: the
+    main runner arm keeps the 0.10 default, and only the replay arm turns the rule on (#376)."""
+    if isinstance(raw, dict) and "drop_rounded" in raw:
+        if raw["drop_rounded"] is not False:
+            raise CacheError("drop_rounded must be false; the runner_drop_rounded arm sets it")
+        raw = {k: v for k, v in raw.items() if k != "drop_rounded"}
     if not isinstance(raw, dict) or set(raw) != {
         "chunk_chars",
         "overlap_chars",
@@ -353,9 +359,15 @@ def chunks(text: str, settings: Json) -> list[tuple[int, int]]:
 
 class _Calls:
     def __init__(
-        self, owner: FrozenSet, folder: Path, binding: str, client: Callable[[str], str] | None
+        self,
+        owner: FrozenSet,
+        folder: Path,
+        binding: str,
+        client: Callable[[str], str] | None,
+        missing_message: str = "missing replay call",
     ):
         self.owner, self.folder, self.binding, self.client = owner, folder, binding, client
+        self.missing_message = missing_message
         self.count = 0
         self.missing = False
         self.failure: CacheError | None = None
@@ -395,7 +407,7 @@ class _Calls:
         else:
             if self.client is None:
                 self.missing = True
-                raise CacheError("missing replay call")
+                raise CacheError(self.missing_message)
             if pending.exists():
                 raise CacheError("unresolved call reservation; automatic retry refused")
             _publish(pending, request)
@@ -487,6 +499,14 @@ def _baseline_reply(raw: str, schema: Json, limit: int) -> list[Json]:
             if source == "document" and item["role"] not in _ROLES:
                 raise CacheError("invalid evidence role")
     return reply["candidates"]
+
+
+def _prompts(result: Json) -> list[Any]:
+    """The prompt digests of the model calls in a runner result, in order."""
+    record = result.get("record")
+    if not isinstance(record, list) or any(not isinstance(e, dict) for e in record):
+        raise CacheError("a runner result needs its record")
+    return [e.get("prompt_sha256") for e in record if e.get("kind") == "call"]
 
 
 def _projection(decision: Json) -> Json:
@@ -850,9 +870,21 @@ class FrozenSet:
         ``retry_transport_errors`` archives a transport error at the last call of a document,
         with its reservation, its result and the split projection, then runs that call again.
         It needs a client. The projection records the retries of each document.
+
+        ``runner_drop_rounded`` runs the runner with ``drop_rounded`` on (#376). It takes no
+        client and makes no model call: it reads the recorded calls of the ``runner`` arm of the
+        same split, in order, and checks each prompt against its record. A missing, extra or
+        changed call stops the run. The rounding step runs after the last model call, so each
+        prompt is the same as in the main arm. It publishes its own results and projection.
         """
-        if arm not in {"baseline", "runner"} or split not in {"development", "heldout"}:
+        if arm not in ARMS or split not in {"development", "heldout"}:
             raise CacheError("unknown arm or split")
+        replayed = arm == "runner_drop_rounded"
+        if replayed and client is not None:
+            raise CacheError(
+                "the runner_drop_rounded arm takes no client: "
+                "it replays the recorded calls of the runner arm"
+            )
         if retry_transport_errors and client is None:
             raise CacheError("a transport retry needs a client")
         selected = None
@@ -862,17 +894,26 @@ class FrozenSet:
             if not selected or not selected <= known:
                 raise CacheError("documents must be a nonempty subset of the split")
         runner_api = None
-        if arm == "runner":
+        if arm != "baseline":
             try:
                 from groundgate.extract import RunPolicy, extract, replay
             except ImportError as exc:
                 raise CacheError("runner execution requires the integrated runner API") from exc
             runner_api = (RunPolicy, replay, extract)
         self.check_inputs()
-        folder = self.cache / self.binding.removeprefix("sha256:") / arm / split
+        root = self.cache / self.binding.removeprefix("sha256:")
+        folder = root / arm / split
         _unlinked(folder)
+        # The replay arm publishes its own artifacts, because it never has a client.
+        replay_only = client is None and not replayed
+        recorded = root / "runner" / split
+        if replayed:
+            # The main runner arm must have run this split with the same binding.
+            _same_or_publish(
+                recorded / "header.json", self.header | {"arm": "runner", "split": split}, True
+            )
         _same_or_publish(
-            folder / "header.json", self.header | {"arm": arm, "split": split}, client is None
+            folder / "header.json", self.header | {"arm": arm, "split": split}, replay_only
         )
         outputs = []
         for ident, doc in sorted(self.documents.items()):
@@ -887,7 +928,25 @@ class FrozenSet:
                     archive = folder / "_attempts"
                     count = len(list(archive.glob("projection-*.json"))) if archive.exists() else 0
                     _move(projection, archive / f"projection-{count + 1:04}.json")
-            calls = _Calls(self, folder / ident / "calls", binding, client)
+            main: Json | None = None
+            if replayed:
+                if not _unlinked(recorded / ident / "result.json").is_file():
+                    raise CacheError("the runner arm has no result to replay: " + ident)
+                main = _json(_read(recorded / ident / "result.json"))
+                source = digest(
+                    encoded(
+                        {"run": self.binding, "arm": "runner", "split": split, "document": ident}
+                    )
+                )
+                calls = _Calls(
+                    self,
+                    recorded / ident / "calls",
+                    source,
+                    None,
+                    "missing recorded call of the runner arm; the replay arm makes no model call",
+                )
+            else:
+                calls = _Calls(self, folder / ident / "calls", binding, client)
             if arm == "baseline":
                 local = self._baseline(ident, calls)
             else:
@@ -899,7 +958,7 @@ class FrozenSet:
                     client=calls,
                     model_id=self.config["model_id"],
                     policy=self.policy,
-                    run_policy=settings_type(**self.settings),
+                    run_policy=settings_type(**self.settings, drop_rounded=replayed),
                     document_id=ident,
                     document_source=doc["source"],
                 )
@@ -944,6 +1003,11 @@ class FrozenSet:
                     "output": {"id": ident, "decisions": decisions, "not_found": missing},
                 }
             calls.finish()
+            # The runner result must come from the same recorded calls as this replay.
+            if main is not None and (
+                main.get("binding_sha256") != self.binding or _prompts(main) != _prompts(local)
+            ):
+                raise CacheError("the runner result does not match its recorded calls: " + ident)
             self.check_inputs()
             local |= {
                 "binding_sha256": self.binding,
@@ -952,13 +1016,13 @@ class FrozenSet:
                 "schema_sha256": digest(encoded(self.schema(doc))),
                 "policy_sha256": digest(encoded(self.policy)),
             }
-            _same_or_publish(folder / ident / "result.json", local, client is None)
+            _same_or_publish(folder / ident / "result.json", local, replay_only)
             outputs.append(
                 local["output"]
                 | {
                     "complete": local["complete"],
                     "transport_error": calls.transport_error,
-                    "transport_retries": _attempts(folder / ident),
+                    "transport_retries": _attempts((recorded if replayed else folder) / ident),
                 }
             )
         if selected is not None:
@@ -972,5 +1036,5 @@ class FrozenSet:
             "documents": outputs,
             "provenance": self.header,
         }
-        _same_or_publish(folder / "projection.json", public, client is None)
+        _same_or_publish(folder / "projection.json", public, replay_only)
         return public
