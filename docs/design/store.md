@@ -1,7 +1,7 @@
 # The store: one data model for all the tools
 
-Status: approved on 2026-10-20, issue #288. Nothing in this file is built, and it changes no
-decision and no receipt.
+Status: approved on 2026-10-20, issue #288. Code issue 1 is built: `groundgate.store` (#402).
+The rest is not built. The note changes no decision and no receipt.
 [review.md](review.md) (#287) keeps its data here. The last section lists the code issues.
 
 ## 1. The answers in short
@@ -138,8 +138,10 @@ and resolutions name the packet, and the answer logs of a packet are filed under
 | `forget(key, reason)` | Remove an object and record the deletion (section 8). |
 
 `get` takes the kind, because the key covers it. A log name is a log kind and one or two keys,
-for example `("answers", packet, reviewer)`. The reviewer part is the store key of the reviewer
-name, so a name never becomes a path.
+for example `("answers", packet, reviewer)`. The reviewer part is the store key of the kind
+`reviewer@1` over the UTF-8 of the reviewer name. The set part of a `splits` log is the store
+key of the kind `set@1` over the UTF-8 of the set name. Thus the file name is a digest, not the
+name that the CLI takes, and a name never becomes a path.
 
 Each log record has `sequence`, `previous` and `entry_sha256`, as the run record has.
 `entry_sha256` is a store key of the kind `<log>-entry@1` over the record without that member.
@@ -156,7 +158,7 @@ module, and the app runs it against its own store. The core holds no storage cod
 store/
   objects/ab/cdef...                         one file for each object, named by its key
   logs/answers/<packet>/<reviewer>.jsonl     one answer log for each packet and reviewer
-  logs/splits/<set>.jsonl                    the splits of #383
+  logs/splits/<set>.jsonl                    the splits of #383, one log for each set
   logs/deleted.jsonl                         the deletions
   views/...                                  JSON files; delete them at any time
 ```
