@@ -3,7 +3,7 @@
 Status: I selected the members on 2026-10-18 and froze the manifest on 2026-10-20, before any
 model output on this set (#323). I sealed the labels on 2026-10-20. The set has 115 documents:
 4 development pilots and 111 held-out (18 component datasheets, 23 SBCs, 20 annual reports and
-50 safety data sheets). No benchmark arm has run on this set.
+50 safety data sheets). All three arms ran on the held-out split on 2026-10-20.
 
 This set measures the 0.10 rules on documents that no 0.10 rule came from. It uses the three kinds
 of [bench/requested2](../requested2) with the same schemas and the same fixed requests, and it
@@ -101,3 +101,53 @@ The rounding step runs in `finish()`, after the last model call, and it calls on
 `runner_drop_rounded` arm sends the same prompts as `runner`. It takes no client. It reads the
 recorded calls of `runner` in order and checks each prompt against its record. A missing, extra or
 changed call stops the run.
+
+## Held-out results
+
+I ran the baseline and runner arms on the 111 held-out documents on 2026-10-20, on the
+code freeze 8290450, with one frozen configuration (`runs/`, `results.json`, `RESULTS.md`). The
+model, transport and run limits are the same as in the requested2 run. The client of this run
+stops the process at a usage limit or after 3 failed tries of one call; no run stopped. The
+`runner_drop_rounded` arm replayed the recorded calls of `runner` and made no model call. The
+labels were sealed before this output. The scorer counts 305 labeled values that the documents
+state. 102 unclear slots are not counted.
+
+| Arm | Right values admitted | Right absences | Escapes | Reviews | Silent misses | Miss rate |
+|---|---:|---:|---:|---:|---:|---:|
+| baseline | 115 | 0 | 2 | 142 | 48 | 62.30% (190 of 305) |
+| runner | 97 | 118 | 0 | 160 | 48 | 68.20% (208 of 305) |
+| runner_drop_rounded | 99 | 118 | 0 | 158 | 48 | 67.54% (206 of 305) |
+
+- The runner arms admit no wrong value. The baseline admits 2 wrong values of 117, all in
+  annual reports (2 of 20). Combined upper bound: baseline 15.34%, runner
+  11.73%, runner_drop_rounded 11.73%.
+- The runner misses more right values than the baseline: 208 against 190. Silent misses are the
+  same (48). The difference is values that the runner sends to review and the baseline admits.
+- The runner gives 118 right absences, 109 of them in safety data sheets. The baseline gives
+  0.
+- `drop_rounded` on admits 2 more right values than the main arm (99 against 97), all in annual reports
+  (4 against 2), and no wrong value.
+- The runner did not complete 15 of the 20 annual reports and 4 of the 18 datasheets. No document had a transport
+  error. Their unadmitted present fields count as misses. Annual miss rate is 73.53%
+  for the baseline and 97.06% for the runner.
+- Safety data sheets, the new kind: miss rate is 53.95% for the baseline and 52.63% for the
+  runner, with no escape in either arm.
+- The miss rate is above 60% for every arm. 0.10 does not meet the goal on this set, and the
+  runner does not beat the baseline on misses.
+
+### The three negative revenue slots
+
+annual-c07, annual-c08 and annual-c09 keep revenue as a negative value (#323). No arm admits a
+revenue value for these three reports, so the sign of the label changes no admitted count:
+
+- annual-c07: no arm gives a revenue decision. The runner arms did not complete this report.
+- annual-c08: each arm gives the positive amount. The baseline rejects it. Both runner arms send
+  it to review. A positive label would make it a right value in review, not a right admit.
+- annual-c09: no arm gives a revenue decision.
+
+To score again:
+
+```bash
+uv run python bench/score.py --requested --set bench/requested3 --split heldout
+uv run python bench/score.py --requested --set bench/requested3 --split heldout --check
+```
