@@ -131,8 +131,9 @@ gets a new meaning (store.md §4). Each format gets a JSON Schema in the package
   a later analysis finds every answer to that template (#287, rule 3).
 - `parts` lists each part that the person checks. The question names each of them (section 8).
   The core has no period, so the period comes from the field name, its description or its key.
-- A task holds offsets, pages and boxes, but no document text. The page reads the text from the
-  store. Thus `forget` can remove the text and keep the tasks (store.md §8).
+- A task holds offsets, pages and boxes. It holds no document text other than the values that its
+  question and choices quote. The page reads the text from the store. Thus `forget` can remove
+  the text and keep the tasks, and `forget --all` also removes the values (store.md §8).
 - The same packet and policy always give the same task bytes, so a task always has the same key.
 
 ### 5.3 The answer

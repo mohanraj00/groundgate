@@ -203,7 +203,8 @@ resolution of each packet, the labels for calibrate and the measures.
    |---|---|
    | `source@1`, `text@1`, `layout@1`, `document@1`, `reference@1`, `candidates@1`, `prompt@1`, `reply@1`, `admission@1` | `packet@1`, `reading@1`, `receipt@1`, `schema@1`, `policy@1`, `pack@1`, `judgments@1`, `run@N`, `task@1`, `resolution@1`, the answer logs |
 
-   The kept objects hold digests, values, offsets, codes and questions, but no document text.
+   The kept objects hold digests, values, offsets, codes and questions, and no document text
+   other than the values. A review question and its choices can quote a value.
    Issue 3 checks that no line of a run record holds document text, and `forget` removes the
    record if a line does. A value is still document data. If an app must also remove the values,
    `groundgate store forget --all PACKET` removes each object and log of the packet.
