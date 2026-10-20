@@ -114,6 +114,28 @@ The command line does the same:
 groundgate verify receipts/grant-0042.json grant.txt schema.json candidates.json --pack-dir receipts/packs
 ```
 
+The review page verifies the receipt first, so give it the same folder. In Python, `render`
+takes `pack_dir`:
+
+```python
+from groundgate.report import render
+
+html = render(stored, text, candidates, schema=schema, pack_dir=receipts / "packs")
+print("receipt verified" in html)
+```
+
+```text
+True
+```
+
+On the command line, `report` takes `--pack-dir`:
+
+```bash
+groundgate report receipts/grant-0042.json grant.txt schema.json candidates.json --pack-dir receipts/packs -o grant-0042.html
+```
+
+Without the folder, `report` gives the problem of the missing pack and does not write the page.
+
 ## 4. A pack that is not there, or that changed
 
 If the folder does not hold the pack, `verify` names the id, the version and the digest. Then
@@ -152,7 +174,8 @@ pack 'lac-x-myapp' 1.0.0: the receipt names the digest sha256:8b6a2af1f165caa8..
 
 ## 5. What `verify` reads from the folder
 
-`verify` treats the folder as untrusted input:
+`verify` treats the folder as untrusted input. `report` and `render` read the folder through
+`verify`, so the same rules apply:
 
 - It reads only the `.json` files directly in the folder, at most 256 files.
 - It does not follow a link, so a link cannot point it out of the folder.

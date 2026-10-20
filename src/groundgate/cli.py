@@ -4,7 +4,7 @@
   groundgate admit    DOC SCHEMA CANDIDATES             > receipt.json
   groundgate admit    --docs D --candidates C --schema S --out R
   groundgate verify   RECEIPT DOC SCHEMA CANDIDATES [--pack-dir DIR]
-  groundgate report   RECEIPT DOC SCHEMA CANDIDATES -o report.html
+  groundgate report   RECEIPT DOC SCHEMA CANDIDATES [--pack-dir DIR] -o report.html
   groundgate schema   SCHEMA                            > extractor.schema.json
   groundgate schema check SCHEMA
 
@@ -145,18 +145,23 @@ def _parser() -> argparse.ArgumentParser:
     a.add_argument("--candidates", dest="batch_candidates", help="folder of <doc>.json files")
     a.add_argument("--out", help="folder for batch receipts and summary.json")
 
+    def pack_dir(p: argparse.ArgumentParser) -> None:
+        p.add_argument(
+            "--pack-dir",
+            metavar="DIR",
+            help="a folder of pack files: verify takes each pack that the receipt names by its "
+            "digest",
+        )
+
     v = sub.add_parser("verify", help="re-derive a receipt from its inputs and compare")
     v.add_argument("receipt")
     inputs(v)
-    v.add_argument(
-        "--pack-dir",
-        metavar="DIR",
-        help="a folder of pack files: verify takes each pack that the receipt names by its digest",
-    )
+    pack_dir(v)
 
     r = sub.add_parser("report", help="verify a receipt, then render an HTML review page")
     r.add_argument("receipt")
     inputs(r)
+    pack_dir(r)
     r.add_argument("--layout", help="layout JSON from read, to show page numbers")
     r.add_argument("--title")
     r.add_argument("-o", "--output", help="write the HTML here instead of stdout")
@@ -217,8 +222,8 @@ def main(argv: list[str] | None = None) -> int:
             _write(_dumps(receipt.to_dict()), args.output)
             return 0
         stored = _json(args.receipt)
-        found = {"pack_dir": args.pack_dir} if args.command == "verify" else {}
-        result = verify(stored, text, schema, candidates, policy, judgments, **extra, **found)
+        extra["pack_dir"] = args.pack_dir  # verify and report read the folder in the same way
+        result = verify(stored, text, schema, candidates, policy, judgments, **extra)
         for problem in result.problems:
             print(f"mismatch: {problem}", file=sys.stderr)
         if args.command == "verify":

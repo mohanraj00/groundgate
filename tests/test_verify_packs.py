@@ -1,4 +1,4 @@
-"""`verify` finds the packs of a receipt (#338, docs/design/packs.md §11)."""
+"""`verify` and `report` find the packs of a receipt (#338, #372, docs/design/packs.md §11)."""
 
 from __future__ import annotations
 
@@ -14,6 +14,7 @@ import groundgate as gg
 from groundgate import pack as pack_module
 from groundgate.cli import main
 from groundgate.pack import BASE_ID, BUILT_IN_SHA256, MAX_FILE, RETIRED, pack_digest
+from groundgate.report import render
 
 DOC = "The grant is 5 lac. The loss was $7."
 LAC = {
@@ -271,3 +272,81 @@ def test_a_failed_file_is_named_in_the_problem(tmp_path: Path) -> None:
     problems = gg.verify(receipt(), DOC, SCHEMA, CANDS, pack_dir=tmp_path / "packs").problems
     assert problems[-1].startswith("the pack folder has 1 files that are not valid packs: ")
     assert "pack file 'bad-id.json': pack 'Lac': the id must be" in problems[-1]
+
+
+# ------------------------------------------------- report: the same pack folder (#372)
+
+
+def test_render_takes_a_pack_from_the_folder(tmp_path: Path) -> None:
+    write(tmp_path / "packs", "any-name.json", LAC)
+    page = render(receipt(), DOC, CANDS, schema=SCHEMA, pack_dir=tmp_path / "packs")
+    assert "receipt verified" in page and "lac-x-test" in page
+    assert "does not match" in render(receipt(), DOC, CANDS, schema=SCHEMA)  # no folder
+
+
+def test_render_does_not_verify_with_a_wrong_folder_pack(tmp_path: Path) -> None:
+    folder = tmp_path / "packs"
+    write(folder, "lac.json", {**LAC, "description": "another copy"})
+    (folder / "big.json").write_bytes(b" " * (MAX_FILE + 1))
+    outside = write(tmp_path / "outside", "lac.json", LAC)
+    (folder / "link.json").symlink_to(outside)
+    page = render(receipt(), DOC, CANDS, schema=SCHEMA, pack_dir=folder)
+    assert "receipt does not match its inputs" in page
+    with pytest.raises(gg.PacketError, match="as a dict"):
+        render(receipt(), DOC, CANDS, schema=gg.Schema.from_dict(SCHEMA, [LAC]), pack_dir=folder)
+
+
+def _report_args(tmp_path: Path) -> list[str]:
+    doc = tmp_path / "doc.txt"
+    doc.write_text(DOC, encoding="utf-8")
+    schema, cands = write(tmp_path, "s.json", SCHEMA), write(tmp_path, "c.json", CANDS)
+    stored = write(tmp_path, "r.json", receipt())
+    out = tmp_path / "report.html"
+    folder = tmp_path / "packs"
+    folder.mkdir()
+    return ["report", str(stored), str(doc), str(schema), str(cands), "-o", str(out)]
+
+
+def test_the_cli_report_takes_a_pack_folder(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    args = _report_args(tmp_path)
+    folder = tmp_path / "packs"
+    assert main(args) == 1
+    assert "is not built in or given" in capsys.readouterr().err
+    write(folder, f"lac-x-test-1.0.0-{SHA[7:19]}.json", LAC)
+    assert main([*args, "--pack-dir", str(folder)]) == 0
+    page = (tmp_path / "report.html").read_text(encoding="utf-8")
+    assert "receipt verified" in page and "lac-x-test" in page
+
+
+@pytest.mark.parametrize("case", ["missing", "digest", "link", "big"])
+def test_the_cli_report_refuses_a_receipt_whose_pack_is_not_in_the_folder(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str], case: str
+) -> None:
+    args = _report_args(tmp_path)
+    folder = tmp_path / "packs"
+    other = {**LAC, "description": "another copy"}
+    want = f"pack 'lac-x-test' 1.0.0 with the digest {SHA} is not built in, not given and not in"
+    if case == "digest":
+        write(folder, "lac.json", other)
+        want = f"the pack folder has only the digest {pack_digest(other)}"
+    elif case == "link":
+        (folder / "lac.json").symlink_to(write(tmp_path / "outside", "lac.json", LAC))
+        want = "'lac.json' is a link, and verify does not follow links"
+    elif case == "big":
+        (folder / "lac.json").write_text(json.dumps(LAC) + " " * MAX_FILE, encoding="utf-8")
+        want = f"'lac.json' is more than {MAX_FILE} bytes (L4)"
+    assert main([*args, "--pack-dir", str(folder)]) == 1
+    err = capsys.readouterr().err
+    assert want in err
+    assert "not rendering a receipt that does not match" in err
+    assert not (tmp_path / "report.html").exists()
+
+
+def test_the_cli_report_with_no_pack_folder_is_invalid_input(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    args = _report_args(tmp_path)
+    assert main([*args, "--pack-dir", str(tmp_path / "none")]) == 2
+    assert "cannot be opened" in capsys.readouterr().err
