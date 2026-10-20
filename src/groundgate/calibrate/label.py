@@ -1,11 +1,18 @@
 """The browser label tool, standard library only. It shows each document with its items marked,
 and the question. It never shows groundgate's reading or a model answer: not the candidate's key,
-and not an answer of a judge."""
+and not an answer of a judge.
+
+The server binds to 127.0.0.1 and refuses a request from another web site (#391). The Host
+header must be 127.0.0.1 and the port, so DNS rebinding cannot reach it. The API asks for a
+random token that only the start URL holds, after #. A POST must be JSON of 64 KiB at most. A
+Content-Security-Policy lets the page run only its own script and style."""
 
 from __future__ import annotations
 
+import hmac
 import html
 import json
+import secrets
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from importlib.resources import files
 from typing import TYPE_CHECKING, Any
@@ -90,7 +97,22 @@ def tables(marked: str) -> str:
     return "".join(out)
 
 
-def serve(w: Work, port: int) -> None:
+MAX_BODY = 64 * 1024
+TOKEN_HEADER = "X-Groundgate-Token"
+CSP = (
+    "default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; "
+    "base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+)
+# the page and its script and style hold no data, so they need no token; the API does
+STATIC = {
+    "/": ("label.html", "text/html"),
+    "/label.js": ("label.js", "text/javascript"),
+    "/label.css": ("label.css", "text/css"),
+}
+
+
+def server(w: Work, port: int) -> tuple[ThreadingHTTPServer, str]:
+    """The label server on 127.0.0.1 and its start URL, which holds the token after #."""
     cfg, items = w.config, w.read("items.json")
     question = cfg["question"]
     by_id = {it["id"]: it for it in items}
@@ -112,19 +134,46 @@ def serve(w: Work, port: int) -> None:
     # links.json, when the user gives one, maps a document to its original, such as the source
     # web page, for text whose tables lost their shape in extraction
     links = w.read("links.json", {})
+    token = secrets.token_urlsafe(32)
+    host = ""  # 127.0.0.1 and the bound port, set once the server binds
 
     class Handler(BaseHTTPRequestHandler):
+        timeout = 30  # a client that sends less than its Content-Length holds a thread no longer
+
         def send(self, body: str, kind: str = "application/json", code: int = 200) -> None:
             raw = body.encode("utf-8")
             self.send_response(code)
             self.send_header("Content-Type", f"{kind}; charset=utf-8")
             self.send_header("Content-Length", str(len(raw)))
+            self.send_header("Content-Security-Policy", CSP)
+            self.send_header("X-Content-Type-Options", "nosniff")
+            self.send_header("Referrer-Policy", "no-referrer")
+            self.send_header("Cache-Control", "no-store")
             self.end_headers()
             self.wfile.write(raw)
 
+        def refuse(self, code: int, why: str) -> None:
+            self.close_connection = True
+            self.send(json.dumps({"error": why}), code=code)
+
+        def allowed(self, api: bool) -> bool:
+            """Refuse a request for another host, and an API request without the token."""
+            if self.headers.get("Host") != host:
+                self.refuse(421, "the Host header must be 127.0.0.1 and the port")
+                return False
+            sent = self.headers.get(TOKEN_HEADER, "")
+            if api and not hmac.compare_digest(sent.encode(), token.encode()):
+                self.refuse(403, "open the start URL with its token")
+                return False
+            return True
+
         def do_GET(self) -> None:
-            if self.path == "/":
-                self.send(files(__package__).joinpath("label.html").read_text("utf-8"), "text/html")
+            if self.path in STATIC:
+                if self.allowed(api=False):
+                    name, kind = STATIC[self.path]
+                    self.send(files(__package__).joinpath(name).read_text("utf-8"), kind)
+            elif not self.allowed(api=True):
+                return
             elif self.path == "/state":
                 labels = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
                 state = {"question": question, "items": shown, "labels": labels, "links": links}
@@ -135,9 +184,27 @@ def serve(w: Work, port: int) -> None:
                 self.send("{}", code=404)
 
         def do_POST(self) -> None:
-            body = json.loads(self.rfile.read(int(self.headers["Content-Length"])))
-            it = by_id.get(body.get("id"))
-            value = body.get("value")
+            if not self.allowed(api=True):
+                return
+            kind = self.headers.get("Content-Type", "").split(";")[0].strip().lower()
+            if kind != "application/json":
+                self.refuse(415, "the body must be application/json")
+                return
+            try:
+                size = int(self.headers.get("Content-Length", ""))
+            except ValueError:
+                self.refuse(411, "the request needs a Content-Length")
+                return
+            if not 0 <= size <= MAX_BODY:
+                self.refuse(413, f"the body must be {MAX_BODY} bytes at most")
+                return
+            try:
+                body = json.loads(self.rfile.read(size))
+            except ValueError:
+                self.refuse(400, "the body is not JSON")
+                return
+            it = by_id.get(body.get("id")) if isinstance(body, dict) else None
+            value = body.get("value") if isinstance(body, dict) else None
             if self.path != "/label" or it is None or not q.valid_label(question, it, value):
                 self.send("{}", code=400)
                 return
@@ -148,12 +215,19 @@ def serve(w: Work, port: int) -> None:
             if question == "key" and value is not None:
                 value = [k for k in it["keys"] if k in value]
             labels[it["id"]] = value
-            body = json.dumps(dict(sorted(labels.items())), indent=1) + "\n"
-            path.write_text(body, encoding="utf-8")
+            out = json.dumps(dict(sorted(labels.items())), indent=1) + "\n"
+            path.write_text(out, encoding="utf-8")
             self.send(json.dumps({"labels": labels}))
 
         def log_message(self, *args: Any) -> None:
             pass
 
-    print(f"Open http://127.0.0.1:{port} and press Ctrl-C here when you finish.")
-    ThreadingHTTPServer(("127.0.0.1", port), Handler).serve_forever()
+    httpd = ThreadingHTTPServer(("127.0.0.1", port), Handler)
+    host = f"127.0.0.1:{httpd.server_port}"
+    return httpd, f"http://{host}/#{token}"
+
+
+def serve(w: Work, port: int) -> None:
+    httpd, url = server(w, port)
+    print(f"Open {url} and press Ctrl-C here when you finish.")
+    httpd.serve_forever()

@@ -2,10 +2,12 @@
 
 from __future__ import annotations
 
+import http.client
 import json
 import socket
 import urllib.request
-from collections.abc import Iterator
+from collections.abc import Callable, Iterator
+from contextlib import contextmanager
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
 from threading import Thread
@@ -63,6 +65,51 @@ def test_upper_95_and_the_clears_that_each_ceiling_needs() -> None:
     assert pick((0.5, 0.7, 0.9), bound, 0.05, "lowest") == 0.7
     assert pick((0.5, 0.7, 0.9), bound, 0.05, "highest") == 0.9
     assert pick((0.5,), bound, 0.05, "lowest") is None
+
+
+Call = Callable[..., tuple[int, dict[str, str], str]]
+
+
+@contextmanager
+def running(work: cli.Work) -> Iterator[Call]:
+    """The label server on a free port. call(method, path, body, headers, host) sends one
+    request with the right Host and token unless the arguments give others."""
+    httpd, url = label.server(work, 0)
+    port, token = httpd.server_port, url.split("#", 1)[1]
+    assert url == f"http://127.0.0.1:{port}/#{token}" and len(token) >= 32
+    thread = Thread(target=httpd.serve_forever, kwargs={"poll_interval": 0.01}, daemon=True)
+    thread.start()
+
+    def call(
+        method: str,
+        path: str,
+        body: bytes | None = None,
+        headers: dict[str, str] | None = None,
+        host: str | None = f"127.0.0.1:{port}",
+    ) -> tuple[int, dict[str, str], str]:
+        """host=None sends no Host header; "{port}" in host stands for the server's port."""
+        sent = {label.TOKEN_HEADER: token, **(headers or {})}
+        if body is not None:
+            sent.setdefault("Content-Length", str(len(body)))
+        conn = http.client.HTTPConnection("127.0.0.1", port, timeout=10)
+        try:
+            conn.putrequest(method, path, skip_host=True, skip_accept_encoding=True)
+            if host is not None:
+                conn.putheader("Host", host.replace("{port}", str(port)))
+            for k, v in sent.items():
+                conn.putheader(k, v)
+            conn.endheaders(body)
+            r = conn.getresponse()
+            return r.status, dict(r.getheaders()), r.read().decode()
+        finally:
+            conn.close()
+
+    try:
+        yield call
+    finally:
+        httpd.shutdown()
+        httpd.server_close()
+        thread.join()
 
 
 def test_sample_takes_key_flags_and_admitted_values() -> None:
@@ -167,20 +214,8 @@ def test_sample_uses_descriptions_in_prompts_and_labels(
             "The text marks one value in brackets. Which of these does it belong to?"
         )
 
-    state: dict[str, Any] = {}
-
-    class Server:
-        def __init__(self, address: Any, handler: Any) -> None:
-            self.handler = handler
-
-        def serve_forever(self) -> None:
-            request = object.__new__(self.handler)
-            request.path = "/state"
-            request.send = lambda body: state.update(json.loads(body))
-            request.do_GET()
-
-    monkeypatch.setattr(label, "ThreadingHTTPServer", Server)
-    label.serve(work, 0)
+    with running(work) as call:
+        state = json.loads(call("GET", "/state")[2])
     assert state["items"][0]["description"] == descriptions.get("revenue", "")
     assert "key" not in state["items"][0]
 
@@ -894,3 +929,104 @@ def test_groundgate_calibrate_runs_the_tool(
     # a step runs with the same options as before; this one stops at the missing work directory
     with pytest.raises(SystemExit, match=r"config\.json is not there"):
         groundgate(["calibrate", "report", "--work", str(tmp_path)])
+
+
+def labeled_work(tmp_path: Path) -> tuple[cli.Work, str]:
+    d, c, s = inputs(tmp_path, 1)
+    work = cli.Work(tmp_path / "work")
+    cli.main(["sample", "--work", str(work.path), "--docs", str(d), "--candidates", str(c),
+              "--schema", str(s), "--question", "field"])  # fmt: skip
+    return work, work.read("items.json")[0]["id"]
+
+
+def test_the_label_server_serves_its_page_and_saves_a_label(tmp_path: Path) -> None:
+    work, iid = labeled_work(tmp_path)
+    with running(work) as call:
+        code, head, body = call("GET", "/", headers={label.TOKEN_HEADER: ""})
+        assert code == 200 and '<script src="/label.js">' in body and "<style>" not in body
+        assert head["Content-Security-Policy"] == label.CSP
+        assert "script-src 'self';" in label.CSP and "style-src 'self';" in label.CSP
+        assert "unsafe" not in label.CSP
+        for path, kind in (("/label.js", "text/javascript"), ("/label.css", "text/css")):
+            code, head, _ = call("GET", path, headers={label.TOKEN_HEADER: ""})
+            assert code == 200 and head["Content-Type"].startswith(kind)
+            assert head["Content-Security-Policy"] == label.CSP
+        assert "X-Groundgate-Token" in call("GET", "/label.js")[2]
+        code, head, body = call("GET", "/state")
+        assert code == 200 and head["Content-Security-Policy"] == label.CSP
+        assert json.loads(body)["labels"] == {}
+        doc = work.read("items.json")[0]["doc"]
+        assert call("GET", f"/doc/{doc}")[0] == 200
+        sent = json.dumps({"id": iid, "value": True}).encode()
+        code, head, body = call("POST", "/label", sent, {"Content-Type": "application/json"})
+        assert code == 200 and head["Content-Security-Policy"] == label.CSP
+    assert work.read("labels.json") == {iid: True}
+
+
+@pytest.mark.parametrize(
+    "host",
+    [
+        None,
+        "",
+        "localhost:{port}",
+        "127.0.0.1",
+        "127.0.0.1:1",
+        "[::1]:{port}",
+        "evil.example:{port}",
+    ],
+)
+def test_the_label_server_refuses_another_host(tmp_path: Path, host: str | None) -> None:
+    work, iid = labeled_work(tmp_path)
+    sent = json.dumps({"id": iid, "value": True}).encode()
+    with running(work) as call:
+        for method, path, body in (("GET", "/", None), ("GET", "/label.js", None),
+                                   ("GET", "/state", None), ("POST", "/label", sent)):  # fmt: skip
+            headers = {"Content-Type": "application/json"}
+            code, head, _ = call(method, path, body, headers, host=host)
+            assert code == 421 and head["Content-Security-Policy"] == label.CSP
+    assert not (work.path / "labels.json").exists()
+
+
+@pytest.mark.parametrize("token", ["", "wrong", "x" * 43])
+def test_the_label_server_refuses_an_api_request_without_the_token(
+    tmp_path: Path, token: str
+) -> None:
+    work, iid = labeled_work(tmp_path)
+    with running(work) as call:
+        doc = work.read("items.json")[0]["doc"]
+        sent = json.dumps({"id": iid, "value": True}).encode()
+        for method, path, body in (("GET", "/state", None), ("GET", f"/doc/{doc}", None),
+                                   ("POST", "/label", sent)):  # fmt: skip
+            headers = {"Content-Type": "application/json", label.TOKEN_HEADER: token}
+            assert call(method, path, body, headers)[0] == 403
+    assert not (work.path / "labels.json").exists()
+
+
+@pytest.mark.parametrize(
+    "kind", ["", "text/plain", "application/x-www-form-urlencoded", "multipart/form-data"]
+)
+def test_the_label_server_refuses_a_body_that_is_not_json(tmp_path: Path, kind: str) -> None:
+    work, iid = labeled_work(tmp_path)
+    with running(work) as call:
+        sent = json.dumps({"id": iid, "value": True}).encode()
+        assert call("POST", "/label", sent, {"Content-Type": kind})[0] == 415
+        assert call("POST", "/label", b"{not json", {"Content-Type": "application/json"})[0] == 400
+        assert call("POST", "/label", b"[1]", {"Content-Type": "application/json"})[0] == 400
+    assert not (work.path / "labels.json").exists()
+
+
+def test_the_label_server_refuses_a_body_over_64_kib(tmp_path: Path) -> None:
+    work, iid = labeled_work(tmp_path)
+    with running(work) as call:
+        pad = " " * (label.MAX_BODY - len(json.dumps({"id": iid, "value": True})))
+        at_most = (json.dumps({"id": iid, "value": True}) + pad).encode()
+        assert len(at_most) == 64 * 1024
+        assert call("POST", "/label", at_most, {"Content-Type": "application/json"})[0] == 200
+        over = at_most + b" "
+        assert call("POST", "/label", over, {"Content-Type": "application/json"})[0] == 413
+        # a Content-Length over the limit is refused before the server reads the body
+        headers = {"Content-Type": "application/json", "Content-Length": str(10**9)}
+        assert call("POST", "/label", b"{}", headers)[0] == 413
+        headers["Content-Length"] = "many"
+        assert call("POST", "/label", b"{}", headers)[0] == 411
+    assert work.read("labels.json") == {iid: True}
