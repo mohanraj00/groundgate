@@ -1,0 +1,18 @@
+{
+ "name": "schema-field-name-digit",
+ "description": "A field name with a digit as the first character breaks the rule of SPEC 2.3 (spec 0.11, #359).",
+ "document": "x",
+ "schema": {
+  "fields": {
+   "2024_revenue": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

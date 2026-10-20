@@ -1,0 +1,49 @@
+{
+ "name": "pack-l9-template-name-long",
+ "description": "L9: a template name of 65 characters (spec 0.11, #359).",
+ "document": "The fee is 5 dollars.",
+ "schema": {
+  "packs": [
+   {
+    "id": "filings-x-test",
+    "version": "1.0.0"
+   }
+  ],
+  "fields": {
+   "fee": {
+    "template": "filings-x-test/net_sales"
+   }
+  }
+ },
+ "policy": null,
+ "packs": [
+  {
+   "groundgate_pack": 1,
+   "type": "kind",
+   "id": "filings-x-test",
+   "version": "1.0.0",
+   "fields": {
+    "net_sales": {
+     "type": "integer",
+     "unit": "USD",
+     "aliases": [
+      "net sales",
+      "revenue"
+     ]
+    },
+    "abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb": {
+     "type": "integer",
+     "unit": "USD",
+     "aliases": [
+      "net sales",
+      "revenue"
+     ]
+    }
+   }
+  }
+ ],
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

@@ -1,0 +1,104 @@
+{
+ "name": "121-field-name-form",
+ "description": "Field names at the edges of the rule: one letter, letters with digits and '_', and 64 characters. A kind pack template with a 64-character name loads, and a field takes it (spec 0.11, #359).",
+ "document": "The a is 3. Net sales in 2024 were 7,100. The levy is 9. The grant is 6.",
+ "schema": {
+  "packs": [
+   {
+    "id": "filings-x-test",
+    "version": "1.0.0"
+   }
+  ],
+  "fields": {
+   "a": {
+    "type": "integer"
+   },
+   "net_sales_2024": {
+    "type": "integer"
+   },
+   "abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb": {
+    "type": "integer"
+   },
+   "grant": {
+    "template": "filings-x-test/abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+   }
+  }
+ },
+ "policy": null,
+ "packs": [
+  {
+   "groundgate_pack": 1,
+   "type": "kind",
+   "id": "filings-x-test",
+   "version": "1.0.0",
+   "fields": {
+    "abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb": {
+     "type": "integer"
+    }
+   }
+  }
+ ],
+ "candidates": [
+  {
+   "id": "fn1",
+   "field": "a",
+   "value": "3",
+   "evidence": {
+    "start": 9,
+    "end": 10,
+    "text": "3"
+   }
+  },
+  {
+   "id": "fn2",
+   "field": "net_sales_2024",
+   "value": "7100",
+   "evidence": {
+    "start": 35,
+    "end": 40,
+    "text": "7,100"
+   }
+  },
+  {
+   "id": "fn3",
+   "field": "abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+   "value": "9",
+   "evidence": {
+    "start": 54,
+    "end": 55,
+    "text": "9"
+   }
+  },
+  {
+   "id": "fn4",
+   "field": "grant",
+   "value": "6",
+   "evidence": {
+    "start": 70,
+    "end": 71,
+    "text": "6"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}
