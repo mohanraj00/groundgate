@@ -13,6 +13,7 @@ import hashlib
 import json
 import os
 import re
+import secrets
 import stat
 import tempfile
 import unicodedata
@@ -261,8 +262,8 @@ class FolderStore:
         self._clock = clock or (lambda: datetime.now(timezone.utc))
         # For each log that this writer holds: the next sequence, the head and the size.
         self._heads: dict[LogName, tuple[int, str | None, int]] = {}
-        # Each lock that this writer made: the process id, the path, and the device and inode.
-        self._locks: dict[LogName, tuple[int, Path, tuple[int, int]]] = {}
+        # Each lock that this writer made: the process id, the path and the bytes of the lock.
+        self._locks: dict[LogName, tuple[int, Path, bytes]] = {}
         self._broken: set[LogName] = set()  # logs with a partial line that could not be removed
 
     def __enter__(self) -> FolderStore:
@@ -274,10 +275,10 @@ class FolderStore:
     def close(self) -> None:
         """Remove the locks of this writer. A child process after a fork keeps the locks of its
         parent in place. A lock that another writer made after a person removed this one stays,
-        because its device and inode differ."""
-        for pid, lock, ident in self._locks.values():
+        because its bytes differ."""
+        for pid, lock, mark in self._locks.values():
             if pid == os.getpid():
-                _unlink_own(lock, ident)
+                self._unlink_own(lock, mark)
         self._locks.clear()
         self._heads.clear()
         self._broken.clear()
@@ -289,6 +290,7 @@ class FolderStore:
         the file of the key is a symlink, not a regular file, too large or has other bytes,
         ``put`` puts a new file in its place. It never writes through a symlink. A file with the
         right bytes and another mode also gets a new file with the file mode."""
+        _check_kind(kind)
         if not isinstance(data, bytes):
             raise TypeError("the data must be bytes")
         if len(data) > self.max_bytes:  # before the parse, so a large input uses no memory
@@ -362,7 +364,8 @@ class FolderStore:
 
     def read(self, log: LogName) -> list[Record]:
         """The records of a log in order, with each link checked. An absent log has none. A
-        torn last line raises ``StoreError`` with the name of the log."""
+        torn last line raises ``StoreError`` with the name of the log. A read takes no lock, so
+        while a writer appends, it can see a line that is not complete yet. Then read again."""
         word, _ = _check_log(log)
         parts, name = self._log_parts(log)
         rel = "/".join([*parts, name + ".jsonl"])
@@ -425,19 +428,20 @@ class FolderStore:
             fd = os.open(lock, os.O_WRONLY | os.O_CREAT | os.O_EXCL | _NOFOLLOW, self.file_mode)
         except FileExistsError as exc:
             raise Locked(f"{lock} exists: {self._holder(lock)}") from exc
-        try:
-            info = os.fstat(fd)
-        except BaseException:
-            os.close(fd)
-            with contextlib.suppress(FileNotFoundError):
-                os.unlink(lock)
-            raise
-        ident = (info.st_dev, info.st_ino)
+        # The token tells this lock from a later lock at the same path. An inode can be reused.
+        mark = f"{os.getpid()}\n{secrets.token_hex(16)}\n".encode("ascii")
         try:
             try:
-                os.write(fd, f"{os.getpid()}\n".encode())
+                view = memoryview(mark)
+                while view:
+                    view = view[os.write(fd, view) :]
             finally:
                 os.close(fd)
+        except BaseException:
+            with contextlib.suppress(FileNotFoundError):
+                os.unlink(lock)  # this writer made it a moment ago
+            raise
+        try:
             rel = "/".join([*parts, name + ".jsonl"])
             path = folder / f"{name}.jsonl"
             try:
@@ -450,20 +454,47 @@ class FolderStore:
                 finally:
                     os.close(fd)
             records = _records(word, data, rel)
+            self._log_mode(path, rel)
         except BaseException:
-            _unlink_own(lock, ident)
+            self._unlink_own(lock, mark)
             raise
-        self._locks[log] = (os.getpid(), lock, ident)
+        self._locks[log] = (os.getpid(), lock, mark)
         head = records[-1]["entry_sha256"] if records else None
         self._heads[log] = (len(records) + 1, head, len(data))
+
+    def _log_mode(self, path: Path, rel: str) -> None:
+        """Give a log that the store did not make, for example one from a backup, the file
+        mode."""
+        if stat.S_IMODE(os.lstat(path).st_mode) == self.file_mode:
+            return
+        try:
+            fd = os.open(path, os.O_WRONLY | _NOFOLLOW | _NONBLOCK)
+        except OSError as exc:
+            raise StoreError(f"{rel} cannot be opened: {exc.strerror}") from exc
+        try:
+            if not stat.S_ISREG(os.fstat(fd).st_mode):
+                raise StoreError(f"{rel} is not a regular file")
+            _chmod(fd, path, self.file_mode)
+        finally:
+            os.close(fd)
+
+    def _unlink_own(self, lock: Path, mark: bytes) -> None:
+        """Remove a lock only if it still holds the bytes that this writer wrote."""
+        try:
+            if os.lstat(lock).st_size != len(mark) or self._file(lock, lock.name) != mark:
+                return
+        except (OSError, StoreError):
+            return
+        with contextlib.suppress(FileNotFoundError):
+            os.unlink(lock)
 
     def _holder(self, lock: Path) -> str:
         """Who holds a lock, as far as the store can tell."""
         text = "another writer has this log."
         try:
-            if os.lstat(lock).st_size > 32:  # a pid and a line break are short
+            if os.lstat(lock).st_size > 64:  # a pid, a token and two line breaks are short
                 raise ValueError("the lock is too large")
-            pid = int(self._file(lock, lock.name).decode("ascii").strip())
+            pid = int(self._file(lock, lock.name).decode("ascii").split("\n")[0])
             if pid <= 0:
                 raise ValueError("not a process id")
         except (OSError, StoreError, ValueError):
@@ -545,7 +576,17 @@ class FolderStore:
                 raise StoreError(f"{rel} is not a regular file")
             if info.st_size > self.max_bytes:
                 raise StoreError(f"{rel} is larger than max_bytes")
-            data = f.read(info.st_size + 1)  # not max_bytes + 1: the buffer has this size
+            # Read the size from fstat and one byte more, not max_bytes + 1: a read asks for a
+            # buffer of its full size. A file that grew after fstat is read to its end in parts.
+            parts = [f.read(info.st_size + 1)]
+            size = len(parts[0])
+            while size > info.st_size and size <= self.max_bytes:
+                part = f.read(min(_PART, self.max_bytes + 1 - size))
+                if not part:
+                    break
+                parts.append(part)
+                size += len(part)
+            data = b"".join(parts)
         if len(data) > self.max_bytes:
             raise StoreError(f"{rel} is larger than max_bytes")
         return data
@@ -569,17 +610,7 @@ class FolderStore:
 
 _NOFOLLOW = getattr(os, "O_NOFOLLOW", 0)
 _NONBLOCK = getattr(os, "O_NONBLOCK", 0)
-
-
-def _unlink_own(lock: Path, ident: tuple[int, int]) -> None:
-    """Remove a lock only if it is still the file that this writer made."""
-    try:
-        info = os.lstat(lock)
-    except FileNotFoundError:
-        return
-    if (info.st_dev, info.st_ino) == ident:
-        with contextlib.suppress(FileNotFoundError):
-            os.unlink(lock)
+_PART = 1 << 20  # the bytes of each read after a file grew
 
 
 def _chmod(fd: int, path: Path, mode: int) -> None:

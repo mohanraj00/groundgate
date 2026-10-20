@@ -422,6 +422,41 @@ def test_forget_writes_no_record_when_it_cannot_remove(root: Path) -> None:
     assert store.get("text@1", k) == TEXT
 
 
+def test_a_read_takes_the_bytes_that_a_writer_adds_after_fstat(
+    root: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    import groundgate.store as module
+
+    with FolderStore(root) as store:
+        store.append(ANA, {"answer": "yes"})
+        fstat = os.fstat
+
+        def grow(fd: int) -> os.stat_result:
+            info = fstat(fd)
+            monkeypatch.setattr(os, "fstat", fstat)
+            store.append(ANA, {"answer": "x" * 200})  # a writer between fstat and read
+            return info
+
+        monkeypatch.setattr(module, "_PART", 7)  # read the new bytes in small parts
+        monkeypatch.setattr(os, "fstat", grow)
+        assert [r["sequence"] for r in FolderStore(root).read(ANA)] == [1, 2]
+
+
+def test_a_log_from_a_backup_gets_the_file_mode(root: Path) -> None:
+    with FolderStore(root) as store:
+        store.append(ANA, {"answer": "yes"})
+    log = root / "logs" / "answers" / PACKET[7:] / (ANA[2][7:] + ".jsonl")
+    log.chmod(0o644)
+    with FolderStore(root) as store:
+        store.append(ANA, {"answer": "no"})
+    assert stat.S_IMODE(log.stat().st_mode) == 0o600
+
+
+def test_put_checks_the_kind_before_the_size(root: Path) -> None:
+    with pytest.raises(ValueError, match="is not a kind"):
+        FolderStore(root, max_bytes=4).put("x" * 1000, b"too large")
+
+
 def test_close_keeps_a_lock_that_another_writer_made(root: Path) -> None:
     first = FolderStore(root)
     first.append(ANA, {"answer": "yes"})
