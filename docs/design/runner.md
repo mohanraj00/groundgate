@@ -314,6 +314,9 @@ region its best query rank and its best match: the match with that rank that com
 merged region longer than `max_region_chars` is cut to a window of that size around its best
 match, clamped to the region (#382). The runner does not drop it. The search entry lists each
 cut in `cut_regions`, with the byte span of the merged region and the byte span that it keeps.
+The list covers the whole ranked pool, not only the sent regions, because the second sweep can
+send any region of the pool. The `regions` of the search entry and of each `sweep` entry tell
+which regions were sent.
 It selects at most `max_target_regions` by rank, then source and
 byte start. `omitted_regions` counts discarded regions from that bounded pool; it does not
 estimate regions from omitted matches. Either cap, or a cut, records `search_truncated`. The selected
@@ -371,7 +374,10 @@ protocol failure, when every region is sent or skipped, or after `max_sweep_call
 `proposed`, `protocol_failure`, `exhausted`, `sweep_limit` or `no_room`. Each not-found reply
 records `targeted_not_found`. If the sweep sends no call, or `max_sweep_calls` is zero, the
 field is `search_limit` and the run is incomplete. If the sweep sent a call, the run stays
-complete, as after a trimmed first sweep. A `call_limit` in the second sweep records
+complete, as after a trimmed first sweep, also when `sweep_limit` leaves regions unsent. I
+chose this on purpose: the search entry keeps the status `search_truncated`, and `sweep_stop`
+counts the unsent regions, so the field state `targeted_not_found` is never a claim that the
+value is absent. A consumer that needs every region searched reads those two entries. A `call_limit` in the second sweep records
 `call_limit`, not `unsearched`, because the field was searched. A single-field reply uses
 the initial envelope. It can give candidates, or explicit `not_found`. Targeted candidates
 have the same repair rules and budget as initial candidates. There is one targeted call per
