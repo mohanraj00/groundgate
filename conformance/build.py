@@ -5489,6 +5489,62 @@ vector(
 )  # fmt: skip
 
 
+# ---------------------------------------------------------------- field names (spec 0.11, #359)
+# SPEC §2.3: a field name has 1 to 64 characters. Each one is a lowercase ASCII letter, a digit or
+# "_", and the first one is a letter. The same rule applies to a template name of a kind pack.
+LONG_NAME = "a" + "b" * 63  # 64 characters, the longest name
+TOO_LONG = "a" + "b" * 64  # 65 characters
+NAMES = kind(fields={LONG_NAME: {"type": "integer"}})
+
+vector(
+    "121-field-name-form",
+    "Field names at the edges of the rule: one letter, letters with digits and '_', and 64 "
+    "characters. A kind pack template with a 64-character name loads, and a field takes it "
+    "(spec 0.11, #359).",
+    "The a is 3. Net sales in 2024 were 7,100. The levy is 9. The grant is 6.",
+    {"packs": [{"id": "filings-x-test", "version": "1.0.0"}],
+     "fields": {"a": {"type": "integer"}, "net_sales_2024": {"type": "integer"},
+                LONG_NAME: {"type": "integer"},
+                "grant": {"template": f"filings-x-test/{LONG_NAME}"}}},
+    [
+        c("fn1", "a", "3", None, q("3")),
+        c("fn2", "net_sales_2024", "7100", None, q("7,100")),
+        c("fn3", LONG_NAME, "9", None, q("9")),
+        c("fn4", "grant", "6", None, q("6")),
+    ],
+    packs=[NAMES],
+)  # fmt: skip
+
+for suffix, bad_name, why in [
+    ("blank", "", "a blank name"),
+    ("space", "net sales", "a space"),
+    ("upper", "Net_sales", "a capital letter"),
+    ("hyphen", "net-sales", "a hyphen"),
+    ("digit", "2024_revenue", "a digit as the first character"),
+    ("ascii", "revenué", "a letter that is not ASCII"),
+    ("long", TOO_LONG, "65 characters"),
+]:
+    INVALID.append(
+        {
+            "name": f"schema-field-name-{suffix}",
+            "description": f"A field name with {why} breaks the rule of SPEC 2.3 "
+            "(spec 0.11, #359).",
+            "document": "x",
+            "schema": {"fields": {bad_name: USD}},
+            "policy": None,
+        }
+    )
+
+# fmt: off
+bad_kind("pack-l9-template-name-blank", "L9: a blank template name (spec 0.11, #359).",
+         kind(fields={"net_sales": SALES, "": SALES}))
+bad_kind("pack-l9-template-name-long", "L9: a template name of 65 characters (spec 0.11, #359).",
+         kind(fields={"net_sales": SALES, TOO_LONG: SALES}))
+bad_kind("pack-l9-template-name-slash", "L9: a template name with a '/' (spec 0.11, #359).",
+         kind(fields={"net_sales": SALES, "net/sales": SALES}))
+# fmt: on
+
+
 def main() -> None:
     out_dir = HERE / "vectors"
     out_dir.mkdir(exist_ok=True)

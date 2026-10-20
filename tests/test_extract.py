@@ -283,9 +283,9 @@ def test_targeted_reference_pins_first_occurrence_accepting_review_cost():
     assert_replays(targeted, "Nothing here.", schema, references=[reference])
 
 
-def test_target_no_terms_no_match_and_explicit_not_found():
+def test_target_no_match_and_explicit_not_found():
+    # a field name starts with a letter (SPEC §2.3, #359), so its title is always a query
     cases = [
-        ("___", "Anything 5.", "search_no_terms"),
         ("amount", "Anything 5.", "search_no_match"),
         ("amount", "Amount absent.", "targeted_not_found"),
     ]

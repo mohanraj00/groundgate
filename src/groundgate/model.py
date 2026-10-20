@@ -22,6 +22,7 @@ from .pack import (
     check_retired,
     checked_copy,
     combine,
+    is_field_name,
     pack_digest,
 )
 from .pack import PacketError as PacketError
@@ -351,6 +352,8 @@ def _with_template(name: str, f: object, kinds: dict[str, dict[str, Any]]) -> ob
 def _field(name: str, f: object, kinds: dict[str, dict[str, Any]]) -> Field:
     """A field of the schema. A field that takes a template and then breaks a rule of a field
     makes the packet invalid under L10 (SPEC §2.3)."""
+    if not is_field_name(name):
+        raise PacketError(f"field name {name!r} breaks the rule of SPEC §2.3")
     merged = _with_template(name, f, kinds)
     if merged is f:
         return Field.from_dict(name, f)

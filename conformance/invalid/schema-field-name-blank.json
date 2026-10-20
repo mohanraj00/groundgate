@@ -1,0 +1,18 @@
+{
+ "name": "schema-field-name-blank",
+ "description": "A field name with a blank name breaks the rule of SPEC 2.3 (spec 0.11, #359).",
+ "document": "x",
+ "schema": {
+  "fields": {
+   "": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}
