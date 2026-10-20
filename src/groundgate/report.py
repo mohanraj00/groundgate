@@ -1,7 +1,8 @@
 """A self-contained HTML review page for a receipt.
 
 The page shows the document with every evidence span highlighted by outcome, and one card per
-decision saying what was decided and why. It has no scripts and loads nothing: a
+decision saying what was decided and why. It lists the packs that the receipt names, and marks
+each admitted value that read a pack with a draft route. It has no scripts and loads nothing: a
 Content-Security-Policy forbids both, so a hostile document cannot run code in the reviewer's
 browser even if it slipped past escaping.
 """
@@ -19,6 +20,7 @@ from .admit import verify
 from .canonical import Offsets, digest
 from .codes import DESCRIPTIONS
 from .model import Policy, Schema
+from .pack import BUILT_IN_SHA256, built_in_pack
 from .read.layout import Layout
 
 OUTCOMES = ("needs_verification", "rejected", "admitted")
@@ -54,6 +56,12 @@ class _Item:
     in_document: bool = True  # the spans are in the document text
     cited: str | None = None  # the text at the value span, when the report has that text
     parts: list[_Part] = field(default_factory=list)
+
+
+@dataclass
+class _Pack:
+    entry: Mapping[str, Any]  # the entry in the receipt member packs
+    measured: int  # the number of measured routes in the pack's status table
 
 
 def _e(s: object) -> str:
@@ -176,6 +184,7 @@ def render(
                 f"{_e(DESCRIPTIONS.get(str(c.get('code')), ''))}</li>"
             )
         parts.append("</ul>")
+    parts.append(_packs(receipt, items))
     parts.append("</header>")
 
     parts.append('<main><aside class="decisions">')
@@ -200,6 +209,79 @@ def render(
     parts.append(_document(text, items, layout))
     parts.append("</article></main></body></html>\n")
     return "".join(parts)
+
+
+def _measured(entry: Mapping[str, Any]) -> int:
+    """The number of measured routes of a pack that the receipt names. Only a built-in pack with
+    its released digest can have a measured row (SPEC §4.8, check L8). So each other pack, also
+    a pack that this report cannot find, is draft in every route."""
+    pid, version = entry.get("id"), entry.get("version")
+    if not isinstance(pid, str) or not isinstance(version, str):
+        return 0
+    if BUILT_IN_SHA256.get((pid, version)) != entry.get("sha256"):
+        return 0
+    pack = built_in_pack(pid, version)
+    rows = pack.get("status", []) if pack is not None else []
+    return sum(1 for r in rows if isinstance(r, Mapping) and r.get("status") == "measured")
+
+
+def _draft_reads(d: Mapping[str, Any]) -> list[object]:
+    """The packs that the decision member ``packs`` names, when the decision admitted its value.
+
+    A route is one pack, kind, field and code, and a route with no status row is draft
+    (docs/design/extensions.md §8). The receipt does not say which route admitted the value, so
+    each pack that the decision read has a draft route that can apply. The report marks the value
+    then. It can mark one value too many, never one too few."""
+    raw = d.get("packs")
+    if d.get("outcome") != "admitted" or not isinstance(raw, list):
+        return []
+    return raw
+
+
+def _packs(receipt: Mapping[str, Any], items: list[_Item]) -> str:
+    """The packs that the receipt names, with their version, digest and status."""
+    raw = receipt.get("packs")
+    packs = [
+        _Pack(e, _measured(e))
+        for e in (raw if isinstance(raw, list) else [])
+        if isinstance(e, Mapping)
+    ]
+    marked = sum(1 for i in items if _draft_reads(i.decision))
+    if not packs and not marked:
+        return ""
+    out = ['<div class="packs"><b>Packs</b>']
+    if packs:
+        out.append("<ul>")
+        for p in packs:
+            e = p.entry
+            if p.measured:
+                routes = "1 measured route" if p.measured == 1 else f"{p.measured} measured routes"
+                status = f"{routes}, the other routes draft"
+            else:
+                status = "draft"
+            out.append(
+                f"<li><code>{_e(e.get('id'))}</code> {_e(e.get('type'))} "
+                f"{_e(e.get('version'))} "
+                f'<span title="{_e(e.get("sha256"))}">{_e(_short(e.get("sha256")))}</span> '
+                f'<span class="pill draft">{status}</span></li>'
+            )
+        out.append("</ul>")
+    else:
+        out.append(" none")
+    if marked == 0:
+        count = "No admitted value read a pack with a draft route."
+    elif marked == 1:
+        count = "1 admitted value read a pack with a draft route. Its card has the mark "
+    else:
+        count = f"{marked} admitted values read a pack with a draft route. Each of their cards "
+        count += "has the mark "
+    if marked:
+        count += '<span class="pill draft">draft pack</span>.'
+    out.append(
+        f'<p class="note">{count} A mark means that groundgate read the pack for the value. '
+        "It does not mean that the pack changed the outcome.</p></div>"
+    )
+    return "".join(out)
 
 
 def _span(own: tuple[str, Offsets] | None, obj: object) -> tuple[int, int] | None:
@@ -257,10 +339,13 @@ def _card(item: _Item, layout: Layout | None) -> str:
     unit = d.get("unit") or (c.get("unit") if isinstance(c, Mapping) else None)
     cid = c.get("id") if isinstance(c, Mapping) else None
     tip = f' title="candidate {_e(cid)}"' if cid is not None else ""
+    reads = _draft_reads(d)
+    draft = '<span class="pill draft">draft pack</span>' if reads else ""
     out = [f'<div class="card {outcome}"{tip}>']
     out.append(
         f'<div class="row"><code class="field">{_wrap(d.get("field") or "(no field)")}</code>'
-        f'<span class="pill {outcome}">{_e(LABELS.get(outcome, d.get("outcome")))}</span></div>'
+        f'<span class="pills">{draft}<span class="pill {outcome}">'
+        f"{_e(LABELS.get(outcome, d.get('outcome')))}</span></span></div>"
     )
     val = "(no value)" if shown is None else f"{shown}"
     key = d.get("key")
@@ -276,6 +361,12 @@ def _card(item: _Item, layout: Layout | None) -> str:
         for code in codes:
             out.append(f"<li><code>{_e(code)}</code> {_e(DESCRIPTIONS.get(str(code), ''))}</li>")
         out.append("</ul>")
+    if reads:
+        names = ", ".join(f"<code>{_e(r)}</code>" for r in reads)
+        out.append(
+            f'<p class="reads">read packs with a draft route: {names}. A pack that was read '
+            "may not have changed the outcome.</p>"
+        )
     source = d.get("source")
     if source == "reference":
         out.append(f'<p class="where">from reference <code>{_e(d.get("ref"))}</code></p>')
@@ -420,7 +511,8 @@ def _tooltip(d: Mapping[str, Any]) -> str:
     key = f" for {d['key']}" if d.get("key") else ""
     codes = f" ({', '.join(d['codes'])})" if d.get("codes") else ""
     outcome = LABELS.get(str(d.get("outcome")), "")
-    return f"{d.get('field')} = {d.get('value')}{unit}{key}: {outcome}{codes}"
+    draft = ", read a draft pack" if _draft_reads(d) else ""
+    return f"{d.get('field')} = {d.get('value')}{unit}{key}: {outcome}{codes}{draft}"
 
 
 _HEAD = """<!doctype html>
@@ -491,6 +583,13 @@ main {{ flex: 1; min-height: 0; display: grid;
 .where {{ margin: 4px 0 0; font-size: 12px; color: var(--muted); }}
 .parts {{ margin: 6px 0; padding-left: 18px; font-size: 12.5px; color: var(--muted); }}
 .parts b {{ color: var(--fg); font-weight: 600; }}
+.pills {{ display: flex; gap: 4px; flex-shrink: 0; }}
+.pill.draft {{ background: var(--warn-bg); color: var(--warn); }}
+.packs {{ margin: 10px 0 0; font-size: 12.5px; }}
+.packs ul {{ margin: 4px 0; padding-left: 18px; }}
+.packs li {{ margin: 2px 0; }}
+.note {{ margin: 4px 0 0; color: var(--muted); }}
+.reads {{ margin: 6px 0; font-size: 12.5px; color: var(--warn); }}
 .missing {{ margin: 6px 0; font-size: 12.5px; color: var(--warn); }}
 a {{ color: var(--focus); }}
 mark {{ color: inherit; border-radius: 2px; padding: 1px 0; }}
