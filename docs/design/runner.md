@@ -457,7 +457,7 @@ at most `max_bytes` (1 GiB by default), so a FIFO, a device or a huge file canno
 memory. It gets the inputs from the objects that the header names and replays the run, so a
 changed line, a changed, missing or oversized object, or a bad object key raises `ValueError`.
 The replay cost grows with the document and the record.
-A shared store for all the tools is #288.
+A shared store for all the tools is #288, in [store.md](store.md).
 
 Two fields are reserved for the document model (#285), so that a later reader output needs no
 new log format. An input of `kind: "document"` will name an extracted document and its reader
