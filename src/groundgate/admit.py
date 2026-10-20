@@ -32,7 +32,7 @@ from .model import (
     RelationResult,
     Schema,
 )
-from .pack import BASE, checked_copy, reading_retired, receipt_packs
+from .pack import BASE, checked_copy, reading_retired, receipt_packs, schema_named
 from .text import (
     HeadingIndex,
     Token,
@@ -1564,6 +1564,9 @@ def verify(
     found, pack_problems = receipt_packs(receipt.get("packs"), given, pack_dir)
     if pack_problems:
         return Verification(False, (*problems, *pack_problems))
+    if found and isinstance(schema, Mapping):
+        keep = schema_named(schema.get("packs"), [*given, *found])
+        found = [p for p in found if (p["id"], p["version"]) in keep]
     doc_id = (
         receipt.get("document", {}).get("id")
         if isinstance(receipt.get("document"), Mapping)

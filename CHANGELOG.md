@@ -96,8 +96,8 @@ Spec 0.10, a draft. Receipts name `"groundgate": "0.10"` and every digest uses t
   digest in the receipt. A built-in version can now be retired: `admit` refuses it and `verify`
   still reads it. No version is retired. A test fails when a built-in pack file is not in the
   list of released digests or has another digest. The how-to
-  [Keep pack files with receipts](docs/howto/keep-packs.md) shows a folder layout. No decision
-  changes.
+  [Keep pack files with receipts](docs/howto/keep-packs.md) shows a folder layout. A loader
+  check error of `load_pack` now names the file. No decision changes.
 - A candidate can cite up to 8 field items, such as a row label and a column header (#300).
   The field check passes when one of them passes. Two items of any other role stay
   `CANDIDATE_INVALID`.

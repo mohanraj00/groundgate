@@ -413,7 +413,10 @@ def _parse(data: bytes, name: str) -> dict[str, Any]:
         if isinstance(e, PacketError):
             raise
         raise PacketError(f"pack file {name!r} is not JSON: {e}") from None
-    return check_pack(obj)
+    try:
+        return check_pack(obj)
+    except PacketError as e:
+        raise PacketError(f"pack file {name!r}: {e}") from None
 
 
 # -------------------------------------------------------------------- the union
@@ -651,7 +654,7 @@ def _read_in(dfd: int, name: str) -> bytes | str:
     try:
         fd = os.open(name, flags, dir_fd=dfd)
     except OSError as e:
-        if e.errno == errno.ELOOP:
+        if e.errno in (errno.ELOOP, errno.EMLINK):  # EMLINK: O_NOFOLLOW on a link in BSD
             return "is a link, and verify does not follow links"
         return f"cannot be opened ({e.strerror})"
     try:
@@ -786,3 +789,27 @@ def receipt_packs(
             f"the pack folder has {len(skipped)} files that are not valid packs: {shown}"
         )
     return found, problems
+
+
+def schema_named(entries: object, packs: Sequence[dict[str, Any]]) -> set[tuple[str, str]]:
+    """The id and version of each pack that the schema member ``packs`` names, and of each pack
+    in the ``needs`` of a named kind pack in ``packs`` or built in. ``verify`` gives ``admit`` a
+    pack from the folder only when this set holds it, so that a pack that the receipt names and
+    the schema does not name is a difference, not an invalid packet."""
+    if not isinstance(entries, list):
+        return set()
+    out = {
+        (e["id"], e["version"])
+        for e in entries
+        if isinstance(e, Mapping)
+        and isinstance(e.get("id"), str)
+        and isinstance(e.get("version"), str)
+    }
+    kinds = [p for p in packs if p["type"] == "kind" and (p["id"], p["version"]) in out]
+    for key in out & set(BUILT_IN_SHA256):
+        p = built_in_pack(*key)
+        if p is not None and p["type"] == "kind":
+            kinds.append(p)
+    for k in kinds:
+        out |= {(e["id"], e["version"]) for e in k.get("needs", [])}
+    return out

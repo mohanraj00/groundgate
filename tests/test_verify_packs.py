@@ -238,3 +238,36 @@ def test_the_cli_takes_a_pack_folder(tmp_path: Path, capsys: pytest.CaptureFixtu
     write(tmp_path / "packs", f"lac-x-test-1.0.0-{SHA[7:19]}.json", LAC)
     assert main([*args, "--pack-dir", str(tmp_path / "packs")]) == 0
     assert capsys.readouterr().out == "receipt verified\n"
+
+
+def test_a_folder_pack_that_the_schema_does_not_name_is_a_difference(tmp_path: Path) -> None:
+    write(tmp_path / "packs", "lac.json", LAC)
+    schema = {"packs": [{"id": "finance", "version": "1.0.0"}], "fields": SCHEMA["fields"]}
+    check = gg.verify(receipt(), DOC, schema, CANDS, pack_dir=tmp_path / "packs")
+    assert not check.ok and "packs differs from the re-derived receipt" in check.problems
+
+
+def test_a_kind_pack_in_the_folder_brings_the_pack_that_it_needs(tmp_path: Path) -> None:
+    kind = {
+        "groundgate_pack": 1,
+        "type": "kind",
+        "id": "grants-x-test",
+        "version": "1.0.0",
+        "needs": [{"id": "lac-x-test", "version": "1.0.0"}],
+        "fields": {"grant": {"type": "integer"}},
+    }
+    schema = {
+        "packs": [{"id": "grants-x-test", "version": "1.0.0"}],
+        "fields": {"grant": {"template": "grants-x-test/grant"}},
+    }
+    r = gg.admit(DOC, schema, CANDS[:1], packs=[kind, LAC]).to_dict()
+    write(tmp_path / "packs", "kind.json", kind)
+    write(tmp_path / "packs", "lac.json", LAC)
+    assert gg.verify(r, DOC, schema, CANDS[:1], pack_dir=tmp_path / "packs").ok
+
+
+def test_a_failed_file_is_named_in_the_problem(tmp_path: Path) -> None:
+    write(tmp_path / "packs", "bad-id.json", {**LAC, "id": "Lac"})
+    problems = gg.verify(receipt(), DOC, SCHEMA, CANDS, pack_dir=tmp_path / "packs").problems
+    assert problems[-1].startswith("the pack folder has 1 files that are not valid packs: ")
+    assert "pack file 'bad-id.json': pack 'Lac': the id must be" in problems[-1]
