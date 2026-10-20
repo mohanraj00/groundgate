@@ -63,11 +63,14 @@ The proposed defaults are settings for this runner, not measured operating point
 | `max_total_candidates` | 1024 | Maximum active proposals, including changed-value proposals. |
 | `max_admission_bytes` | 8388608 | Total canonical bytes of stored admission packets and receipts. |
 | `drop_rounded` | false | Drop a rounded figure beside the exact figure (section 4, #319, #331). |
+| `max_region_chars` | 6000 | Maximum size of one search region. A larger region is cut (section 6, #382). |
+| `max_sweep_calls` | 2 | Calls of the second sweep for one field after `search_limit` (section 6, #382). |
 
-Counts must be integers, not booleans. Limits other than overlap and repair rounds are positive;
-those two can be zero. Overlap must be less than chunk size. `targeted` and `drop_rounded` must
+Counts must be integers, not booleans. Limits other than overlap, repair rounds and sweep calls
+are positive; those three can be zero. Overlap must be less than chunk size. `targeted` and `drop_rounded` must
 be booleans. Invalid settings fail before a call. There is no automatic transport retry, JSON
-retry, model fallback, second targeted search or adaptive increase of a limit.
+retry, model fallback or adaptive increase of a limit. The only second targeted search is the
+second sweep of section 6.
 
 All calls are sequential. The order is document chunks, targeted fields in sorted field-name
 order, then repairs in candidate creation order. Each eligible candidate gets at most one call
@@ -307,9 +310,13 @@ come first, then references by id, then byte position. It visits each match and 
 most 1024 match records in that order. It counts later matches in `omitted_matches` without
 allocating records or windows for them. A retained match selects `search_context_chars` characters on either side,
 clamped to its source. It merges overlapping regions in the same source and gives each merged
-region its best query rank. It selects at most `max_target_regions` by rank, then source and
+region its best query rank and its best match: the match with that rank that comes first. A
+merged region longer than `max_region_chars` is cut to a window of that size around its best
+match, clamped to the region (#382). The runner does not drop it. The search entry lists each
+cut in `cut_regions`, with the byte span of the merged region and the byte span that it keeps.
+It selects at most `max_target_regions` by rank, then source and
 byte start. `omitted_regions` counts discarded regions from that bounded pool; it does not
-estimate regions from omitted matches. Either cap records `search_truncated`. The selected
+estimate regions from omitted matches. Either cap, or a cut, records `search_truncated`. The selected
 regions are sent in document, reference-id and byte-start order for stable quote anchoring.
 
 The match-record cap does not cap the number of hits scanned. Each of at most 64 retained
@@ -352,10 +359,24 @@ One prompt includes all retained regions and asks only for that field. If they d
 prompt limit, the script removes the region with the worst rank first, then source and byte
 start as above, until they fit. The other regions keep their location order. The search entry
 records `trimmed_regions`, lists only the sent regions and has the status `search_truncated`.
-If none fit, the field is `search_limit` and the run is incomplete. A single-field reply uses
+This is the first sweep, and its call has `sweep: 1`.
+
+If no region fits, the second sweep runs (#382). It takes every ranked region in rank order,
+then source and byte start, and puts as many in each call as fit `max_prompt_chars` and
+`max_target_regions`. A region that does not fit alone is skipped. Each call sends its regions
+in location order. A `sweep` entry before each call lists its regions without text, and the
+call has `sweep: 2` and its `part`. The sweep stops at the first reply with a candidate or a
+protocol failure, when every region is sent or skipped, or after `max_sweep_calls` calls. A
+`sweep_stop` entry records the calls, the skipped and unsent regions and the status:
+`proposed`, `protocol_failure`, `exhausted`, `sweep_limit` or `no_room`. Each not-found reply
+records `targeted_not_found`. If the sweep sends no call, or `max_sweep_calls` is zero, the
+field is `search_limit` and the run is incomplete. If the sweep sent a call, the run stays
+complete, as after a trimmed first sweep. A `call_limit` in the second sweep records
+`call_limit`, not `unsearched`, because the field was searched. A single-field reply uses
 the initial envelope. It can give candidates, or explicit `not_found`. Targeted candidates
 have the same repair rules and budget as initial candidates. There is one targeted call per
-field, not one per match.
+field in the first sweep, not one per match, and at most `max_sweep_calls` more in the second
+sweep.
 
 If no query matches, there is no client call: record `search_no_match`, the actual queries,
 sources and zero regions. If the model returns no candidate, record `targeted_not_found` with
@@ -413,7 +434,7 @@ completed repair rounds can leave `repair_limit`. A targeted not-found response 
 
 ## 8. The run record and replay
 
-The core receipt format stays unchanged. The `groundgate-run/2` record is a log: one line of
+The core receipt format stays unchanged. The `groundgate-run/3` record is a log: one line of
 canonical JSON for each entry. Each line has a `sequence`, the `previous` line's digest and its
 own `entry_sha256`. The first line, `header`, is the run manifest. It holds the runner version,
 core spec version, model id and every `RunPolicy` setting, and it names every input by digest:
@@ -438,7 +459,7 @@ cover exact UTF-8 bytes, including whitespace. Prompt digests cover the exact st
 `client`, encoded as UTF-8. Schema, policy, reference and admission objects are canonical JSON.
 Client errors have no reply digest.
 
-Runner digests use their own prefix, `groundgate-run/2:<kind>` followed by a zero byte and the
+Runner digests use their own prefix, `groundgate-run/3:<kind>` followed by a zero byte and the
 object bytes. They do not reuse the core `digest()`, whose prefix names the spec version, so the
 same text keeps its key in each spec version. There are no wall-clock times, host paths,
 credentials or random ids in this deterministic content. An app may keep times separately. The
@@ -481,9 +502,11 @@ allocation ceilings for candidates and admission history are further bounded by 
 canonical record and artifact byte counts, even when the header declares larger budgets.
 It checks not-found and search-only entries too. Missing artifacts, changed
 settings, unknown runner versions or a different core version fail replay.
-`groundgate-run/2` replaced `groundgate-run/1`, the version that 0.9.0 wrote, because the prompt,
-the field causes and the `rounding` line changed (#318, #319). A `groundgate-run/1` record fails
-replay with the message `runner version differs`, which names both versions. It does not get to
+`groundgate-run/3` replaced `groundgate-run/2`, the version that 0.10.0 wrote, because the
+search cuts large regions and the second sweep adds entries (#382). `groundgate-run/2` replaced
+`groundgate-run/1`, the version that 0.9.0 wrote, because the prompt, the field causes and the
+`rounding` line changed (#318, #319). An older record fails replay with the message
+`runner version differs`, which names both versions. It does not get to
 a prompt comparison. A client-error
 entry can verify the record of the attempted call, not reproduce the external failure.
 Replaying recorded replies is deterministic; a fresh model run need not produce those replies.
