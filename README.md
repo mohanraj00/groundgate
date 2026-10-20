@@ -230,6 +230,30 @@ The loop halves the silent misses and admits no wrong value, but both arms still
 of the stated values. The loop did not complete 18 of the 21 annual reports: each stopped at a
 harness limit. [bench/requested/RESULTS.md](bench/requested/RESULTS.md) has every number.
 
+### Spec 0.10 on requested fields
+
+0.10 is about fewer reviews of right values. `bench/requested3` has 111 held-out documents in
+four kinds that no rule came from: 18 component datasheets, 23 health plan SBCs, 20 annual
+reports and 50 safety data sheets, a new kind. Each kind has one fixed field list. Two blind passes
+labeled each field from the original PDFs before any model output. The documents state 305 of
+the labeled values. The baseline and `groundgate.extract` use `gpt-6.1-sol` at medium effort. The
+`drop_rounded` arm makes no model call: it replays the calls of `groundgate.extract`.
+
+| Arm | Right values admitted | Right absences | Escapes | Reviews | Silent misses | Miss rate |
+|---|---:|---:|---:|---:|---:|---:|
+| One-pass extraction with feedback (baseline) | 115 | 0 | 2 | 142 | 48 | 62.30% |
+| `groundgate.extract` | 97 | 118 | 0 | 160 | 48 | 68.20% |
+| `groundgate.extract` with `drop_rounded` | 99 | 118 | 0 | 158 | 48 | 67.54% |
+
+`groundgate.extract` admits no wrong value. The baseline admits 2 wrong values of 117. But
+`groundgate.extract` misses more right values than the baseline: 208 of 305 (68.20%) against 190
+of 305 (62.30%). The silent misses are the same (48), so the difference is right values that
+it sends to review and the baseline admits. It did not complete 15 of the 20 annual reports and
+4 of the 18 datasheets: each stopped at a harness limit. Its annual miss rate is 97.06%, against
+73.53% for the baseline. Every arm misses more than 60% of the stated values, so 0.10 does
+not meet the goal on this set. [bench/requested3/RESULTS.md](bench/requested3/RESULTS.md) has
+every number.
+
 ## Quickstart
 
 ```bash
@@ -411,7 +435,7 @@ a changed document, schema, policy, candidate or outcome.
   `CONFLICTING_CANDIDATES` catches it only when the models disagree, and in the benchmark they
   mostly agreed: six of the eight escapes were this case. When the field depends on a condition
   the schema can name, such as a drug's indications, a keyed field checks it (spec 0.2).
-- **No dates, arrays of records, or cross-document checks** in spec 0.9.
+- **No dates, arrays of records, or cross-document checks** in spec 0.10.
 - **English number formats only.** A decimal comma (`1.234,56`), space groups (`1 234`) and
   number words (`five`) have no value, so a fact that cites them is rejected. The
   [guide](docs/guide.md#how-values-are-read) lists what is read. Locale packs for other formats
@@ -426,8 +450,11 @@ a changed document, schema, policy, candidate or outcome.
 
 ## Status
 
-Alpha. groundgate 0.9.0 implements spec v0.9. [CHANGELOG.md](CHANGELOG.md) lists what each
-version changes, with its measure. 0.9 moves the reader to `groundgate.read` (#289), adds the
+Alpha. groundgate 0.10.0 implements spec v0.10. [CHANGELOG.md](CHANGELOG.md) lists what each
+version changes, with its measure. 0.10 adds vocabulary and kind packs (#333 to #339), relations
+across fields (#321), currency scales and heading units (#301, #313, #315, #365), up to 8 field
+items for one value (#300), label cells (#316), dash variants in aliases (#317), and the runner
+rules of #318 and #319. 0.9 moves the reader to `groundgate.read` (#289), adds the
 extraction loop `groundgate.extract` (#281), keeps an empty table cell in its column and refuses
 ambiguous column keys (#280), and keeps PDF running heads out of tables and blank cells in their
 column (#279). 0.8 writes PDF table rows as lines with tabs (#230), scales a
