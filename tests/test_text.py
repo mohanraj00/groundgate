@@ -276,13 +276,15 @@ def test_heading_index_checks_each_kind_once() -> None:
 def test_heading_conflict_reads_only_currency_units() -> None:
     """A heading conflict needs a currency unit: a code of the currency table, or a unit with a
     prefix that ends with a currency sign (SPEC §4.3, #365). `%`, and a schema unit with a sign
-    that §4.1 does not list, have none."""
+    that §4.1 does not list, have none. JPY is a code of the currency table since spec 0.11
+    (#368), so it is a currency unit with any prefix."""
     units = {
         "USD": (["US$", "$"], ["USD", "dollars"]),
         "AUD": ([], []),
         "CAD2": (["C$"], []),
         "%": ([], ["%"]),
         "JPY": (["\u00a5"], []),
+        "YEN2": (["\u00a5"], []),
     }
     text = "(in Australian dollars)\nRevenue\t5\n"
     index = HeadingIndex(text)
@@ -291,7 +293,8 @@ def test_heading_conflict_reads_only_currency_units() -> None:
     assert index.conflict(pos, "CAD2", units)
     assert not index.conflict(pos, "AUD", units)
     assert not index.conflict(pos, "%", units)
-    assert not index.conflict(pos, "JPY", units)
+    assert index.conflict(pos, "JPY", units)
+    assert not index.conflict(pos, "YEN2", units)
     assert not index.conflict(text.index("Australian"), "USD", units)  # its own line
 
 
@@ -308,9 +311,9 @@ def test_heading_conflict_of_two_statements_and_unknown_headers() -> None:
     assert not HeadingIndex(text).conflict(text.index("5"), "USD", units)
 
 
-def test_the_outside_path_does_not_read_the_heading_conflict() -> None:
-    """An external item still holds a value under a statement of another currency: the outside
-    path does not read the heading conflict (SPEC §4.3, #365). #367 decides it for 0.11."""
+def test_the_outside_path_reads_the_heading_conflict() -> None:
+    """An external item still holds a value under a statement of another currency, and the
+    decision lists the unit as missing (SPEC §3.2, spec 0.11, #367)."""
     item = {
         "source": "external",
         "url": "https://example.org/a",
@@ -324,7 +327,11 @@ def test_the_outside_path_does_not_read_the_heading_conflict() -> None:
         {"sources": {"external": {"allow": ["*"], "other": "review"}, "knowledge": "review"}},
     )
     (d,) = receipt.decisions
-    assert (d.outcome, list(d.codes)) == ("admitted", ["ADMITTED_BY_POLICY"])
+    assert (d.outcome, list(d.codes), list(d.missing)) == (
+        "needs_verification",
+        ["PART_MISSING", "ADMITTED_BY_POLICY"],
+        ["unit"],
+    )
 
 
 def test_heading_index_held_skips_units_that_reach_nothing() -> None:

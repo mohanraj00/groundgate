@@ -26,9 +26,9 @@ class PacketError(ValueError):
 
 
 BASE_ID = "en"
-BASE_VERSION = "1.0.0"
+BASE_VERSION = "1.1.0"
 # the digest of the base pack that SPEC §4.7 gives for this spec version
-BASE_SHA256 = "sha256:8ee2f5c367baa29969759e3ed3ec5acf39f412a8b4b6afbda6477c1cde7fdeae"
+BASE_SHA256 = "sha256:15fb3c027b33e5aa83561ef894053a54f7c7e469825960c50266c6d0f03e6f0c"
 # each released version of a built-in pack other than the base, with the digest that SPEC §4.8
 # gives. A schema names one by id and version, and the packet never gives it (#336). The kind
 # packs and electronics hold the knowledge of the bench schemas (#337).

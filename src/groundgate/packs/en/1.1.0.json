@@ -2,7 +2,7 @@
  "groundgate_pack": 1,
  "type": "vocabulary",
  "id": "en",
- "version": "1.0.0",
+ "version": "1.1.0",
  "description": "The base vocabulary of groundgate: the English words that the text rules of SPEC section 4 read.",
  "status": [],
  "scale": {
@@ -534,6 +534,76 @@
    "names": [
     "Sri Lankan rupees",
     "Sri Lankan rupee"
+   ],
+   "sign": null
+  },
+  "JPY": {
+   "names": [
+    "Japanese yen",
+    "yen"
+   ],
+   "sign": null
+  },
+  "CNY": {
+   "names": [
+    "Chinese yuan",
+    "yuan",
+    "renminbi"
+   ],
+   "sign": null
+  },
+  "CHF": {
+   "names": [
+    "Swiss francs",
+    "Swiss franc"
+   ],
+   "sign": null
+  },
+  "KRW": {
+   "names": [
+    "Korean won",
+    "South Korean won"
+   ],
+   "sign": null
+  },
+  "SEK": {
+   "names": [
+    "Swedish kronor",
+    "Swedish krona"
+   ],
+   "sign": null
+  },
+  "NOK": {
+   "names": [
+    "Norwegian kroner",
+    "Norwegian krone"
+   ],
+   "sign": null
+  },
+  "DKK": {
+   "names": [
+    "Danish kroner",
+    "Danish krone"
+   ],
+   "sign": null
+  },
+  "ZAR": {
+   "names": [
+    "South African rand"
+   ],
+   "sign": null
+  },
+  "BRL": {
+   "names": [
+    "Brazilian reais",
+    "Brazilian real"
+   ],
+   "sign": null
+  },
+  "MXN": {
+   "names": [
+    "Mexican pesos",
+    "Mexican peso"
    ],
    "sign": null
   }

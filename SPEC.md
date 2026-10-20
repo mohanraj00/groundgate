@@ -399,8 +399,8 @@ On the outside path, the candidate's support is its outside items. groundgate ca
 and `policy.sources` decides (§2.4).
 
 1. An external item **holds the value** when its `text`, read as a text of its own with the whole
-   text as the span, passes steps 10 and 11 without a missing part. A knowledge item always holds
-   the value.
+   text as the span, passes steps 10 and 11 without a missing part. These steps read the text as
+   if no heading unit reaches a token (§4.3). A knowledge item always holds the value.
 2. When no item holds the value, the candidate is rejected with `VALUE_NOT_IN_EVIDENCE`.
 3. Each item that holds the value gets an **action**. An external item gets `admit` when its URL
    matches an entry of `external.allow`, and `external.other` when not. A knowledge item gets
@@ -410,6 +410,13 @@ and `policy.sources` decides (§2.4).
 5. With `reject`, the candidate is rejected with `SOURCE_REJECTED`. With `review`, the decision
    gets the flag `EVIDENCE_QUOTED` for an external deciding item, or `EVIDENCE_STATED` for a
    knowledge item. With `admit`, it records `ADMITTED_BY_POLICY`.
+
+**Heading conflict (spec 0.11, #367).** The deciding item can be external, and the first token at
+which its text holds the value can have a heading conflict in that text (§4.3). Then the decision
+lists `unit` in `missing` and gets `PART_MISSING`. The action does not change. So `admit` gives
+`needs_verification` with `ADMITTED_BY_POLICY`, and `reject` still gives `SOURCE_REJECTED`. The
+deciding item is chosen as if no heading unit reaches a token. groundgate does not read the text
+of a knowledge item, so a knowledge item has no heading conflict.
 
 When the deciding item is external, the flags `QUALIFIED_VALUE`, `SCALE_WORD` and
 `KEY_NOT_AT_VALUE` read its text as the text. When it is knowledge, they do not apply.
@@ -733,6 +740,21 @@ capitals only.
 | `GBP` | `pounds sterling`, `sterling` | `£` |
 | `INR` | `Indian rupees` | `₹` |
 | `LKR` | `Sri Lankan rupees` | |
+| `JPY` | `Japanese yen`, `yen` | |
+| `CNY` | `Chinese yuan`, `yuan`, `renminbi` | |
+| `CHF` | `Swiss francs` | |
+| `KRW` | `Korean won`, `South Korean won` | |
+| `SEK` | `Swedish kronor` | |
+| `NOK` | `Norwegian kroner` | |
+| `DKK` | `Danish kroner` | |
+| `ZAR` | `South African rand` | |
+| `BRL` | `Brazilian reais` | |
+| `MXN` | `Mexican pesos` | |
+
+The currency table is this table and the `heading_units` of the packet's packs (§4.8). A currency
+with no sign is allowed by no currency header. Two currencies can share a sign, as six share `$`.
+A lone-sign header then allows each of them, and only a statement or a prefix in the unit table
+settles the heading currency (spec 0.11, #368).
 
 A heading unit **reaches** a token as a heading scale does (§4.1).
 
@@ -775,8 +797,9 @@ So the decision lists `unit` in `missing` and gets `PART_MISSING`, or it gets
 
 A heading conflict does not change which occurrence of a quote is the evidence (§4.6), and it
 does not change if re-anchoring moves the evidence (§3.1). These choices are made as if no
-heading unit reaches the token. Then the heading conflict applies at the evidence. The outside
-path (§3.2) does not read the heading conflict.
+heading unit reaches the token. Then the heading conflict applies at the evidence. On the
+outside path, a heading conflict at the deciding item lists `unit` in `missing` (§3.2, spec 0.11,
+#367).
 
 So under "presented in Australian dollars" and `$m`, a value in `USD` goes to review, and a value
 in `AUD` can be admitted. Under "presented in US dollars" and `$m`, a value in `USD` can be
@@ -1029,22 +1052,23 @@ and names another key adds `MODEL_DOUBT` to a decision with `KEY_CITED`.
 
 ### 4.7 The base vocabulary pack
 
-The word lists of §3 and §4 are data in one file, the base vocabulary pack `en` 1.0.0:
-[`src/groundgate/packs/en/1.0.0.json`](src/groundgate/packs/en/1.0.0.json). Its lists are the scale
+The word lists of §3 and §4 are data in one file, the base vocabulary pack `en` 1.1.0:
+[`src/groundgate/packs/en/1.1.0.json`](src/groundgate/packs/en/1.1.0.json). Its lists are the scale
 words and suffixes, the currency signs and scales, the unit table, the per-units, the qualifier
 words and their negations, the range words, the change words, the abbreviations, the gain words, the
 negations before a loss word, the currency names of a currency statement (§4.3), and the null
 literals. It gives no loss word of §4.6: the built-in pack `finance` gives them (§4.8). The rules of §4 read each list as plain words,
 never as patterns, with the fixed rules of §4: whole words, the same case rules and the same
-windows.
+windows. The pack also writes the singular forms of the currency names: `Swedish krona`,
+`Norwegian krone`, `Danish krone`, `Brazilian real`, `Mexican peso` and `Swiss franc`.
 
 The digest of the base pack is
 
 `pack_sha256 = "sha256:" + hex(SHA-256("groundgate-pack/1:" + type + "\0" + JCS(pack)))`
 
 where `type` is `vocabulary` and JCS is §6. The prefix names the pack format, not the spec
-version. For this spec version the base pack is `en` 1.0.0, with the digest
-`sha256:8ee2f5c367baa29969759e3ed3ec5acf39f412a8b4b6afbda6477c1cde7fdeae`.
+version. For this spec version the base pack is `en` 1.1.0, with the digest
+`sha256:15fb3c027b33e5aa83561ef894053a54f7c7e469825960c50266c6d0f03e6f0c`.
 An implementation loads a base pack with this digest, and refuses to run with another one. The base
 pack applies to every packet, and the receipt does not name it: the spec version names it.
 
