@@ -5,6 +5,7 @@ from __future__ import annotations
 import bisect
 import dataclasses
 import itertools
+import os
 import re
 from array import array
 from collections import defaultdict
@@ -31,7 +32,7 @@ from .model import (
     RelationResult,
     Schema,
 )
-from .pack import BASE
+from .pack import BASE, checked_copy, reading_retired, receipt_packs
 from .text import (
     HeadingIndex,
     Token,
@@ -1524,6 +1525,7 @@ def verify(
     references: Sequence[object] | None = None,
     document_source: str | None = None,
     packs: Sequence[object] = (),
+    pack_dir: str | os.PathLike[str] | None = None,
 ) -> Verification:
     """Re-derive the receipt from its inputs and compare it with ``receipt``.
 
@@ -1533,6 +1535,13 @@ def verify(
     ``problems``: ``(True, ())`` when every byte re-derives. A receipt from another spec version
     gives one problem and no further
     checks. Raises ``PacketError`` when ``receipt`` is not a JSON object or an input is invalid.
+
+    ``verify`` finds each pack that the receipt names by its id, version and digest: a built-in
+    pack, then a pack in ``packs``, then a pack file in the folder ``pack_dir``. The folder is
+    untrusted. ``verify`` reads only its ``.json`` files, follows no link, and uses a file only
+    when its computed digest is the digest in the receipt. A pack that is not found, or a pack
+    with another digest, gives a problem and no further checks (docs/design/packs.md §11).
+    ``verify`` also reads a retired built-in version, which ``admit`` refuses.
     """
     if not isinstance(receipt, Mapping):
         raise PacketError("receipt must be a JSON object")
@@ -1544,22 +1553,34 @@ def verify(
     body = {k: v for k, v in receipt.items() if k != "receipt_sha256"}
     if digest("receipt", body) != receipt.get("receipt_sha256"):
         problems.append("receipt_sha256 does not match the receipt body")
+    if isinstance(schema, Schema):
+        if pack_dir is not None:
+            raise PacketError("give the schema as a dict when you give a pack folder")
+        given: list[dict[str, Any]] = list(schema.given)
+    else:
+        if isinstance(packs, (str, bytes, dict)) or not isinstance(packs, Sequence):
+            raise PacketError("packs must be a list of pack objects")
+        given = [checked_copy(p) for p in packs]
+    found, pack_problems = receipt_packs(receipt.get("packs"), given, pack_dir)
+    if pack_problems:
+        return Verification(False, (*problems, *pack_problems))
     doc_id = (
         receipt.get("document", {}).get("id")
         if isinstance(receipt.get("document"), Mapping)
         else None
     )
-    fresh = admit(
-        text,
-        schema,
-        candidates,
-        policy,
-        doc_id,
-        judgments,
-        references=references,
-        document_source=document_source,
-        packs=packs,
-    ).to_dict()
+    with reading_retired():
+        fresh = admit(
+            text,
+            schema,
+            candidates,
+            policy,
+            doc_id,
+            judgments,
+            references=references,
+            document_source=document_source,
+            packs=[*packs, *found],
+        ).to_dict()
     for key in (
         "document",
         "references",

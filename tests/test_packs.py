@@ -198,10 +198,11 @@ def test_a_packet_with_no_pack_reads_the_base_only() -> None:
 def test_verify_needs_the_same_packs() -> None:
     receipt = gg.admit(DOC, SCHEMA, CANDS, packs=[LAC]).to_dict()
     assert gg.verify(receipt, DOC, SCHEMA, CANDS, packs=[LAC]).ok
-    with pytest.raises(gg.PacketError, match="not given"):
-        gg.verify(receipt, DOC, SCHEMA, CANDS)
+    check = gg.verify(receipt, DOC, SCHEMA, CANDS)  # the receipt names the pack (#338)
+    assert not check.ok and "'words-x-test' 1.0.0 with the digest" in check.problems[0]
     other = pack(scale={"words": {"lac": 5}}, description="another copy")
-    assert not gg.verify(receipt, DOC, SCHEMA, CANDS, packs=[other]).ok
+    check = gg.verify(receipt, DOC, SCHEMA, CANDS, packs=[other])
+    assert not check.ok and "the given pack has the digest" in check.problems[0]
 
 
 def test_a_schema_object_takes_its_packs_from_from_dict() -> None:
@@ -259,8 +260,8 @@ def test_the_cli_reads_each_pack_file(tmp_path: Path, capsys: pytest.CaptureFixt
     assert main(["admit", doc, schema, cands, "--pack", lac, "-o", out]) == 0
     assert json.loads(Path(out).read_text(encoding="utf-8"))["packs"][0]["id"] == "words-x-test"
     assert main(["verify", out, doc, schema, cands, "--pack", lac]) == 0
-    assert main(["verify", out, doc, schema, cands]) == 2
-    assert "not given" in capsys.readouterr().err
+    assert main(["verify", out, doc, schema, cands]) == 1  # the pack is not found (#338)
+    assert "is not built in or given" in capsys.readouterr().err
     assert main(["schema", schema, "--pack", lac]) == 0
     assert main(["schema", "check", schema, "--pack", lac]) == 0
 

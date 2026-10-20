@@ -3,7 +3,7 @@
   groundgate read     FILE                              > doc.txt
   groundgate admit    DOC SCHEMA CANDIDATES             > receipt.json
   groundgate admit    --docs D --candidates C --schema S --out R
-  groundgate verify   RECEIPT DOC SCHEMA CANDIDATES
+  groundgate verify   RECEIPT DOC SCHEMA CANDIDATES [--pack-dir DIR]
   groundgate report   RECEIPT DOC SCHEMA CANDIDATES -o report.html
   groundgate schema   SCHEMA                            > extractor.schema.json
   groundgate schema check SCHEMA
@@ -148,6 +148,11 @@ def _parser() -> argparse.ArgumentParser:
     v = sub.add_parser("verify", help="re-derive a receipt from its inputs and compare")
     v.add_argument("receipt")
     inputs(v)
+    v.add_argument(
+        "--pack-dir",
+        metavar="DIR",
+        help="a folder of pack files: verify takes each pack that the receipt names by its digest",
+    )
 
     r = sub.add_parser("report", help="verify a receipt, then render an HTML review page")
     r.add_argument("receipt")
@@ -212,7 +217,8 @@ def main(argv: list[str] | None = None) -> int:
             _write(_dumps(receipt.to_dict()), args.output)
             return 0
         stored = _json(args.receipt)
-        result = verify(stored, text, schema, candidates, policy, judgments, **extra)
+        found = {"pack_dir": args.pack_dir} if args.command == "verify" else {}
+        result = verify(stored, text, schema, candidates, policy, judgments, **extra, **found)
         for problem in result.problems:
             print(f"mismatch: {problem}", file=sys.stderr)
         if args.command == "verify":

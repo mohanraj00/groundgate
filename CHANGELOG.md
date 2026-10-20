@@ -86,6 +86,18 @@ Spec 0.10, a draft. Receipts name `"groundgate": "0.10"` and every digest uses t
   digest. Every route is `draft`. The bench sets keep their own schema files, so no bench number
   changes. A test writes each set's schema in template form, and it resolves to the same fields,
   member by member. No decision changes.
+- `verify` finds the packs of a receipt by id, version and digest (#338). It looks for a
+  built-in pack, then a given pack, then a file in the new folder option: `pack_dir` in Python,
+  `--pack-dir DIR` on the command line. A pack that is not found, or a pack with another digest,
+  is now one problem that names the id, the version and the digests, and `verify` checks nothing
+  more. Before, a missing pack raised `PacketError`, and the CLI exited 2. Now it exits 1.
+  `verify` reads the folder as untrusted: only the `.json` files directly in it, at most 256,
+  each at most 1 MiB, with no link followed, and a file only when its computed digest is the
+  digest in the receipt. A built-in version can now be retired: `admit` refuses it and `verify`
+  still reads it. No version is retired. A test fails when a built-in pack file is not in the
+  list of released digests or has another digest. The how-to
+  [Keep pack files with receipts](docs/howto/keep-packs.md) shows a folder layout. No decision
+  changes.
 - A candidate can cite up to 8 field items, such as a row label and a column header (#300).
   The field check passes when one of them passes. Two items of any other role stay
   `CANDIDATE_INVALID`.
