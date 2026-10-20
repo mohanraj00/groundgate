@@ -86,7 +86,8 @@ has a second blind check: both passes gave 101 of the 108 absences. The independ
 The independent check used the requested3 precedent for a typical current that has only a Max
 value: no typical value is stated, so the slot is absent. Both passes had labeled 4 such slots
 unclear (component-c01 to c04, `supply_current_typ`). I applied the same rule to them, so they
-are absent. No model output existed when I made this change.
+are absent. No model output existed when I made this change. So the 108 absences are 101 from
+both blind passes, 3 from the independent check and 4 from this rule.
 
 ## Arms
 
