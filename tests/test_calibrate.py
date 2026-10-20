@@ -2,10 +2,8 @@
 
 from __future__ import annotations
 
-import importlib.util
 import json
 import socket
-import sys
 import urllib.request
 from collections.abc import Iterator
 from http.server import BaseHTTPRequestHandler, HTTPServer
@@ -15,14 +13,10 @@ from typing import Any
 
 import pytest
 
-if importlib.util.find_spec("groundgate_calibrate") is None:  # the release job tests the wheel
-    sys.path.insert(0, str(Path(__file__).parents[1] / "src"))
-
-from groundgate_calibrate import cli, judges, label
-from groundgate_calibrate import questions as q
-from groundgate_calibrate.stats import needed, pick, upper_95
-
 import groundgate as gg
+from groundgate.calibrate import cli, judges, label
+from groundgate.calibrate import questions as q
+from groundgate.calibrate.stats import needed, pick, upper_95
 from groundgate.canonical import SPEC_VERSION
 
 # "0.10" < "0.6" as strings, so the spec version is compared as numbers
@@ -878,3 +872,25 @@ def test_chat_calibrates_and_writes_recorded_judgments(
         chat_server.requests.clear()
         # judge reads the calibration answers before calling the server.
         (work / "answers-chat.json").write_text(json.dumps({"meta": meta}))
+
+
+def test_groundgate_calibrate_runs_the_tool(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    from groundgate.cli import main as groundgate
+
+    with pytest.raises(SystemExit) as stop:
+        groundgate(["--help"])
+    assert stop.value.code == 0
+    assert "experimental: measure a judge's thresholds" in capsys.readouterr().out
+    with pytest.raises(SystemExit) as stop:
+        groundgate(["calibrate", "--help"])
+    assert stop.value.code == 0
+    out = capsys.readouterr().out
+    assert out.startswith("usage: groundgate calibrate ")
+    assert "experimental" in out
+    for step in ("sample", "label", "split", "ask", "report", "judge"):
+        assert step in out
+    # a step runs with the same options as before; this one stops at the missing work directory
+    with pytest.raises(SystemExit, match=r"config\.json is not there"):
+        groundgate(["calibrate", "report", "--work", str(tmp_path)])

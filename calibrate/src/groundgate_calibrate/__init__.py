@@ -1,3 +1,3 @@
-"""Measure a judge's thresholds for groundgate on your own documents (hybrid design §9)."""
+"""groundgate-calibrate is now ``groundgate calibrate``. This last release runs that command."""
 
-__version__ = "0.3.0"
+__version__ = "0.4.0"

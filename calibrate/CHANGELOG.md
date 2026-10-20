@@ -3,6 +3,17 @@
 Versions follow [SemVer](https://semver.org). groundgate-calibrate is released apart from
 groundgate, with tags `calibrate-v*`.
 
+## 0.4.0 (unreleased)
+
+The last release ([#385](https://github.com/mohanraj00/groundgate/issues/385)). The tool moved
+into groundgate 0.11 as the command `groundgate calibrate`, with the same steps and options.
+
+- It requires `groundgate>=0.11`.
+- `groundgate-calibrate` prints one line that tells you to change, then runs
+  `groundgate calibrate` with your arguments.
+- The modules `groundgate_calibrate.judges`, `questions`, `label` and `stats` are gone. Import
+  them from `groundgate.calibrate`.
+
 ## 0.3.0 (2026-10-20)
 
 Checked against groundgate 0.10.0 and spec 0.10

@@ -369,9 +369,9 @@ receipt = gg.admit(text, schema, candidates, policy, judgments=judgments)
   rejection, and never admits a candidate that has another flag.
 
 The thresholds belong to one model and one kind of document. groundgate ships none: measure
-yours with `groundgate-calibrate` ([#112](https://github.com/mohanraj00/groundgate/issues/112)), in
-[calibrate/](../calibrate). [Measure a judge's thresholds](howto/calibrate.md) runs it from start
-to end.
+yours with `groundgate calibrate` ([#112](https://github.com/mohanraj00/groundgate/issues/112)),
+which is experimental. [Measure a judge's thresholds](howto/calibrate.md) runs it from start to
+end, and [the calibrate reference](calibrate.md) gives each command and each rule.
 
 ## Decisions
 
@@ -801,6 +801,7 @@ groundgate verify  RECEIPT DOC SCHEMA CANDIDATES [--policy P] [--judgments J] [-
 groundgate report  RECEIPT DOC SCHEMA CANDIDATES [--policy P] [--judgments J] [--pack-dir DIR] [--layout L] [--title T] [-o report.html]
 groundgate schema  SCHEMA [--references R] [-o extractor.schema.json]
 groundgate schema check SCHEMA
+groundgate calibrate STEP ...      # experimental: sample, split, label, ask, report, judge
 ```
 
 `admit`, `verify` and `report` also take `--references R`, `--document-source URL` and
@@ -812,6 +813,10 @@ prints the settings that make a check fail every time, or pass for the wrong key
 0 success, 1 the receipt does not match its inputs or `schema check` has a finding, 2 invalid
 input.
 
+`groundgate calibrate` measures a judge's thresholds on your own documents. It is experimental.
+[The calibrate reference](calibrate.md) gives each step and its options. A step that stops
+prints the reason and exits with 1. A usage error exits with 2.
+
 `groundgate admit --docs D --candidates C --schema S --out R` processes a folder of documents.
 `D` holds `<doc>.txt` files, and `C` holds matching `<doc>.json` arrays of candidates. Only names
 that end in `.txt` (lower case) directly in `D` are read, in filename order. Two names equal in
@@ -819,7 +824,7 @@ any letter case stop the run. A missing candidate file stops the run. `[]` means
 has no candidates. The document id in each receipt is `<doc>`.
 
 One `--policy` file and one `--references` file apply to the whole batch. With `--judgments J`,
-`J` is a folder of matching `<doc>.json` arrays, as `groundgate-calibrate judge` writes them. Each
+`J` is a folder of matching `<doc>.json` arrays, as `groundgate calibrate judge` writes them. Each
 document needs its judgment file. `[]` means no judgments. `--document-source`, if given, applies
 to every document. Positional inputs, `--document-id` and `--output` cannot be used in batch mode.
 

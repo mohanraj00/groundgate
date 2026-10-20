@@ -5,13 +5,13 @@ build-backend = "hatchling.build"
 [project]
 name = "groundgate-calibrate"
 dynamic = ["version"]
-description = "Measure a judge's thresholds for groundgate on your own documents."
+description = "Moved into groundgate as `groundgate calibrate`. This last release runs that command."
 readme = "README.md"
 license = "Apache-2.0"
 license-files = ["LICENSE"]
 authors = [{ name = "Mohan Raj" }]
 requires-python = ">=3.10"
-dependencies = ["groundgate>=0.5"]
+dependencies = ["groundgate>=0.11"]
 
 [project.urls]
 Homepage = "https://github.com/mohanraj00/groundgate/tree/main/calibrate"
