@@ -718,7 +718,10 @@ class FrozenSet:
         if not (freeze.get("code_sha256") == self.config["code_sha256"] == source_code_digest()):
             raise CacheError("a held-out run needs the frozen code digest in config and code")
         records = []
-        for path in sorted((self.directory / "loop").glob("*.json")):
+        paths = sorted((self.directory / "loop").glob("*.json"))
+        if [p.name for p in paths] != [f"{n:02}.json" for n in range(1, len(paths) + 1)]:
+            raise CacheError("loop records must be 01.json, 02.json, ... with no gap")
+        for path in paths:
             try:
                 records.append(_json(_read(_unlinked(path))))
             except (ValueError, RecursionError) as exc:

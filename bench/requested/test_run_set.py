@@ -1430,3 +1430,12 @@ def test_heldout_run_needs_the_named_last_loop_record(tmp_path, records, code, m
     with pytest.raises(harness.CacheError, match=message):
         session.run("baseline", client)
     assert client.prompts == []
+
+
+def test_heldout_guard_refuses_a_gap_in_the_loop_records(tmp_path):
+    session, _ = frozen_fixture(tmp_path, frozen())
+    (session.directory / "loop/02.json").rename(session.directory / "loop/03.json")
+    client = Client(envelope(candidate()))
+    with pytest.raises(harness.CacheError, match="no gap"):
+        session.run("baseline", client)
+    assert client.prompts == []

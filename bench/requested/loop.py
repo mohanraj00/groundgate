@@ -303,7 +303,12 @@ def check_record(directory: Path, record: Json, iteration: int, heldout: set[str
     ):
         raise ValueError(f"{name(iteration)}: a proposal needs a change, an issue or PR, a line")
     if propose is not None and (
-        leaked := sorted(i for i in heldout if i in propose["summary"] + propose["reference"])
+        leaked := sorted(
+            i
+            for i in heldout
+            for text in (propose["summary"], propose["reference"])
+            if re.search(r"(?<![A-Za-z0-9_-])" + re.escape(i) + r"(?![A-Za-z0-9_-])", text)
+        )
     ):
         raise ValueError(f"{name(iteration)}: names held-out documents: " + ", ".join(leaked))
     decide = record["decide"]

@@ -262,7 +262,8 @@ def test_check_refuses_held_out_ids_in_a_proposal_and_answers_outside_the_set(
     dev_run(tmp_path, 1, REVIEWS)
     with pytest.raises(ValueError, match="held-out documents: held"):
         loop.record(tmp_path, 1, **(PROPOSE | {"summary": "The held document misses."}))
-    path = loop.record(tmp_path, 1, **PROPOSE)
+    # Only a whole id counts: "withheld" and "held2" do not name "held".
+    path = loop.record(tmp_path, 1, **(PROPOSE | {"summary": "A withheld held2 note."}))
     dev_run(tmp_path, 2, REVIEWS)
     record = json.loads(path.read_text())
     outside = tmp_path.parent / "outside.json"
