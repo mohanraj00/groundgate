@@ -251,6 +251,7 @@ def test_untrusted_store_data(tmp_path: Path, capsys: pytest.CaptureFixture[str]
             "document": put({**packet, "document": {**packet["document"], "text": None}}),
             "document id": put({**packet, "document": {**packet["document"], "id": "other"}}),
             "wrong kind": put({**packet, "schema": packet["candidates"]}),
+            "spec": put({**packet, "spec": "9.9"}),
         }
         for name, bad in cases.items():
             with pytest.raises(StoreError):
@@ -258,6 +259,13 @@ def test_untrusted_store_data(tmp_path: Path, capsys: pytest.CaptureFixture[str]
             assert main(["verify", "--store", str(root), bad]) == 2, name
         with pytest.raises(ValueError, match="not a store key"):
             load_packet(store, "../objects")
+        twice = jcs(packet).encode()[:-1] + b',"run":null}'  # a duplicate member
+        dup = key("packet@1", twice)
+        folder = root / "objects" / dup[7:9]
+        folder.mkdir(mode=0o700, exist_ok=True)
+        (folder / dup[9:]).write_bytes(twice)
+        with pytest.raises(StoreError, match="not canonical JSON: a duplicate member"):
+            load_packet(store, dup)
     capsys.readouterr()
     assert main(["verify", "--store", str(root), "../objects"]) == 2
     assert "is not a store key" in capsys.readouterr().err
@@ -285,6 +293,18 @@ def test_a_reading_of_another_text_is_refused(tmp_path: Path) -> None:
         layoutless = json.loads(store.get("reading@1", reading))
         assert layoutless["layout"] is None and layoutless["reader"]["name"] == "groundgate.read"
         assert store.get("source@1", layoutless["source"]) == b"Another text."
+
+
+def test_layout_needs_a_pdf_before_the_store_is_written(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    page = tmp_path / "a.html"
+    page.write_text("<p>Fee: $500</p>", encoding="utf-8")
+    store = tmp_path / "s"
+    argv = ["read", "--store", str(store), str(page), "--layout", str(tmp_path / "l.json")]
+    assert main(argv) == 2
+    assert capsys.readouterr().err == "groundgate: --layout needs a PDF\n"
+    assert not store.exists()
 
 
 def test_store_options_need_their_mode(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:

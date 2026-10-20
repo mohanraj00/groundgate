@@ -191,7 +191,9 @@ def put_reading(
 ) -> tuple[str, Any]:
     """Read the file at ``path`` as ``groundgate read`` does, and write the source, the text,
     the layout (PDF only) and a ``reading@1`` object. Return the reading key and the result of
-    ``read``. The file must be a regular file, and it must not change while ``read`` runs."""
+    ``read``. The file must be a regular file. ``put_reading`` reads its bytes before and after
+    ``read``, and refuses the file if they differ. A file that changes during ``read`` and then
+    changes back is not detected, so do not write the file while ``put_reading`` runs."""
     from .. import __version__
     from ..read import ReadError, read
 
@@ -327,8 +329,10 @@ def admit_packet(
 
 def load_packet(store: Store, k: str, *, layout: bool = False) -> Packet:
     """Get the packet of key ``k`` and each input that it names. With ``layout``, also get the
-    layout of its reading. An object that is not in the store raises ``InputGone``, and data
-    that does not match its key or its format raises ``StoreError``."""
+    layout of its reading. The packet member ``spec`` must be the ``groundgate`` member of the
+    receipt, and ``verify`` checks that spec version against its own. An object that is not in
+    the store raises ``InputGone``, and data that does not match its key or its format raises
+    ``StoreError``."""
     if not isinstance(k, str) or not KEY.fullmatch(k):
         raise ValueError(f"{_printable(k)} is not a store key")
     obj = _members(_get_json(store, "packet@1", k), _PACKET, "packet@1", k)
@@ -353,6 +357,8 @@ def load_packet(store: Store, k: str, *, layout: bool = False) -> Packet:
     receipt = _get_json(store, "receipt@1", obj["receipt"])
     if not isinstance(receipt, dict):
         raise StoreError(f"the receipt@1 object {obj['receipt']} is not a JSON object")
+    if receipt.get("groundgate") != obj["spec"]:
+        raise StoreError("the packet and its receipt name different spec versions")
     named = receipt.get("document")
     if not isinstance(named, dict) or named.get("id") != document["id"]:
         raise StoreError("the packet and its receipt name different document ids")
