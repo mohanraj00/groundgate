@@ -1,0 +1,51 @@
+{
+ "name": "118-outside-heading-conflict-reject",
+ "description": "A heading conflict does not change the action of the deciding item: with no allow entry and external.other reject, the item is still rejected with SOURCE_REJECTED (spec 0.11, #367).",
+ "document": "The annual report is on the web.\n",
+ "schema": {
+  "fields": {
+   "usd": {
+    "type": "number",
+    "unit": "USD",
+    "multiple": false,
+    "aliases": [
+     "Revenue"
+    ]
+   }
+  }
+ },
+ "policy": {
+  "sources": {
+   "external": {
+    "other": "reject"
+   }
+  }
+ },
+ "candidates": [
+  {
+   "id": "oc6",
+   "field": "usd",
+   "value": "5200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "external",
+     "url": "https://b.example/report",
+     "retrieved": "2026-10-01",
+     "text": "Presented in Australian dollars\n\t2025\nRevenue\t$5,200\n"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "rejected",
+    "codes": [
+     "SOURCE_REJECTED"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

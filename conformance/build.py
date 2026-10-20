@@ -5399,6 +5399,96 @@ vector(
 )  # fmt: skip
 
 
+# ---------------------------------------------------------------- spec 0.11 (#367)
+ALLOWED = "https://a.example/report"
+OTHER_SITE = "https://b.example/report"
+AUSTRALIAN_TABLE = "Presented in Australian dollars\n\t2025\nRevenue\t$5,200\n"
+US_TABLE = "Presented in US dollars\n\t2025\nRevenue\t$5,200\n"
+POLICY_GONE = (REVIEW, ["PART_MISSING", "ADMITTED_BY_POLICY"], ["unit"])
+BY_POLICY = ("admitted", ["ADMITTED_BY_POLICY"], [])
+
+vector(
+    "117-outside-heading-conflict",
+    "On the outside path, a heading conflict at the deciding external item lists unit in "
+    "missing and gives PART_MISSING. The action does not change: admit gives "
+    "needs_verification with ADMITTED_BY_POLICY, and review gives EVIDENCE_QUOTED. The "
+    "deciding item is chosen as if no heading unit reaches a token, so it does not move to a "
+    "later item with no conflict. A knowledge item has no heading conflict (spec 0.11, #367).",
+    "The annual report is on the web.\n",
+    {"fields": {"usd": money("USD", "Revenue", multiple=True)}},
+    [
+        # admitted in spec 0.10
+        c("oc1", "usd", "5200", "USD", [ext(AUSTRALIAN_TABLE, ALLOWED)], POLICY_GONE),
+        c("oc2", "usd", "5200", "USD", [ext(AUSTRALIAN_TABLE, OTHER_SITE)],
+          (REVIEW, ["PART_MISSING", "EVIDENCE_QUOTED"], ["unit"])),
+        c("oc3", "usd", "5200", "USD",
+          [ext(AUSTRALIAN_TABLE, ALLOWED), ext(US_TABLE, ALLOWED)], POLICY_GONE),
+        # must not change
+        c("oc4", "usd", "5200", "USD",
+          [ext(US_TABLE, ALLOWED), ext(AUSTRALIAN_TABLE, ALLOWED)], BY_POLICY),
+        c("oc5", "usd", "5200", "USD",
+          [know("Presented in Australian dollars. Revenue was $5,200.")], BY_POLICY),
+    ],
+    policy={
+        "sources": {
+            "external": {"allow": ["https://a.example/"], "other": "review"},
+            "knowledge": "admit",
+        }
+    },
+)  # fmt: skip
+
+vector(
+    "118-outside-heading-conflict-reject",
+    "A heading conflict does not change the action of the deciding item: with no allow entry "
+    "and external.other reject, the item is still rejected with SOURCE_REJECTED "
+    "(spec 0.11, #367).",
+    "The annual report is on the web.\n",
+    {"fields": {"usd": money("USD", "Revenue")}},
+    [
+        c("oc6", "usd", "5200", "USD", [ext(AUSTRALIAN_TABLE, OTHER_SITE)],
+          ("rejected", ["SOURCE_REJECTED"])),
+    ],
+    policy={"sources": {"external": {"other": "reject"}}},
+)  # fmt: skip
+
+
+# ---------------------------------------------------------------- spec 0.11 (#368)
+vector(
+    "119-currency-statement-names",
+    "The base pack en 1.1.0 adds currency names with no sign, and each code matches as a name "
+    "in capitals. So 'in Japanese yen' and 'in CHF' are currency statements. They do not allow "
+    "USD, so a $ in the row label or next to the value does not admit a value in USD. A value "
+    "in % is not in a currency unit, so the statement does not change it (spec 0.11, #368).",
+    "Amounts in Japanese yen\n\t2025\nRevenue ($)\t5,200\nMargin\t12.5%\n\n"
+    "Figures in CHF\n\t2025\nRevenue\t$5,200\n",
+    {"fields": {"usd": money("USD", "Revenue", multiple=True), "margin": money("%", "Margin")}},
+    [
+        # admitted in spec 0.10
+        c("cn1", "usd", "5200", "USD", [value_quote("5,200"), REV], UNIT_GONE),
+        c("cn2", "usd", "5200", "USD", [value_quote("$5,200")], UNIT_GONE),
+        # must not change
+        c("cn3", "margin", "12.5", "%", [value_quote("12.5%"), row("Margin")]),
+    ],
+)  # fmt: skip
+
+vector(
+    "120-currency-unit-from-table",
+    "JPY is a code of the currency table, so it is a currency unit, also when its prefix ¥ is "
+    "not a currency sign. A statement of AUD does not allow it, so ¥5,200 goes to review in "
+    "JPY. Under a statement of JPY the value is admitted (spec 0.11, #368).",
+    "The figures are presented in Australian dollars.\n\t2025\nRevenue\t¥5,200\n\n"
+    "The figures are presented in Japanese yen.\n\t2025\nRevenue\t¥5,200\n",
+    {"fields": {"jpy": money("JPY", "Revenue", multiple=True)},
+     "units": {"JPY": {"prefix": ["¥"], "suffix": []}}},
+    [
+        # admitted in spec 0.10
+        c("cn4", "jpy", "5200", "JPY", [q("¥5,200", 1)], UNIT_GONE),
+        # must not change
+        c("cn5", "jpy", "5200", "JPY", [q("¥5,200", 2)]),
+    ],
+)  # fmt: skip
+
+
 def main() -> None:
     out_dir = HERE / "vectors"
     out_dir.mkdir(exist_ok=True)

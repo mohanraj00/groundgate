@@ -1,0 +1,72 @@
+{
+ "name": "120-currency-unit-from-table",
+ "description": "JPY is a code of the currency table, so it is a currency unit, also when its prefix ¥ is not a currency sign. A statement of AUD does not allow it, so ¥5,200 goes to review in JPY. Under a statement of JPY the value is admitted (spec 0.11, #368).",
+ "document": "The figures are presented in Australian dollars.\n\t2025\nRevenue\t¥5,200\n\nThe figures are presented in Japanese yen.\n\t2025\nRevenue\t¥5,200\n",
+ "schema": {
+  "fields": {
+   "jpy": {
+    "type": "number",
+    "unit": "JPY",
+    "multiple": true,
+    "aliases": [
+     "Revenue"
+    ]
+   }
+  },
+  "units": {
+   "JPY": {
+    "prefix": [
+     "¥"
+    ],
+    "suffix": []
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "cn4",
+   "field": "jpy",
+   "value": "5200",
+   "unit": "JPY",
+   "evidence": [
+    {
+     "start": 63,
+     "end": 70,
+     "text": "¥5,200"
+    }
+   ]
+  },
+  {
+   "id": "cn5",
+   "field": "jpy",
+   "value": "5200",
+   "unit": "JPY",
+   "evidence": [
+    {
+     "start": 129,
+     "end": 136,
+     "text": "¥5,200"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

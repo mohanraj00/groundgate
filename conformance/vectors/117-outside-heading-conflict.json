@@ -1,0 +1,159 @@
+{
+ "name": "117-outside-heading-conflict",
+ "description": "On the outside path, a heading conflict at the deciding external item lists unit in missing and gives PART_MISSING. The action does not change: admit gives needs_verification with ADMITTED_BY_POLICY, and review gives EVIDENCE_QUOTED. The deciding item is chosen as if no heading unit reaches a token, so it does not move to a later item with no conflict. A knowledge item has no heading conflict (spec 0.11, #367).",
+ "document": "The annual report is on the web.\n",
+ "schema": {
+  "fields": {
+   "usd": {
+    "type": "number",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "Revenue"
+    ]
+   }
+  }
+ },
+ "policy": {
+  "sources": {
+   "external": {
+    "allow": [
+     "https://a.example/"
+    ],
+    "other": "review"
+   },
+   "knowledge": "admit"
+  }
+ },
+ "candidates": [
+  {
+   "id": "oc1",
+   "field": "usd",
+   "value": "5200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "external",
+     "url": "https://a.example/report",
+     "retrieved": "2026-10-01",
+     "text": "Presented in Australian dollars\n\t2025\nRevenue\t$5,200\n"
+    }
+   ]
+  },
+  {
+   "id": "oc2",
+   "field": "usd",
+   "value": "5200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "external",
+     "url": "https://b.example/report",
+     "retrieved": "2026-10-01",
+     "text": "Presented in Australian dollars\n\t2025\nRevenue\t$5,200\n"
+    }
+   ]
+  },
+  {
+   "id": "oc3",
+   "field": "usd",
+   "value": "5200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "external",
+     "url": "https://a.example/report",
+     "retrieved": "2026-10-01",
+     "text": "Presented in Australian dollars\n\t2025\nRevenue\t$5,200\n"
+    },
+    {
+     "source": "external",
+     "url": "https://a.example/report",
+     "retrieved": "2026-10-01",
+     "text": "Presented in US dollars\n\t2025\nRevenue\t$5,200\n"
+    }
+   ]
+  },
+  {
+   "id": "oc4",
+   "field": "usd",
+   "value": "5200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "external",
+     "url": "https://a.example/report",
+     "retrieved": "2026-10-01",
+     "text": "Presented in US dollars\n\t2025\nRevenue\t$5,200\n"
+    },
+    {
+     "source": "external",
+     "url": "https://a.example/report",
+     "retrieved": "2026-10-01",
+     "text": "Presented in Australian dollars\n\t2025\nRevenue\t$5,200\n"
+    }
+   ]
+  },
+  {
+   "id": "oc5",
+   "field": "usd",
+   "value": "5200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "knowledge",
+     "text": "Presented in Australian dollars. Revenue was $5,200."
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "ADMITTED_BY_POLICY"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "EVIDENCE_QUOTED"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "ADMITTED_BY_POLICY"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "ADMITTED_BY_POLICY"
+    ],
+    "missing": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "ADMITTED_BY_POLICY"
+    ],
+    "missing": []
+   }
+  ],
+  "coverage": []
+ }
+}

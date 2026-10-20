@@ -1,0 +1,99 @@
+{
+ "name": "119-currency-statement-names",
+ "description": "The base pack en 1.1.0 adds currency names with no sign, and each code matches as a name in capitals. So 'in Japanese yen' and 'in CHF' are currency statements. They do not allow USD, so a $ in the row label or next to the value does not admit a value in USD. A value in % is not in a currency unit, so the statement does not change it (spec 0.11, #368).",
+ "document": "Amounts in Japanese yen\n\t2025\nRevenue ($)\t5,200\nMargin\t12.5%\n\nFigures in CHF\n\t2025\nRevenue\t$5,200\n",
+ "schema": {
+  "fields": {
+   "usd": {
+    "type": "number",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "Revenue"
+    ]
+   },
+   "margin": {
+    "type": "number",
+    "unit": "%",
+    "multiple": false,
+    "aliases": [
+     "Margin"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "cn1",
+   "field": "usd",
+   "value": "5200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "role": "value",
+     "text": "5,200"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    }
+   ]
+  },
+  {
+   "id": "cn2",
+   "field": "usd",
+   "value": "5200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "role": "value",
+     "text": "$5,200"
+    }
+   ]
+  },
+  {
+   "id": "cn3",
+   "field": "margin",
+   "value": "12.5",
+   "unit": "%",
+   "evidence": [
+    {
+     "role": "value",
+     "text": "12.5%"
+    },
+    {
+     "role": "field",
+     "text": "Margin"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "unit"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}
