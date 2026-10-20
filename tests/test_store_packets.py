@@ -278,6 +278,28 @@ def test_untrusted_store_data(tmp_path: Path, capsys: pytest.CaptureFixture[str]
     assert "store folder is not there" in capsys.readouterr().err
 
 
+def test_a_crafted_store_layout_exits_2(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    root = tmp_path / "s"
+    with FolderStore(root) as store:
+        layout = {"groundgate_layout": "0.1", "pages": [], "words": []}  # no document_sha256
+        text = store.put("text@1", TEXT.encode())
+        reading = {
+            "format": "reading@1",
+            "source": store.put("source@1", TEXT.encode()),
+            "reader": {"name": "groundgate.read", "version": "0"},
+            "options": {"pages": None},
+            "text": text,
+            "layout": store.put("layout@1", jcs(layout).encode()),
+            "document": None,
+        }
+        reading_key = store.put("reading@1", jcs(reading).encode())
+        k, _ = admit_packet(store, TEXT, SCHEMA, cands(), reading=reading_key)
+    assert main(["report", "--store", str(root), k]) == 2
+    err = capsys.readouterr().err
+    assert err == "groundgate: malformed layout: 'document_sha256'\n"
+    assert "Traceback" not in err
+
+
 def test_a_reading_of_another_text_is_refused(tmp_path: Path) -> None:
     source = tmp_path / "a.txt"
     source.write_text("Another text.", encoding="utf-8")

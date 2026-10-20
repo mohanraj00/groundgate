@@ -7,6 +7,7 @@ origin at the top-left of the page.
 
 from __future__ import annotations
 
+import re
 from collections.abc import Mapping
 from dataclasses import dataclass
 from typing import Any
@@ -14,6 +15,7 @@ from typing import Any
 from ..model import PacketError
 
 LAYOUT_VERSION = "0.1"
+_DIGEST = re.compile(r"sha256:[0-9a-f]{64}")
 
 
 @dataclass(frozen=True)
@@ -99,6 +101,9 @@ class Layout:
         if not isinstance(d, Mapping) or d.get("groundgate_layout") != LAYOUT_VERSION:
             raise PacketError(f"not a groundgate layout v{LAYOUT_VERSION} object")
         try:
+            digest = d["document_sha256"]
+            if not isinstance(digest, str) or not _DIGEST.fullmatch(digest):
+                raise ValueError("document_sha256 is not a digest such as sha256:<64 hex digits>")
             pages = tuple(
                 Page(int(p["page"]), float(p["width"]), float(p["height"]), int(p["start"]),
                      int(p["end"]))
@@ -120,7 +125,7 @@ class Layout:
             if not prev <= w.start < w.end <= end:
                 raise PacketError("malformed layout: words must be in text order, within the pages")
             prev = w.end
-        return cls(str(d["document_sha256"]), pages, words)
+        return cls(digest, pages, words)
 
 
 def _same_line(a: Box, b: Box) -> bool:
