@@ -19,6 +19,7 @@ from .pack import (
     BUILT_IN,
     added_words,
     built_in_pack,
+    check_retired,
     checked_copy,
     combine,
     pack_digest,
@@ -391,6 +392,7 @@ def _resolve_packs(
             p = built_in_pack(pid, version)
             if p is None:
                 raise PacketError(f"packs: {pid!r} {version} is not a built-in version")
+            check_retired(pid, version)
             by_id[pid] = (p, pack_digest(p))
             built.add(pid)
 

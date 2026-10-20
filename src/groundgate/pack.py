@@ -3,11 +3,16 @@
 from __future__ import annotations
 
 import copy
+import errno
 import hashlib
 import json
+import os
 import re
+import stat
 import unicodedata
-from collections.abc import Iterable, Iterator, Sequence
+from collections.abc import Iterable, Iterator, Mapping, Sequence
+from contextlib import contextmanager
+from contextvars import ContextVar
 from importlib import resources
 from pathlib import Path
 from typing import Any
@@ -47,6 +52,10 @@ BUILT_IN_SHA256 = {
     ),
 }
 BUILT_IN = frozenset({BASE_ID, *(pid for pid, _ in BUILT_IN_SHA256)})  # (SPEC §4.8, L7)
+# the released built-in versions that ``admit`` refuses. A retired version stays in
+# BUILT_IN_SHA256 and in the wheel, and ``verify`` still loads it, so that an old receipt that
+# names it still verifies (docs/design/packs.md §6, §11). No version is retired in 0.10.
+RETIRED: frozenset[tuple[str, str]] = frozenset()
 
 FORMAT = 1
 MAX_FILE = 1 << 20  # bytes of a pack file, before the loader parses it (L4)
@@ -86,6 +95,7 @@ _HEAD = ("groundgate_pack", "type", "id", "version", "description", "status")
 _KIND = ("needs", "fields")
 TEMPLATE_MEMBERS = ("type", "unit", "comparator", "aliases", "description")
 MAX_TEMPLATES = 200  # the field templates of one kind pack (L4)
+MAX_DIR_FILES = 256  # the .json files that verify reads from one pack folder
 # the lists that only the base pack gives: a word there cancels a flag (SPEC §4.8, L5)
 BASE_ONLY = frozenset(
     {
@@ -390,15 +400,23 @@ def load_pack(path: str | Path) -> dict[str, Any]:
             data = f.read(MAX_FILE + 1)
     except OSError as e:
         raise PacketError(f"pack file {str(path)!r} cannot be read: {e}") from None
+    return _parse(data, str(path))
+
+
+def _parse(data: bytes, name: str) -> dict[str, Any]:
+    """The bytes of one pack file, after the checks of SPEC §4.8 (L4 size first)."""
     if len(data) > MAX_FILE:
-        raise PacketError(f"pack file {str(path)!r} is more than {MAX_FILE} bytes (L4)")
+        raise PacketError(f"pack file {name!r} is more than {MAX_FILE} bytes (L4)")
     try:
         obj = json.loads(data.decode("utf-8"), object_pairs_hook=_no_twice)
     except (UnicodeDecodeError, ValueError, RecursionError) as e:
         if isinstance(e, PacketError):
             raise
-        raise PacketError(f"pack file {str(path)!r} is not JSON: {e}") from None
-    return check_pack(obj)
+        raise PacketError(f"pack file {name!r} is not JSON: {e}") from None
+    try:
+        return check_pack(obj)
+    except PacketError as e:
+        raise PacketError(f"pack file {name!r}: {e}") from None
 
 
 # -------------------------------------------------------------------- the union
@@ -604,3 +622,194 @@ def built_in_pack(pid: str, version: str) -> dict[str, Any] | None:
             raise RuntimeError(f"built-in pack {pid} {version} has digest {found}, not {want}")
         _LOADED[(pid, version)] = check_pack(pack, built_in=True)
     return copy.deepcopy(_LOADED[(pid, version)])  # a caller cannot change the cached pack
+
+
+# ------------------------------------------------------- verify: the packs of a receipt
+
+_VERIFYING: ContextVar[bool] = ContextVar("groundgate_verifying", default=False)
+_SHA = re.compile(r"sha256:[0-9a-f]{64}\Z")
+
+
+@contextmanager
+def reading_retired() -> Iterator[None]:
+    """In this block, a schema can name a retired built-in version. Only ``verify`` uses it, to
+    re-derive an old receipt (docs/design/packs.md §11)."""
+    token = _VERIFYING.set(True)
+    try:
+        yield
+    finally:
+        _VERIFYING.reset(token)
+
+
+def check_retired(pid: str, version: str) -> None:
+    """``admit`` refuses a retired built-in version. ``verify`` still reads it."""
+    if (pid, version) in RETIRED and not _VERIFYING.get():
+        raise PacketError(f"packs: {pid!r} {version} is a retired built-in version")
+
+
+def _read_in(dfd: int, name: str) -> bytes | str:
+    """The bytes of the file ``name`` in the open folder ``dfd``, or the reason why it is not
+    read. The open never follows a link, so a link cannot point out of the folder."""
+    flags = os.O_RDONLY | os.O_NOFOLLOW | getattr(os, "O_NONBLOCK", 0)
+    try:
+        fd = os.open(name, flags, dir_fd=dfd)
+    except OSError as e:
+        if e.errno in (errno.ELOOP, errno.EMLINK):  # EMLINK: O_NOFOLLOW on a link in BSD
+            return "is a link, and verify does not follow links"
+        return f"cannot be opened ({e.strerror})"
+    try:
+        st = os.fstat(fd)
+        if not stat.S_ISREG(st.st_mode):
+            return "is not a regular file"
+        if st.st_size > MAX_FILE:
+            return f"is more than {MAX_FILE} bytes (L4)"
+        chunks: list[bytes] = []
+        size = 0
+        while size <= MAX_FILE:  # the file can grow after fstat: read at most MAX_FILE + 1
+            chunk = os.read(fd, MAX_FILE + 1 - size)
+            if not chunk:
+                break
+            chunks.append(chunk)
+            size += len(chunk)
+        return b"".join(chunks)
+    except OSError as e:
+        return f"cannot be read ({e.strerror})"
+    finally:
+        os.close(fd)
+
+
+def _read_dir(
+    path: str | os.PathLike[str], wanted: set[str]
+) -> tuple[dict[str, dict[str, Any]], dict[tuple[str, str], set[str]], list[str]]:
+    """Read each ``.json`` file directly in the folder ``path``, which is untrusted. Return the
+    packs whose digest is in ``wanted``, the digests of each id and version, and each file that
+    is not a valid pack with the reason. A file is checked as ``load_pack`` checks it."""
+    if not (os.open in os.supports_dir_fd and os.listdir in os.supports_fd):
+        raise PacketError("this system cannot read a pack folder safely: give each pack file")
+    try:
+        dfd = os.open(path, os.O_RDONLY | getattr(os, "O_DIRECTORY", 0))
+    except OSError as e:
+        raise PacketError(f"pack folder {str(path)!r} cannot be opened ({e.strerror})") from None
+    by_sha: dict[str, dict[str, Any]] = {}
+    by_key: dict[tuple[str, str], set[str]] = {}
+    skipped: list[str] = []
+    try:
+        if not stat.S_ISDIR(os.fstat(dfd).st_mode):
+            raise PacketError(f"pack folder {str(path)!r} is not a folder")
+        names = sorted(n for n in os.listdir(dfd) if n.endswith(".json"))
+        if len(names) > MAX_DIR_FILES:
+            raise PacketError(
+                f"pack folder {str(path)!r} holds more than {MAX_DIR_FILES} .json files"
+            )
+        for name in names:
+            data = _read_in(dfd, name)
+            if isinstance(data, str):
+                skipped.append(f"{name!r} {data}")
+                continue
+            try:
+                p = _parse(data, name)
+            except PacketError as e:
+                skipped.append(str(e))
+                continue
+            sha = pack_digest(p)  # the digest is computed here, never read from the file (L11)
+            by_key.setdefault((p["id"], p["version"]), set()).add(sha)
+            if sha in wanted:
+                by_sha.setdefault(sha, p)
+    finally:
+        os.close(dfd)
+    return by_sha, by_key, skipped
+
+
+def _entry(e: object) -> bool:
+    """An entry of the receipt member ``packs`` (SPEC §5) with each member of the right form."""
+    return (
+        isinstance(e, Mapping)
+        and set(e) == {"id", "type", "version", "sha256"}
+        and all(isinstance(e[k], str) for k in e)
+        and len(e["id"]) <= MAX_WORD
+        and _ID.match(e["id"]) is not None
+        and _VERSION.match(e["version"]) is not None
+        and e["type"] in ("vocabulary", "kind")
+        and _SHA.match(e["sha256"]) is not None
+    )
+
+
+def receipt_packs(
+    entries: object,
+    given: Sequence[dict[str, Any]],
+    pack_dir: str | os.PathLike[str] | None = None,
+) -> tuple[list[dict[str, Any]], list[str]]:
+    """Steps 1 to 3 of docs/design/packs.md §11: find each pack that a receipt names, by id,
+    version and digest. ``given`` holds the checked given packs. Return the packs from
+    ``pack_dir`` that the receipt names, and the problems. A pack from the folder is returned
+    only when its computed digest is the digest in the receipt."""
+    if not isinstance(entries, list) or not all(_entry(e) for e in entries):
+        return [], ["the receipt member packs is not a list of pack entries"]
+    have = {(p["id"], p["version"]): pack_digest(p) for p in given}
+    problems: list[str] = []
+    missing: list[Mapping[str, str]] = []
+    for e in entries:
+        key = (e["id"], e["version"])
+        where = "built-in" if key in BUILT_IN_SHA256 else "given"
+        other = BUILT_IN_SHA256.get(key) or have.get(key)
+        if other is None:
+            missing.append(e)
+        elif other != e["sha256"]:
+            problems.append(
+                f"pack {e['id']!r} {e['version']}: the receipt names the digest {e['sha256']}, "
+                f"and the {where} pack has the digest {other}"
+            )
+    by_sha: dict[str, dict[str, Any]] = {}
+    by_key: dict[tuple[str, str], set[str]] = {}
+    skipped: list[str] = []
+    if missing and pack_dir is not None:
+        by_sha, by_key, skipped = _read_dir(pack_dir, {e["sha256"] for e in missing})
+    found: list[dict[str, Any]] = []
+    lost = False
+    for e in missing:
+        key, sha = (e["id"], e["version"]), e["sha256"]
+        p = by_sha.get(sha)
+        if p is not None and (p["id"], p["version"]) == key:
+            found.append(p)
+            continue
+        lost = True
+        if by_key.get(key):
+            problems.append(
+                f"pack {e['id']!r} {e['version']}: the receipt names the digest {sha}, and the "
+                f"pack folder has only the digest {', '.join(sorted(by_key[key]))}"
+            )
+            continue
+        place = ", not given and not in the pack folder" if pack_dir is not None else " or given"
+        problems.append(
+            f"pack {e['id']!r} {e['version']} with the digest {sha} is not built in{place}"
+        )
+    if lost and skipped:
+        shown = "; ".join(skipped[:3]) + ("; ..." if len(skipped) > 3 else "")
+        problems.append(
+            f"the pack folder has {len(skipped)} files that are not valid packs: {shown}"
+        )
+    return found, problems
+
+
+def schema_named(entries: object, packs: Sequence[dict[str, Any]]) -> set[tuple[str, str]]:
+    """The id and version of each pack that the schema member ``packs`` names, and of each pack
+    in the ``needs`` of a named kind pack in ``packs`` or built in. ``verify`` gives ``admit`` a
+    pack from the folder only when this set holds it, so that a pack that the receipt names and
+    the schema does not name is a difference, not an invalid packet."""
+    if not isinstance(entries, list):
+        return set()
+    out = {
+        (e["id"], e["version"])
+        for e in entries
+        if isinstance(e, Mapping)
+        and isinstance(e.get("id"), str)
+        and isinstance(e.get("version"), str)
+    }
+    kinds = [p for p in packs if p["type"] == "kind" and (p["id"], p["version"]) in out]
+    for key in out & set(BUILT_IN_SHA256):
+        p = built_in_pack(*key)
+        if p is not None and p["type"] == "kind":
+            kinds.append(p)
+    for k in kinds:
+        out |= {(e["id"], e["version"]) for e in k.get("needs", [])}
+    return out

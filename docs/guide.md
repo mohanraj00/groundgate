@@ -563,6 +563,7 @@ check = gg.verify(
     references=None,
     document_source=None,
     packs=(),
+    pack_dir=None,
 )
 check.ok, check.problems  # True, () when the receipt re-derives exactly
 ```
@@ -644,6 +645,20 @@ schema = {
 }
 receipt = gg.admit(text, schema, candidates)
 ```
+
+**Verify a receipt with packs.** The receipt names each pack by its id, version and digest.
+`verify` finds each one in this order: a built-in pack, a pack in `packs`, then a pack file in
+the folder `pack_dir`. It takes a file from the folder only when the digest of its pack is the
+digest in the receipt, so the file name does not matter. If no pack matches, `verify` gives one
+problem that names the id, the version and the digest, and checks nothing more. If a pack has
+the id and version but another digest, the problem names both digests. Give the schema as a dict
+when you give `pack_dir`.
+
+`verify` reads the folder as untrusted input. It reads only the `.json` files directly in it, at
+most 256, each at most 1 MiB. It does not follow a link, and it runs the loader checks on each
+file. A file that fails is not used. A built-in version can be retired: then `admit` refuses it,
+and `verify` still reads it, so an old receipt still verifies. No version is retired in 0.10.
+[Keep pack files with receipts](howto/keep-packs.md) shows a folder layout.
 
 ### LangExtract
 
@@ -780,14 +795,15 @@ the page re-derives the receipt first and says whether it matched. `layout=` and
 groundgate read FILE [--pages 1-3,7] [-o doc.txt] [--layout layout.json]
 groundgate admit   DOC SCHEMA CANDIDATES [--policy P] [--judgments J] [--document-id ID] [-o receipt.json]
 groundgate admit   --docs D --candidates C --schema S --out R [--policy P] [--judgments J]
-groundgate verify  RECEIPT DOC SCHEMA CANDIDATES [--policy P] [--judgments J]
+groundgate verify  RECEIPT DOC SCHEMA CANDIDATES [--policy P] [--judgments J] [--pack-dir DIR]
 groundgate report  RECEIPT DOC SCHEMA CANDIDATES [--policy P] [--judgments J] [--layout L] [--title T] [-o report.html]
 groundgate schema  SCHEMA [--references R] [-o extractor.schema.json]
 groundgate schema check SCHEMA
 ```
 
 `admit`, `verify` and `report` also take `--references R`, `--document-source URL` and
-`--pack FILE`, once for each pack. `schema` and `schema check` also take `--pack FILE`. `schema`
+`--pack FILE`, once for each pack. `verify` also takes `--pack-dir DIR`, a folder of pack
+files. `schema` and `schema check` also take `--pack FILE`. `schema`
 writes the extractor schema, with the ids of the references in `R` as its refs. `schema check`
 prints the settings that make a check fail every time, or pass for the wrong key or field
 ([Check a schema](schema.md#check-a-schema)). `DOC` may be `-` for standard input. Exit codes:
