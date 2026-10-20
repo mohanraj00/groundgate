@@ -1,0 +1,16 @@
+{
+ "groundgate_pack": 1,
+ "type": "kind",
+ "id": "component-datasheets",
+ "version": "1.0.0",
+ "description": "Field templates for the operating conditions of electronic component datasheets. The fields come from the request schema component of the bench set requested. Draft: no route is measured.",
+ "status": [],
+ "needs": [{"id": "electronics", "version": "1.0.0"}],
+ "fields": {
+  "operating_temperature_max": {"type": "number", "unit": "C", "comparator": "le", "aliases": ["Operating temperature", "Ambient temperature"], "description": "Upper operating temperature limit, not storage temperature."},
+  "operating_temperature_min": {"type": "number", "unit": "C", "comparator": "ge", "aliases": ["Operating temperature", "Ambient temperature"], "description": "Lower operating temperature limit, not storage temperature."},
+  "supply_current_typ": {"type": "number", "unit": "mA", "comparator": "eq", "aliases": ["Supply current", "Typical current"], "description": "Typical supply current at the document reference condition. Distinguish operating modes; do not choose between equally applicable conditions."},
+  "supply_voltage_max": {"type": "number", "unit": "V", "comparator": "le", "aliases": ["Recommended operating conditions", "Supply voltage"], "description": "Maximum recommended supply voltage at the same stated reference condition, not an absolute maximum rating."},
+  "supply_voltage_min": {"type": "number", "unit": "V", "comparator": "ge", "aliases": ["Recommended operating conditions", "Supply voltage"], "description": "Minimum recommended supply voltage at the stated reference condition, not an absolute maximum rating."}
+ }
+}

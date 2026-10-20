@@ -1,0 +1,17 @@
+{
+ "groundgate_pack": 1,
+ "type": "kind",
+ "id": "us-government-reports",
+ "version": "1.0.0",
+ "description": "Field templates for financial reports of U.S. governments, in USD: agency financial reports and annual comprehensive financial reports. The aliases come from the bench sets afr, acfr and acfr2. Draft: no route is measured.",
+ "status": [],
+ "needs": [{"id": "finance", "version": "1.0.0"}],
+ "fields": {
+  "total_assets": {"type": "number", "unit": "USD", "aliases": ["total assets"]},
+  "total_liabilities": {"type": "number", "unit": "USD", "aliases": ["total liabilities"]},
+  "total_net_position": {"type": "number", "unit": "USD", "aliases": ["total net position"]},
+  "net_cost_of_operations": {"type": "number", "unit": "USD", "aliases": ["net cost of operations"]},
+  "total_budgetary_resources": {"type": "number", "unit": "USD", "aliases": ["total budgetary resources"]},
+  "change_in_net_position": {"type": "number", "unit": "USD", "aliases": ["change in net position"]}
+ }
+}

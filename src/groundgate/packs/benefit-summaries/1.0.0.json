@@ -1,0 +1,15 @@
+{
+ "groundgate_pack": 1,
+ "type": "kind",
+ "id": "benefit-summaries",
+ "version": "1.0.0",
+ "description": "Field templates for summaries of benefits and coverage of U.S. health plans, in USD. The fields come from the request schema sbc of the bench set requested. Draft: no route is measured.",
+ "status": [],
+ "fields": {
+  "deductible_family": {"type": "number", "unit": "USD", "comparator": "eq", "aliases": ["Overall deductible", "Deductible"], "description": "In-network family deductible in the plan coverage year."},
+  "deductible_individual": {"type": "number", "unit": "USD", "comparator": "eq", "aliases": ["Overall deductible", "Deductible"], "description": "In-network deductible for one person in the plan coverage year."},
+  "out_of_pocket_family": {"type": "number", "unit": "USD", "comparator": "le", "aliases": ["Out-of-pocket limit"], "description": "In-network out-of-pocket limit for a family in the plan coverage year."},
+  "out_of_pocket_individual": {"type": "number", "unit": "USD", "comparator": "le", "aliases": ["Out-of-pocket limit"], "description": "In-network out-of-pocket limit for one person in the plan coverage year."},
+  "specialist_copay": {"type": "number", "unit": "USD", "comparator": "eq", "aliases": ["Specialist visit"], "description": "In-network specialist office visit copay in USD. A percentage is not a dollar copay; unresolved conditions are unclear."}
+ }
+}

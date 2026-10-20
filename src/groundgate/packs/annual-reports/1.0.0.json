@@ -1,0 +1,17 @@
+{
+ "groundgate_pack": 1,
+ "type": "kind",
+ "id": "annual-reports",
+ "version": "1.0.0",
+ "description": "Field templates for the consolidated statements of annual reports. The templates give no unit: the schema gives the reporting currency. The fields come from the request schema annual of the bench set requested. Draft: no route is measured.",
+ "status": [],
+ "needs": [{"id": "finance", "version": "1.0.0"}],
+ "fields": {
+  "cost_of_sales": {"type": "number", "aliases": ["Cost of sales"], "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses."},
+  "gross_profit": {"type": "number", "aliases": ["Gross profit"], "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value."},
+  "revenue": {"type": "number", "aliases": ["Revenue", "Turnover"], "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale."},
+  "total_assets": {"type": "number", "aliases": ["Total assets"], "description": "Latest consolidated full-year closing total assets."},
+  "total_equity": {"type": "number", "aliases": ["Total equity"], "description": "Latest consolidated full-year closing total equity, preserving sign."},
+  "total_liabilities": {"type": "number", "aliases": ["Total liabilities"], "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign."}
+ }
+}

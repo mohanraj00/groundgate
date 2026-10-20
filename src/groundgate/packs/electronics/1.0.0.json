@@ -1,0 +1,9 @@
+{
+ "groundgate_pack": 1,
+ "type": "vocabulary",
+ "id": "electronics",
+ "version": "1.0.0",
+ "description": "Unit forms of electronic component datasheets: degrees Celsius, volts and milliamps. They come from the request schema component of the bench set requested. Draft: no route is measured.",
+ "status": [],
+ "units": {"C": {"suffixes": ["°C", "Celsius"]}, "V": {"suffixes": ["V", "volts"]}, "mA": {"suffixes": ["mA", "milliamps"]}}
+}

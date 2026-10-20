@@ -1106,11 +1106,24 @@ invalid.
 A **built-in pack** ships with the implementation, like the base pack, but applies only when the
 schema or a kind pack names it (§2.3, §4.9). The packet never gives it, and L7 refuses a given pack
 with its id. An implementation loads a built-in pack with its digest, and refuses to run with another
-one. The receipt names it in `packs` with its digest, as it names a given pack. For this spec version
-there is one: `finance` 1.0.0,
-[`src/groundgate/packs/finance/1.0.0.json`](src/groundgate/packs/finance/1.0.0.json), with the
-digest `sha256:822c91124cbd23f29e683873975d4f3f85f2207dbbb02ca3664f0ef74848162b`. It gives the loss
-words of §4.6. A loss word only helps to admit a value: without `finance`, a sign item that holds
+one. The receipt names it in `packs` with its digest, as it names a given pack. These are the
+built-in packs of this spec version. Each file is `src/groundgate/packs/<id>/<version>.json`.
+
+| Id | Version | Type | Needs | Digest |
+|---|---|---|---|---|
+| `finance` | `1.0.0` | vocabulary | | `sha256:822c91124cbd23f29e683873975d4f3f85f2207dbbb02ca3664f0ef74848162b` |
+| `electronics` | `1.0.0` | vocabulary | | `sha256:af8570f97b8e06fcceae56949a6e3b5ffab4992413cf8b6f474b6239989dbc5b` |
+| `us-10k` | `1.0.0` | kind | `finance` | `sha256:ea4115fd9215c89b78369cd1291cf8482cb185602e037c076a8c17c8edbab102` |
+| `us-government-reports` | `1.0.0` | kind | `finance` | `sha256:604297bba0b9543fae9d3099eaa6a810f2bdb0fcd0cf5f527d6903b374e44974` |
+| `annual-reports` | `1.0.0` | kind | `finance` | `sha256:ca2433ec6dd249581310c977b29a54b4c70aa65acd3561701285a2f4ccf150e7` |
+| `component-datasheets` | `1.0.0` | kind | `electronics` | `sha256:3b0ac7d8b1dff0f25a33078c668739086b027704e75b7d4deba9a6ebf9c27538` |
+| `benefit-summaries` | `1.0.0` | kind | | `sha256:a01109e7c7a72e248012161d8fe16b1937a77e09c328a6cdcbfd0e9d41ebe3d2` |
+
+No built-in pack has a status row, so each route that it gives is `draft`. `electronics` gives
+the unit forms of `C`, `V` and `mA` (§4.3). The kind packs give field templates (§4.9) and no
+words.
+
+`finance` gives the loss words of §4.6. A loss word only helps to admit a value: without `finance`, a sign item that holds
 only a loss word fails, and the decision goes to review. The currency names of a currency
 statement (§4.3) stay in the base pack, because they can stop an admit.
 
