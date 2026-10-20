@@ -19,6 +19,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 from collections import defaultdict
 from pathlib import Path
 from typing import Any
@@ -30,15 +31,20 @@ FORMAT = "requested-limits/1"
 # current harness counts run/3 records in its own projection (metrics.search_limit_fields).
 RECORD = "groundgate-run/2"
 STATES = ("documents", "search_limit_documents", "search_limit_fields")
+_BINDING = re.compile(r"sha256:[0-9a-f]{64}\Z")
+_ID = re.compile(r"[a-z][a-z0-9_-]{0,79}\Z")
 
 
 def _digest(raw: bytes) -> str:
     return "sha256:" + hashlib.sha256(raw).hexdigest()
 
 
-def _plain(path: Path) -> Path:
+def _plain(path: Path, root: Path | None = None) -> Path:
+    """A regular file that is not linked and, with a root, resolves inside that root."""
     if path.is_symlink() or not path.is_file():
         raise ValueError("missing or linked file: " + str(path))
+    if root is not None and not path.resolve().is_relative_to(root.resolve()):
+        raise ValueError("a cache path leaves the cache: " + str(path))
     return path
 
 
@@ -58,18 +64,22 @@ def count(directory: Path, cache: Path) -> dict[str, Any]:
         if run.get("labels_sha256") != _digest(labels_raw):
             raise ValueError("run does not match the labels: " + path.name)
         arm, binding, split = run["arm"], run["binding_sha256"], run["split"]
+        if not isinstance(binding, str) or not _BINDING.fullmatch(binding):
+            raise ValueError("invalid run binding: " + path.name)
         if arm != path.stem or split not in {"development", "heldout"}:
             raise ValueError("run file must be named for its arm: " + path.name)
         bindings.add(binding)
         splits.add(split)
         folder = cache / binding.removeprefix("sha256:") / arm / split
-        if _plain(folder / "projection.json").read_bytes() != raw:
+        if _plain(folder / "projection.json", cache).read_bytes() != raw:
             raise ValueError("cached projection differs from the committed run: " + path.name)
         states: dict[str, dict[str, int]] = defaultdict(lambda: dict.fromkeys(STATES, 0))
         for output in run["documents"]:
             ident = output["id"]
+            if not isinstance(ident, str) or not _ID.fullmatch(ident):
+                raise ValueError("invalid document id in " + path.name)
             doc = documents[ident]
-            result = json.loads(_plain(folder / ident / "result.json").read_bytes())
+            result = json.loads(_plain(folder / ident / "result.json", cache).read_bytes())
             if (
                 result.get("binding_sha256") != binding
                 or result.get("source_sha256") != doc["source_sha256"]
@@ -113,13 +123,13 @@ def main() -> None:
     ap.add_argument("--cache", type=Path, required=True, help="local cache of the set's runs")
     ap.add_argument("--out", type=Path, required=True, help="new limits.json to write")
     args = ap.parse_args()
-    if args.out.exists():
-        ap.error("the output exists; this script writes a new file only")
     try:
         limits = count(args.set.resolve(), args.cache.resolve())
-    except (OSError, ValueError, KeyError, TypeError) as exc:
+        # Mode "x" writes a new file only, and never follows a link at that name.
+        with args.out.open("x", encoding="utf-8") as stream:
+            stream.write(json.dumps(limits, indent=1, sort_keys=True) + "\n")
+    except (OSError, ValueError, KeyError, TypeError, RecursionError) as exc:
         ap.error(str(exc))
-    args.out.write_text(json.dumps(limits, indent=1, sort_keys=True) + "\n", encoding="utf-8")
     for arm, run in sorted(limits["runs"].items()):
         states = run["document_states"]
         for kind, row in [("total", states["total"]), *sorted(states["by_kind"].items())]:

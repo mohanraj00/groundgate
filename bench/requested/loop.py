@@ -16,8 +16,10 @@ A loop iteration learns on development documents only. Each iteration writes one
         --iteration 1 --change feedback --reference '#400' --summary 'one line'
     PYTHONPATH=bench uv run python -m requested.loop check --set bench/requested4
 
-``check`` refuses a record that names a held-out document or a run of another split, and a
-record whose files no longer match their digests. When the manifest freezes the code for the
+``check`` refuses a record that names a held-out document (in its runs, its documents or its
+proposal text) or a run of another split, and a record whose files no longer match their
+digests. It keeps the calibration answers and a diagnostics export by digest only: it does not
+read their contents for held-out documents. When the manifest freezes the code for the
 held-out split, the freeze must name the last record, and that record must have the frozen
 code digest. No model runs here.
 """
@@ -286,7 +288,9 @@ def check_record(directory: Path, record: Json, iteration: int, heldout: set[str
         raise ValueError(f"{name(iteration)}: the review-code table is not from its runs")
     calibrate = record["calibrate"]
     if calibrate is not None:
-        path = directory / str(calibrate.get("answers"))
+        path = (directory / str(calibrate.get("answers"))).resolve()
+        if not path.is_relative_to(directory.resolve()):
+            raise ValueError(f"{name(iteration)}: calibration answers must be in the set folder")
         if calibrate.get("answers_sha256") != _digest(_read(path)):
             raise ValueError(f"{name(iteration)}: calibration answers differ from their digest")
     propose = record["propose"]
@@ -298,6 +302,10 @@ def check_record(directory: Path, record: Json, iteration: int, heldout: set[str
         or not propose["summary"].strip()
     ):
         raise ValueError(f"{name(iteration)}: a proposal needs a change, an issue or PR, a line")
+    if propose is not None and (
+        leaked := sorted(i for i in heldout if i in propose["summary"] + propose["reference"])
+    ):
+        raise ValueError(f"{name(iteration)}: names held-out documents: " + ", ".join(leaked))
     decide = record["decide"]
     if iteration == 1:
         if decide is not None:
@@ -390,7 +398,7 @@ def main() -> None:
                 diagnostics=args.diagnostics,
             )
             print("wrote " + str(path))
-    except (OSError, ValueError, KeyError, TypeError) as exc:
+    except (OSError, ValueError, KeyError, TypeError, RecursionError) as exc:
         ap.error(str(exc))
 
 

@@ -1287,6 +1287,21 @@ def test_baseline_projection_has_no_search_limit_field(tmp_path):
     assert output(result)["search_limit"] == 0
 
 
+def loops(session, count=2, code=None):
+    """Minimal loop records: the guard reads only the run code digest of each."""
+    folder = session.directory / "loop"
+    folder.mkdir(exist_ok=True)
+    for n in range(1, count + 1):
+        record = {"run": {"code_sha256": code or session.code_sha256}}
+        (folder / f"{n:02}.json").write_text(json.dumps(record))
+    return session
+
+
+def frozen_fixture(path, mutate):
+    session, paths = fixture(path, mutate=mutate)
+    return loops(session), paths
+
+
 def frozen(code=None, last_loop="loop/02.json", split_rule=False):
     def mutate(manifest, labels, config):
         freeze = {"applies_to": "heldout", "last_loop": last_loop}
@@ -1307,14 +1322,14 @@ def frozen(code=None, last_loop="loop/02.json", split_rule=False):
 
 
 def test_heldout_run_needs_the_frozen_code_digest(tmp_path):
-    session, _ = fixture(tmp_path / "a", mutate=frozen())
+    session, _ = frozen_fixture(tmp_path / "a", frozen())
     session.run("baseline", Client(envelope(candidate()), envelope(candidate())))
     for name, mutate in (
         ("b", frozen(code="sha256:" + "0" * 64)),
         ("c", frozen(last_loop=None)),
         ("d", frozen(last_loop="02.json")),
     ):
-        session, _ = fixture(tmp_path / name, mutate=mutate)
+        session, _ = frozen_fixture(tmp_path / name, mutate)
         client = Client(envelope(candidate()))
         with pytest.raises(harness.CacheError, match="held-out run needs"):
             session.run("baseline", client)
@@ -1322,7 +1337,7 @@ def test_heldout_run_needs_the_frozen_code_digest(tmp_path):
 
 
 def test_heldout_run_has_one_binding_for_the_set(tmp_path):
-    session, _ = fixture(tmp_path, mutate=frozen())
+    session, _ = frozen_fixture(tmp_path, frozen())
     session.run("baseline", Client(envelope(candidate()), envelope(candidate())))
     # The same binding replays; another binding in the same cache is refused before a call.
     session.run("baseline")
@@ -1346,7 +1361,7 @@ def test_a_set_with_a_split_rule_needs_a_heldout_freeze(tmp_path):
     with pytest.raises(harness.CacheError, match="code_freeze"):
         session.run("baseline", client)
     assert client.prompts == []
-    session, _ = fixture(tmp_path / "b", mutate=frozen(split_rule=True))
+    session, _ = frozen_fixture(tmp_path / "b", frozen(split_rule=True))
     session.run("baseline", client)
 
 
@@ -1397,3 +1412,21 @@ def test_projection_of_an_older_runner_record_is_a_cache_error():
     record = [{"kind": "header", "runner": "groundgate-run/2"}, {"kind": "final", "fields": {}}]
     with pytest.raises(harness.CacheError, match="groundgate-run/3"):
         harness._limits(record)
+
+
+@pytest.mark.parametrize(
+    ("records", "code", "message"),
+    [
+        (0, None, "has none"),
+        (1, None, "name the last"),
+        (3, None, "name the last"),
+        (2, "sha256:" + "c" * 64, "frozen code digest"),
+    ],
+)
+def test_heldout_run_needs_the_named_last_loop_record(tmp_path, records, code, message):
+    session, _ = fixture(tmp_path, mutate=frozen())
+    loops(session, records, code)
+    client = Client(envelope(candidate()))
+    with pytest.raises(harness.CacheError, match=message):
+        session.run("baseline", client)
+    assert client.prompts == []

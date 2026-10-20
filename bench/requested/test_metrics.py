@@ -619,6 +619,9 @@ def test_development_results_go_to_their_own_folder(tmp_path: Path) -> None:
     assert refused.returncode != 0 and "--out" in refused.stderr
     refused = subprocess.run([*args, "--out", str(tmp_path)], capture_output=True, text=True)
     assert refused.returncode != 0
+    heldout = [a if a != "development" else "heldout" for a in args]
+    refused = subprocess.run([*heldout, "--out", str(loop)], capture_output=True, text=True)
+    assert refused.returncode != 0 and "set folder" in refused.stderr
     subprocess.run([*args, "--out", str(loop)], check=True, capture_output=True)
     subprocess.run([*args, "--out", str(loop), "--check"], check=True, capture_output=True)
     results = json.loads((loop / "results.json").read_text())

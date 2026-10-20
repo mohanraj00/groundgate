@@ -253,3 +253,21 @@ def test_cli_check_and_record(tmp_path: Path) -> None:
         env=env,
     )
     assert "1 loop records are valid" in done.stdout
+
+
+def test_check_refuses_held_out_ids_in_a_proposal_and_answers_outside_the_set(
+    tmp_path: Path,
+) -> None:
+    make_set(tmp_path)
+    dev_run(tmp_path, 1, REVIEWS)
+    with pytest.raises(ValueError, match="held-out documents: held"):
+        loop.record(tmp_path, 1, **(PROPOSE | {"summary": "The held document misses."}))
+    path = loop.record(tmp_path, 1, **PROPOSE)
+    dev_run(tmp_path, 2, REVIEWS)
+    record = json.loads(path.read_text())
+    outside = tmp_path.parent / "outside.json"
+    outside.write_text("{}")
+    record["calibrate"] = {"answers": "../outside.json", "answers_sha256": digest(outside)}
+    path.write_text(json.dumps(record))
+    with pytest.raises(ValueError, match="in the set folder"):
+        loop.check(tmp_path)

@@ -21,6 +21,7 @@ from typing import Any
 
 import groundgate as gg
 
+from .loop import check_freeze
 from .metrics import ARMS, measure, same_request, search_limit_fields
 
 Json = dict[str, Any]
@@ -111,6 +112,7 @@ def source_code_digest() -> str:
     }
     files["requested/run_set.py"] = digest(_read(Path(__file__)))
     files["requested/metrics.py"] = digest(_read(Path(__file__).with_name("metrics.py")))
+    files["requested/loop.py"] = digest(_read(Path(__file__).with_name("loop.py")))
     return digest(encoded(files))
 
 
@@ -691,7 +693,9 @@ class FrozenSet:
         """Refuse a held-out run of a set with a split rule or a held-out freeze (#383).
 
         The run configuration, the manifest code_freeze and the imported code must have one
-        code digest. The freeze names the last learning-loop record. The cache keeps one
+        code digest. The freeze names the last learning-loop record, and that record has the
+        frozen code digest (``loop.check_freeze``). ``loop.py check`` checks the records in
+        full; this guard reads only their run code digests. The cache keeps one
         held-out binding for the set: a held-out run measures a frozen change once. A run
         publishes its split header after this check and before its first call, so each
         started held-out run leaves its ``<binding>/<arm>/heldout`` folder. A set
@@ -713,6 +717,18 @@ class FrozenSet:
             )
         if not (freeze.get("code_sha256") == self.config["code_sha256"] == source_code_digest()):
             raise CacheError("a held-out run needs the frozen code digest in config and code")
+        records = []
+        for path in sorted((self.directory / "loop").glob("*.json")):
+            try:
+                records.append(_json(_read(_unlinked(path))))
+            except (ValueError, RecursionError) as exc:
+                raise CacheError("unreadable loop record: " + path.name) from exc
+        try:
+            check_freeze(self.manifest, records)
+            if any(not isinstance(r.get("run"), dict) for r in records):
+                raise ValueError("a loop record needs its run")
+        except (ValueError, KeyError, TypeError, AttributeError) as exc:
+            raise CacheError("a held-out run needs a valid freeze: " + str(exc)) from exc
         if self.cache.exists():
             for other in _unlinked(self.cache).iterdir():
                 if other.name == self.binding.removeprefix("sha256:"):

@@ -973,6 +973,8 @@ def main() -> None:
         # learning loop go to their own folder, such as loop/NN (#383).
         if args.split == "development" and out == directory:
             ap.error("development results need --out other than the set folder, e.g. loop/NN")
+        if args.split == "heldout" and out != directory:
+            ap.error("held-out results go only to the set folder")
         try:
             results = score_set(
                 directory,
