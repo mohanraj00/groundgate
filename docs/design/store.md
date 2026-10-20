@@ -1,6 +1,7 @@
 # The store: one data model for all the tools
 
 Status: approved on 2026-10-20, issue #288. Code issue 1 is built: `groundgate.store` (#402).
+Code issue 2 is built: packets and readings (#403).
 The rest is not built. The note changes no decision and no receipt.
 [review.md](review.md) (#287) keeps its data here. The last section lists the code issues.
 

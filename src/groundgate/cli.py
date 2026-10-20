@@ -1,33 +1,43 @@
 """groundgate command line.
 
   groundgate read     FILE                              > doc.txt
+  groundgate read     --store DIR FILE -o doc.txt       > reading-key
   groundgate admit    DOC SCHEMA CANDIDATES             > receipt.json
+  groundgate admit    --store DIR DOC SCHEMA CANDIDATES > packet-key
   groundgate admit    --docs D --candidates C --schema S --out R
   groundgate verify   RECEIPT DOC SCHEMA CANDIDATES [--pack-dir DIR]
+  groundgate verify   --store DIR PACKET
   groundgate report   RECEIPT DOC SCHEMA CANDIDATES [--pack-dir DIR] -o report.html
+  groundgate report   --store DIR PACKET -o report.html
   groundgate schema   SCHEMA                            > extractor.schema.json
   groundgate schema check SCHEMA
   groundgate calibrate STEP ...                         (experimental; calibrate --help)
 
 DOC may be "-" to read the document from standard input. Exit codes: 0 success, 1 the receipt
-does not match its inputs (or schema check has a finding), 2 invalid input.
+does not match its inputs (or schema check has a finding), 2 invalid input, or an input that is
+not in the store ("input deleted" or "input missing").
 """
 
 from __future__ import annotations
 
 import argparse
+import contextlib
 import json
 import re
 import sys
 from collections import Counter
+from collections.abc import Iterator
 from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from .admit import admit, verify
 from .fold import fold, fold_text
 from .model import PacketError, Schema, extractor_schema
 from .pack import load_pack
 from .text import KEY_DASHES, key_mentions, normalize_ws
+
+if TYPE_CHECKING:
+    from .store import FolderStore
 
 
 def _unique(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
@@ -89,6 +99,10 @@ def _pages(spec: str) -> list[int]:
     return out
 
 
+def store_option(p: argparse.ArgumentParser, text: str) -> None:
+    p.add_argument("--store", metavar="DIR", help=f"a store folder (docs/design/store.md): {text}")
+
+
 def _parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(
         prog="groundgate", description=__doc__, formatter_class=argparse.RawTextHelpFormatter
@@ -100,6 +114,7 @@ def _parser() -> argparse.ArgumentParser:
     x.add_argument("-o", "--output", help="write the text here instead of stdout")
     x.add_argument("--layout", help="also write page and word boxes (PDF only) as JSON")
     x.add_argument("--pages", type=_pages, help="PDF pages to read, e.g. 1-12,15")
+    store_option(x, "write the source, the text, the layout and a reading; print the reading key")
 
     s = sub.add_parser(
         "schema",
@@ -117,7 +132,7 @@ def _parser() -> argparse.ArgumentParser:
     s.add_argument("-o", "--output", help="write the JSON Schema here instead of stdout")
 
     def inputs(p: argparse.ArgumentParser, *, batch: bool = False) -> None:
-        nargs = "?" if batch else None
+        nargs = "?"  # main() checks the inputs of each mode
         p.add_argument("document", nargs=nargs, help='UTF-8 NFC text file, or "-" for stdin')
         p.add_argument("schema", nargs=nargs, help="schema JSON")
         p.add_argument("candidates", nargs=nargs, help="JSON array of candidates")
@@ -145,6 +160,10 @@ def _parser() -> argparse.ArgumentParser:
     a.add_argument("--schema", dest="batch_schema", help="schema JSON for batch mode")
     a.add_argument("--candidates", dest="batch_candidates", help="folder of <doc>.json files")
     a.add_argument("--out", help="folder for batch receipts and summary.json")
+    store_option(a, "write the inputs, the receipt and a packet; print the packet key")
+    a.add_argument(
+        "--reading", metavar="KEY", help="with --store: the key of the reading of DOC from read"
+    )
 
     def pack_dir(p: argparse.ArgumentParser) -> None:
         p.add_argument(
@@ -155,14 +174,16 @@ def _parser() -> argparse.ArgumentParser:
         )
 
     v = sub.add_parser("verify", help="re-derive a receipt from its inputs and compare")
-    v.add_argument("receipt")
+    v.add_argument("receipt", help="the receipt JSON, or the packet key with --store")
     inputs(v)
     pack_dir(v)
+    store_option(v, "get the receipt and each input of the packet PACKET")
 
     r = sub.add_parser("report", help="verify a receipt, then render an HTML review page")
-    r.add_argument("receipt")
+    r.add_argument("receipt", help="the receipt JSON, or the packet key with --store")
     inputs(r)
     pack_dir(r)
+    store_option(r, "get the receipt, each input and the layout of the packet PACKET")
     r.add_argument("--layout", help="layout JSON from read, to show page numbers")
     r.add_argument("--title")
     r.add_argument("-o", "--output", help="write the HTML here instead of stdout")
@@ -212,6 +233,8 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv[2:] if check else argv)
     if not check and args.command == "admit":
         _admit_inputs(parser, args)
+    if not check and args.command in ("verify", "report"):
+        _verify_inputs(parser, args)
     try:
         if check:
             return _check(args)
@@ -221,6 +244,8 @@ def main(argv: list[str] | None = None) -> int:
             return _schema(args)
         if args.command == "admit" and args.docs is not None:
             return _batch_admit(args)
+        if args.command in ("verify", "report") and args.store is not None:
+            return _from_store(args)
         policy = _json(args.policy) if args.policy else None
         text = _text(args.document)
         schema, candidates = _json(args.schema), _json(args.candidates)
@@ -230,6 +255,8 @@ def main(argv: list[str] | None = None) -> int:
             "document_source": args.document_source,
             "packs": [load_pack(f) for f in args.pack],
         }
+        if args.command == "admit" and args.store is not None:
+            return _admit_store(args, text, schema, candidates, policy, judgments, extra)
         if args.command == "admit":
             receipt = admit(text, schema, candidates, policy, args.document_id, judgments, **extra)
             _write(_dumps(receipt.to_dict()), args.output)
@@ -246,7 +273,11 @@ def main(argv: list[str] | None = None) -> int:
         if not result.ok:
             print("groundgate: not rendering a receipt that does not match", file=sys.stderr)
             return 1
-        return _report(args, stored, text, candidates, extra)
+        title = Path(args.document).name if args.document != "-" else None
+        layout = _json(args.layout) if args.layout else None
+        schema, policy = _json(args.schema), _json(args.policy) if args.policy else None
+        extra.update(schema=schema, policy=policy, judgments=judgments)
+        return _report(args, stored, text, candidates, extra, layout, title)
     except (PacketError, ValueError, OSError, ImportError) as e:  # JSON, UTF-8: ValueError
         print(f"groundgate: {e}", file=sys.stderr)
         return 2
@@ -255,13 +286,110 @@ def main(argv: list[str] | None = None) -> int:
 def _admit_inputs(parser: argparse.ArgumentParser, args: argparse.Namespace) -> None:
     batch = (args.docs, args.batch_candidates, args.batch_schema, args.out)
     single = (args.document, args.schema, args.candidates)
+    if args.reading is not None and args.store is None:
+        parser.error("--reading needs --store")
     if any(value is not None for value in batch):
         if not all(batch):
             parser.error("batch admit requires --docs, --candidates, --schema and --out")
+        if args.store is not None:
+            parser.error("batch admit cannot use --store")
         if any(value is not None for value in (*single, args.output, args.document_id)):
             parser.error("batch admit cannot use positional inputs, --output or --document-id")
     elif not all(value is not None for value in single):
         parser.error("admit requires DOC SCHEMA CANDIDATES, or the batch options")
+
+
+def _verify_inputs(parser: argparse.ArgumentParser, args: argparse.Namespace) -> None:
+    single = (args.document, args.schema, args.candidates)
+    if args.store is None:
+        if not all(value is not None for value in single):
+            parser.error(
+                f"{args.command} requires RECEIPT DOC SCHEMA CANDIDATES, or --store DIR PACKET"
+            )
+        return
+    given = [
+        option
+        for option, value in (
+            ("DOC SCHEMA CANDIDATES", any(v is not None for v in single)),
+            ("--policy", args.policy is not None),
+            ("--judgments", args.judgments is not None),
+            ("--references", args.references is not None),
+            ("--document-source", args.document_source is not None),
+            ("--pack", bool(args.pack)),
+        )
+        if value
+    ]
+    if given:
+        parser.error(
+            f"with --store, {args.command} gets each input from the packet: remove "
+            + ", ".join(given)
+        )
+
+
+@contextlib.contextmanager
+def _store(folder: str, *, make: bool) -> Iterator[FolderStore]:
+    """A folder store. A store error becomes a ``ValueError``, so it exits 2. The core and this
+    module do not import the store until a command takes ``--store``."""
+    from .store import FolderStore, StoreError
+
+    path = Path(folder)
+    if not make and not path.is_dir():
+        raise ValueError(f"{folder}: the store folder is not there")
+    try:
+        with FolderStore(path) as store:
+            yield store
+    except StoreError as exc:
+        raise ValueError(str(exc)) from exc
+
+
+def _admit_store(
+    args: argparse.Namespace,
+    text: str,
+    schema: Any,
+    candidates: Any,
+    policy: Any,
+    judgments: Any,
+    extra: dict[str, Any],
+) -> int:
+    from .store.packets import admit_packet
+
+    with _store(args.store, make=True) as store:
+        packet, receipt = admit_packet(
+            store,
+            text,
+            schema,
+            candidates,
+            policy,
+            args.document_id,
+            judgments,
+            reading=args.reading,
+            **extra,
+        )
+    if args.output:
+        _write(_dumps(receipt.to_dict()), args.output)
+    print(packet)
+    return 0
+
+
+def _from_store(args: argparse.Namespace) -> int:
+    from .store.packets import load_packet
+
+    with _store(args.store, make=False) as store:
+        packet = load_packet(store, args.receipt, layout=args.command == "report")
+    extra = {**packet.inputs(), "pack_dir": args.pack_dir}
+    result = verify(packet.receipt, packet.text, packet.schema, packet.candidates, **extra)
+    for problem in result.problems:
+        print(f"mismatch: {problem}", file=sys.stderr)
+    if args.command == "verify":
+        if result.ok:
+            print("receipt verified")
+        return 0 if result.ok else 1
+    if not result.ok:
+        print("groundgate: not rendering a receipt that does not match", file=sys.stderr)
+        return 1
+    layout = _json(args.layout) if args.layout else packet.layout
+    extra["schema"] = packet.schema
+    return _report(args, packet.receipt, packet.text, packet.candidates, extra, layout, None)
 
 
 def _batch_admit(args: argparse.Namespace) -> int:
@@ -535,7 +663,13 @@ def _check(args: argparse.Namespace) -> int:
 def _read(args: argparse.Namespace) -> int:
     from .read import read
 
-    doc = read(args.file, pages=args.pages)
+    if args.store is not None:
+        from .store.packets import put_reading
+
+        with _store(args.store, make=True) as store:
+            reading, doc = put_reading(store, args.file, args.pages)
+    else:
+        doc = read(args.file, pages=args.pages)
     for w in doc.warnings:
         print(f"groundgate: warning: {w}", file=sys.stderr)
     if args.layout:
@@ -543,37 +677,36 @@ def _read(args: argparse.Namespace) -> int:
             print("groundgate: --layout needs a PDF", file=sys.stderr)
             return 2
         Path(args.layout).write_text(json.dumps(doc.layout.to_dict()) + "\n", encoding="utf-8")
+    if args.store is not None:
+        if args.output:
+            _write(doc.text, args.output)
+        print(reading)
+        return 0
     _write(doc.text, args.output)
     return 0
 
 
 def _report(
-    args: argparse.Namespace, receipt: Any, text: str, candidates: Any, extra: dict[str, Any]
+    args: argparse.Namespace,
+    receipt: Any,
+    text: str,
+    candidates: Any,
+    extra: dict[str, Any],
+    layout_dict: Any,
+    file_title: str | None,
 ) -> int:
     from .canonical import digest
     from .read import Layout
     from .report import render
 
     layout = None
-    if args.layout:
-        layout = Layout.from_dict(_json(args.layout))
+    if layout_dict is not None:
+        layout = Layout.from_dict(layout_dict)
         if layout.document_sha256 != digest("document", {"text": text}):
             raise PacketError("the layout was extracted from a different document")
     doc_id = receipt.get("document", {}).get("id") if isinstance(receipt, dict) else None
-    title = args.title or doc_id or (Path(args.document).name if args.document != "-" else None)
-    schema, policy = _json(args.schema), _json(args.policy) if args.policy else None
-    judgments = _json(args.judgments) if args.judgments else None
-    page = render(
-        receipt,
-        text,
-        candidates,
-        schema=schema,
-        policy=policy,
-        layout=layout,
-        title=title,
-        judgments=judgments,
-        **extra,
-    )
+    title = args.title or doc_id or file_title
+    page = render(receipt, text, candidates, layout=layout, title=title, **extra)
     _write(page, args.output)
     return 0
 

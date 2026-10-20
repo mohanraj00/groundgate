@@ -131,6 +131,21 @@ Give `verify` and `report` the same `--policy`, `--judgments`, `--references` an
 `--document-source` that you gave `admit`. `verify` prints "receipt verified" and exits 0, or
 prints each problem and exits 1. Invalid input exits 2.
 
+With a store, you keep one key, not five files. `read --store` writes the source, the text and
+the layout, and prints the key of the reading. `admit --store` writes the inputs, the receipt and
+a packet, and prints the packet key. `verify --store` and `report --store` get each input from
+the packet:
+
+```bash
+reading=$(groundgate read --store store lease.html -o doc.txt)
+packet=$(groundgate admit --store store --reading "$reading" doc.txt schema.json candidates.json --document-id lease-0417)
+groundgate verify --store store "$packet"
+groundgate report --store store "$packet" -o report.html
+```
+
+`--reading` is optional. With it, the packet names the reading, and `report` shows page numbers
+for a PDF. Section 8 shows the store in Python.
+
 ## 4. Store receipts as JSON
 
 `receipt.to_dict()` is the JSON receipt. Store it as UTF-8 JSON.
@@ -254,3 +269,55 @@ If the same code comes back on many facts, change the input, not the review. The
 [guide](../guide.md#when-a-fact-is-rejected-or-flagged) says what to change for each code. The
 page [Send reasons back to the extractor](feedback.md) shows how to ask the extractor for the
 missing parts.
+
+## 8. Keep the inputs in a store
+
+A store keeps each input of a receipt by its digest (see the
+[store note](../design/store.md)). `admit_packet` runs `admit`, writes the inputs and the
+receipt, and returns the key of a packet. The packet names each input. Keep that key:
+
+```python
+from groundgate.store import FolderStore, StoreError, key
+from groundgate.store.packets import admit_packet, load_packet
+
+store = FolderStore(work / "store")
+packet, receipt = admit_packet(store, text, schema, candidates, document_id="lease-0417")
+print(packet[:23])
+```
+
+```text
+sha256:3e0c27fa9861a3cb
+```
+
+The same inputs give the same key. Later, `load_packet` gets each input back, and `verify`
+decides again:
+
+```python
+found = load_packet(store, packet)
+check = gg.verify(found.receipt, found.text, found.schema, found.candidates, **found.inputs())
+print(check.ok, found.receipt["document"]["id"])
+```
+
+```text
+True lease-0417
+```
+
+If you must delete the document, `forget` removes its text and records the time and the reason.
+The receipt and the packet stay. `verify` then cannot decide again, and the error says why. It
+does not report a mismatch:
+
+```python
+store.forget(key("text@1", text.encode("utf-8")), "the tenant asked")
+try:
+    load_packet(store, packet)
+except StoreError as gone:
+    print(str(gone).split(" sha256:")[0])
+store.close()
+```
+
+```text
+input deleted: the text@1 object
+```
+
+The command line prints the same message with the key, the time and the reason, and exits 2.
+An object that is not in the store and has no deletion record gives "input missing".
