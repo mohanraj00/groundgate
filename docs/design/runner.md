@@ -370,8 +370,10 @@ then source and byte start, and puts as many in each call as fit `max_prompt_cha
 in location order. A `sweep` entry before each call lists its regions without text, and the
 call has `sweep: 2` and its `part`. The sweep stops at the first reply with a candidate or a
 protocol failure, when every region is sent or skipped, or after `max_sweep_calls` calls. A
-`sweep_stop` entry records the calls, the skipped and unsent regions and the status:
-`proposed`, `protocol_failure`, `exhausted`, `sweep_limit` or `no_room`. Each not-found reply
+`sweep_stop` entry records the calls, the skipped regions, the unsent regions (which include
+the skipped ones) and the status: `proposed`, `protocol_failure`, `exhausted`, `sweep_limit` or
+`no_room`. A sweep that ends the run, at `call_limit`, an invalid reply or a candidate limit,
+has no `sweep_stop`: its `limit` or `call` entry tells why the run stopped. Each not-found reply
 records `targeted_not_found`. If the sweep sends no call, or `max_sweep_calls` is zero, the
 field is `search_limit` and the run is incomplete. If the sweep sent a call, the run stays
 complete, as after a trimmed first sweep, also when `sweep_limit` leaves regions unsent. I
