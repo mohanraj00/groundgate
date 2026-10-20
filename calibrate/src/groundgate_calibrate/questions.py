@@ -31,6 +31,15 @@ def mark(text: str, start: int, end: int, value: object) -> tuple[int, int]:
     return a, b
 
 
+def descriptions(schema: dict[str, Any], all_fields: bool = False) -> dict[str, str | None]:
+    """The description of each field, after the field takes its template (spec 0.10, #335): a
+    field that takes a kind pack's template can get its description from it. With all_fields, a
+    field with no description maps to None."""
+    fields = gg.Schema.from_dict(schema).fields
+    out = {name: getattr(field, "description", None) for name, field in fields.items()}
+    return out if all_fields else {name: d for name, d in out.items() if d is not None}
+
+
 def state(text: str, item: dict[str, Any]) -> str:
     """The text around the value, with the value in brackets."""
     a, b = item["mark"]

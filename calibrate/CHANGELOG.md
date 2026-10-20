@@ -3,6 +3,21 @@
 Versions follow [SemVer](https://semver.org). groundgate-calibrate is released apart from
 groundgate, with tags `calibrate-v*`.
 
+## 0.3.0 (2026-10-20)
+
+Checked against groundgate 0.10.0 and spec 0.10
+([#325](https://github.com/mohanraj00/groundgate/issues/325)).
+
+- A field that takes a kind pack's template gets its description from the template (spec 0.10,
+  [#335](https://github.com/mohanraj00/groundgate/issues/335)). Before, `sample` and `judge`
+  read only the `description` that the schema field gives. So a templated field's question used
+  the field name, and `judge` did not see a change of the template's description. Both now read
+  each description after the field takes its template. `--descriptions` still replaces it.
+- The tests compare the spec version as numbers. As strings, `"0.10"` is less than `"0.6"`, so
+  under spec 0.10 six tests of descriptions and recorded judgments were skipped. They run again
+  and pass.
+- It still needs `groundgate>=0.5`.
+
 ## 0.2.0 (2026-10-09)
 
 - `sample` reads each field's `description` from the schema, for the field question and the
