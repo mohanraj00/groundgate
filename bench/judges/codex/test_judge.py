@@ -22,6 +22,7 @@ def item(**change: Any) -> dict[str, Any]:
     second = TEXT.rindex("1,181")
     it = {
         "id": "doc-a|revenue",
+        "doc": "doc-a",
         "split": "development",
         "document": "an annual report",
         "field": "revenue",
@@ -53,14 +54,17 @@ def event(kind: str, **item: Any) -> str:
 class FakeCodex:
     """A fake CLI: each call returns the next reply, as a JSONL event stream."""
 
-    def __init__(self, *replies: str | tuple[int, str]) -> None:
+    def __init__(self, *replies: str | tuple[int, str], version: str = "codex-cli 0.0.0") -> None:
         self.replies = list(replies)
+        self.version = version
         self.commands: list[list[str]] = []
         self.stdins: list[str] = []
+        self.envs: list[dict[str, str]] = []
 
-    def __call__(self, cmd: list[str], stdin: str) -> tuple[int, str, str]:
+    def __call__(self, cmd: list[str], stdin: str, env: dict[str, str]) -> tuple[int, str, str]:
+        self.envs.append(env)
         if cmd == ["codex", "--version"]:
-            return 0, "codex-cli 0.0.0\n", ""
+            return 0, self.version + "\n", ""
         self.commands.append(cmd)
         self.stdins.append(stdin)
         reply = self.replies.pop(0)
@@ -131,6 +135,7 @@ def test_byte_spans_become_code_point_spans() -> None:
     "change",
     [
         {"split": "test"},
+        {"doc": None},
         {"candidates": []},
         {"text": 5},
         {"candidates": [{"value": "1", "scale": None, "unit": None, "spans": [[0, 9999]]}]},
@@ -151,6 +156,15 @@ def test_command_keeps_the_sandbox(tmp_path: Path) -> None:
     assert {"--ephemeral", "--ignore-user-config", "--ignore-rules"} <= set(cmd)
     assert cmd[-1] == "-"  # the prompt goes on stdin
     assert 'model_reasoning_effort="low"' in cmd
+    assert cmd[cmd.index('web_search="disabled"') - 1] == "-c"
+    disabled = {cmd[i + 1] for i, a in enumerate(cmd) if a == "--disable"}
+    assert disabled == {
+        "apps",
+        "browser_use",
+        "browser_use_external",
+        "computer_use",
+        "in_app_browser",
+    }
     with pytest.raises(judge.JudgeError):
         judge.Codex("--dangerously-bypass-approvals-and-sandbox")
 
@@ -181,38 +195,78 @@ def test_parse_refuses(reply: str) -> None:
         judge.parse(reply, ["c1", "none"])
 
 
+def manifest(tmp_path: Path, **splits: str) -> Path:
+    path = tmp_path / f"manifest-{len(list(tmp_path.glob('manifest-*.json')))}.json"
+    docs = [{"id": d, "split": s} for d, s in (splits or {"doc-a": "development"}).items()]
+    path.write_text(json.dumps({"documents": docs}))
+    return path
+
+
+def ask(items: list[Any], fake: FakeCodex, tmp_path: Path, cache: str = "cache", **kw: Any) -> Any:
+    kw.setdefault("manifest", manifest(tmp_path))
+    kw.setdefault("max_calls", 5)
+    return judge.run(items, codex(fake, tmp_path), judge.Cache(tmp_path / cache), **kw)
+
+
 def test_run_records_answers_and_uses_the_cache(tmp_path: Path) -> None:
     fake = FakeCodex('{"choice": "c1", "confidence": 0.93}')
-    cache = judge.Cache(tmp_path / "cache")
-    out = judge.run([item()], codex(fake, tmp_path), cache, max_calls=5)
+    out = ask([item()], fake, tmp_path)
     a = out["answers"]["doc-a|revenue"]
     assert a["choice"] == {"value": "1181000000", "scale": "million", "unit": "EUR"}
     assert a["confidence"] == 0.93
     assert a["prompt_sha256"] == judge.sha256(fake.stdins[0])
+    assert a["codex_version"] == "codex-cli 0.0.0"
     assert out["meta"]["model"] == "gpt-test"
     assert out["meta"]["prompts_sha256"] == judge.prompts_sha256([item()])
     assert out["meta"]["template_sha256"] == judge.template_sha256()
+    assert out["meta"]["manifest_sha256"].startswith("sha256:")
     assert out["calls"] == 1
     # a second pass reads the cache and makes no call
-    again = judge.run([item()], codex(FakeCodex(), tmp_path), cache, max_calls=0)
+    again = ask([item()], FakeCodex(), tmp_path, max_calls=0)
     assert again["answers"] == out["answers"]
     assert again["calls"] == 0
     # a repeat run asks again
     fake2 = FakeCodex('{"choice": "none", "confidence": 0.6}')
-    second = judge.run([item()], codex(fake2, tmp_path), cache, max_calls=1, run_number=2)
+    second = ask([item()], fake2, tmp_path, max_calls=1, run_number=2)
     assert second["answers"]["doc-a|revenue"]["choice"] is None
 
 
-def test_a_changed_cache_entry_is_refused(tmp_path: Path) -> None:
-    cache = judge.Cache(tmp_path / "cache")
-    fake = FakeCodex('{"choice": "c1", "confidence": 0.93}')
-    judge.run([item()], codex(fake, tmp_path), cache, max_calls=1)
+def test_a_cache_hit_keeps_the_version_that_answered(tmp_path: Path) -> None:
+    ask([item()], FakeCodex('{"choice": "c1", "confidence": 0.93}'), tmp_path)
+    later = ask([item()], FakeCodex(version="codex-cli 9.9.9"), tmp_path, max_calls=0)
+    assert later["answers"]["doc-a|revenue"]["codex_version"] == "codex-cli 0.0.0"
+    assert later["meta"]["codex_versions"] == ["codex-cli 0.0.0"]
+
+
+def entry_path(tmp_path: Path) -> Path:
     (path,) = (tmp_path / "cache").glob("*.json")
-    entry = json.loads(path.read_text())
-    entry["reply"] = '{"choice": "c2", "confidence": 0.99}'
-    path.write_text(json.dumps(entry))
+    return path
+
+
+@pytest.mark.parametrize(
+    "spoil",
+    [
+        lambda e: e | {"reply": '{"choice": "c2", "confidence": 0.99}'},
+        lambda e: e | {"model": "other"},
+        "not json {",
+        "[]",
+    ],
+)
+def test_a_bad_cache_entry_is_refused(tmp_path: Path, spoil: Any) -> None:
+    ask([item()], FakeCodex('{"choice": "c1", "confidence": 0.93}'), tmp_path)
+    path = entry_path(tmp_path)
+    if callable(spoil):
+        entry = json.loads(path.read_text())
+        entry.pop("entry_sha256")
+        changed = spoil(entry)
+        # a forged digest passes the digest check; the model check must still refuse it
+        if changed.get("model") == "other":
+            changed["entry_sha256"] = judge.sha256(judge.canonical(changed))
+        path.write_text(json.dumps(changed))
+    else:
+        path.write_text(spoil)
     with pytest.raises(judge.JudgeError):
-        judge.run([item()], codex(FakeCodex(), tmp_path), cache, max_calls=0)
+        ask([item()], FakeCodex(), tmp_path, max_calls=0)
 
 
 def test_tool_use_bad_replies_and_failures_are_retried(tmp_path: Path) -> None:
@@ -223,24 +277,75 @@ def test_tool_use_bad_replies_and_failures_are_retried(tmp_path: Path) -> None:
         ]
     )
     fake = FakeCodex((0, tool), "not json", '{"choice": "c2", "confidence": 0.7}')
-    out = judge.run([item()], codex(fake, tmp_path), judge.Cache(tmp_path / "c"), max_calls=5)
+    out = ask([item()], fake, tmp_path)
     assert out["answers"]["doc-a|revenue"]["option"] == "c2"
     assert out["calls"] == 3
     assert len(out["failures"]) == 2
     fake = FakeCodex((1, ""), (1, ""), (1, ""))
     with pytest.raises(judge.JudgeError, match="no valid reply"):
-        judge.run([item()], codex(fake, tmp_path), judge.Cache(tmp_path / "d"), max_calls=5)
+        ask([item()], fake, tmp_path, cache="d")
 
 
-def test_budget_and_heldout_guards(tmp_path: Path) -> None:
+def test_a_failed_turn_with_exit_0_is_refused(tmp_path: Path) -> None:
+    failed = "\n".join(
+        [
+            event("item.completed", type="agent_message", text='{"choice": "c1", "confidence": 1}'),
+            json.dumps({"type": "turn.failed", "error": {"message": "stream cut"}}),
+        ]
+    )
+    with pytest.raises(judge.JudgeError, match="no valid reply"):
+        ask([item()], FakeCodex((0, failed), (0, failed), (0, failed)), tmp_path)
+
+
+def test_codex_gets_only_path_home_and_codex_home(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setenv("GITHUB_TOKEN", "secret")
+    monkeypatch.setenv("CODEX_HOME", str(tmp_path / "codex-home"))
+    fake = FakeCodex('{"choice": "c1", "confidence": 0.5}')
+    ask([item()], fake, tmp_path)
+    assert fake.envs
+    for env in fake.envs:
+        assert set(env) <= {"PATH", "HOME", "CODEX_HOME"}
+        assert env["CODEX_HOME"] == str(tmp_path / "codex-home")
+
+
+@pytest.mark.parametrize(
+    "error",
+    [FileNotFoundError("codex"), judge.subprocess.TimeoutExpired(["codex"], 1)],
+)
+def test_a_missing_or_stuck_codex_is_refused(tmp_path: Path, error: Exception) -> None:
+    def broken(cmd: list[str], stdin: str, env: dict[str, str]) -> tuple[int, str, str]:
+        raise error
+
+    c = judge.Codex("gpt-test", runner=broken, workdir=str(tmp_path), pause=0)
+    with pytest.raises(judge.JudgeError):
+        c.version()
+
+
+def test_budget_guard(tmp_path: Path) -> None:
     fake = FakeCodex()
     with pytest.raises(judge.JudgeError, match="budget"):
-        judge.run([item()], codex(fake, tmp_path), judge.Cache(tmp_path / "c"), max_calls=0)
-    with pytest.raises(judge.JudgeError, match="held-out"):
-        judge.run(
-            [item(split="heldout")], codex(fake, tmp_path), judge.Cache(tmp_path / "c"), max_calls=1
-        )
+        ask([item()], fake, tmp_path, max_calls=0)
     assert fake.commands == []
+
+
+def test_the_manifest_sets_the_split(tmp_path: Path) -> None:
+    fake = FakeCodex()
+    held = manifest(tmp_path, **{"doc-a": "heldout"})
+    # an item that says development, of a held-out document
+    with pytest.raises(judge.JudgeError, match="puts 'doc-a' in heldout"):
+        ask([item()], fake, tmp_path, manifest=held)
+    with pytest.raises(judge.JudgeError, match="held-out"):
+        ask([item(split="heldout")], fake, tmp_path, manifest=held)
+    with pytest.raises(judge.JudgeError, match="not in the manifest"):
+        ask([item(doc="doc-b")], fake, tmp_path)
+    with pytest.raises(judge.JudgeError, match="no manifest"):
+        ask([item()], fake, tmp_path, manifest=tmp_path / "missing.json")
+    assert fake.commands == []
+    fake = FakeCodex('{"choice": "c1", "confidence": 0.5}')
+    out = ask([item(split="heldout")], fake, tmp_path, manifest=held, allow_heldout=True)
+    assert out["meta"]["splits"] == ["heldout"]
 
 
 def test_cli(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
@@ -250,11 +355,24 @@ def test_cli(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
     assert '"field": "revenue"' in capsys.readouterr().out
     out = tmp_path / "answers.json"
     args = ["run", "--items", str(items), "--model", "gpt-test", "--max-calls", "3"]
-    args += ["--cache", str(tmp_path / "cache"), "--out", str(out)]
-    judge.main(args, FakeCodex('{"choice": "c2", "confidence": 0.4}'))
+    args += ["--cache", str(tmp_path / "cache"), "--manifest", str(manifest(tmp_path))]
+    judge.main([*args, "--out", str(out)], FakeCodex('{"choice": "c2", "confidence": 0.4}'))
     saved = json.loads(out.read_text())
     assert saved["format"] == judge.ANSWERS_FORMAT
-    assert saved["meta"]["codex_version"] == "codex-cli 0.0.0"
+    assert saved["meta"]["codex_versions"] == ["codex-cli 0.0.0"]
     assert saved["answers"]["doc-a|revenue"]["choice"]["value"] == "2024"
     with pytest.raises(SystemExit):
-        judge.main(args, FakeCodex())  # the answers file is there already
+        judge.main([*args, "--out", str(out)], FakeCodex())  # the answers file is there already
+    with pytest.raises(SystemExit, match="no folder"):
+        judge.main([*args, "--out", str(tmp_path / "no" / "a.json")], FakeCodex())
+    # the default manifest, bench/requested4/manifest.json, is not there yet
+    with pytest.raises(SystemExit, match="no manifest"):
+        judge.main([*args[:9], "--out", str(tmp_path / "b.json")], FakeCodex())
+
+
+@pytest.mark.parametrize("body", ["{", '{"format": "codex-judge-items/1", "items": {}}'])
+def test_a_bad_items_file_is_refused(tmp_path: Path, body: str) -> None:
+    items = tmp_path / "items.json"
+    items.write_text(body)
+    with pytest.raises(judge.JudgeError):
+        judge.load_items(items)
