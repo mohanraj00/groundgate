@@ -21,7 +21,8 @@ from typing import Any
 
 import groundgate as gg
 
-from .metrics import ARMS, measure, same_request
+from .loop import check_freeze
+from .metrics import ARMS, measure, same_request, search_limit_fields
 
 Json = dict[str, Any]
 _VERSION = "requested-run/1"
@@ -31,6 +32,8 @@ _MAX_REPLY = 8 * 1024 * 1024
 _MAX_REQUEST_CONTEXT = 4096
 _ID = re.compile(r"[a-z][a-z0-9_-]{0,79}\Z")
 _ROLES = {"value", "sign", "scale", "unit", "field", "key"}
+_SWEEP_SETTINGS = {"max_region_chars", "max_sweep_calls"}
+_LOOP = re.compile(r"loop/[0-9]{2,}\.json\Z")
 # Verbatim instruction string from the released own-model guide. The wrapper, bounded chunk
 # search_region and current core are declared adaptations, not the entire released pipeline.
 BASELINE_INSTRUCTIONS = """\
@@ -109,6 +112,7 @@ def source_code_digest() -> str:
     }
     files["requested/run_set.py"] = digest(_read(Path(__file__)))
     files["requested/metrics.py"] = digest(_read(Path(__file__).with_name("metrics.py")))
+    files["requested/loop.py"] = digest(_read(Path(__file__).with_name("loop.py")))
     return digest(encoded(files))
 
 
@@ -289,14 +293,25 @@ def _archive_transport_error(document: Path, binding: str) -> bool:
     return True
 
 
+def _limits(record: Any) -> int:
+    """The search_limit fields of a groundgate-run/3 record; an older record stops the run."""
+    try:
+        return search_limit_fields(record)
+    except ValueError as exc:
+        raise CacheError("a projection needs groundgate-run/3 records: " + str(exc)) from exc
+
+
 def _settings(raw: Any) -> Json:
     """Check the frozen runner settings. ``drop_rounded`` is optional and must be false: the
-    main runner arm keeps the 0.10 default, and only the replay arm turns the rule on (#376)."""
+    main runner arm keeps the 0.10 default, and only the replay arm turns the rule on (#376).
+
+    ``max_region_chars`` and ``max_sweep_calls`` (groundgate-run/3, #382) are optional, so a
+    configuration from before them stays valid. A new freeze names them explicitly."""
     if isinstance(raw, dict) and "drop_rounded" in raw:
         if raw["drop_rounded"] is not False:
             raise CacheError("drop_rounded must be false; the runner_drop_rounded arm sets it")
         raw = {k: v for k, v in raw.items() if k != "drop_rounded"}
-    if not isinstance(raw, dict) or set(raw) != {
+    if not isinstance(raw, dict) or set(raw) - _SWEEP_SETTINGS != {
         "chunk_chars",
         "overlap_chars",
         "max_repair_rounds",
@@ -316,7 +331,7 @@ def _settings(raw: Any) -> Json:
             if type(value) is not bool:
                 raise CacheError("targeted must be boolean")
         elif type(value) is not int or value < (
-            0 if name in {"overlap_chars", "max_repair_rounds"} else 1
+            0 if name in {"overlap_chars", "max_repair_rounds", "max_sweep_calls"} else 1
         ):
             raise CacheError("invalid runner setting")
     if raw["overlap_chars"] >= raw["chunk_chars"]:
@@ -332,8 +347,10 @@ def _settings(raw: Any) -> Json:
         "max_candidates_per_reply": 1024,
         "max_total_candidates": 4096,
         "max_admission_bytes": 32 * 1024 * 1024,
+        "max_region_chars": _MAX_TEXT,
+        "max_sweep_calls": 64,
     }
-    if any(raw[name] > cap for name, cap in caps.items()):
+    if any(name in raw and raw[name] > cap for name, cap in caps.items()):
         raise CacheError("runner setting exceeds harness processing cap")
     return copy.deepcopy(raw)
 
@@ -672,6 +689,56 @@ class FrozenSet:
         }
         self.binding = digest(encoded(self.header))
 
+    def _check_heldout_freeze(self) -> None:
+        """Refuse a held-out run of a set with a split rule or a held-out freeze (#383).
+
+        The run configuration, the manifest code_freeze and the imported code must have one
+        code digest. The freeze names the last learning-loop record, and that record has the
+        frozen code digest (``loop.check_freeze``). ``loop.py check`` checks the records in
+        full; this guard reads only their run code digests. The cache keeps one
+        held-out binding for the set: a held-out run measures a frozen change once. A run
+        publishes its split header after this check and before its first call, so each
+        started held-out run leaves its ``<binding>/<arm>/heldout`` folder. A set
+        without a split_rule and without a held-out freeze keeps its earlier behavior.
+        """
+        freeze = self.manifest.get("code_freeze")
+        if "split_rule" not in self.manifest and not (
+            isinstance(freeze, dict) and freeze.get("applies_to") == "heldout"
+        ):
+            return
+        if (
+            not isinstance(freeze, dict)
+            or freeze.get("applies_to") != "heldout"
+            or not isinstance(freeze.get("last_loop"), str)
+            or not _LOOP.fullmatch(freeze["last_loop"])
+        ):
+            raise CacheError(
+                "a held-out run needs a code_freeze that applies to heldout and names its last loop"
+            )
+        if not (freeze.get("code_sha256") == self.config["code_sha256"] == source_code_digest()):
+            raise CacheError("a held-out run needs the frozen code digest in config and code")
+        records = []
+        paths = sorted((self.directory / "loop").glob("*.json"))
+        if [p.name for p in paths] != [f"{n:02}.json" for n in range(1, len(paths) + 1)]:
+            raise CacheError("loop records must be 01.json, 02.json, ... with no gap")
+        for path in paths:
+            try:
+                records.append(_json(_read(_unlinked(path))))
+            except (ValueError, RecursionError) as exc:
+                raise CacheError("unreadable loop record: " + path.name) from exc
+        try:
+            check_freeze(self.manifest, records)
+            if any(not isinstance(r.get("run"), dict) for r in records):
+                raise ValueError("a loop record needs its run")
+        except (ValueError, KeyError, TypeError, AttributeError) as exc:
+            raise CacheError("a held-out run needs a valid freeze: " + str(exc)) from exc
+        if self.cache.exists():
+            for other in _unlinked(self.cache).iterdir():
+                if other.name == self.binding.removeprefix("sha256:"):
+                    continue
+                if any(_unlinked(other / arm / "heldout").exists() for arm in ARMS):
+                    raise CacheError("the cache already holds another held-out binding of the set")
+
     def schema(self, doc: Json) -> Json:
         """Return a fresh schema with only explicit pre-label request context appended.
 
@@ -893,6 +960,8 @@ class FrozenSet:
             known = {i for i, d in self.documents.items() if d["split"] == split}
             if not selected or not selected <= known:
                 raise CacheError("documents must be a nonempty subset of the split")
+        if split == "heldout":
+            self._check_heldout_freeze()
         runner_api = None
         if arm != "baseline":
             try:
@@ -1023,6 +1092,8 @@ class FrozenSet:
                     "complete": local["complete"],
                     "transport_error": calls.transport_error,
                     "transport_retries": _attempts((recorded if replayed else folder) / ident),
+                    # The baseline arm has no targeted search, so no field stops there.
+                    "search_limit": 0 if arm == "baseline" else _limits(local["record"]),
                 }
             )
         if selected is not None:

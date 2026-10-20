@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import builtins
 import copy
+import hashlib
 import importlib.util
 import json
 import re
@@ -1258,3 +1259,183 @@ def test_replay_arm_refuses_a_runner_result_from_other_calls(tmp_path):
         with pytest.raises(harness.CacheError, match="runner result"):
             session.run("runner_drop_rounded")
     assert not list(session.cache.rglob("runner_drop_rounded/heldout/doc/result.json"))
+
+
+@requires_runner
+def test_projection_counts_the_fields_that_stop_at_search_limit(tmp_path):
+    # The initial chunk prompts fit; the 4000-character search region does not (#383).
+    settings = {
+        "chunk_chars": 400,
+        "overlap_chars": 0,
+        "search_context_chars": 4000,
+        "max_prompt_chars": 4000,
+    }
+    session, _ = fixture(tmp_path, "Amount 5. " + "filler words here. " * 300, settings=settings)
+
+    def client(prompt):
+        return json.dumps(runner_envelope(missing=("amount",)))
+
+    result = session.run("runner", client)
+    assert output(result)["complete"] is False
+    assert output(result)["search_limit"] == 1
+    assert session.run("runner") == result
+
+
+def test_baseline_projection_has_no_search_limit_field(tmp_path):
+    session, _ = fixture(tmp_path)
+    result = session.run("baseline", Client(envelope(candidate()), envelope(candidate())))
+    assert output(result)["search_limit"] == 0
+
+
+def loops(session, count=2, code=None):
+    """Minimal loop records: the guard reads only the run code digest of each."""
+    folder = session.directory / "loop"
+    folder.mkdir(exist_ok=True)
+    for n in range(1, count + 1):
+        record = {"run": {"code_sha256": code or session.code_sha256}}
+        (folder / f"{n:02}.json").write_text(json.dumps(record))
+    return session
+
+
+def frozen_fixture(path, mutate):
+    session, paths = fixture(path, mutate=mutate)
+    return loops(session), paths
+
+
+def frozen(code=None, last_loop="loop/02.json", split_rule=False):
+    def mutate(manifest, labels, config):
+        freeze = {"applies_to": "heldout", "last_loop": last_loop}
+        freeze["code_sha256"] = code or config["code_sha256"]
+        manifest["code_freeze"] = freeze
+        if split_rule:
+            manifest["documents"][0]["source_family_group"] = "family"
+            manifest["split_rule"] = {
+                "method": "family-hash/1",
+                "salt": "salt",
+                "development_share": 0.5,
+                "fixed_on": "2026-10-20",
+            }
+            first = hashlib.sha256(b"saltfamily").digest()[0]
+            manifest["documents"][0]["split"] = "development" if first < 128 else "heldout"
+
+    return mutate
+
+
+def test_heldout_run_needs_the_frozen_code_digest(tmp_path):
+    session, _ = frozen_fixture(tmp_path / "a", frozen())
+    session.run("baseline", Client(envelope(candidate()), envelope(candidate())))
+    for name, mutate in (
+        ("b", frozen(code="sha256:" + "0" * 64)),
+        ("c", frozen(last_loop=None)),
+        ("d", frozen(last_loop="02.json")),
+    ):
+        session, _ = frozen_fixture(tmp_path / name, mutate)
+        client = Client(envelope(candidate()))
+        with pytest.raises(harness.CacheError, match="held-out run needs"):
+            session.run("baseline", client)
+        assert client.prompts == []
+
+
+def test_heldout_run_has_one_binding_for_the_set(tmp_path):
+    session, _ = frozen_fixture(tmp_path, frozen())
+    session.run("baseline", Client(envelope(candidate()), envelope(candidate())))
+    # The same binding replays; another binding in the same cache is refused before a call.
+    session.run("baseline")
+    other = session.cache / ("0" * 64) / "runner" / "heldout"
+    other.mkdir(parents=True)
+    client = Client(envelope(candidate()))
+    with pytest.raises(harness.CacheError, match="another held-out binding"):
+        session.run("runner", client)
+    assert client.prompts == []
+
+
+def test_a_set_with_a_split_rule_needs_a_heldout_freeze(tmp_path):
+    def rule_only(manifest, labels, config):
+        frozen(split_rule=True)(manifest, labels, config)
+        manifest.pop("code_freeze")
+
+    session, _ = fixture(tmp_path / "a", mutate=rule_only)
+    # The first byte of sha256("saltfamily") is 191, so the family is held out.
+    assert session.documents["doc"]["split"] == "heldout"
+    client = Client(envelope(candidate()), envelope(candidate()))
+    with pytest.raises(harness.CacheError, match="code_freeze"):
+        session.run("baseline", client)
+    assert client.prompts == []
+    session, _ = frozen_fixture(tmp_path / "b", frozen(split_rule=True))
+    session.run("baseline", client)
+
+
+def test_a_document_outside_its_split_rule_is_refused(tmp_path):
+    def wrong(manifest, labels, config):
+        frozen(split_rule=True)(manifest, labels, config)
+        doc = manifest["documents"][0]
+        doc["split"] = "heldout" if doc["split"] == "development" else "development"
+
+    with pytest.raises(harness.CacheError, match="blind labels"):
+        fixture(tmp_path, mutate=wrong)
+
+
+@pytest.mark.parametrize(
+    ("settings", "valid"),
+    [
+        ({"max_region_chars": 6000, "max_sweep_calls": 2}, True),
+        ({"max_sweep_calls": 0}, True),
+        ({"max_region_chars": 0}, False),
+        ({"max_sweep_calls": -1}, False),
+        ({"max_sweep_calls": 65}, False),
+        ({"max_region_chars": True}, False),
+    ],
+)
+def test_frozen_run_policy_may_name_the_sweep_settings(settings, valid):
+    policy = {
+        "chunk_chars": 12000,
+        "overlap_chars": 1000,
+        "max_repair_rounds": 2,
+        "targeted": True,
+        "search_context_chars": 1000,
+        "max_target_regions": 8,
+        "max_calls": 128,
+        "max_prompt_chars": 65536,
+        "max_reply_bytes": 1048576,
+        "max_candidates_per_reply": 256,
+        "max_total_candidates": 1024,
+        "max_admission_bytes": 8388608,
+    } | settings
+    if valid:
+        assert harness._settings(policy) == policy
+    else:
+        with pytest.raises(harness.CacheError):
+            harness._settings(policy)
+
+
+def test_projection_of_an_older_runner_record_is_a_cache_error():
+    record = [{"kind": "header", "runner": "groundgate-run/2"}, {"kind": "final", "fields": {}}]
+    with pytest.raises(harness.CacheError, match="groundgate-run/3"):
+        harness._limits(record)
+
+
+@pytest.mark.parametrize(
+    ("records", "code", "message"),
+    [
+        (0, None, "has none"),
+        (1, None, "name the last"),
+        (3, None, "name the last"),
+        (2, "sha256:" + "c" * 64, "frozen code digest"),
+    ],
+)
+def test_heldout_run_needs_the_named_last_loop_record(tmp_path, records, code, message):
+    session, _ = fixture(tmp_path, mutate=frozen())
+    loops(session, records, code)
+    client = Client(envelope(candidate()))
+    with pytest.raises(harness.CacheError, match=message):
+        session.run("baseline", client)
+    assert client.prompts == []
+
+
+def test_heldout_guard_refuses_a_gap_in_the_loop_records(tmp_path):
+    session, _ = frozen_fixture(tmp_path, frozen())
+    (session.directory / "loop/02.json").rename(session.directory / "loop/03.json")
+    client = Client(envelope(candidate()))
+    with pytest.raises(harness.CacheError, match="no gap"):
+        session.run("baseline", client)
+    assert client.prompts == []
