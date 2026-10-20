@@ -31,6 +31,7 @@ _MAX_REPLY = 8 * 1024 * 1024
 _MAX_REQUEST_CONTEXT = 4096
 _ID = re.compile(r"[a-z][a-z0-9_-]{0,79}\Z")
 _ROLES = {"value", "sign", "scale", "unit", "field", "key"}
+_SWEEP_SETTINGS = {"max_region_chars", "max_sweep_calls"}
 _LOOP = re.compile(r"loop/[0-9]{2,}\.json\Z")
 # Verbatim instruction string from the released own-model guide. The wrapper, bounded chunk
 # search_region and current core are declared adaptations, not the entire released pipeline.
@@ -292,12 +293,15 @@ def _archive_transport_error(document: Path, binding: str) -> bool:
 
 def _settings(raw: Any) -> Json:
     """Check the frozen runner settings. ``drop_rounded`` is optional and must be false: the
-    main runner arm keeps the 0.10 default, and only the replay arm turns the rule on (#376)."""
+    main runner arm keeps the 0.10 default, and only the replay arm turns the rule on (#376).
+
+    ``max_region_chars`` and ``max_sweep_calls`` (groundgate-run/3, #382) are optional, so a
+    configuration from before them stays valid. A new freeze names them explicitly."""
     if isinstance(raw, dict) and "drop_rounded" in raw:
         if raw["drop_rounded"] is not False:
             raise CacheError("drop_rounded must be false; the runner_drop_rounded arm sets it")
         raw = {k: v for k, v in raw.items() if k != "drop_rounded"}
-    if not isinstance(raw, dict) or set(raw) != {
+    if not isinstance(raw, dict) or set(raw) - _SWEEP_SETTINGS != {
         "chunk_chars",
         "overlap_chars",
         "max_repair_rounds",
@@ -317,7 +321,7 @@ def _settings(raw: Any) -> Json:
             if type(value) is not bool:
                 raise CacheError("targeted must be boolean")
         elif type(value) is not int or value < (
-            0 if name in {"overlap_chars", "max_repair_rounds"} else 1
+            0 if name in {"overlap_chars", "max_repair_rounds", "max_sweep_calls"} else 1
         ):
             raise CacheError("invalid runner setting")
     if raw["overlap_chars"] >= raw["chunk_chars"]:
@@ -333,8 +337,10 @@ def _settings(raw: Any) -> Json:
         "max_candidates_per_reply": 1024,
         "max_total_candidates": 4096,
         "max_admission_bytes": 32 * 1024 * 1024,
+        "max_region_chars": _MAX_TEXT,
+        "max_sweep_calls": 64,
     }
-    if any(raw[name] > cap for name, cap in caps.items()):
+    if any(name in raw and raw[name] > cap for name, cap in caps.items()):
         raise CacheError("runner setting exceeds harness processing cap")
     return copy.deepcopy(raw)
 

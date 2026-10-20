@@ -43,10 +43,18 @@ LIMIT_STATES = ("search_limit_documents", "search_limit_fields")
 SPLIT_METHOD = "family-hash/1"
 
 
-def search_limit_fields(record: Any) -> int:
-    """Count the fields of a runner record whose final state list holds search_limit."""
+RUN_RECORD = "groundgate-run/3"
+
+
+def final_search_limits(record: Any, runner: str) -> int:
+    """Count the fields of a runner record of one version whose final states hold search_limit."""
     if not isinstance(record, list) or not record:
         raise ValueError("a runner record must be a nonempty list")
+    header = record[0]
+    if not isinstance(header, dict) or header.get("kind") != "header":
+        raise ValueError("a runner record must start with its header")
+    if header.get("runner") != runner:
+        raise ValueError(f"the runner record is {header.get('runner')!r}, not {runner!r}")
     final = record[-1]
     if not isinstance(final, dict) or final.get("kind") != "final":
         raise ValueError("a runner record must end with its final entry")
@@ -54,6 +62,15 @@ def search_limit_fields(record: Any) -> int:
     if not isinstance(fields, dict) or any(not isinstance(s, list) for s in fields.values()):
         raise ValueError("the final entry needs a state list for each field")
     return sum("search_limit" in states for states in fields.values())
+
+
+def search_limit_fields(record: Any) -> int:
+    """Count the fields of a groundgate-run/3 record that end at search_limit.
+
+    In run/3 (#382) a field records search_limit only when no region fit the first sweep and
+    the second sweep sent no call. A field that the second sweep searched does not count.
+    """
+    return final_search_limits(record, RUN_RECORD)
 
 
 def split_of(rule: dict[str, Any], family: str) -> str:

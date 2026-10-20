@@ -1358,3 +1358,36 @@ def test_a_document_outside_its_split_rule_is_refused(tmp_path):
 
     with pytest.raises(harness.CacheError, match="blind labels"):
         fixture(tmp_path, mutate=wrong)
+
+
+@pytest.mark.parametrize(
+    ("settings", "valid"),
+    [
+        ({"max_region_chars": 6000, "max_sweep_calls": 2}, True),
+        ({"max_sweep_calls": 0}, True),
+        ({"max_region_chars": 0}, False),
+        ({"max_sweep_calls": -1}, False),
+        ({"max_sweep_calls": 65}, False),
+        ({"max_region_chars": True}, False),
+    ],
+)
+def test_frozen_run_policy_may_name_the_sweep_settings(settings, valid):
+    policy = {
+        "chunk_chars": 12000,
+        "overlap_chars": 1000,
+        "max_repair_rounds": 2,
+        "targeted": True,
+        "search_context_chars": 1000,
+        "max_target_regions": 8,
+        "max_calls": 128,
+        "max_prompt_chars": 65536,
+        "max_reply_bytes": 1048576,
+        "max_candidates_per_reply": 256,
+        "max_total_candidates": 1024,
+        "max_admission_bytes": 8388608,
+    } | settings
+    if valid:
+        assert harness._settings(policy) == policy
+    else:
+        with pytest.raises(harness.CacheError):
+            harness._settings(policy)

@@ -9,8 +9,9 @@ came from, and writes one new file:
 
 Each cached projection must have the same bytes as the committed ``runs/<arm>.json``. Each
 cached document result must have the run binding and the manifest source and text digests.
-A runner arm counts the fields whose final state list holds ``search_limit``. The baseline arm
-has no targeted search, so its count is zero.
+A runner arm counts the fields whose final state list holds ``search_limit``. It reads only
+groundgate-run/2 records, the format of the requested3 cache; it refuses another version.
+The baseline arm has no targeted search, so its count is zero.
 """
 
 from __future__ import annotations
@@ -22,9 +23,12 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
-from .metrics import search_limit_fields
+from .metrics import final_search_limits
 
 FORMAT = "requested-limits/1"
+# This read-only path counts the earlier record format of the requested3 cache. A run of the
+# current harness counts run/3 records in its own projection (metrics.search_limit_fields).
+RECORD = "groundgate-run/2"
 STATES = ("documents", "search_limit_documents", "search_limit_fields")
 
 
@@ -73,7 +77,7 @@ def count(directory: Path, cache: Path) -> dict[str, Any]:
                 or result.get("complete") != output["complete"]
             ):
                 raise ValueError("cached result does not match its run: " + ident)
-            fields = 0 if arm == "baseline" else search_limit_fields(result["record"])
+            fields = 0 if arm == "baseline" else final_search_limits(result["record"], RECORD)
             tally = states[doc["kind"]]
             tally["documents"] += 1
             tally["search_limit_documents"] += fields > 0
@@ -93,7 +97,7 @@ def count(directory: Path, cache: Path) -> dict[str, Any]:
         "format": FORMAT,
         "method": (
             "bench/requested/limits.py: for each document of a run, the fields whose final "
-            "runner state list holds search_limit, read from the local cache of that run"
+            "groundgate-run/2 state list holds search_limit, read from the local cache of that run"
         ),
         "manifest_sha256": _digest(manifest_raw),
         "labels_sha256": _digest(labels_raw),

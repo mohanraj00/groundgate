@@ -3,7 +3,7 @@
  "format": "requested-limits/1",
  "labels_sha256": "sha256:95632ebfa9530d518981f984c740a2345746db427d9a4a9ba6b4647af1f98376",
  "manifest_sha256": "sha256:dac8c72d34de30eebd59cf95e60a1e5b797edf51be953e89f93647d5f0ffa2ea",
- "method": "bench/requested/limits.py: for each document of a run, the fields whose final runner state list holds search_limit, read from the local cache of that run",
+ "method": "bench/requested/limits.py: for each document of a run, the fields whose final groundgate-run/2 state list holds search_limit, read from the local cache of that run",
  "runs": {
   "baseline": {
    "document_states": {

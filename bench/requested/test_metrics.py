@@ -16,6 +16,7 @@ sys.path.insert(0, str(Path(__file__).parents[1]))
 from report import render_requested
 from requested.metrics import (
     check_split_rule,
+    final_search_limits,
     measure,
     score_set,
     search_limit_fields,
@@ -464,12 +465,24 @@ def test_replay_arm_is_scored_beside_the_other_arms(tmp_path: Path) -> None:
     assert "## runner_drop_rounded" in render_requested(score_set(tmp_path, "heldout"))
 
 
+RUN2 = "groundgate-run/2"
+
+
 def test_search_limit_fields_count_the_final_states_of_a_runner_record() -> None:
+    header = {"kind": "header", "runner": "groundgate-run/3"}
     final = {"kind": "final", "fields": {"a": ["proposed", "search_limit"], "b": ["proposed"]}}
-    assert search_limit_fields([{"kind": "call"}, final]) == 1
-    for bad in ([], [{"kind": "call"}], [{"kind": "final", "fields": {"a": "search_limit"}}]):
+    assert search_limit_fields([header, {"kind": "call"}, final]) == 1
+    for bad in (
+        [],
+        [header, {"kind": "call"}],
+        [header, {"kind": "final", "fields": {"a": "search_limit"}}],
+        [final],
+        # A run/2 record is read only by limits.py, for the requested3 cache.
+        [header | {"runner": "groundgate-run/2"}, final],
+    ):
         with pytest.raises(ValueError):
             search_limit_fields(bad)
+    assert final_search_limits([header | {"runner": "groundgate-run/2"}, final], RUN2) == 1
 
 
 def test_search_limit_counts_appear_only_for_runs_that_carry_them(tmp_path: Path) -> None:

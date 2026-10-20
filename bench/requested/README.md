@@ -260,11 +260,12 @@ each arm and kind, the incomplete documents, the documents with a transport erro
 retries. A smaller harness limit is reported rather than silently treated as an absence.
 
 Each projection document from #383 on also records `search_limit`: the number of fields whose
-targeted search found no region that fits the prompt budget. The baseline has no targeted search,
-so its count is 0. `results.json` then gives, for each arm and kind, the documents and the fields
+targeted search found no region that fits the prompt budget, in either sweep of a
+`groundgate-run/3` record. The baseline has no targeted search, so its count is 0. `results.json` then gives, for each arm and kind, the documents and the fields
 at `search_limit`. A run without this member keeps its published `document_states`.
-`python -m requested.limits` counts the same from the local cache of an earlier run into a new
-`limits.json` beside the set. It reads no label and makes no model call.
+`python -m requested.limits` counts the same from the `groundgate-run/2` records of the local
+requested3 cache into a new `limits.json` beside the set. It reads no label and makes no model
+call. The frozen `run_policy` can name `max_region_chars` and `max_sweep_calls` (#382).
 
 I check the harness with synthetic sources and fixed replies. No test reads the source PDFs.
 One test reads the tracked manifest and labels only to check the request context rules. The
