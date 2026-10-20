@@ -1,8 +1,9 @@
 # Requested fields: the 0.10 confirmation set
 
-Status: draft. I selected the members on 2026-10-18, before any model output on this set (#323).
-The labels are a draft and `manifest.json` is not frozen. Both freeze at the code freeze. No
-benchmark arm has run on this set.
+Status: I selected the members on 2026-10-18 and froze the manifest on 2026-10-20, before any
+model output on this set (#323). I sealed the labels on 2026-10-20. The set has 115 documents:
+4 development pilots and 111 held-out (18 component datasheets, 23 SBCs, 20 annual reports and
+50 safety data sheets). No benchmark arm has run on this set.
 
 This set measures the 0.10 rules on documents that no 0.10 rule came from. It uses the three kinds
 of [bench/requested2](../requested2) with the same schemas and the same fixed requests, and it
@@ -51,9 +52,11 @@ lowest ID whose source family has one member: component-c05, sbc-c05, annual-c01
 The documents of one family or one employer stay in one split. Selection uses publisher metadata, notices and layout eligibility. It
 never uses a requested value or a model output.
 
-`manifest.json` records each source URL, byte size, PDF hash, terms group and license note. The
-originals stay in local work storage and are not published. One datasheet download URL holds a
-session token, so its source is the catalog page that links it. Its SHA-256 identifies the file.
+`manifest.json` records each source URL, byte size, PDF hash, reader text hash, terms group and
+license note. The originals and the reader texts stay in local work storage and are not published.
+One datasheet download URL holds a session token, so its source is the catalog page that links it.
+Its SHA-256 identifies the file. Its HEAD request gave no size, so its approved size is the size of
+the downloaded file.
 
 ## Labels
 
@@ -78,3 +81,21 @@ uses the new pass B.
 Three reports print income in brackets in a statement of net expenditure. The statement adds the
 bracketed amount as a negative, so the check kept the printed sign, as requested2 did for a
 bracketed total liabilities line. Revenue is negative in these three reports.
+
+## Code freeze and arms
+
+The code freeze is origin/main c5ba774, where all 0.10 code is merged. `groundgate.read` at that
+commit made the reader texts. The run configuration pins the code by its `code_sha256`, and a code
+change after the freeze voids it. The frozen manifest names three arms:
+
+| Arm | `drop_rounded` | Model calls |
+|---|---|---|
+| `baseline` | not used | new calls on the held-out split |
+| `runner` | off, the 0.10 default (main arm) | new calls on the held-out split |
+| `runner_drop_rounded` | on | none: it uses the recorded replies of `runner` |
+
+The rounding step runs in `finish()`, after the last model call, and it calls only `admit`. So the
+`runner_drop_rounded` arm sends the same prompts as `runner`, and the recorded replies answer
+them. The harness at c5ba774 runs only `baseline` and `runner`. The replay arm needs a change to
+`bench/requested/run_set.py` (#376), and that change must merge before the first model call. Then
+the code freeze moves to its merge commit, and I pin the manifest again before any model output.
