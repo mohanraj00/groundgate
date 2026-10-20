@@ -119,16 +119,17 @@ state. 102 unclear slots are not counted.
 | runner_drop_rounded | 99 | 118 | 0 | 158 | 48 | 67.54% (206 of 305) |
 
 - The runner arms admit no wrong value. The baseline admits 2 wrong values of 117, all in
-  annual reports (2 of 20). Combined upper bound: baseline 15.34%, runner
+  annual reports: 2 of the 20 annual admits are wrong. Combined upper bound: baseline 15.34%, runner
   11.73%, runner_drop_rounded 11.73%.
 - The runner misses more right values than the baseline: 208 against 190. Silent misses are the
   same (48). The difference is values that the runner sends to review and the baseline admits.
 - The runner gives 118 right absences, 109 of them in safety data sheets. The baseline gives
   0.
-- `drop_rounded` on admits 2 more right values than the main arm (99 against 97), all in annual reports
-  (4 against 2), and no wrong value.
-- The runner did not complete 15 of the 20 annual reports and 4 of the 18 datasheets. No document had a transport
-  error. Their unadmitted present fields count as misses. Annual miss rate is 73.53%
+- `drop_rounded` on admits 2 more right values than the main arm (99 against
+  97), all in annual reports (4 against 2), and no wrong value.
+- The runner did not complete 15 of the 20 annual reports and 4 of the
+  18 datasheets. No document had a transport error.
+  Their unadmitted present fields count as misses. Annual miss rate is 73.53%
   for the baseline and 97.06% for the runner.
 - Safety data sheets, the new kind: miss rate is 53.95% for the baseline and 52.63% for the
   runner, with no escape in either arm.
