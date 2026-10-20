@@ -78,6 +78,14 @@ Spec 0.10, a draft. Receipts name `"groundgate": "0.10"` and every digest uses t
   names a kind pack with the type `kind`, and a decision names the kind pack of its field's
   template. 4 vectors (88 to 91) and 18 invalid packets cover it. No outcome of a packet without
   a kind pack changes.
+- Five built-in kind packs hold the field templates of the bench schemas (#337): `us-10k`,
+  `us-government-reports`, `annual-reports`, `component-datasheets` and `benefit-summaries`, all
+  1.0.0. The built-in vocabulary pack `electronics` 1.0.0 holds the unit forms of `C`, `V` and
+  `mA`, and `component-datasheets` needs it. The three financial kinds need `finance`. A schema
+  names a kind pack by id and version, and the packet does not give it. SPEC §4.8 lists each
+  digest. Every route is `draft`. The bench sets keep their own schema files, so no bench number
+  changes. A test writes each set's schema in template form, and it resolves to the same fields,
+  member by member. No decision changes.
 - A candidate can cite up to 8 field items, such as a row label and a column header (#300).
   The field check passes when one of them passes. Two items of any other role stay
   `CANDIDATE_INVALID`.

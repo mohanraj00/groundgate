@@ -597,8 +597,8 @@ The receipt names each pack with its digest, and each decision names the packs t
 pack only adds words, and a pack that fails a check makes the packet invalid. If you build a
 `gg.Schema` yourself, give the packs to `gg.Schema.from_dict(schema, packs)`.
 
-One pack is built in: `finance` 1.0.0 gives the loss words of a role `sign` item. Name it in the
-schema, and do not give it:
+The pack `finance` 1.0.0 is built in. It gives the loss words of a role `sign` item. Name it in
+the schema, and do not give it:
 
 ```python
 schema = {"packs": [{"id": "finance", "version": "1.0.0"}], "fields": {...}}
@@ -623,6 +623,27 @@ The template fills each member that the field does not give. A member that the f
 wins, also `aliases`. If the field gives a `type` or a `unit` that differs from the template's,
 the packet is invalid. Give each vocabulary pack in the kind pack's `needs` too. The schema does
 not have to name it.
+
+Five kind packs are built in, all 1.0.0 and all `draft`. Their templates come from the bench
+schemas. Name one in the schema, and do not give it. The packs that it needs load with it.
+
+| Kind pack | Documents | Needs |
+|---|---|---|
+| `us-10k` | annual reports on Form 10-K, in USD | `finance` |
+| `us-government-reports` | agency financial reports and annual comprehensive financial reports, in USD | `finance` |
+| `annual-reports` | consolidated statements of annual reports, with no unit: give the reporting currency | `finance` |
+| `component-datasheets` | operating conditions of electronic components, in `C`, `V` and `mA` | `electronics` |
+| `benefit-summaries` | summaries of benefits and coverage of health plans, in USD | |
+
+```python
+schema = {
+    "packs": [{"id": "us-10k", "version": "1.0.0"}],
+    "fields": {
+        "revenue": {"template": "us-10k/revenue", "keys": ["2025", "2024"], "multiple": True}
+    },
+}
+receipt = gg.admit(text, schema, candidates)
+```
 
 ### LangExtract
 

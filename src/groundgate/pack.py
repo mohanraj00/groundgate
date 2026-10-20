@@ -25,9 +25,26 @@ BASE_VERSION = "1.0.0"
 # the digest of the base pack that SPEC §4.7 gives for this spec version
 BASE_SHA256 = "sha256:8ee2f5c367baa29969759e3ed3ec5acf39f412a8b4b6afbda6477c1cde7fdeae"
 # each released version of a built-in pack other than the base, with the digest that SPEC §4.8
-# gives. A schema names one by id and version, and the packet never gives it (#336).
+# gives. A schema names one by id and version, and the packet never gives it (#336). The kind
+# packs and electronics hold the knowledge of the bench schemas (#337).
 BUILT_IN_SHA256 = {
     ("finance", "1.0.0"): "sha256:822c91124cbd23f29e683873975d4f3f85f2207dbbb02ca3664f0ef74848162b",
+    ("electronics", "1.0.0"): (
+        "sha256:af8570f97b8e06fcceae56949a6e3b5ffab4992413cf8b6f474b6239989dbc5b"
+    ),
+    ("us-10k", "1.0.0"): "sha256:ea4115fd9215c89b78369cd1291cf8482cb185602e037c076a8c17c8edbab102",
+    ("us-government-reports", "1.0.0"): (
+        "sha256:604297bba0b9543fae9d3099eaa6a810f2bdb0fcd0cf5f527d6903b374e44974"
+    ),
+    ("annual-reports", "1.0.0"): (
+        "sha256:ca2433ec6dd249581310c977b29a54b4c70aa65acd3561701285a2f4ccf150e7"
+    ),
+    ("component-datasheets", "1.0.0"): (
+        "sha256:3b0ac7d8b1dff0f25a33078c668739086b027704e75b7d4deba9a6ebf9c27538"
+    ),
+    ("benefit-summaries", "1.0.0"): (
+        "sha256:a01109e7c7a72e248012161d8fe16b1937a77e09c328a6cdcbfd0e9d41ebe3d2"
+    ),
 }
 BUILT_IN = frozenset({BASE_ID, *(pid for pid, _ in BUILT_IN_SHA256)})  # (SPEC §4.8, L7)
 

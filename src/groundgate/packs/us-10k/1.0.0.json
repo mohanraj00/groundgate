@@ -1,0 +1,16 @@
+{
+ "groundgate_pack": 1,
+ "type": "kind",
+ "id": "us-10k",
+ "version": "1.0.0",
+ "description": "Field templates for annual reports on Form 10-K of U.S. public companies, in USD. The aliases come from the bench sets sec2 and sec3. The app gives the keys, such as the years. Draft: no route is measured.",
+ "status": [],
+ "needs": [{"id": "finance", "version": "1.0.0"}],
+ "fields": {
+  "revenue": {"type": "number", "unit": "USD", "aliases": ["revenue", "revenues", "total revenue", "total revenues", "net revenue", "net revenues", "net sales", "total net sales", "sales"]},
+  "net_income": {"type": "number", "unit": "USD", "aliases": ["net income", "net loss", "net income (loss)", "net (loss) income", "net earnings", "net loss and comprehensive loss"]},
+  "operating_income": {"type": "number", "unit": "USD", "aliases": ["operating income", "operating loss", "income from operations", "loss from operations", "operating income (loss)", "(loss) income from operations", "income (loss) from operations"]},
+  "cash_and_equivalents": {"type": "number", "unit": "USD", "aliases": ["cash and cash equivalents", "cash and equivalents"]},
+  "total_debt": {"type": "number", "unit": "USD", "aliases": ["total debt", "long-term debt", "total long-term debt", "total borrowings"]}
+ }
+}
