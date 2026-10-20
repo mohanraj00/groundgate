@@ -435,7 +435,7 @@ a changed document, schema, policy, candidate or outcome.
   `CONFLICTING_CANDIDATES` catches it only when the models disagree, and in the benchmark they
   mostly agreed: six of the eight escapes were this case. When the field depends on a condition
   the schema can name, such as a drug's indications, a keyed field checks it (spec 0.2).
-- **No dates, arrays of records, or cross-document checks** in spec 0.10.
+- **No dates, arrays of records, or cross-document checks** in spec 0.11.
 - **English number formats only.** A decimal comma (`1.234,56`), space groups (`1 234`) and
   number words (`five`) have no value, so a fact that cites them is rejected. The
   [guide](docs/guide.md#how-values-are-read) lists what is read. Locale packs for other formats
