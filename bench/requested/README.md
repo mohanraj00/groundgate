@@ -238,7 +238,8 @@ completed documents without transport and writes the projection.
 `session.run("runner_drop_rounded", split="heldout")` runs the runner with `drop_rounded` on
 (#376). It takes no client and makes no model call. It reads the recorded calls of the `runner`
 arm of the same split in order, and checks each prompt against its record. A missing, extra or
-changed call stops the run. The rounding step runs after the last model call, so each prompt is
+changed call stops the run. A runner result whose prompt digests or binding differ from the
+recorded calls also stops it. The rounding step runs after the last model call, so each prompt is
 the same as in the main arm. The arm writes its own results and projection beside the other
 arms. The frozen `run_policy` can hold `drop_rounded`, and it must be `false`: the main arm keeps
 the default, and only this arm turns the rule on.

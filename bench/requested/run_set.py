@@ -364,10 +364,10 @@ class _Calls:
         folder: Path,
         binding: str,
         client: Callable[[str], str] | None,
-        missing: str = "missing replay call",
+        missing_message: str = "missing replay call",
     ):
         self.owner, self.folder, self.binding, self.client = owner, folder, binding, client
-        self.missing_message = missing
+        self.missing_message = missing_message
         self.count = 0
         self.missing = False
         self.failure: CacheError | None = None
@@ -499,6 +499,14 @@ def _baseline_reply(raw: str, schema: Json, limit: int) -> list[Json]:
             if source == "document" and item["role"] not in _ROLES:
                 raise CacheError("invalid evidence role")
     return reply["candidates"]
+
+
+def _prompts(result: Json) -> list[Any]:
+    """The prompt digests of the model calls in a runner result, in order."""
+    record = result.get("record")
+    if not isinstance(record, list) or any(not isinstance(e, dict) for e in record):
+        raise CacheError("a runner result needs its record")
+    return [e.get("prompt_sha256") for e in record if e.get("kind") == "call"]
 
 
 def _projection(decision: Json) -> Json:
@@ -920,9 +928,11 @@ class FrozenSet:
                     archive = folder / "_attempts"
                     count = len(list(archive.glob("projection-*.json"))) if archive.exists() else 0
                     _move(projection, archive / f"projection-{count + 1:04}.json")
+            main: Json | None = None
             if replayed:
                 if not _unlinked(recorded / ident / "result.json").is_file():
                     raise CacheError("the runner arm has no result to replay: " + ident)
+                main = _json(_read(recorded / ident / "result.json"))
                 source = digest(
                     encoded(
                         {"run": self.binding, "arm": "runner", "split": split, "document": ident}
@@ -993,6 +1003,11 @@ class FrozenSet:
                     "output": {"id": ident, "decisions": decisions, "not_found": missing},
                 }
             calls.finish()
+            # The runner result must come from the same recorded calls as this replay.
+            if main is not None and (
+                main.get("binding_sha256") != self.binding or _prompts(main) != _prompts(local)
+            ):
+                raise CacheError("the runner result does not match its recorded calls: " + ident)
             self.check_inputs()
             local |= {
                 "binding_sha256": self.binding,

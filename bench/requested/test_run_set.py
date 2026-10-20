@@ -1216,3 +1216,45 @@ def test_main_arms_with_drop_rounded_false_behave_as_before(tmp_path, arm):
         decisions = output(results[1])["decisions"]
         assert len(decisions) == 2
         assert all("CONFLICTING_CANDIDATES" in d["codes"] for d in decisions)
+
+
+@requires_runner
+def test_replay_arm_reads_each_recorded_call_in_order(tmp_path):
+    session = rounded_session(tmp_path, {"chunk_chars": 30, "overlap_chars": 0})
+    replies = rounded_replies()
+    rounded, exact = replies["candidates"]
+    client = Client(runner_envelope(rounded), runner_envelope(exact))
+    main = session.run("runner", client)
+    assert len(client.prompts) == 2
+    assert all("CONFLICTING_CANDIDATES" in d["codes"] for d in output(main)["decisions"])
+    calls = local(session, "0001.json").parent
+    assert sorted(p.name for p in calls.glob("*.json")) == [
+        "0001.json",
+        "0001.pending.json",
+        "0002.json",
+        "0002.pending.json",
+    ]
+    replay = session.run("runner_drop_rounded")
+    assert [d["value"] for d in output(replay)["decisions"]] == ["17284000000"]
+    assert len(list(calls.glob("*.json"))) == 4
+
+
+@requires_runner
+def test_replay_arm_refuses_a_runner_result_from_other_calls(tmp_path):
+    session = rounded_session(tmp_path)
+    session.run("runner", Client(rounded_replies()))
+    result = local(session, "result.json")
+    saved = json.loads(result.read_bytes())
+    for change in (
+        lambda r: next(e for e in r["record"] if e["kind"] == "call").update(
+            prompt_sha256="sha256:" + "0" * 64
+        ),
+        lambda r: r.update(binding_sha256="sha256:" + "0" * 64),
+        lambda r: r.pop("record"),
+    ):
+        changed = copy.deepcopy(saved)
+        change(changed)
+        result.write_bytes(harness.encoded(changed))
+        with pytest.raises(harness.CacheError, match="runner result"):
+            session.run("runner_drop_rounded")
+    assert not list(session.cache.rglob("runner_drop_rounded/heldout/doc/result.json"))
