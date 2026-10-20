@@ -232,10 +232,11 @@ def _check_record(record: object) -> Record:
 
 class FolderStore:
     """A store in a folder (§7). Each path part is 64 hex digits or a fixed word, so a name from
-    input never becomes a path. Files have mode 0600 and folders 0700, or 0640 and 0750 with
-    ``group_read``. A read takes only regular files of at most ``max_bytes`` bytes, and refuses
-    a symlink or a FIFO before it reads. The first append to a log makes ``<log>.lock``, and
-    ``close`` removes it. The store trusts the processes that can write to its folder."""
+    input never becomes a path. Each file and folder that the store makes has mode 0600 or 0700,
+    or 0640 or 0750 with ``group_read``. A read takes only regular files of at most
+    ``max_bytes`` bytes, and refuses a symlink or a FIFO before it reads. The first append to a
+    log makes ``<log>.lock``, and ``close`` removes it. The store trusts the processes that can
+    write to its folder."""
 
     def __init__(
         self,
@@ -253,6 +254,7 @@ class FolderStore:
         # For each log that this writer holds: the next sequence, the head and the size.
         self._heads: dict[LogName, tuple[int, str | None, int]] = {}
         self._locks: list[Path] = []
+        self._broken: set[LogName] = set()  # logs with a partial line that could not be removed
 
     def __enter__(self) -> FolderStore:
         return self
@@ -267,11 +269,14 @@ class FolderStore:
                 os.unlink(lock)
         self._locks.clear()
         self._heads.clear()
+        self._broken.clear()
 
     # Objects
 
     def put(self, kind: str, data: bytes) -> str:
-        """Write an object, and return its key. Equal bytes give the same key and one file."""
+        """Write an object, and return its key. Equal bytes give the same key and one file. If
+        the file of the key is a symlink, not a regular file, too large or has other bytes,
+        ``put`` puts a new file in its place. It never writes through a symlink."""
         check_bytes(kind, data)
         if len(data) > self.max_bytes:
             raise ValueError(f"the {kind} object is larger than max_bytes")
@@ -303,7 +308,9 @@ class FolderStore:
         return data
 
     def forget(self, key: str, reason: str) -> None:
-        """Remove an object, and record the key, the time and the reason in the deleted log."""
+        """Remove an object, and record the key, the time and the reason in the deleted log.
+        The record comes first. After a crash between the two steps, the object is still there,
+        and a second ``forget`` adds a second record for the key."""
         hexes = _check_key(key)
         if not isinstance(reason, str) or not reason:
             raise ValueError("forget needs a reason")
@@ -343,6 +350,8 @@ class FolderStore:
         body = _check_record(record)
         parts, name = self._log_parts(log)
         rel = "/".join([*parts, name + ".jsonl"])
+        if log in self._broken:
+            raise StoreError(f"an earlier append to {rel} failed: check the log, then close")
         if log not in self._heads:
             self._take(log)
         sequence, previous, size = self._heads[log]
@@ -359,10 +368,17 @@ class FolderStore:
         try:
             if not stat.S_ISREG(os.fstat(fd).st_mode):
                 raise StoreError(f"{rel} is not a regular file")
-            view = memoryview(line)
-            while view:
-                view = view[os.write(fd, view) :]
-            os.fsync(fd)
+            try:
+                view = memoryview(line)
+                while view:
+                    view = view[os.write(fd, view) :]
+                os.fsync(fd)
+            except BaseException:
+                try:  # remove the part of the line that was written
+                    os.ftruncate(fd, size)
+                except OSError:
+                    self._broken.add(log)
+                raise
         finally:
             os.close(fd)
         self._heads[log] = (sequence + 1, head, size + len(line))
@@ -398,7 +414,8 @@ class FolderStore:
                     os.close(fd)
             records = _records(word, data, rel)
         except BaseException:
-            os.unlink(lock)
+            with contextlib.suppress(FileNotFoundError):
+                os.unlink(lock)
             raise
         self._locks.append(lock)
         head = records[-1]["entry_sha256"] if records else None
@@ -420,12 +437,13 @@ class FolderStore:
         absent folders are made with the folder mode, else ``NotFound`` is raised."""
         path = self.root
         if make and not path.exists():
-            try:
-                os.makedirs(path)
-            except FileExistsError:
-                pass
-            else:
-                os.chmod(path, self.folder_mode)
+            absent = [path, *(p for p in path.parents if not p.exists())]
+            for folder in reversed(absent):  # each folder that the store makes gets its mode
+                try:
+                    os.mkdir(folder, self.folder_mode)
+                except FileExistsError:
+                    continue
+                os.chmod(folder, self.folder_mode)
         for n, part in enumerate(parts):
             path = path / part
             try:

@@ -78,6 +78,30 @@ def test_the_layout_and_modes(root: Path) -> None:
     assert not (log.parent / (ANA[2][7:] + ".lock")).exists()
 
 
+def test_each_folder_that_the_store_makes_is_private(root: Path) -> None:
+    deep = root / "a" / "b"
+    FolderStore(deep).put("text@1", TEXT)
+    for folder in (root, root / "a", deep):
+        assert stat.S_IMODE(folder.stat().st_mode) == 0o700
+
+
+def test_a_failed_append_removes_its_partial_line(
+    root: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    with FolderStore(root) as store:
+        store.append(ANA, {"answer": "yes"})
+
+        def fail(fd: int) -> None:
+            raise OSError(28, "No space left on device")
+
+        monkeypatch.setattr(os, "fsync", fail)
+        with pytest.raises(OSError, match="No space"):
+            store.append(ANA, {"answer": "no"})
+        monkeypatch.undo()
+        store.append(ANA, {"answer": "maybe"})
+        assert [r["answer"] for r in store.read(ANA)] == ["yes", "maybe"]
+
+
 def test_group_read(root: Path) -> None:
     os.umask(0o077)
     with FolderStore(root, group_read=True) as store:
