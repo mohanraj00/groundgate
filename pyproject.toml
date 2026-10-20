@@ -109,7 +109,7 @@ python_version = "3.10"
 files = ["src", "calibrate/src"]
 
 [tool.pytest.ini_options]
-testpaths = ["tests", "calibrate/tests", "bench/requested"]
+testpaths = ["tests", "calibrate/tests", "bench/requested", "bench/judges/codex"]
 addopts = "-q"
 
 [tool.coverage.run]
