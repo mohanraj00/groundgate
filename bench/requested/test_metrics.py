@@ -445,3 +445,13 @@ def test_incomplete_and_transport_documents_are_counted_for_each_kind(tmp_path: 
     assert "| total | 3 | 2 | 1 | 3 |" in report
     assert "| kind | 2 | 1 | 1 | 2 |" in report
     assert "| other | 1 | 1 | 0 | 1 |" in report
+
+
+def test_replay_arm_is_scored_beside_the_other_arms(tmp_path: Path) -> None:
+    # runner_drop_rounded replays the runner calls with one binding (#376).
+    _, _, run = cache(tmp_path)
+    for arm in ("runner", "runner_drop_rounded"):
+        (tmp_path / f"runs/{arm}.json").write_text(json.dumps(bind(copy.deepcopy(run), arm)))
+    runs = score_set(tmp_path, "heldout")["runs"]
+    assert set(runs) == {"baseline", "runner", "runner_drop_rounded"}
+    assert "## runner_drop_rounded" in render_requested(score_set(tmp_path, "heldout"))

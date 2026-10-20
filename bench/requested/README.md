@@ -142,7 +142,7 @@ retain `core_outcome` and an `application_reason`; original core receipts remain
 The scoring projection omits quotes and raw replies; the external cache keeps all calls and
 receipts. A run document with no decisions is no candidate, not an absence hit. The scorer
 refuses a run of another split, a partial run, and a run whose documents are not exactly the
-documents of the split. Each run file is named for its `arm` (`baseline.json` or `runner.json`). Its `binding_sha256` must match the JCS digest of its `provenance`, and all runs must share one binding. The manifest is frozen and the labels are sealed. No result file is
+documents of the split. Each run file is named for its `arm` (`baseline.json`, `runner.json` or `runner_drop_rounded.json`). Its `binding_sha256` must match the JCS digest of its `provenance`, and all runs must share one binding. The manifest is frozen and the labels are sealed. No result file is
 committed before an actual sealed-label measure exists.
 
 I check the scoring mode with synthetic values:
@@ -234,6 +234,14 @@ search with no active candidate. A field-level absence never creates a key-level
 `documents=[...]` runs only those documents of the split, so separate processes can fill the
 cache in parallel. A partial run writes no projection. A later run of the whole split reuses the
 completed documents without transport and writes the projection.
+
+`session.run("runner_drop_rounded", split="heldout")` runs the runner with `drop_rounded` on
+(#376). It takes no client and makes no model call. It reads the recorded calls of the `runner`
+arm of the same split in order, and checks each prompt against its record. A missing, extra or
+changed call stops the run. The rounding step runs after the last model call, so each prompt is
+the same as in the main arm. The arm writes its own results and projection beside the other
+arms. The frozen `run_policy` can hold `drop_rounded`, and it must be `false`: the main arm keeps
+the default, and only this arm turns the rule on.
 
 Each call reserves an exclusive cache entry before transport, then stores the prompt and reply
 before admission. A process stop with an unresolved reservation needs inspection; it is never

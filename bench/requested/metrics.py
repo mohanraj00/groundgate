@@ -33,7 +33,8 @@ COUNTERS = (
     "unreported_absences",
 )
 
-ARMS = ("baseline", "runner")
+# runner_drop_rounded replays the recorded calls of runner with drop_rounded on (#376).
+ARMS = ("baseline", "runner", "runner_drop_rounded")
 # Run state for each document of a split: a harness stop, a failed call and archived retries.
 DOCUMENT_STATES = ("documents", "incomplete", "transport_error", "transport_retries")
 

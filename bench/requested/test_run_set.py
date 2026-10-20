@@ -1081,3 +1081,138 @@ def test_document_schema_changes_only_currency_aliases_keys_and_units() -> None:
         changed["fields"][name][member] = value
         assert not harness.same_request(template, changed), member
     assert not harness.same_request(template, template | {"currency": "GBP"})
+
+
+# The replay arm of #376: drop_rounded on, with the recorded calls of the runner arm only.
+ROUNDED_TEXT = "Revenue rose to £17.3bn.\n(in millions)\nRevenue\t17,284"
+ROUNDED_FIELDS = {"revenue": {"type": "number", "aliases": ["Revenue"]}}
+
+
+def rounded_replies():
+    def item(text, role="value"):
+        return {"source": "document", "role": role, "text": text}
+
+    rounded = candidate("17300000000", "revenue", quote="£17.3bn")
+    exact = candidate("17284000000", "revenue", quote="17,284")
+    exact["evidence"] += [item("Revenue", "field"), item("in millions", "scale")]
+    return runner_envelope(rounded, exact)
+
+
+def rounded_session(tmp_path, settings=None):
+    return fixture(tmp_path, ROUNDED_TEXT, ROUNDED_FIELDS, settings=settings)[0]
+
+
+def files(folder):
+    return {p.relative_to(folder): p.read_bytes() for p in sorted(folder.rglob("*")) if p.is_file()}
+
+
+@requires_runner
+def test_replay_arm_drops_rounded_figures_with_no_new_call(tmp_path):
+    session = rounded_session(tmp_path, {"drop_rounded": False})
+    client = Client(rounded_replies())
+    main = session.run("runner", client)
+    assert len(client.prompts) == 1
+    decisions = output(main)["decisions"]
+    assert len(decisions) == 2 and all("CONFLICTING_CANDIDATES" in d["codes"] for d in decisions)
+    root = session.cache / session.binding.removeprefix("sha256:")
+    recorded = files(root / "runner")
+    replay = session.run("runner_drop_rounded")
+    # Zero new calls: no client, no new call file, and the runner cache keeps its bytes.
+    assert files(root / "runner") == recorded
+    assert not list((root / "runner_drop_rounded").rglob("calls"))
+    assert [d["outcome"] for d in output(replay)["decisions"]] == ["admitted"]
+    assert output(replay)["decisions"][0]["value"] == "17284000000"
+    assert (
+        replay["arm"] == "runner_drop_rounded"
+        and replay["binding_sha256"] == main["binding_sha256"]
+    )
+    assert (root / "runner_drop_rounded" / "heldout" / "projection.json").is_file()
+    results = {
+        arm: json.loads((root / arm / "heldout" / "doc" / "result.json").read_bytes())
+        for arm in ("runner", "runner_drop_rounded")
+    }
+    # The same prompts in the same order, and only the replay has a rounding step.
+    prompts = {
+        arm: [e["prompt_sha256"] for e in result["record"] if e["kind"] == "call"]
+        for arm, result in results.items()
+    }
+    assert prompts["runner"] == prompts["runner_drop_rounded"] and len(prompts["runner"]) == 1
+    assert results["runner"]["record"][0]["settings"]["drop_rounded"] is False
+    assert results["runner_drop_rounded"]["record"][0]["settings"]["drop_rounded"] is True
+    assert not any(e["kind"] == "rounding" for e in results["runner"]["record"])
+    assert any(e["kind"] == "rounding" for e in results["runner_drop_rounded"]["record"])
+    # A second replay gives the same bytes and still makes no call.
+    assert session.run("runner_drop_rounded") == replay
+    assert files(root / "runner") == recorded
+
+
+@requires_runner
+def test_replay_arm_takes_no_client(tmp_path):
+    session = rounded_session(tmp_path)
+    session.run("runner", Client(rounded_replies()))
+    client = Client(rounded_replies())
+    with pytest.raises(harness.CacheError, match="takes no client"):
+        session.run("runner_drop_rounded", client)
+    with pytest.raises(harness.CacheError, match="takes no client"):
+        session.run("runner_drop_rounded", client, retry_transport_errors=True)
+    assert client.prompts == []
+    assert not list(session.cache.rglob("runner_drop_rounded"))
+
+
+@requires_runner
+def test_replay_arm_stops_without_the_runner_record(tmp_path):
+    session = rounded_session(tmp_path)
+    with pytest.raises(harness.CacheError, match=r"missing replay artifact: header\.json"):
+        session.run("runner_drop_rounded")
+    session.run("runner", Client(rounded_replies()), documents=["doc"])
+    calls = local(session, "0001.json").parent
+    result = calls.parent / "result.json"
+    saved = {path: path.read_bytes() for path in (calls / "0001.json", result)}
+    result.unlink()
+    with pytest.raises(harness.CacheError, match="no result to replay"):
+        session.run("runner_drop_rounded")
+    result.write_bytes(saved[result])
+    (calls / "0001.json").unlink()
+    with pytest.raises(harness.CacheError, match="missing recorded call of the runner arm"):
+        session.run("runner_drop_rounded")
+    assert not (calls / "0001.json").exists()
+    entry = json.loads(saved[calls / "0001.json"])
+    entry["prompt"] += " "
+    (calls / "0001.json").write_bytes(harness.encoded(entry))
+    with pytest.raises(harness.CacheError, match="cached call differs"):
+        session.run("runner_drop_rounded")
+    assert not list(session.cache.rglob("projection.json"))
+
+
+@requires_runner
+def test_replay_arm_refuses_extra_recorded_calls(tmp_path):
+    session = rounded_session(tmp_path)
+    session.run("runner", Client(rounded_replies()))
+    calls = local(session, "0001.json").parent
+    (calls / "0002.json").write_bytes((calls / "0001.json").read_bytes())
+    with pytest.raises(harness.CacheError, match="extra or missing cached calls"):
+        session.run("runner_drop_rounded")
+
+
+@pytest.mark.parametrize("value", [True, 1, None, "false"])
+def test_run_policy_refuses_drop_rounded_other_than_false(tmp_path, value):
+    with pytest.raises(harness.CacheError, match="drop_rounded must be false"):
+        fixture(tmp_path, settings={"drop_rounded": value})
+
+
+@pytest.mark.parametrize("arm", ["baseline", "runner"])
+def test_main_arms_with_drop_rounded_false_behave_as_before(tmp_path, arm):
+    if arm == "runner" and importlib.util.find_spec("groundgate.extract") is None:
+        pytest.skip("runner integration pending")
+    results = []
+    for name, settings in (("absent", None), ("false", {"drop_rounded": False})):
+        session = rounded_session(tmp_path / name, settings)
+        client = Client(rounded_replies() if arm == "runner" else envelope(candidate("17,284")))
+        results.append(session.run(arm, client))
+        assert len(client.prompts) == 1
+        assert session.run(arm) == results[-1]
+    assert results[0]["documents"] == results[1]["documents"]
+    if arm == "runner":
+        decisions = output(results[1])["decisions"]
+        assert len(decisions) == 2
+        assert all("CONFLICTING_CANDIDATES" in d["codes"] for d in decisions)
