@@ -952,11 +952,15 @@ def main() -> None:
     ap.add_argument("--controls", action="store_true", help="set 2: list the control items")
     ap.add_argument("--requested", action="store_true", help="score sealed requested-field labels")
     ap.add_argument("--split", choices=("development", "heldout"), default="heldout")
+    ap.add_argument("--runs", type=Path, help="requested: run projections (default: SET/runs)")
+    ap.add_argument("--out", type=Path, help="requested: output folder (default: SET)")
     ap.add_argument("--diagnostics", type=Path, help="explicit cached diagnostic export")
     ap.add_argument("--diagnostics-sha256", help="exact diagnostic export digest")
     args = ap.parse_args()
     if (args.diagnostics is not None or args.diagnostics_sha256 is not None) and not args.requested:
         ap.error("diagnostics require requested-field mode")
+    if (args.runs is not None or args.out is not None) and not args.requested:
+        ap.error("--runs and --out require requested-field mode")
     if args.requested:
         if args.drafts or args.controls:
             ap.error("requested-field scoring refuses --drafts and --controls")
@@ -964,10 +968,16 @@ def main() -> None:
         from requested.metrics import score_set
 
         directory = args.set.resolve()
+        out = (args.out or args.set).resolve()
+        # The set's own results.json holds held-out numbers only. Development numbers of a
+        # learning loop go to their own folder, such as loop/NN (#383).
+        if args.split == "development" and out == directory:
+            ap.error("development results need --out other than the set folder, e.g. loop/NN")
         try:
             results = score_set(
                 directory,
                 args.split,
+                runs=args.runs.resolve() if args.runs is not None else None,
                 diagnostics=args.diagnostics,
                 diagnostics_sha256=args.diagnostics_sha256,
             )
@@ -981,14 +991,14 @@ def main() -> None:
             stale = [
                 name
                 for name, content in outputs.items()
-                if not (directory / name).exists()
-                or (directory / name).read_text(encoding="utf-8") != content
+                if not (out / name).exists() or (out / name).read_text(encoding="utf-8") != content
             ]
             if stale:
                 raise SystemExit("out of date: " + ", ".join(stale))
         else:
+            out.mkdir(parents=True, exist_ok=True)
             for name, content in outputs.items():
-                (directory / name).write_text(content, encoding="utf-8")
+                (out / name).write_text(content, encoding="utf-8")
         return
     global SET, SET2, CONFIGS, GATES, KINDS, SPEC01
     SET = args.set.resolve()

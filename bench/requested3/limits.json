@@ -1,0 +1,106 @@
+{
+ "binding_sha256": "sha256:f6609e4742371e67298393cd1f781efd87758c8429573d9f6a07e4b1a494f317",
+ "format": "requested-limits/1",
+ "labels_sha256": "sha256:95632ebfa9530d518981f984c740a2345746db427d9a4a9ba6b4647af1f98376",
+ "manifest_sha256": "sha256:dac8c72d34de30eebd59cf95e60a1e5b797edf51be953e89f93647d5f0ffa2ea",
+ "method": "bench/requested/limits.py: for each document of a run, the fields whose final runner state list holds search_limit, read from the local cache of that run",
+ "runs": {
+  "baseline": {
+   "document_states": {
+    "by_kind": {
+     "annual": {
+      "documents": 20,
+      "search_limit_documents": 0,
+      "search_limit_fields": 0
+     },
+     "component": {
+      "documents": 18,
+      "search_limit_documents": 0,
+      "search_limit_fields": 0
+     },
+     "sbc": {
+      "documents": 23,
+      "search_limit_documents": 0,
+      "search_limit_fields": 0
+     },
+     "sds": {
+      "documents": 50,
+      "search_limit_documents": 0,
+      "search_limit_fields": 0
+     }
+    },
+    "total": {
+     "documents": 111,
+     "search_limit_documents": 0,
+     "search_limit_fields": 0
+    }
+   },
+   "run_sha256": "sha256:66fd5b55c7f88135dd275a2bdaaba79b102ca71a3564cb1e2cbd14d4ca2a34e9"
+  },
+  "runner": {
+   "document_states": {
+    "by_kind": {
+     "annual": {
+      "documents": 20,
+      "search_limit_documents": 15,
+      "search_limit_fields": 42
+     },
+     "component": {
+      "documents": 18,
+      "search_limit_documents": 4,
+      "search_limit_fields": 14
+     },
+     "sbc": {
+      "documents": 23,
+      "search_limit_documents": 0,
+      "search_limit_fields": 0
+     },
+     "sds": {
+      "documents": 50,
+      "search_limit_documents": 0,
+      "search_limit_fields": 0
+     }
+    },
+    "total": {
+     "documents": 111,
+     "search_limit_documents": 19,
+     "search_limit_fields": 56
+    }
+   },
+   "run_sha256": "sha256:f6dd090bfda02f84aa9d465e80edd08eea6677925609cdcd830994800bf9707e"
+  },
+  "runner_drop_rounded": {
+   "document_states": {
+    "by_kind": {
+     "annual": {
+      "documents": 20,
+      "search_limit_documents": 15,
+      "search_limit_fields": 42
+     },
+     "component": {
+      "documents": 18,
+      "search_limit_documents": 4,
+      "search_limit_fields": 14
+     },
+     "sbc": {
+      "documents": 23,
+      "search_limit_documents": 0,
+      "search_limit_fields": 0
+     },
+     "sds": {
+      "documents": 50,
+      "search_limit_documents": 0,
+      "search_limit_fields": 0
+     }
+    },
+    "total": {
+     "documents": 111,
+     "search_limit_documents": 19,
+     "search_limit_fields": 56
+    }
+   },
+   "run_sha256": "sha256:8ef1de6f2a4a8f0fe05449e3e1bc33f180af778352e84f0fdd0d325eb1177af9"
+  }
+ },
+ "split": "heldout"
+}

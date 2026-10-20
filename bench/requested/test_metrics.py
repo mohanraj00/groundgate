@@ -14,7 +14,14 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).parents[1]))
 from report import render_requested
-from requested.metrics import measure, score_set, upper95
+from requested.metrics import (
+    check_split_rule,
+    measure,
+    score_set,
+    search_limit_fields,
+    split_of,
+    upper95,
+)
 
 from groundgate import jcs
 
@@ -455,3 +462,184 @@ def test_replay_arm_is_scored_beside_the_other_arms(tmp_path: Path) -> None:
     runs = score_set(tmp_path, "heldout")["runs"]
     assert set(runs) == {"baseline", "runner", "runner_drop_rounded"}
     assert "## runner_drop_rounded" in render_requested(score_set(tmp_path, "heldout"))
+
+
+def test_search_limit_fields_count_the_final_states_of_a_runner_record() -> None:
+    final = {"kind": "final", "fields": {"a": ["proposed", "search_limit"], "b": ["proposed"]}}
+    assert search_limit_fields([{"kind": "call"}, final]) == 1
+    for bad in ([], [{"kind": "call"}], [{"kind": "final", "fields": {"a": "search_limit"}}]):
+        with pytest.raises(ValueError):
+            search_limit_fields(bad)
+
+
+def test_search_limit_counts_appear_only_for_runs_that_carry_them(tmp_path: Path) -> None:
+    m, labels, run = data()
+    old = measure(m, labels, run, "heldout")["document_states"]["total"]
+    assert set(old) == {"documents", "incomplete", "transport_error", "transport_retries"}
+    run["documents"][0]["search_limit"] = 3
+    states = measure(m, labels, run, "heldout")["document_states"]
+    assert states["total"]["search_limit_documents"] == 1
+    assert states["by_kind"]["kind"]["search_limit_fields"] == 3
+    m["documents"].append({"id": "d2", "kind": "kind", "split": "heldout"})
+    gold = copy.deepcopy(labels["documents"][0])
+    gold["id"] = "d2"
+    labels["documents"].append(gold)
+    run["documents"].append({"id": "d2", "decisions": []})
+    with pytest.raises(ValueError, match="every run document"):
+        measure(m, labels, run, "heldout")
+    run["documents"][1]["search_limit"] = -1
+    with pytest.raises(ValueError, match="nonnegative"):
+        measure(m, labels, run, "heldout")
+    _, _, cached = cache(tmp_path)
+    cached["documents"][0]["search_limit"] = 2
+    (tmp_path / "runs/baseline.json").write_text(json.dumps(cached))
+    report = render_requested(score_set(tmp_path, "heldout"))
+    assert "| search_limit docs | search_limit fields |" in report
+    assert "| total | 1 | 0 | 0 | 0 | 1 | 2 |" in report
+
+
+def family_set(rule: dict[str, Any]) -> dict[str, Any]:
+    """A manifest whose splits follow the rule; one family has two documents."""
+    docs = []
+    for i, family in enumerate(["fa", "fa", "fb", "fc", "fd", "fe", "ff", "fg"]):
+        docs.append(
+            {
+                "id": f"d{i}",
+                "kind": "kind",
+                "source_family_group": family,
+                "split": split_of(rule, family),
+            }
+        )
+    return {"split_rule": rule, "documents": docs}
+
+
+RULE = {
+    "method": "family-hash/1",
+    "salt": "fixed-salt",
+    "development_share": 0.5,
+    "fixed_on": "2026-10-20",
+}
+
+
+def test_split_rule_recomputes_each_split_by_source_family() -> None:
+    manifest = family_set(RULE)
+    check_split_rule(manifest)
+    assert {d["split"] for d in manifest["documents"]} == {"development", "heldout"}
+    first = hashlib.sha256(b"fixed-saltfa").digest()[0]
+    assert split_of(RULE, "fa") == ("development" if first < 128 else "heldout")
+    # A wrong split, or one family in two splits, is refused.
+    wrong = copy.deepcopy(manifest)
+    doc = wrong["documents"][3]
+    doc["split"] = "heldout" if doc["split"] == "development" else "development"
+    with pytest.raises(ValueError, match="split_rule"):
+        check_split_rule(wrong)
+    wrong = copy.deepcopy(manifest)
+    doc = wrong["documents"][1]
+    doc["split"] = "heldout" if doc["split"] == "development" else "development"
+    with pytest.raises(ValueError, match="d1"):
+        check_split_rule(wrong)
+
+
+def test_a_pilot_family_is_development_and_a_set_without_a_rule_is_not_checked() -> None:
+    manifest = family_set(RULE)
+    held = next(d for d in manifest["documents"] if d["split"] == "heldout")
+    held["pilot"] = True
+    with pytest.raises(ValueError, match="development"):
+        check_split_rule(manifest)
+    for d in manifest["documents"]:
+        if d["source_family_group"] == held["source_family_group"]:
+            d["split"] = "development"
+    check_split_rule(manifest)
+    manifest.pop("split_rule")
+    manifest["documents"][0]["split"] = "heldout"
+    check_split_rule(manifest)
+
+
+@pytest.mark.parametrize(
+    "change",
+    [
+        lambda r: r.update(method="family-hash/2"),
+        lambda r: r.update(salt=" "),
+        lambda r: r.update(development_share=1),
+        lambda r: r.update(development_share=True),
+        lambda r: r.pop("fixed_on"),
+        lambda r: r.update(extra=1),
+    ],
+)
+def test_invalid_split_rule_is_refused(change: Any) -> None:
+    rule = dict(RULE)
+    change(rule)
+    with pytest.raises(ValueError, match="split_rule"):
+        check_split_rule({"split_rule": rule, "documents": []})
+
+
+def test_a_split_rule_needs_a_family_on_each_document() -> None:
+    manifest = family_set(RULE)
+    manifest["documents"][0].pop("source_family_group")
+    with pytest.raises(ValueError, match="source_family_group"):
+        check_split_rule(manifest)
+
+
+def test_development_results_go_to_their_own_folder(tmp_path: Path) -> None:
+    m, _, run = cache(tmp_path)
+    m["documents"][0]["split"] = "development"
+    (tmp_path / "manifest.json").write_text(json.dumps(m))
+    run["manifest_sha256"] = (
+        "sha256:" + hashlib.sha256((tmp_path / "manifest.json").read_bytes()).hexdigest()
+    )
+    run["split"] = "development"
+    loop = tmp_path / "loop/01"
+    (loop / "runs").mkdir(parents=True)
+    (loop / "runs/runner.json").write_text(json.dumps(bind(run, "runner")))
+    scorer = Path(__file__).parents[1] / "score.py"
+    args = [sys.executable, str(scorer), "--requested", "--set", str(tmp_path)]
+    args += ["--split", "development", "--runs", str(loop / "runs")]
+    refused = subprocess.run(args, capture_output=True, text=True)
+    assert refused.returncode != 0 and "--out" in refused.stderr
+    refused = subprocess.run([*args, "--out", str(tmp_path)], capture_output=True, text=True)
+    assert refused.returncode != 0
+    subprocess.run([*args, "--out", str(loop)], check=True, capture_output=True)
+    subprocess.run([*args, "--out", str(loop), "--check"], check=True, capture_output=True)
+    results = json.loads((loop / "results.json").read_text())
+    assert results["runs"]["runner"]["split"] == "development"
+    assert not (tmp_path / "results.json").exists()
+
+
+REQUESTED3 = Path(__file__).parents[1] / "requested3"
+
+
+def test_requested3_limits_belong_to_its_published_runs() -> None:
+    limits = json.loads((REQUESTED3 / "limits.json").read_text())
+    results = json.loads((REQUESTED3 / "results.json").read_text())
+    assert limits["format"] == "requested-limits/1"
+    assert limits["manifest_sha256"] == results["manifest_sha256"]
+    assert limits["labels_sha256"] == results["labels_sha256"]
+    assert set(limits["runs"]) == set(results["runs"])
+    for arm, run in limits["runs"].items():
+        published = results["runs"][arm]
+        assert run["run_sha256"] == published["cache_sha256"]
+        assert run["run_sha256"] == (
+            "sha256:"
+            + hashlib.sha256((REQUESTED3 / "runs" / f"{arm}.json").read_bytes()).hexdigest()
+        )
+        states = published["document_states"]
+        for kind, row in run["document_states"]["by_kind"].items():
+            assert row["documents"] == states["by_kind"][kind]["documents"]
+            # A search_limit document stops the run, so it is also an incomplete document.
+            assert row["search_limit_documents"] <= states["by_kind"][kind]["incomplete"]
+
+
+def test_compare_puts_search_limit_beside_the_published_numbers(tmp_path: Path) -> None:
+    report = Path(__file__).parents[1] / "report.py"
+    results = REQUESTED3 / "results.json"
+    out = tmp_path / "compare.md"
+    args = [sys.executable, str(report), "--compare", str(results), str(results)]
+    subprocess.run([*args, "--out", str(out)], check=True, capture_output=True)
+    text = out.read_text()
+    limits = json.loads((REQUESTED3 / "limits.json").read_text())
+    total = limits["runs"]["runner"]["document_states"]["total"]
+    cell = f"{total['search_limit_documents']} docs, {total['search_limit_fields']} fields"
+    row = next(line for line in text.splitlines() if line.startswith("| runner | total |"))
+    assert row.count(cell) == 2
+    miss = json.loads(results.read_text())["runs"]["runner"]["total"]["miss_rate"]
+    assert f"{miss['k']}/{miss['n']}" in row

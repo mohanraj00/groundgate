@@ -259,10 +259,61 @@ call, prompt, candidate and admission-history budgets. Each projection document 
 each arm and kind, the incomplete documents, the documents with a transport error and the
 retries. A smaller harness limit is reported rather than silently treated as an absence.
 
+Each projection document from #383 on also records `search_limit`: the number of fields whose
+targeted search found no region that fits the prompt budget. The baseline has no targeted search,
+so its count is 0. `results.json` then gives, for each arm and kind, the documents and the fields
+at `search_limit`. A run without this member keeps its published `document_states`.
+`python -m requested.limits` counts the same from the local cache of an earlier run into a new
+`limits.json` beside the set. It reads no label and makes no model call.
+
 I check the harness with synthetic sources and fixed replies. No test reads the source PDFs.
 One test reads the tracked manifest and labels only to check the request context rules. The
 runner integration checks skip until the Runner lane is available; I run them against that lane
 before integration. No real client runs before the full corpus seal.
+
+## Development split and learning loop
+
+From `bench/requested4` on (#383), the manifest holds a `split_rule`:
+
+```json
+{"method": "family-hash/1", "salt": "...", "development_share": 0.33, "fixed_on": "2026-10-20"}
+```
+
+A source family is development if the first byte of `sha256(salt + source_family_group)` is
+below `development_share * 256`, else held out. A family with a document marked `"pilot": true`
+is development. So one family is always in one split. I fix the salt on the set's issue before
+any download. The scorer and the harness recompute each split and refuse a manifest whose split
+differs. A set without a `split_rule` (bench/requested to bench/requested3) is not checked.
+
+The learning loop runs on the development split only. Each iteration has its own folder:
+
+1. Run the arms on the development split, and copy each projection to `loop/NN/runs/<arm>.json`.
+2. Score them: `bench/score.py --requested --set bench/<set> --split development --runs
+   bench/<set>/loop/NN/runs --out bench/<set>/loop/NN`. The scorer refuses development results
+   in the set's own `results.json`.
+3. Write the record: `PYTHONPATH=bench python -m requested.loop record --set bench/<set>
+   --iteration N`, with one proposal (`--change feedback|prompt|pack|spec`, `--reference`,
+   `--summary`). From the second iteration on, `--decide keep|drop` decides the change of the
+   previous iteration from this iteration's numbers. `--calibration` keeps the recorded answers
+   to judge questions by digest, and `--diagnostics` keeps a diagnostics export by digest.
+
+`loop/NN.json` holds the run digests (code, configuration, cache binding), the miss rate,
+escapes, incomplete documents and `search_limit` count for each arm and kind, and for each
+review code the review decisions with a right value and with a wrong value.
+`python -m requested.loop check --set bench/<set>` checks every record against its files. It
+refuses a record or a run that names a held-out document.
+
+The freeze is one PR, merged before the first held-out model call. It writes `code_freeze` into
+the manifest with `"applies_to": "heldout"`, the commit, `code_sha256` and `"last_loop":
+"loop/NN.json"`. The loop check then needs the last record to have the frozen `code_sha256`, and
+it refuses a new record. For a set with a `split_rule` or a held-out freeze, `run_set.py` refuses
+a held-out run unless the configuration, the freeze and the imported code have one digest. It
+also refuses a second held-out binding in the cache of the set. A code change after the freeze
+voids it.
+
+`bench/report.py --compare bench/requested3/results.json bench/<set>/results.json` puts the miss
+rate, escapes, incomplete documents and `search_limit` count of each arm and kind beside the 0.10
+numbers. The `search_limit` count of requested3 comes from `bench/requested3/limits.json`.
 
 ## Inspected candidate batches
 

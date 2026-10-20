@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import builtins
 import copy
+import hashlib
 import importlib.util
 import json
 import re
@@ -1258,3 +1259,102 @@ def test_replay_arm_refuses_a_runner_result_from_other_calls(tmp_path):
         with pytest.raises(harness.CacheError, match="runner result"):
             session.run("runner_drop_rounded")
     assert not list(session.cache.rglob("runner_drop_rounded/heldout/doc/result.json"))
+
+
+@requires_runner
+def test_projection_counts_the_fields_that_stop_at_search_limit(tmp_path):
+    # The initial chunk prompts fit; the 4000-character search region does not (#383).
+    settings = {
+        "chunk_chars": 400,
+        "overlap_chars": 0,
+        "search_context_chars": 4000,
+        "max_prompt_chars": 4000,
+    }
+    session, _ = fixture(tmp_path, "Amount 5. " + "filler words here. " * 300, settings=settings)
+
+    def client(prompt):
+        return json.dumps(runner_envelope(missing=("amount",)))
+
+    result = session.run("runner", client)
+    assert output(result)["complete"] is False
+    assert output(result)["search_limit"] == 1
+    assert session.run("runner") == result
+
+
+def test_baseline_projection_has_no_search_limit_field(tmp_path):
+    session, _ = fixture(tmp_path)
+    result = session.run("baseline", Client(envelope(candidate()), envelope(candidate())))
+    assert output(result)["search_limit"] == 0
+
+
+def frozen(code=None, last_loop="loop/02.json", split_rule=False):
+    def mutate(manifest, labels, config):
+        freeze = {"applies_to": "heldout", "last_loop": last_loop}
+        freeze["code_sha256"] = code or config["code_sha256"]
+        manifest["code_freeze"] = freeze
+        if split_rule:
+            manifest["documents"][0]["source_family_group"] = "family"
+            manifest["split_rule"] = {
+                "method": "family-hash/1",
+                "salt": "salt",
+                "development_share": 0.5,
+                "fixed_on": "2026-10-20",
+            }
+            first = hashlib.sha256(b"saltfamily").digest()[0]
+            manifest["documents"][0]["split"] = "development" if first < 128 else "heldout"
+
+    return mutate
+
+
+def test_heldout_run_needs_the_frozen_code_digest(tmp_path):
+    session, _ = fixture(tmp_path / "a", mutate=frozen())
+    session.run("baseline", Client(envelope(candidate()), envelope(candidate())))
+    for name, mutate in (
+        ("b", frozen(code="sha256:" + "0" * 64)),
+        ("c", frozen(last_loop=None)),
+        ("d", frozen(last_loop="02.json")),
+    ):
+        session, _ = fixture(tmp_path / name, mutate=mutate)
+        client = Client(envelope(candidate()))
+        with pytest.raises(harness.CacheError, match="held-out run needs"):
+            session.run("baseline", client)
+        assert client.prompts == []
+
+
+def test_heldout_run_has_one_binding_for_the_set(tmp_path):
+    session, _ = fixture(tmp_path, mutate=frozen())
+    session.run("baseline", Client(envelope(candidate()), envelope(candidate())))
+    # The same binding replays; another binding in the same cache is refused before a call.
+    session.run("baseline")
+    other = session.cache / ("0" * 64) / "runner" / "heldout"
+    other.mkdir(parents=True)
+    client = Client(envelope(candidate()))
+    with pytest.raises(harness.CacheError, match="another held-out binding"):
+        session.run("runner", client)
+    assert client.prompts == []
+
+
+def test_a_set_with_a_split_rule_needs_a_heldout_freeze(tmp_path):
+    def rule_only(manifest, labels, config):
+        frozen(split_rule=True)(manifest, labels, config)
+        manifest.pop("code_freeze")
+
+    session, _ = fixture(tmp_path / "a", mutate=rule_only)
+    # The first byte of sha256("saltfamily") is 191, so the family is held out.
+    assert session.documents["doc"]["split"] == "heldout"
+    client = Client(envelope(candidate()), envelope(candidate()))
+    with pytest.raises(harness.CacheError, match="code_freeze"):
+        session.run("baseline", client)
+    assert client.prompts == []
+    session, _ = fixture(tmp_path / "b", mutate=frozen(split_rule=True))
+    session.run("baseline", client)
+
+
+def test_a_document_outside_its_split_rule_is_refused(tmp_path):
+    def wrong(manifest, labels, config):
+        frozen(split_rule=True)(manifest, labels, config)
+        doc = manifest["documents"][0]
+        doc["split"] = "heldout" if doc["split"] == "development" else "development"
+
+    with pytest.raises(harness.CacheError, match="blind labels"):
+        fixture(tmp_path, mutate=wrong)

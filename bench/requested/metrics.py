@@ -37,6 +37,69 @@ COUNTERS = (
 ARMS = ("baseline", "runner", "runner_drop_rounded")
 # Run state for each document of a split: a harness stop, a failed call and archived retries.
 DOCUMENT_STATES = ("documents", "incomplete", "transport_error", "transport_retries")
+# A projection from #383 on also counts the fields that stopped at search_limit. A run without
+# this member keeps its published document_states.
+LIMIT_STATES = ("search_limit_documents", "search_limit_fields")
+SPLIT_METHOD = "family-hash/1"
+
+
+def search_limit_fields(record: Any) -> int:
+    """Count the fields of a runner record whose final state list holds search_limit."""
+    if not isinstance(record, list) or not record:
+        raise ValueError("a runner record must be a nonempty list")
+    final = record[-1]
+    if not isinstance(final, dict) or final.get("kind") != "final":
+        raise ValueError("a runner record must end with its final entry")
+    fields = final.get("fields")
+    if not isinstance(fields, dict) or any(not isinstance(s, list) for s in fields.values()):
+        raise ValueError("the final entry needs a state list for each field")
+    return sum("search_limit" in states for states in fields.values())
+
+
+def split_of(rule: dict[str, Any], family: str) -> str:
+    """The split of a source family: development if the first sha256 byte is below the share."""
+    first = hashlib.sha256((rule["salt"] + family).encode("utf-8")).digest()[0]
+    return "development" if first < rule["development_share"] * 256 else "heldout"
+
+
+def check_split_rule(manifest: dict[str, Any]) -> None:
+    """Recompute the split of each document from the manifest split_rule, if it has one.
+
+    One source family is always in one split. A family with a pilot document is development.
+    Every other family takes the split of its salted hash. A manifest without a split_rule
+    (bench/requested to bench/requested3) is not checked here.
+    """
+    rule = manifest.get("split_rule")
+    if rule is None:
+        return
+    share = rule.get("development_share") if isinstance(rule, dict) else None
+    if (
+        not isinstance(rule, dict)
+        or set(rule) != {"method", "salt", "development_share", "fixed_on"}
+        or rule["method"] != SPLIT_METHOD
+        or not isinstance(rule["salt"], str)
+        or not rule["salt"].strip()
+        or not isinstance(rule["fixed_on"], str)
+        or not rule["fixed_on"].strip()
+        or isinstance(share, bool)
+        or not isinstance(share, (int, float))
+        or not 0 < share < 1
+    ):
+        raise ValueError("split_rule needs method family-hash/1, a salt, a share and a date")
+    families: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for doc in manifest["documents"]:
+        family = doc.get("source_family_group")
+        if not isinstance(family, str) or not family.strip():
+            raise ValueError("a split_rule needs a source_family_group on each document")
+        if doc.get("pilot", False) not in {True, False}:
+            raise ValueError("pilot must be true or false")
+        families[family].append(doc)
+    for family, docs in families.items():
+        pilot = any(d.get("pilot") is True for d in docs)
+        expected = "development" if pilot else split_of(rule, family)
+        wrong = sorted(str(d.get("id")) for d in docs if d.get("split") != expected)
+        if wrong:
+            raise ValueError(f"split differs from the split_rule ({expected}): " + ", ".join(wrong))
 
 
 def blank_row() -> dict[str, Any]:
@@ -237,6 +300,11 @@ def measure(
     outputs = {d["id"]: d for d in run_docs}
     if set(outputs) - set(doc_ids):
         raise ValueError("run contains unknown documents")
+    check_split_rule(manifest)
+    limited = {"search_limit" in d for d in run_docs}
+    if len(limited) > 1:
+        raise ValueError("either every run document has a search_limit count or none has")
+    names = DOCUMENT_STATES + (LIMIT_STATES if limited == {True} else ())
     rows = []
     states: dict[str, dict[str, int]] = {}
     for doc in documents:
@@ -272,11 +340,17 @@ def measure(
         if doc["split"] != split:
             continue
         output = outputs.get(doc["id"], {})
-        tally = states.setdefault(doc["kind"], dict.fromkeys(DOCUMENT_STATES, 0))
+        tally = states.setdefault(doc["kind"], dict.fromkeys(names, 0))
         tally["documents"] += 1
         tally["incomplete"] += output.get("complete") is False
         tally["transport_error"] += output.get("transport_error") is True
         tally["transport_retries"] += output.get("transport_retries", 0)
+        if "search_limit_fields" in tally:
+            limit = output.get("search_limit", 0)
+            if type(limit) is not int or limit < 0:
+                raise ValueError("a search_limit count must be a nonnegative integer")
+            tally["search_limit_documents"] += limit > 0
+            tally["search_limit_fields"] += limit
         decisions = output.get("decisions", [])
         if any(d.get("field") not in fields for d in decisions):
             raise ValueError("a final decision names an unrequested field")
@@ -373,7 +447,7 @@ def measure(
     return {
         "split": split,
         "document_states": {
-            "total": {n: sum(v[n] for v in states.values()) for n in DOCUMENT_STATES},
+            "total": {n: sum(v[n] for v in states.values()) for n in names},
             "by_kind": {k: states[k] for k in sorted(states)},
         },
         "total": summarize(rows),
@@ -435,18 +509,24 @@ def score_set(
     directory: Path,
     split: str,
     *,
+    runs: Path | None = None,
     diagnostics: Path | None = None,
     diagnostics_sha256: str | None = None,
 ) -> dict[str, Any]:
-    """Load a requested set, bind all runs to sealed label bytes, and score its final decisions."""
+    """Load a requested set, bind all runs to sealed label bytes, and score its final decisions.
+
+    ``runs`` is the folder of cached run projections. It is the set's ``runs`` folder if not
+    given. A learning-loop iteration keeps its development runs in ``loop/NN/runs``.
+    """
     manifest_raw = (directory / "manifest.json").read_bytes()
     labels_raw = (directory / "labels.json").read_bytes()
     manifest, labels = json.loads(manifest_raw), json.loads(labels_raw)
     seal = "sha256:" + hashlib.sha256(labels_raw).hexdigest()
     manifest_seal = "sha256:" + hashlib.sha256(manifest_raw).hexdigest()
-    runs = {}
+    folder = runs if runs is not None else directory / "runs"
+    scored = {}
     bindings = set()
-    for path in sorted((directory / "runs").glob("*.json")):
+    for path in sorted(folder.glob("*.json")):
         raw = path.read_bytes()
         run = json.loads(raw)
         if run.get("manifest_sha256") != manifest_seal:
@@ -455,10 +535,10 @@ def score_set(
             raise ValueError("cached run does not match the sealed labels: " + path.name)
         check_coverage(manifest, run, split, path.name)
         bindings.add(check_provenance(run, path.stem, manifest_seal, seal))
-        runs[path.stem] = measure(manifest, labels, run, split) | {
+        scored[path.stem] = measure(manifest, labels, run, split) | {
             "cache_sha256": "sha256:" + hashlib.sha256(raw).hexdigest()
         }
-    if not runs:
+    if not scored:
         raise ValueError("no cached requested-field runs")
     if len(bindings) != 1:
         raise ValueError("cached runs do not share one configuration and code binding")
@@ -466,7 +546,7 @@ def score_set(
         "format": "requested-fields/1",
         "labels_sha256": seal,
         "manifest_sha256": "sha256:" + hashlib.sha256(manifest_raw).hexdigest(),
-        "runs": runs,
+        "runs": scored,
     }
     if (diagnostics is None) != (diagnostics_sha256 is None):
         raise ValueError("diagnostics need an export path and exact digest")

@@ -136,6 +136,11 @@ state. 102 unclear slots are not counted.
 - The miss rate is above 60% for every arm. 0.10 does not meet the goal on this set, and the
   runner does not beat the baseline on misses.
 
+`limits.json` counts, for each arm and kind, the documents and fields that stopped at
+`search_limit`. `bench/requested/limits.py` read it from the local cache of this run after the
+results were published (#383). It changes no published number, and `bench/report.py --compare`
+puts it beside a later set.
+
 ### The three negative revenue slots
 
 annual-c07, annual-c08 and annual-c09 keep revenue as a negative value (#323). No arm admits a

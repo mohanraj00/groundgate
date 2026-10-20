@@ -21,7 +21,7 @@ from typing import Any
 
 import groundgate as gg
 
-from .metrics import ARMS, measure, same_request
+from .metrics import ARMS, measure, same_request, search_limit_fields
 
 Json = dict[str, Any]
 _VERSION = "requested-run/1"
@@ -31,6 +31,7 @@ _MAX_REPLY = 8 * 1024 * 1024
 _MAX_REQUEST_CONTEXT = 4096
 _ID = re.compile(r"[a-z][a-z0-9_-]{0,79}\Z")
 _ROLES = {"value", "sign", "scale", "unit", "field", "key"}
+_LOOP = re.compile(r"loop/[0-9]{2,}\.json\Z")
 # Verbatim instruction string from the released own-model guide. The wrapper, bounded chunk
 # search_region and current core are declared adaptations, not the entire released pipeline.
 BASELINE_INSTRUCTIONS = """\
@@ -672,6 +673,37 @@ class FrozenSet:
         }
         self.binding = digest(encoded(self.header))
 
+    def _check_heldout_freeze(self) -> None:
+        """Refuse a held-out run of a set with a split rule or a held-out freeze (#383).
+
+        The run configuration, the manifest code_freeze and the imported code must have one
+        code digest. The freeze names the last learning-loop record. The cache keeps one
+        held-out binding for the set: a held-out run measures a frozen change once. A set
+        without a split_rule and without a held-out freeze keeps its earlier behavior.
+        """
+        freeze = self.manifest.get("code_freeze")
+        if "split_rule" not in self.manifest and not (
+            isinstance(freeze, dict) and freeze.get("applies_to") == "heldout"
+        ):
+            return
+        if (
+            not isinstance(freeze, dict)
+            or freeze.get("applies_to") != "heldout"
+            or not isinstance(freeze.get("last_loop"), str)
+            or not _LOOP.fullmatch(freeze["last_loop"])
+        ):
+            raise CacheError(
+                "a held-out run needs a code_freeze that applies to heldout and names its last loop"
+            )
+        if not (freeze.get("code_sha256") == self.config["code_sha256"] == source_code_digest()):
+            raise CacheError("a held-out run needs the frozen code digest in config and code")
+        if self.cache.exists():
+            for other in _unlinked(self.cache).iterdir():
+                if other.name == self.binding.removeprefix("sha256:"):
+                    continue
+                if any(_unlinked(other / arm / "heldout").exists() for arm in ARMS):
+                    raise CacheError("the cache already holds another held-out binding of the set")
+
     def schema(self, doc: Json) -> Json:
         """Return a fresh schema with only explicit pre-label request context appended.
 
@@ -893,6 +925,8 @@ class FrozenSet:
             known = {i for i, d in self.documents.items() if d["split"] == split}
             if not selected or not selected <= known:
                 raise CacheError("documents must be a nonempty subset of the split")
+        if split == "heldout":
+            self._check_heldout_freeze()
         runner_api = None
         if arm != "baseline":
             try:
@@ -1023,6 +1057,10 @@ class FrozenSet:
                     "complete": local["complete"],
                     "transport_error": calls.transport_error,
                     "transport_retries": _attempts((recorded if replayed else folder) / ident),
+                    # The baseline arm has no targeted search, so no field stops there.
+                    "search_limit": 0
+                    if arm == "baseline"
+                    else search_limit_fields(local["record"]),
                 }
             )
         if selected is not None:

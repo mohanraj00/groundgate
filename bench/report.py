@@ -1,8 +1,19 @@
-"""Render bench/results.json as bench/RESULTS.md and two SVG charts. Called by bench/score.py."""
+"""Render bench/results.json as bench/RESULTS.md and two SVG charts. Called by bench/score.py.
+
+    python bench/report.py --compare bench/requested3/results.json bench/requested4/results.json
+
+compares two requested sets: miss rate, escapes, incomplete documents and search_limit count
+for each arm and kind. A search_limit count comes from results.json, or from a limits.json
+beside it (bench/requested3 has one, from bench/requested/limits.py).
+"""
 
 from __future__ import annotations
 
+import argparse
+import json
+import sys
 from html import escape
+from pathlib import Path
 from typing import Any
 
 SERIES = {
@@ -911,8 +922,17 @@ def render_requested(results: dict[str, Any]) -> str:
             "errors that ran again.",
             "",
         ]
+        # A run from #383 on also counts the fields that stopped at search_limit.
+        limits = "search_limit_fields" in states["total"]
+        if limits:
+            lines += [
+                "A search_limit document has at least one field whose targeted search found "
+                "no region that fits the prompt budget.",
+                "",
+            ]
         lines += table(
-            ["Kind", "Docs", "Incomplete", "Transport error", "Transport retries"],
+            ["Kind", "Docs", "Incomplete", "Transport error", "Transport retries"]
+            + (["search_limit docs", "search_limit fields"] if limits else []),
             [
                 [
                     label.replace("|", "\\|"),
@@ -921,6 +941,7 @@ def render_requested(results: dict[str, Any]) -> str:
                     r["transport_error"],
                     r["transport_retries"],
                 ]
+                + ([r["search_limit_documents"], r["search_limit_fields"]] if limits else [])
                 for label, r in [
                     ("total", states["total"]),
                     *sorted(states["by_kind"].items()),
@@ -1014,3 +1035,129 @@ def render_requested(results: dict[str, Any]) -> str:
         )
         lines += [""] + diagnostic["reader_layout"]["limitations"] + [""]
     return "\n".join(lines) + "\n"
+
+
+def _limits(path: Path, results: dict[str, Any]) -> dict[str, Any]:
+    """search_limit states for each arm: from results.json, else from limits.json beside it.
+
+    A limits.json counts only when its run digests are the cache digests in results.json.
+    """
+    found = {
+        arm: run["document_states"]
+        for arm, run in results["runs"].items()
+        if "search_limit_fields" in run["document_states"]["total"]
+    }
+    side = path.parent / "limits.json"
+    if side.is_file():
+        limits = json.loads(side.read_text(encoding="utf-8"))
+        if (
+            limits.get("manifest_sha256") != results["manifest_sha256"]
+            or limits.get("labels_sha256") != results["labels_sha256"]
+        ):
+            raise ValueError("limits.json is not for this results.json: " + str(side))
+        for arm, run in limits["runs"].items():
+            if arm in results["runs"] and arm not in found:
+                if run["run_sha256"] != results["runs"][arm]["cache_sha256"]:
+                    raise ValueError("limits.json is not for the run of arm " + arm)
+                found[arm] = run["document_states"]
+    return found
+
+
+def render_compare(
+    base: dict[str, Any], new: dict[str, Any], base_limits: dict[str, Any], new_limits: dict
+) -> list[str]:
+    """Each arm and kind of two requested sets side by side; every number from their files."""
+
+    def miss(run: dict[str, Any] | None, kind: str) -> str:
+        r = None if run is None else (run["total"] if kind == "total" else run["by_kind"].get(kind))
+        if r is None or r["miss_rate"]["rate"] is None:
+            return "n/a"
+        m = r["miss_rate"]
+        return f"{m['k']}/{m['n']} ({m['rate'] * 100:.2f}%)"
+
+    def escapes(run: dict[str, Any] | None, kind: str) -> str:
+        r = None if run is None else (run["total"] if kind == "total" else run["by_kind"].get(kind))
+        return "n/a" if r is None else str(r["escapes"])
+
+    def state(states: dict[str, Any] | None, kind: str, limit: bool) -> str:
+        s = None
+        if states is not None:
+            s = states["total"] if kind == "total" else states["by_kind"].get(kind)
+        if s is None:
+            return "n/a"
+        if limit:
+            return f"{s['search_limit_documents']} docs, {s['search_limit_fields']} fields"
+        return f"{s['incomplete']}/{s['documents']}"
+
+    lines = [
+        "Miss rate is reviews plus silent misses over present values. Incomplete is the "
+        "documents that stopped at a limit or a failed call. search_limit counts the documents "
+        "and fields whose targeted search found no region that fits the prompt budget.",
+        "",
+        "| Arm | Kind | Miss rate (base) | Miss rate (new) | Escapes (base) | Escapes (new) "
+        "| Incomplete (base) | Incomplete (new) | search_limit (base) | search_limit (new) |",
+        "|---|---|---:|---:|---:|---:|---:|---:|---:|---:|",
+    ]
+    for arm in sorted(set(base["runs"]) | set(new["runs"])):
+        b, n = base["runs"].get(arm), new["runs"].get(arm)
+        kinds = set()
+        for run in (b, n):
+            if run is not None:
+                kinds |= set(run["by_kind"])
+        for kind in ["total", *sorted(kinds)]:
+            lines.append(
+                "| "
+                + " | ".join(
+                    [
+                        arm,
+                        kind,
+                        miss(b, kind),
+                        miss(n, kind),
+                        escapes(b, kind),
+                        escapes(n, kind),
+                        state(None if b is None else b["document_states"], kind, False),
+                        state(None if n is None else n["document_states"], kind, False),
+                        state(base_limits.get(arm), kind, True),
+                        state(new_limits.get(arm), kind, True),
+                    ]
+                )
+                + " |"
+            )
+    return lines
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser(description="Compare two requested-set results.json files.")
+    ap.add_argument("--compare", type=Path, required=True, help="base results.json, e.g. 0.10")
+    ap.add_argument("results", type=Path, help="new results.json")
+    ap.add_argument("--out", type=Path, help="write the table here instead of stdout")
+    args = ap.parse_args()
+    try:
+        sets = []
+        for path in (args.compare, args.results):
+            results = json.loads(path.read_text(encoding="utf-8"))
+            if results.get("format") != "requested-fields/1":
+                raise ValueError("not a requested-field results.json: " + str(path))
+            sets.append((path, results, _limits(path, results)))
+    except (OSError, ValueError, KeyError) as exc:
+        ap.error(str(exc))
+    (base_path, base, base_limits), (new_path, new, new_limits) = sets
+    lines = [
+        "# Requested-field comparison",
+        "",
+        f"Generated by `bench/report.py --compare {base_path.as_posix()} {new_path.as_posix()}`.",
+        "",
+        f"Base: `{base_path.as_posix()}`, labels `{base['labels_sha256']}`.",
+        f"New: `{new_path.as_posix()}`, labels `{new['labels_sha256']}`.",
+        "",
+        *render_compare(base, new, base_limits, new_limits),
+    ]
+    text = "\n".join(lines) + "\n"
+    if args.out is None:
+        sys.stdout.write(text)
+    else:
+        args.out.write_text(text, encoding="utf-8")
+
+
+if __name__ == "__main__":
+    main()
