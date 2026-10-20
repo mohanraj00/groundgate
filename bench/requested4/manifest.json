@@ -1,0 +1,3712 @@
+{
+ "format": "requested-fields/1",
+ "status": "frozen",
+ "selection_complete": true,
+ "selection_note": "Selected and frozen 2026-10-20 before any model output on this set (#395). 91 documents: component 7 development and 9 held-out, sbc 8 development and 16 held-out, annual 9 development and 16 held-out, sds 8 development and 18 held-out. Every eligible approved download is a member; there is no subsample. The split of each document comes from split_rule (family-hash/1) on its source_family_group. Non-members and their reasons are in source_checks.json. No publisher of bench/requested, bench/requested2 or bench/requested3 is a member. Selection used publisher metadata, notices and layout eligibility, never a requested value or model output.",
+ "label_method": "Source-only agent annotations from original PDFs, checked against original page renders. Two blind passes label every slot. An independent check of the original PDF decides each disagreement. Each absence has a second blind check. No benchmark model call has run on this set.",
+ "source_use": "Each member is cited by its public URL and SHA-256. Original PDFs, page images and reader text stay private in local work storage and are not redistributed. Sources with an express reproduction or use restriction in their own notices are on hold and are not members. Terms group B members allow only personal, noncommercial or internal use: they are members only for local, internal measurement. Limited terms and attribution conditions stay recorded on each member; no broader right is inferred.",
+ "split_rule": {
+  "method": "family-hash/1",
+  "salt": "01b7a9400553fd883fbff30d7e5295d3",
+  "development_share": 0.3333333333333333,
+  "fixed_on": "2026-10-20"
+ },
+ "schemas": {
+  "component": {
+   "fields": {
+    "operating_temperature_max": {
+     "aliases": [
+      "Operating temperature",
+      "Ambient temperature"
+     ],
+     "description": "Upper operating temperature limit, not storage temperature.",
+     "type": "number",
+     "unit": "C",
+     "comparator": "le"
+    },
+    "operating_temperature_min": {
+     "aliases": [
+      "Operating temperature",
+      "Ambient temperature"
+     ],
+     "description": "Lower operating temperature limit, not storage temperature.",
+     "type": "number",
+     "unit": "C",
+     "comparator": "ge"
+    },
+    "supply_current_typ": {
+     "aliases": [
+      "Supply current",
+      "Typical current"
+     ],
+     "description": "Typical supply current at the document reference condition. Distinguish operating modes; do not choose between equally applicable conditions.",
+     "type": "number",
+     "unit": "mA",
+     "comparator": "eq"
+    },
+    "supply_voltage_max": {
+     "aliases": [
+      "Recommended operating conditions",
+      "Supply voltage"
+     ],
+     "description": "Maximum recommended supply voltage at the same stated reference condition, not an absolute maximum rating.",
+     "type": "number",
+     "unit": "V",
+     "comparator": "le"
+    },
+    "supply_voltage_min": {
+     "aliases": [
+      "Recommended operating conditions",
+      "Supply voltage"
+     ],
+     "description": "Minimum recommended supply voltage at the stated reference condition, not an absolute maximum rating.",
+     "type": "number",
+     "unit": "V",
+     "comparator": "ge"
+    }
+   },
+   "units": {
+    "C": {
+     "suffix": [
+      "°C",
+      "Celsius"
+     ]
+    },
+    "V": {
+     "suffix": [
+      "V",
+      "volts"
+     ]
+    },
+    "mA": {
+     "suffix": [
+      "mA",
+      "milliamps"
+     ]
+    }
+   }
+  },
+  "sbc": {
+   "fields": {
+    "deductible_family": {
+     "aliases": [
+      "Overall deductible",
+      "Deductible"
+     ],
+     "description": "In-network family deductible in the plan coverage year.",
+     "type": "number",
+     "unit": "USD",
+     "comparator": "eq"
+    },
+    "deductible_individual": {
+     "aliases": [
+      "Overall deductible",
+      "Deductible"
+     ],
+     "description": "In-network deductible for one person in the plan coverage year.",
+     "type": "number",
+     "unit": "USD",
+     "comparator": "eq"
+    },
+    "out_of_pocket_family": {
+     "aliases": [
+      "Out-of-pocket limit"
+     ],
+     "description": "In-network out-of-pocket limit for a family in the plan coverage year.",
+     "type": "number",
+     "unit": "USD",
+     "comparator": "le"
+    },
+    "out_of_pocket_individual": {
+     "aliases": [
+      "Out-of-pocket limit"
+     ],
+     "description": "In-network out-of-pocket limit for one person in the plan coverage year.",
+     "type": "number",
+     "unit": "USD",
+     "comparator": "le"
+    },
+    "specialist_copay": {
+     "aliases": [
+      "Specialist visit"
+     ],
+     "description": "In-network specialist office visit copay in USD. A percentage is not a dollar copay; unresolved conditions are unclear.",
+     "type": "number",
+     "unit": "USD",
+     "comparator": "eq"
+    }
+   }
+  },
+  "annual": {
+   "fields": {
+    "cost_of_sales": {
+     "aliases": [
+      "Cost of sales"
+     ],
+     "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+     "type": "number",
+     "unit": "GBP"
+    },
+    "gross_profit": {
+     "aliases": [
+      "Gross profit"
+     ],
+     "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+     "type": "number",
+     "unit": "GBP"
+    },
+    "revenue": {
+     "aliases": [
+      "Revenue",
+      "Turnover"
+     ],
+     "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+     "type": "number",
+     "unit": "GBP"
+    },
+    "total_assets": {
+     "aliases": [
+      "Total assets"
+     ],
+     "description": "Latest consolidated full-year closing total assets.",
+     "type": "number",
+     "unit": "GBP"
+    },
+    "total_equity": {
+     "aliases": [
+      "Total equity"
+     ],
+     "description": "Latest consolidated full-year closing total equity, preserving sign.",
+     "type": "number",
+     "unit": "GBP"
+    },
+    "total_liabilities": {
+     "aliases": [
+      "Total liabilities"
+     ],
+     "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+     "type": "number",
+     "unit": "GBP"
+    }
+   }
+  },
+  "sds": {
+   "fields": {
+    "flash_point": {
+     "aliases": [
+      "Flash point"
+     ],
+     "description": "Flash point of the product as Section 9 states it, in degrees Celsius. A bound, a range or a value only in Fahrenheit is not one value.",
+     "type": "number",
+     "unit": "C"
+    },
+    "initial_boiling_point": {
+     "aliases": [
+      "Initial boiling point",
+      "Initial boiling point and boiling range",
+      "Boiling point"
+     ],
+     "description": "Initial boiling point of the product as Section 9 states it, in degrees Celsius. A bound, a range or a value only in Fahrenheit is not one value.",
+     "type": "number",
+     "unit": "C"
+    },
+    "ph": {
+     "aliases": [
+      "pH"
+     ],
+     "description": "pH of the product as Section 9 states it, with no unit. A range is not one value.",
+     "type": "number",
+     "unit": null
+    },
+    "relative_density": {
+     "aliases": [
+      "Relative density",
+      "Specific gravity"
+     ],
+     "description": "Relative density (water = 1) as Section 9 states it, with no unit. A density with a unit is a different quantity.",
+     "type": "number",
+     "unit": null
+    },
+    "un_number": {
+     "aliases": [
+      "UN number",
+      "UN No."
+     ],
+     "description": "UN number of the product as Section 14 states it, written UN and four digits.",
+     "type": "string",
+     "unit": null
+    }
+   },
+   "units": {
+    "C": {
+     "suffix": [
+      "°C",
+      "Celsius"
+     ]
+    }
+   }
+  }
+ },
+ "reader_text": {
+  "reader": "groundgate.read (spec 0.11 draft)",
+  "code_sha256": "sha256:0fd540ed5e0f6ad33801bb503e3a0ab052116f9ee0128b4add967e55b4204edf",
+  "code_digest_method": "sha256 over sorted src/groundgate/read/*.py lines \"name NUL sha256(file) LF\"",
+  "built_from": "origin/main ad02842",
+  "note": "Text files stay in local work storage with the original PDFs. Only their hashes are published."
+ },
+ "arms": [
+  {
+   "id": "baseline",
+   "description": "The released one-pass prompt and the app feedback loop, as in bench/requested2.",
+   "model_calls": "new calls on each split"
+  },
+  {
+   "id": "runner",
+   "description": "The extract runner with RunPolicy drop_rounded off, the default. This is the main arm.",
+   "drop_rounded": false,
+   "model_calls": "new calls on each split"
+  },
+  {
+   "id": "runner_drop_rounded",
+   "description": "The extract runner with RunPolicy drop_rounded on. It takes no client. It reads the recorded calls of the runner arm of the same split in order, and checks each prompt against its record. A missing, extra or changed call stops the run. The rounding step runs in finish(), after the last model call, and calls only admit, so each prompt is the same as in the runner arm.",
+   "drop_rounded": true,
+   "model_calls": "none"
+  }
+ ],
+ "documents": [
+  {
+   "id": "component-c01",
+   "kind": "component",
+   "split": "development",
+   "selection_status": "frozen_member",
+   "source": "https://www.analog-micro.com/products/ics/uiconverter/am462/am462-datasheet.pdf",
+   "source_bytes": 301725,
+   "source_sha256": "sha256:025ee4fb7f1671494cc87f148cf97deadd291065a63d6896776d3fda29b68251",
+   "source_pages": 20,
+   "approved_max_bytes": 301725,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "analogmicro-am462-converter",
+   "terms_group": "A",
+   "license": "No affirmative open reuse grant; site terms permit a download, and their exact conditions are in source_checks.json. URL and SHA-256 provenance only.",
+   "license_source": "https://www.analog-micro.com/en/company/imprint/",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "named_device": "AM462",
+   "request_context": {
+    "subject": "AM462",
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
+   },
+   "text_sha256": "sha256:f65117bf79e6d1a2e4311f0da3ad4587cad8cddaac63d35e8b2fac7e02e04ef7"
+  },
+  {
+   "id": "component-c02",
+   "kind": "component",
+   "split": "development",
+   "selection_status": "frozen_member",
+   "source": "https://www.analog-micro.com/products/ics/sensoramplifier/am401/am401-datasheet.pdf",
+   "source_bytes": 292481,
+   "source_sha256": "sha256:69f1c45f4119608cc79a34929b8a0fda5fdce4e0403f56c8c04a37b324d3ed55",
+   "source_pages": 21,
+   "approved_max_bytes": 292481,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "analogmicro-am401-amplifier",
+   "terms_group": "A",
+   "license": "No affirmative open reuse grant; site terms permit a download, and their exact conditions are in source_checks.json. URL and SHA-256 provenance only.",
+   "license_source": "https://www.analog-micro.com/en/company/imprint/",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "named_device": "AM401",
+   "request_context": {
+    "subject": "AM401",
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
+   },
+   "text_sha256": "sha256:f367caca837836f58c2ed239d79ce2514e445346d79bcd98238405c13b5eed25"
+  },
+  {
+   "id": "component-c03",
+   "kind": "component",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://www.analog-micro.com/products/ics/sensoramplifier/am417/am417-datasheet.pdf",
+   "source_bytes": 271788,
+   "source_sha256": "sha256:45fba4d8a55492e9c1d98d1a53d5b9ea320ec396017765446492ebba9198d098",
+   "source_pages": 18,
+   "approved_max_bytes": 271788,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "analogmicro-am417-amplifier",
+   "terms_group": "A",
+   "license": "No affirmative open reuse grant; site terms permit a download, and their exact conditions are in source_checks.json. URL and SHA-256 provenance only.",
+   "license_source": "https://www.analog-micro.com/en/company/imprint/",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "named_device": "AM417",
+   "request_context": {
+    "subject": "AM417",
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
+   },
+   "text_sha256": "sha256:fb040693791f977efbe593dc0a5cba19721a3d26ff9ed9795ad12bb0992beb3b"
+  },
+  {
+   "id": "component-c04",
+   "kind": "component",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://www.analog-micro.com/products/pressure-sensors/board-mount-pressure-sensors/ams5915/ams5915-datasheet.pdf",
+   "source_bytes": 1220741,
+   "source_sha256": "sha256:cc0f33129b152ed3e2ca4730d4c4ea24607b21cc1baed32396d0b84cebfa183e",
+   "source_pages": 15,
+   "approved_max_bytes": 1220741,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "analogmicro-ams5915-pressure",
+   "terms_group": "A",
+   "license": "No affirmative open reuse grant; site terms permit a download, and their exact conditions are in source_checks.json. URL and SHA-256 provenance only.",
+   "license_source": "https://www.analog-micro.com/en/company/imprint/",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "named_device": "AMS 5915",
+   "request_context": {
+    "subject": "AMS 5915",
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
+   },
+   "text_sha256": "sha256:8e5327fcd0bf5582bd2c02059d761bc503fcbf300dc2ebfd05fe41a054b140bc"
+  },
+  {
+   "id": "component-c09",
+   "kind": "component",
+   "split": "development",
+   "selection_status": "frozen_member",
+   "source": "https://www.murata.com/-/media/webrenewal/products/sensor/pdf/datasheet/datasheet_sca3300-d01.ashx?la=en&cvid=20260615010000000000",
+   "source_bytes": 1637711,
+   "source_sha256": "sha256:78652e22800057f48f9e4a407ae38483f29da5ffb7e1946ed6f2ae8ebcd79615",
+   "source_pages": 42,
+   "approved_max_bytes": 1637711,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "murata-sca3300-accelerometer",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.murata.com/en-global/sitepolicy",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "named_device": "SCA3300-D01",
+   "request_context": {
+    "subject": "SCA3300-D01",
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
+   },
+   "text_sha256": "sha256:2553acb5136ee054e117b75cddb391065fecd9880a467f5022d46bf40767dc09"
+  },
+  {
+   "id": "component-c10",
+   "kind": "component",
+   "split": "development",
+   "selection_status": "frozen_member",
+   "source": "https://www.murata.com/-/media/webrenewal/products/sensor/pdf/datasheet/datasheet_scl3300-d01.ashx?la=en&cvid=20260615010000000000",
+   "source_bytes": 1514212,
+   "source_sha256": "sha256:87a1ecf38d129a13964452a98f8610af3ea9102011c91f87e2b1aa50bf2558dd",
+   "source_pages": 48,
+   "approved_max_bytes": 1514212,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "murata-scl3300-inclinometer",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.murata.com/en-global/sitepolicy",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "named_device": "SCL3300-D01",
+   "request_context": {
+    "subject": "SCL3300-D01",
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
+   },
+   "text_sha256": "sha256:15dd5e96fd6da5b704ba08dd94a64bbe8194a3cf1cd5cd8ec850786f19d41fba"
+  },
+  {
+   "id": "component-c11",
+   "kind": "component",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://www.murata.com/-/media/webrenewal/products/sensor/pdf/datasheet/datasheet_scc2130-d08.ashx?la=en&cvid=20190118045358899200",
+   "source_bytes": 1025613,
+   "source_sha256": "sha256:4370953ea788a87c5c33a79f36ffbd141a7952f4b9b6247acba8970daa145d13",
+   "source_pages": 38,
+   "approved_max_bytes": 1025613,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "murata-scc2000-gyro-combo",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.murata.com/en-global/sitepolicy",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "named_device": "SCC2130-D08",
+   "request_context": {
+    "subject": "SCC2130-D08",
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
+   },
+   "text_sha256": "sha256:9b72b77481d8c091e0f3881497df9f9068b673c016372b005f3247b2ecc76056"
+  },
+  {
+   "id": "component-c12",
+   "kind": "component",
+   "split": "development",
+   "selection_status": "frozen_member",
+   "source": "https://www.murata.com/-/media/webrenewal/products/sensor/pdf/datasheet/datasheet-sca3400-d01.ashx?la=en&cvid=20250625064056000000",
+   "source_bytes": 1794644,
+   "source_sha256": "sha256:0bec73a307129c54afbde7459c19171bd86d79cb9cad47646cbd8fdf2897d828",
+   "source_pages": 46,
+   "approved_max_bytes": 1794644,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "murata-sca3400-accelerometer",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.murata.com/en-global/sitepolicy",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "named_device": "SCA3400-D01",
+   "request_context": {
+    "subject": "SCA3400-D01",
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
+   },
+   "text_sha256": "sha256:2974d759879a013172a4324c0a0ee253328147062f35e8b4dd90720bd1325e4a"
+  },
+  {
+   "id": "component-c17",
+   "kind": "component",
+   "split": "development",
+   "selection_status": "frozen_member",
+   "source": "https://www.rakon.com/hubfs/Files/Product%20datasheets/TCXO/TCXO%20RST2016A.pdf",
+   "source_bytes": 416507,
+   "source_sha256": "sha256:c246c54a5fe6046c3be2ef02ab0587e5cc5923e1725b0a57b951ee900f2a0084",
+   "source_pages": 2,
+   "approved_max_bytes": 416507,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "rakon-rst2016-tcxo",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.rakon.com/terms-of-use",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "named_device": "RST2016A",
+   "request_context": {
+    "subject": "RST2016A",
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
+   },
+   "text_sha256": "sha256:e39413abc27a2650e8dff527b66925bf4997ed59dfb1e91741773ba75f864815"
+  },
+  {
+   "id": "component-c18",
+   "kind": "component",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://www.rakon.com/hubfs/Files/Product%20datasheets/TCXO/TCXO%20RST2520A.pdf",
+   "source_bytes": 350456,
+   "source_sha256": "sha256:402dd0fa12d8d7d364061ca6a31a9a2909772dc1dd4748af880d07db49786a0e",
+   "source_pages": 2,
+   "approved_max_bytes": 350456,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "rakon-rst2520-tcxo",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.rakon.com/terms-of-use",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "named_device": "RST2520A",
+   "request_context": {
+    "subject": "RST2520A",
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
+   },
+   "text_sha256": "sha256:2f7fcea4047254dcf823e376d9f2b4488e297abc560d5d756662adf92f1a16ce"
+  },
+  {
+   "id": "component-c19",
+   "kind": "component",
+   "split": "development",
+   "selection_status": "frozen_member",
+   "source": "https://www.rakon.com/hubfs/Files/Product%20datasheets/TCXO/TCXO%20RST3225H.pdf",
+   "source_bytes": 415993,
+   "source_sha256": "sha256:b66b7216318409c39e2a9fe732fed9d7b5d3f6b2aa7d215311b118bff839546b",
+   "source_pages": 2,
+   "approved_max_bytes": 415993,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "rakon-rst3225-tcxo",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.rakon.com/terms-of-use",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "named_device": "RST3225H",
+   "request_context": {
+    "subject": "RST3225H",
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
+   },
+   "text_sha256": "sha256:58ed96f789ff42587e30b1cb95fa97b1ec35d0a1e852f3866cc0522e44697208"
+  },
+  {
+   "id": "component-c20",
+   "kind": "component",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://www.prema.com/images/downloads/Datenblatt_PR4401_PR4402.pdf",
+   "source_bytes": 574371,
+   "source_sha256": "sha256:939aeebd4a7f9ec217b36e840b878cb9b2c6eb6fd01952e1812d3a0165ffb041",
+   "source_pages": 12,
+   "approved_max_bytes": 574371,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "prema-pr4401-led-driver",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.prema.com/index.php/en/imprint",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "named_device": "PR4401",
+   "request_context": {
+    "subject": "PR4401",
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
+   },
+   "text_sha256": "sha256:552010c71a1d411c7da01a04fb77b6a021b0d3e70e7efc56d1e0caba77150399"
+  },
+  {
+   "id": "component-c21",
+   "kind": "component",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://www.prema.com/images/downloads/PR4403.pdf",
+   "source_bytes": 529869,
+   "source_sha256": "sha256:f53573a1572ea70f86c069ce32f92b7c246db6f94ae2efc69eee8b361975debf",
+   "source_pages": 12,
+   "approved_max_bytes": 529869,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "prema-pr4403-led-driver",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.prema.com/index.php/en/imprint",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "named_device": "PR4403",
+   "request_context": {
+    "subject": "PR4403",
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
+   },
+   "text_sha256": "sha256:db9ff5bc069b489c4d0d982b4f8e822a8f91e30c63ddd6cde8c97d14eb0b00f7"
+  },
+  {
+   "id": "component-c22",
+   "kind": "component",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://www.prema.com/images/downloads/PR4404_v1017.pdf",
+   "source_bytes": 389047,
+   "source_sha256": "sha256:026e3712318f509f866f04b1419c90bfb85dd5cb05688c516400c50e461bfc86",
+   "source_pages": 12,
+   "approved_max_bytes": 389047,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "prema-pr4404-led-driver",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.prema.com/index.php/en/imprint",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "named_device": "PR4404",
+   "request_context": {
+    "subject": "PR4404",
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
+   },
+   "text_sha256": "sha256:48f5967d03fa0156711d5fa783d203c1489af34c23fddb914fdb968398957010"
+  },
+  {
+   "id": "component-c24",
+   "kind": "component",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://www.prisemi.com/pdf/5fzkg/P1498.pdf",
+   "source_bytes": 1302071,
+   "source_sha256": "sha256:1bdf813bff580b0043103221c5737ffbceaad74c6b42514af97356b293687bc1",
+   "source_pages": 13,
+   "approved_max_bytes": 1302071,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "prisemi-p1498-loadswitch",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.prisemi.com/law/",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "named_device": "P1498",
+   "request_context": {
+    "subject": "P1498",
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
+   },
+   "text_sha256": "sha256:10630a04032841344acca9ba56fe2315ff8865adb6c2a752da455e7b3c0479f2"
+  },
+  {
+   "id": "component-c28",
+   "kind": "component",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://product.minebeamitsumi.com/en/product/category/ics/regulate/ldo/parts/download/__icsFiles/afieldfile/2025/12/26/41_download_01_8.pdf",
+   "source_bytes": 507418,
+   "source_sha256": "sha256:1964c4e46fdc7abebf1339a8d7fe5e3528f88fc35cee2d956b169ad17f332b5c",
+   "source_pages": 20,
+   "approved_max_bytes": 507418,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "mitsumi-mm3823-ldo",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://product.minebeamitsumi.com/en/use/index.html",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "named_device": "MM3823",
+   "request_context": {
+    "subject": "MM3823",
+    "scope": "The named part. Recommended operating conditions, not absolute maximum or storage ratings. Typical supply current at the reference condition that the document states, not a chosen mode or a calculated average. Operating temperature range, not storage or junction-only ratings. If a value depends on a variant, rail, mode or condition that this request does not fix, do not choose one."
+   },
+   "text_sha256": "sha256:7ec289bfe1516a0504964b947613672a5755aacf3a27400d17fe075f905ceaab"
+  },
+  {
+   "id": "sbc-c03",
+   "kind": "sbc",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://ogi.idaho.gov/wp-content/uploads/2026/04/FY27-Active-PPO-SBC.pdf",
+   "source_bytes": 798877,
+   "source_sha256": "sha256:dda748da98e6884418a2fb25c01160d04dd99bcfb80c3ead7b9079275ddd2567",
+   "source_pages": 9,
+   "approved_max_bytes": 798877,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "state-of-idaho-ogi",
+   "terms_group": "A",
+   "license": "No affirmative open reuse grant; site terms permit a download, and their exact conditions are in source_checks.json. URL and SHA-256 provenance only.",
+   "license_source": "https://www.idaho.gov/about-us/legal-notices/",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
+   },
+   "text_sha256": "sha256:18a833abd3bd83f8b71a79804058d3948fabc9c1a7c5bdd5de0b62ed915635e7"
+  },
+  {
+   "id": "sbc-c04",
+   "kind": "sbc",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://ogi.idaho.gov/wp-content/uploads/2027/FY27-Active-Trad-SBC.pdf?_t=1776369512",
+   "source_bytes": 792581,
+   "source_sha256": "sha256:763860c1bfffe5ed5087f4f763e7950c7c30c5d8a9fc5ff51a270bb0c214c4df",
+   "source_pages": 8,
+   "approved_max_bytes": 792581,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "state-of-idaho-ogi",
+   "terms_group": "A",
+   "license": "No affirmative open reuse grant; site terms permit a download, and their exact conditions are in source_checks.json. URL and SHA-256 provenance only.",
+   "license_source": "https://www.idaho.gov/about-us/legal-notices/",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
+   },
+   "text_sha256": "sha256:de51258a5ee98adf0d94361918b6fe26e96fdaa771ba1af745935a6301d04097"
+  },
+  {
+   "id": "sbc-c05",
+   "kind": "sbc",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://sonomacounty.gov/Main%20County%20Site/Administrative%20Support%20%26%20Fiscal%20Services/HR/Divisions%20%26%20Units/Benefits/Documents/SBC%27s/Anthem%20Medicare%20and%20CHP/2026%20County%20Health%20Plan%20EPO%20%28SBC%29.pdf",
+   "source_bytes": 334812,
+   "source_sha256": "sha256:2305f79cf3f33cb778739fe599d5272344342825995a2fd356f7ea094bac4788",
+   "source_pages": 7,
+   "approved_max_bytes": 334812,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "county-of-sonoma",
+   "terms_group": "A",
+   "license": "No affirmative open reuse grant; site terms permit a download, and their exact conditions are in source_checks.json. URL and SHA-256 provenance only.",
+   "license_source": "https://sonomacounty.gov/terms-of-use",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
+   },
+   "text_sha256": "sha256:8ed86756c4d44f96eba4a48ff38f3eee5b39cdaf2ee521b367ff7dc85e48e5f0"
+  },
+  {
+   "id": "sbc-c06",
+   "kind": "sbc",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://sonomacounty.gov/Main%20County%20Site/Administrative%20Support%20%26%20Fiscal%20Services/HR/Divisions%20%26%20Units/Benefits/Documents/SBC%27s/Anthem%20Medicare%20and%20CHP/2026%20County%20Health%20Plan%20PPO%20%28SBC%29.pdf",
+   "source_bytes": 336382,
+   "source_sha256": "sha256:804886a5afc41f4401f23d26e808f628f2b46fb06b70819e07eae963b67fbdaf",
+   "source_pages": 7,
+   "approved_max_bytes": 336382,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "county-of-sonoma",
+   "terms_group": "A",
+   "license": "No affirmative open reuse grant; site terms permit a download, and their exact conditions are in source_checks.json. URL and SHA-256 provenance only.",
+   "license_source": "https://sonomacounty.gov/terms-of-use",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
+   },
+   "text_sha256": "sha256:e6be6f30256c71f2d458bcad9e59227390d4f54069b09b3e0c34248f9d1174f5"
+  },
+  {
+   "id": "sbc-c09",
+   "kind": "sbc",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://www.cityoftulsa.org/media/30567/2026-bcbsok-hsa-sbc.pdf",
+   "source_bytes": 571501,
+   "source_sha256": "sha256:d48a11d14b72b2da17afa41cc544b373245a8e58013e9b1ce853fccf86fb31c0",
+   "source_pages": 9,
+   "approved_max_bytes": 571501,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "city-of-tulsa",
+   "terms_group": "A",
+   "license": "No affirmative open reuse grant; site terms permit a download, and their exact conditions are in source_checks.json. URL and SHA-256 provenance only.",
+   "license_source": "https://www.cityoftulsa.org/government/departments/communications/legal-disclaimer/",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
+   },
+   "text_sha256": "sha256:24f19762e737d02db12ce52cbcdac2cc6e1a3a18898d4a3b7e761d8c2677f845"
+  },
+  {
+   "id": "sbc-c10",
+   "kind": "sbc",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://www.cityoftulsa.org/media/30574/2026-sbc-ppo.pdf",
+   "source_bytes": 582854,
+   "source_sha256": "sha256:0da22d0094a20176793bb07abfc55ba27d9501e54d2899715b39b513aa3f5a30",
+   "source_pages": 9,
+   "approved_max_bytes": 582854,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "city-of-tulsa",
+   "terms_group": "A",
+   "license": "No affirmative open reuse grant; site terms permit a download, and their exact conditions are in source_checks.json. URL and SHA-256 provenance only.",
+   "license_source": "https://www.cityoftulsa.org/government/departments/communications/legal-disclaimer/",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
+   },
+   "text_sha256": "sha256:b5998356f9a2161be38455751fc4b0005a3245f6ffe60cdce97534bcb5cf3d6d"
+  },
+  {
+   "id": "sbc-c11",
+   "kind": "sbc",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://www.nashville.gov/sites/default/files/2025-08/2026_SBC_PPO.pdf?ct=1756144882",
+   "source_bytes": 553084,
+   "source_sha256": "sha256:3624590d2abc0dcc3473756c2f9363850cfeb72887f923491ff60b60f6e2d946",
+   "source_pages": 10,
+   "approved_max_bytes": 553084,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "metro-nashville",
+   "terms_group": "A",
+   "license": "No affirmative open reuse grant; site terms permit a download, and their exact conditions are in source_checks.json. URL and SHA-256 provenance only.",
+   "license_source": "https://www.nashville.gov/departments/government/terms-service",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
+   },
+   "text_sha256": "sha256:f4c106b16194a02f9a4dcef902f117af2f8c756c246da33f468fcf2ec24d32db"
+  },
+  {
+   "id": "sbc-c12",
+   "kind": "sbc",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://www.nashville.gov/sites/default/files/2025-08/2026_SBC_HRA.pdf?ct=1756144925",
+   "source_bytes": 551685,
+   "source_sha256": "sha256:5d9ffb3bcc7cf5f0b81bf030ce239669ecf683e8b344a66412378903d61d6169",
+   "source_pages": 10,
+   "approved_max_bytes": 551685,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "metro-nashville",
+   "terms_group": "A",
+   "license": "No affirmative open reuse grant; site terms permit a download, and their exact conditions are in source_checks.json. URL and SHA-256 provenance only.",
+   "license_source": "https://www.nashville.gov/departments/government/terms-service",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
+   },
+   "text_sha256": "sha256:bfb0d74d24e852b7b9068dc8985b521abb274b2cef8a281d3605aa533a447968"
+  },
+  {
+   "id": "sbc-c13",
+   "kind": "sbc",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://riversideca.gov/human/sites/riversideca.gov.human/files/pdf/Benefits/Open-enrollment/2026/2026%20Kaiser%20HMO%2015%20Summary%20of%20Benefits%20and%20Coverage_0.pdf",
+   "source_bytes": 844715,
+   "source_sha256": "sha256:7eade2a7eabb5f4d5221a612a6b4169fcbad42dcbcf78ba36dc56a62ba52040a",
+   "source_pages": 14,
+   "approved_max_bytes": 844715,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "city-of-riverside-ca",
+   "terms_group": "A",
+   "license": "No affirmative open reuse grant; site terms permit a download, and their exact conditions are in source_checks.json. URL and SHA-256 provenance only.",
+   "license_source": "https://riversideca.gov/website-disclaimer-limit-liability",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
+   },
+   "text_sha256": "sha256:2a08108fb0ceaecae9bf2dc1ee8cb177851fcbda9b7a6710ffe495347c8fe9ff"
+  },
+  {
+   "id": "sbc-c14",
+   "kind": "sbc",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://riversideca.gov/human/sites/riversideca.gov.human/files/pdf/Benefits/Open-enrollment/2026/2026%20Kaiser%20HMO%2030%20Summary%20of%20Benefits%20and%20Coverage_0.pdf",
+   "source_bytes": 845401,
+   "source_sha256": "sha256:df9b61b88512b05a095a1ecbc901f5cf350b4fbdb142718a28d21c5e8ce1eb06",
+   "source_pages": 14,
+   "approved_max_bytes": 845401,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "city-of-riverside-ca",
+   "terms_group": "A",
+   "license": "No affirmative open reuse grant; site terms permit a download, and their exact conditions are in source_checks.json. URL and SHA-256 provenance only.",
+   "license_source": "https://riversideca.gov/website-disclaimer-limit-liability",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
+   },
+   "text_sha256": "sha256:231303e7d2b4e7f0ef0528307502a998ffb8f50bbde864be913e15ebeea3d049"
+  },
+  {
+   "id": "sbc-c15",
+   "kind": "sbc",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://oklahoma.gov/content/dam/ok/en/egid/documents/benefits-and-coverage/2026/2026-SBCHCHigh.pdf",
+   "source_bytes": 377508,
+   "source_sha256": "sha256:05563741211b750e783868ba39b31b659e84f553d146a5b16b3b8f144454089a",
+   "source_pages": 8,
+   "approved_max_bytes": 377508,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "state-of-oklahoma-omes",
+   "terms_group": "A",
+   "license": "No affirmative open reuse grant; site terms permit a download, and their exact conditions are in source_checks.json. URL and SHA-256 provenance only.",
+   "license_source": "https://oklahoma.gov/about/policy-disclaimers.html",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
+   },
+   "text_sha256": "sha256:9a10807fa6414768fbe866dc86d6fcae08314c8693d99572e5cd3e23c7092c04"
+  },
+  {
+   "id": "sbc-c16",
+   "kind": "sbc",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://oklahoma.gov/content/dam/ok/en/egid/documents/benefits-and-coverage/2026/2026-SBHCHDHP.pdf",
+   "source_bytes": 313017,
+   "source_sha256": "sha256:e4fac04e8034992a0ba38195cac6e27da100a90bd20daae056bd1c379a3b0eb8",
+   "source_pages": 8,
+   "approved_max_bytes": 313017,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "state-of-oklahoma-omes",
+   "terms_group": "A",
+   "license": "No affirmative open reuse grant; site terms permit a download, and their exact conditions are in source_checks.json. URL and SHA-256 provenance only.",
+   "license_source": "https://oklahoma.gov/about/policy-disclaimers.html",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
+   },
+   "text_sha256": "sha256:f981dc62c02af8ef4c2f460d565c2adf9d95577cadae36d899b2f855ae93d8bf"
+  },
+  {
+   "id": "sbc-c17",
+   "kind": "sbc",
+   "split": "development",
+   "selection_status": "frozen_member",
+   "source": "https://udel.edu/content/dam/udelImages/human-resources/benefits/aetna/SBC_UD_Aetna_CDHGoldPlan_2026_2027.pdf",
+   "source_bytes": 1032780,
+   "source_sha256": "sha256:1adfb1aeb43198d9f707fdb1165b6714ef9b17ae51b04335693e34156930edd1",
+   "source_pages": 12,
+   "approved_max_bytes": 1032780,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "university-of-delaware",
+   "terms_group": "A",
+   "license": "No affirmative open reuse grant; site terms permit a download, and their exact conditions are in source_checks.json. URL and SHA-256 provenance only.",
+   "license_source": "https://www.udel.edu/home/legal-notices/",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
+   },
+   "text_sha256": "sha256:3add9356620b9b9d4e214fa77cb502c362f8a0fb230e782f4958809ca4d35db2"
+  },
+  {
+   "id": "sbc-c18",
+   "kind": "sbc",
+   "split": "development",
+   "selection_status": "frozen_member",
+   "source": "https://udel.edu/content/dam/udelImages/human-resources/benefits/aetna/SBC_UD_Aetna_HMOPlan_2026_2027.pdf",
+   "source_bytes": 1045857,
+   "source_sha256": "sha256:99fbb9cc9abf5bac5618256463e0776484edffe0862986e4cee4f1a258c1cd27",
+   "source_pages": 12,
+   "approved_max_bytes": 1045857,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "university-of-delaware",
+   "terms_group": "A",
+   "license": "No affirmative open reuse grant; site terms permit a download, and their exact conditions are in source_checks.json. URL and SHA-256 provenance only.",
+   "license_source": "https://www.udel.edu/home/legal-notices/",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
+   },
+   "text_sha256": "sha256:170fd36afe9dee14b0463acdc1f11e2d110c0309e4117d9318b1aabca9eb0a19"
+  },
+  {
+   "id": "sbc-c19",
+   "kind": "sbc",
+   "split": "development",
+   "selection_status": "frozen_member",
+   "source": "https://hr.iastate.edu/files/documents/2025-09/Wellmark%20SBC%20PPO%201-1-2026.pdf",
+   "source_bytes": 676221,
+   "source_sha256": "sha256:59603a8e1ccb1c1616df3b60fee2aa1f87b92b80fc04f98dc443b7fee7946eeb",
+   "source_pages": 9,
+   "approved_max_bytes": 676221,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "iowa-state-university",
+   "terms_group": "A",
+   "license": "No affirmative open reuse grant; site terms permit a download, and their exact conditions are in source_checks.json. URL and SHA-256 provenance only.",
+   "license_source": "https://www.iastate.edu/disclaimers-and-terms",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
+   },
+   "text_sha256": "sha256:2c986c3f172ff3d6f303a84737ba6dc34aa33469eab4d82fbd69b11635febfdf"
+  },
+  {
+   "id": "sbc-c20",
+   "kind": "sbc",
+   "split": "development",
+   "selection_status": "frozen_member",
+   "source": "https://hr.iastate.edu/files/documents/2025-09/Wellmark%20SBC%20HMO%201-1-2026.pdf",
+   "source_bytes": 648824,
+   "source_sha256": "sha256:030d3bdb1b76441e5b561bbdf79aa077e5414200976a98ddc57ff011ef2d3661",
+   "source_pages": 9,
+   "approved_max_bytes": 648824,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "iowa-state-university",
+   "terms_group": "A",
+   "license": "No affirmative open reuse grant; site terms permit a download, and their exact conditions are in source_checks.json. URL and SHA-256 provenance only.",
+   "license_source": "https://www.iastate.edu/disclaimers-and-terms",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
+   },
+   "text_sha256": "sha256:2456d556dc5b2c10a7298234d2a61b264c84e44023a22e436a2dd59706bcc371"
+  },
+  {
+   "id": "sbc-c21",
+   "kind": "sbc",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://hr.unm.edu/docs/benefits/unm-lobohealth-summary-of-benefits-and-coverage-2026-2027.pdf",
+   "source_bytes": 706185,
+   "source_sha256": "sha256:b124452e65f593eeeeca163cf2ea2572a88c6ffd3e45600b23e67f814684d26c",
+   "source_pages": 10,
+   "approved_max_bytes": 706185,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "university-of-new-mexico",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "http://www.unm.edu/legal.html",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
+   },
+   "text_sha256": "sha256:f73ca0dc88b80ca1d6ab9c7ff80c74378ef501cbe587749c8bb8c674c009d236"
+  },
+  {
+   "id": "sbc-c22",
+   "kind": "sbc",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "http://hr.unm.edu/docs/benefits/presbyterian-summary-of-benefits-and-coverage-2026-2027.pdf",
+   "source_bytes": 569708,
+   "source_sha256": "sha256:8548a75951b72ff4de5f1903da8f60a5c8c38ef07e5c3116890e122efaf69881",
+   "source_pages": 7,
+   "approved_max_bytes": 569708,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "university-of-new-mexico",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "http://www.unm.edu/legal.html",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
+   },
+   "text_sha256": "sha256:bb76aeed0791ec8b63c8a5001b93fa4ebe4189c78f0f00ae42e041d63819d7d5"
+  },
+  {
+   "id": "sbc-c23",
+   "kind": "sbc",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://hr.gwu.edu/sites/g/files/zaxdzs5691/files/2026-01/2026%20PPO.pdf",
+   "source_bytes": 946135,
+   "source_sha256": "sha256:97c3e3c9bffdcc37d7e488697b9e6ffe3538e6a3fe153f8e63e8de441745a34e",
+   "source_pages": 13,
+   "approved_max_bytes": 946135,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "george-washington-university",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.gwu.edu/terms-use",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
+   },
+   "text_sha256": "sha256:2f664d982ea574cb1027d5735edb9b8214ec5a61421ff418b8ecc19d88b2b549"
+  },
+  {
+   "id": "sbc-c24",
+   "kind": "sbc",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://hr.gwu.edu/sites/g/files/zaxdzs5691/files/2026-01/2026%20GW%20HSP%20Plan.pdf",
+   "source_bytes": 920501,
+   "source_sha256": "sha256:30784da4ce32dbb880c6fe2967c09d02ed4e485b31aae883aba4e06566baaf76",
+   "source_pages": 13,
+   "approved_max_bytes": 920501,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "george-washington-university",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.gwu.edu/terms-use",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
+   },
+   "text_sha256": "sha256:952a78847137c58d17c30f41d1d2a74e2019607563a03cd7a05afacc7fcfea86"
+  },
+  {
+   "id": "sbc-c25",
+   "kind": "sbc",
+   "split": "development",
+   "selection_status": "frozen_member",
+   "source": "https://www.marquette.edu/human-resources/documents/sbc-01-01-2026-00-009-ppo.pdf",
+   "source_bytes": 323177,
+   "source_sha256": "sha256:6cf9b4d8c5803313fadbd87bec247e1ae42793e9c504e9e6ff5ca7c2672e2293",
+   "source_pages": 8,
+   "approved_max_bytes": 323177,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "marquette-university",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.marquette.edu/tools/legal.php",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
+   },
+   "text_sha256": "sha256:c24520257a6222a463551a6d35812efb6af1edb23702d9e86f7a3bc82306429b"
+  },
+  {
+   "id": "sbc-c26",
+   "kind": "sbc",
+   "split": "development",
+   "selection_status": "frozen_member",
+   "source": "https://www.marquette.edu/human-resources/documents/sbc-01-01-2026-00-010-hdhp.pdf",
+   "source_bytes": 322331,
+   "source_sha256": "sha256:5d3426867baddfcb804d5afc7684baf908122d5c2b9dc3a472211418fd845fbb",
+   "source_pages": 8,
+   "approved_max_bytes": 322331,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "marquette-university",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.marquette.edu/tools/legal.php",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
+   },
+   "text_sha256": "sha256:c8d1c3f0ca1810c6b8507f050aaee0219c07a4466eb5090ef7214214f2bd338c"
+  },
+  {
+   "id": "sbc-c27",
+   "kind": "sbc",
+   "split": "development",
+   "selection_status": "frozen_member",
+   "source": "https://www.bu.edu/hr/documents/2026_BCBS_PPO_SBC.pdf",
+   "source_bytes": 339150,
+   "source_sha256": "sha256:470b755ad36152091148c233c543d5796c0d6818f12c5d37d75a92ddacf71919",
+   "source_pages": 9,
+   "approved_max_bytes": 339150,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "boston-university",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.bu.edu/hr/home/disclaimer/",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
+   },
+   "text_sha256": "sha256:923b245df2215f013d99bbf9c1e9532fb2f2b9ac39eb5db0ea3d713147168b7e"
+  },
+  {
+   "id": "sbc-c28",
+   "kind": "sbc",
+   "split": "development",
+   "selection_status": "frozen_member",
+   "source": "https://www.bu.edu/hr/documents/2026_BU_Health_Savings_Plan_SBC.pdf",
+   "source_bytes": 320553,
+   "source_sha256": "sha256:2c67c6522ed890999aa56beacce399e95d321be72e1cea637f42ba8f7a7a4796",
+   "source_pages": 8,
+   "approved_max_bytes": 320553,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "boston-university",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.bu.edu/hr/home/disclaimer/",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The plan that this Summary of Benefits and Coverage describes",
+    "scope": "The coverage period that the document states. In-network medical benefits only. Deductible and out-of-pocket limit for one person and for a family. Specialist visit copay as a USD amount, not coinsurance. Do not add separate prescription-drug limits. Keep tiers and cost-category sublimits separate. Do not choose among equally applicable networks or tiers. Do not calculate unstated totals."
+   },
+   "text_sha256": "sha256:6ae5605f4d0c171a7bb18dc30d9ab84629dd587be01722f1cb10189c2cfa71e8"
+  },
+  {
+   "id": "annual-c01",
+   "kind": "annual",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://www.results.philips.com/app/uploads/2026/04/PhilipsFullAnnualReport2025-English.pdf",
+   "source_bytes": 36925082,
+   "source_sha256": "sha256:ff527efe35aa923bd6b592c38549bf1f9f207ac3cef2cec6695a7b9cd93efc6d",
+   "source_pages": 306,
+   "approved_max_bytes": 36925082,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "philips",
+   "terms_group": "A",
+   "license": "No affirmative open reuse grant; site terms permit a download, and their exact conditions are in source_checks.json. URL and SHA-256 provenance only.",
+   "license_source": "https://www.philips.com/a-w/terms-of-use",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "EUR"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "EUR"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "EUR"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "EUR"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "EUR"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "EUR"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
+   },
+   "text_sha256": "sha256:d5eefed2570f31c80eaa5a00fea686c22418483d3f5e3af4e69579169d2b2aed"
+  },
+  {
+   "id": "annual-c02",
+   "kind": "annual",
+   "split": "development",
+   "selection_status": "frozen_member",
+   "source": "https://reports.beiersdorf.com/annual-report/2025/_assets/downloads/entire-beiersdorf-ar25.pdf?h=5y9hhLi9",
+   "source_bytes": 14136691,
+   "source_sha256": "sha256:e72f6184b8bd6c03d3dfd4630b5ff43413a34f19988dc26472c2a1290242b61a",
+   "source_pages": 353,
+   "approved_max_bytes": 14136691,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "beiersdorf",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.beiersdorf.com/meta-pages/conditions-of-use",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "EUR"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "EUR"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "EUR"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "EUR"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "EUR"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "EUR"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
+   },
+   "text_sha256": "sha256:be3cfc44db6187be981624caa8bcec2a22c5bb704f2b4165f16239634caf4d1c"
+  },
+  {
+   "id": "annual-c03",
+   "kind": "annual",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://www.glanbia.com/sites/glanbia-plc/files/glanbia/investors/annual-report/2026/Glanbia-Annual-Report-2025.pdf",
+   "source_bytes": 11074277,
+   "source_sha256": "sha256:a92dc6343761f7c314213845aca2af8b2de0fcceaf9173ddc4462f7289612ede",
+   "source_pages": 310,
+   "approved_max_bytes": 11074277,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "glanbia",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.glanbia.com/terms-use",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "USD"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "USD"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "USD"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "USD"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "USD"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "USD"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
+   },
+   "text_sha256": "sha256:a55f893f2095bda151b2a1c517398adec19a4282aeb4a70dbe11734a59d11140"
+  },
+  {
+   "id": "annual-c04",
+   "kind": "annual",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://www.empireco.ca/uploads/2026/07/Empire-2026-Annual-Report-English-SEDAR.pdf?var=0",
+   "source_bytes": 1788673,
+   "source_sha256": "sha256:8afba6b1431cb662678216f87ba60ff5f9c1a63e620af9f33ce57ed7dff34302",
+   "source_pages": 108,
+   "approved_max_bytes": 1788673,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "empire-company",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.empireco.ca/legal-disclaimer",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "CAD"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "CAD"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "CAD"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "CAD"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "CAD"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "CAD"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
+   },
+   "text_sha256": "sha256:e994c14a22d8a13b7a4da89468bd4affc1fd6fbaa6d462547fc717946350eb59"
+  },
+  {
+   "id": "annual-c05",
+   "kind": "annual",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://www.mapleleaffoods.com/wp-content/uploads/sites/6/2026/04/Financial-Statements12.31.2025-C.pdf",
+   "source_bytes": 1923607,
+   "source_sha256": "sha256:2f3f24b6b16907f8e2e7a1259bb840375a027d5060cb7779b565ddffcd0565af",
+   "source_pages": 60,
+   "approved_max_bytes": 1923607,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "maple-leaf-foods",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.mapleleaffoods.com/terms-of-use/",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "CAD"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "CAD"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "CAD"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "CAD"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "CAD"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "CAD"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
+   },
+   "text_sha256": "sha256:6fe25b4f03379cd6947b9630d5d6a2562bfe471b4ad929af36ede8f9d3e6f21a"
+  },
+  {
+   "id": "annual-c06",
+   "kind": "annual",
+   "split": "development",
+   "selection_status": "frozen_member",
+   "source": "https://dis-prod.assetful.loblaw.ca/content/dam/loblaw-companies-limited/creative-assets/loblaw-ca/investor-relations-reports/annual/2025/LCL_2025%20Annual%20Report.pdf",
+   "source_bytes": 10000101,
+   "source_sha256": "sha256:2443b3ce2ebe0a103922ac50287b43a8884546909db612bf93fff45631834682",
+   "source_pages": 172,
+   "approved_max_bytes": 10000101,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "loblaw",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.loblaw.ca/en/legal/",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "CAD"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "CAD"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "CAD"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "CAD"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "CAD"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "CAD"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
+   },
+   "text_sha256": "sha256:867ffdc2b0af62f7fb426402bf62bc24663ebfc382a11a82e5b91d9aadbadf20"
+  },
+  {
+   "id": "annual-c07",
+   "kind": "annual",
+   "split": "development",
+   "selection_status": "frozen_member",
+   "source": "https://www.mbll.ca/sites/mbll-ca/files/2026-09/MBLL-Annual-Report-25-26.pdf",
+   "source_bytes": 1548624,
+   "source_sha256": "sha256:dc3e3100de9912a87ff097cf975ba76e325e11cf5366f1bac554b05b4d94ba0e",
+   "source_pages": 61,
+   "approved_max_bytes": 1548624,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "manitoba-liquor-lotteries",
+   "terms_group": "A",
+   "license": "No affirmative open reuse grant; site terms permit a download, and their exact conditions are in source_checks.json. URL and SHA-256 provenance only.",
+   "license_source": "https://www.mbll.ca/content/terms-and-conditions",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "CAD"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "CAD"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "CAD"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "CAD"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "CAD"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "CAD"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
+   },
+   "text_sha256": "sha256:e42f5b17d8d1b548d088dedd621bbb576a9eb41595aff799f53055994e06c4b8"
+  },
+  {
+   "id": "annual-c08",
+   "kind": "annual",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://www.wesfarmers.com.au/docs/default-source/reports/wesfarmers-2026-annual-report.pdf?Status=Master&sfvrsn=2fa1afbb_1",
+   "source_bytes": 15224214,
+   "source_sha256": "sha256:39386056c4ec96d4a7c039711a4c0d13fd439920ad63c4e5f3e0dcaa4eed07e0",
+   "source_pages": 211,
+   "approved_max_bytes": 15224214,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "wesfarmers",
+   "terms_group": "A",
+   "license": "No affirmative open reuse grant; site terms permit a download, and their exact conditions are in source_checks.json. URL and SHA-256 provenance only.",
+   "license_source": "https://www.wesfarmers.com.au/terms-of-use",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "AUD"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "AUD"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "AUD"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "AUD"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "AUD"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "AUD"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
+   },
+   "text_sha256": "sha256:81755dc0343f7d9a65e76884fc20d5e473d1fcc5a2c03d328ff863f1b1c66b21"
+  },
+  {
+   "id": "annual-c09",
+   "kind": "annual",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://a.storyblok.com/f/171317/x/83f39a3aa1/2026-annual-report.pdf",
+   "source_bytes": 12404035,
+   "source_sha256": "sha256:68c879ac86383656c9a4d03218e16e949cddda1d293429d15d910afee937d771",
+   "source_pages": 199,
+   "approved_max_bytes": 12404035,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "treasury-wine-estates",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.tweglobal.com/en-us/terms-of-use",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "AUD"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "AUD"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "AUD"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "AUD"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "AUD"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "AUD"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
+   },
+   "text_sha256": "sha256:b85080335fc7f7358e47e8539485748f60e4fe751d7c63c93619403a226edf19"
+  },
+  {
+   "id": "annual-c10",
+   "kind": "annual",
+   "split": "development",
+   "selection_status": "frozen_member",
+   "source": "https://www.pamunewzealand.com/pamunewzealand-pmu3/downloads/2026-P%C4%81mu-Integrated-Annual-Report.pdf",
+   "source_bytes": 5232681,
+   "source_sha256": "sha256:8e6565ff580c00a855552438dd3368feafb445b90802be9e81ef4c9cc048eaf7",
+   "source_pages": 98,
+   "approved_max_bytes": 5232681,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "pamu",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.pamunewzealand.com/disclaimer",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "NZD"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "NZD"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "NZD"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "NZD"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "NZD"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "NZD"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
+   },
+   "text_sha256": "sha256:f853f61d4f8a4f3ea1e93cf5714bfd9b7f02f401ea581970cca1add92f6e2006"
+  },
+  {
+   "id": "annual-c12",
+   "kind": "annual",
+   "split": "development",
+   "selection_status": "frozen_member",
+   "source": "https://clicksgroup.co.za/iar2025/wp-content/uploads/CGL-YE25-Annual-financial-statements.pdf",
+   "source_bytes": 4326708,
+   "source_sha256": "sha256:664c3ce033c0d36157277ae5ef9f28a933edd4acebc8cec649069cd20d9c576d",
+   "source_pages": 53,
+   "approved_max_bytes": 4326708,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "clicks-group",
+   "terms_group": "A",
+   "license": "No affirmative open reuse grant; site terms permit a download, and their exact conditions are in source_checks.json. URL and SHA-256 provenance only.",
+   "license_source": "https://www.clicksgroup.co.za/website-terms-and-conditions/",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "ZAR"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "ZAR"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "ZAR"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "ZAR"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "ZAR"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "ZAR"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
+   },
+   "text_sha256": "sha256:6f83e977985abcf20de4837e2fbe1f3016e2ad31334c8ed87c60876d911d552d"
+  },
+  {
+   "id": "annual-c14",
+   "kind": "annual",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://www.airports.co.za/Documents/25246%20ACSA%20-%20AFS%202026%20V15.pdf",
+   "source_bytes": 6565970,
+   "source_sha256": "sha256:cfc052e79ae45105e199b79f5e4ab9525cbd241a2a6447bc825551ef4d6acd2b",
+   "source_pages": 118,
+   "approved_max_bytes": 6565970,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "airports-company-south-africa",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.airports.co.za/globals/terms-and-conditions",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "ZAR"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "ZAR"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "ZAR"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "ZAR"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "ZAR"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "ZAR"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
+   },
+   "text_sha256": "sha256:10333653fc7c7238e1fde52da201d24e36bc3fbfdb5f6fc778fb96dd11b0acf5"
+  },
+  {
+   "id": "annual-c15",
+   "kind": "annual",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://storage.towngas.com/static-site/annual-report/eng/TGAR2025/E_2025AR.pdf",
+   "source_bytes": 32526596,
+   "source_sha256": "sha256:ee06bb6c48f34d3a3dd3cb568ab224ec98115b9aca9ec4f2095000906e5ca67f",
+   "source_pages": 240,
+   "approved_max_bytes": 32526596,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "hong-kong-china-gas",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.towngas.com/en/Info/Disclaimer",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "HKD"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "HKD"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "HKD"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "HKD"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "HKD"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "HKD"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
+   },
+   "text_sha256": "sha256:54a31602668e6369d93949e843ded22c0f8bbe2c94b176d1be59649ca0d5a343"
+  },
+  {
+   "id": "annual-c16",
+   "kind": "annual",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://www.ttigroup.com/sites/default/files/2026-03/ar2025.pdf",
+   "source_bytes": 35980638,
+   "source_sha256": "sha256:3dfc4551717fbd30da0f2e4c8c9a6175c684127bb1b973e945d967f7b4b0a31c",
+   "source_pages": 184,
+   "approved_max_bytes": 35980638,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "techtronic-industries",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.ttigroup.com/terms-of-use",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "USD"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "USD"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "USD"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "USD"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "USD"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "USD"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
+   },
+   "text_sha256": "sha256:1eadde6b994145494f5ffb72cd7cf9d970028042d9fb914ace5c23fcab2ed023"
+  },
+  {
+   "id": "annual-c17",
+   "kind": "annual",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://img.thehourglass.com/uploads/2026/06/FY2026_Annual-Report-1.pdf",
+   "source_bytes": 1591352,
+   "source_sha256": "sha256:82ff19fb6963c3c5930eb31d0577c3a272247f79a7db94902c6d63781b189e7f",
+   "source_pages": 158,
+   "approved_max_bytes": 1591352,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "hour-glass",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.thehourglass.com/terms-and-conditions",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "SGD"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "SGD"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "SGD"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "SGD"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "SGD"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "SGD"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
+   },
+   "text_sha256": "sha256:9d5c1ec29599084d3d184d4cfef84406f77e5dbf33a7e2bdb4bdbb922c5262a6"
+  },
+  {
+   "id": "annual-c18",
+   "kind": "annual",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://www.uol.com.sg/wp-content/uploads/uol-reports/files/UOL-Annual-Report-2025.pdf",
+   "source_bytes": 11291243,
+   "source_sha256": "sha256:2b7c349f845e45bb13d3d1cc95e41ec954d4cd2a781eeab185a3da8da423ddc3",
+   "source_pages": 232,
+   "approved_max_bytes": 11291243,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "uol-group",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.uol.com.sg/disclaimer/",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "SGD"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "SGD"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "SGD"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "SGD"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "SGD"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "SGD"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
+   },
+   "text_sha256": "sha256:ef7e4157e4e364db85e53032eaaac6e09948446623c24529b57fca2d53ccd426"
+  },
+  {
+   "id": "annual-c19",
+   "kind": "annual",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://bumitama-agri.com/wp-content/uploads/2026/04/BAL-Annual-Report-2025.pdf",
+   "source_bytes": 10911839,
+   "source_sha256": "sha256:de6a36f9361c99b9656c9e07282fb9ab5d39ce490362949426e99520620aa2b0",
+   "source_pages": 149,
+   "approved_max_bytes": 10911839,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "bumitama-agri",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://bumitama-agri.com/terms-of-use/",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "IDR"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "IDR"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "IDR"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "IDR"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "IDR"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "IDR"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
+   },
+   "text_sha256": "sha256:42ede649662f0e81c1ad76c563ea0d824823613722a1d7f3169e7637ebaaf01d"
+  },
+  {
+   "id": "annual-c20",
+   "kind": "annual",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://www.tataconsumer.com/sites/g/files/gfwrlq316/files/2026-06/INTEGRATED_ANNUAL_REPORT_F_Y_2025_26.pdf",
+   "source_bytes": 23704375,
+   "source_sha256": "sha256:e5e1f09838183e22dbf3fc11056894b197401f462cc7966ff295419e4e660b8d",
+   "source_pages": 428,
+   "approved_max_bytes": 23704375,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "tata-consumer-products",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.tataconsumer.com/disclaimer",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "INR"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "INR"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "INR"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "INR"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "INR"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "INR"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
+   },
+   "text_sha256": "sha256:fefa4ef7200bb35f06064f194bf0e3d59c5cca5f33c2014b3398046f72c5413b"
+  },
+  {
+   "id": "annual-c21",
+   "kind": "annual",
+   "split": "development",
+   "selection_status": "frozen_member",
+   "source": "https://www.gn.com/-/media/Files/Financial-Download-Center/2026/Q1/GN-Annual-Report-2025.pdf",
+   "source_bytes": 14110699,
+   "source_sha256": "sha256:3deac8acec8e35cbd49fca178e9e21cff5a200801af61a5f18d87f789200e555",
+   "source_pages": 195,
+   "approved_max_bytes": 14110699,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "gn-store-nord",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.gn.com/Legal-notice",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "DKK"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "DKK"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "DKK"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "DKK"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "DKK"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "DKK"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
+   },
+   "text_sha256": "sha256:4391ddac8f9bdae216b73ff4c4a47dc5e601cc11d69b8fe24a7aa9bc0a993fbc"
+  },
+  {
+   "id": "annual-c22",
+   "kind": "annual",
+   "split": "development",
+   "selection_status": "frozen_member",
+   "source": "https://assets.www.essity.com/essity/Annual-Report-2025-digital-pdf-.pdf",
+   "source_bytes": 16669256,
+   "source_sha256": "sha256:b71f102d5121fa0f7e50df9e69c30399d0c9bdae8dcdd4206eff062f46f8c5bc",
+   "source_pages": 192,
+   "approved_max_bytes": 16669256,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "essity",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.essity.com/terms-and-conditions",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "SEK"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "SEK"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "SEK"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "SEK"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "SEK"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "SEK"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
+   },
+   "text_sha256": "sha256:f65ac6683feb6cecf9001c092cd49e2b0bafa10c2034b82f07039650b8132284"
+  },
+  {
+   "id": "annual-c23",
+   "kind": "annual",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://www.nokia.com/system/files/2026-03/nokia-annual-report-2025.pdf",
+   "source_bytes": 14181152,
+   "source_sha256": "sha256:fa6067b17c09d25b05571ceec218fb3f524054fc8cb7d8eb899221c7b7404455",
+   "source_pages": 295,
+   "approved_max_bytes": 14181152,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "nokia",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.nokia.com/notices/terms/",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "EUR"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "EUR"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "EUR"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "EUR"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "EUR"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "EUR"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
+   },
+   "text_sha256": "sha256:bbfe9e84a447cab98fc39d430f2d6257fa2931bca12d1f7b2941692fd08d9e43"
+  },
+  {
+   "id": "annual-c24",
+   "kind": "annual",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://www.annualreport.sandvik/en/2025/_assets/downloads/entire-en-svk-ar25.pdf",
+   "source_bytes": 17141297,
+   "source_sha256": "sha256:b3f7b20c4dc8a59fd92bc6a89ed5b8efa19a0328b816837cae7d8864438af165",
+   "source_pages": 180,
+   "approved_max_bytes": 17141297,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "sandvik",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.home.sandvik/en/about-this-site/legal-notice/",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "SEK"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "SEK"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "SEK"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "SEK"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "SEK"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "SEK"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
+   },
+   "text_sha256": "sha256:e65805001a29d2c8fdbcf56f4d684eeb1749cefcfdedee91c9d2ff19cd145824"
+  },
+  {
+   "id": "annual-c25",
+   "kind": "annual",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://www.bidvest.co.za/pdf/annual-reports/2025/bidvest-afs-2025.pdf",
+   "source_bytes": 5596131,
+   "source_sha256": "sha256:b95bbe14f4581c538b3e09f28b9e0bfe0aa294508d39f2881bc3ceba97bba50e",
+   "source_pages": 144,
+   "approved_max_bytes": 5596131,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "bidvest-group",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.bidvest.co.za/disclaimer",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "ZAR"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "ZAR"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "ZAR"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "ZAR"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "ZAR"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "ZAR"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
+   },
+   "text_sha256": "sha256:e8a797f48c1f87bd6e9c00ef768efa1b17347579ac85866e9b8f61de944d829f"
+  },
+  {
+   "id": "annual-c26",
+   "kind": "annual",
+   "split": "development",
+   "selection_status": "frozen_member",
+   "source": "https://www.husqvarnagroup.com/sites/husqvarna/files/pr/202603249629-1.pdf",
+   "source_bytes": 14294712,
+   "source_sha256": "sha256:33bef8acfbaaaba22e71b0096e146e81545687ce864e39f543752ec90affa57c",
+   "source_pages": 134,
+   "approved_max_bytes": 14294712,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "husqvarna",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.husqvarnagroup.com/en/terms-use",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "SEK"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "SEK"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "SEK"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "SEK"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "SEK"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "SEK"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
+   },
+   "text_sha256": "sha256:e6814eaefdb8b30c7a8b2c600b0e7f7b52b6ad2c13e088e47eea78d9f5848c94"
+  },
+  {
+   "id": "annual-c28",
+   "kind": "annual",
+   "split": "development",
+   "selection_status": "frozen_member",
+   "source": "https://www.huhtamaki.com/globalassets/global/investors/reports-and-presentations/en/2025/huhtamaki_annual-report-2025.pdf",
+   "source_bytes": 8206473,
+   "source_sha256": "sha256:48907673f30ee3e46d86fab1bf6abbb81092c5e6abff67c8f8390ca83fe75a8b",
+   "source_pages": 214,
+   "approved_max_bytes": 8206473,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "huhtamaki",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.huhtamaki.com/en/legal-notice/",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "schema": {
+    "fields": {
+     "cost_of_sales": {
+      "aliases": [
+       "Cost of sales"
+      ],
+      "description": "Latest consolidated full-year cost of sales, positive amount. Do not substitute operating expenses.",
+      "type": "number",
+      "unit": "EUR"
+     },
+     "gross_profit": {
+      "aliases": [
+       "Gross profit"
+      ],
+      "description": "Latest consolidated full-year gross profit as stated, preserving sign. Do not compute an unstated value.",
+      "type": "number",
+      "unit": "EUR"
+     },
+     "revenue": {
+      "aliases": [
+       "Revenue",
+       "Turnover"
+      ],
+      "description": "Latest consolidated full-year revenue, in the reporting currency after its printed scale.",
+      "type": "number",
+      "unit": "EUR"
+     },
+     "total_assets": {
+      "aliases": [
+       "Total assets"
+      ],
+      "description": "Latest consolidated full-year closing total assets.",
+      "type": "number",
+      "unit": "EUR"
+     },
+     "total_equity": {
+      "aliases": [
+       "Total equity"
+      ],
+      "description": "Latest consolidated full-year closing total equity, preserving sign.",
+      "type": "number",
+      "unit": "EUR"
+     },
+     "total_liabilities": {
+      "aliases": [
+       "Total liabilities"
+      ],
+      "description": "Latest consolidated full-year closing total liabilities, preserving the printed sign.",
+      "type": "number",
+      "unit": "EUR"
+     }
+    }
+   },
+   "request_context": {
+    "subject": "The reporting entity's own consolidated group in this annual report",
+    "scope": "Latest full fiscal year in this report. Own consolidated group, not parent-only, agency-only or condensed accounts. Original reporting currency after any printed scale. Cost of sales is a positive amount; preserve other printed signs. Do not calculate unstated totals or profit."
+   },
+   "text_sha256": "sha256:656f66e6006a2ba1dc54070efa147972d2139cbc6ba26baa5329a4c918a20247"
+  },
+  {
+   "id": "sds-c01",
+   "kind": "sds",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://tuigarden.co.nz/media/molpetmf/tui-seaweed-fish-fertiliser-concentrate-sds.pdf",
+   "source_bytes": 167563,
+   "source_sha256": "sha256:fca493363c08c155aa2a74c18f5f970eabb6c0a435e9aa68ba956a942f852809",
+   "source_pages": 5,
+   "approved_max_bytes": 167563,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "tui-liquid-fertilisers",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://tuigarden.co.nz/about-tui/terms-conditions/",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The named product in this safety data sheet",
+    "scope": "The value as Section 9 or Section 14 states it. Flash point and initial boiling point in degrees Celsius. pH and relative density without a unit. The UN number as UN and four digits. If the sheet gives two methods, conditions, parts or a range that this request does not fix, do not choose one. Do not convert units or calculate a value."
+   },
+   "text_sha256": "sha256:c30c03c914c2669754113c19125e9c1e7679c5fb868feed5844c01a19ec379e2"
+  },
+  {
+   "id": "sds-c02",
+   "kind": "sds",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://tuigarden.co.nz/media/hapliteh/tui-indoor-plant-insect-spray-rtu-sds.pdf",
+   "source_bytes": 209647,
+   "source_sha256": "sha256:9d67e75abe0dc151a70a815b01265c508c0de94fce62174d0a765e735e73f84e",
+   "source_pages": 6,
+   "approved_max_bytes": 209647,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "tui-pest-control",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://tuigarden.co.nz/about-tui/terms-conditions/",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The named product in this safety data sheet",
+    "scope": "The value as Section 9 or Section 14 states it. Flash point and initial boiling point in degrees Celsius. pH and relative density without a unit. The UN number as UN and four digits. If the sheet gives two methods, conditions, parts or a range that this request does not fix, do not choose one. Do not convert units or calculate a value."
+   },
+   "text_sha256": "sha256:f238291bd307e1d93e12f75010fed33d51e539eee8bb5b7d63a6df086b1d4d7c"
+  },
+  {
+   "id": "sds-c03",
+   "kind": "sds",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://www.gardenhealth.com/wp-content/uploads/2019/04/Resolva-Weedkiller-2-Action-Concentrate.pdf",
+   "source_bytes": 286913,
+   "source_sha256": "sha256:a1eaf2447fce0e54ae004b41e20bfd13f4846e54e6755930eea750e78e6e4c1e",
+   "source_pages": 11,
+   "approved_max_bytes": 286913,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "westland-resolva-weedkillers",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.gardenhealth.com/terms-of-use",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The named product in this safety data sheet",
+    "scope": "The value as Section 9 or Section 14 states it. Flash point and initial boiling point in degrees Celsius. pH and relative density without a unit. The UN number as UN and four digits. If the sheet gives two methods, conditions, parts or a range that this request does not fix, do not choose one. Do not convert units or calculate a value."
+   },
+   "text_sha256": "sha256:ea951b4808278fdbe8b80d0593feecd25a1046537f2ccba8c34d2015239f289c"
+  },
+  {
+   "id": "sds-c04",
+   "kind": "sds",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://www.gardenhealth.com/wp-content/uploads/2019/01/Resolva_Bug__Mildew_RTU.pdf",
+   "source_bytes": 130318,
+   "source_sha256": "sha256:3fb7c01e4a36c469f93419e992575f2a7ec9a5e701fd4ec3bf83d2a3cbe0d351",
+   "source_pages": 11,
+   "approved_max_bytes": 130318,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "westland-resolva-bug-control",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.gardenhealth.com/terms-of-use",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The named product in this safety data sheet",
+    "scope": "The value as Section 9 or Section 14 states it. Flash point and initial boiling point in degrees Celsius. pH and relative density without a unit. The UN number as UN and four digits. If the sheet gives two methods, conditions, parts or a range that this request does not fix, do not choose one. Do not convert units or calculate a value."
+   },
+   "text_sha256": "sha256:9d28dbc930ad54ab39e4e6a682a7268d1918387469bbedc3116cd608eb766cb4"
+  },
+  {
+   "id": "sds-c05",
+   "kind": "sds",
+   "split": "development",
+   "selection_status": "frozen_member",
+   "source": "https://www.seasol.com.au/wp-content/uploads/2026/02/SEN000025-SEASOL_CONCENTRATE__HG_-AUS_GHS.pdf",
+   "source_bytes": 497849,
+   "source_sha256": "sha256:92baecde38e27870ad1899f885cf2451615614ddbb0e5f400ac60d3f4c45f2e1",
+   "source_pages": 7,
+   "approved_max_bytes": 497849,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "seasol-seaweed-concentrates",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.seasol.com.au/site-terms/",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The named product in this safety data sheet",
+    "scope": "The value as Section 9 or Section 14 states it. Flash point and initial boiling point in degrees Celsius. pH and relative density without a unit. The UN number as UN and four digits. If the sheet gives two methods, conditions, parts or a range that this request does not fix, do not choose one. Do not convert units or calculate a value."
+   },
+   "text_sha256": "sha256:cc7b0ac0ae35e2faf6da31d13cd84e3ee097a3c600645e694cd8b9da4b46f99f"
+  },
+  {
+   "id": "sds-c06",
+   "kind": "sds",
+   "split": "development",
+   "selection_status": "frozen_member",
+   "source": "https://www.superiorpropane.com/-/media/01_propane_2024-02-11_en.ashx",
+   "source_bytes": 425844,
+   "source_sha256": "sha256:b53088b06744f9df17e5e8af2e942ca80742a4d1b5db390d1a5c8e3128d93de7",
+   "source_pages": 11,
+   "approved_max_bytes": 425844,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "superiorpropane-lpg",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.superiorpropane.com/terms-and-conditions",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The named product in this safety data sheet",
+    "scope": "The value as Section 9 or Section 14 states it. Flash point and initial boiling point in degrees Celsius. pH and relative density without a unit. The UN number as UN and four digits. If the sheet gives two methods, conditions, parts or a range that this request does not fix, do not choose one. Do not convert units or calculate a value."
+   },
+   "text_sha256": "sha256:74fd5aa9dd2c551a664524c069b679b081de092d515601a209e369e3f3952b2e"
+  },
+  {
+   "id": "sds-c07",
+   "kind": "sds",
+   "split": "development",
+   "selection_status": "frozen_member",
+   "source": "https://www.superiorpropane.com/-/media/02_butane_07212025_en.ashx",
+   "source_bytes": 372857,
+   "source_sha256": "sha256:59a5765194562018e07c4d615ea55db62d6b7a1ec4aee8429bd3acddb497999f",
+   "source_pages": 11,
+   "approved_max_bytes": 372857,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "superiorpropane-lpg",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.superiorpropane.com/terms-and-conditions",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The named product in this safety data sheet",
+    "scope": "The value as Section 9 or Section 14 states it. Flash point and initial boiling point in degrees Celsius. pH and relative density without a unit. The UN number as UN and four digits. If the sheet gives two methods, conditions, parts or a range that this request does not fix, do not choose one. Do not convert units or calculate a value."
+   },
+   "text_sha256": "sha256:f3efe3781a7a73aa06c9813bf6c7779fca90846385f4344cac0ef495a113b005"
+  },
+  {
+   "id": "sds-c08",
+   "kind": "sds",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://plytix-files.com/api/v1.1/file/public_files/pim/assets/45/7d/ae/5f/5fae7d45c573435950d65e1e/texts/5a/7d/b5/67/67b57d5a941bdb08a4d69f39/56599-GB-GB.pdf",
+   "source_bytes": 177892,
+   "source_sha256": "sha256:50b7a4eeb454b5870c2afda5d1cbd3f5cc366070cb920f04b2c5133f9c8a8f8a",
+   "source_pages": 12,
+   "approved_max_bytes": 177892,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "fernox-inhibitors",
+   "terms_group": "A",
+   "license": "No affirmative open reuse grant; site terms permit a download, and their exact conditions are in source_checks.json. URL and SHA-256 provenance only.",
+   "license_source": "https://fernox.com/disclaimer/",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The named product in this safety data sheet",
+    "scope": "The value as Section 9 or Section 14 states it. Flash point and initial boiling point in degrees Celsius. pH and relative density without a unit. The UN number as UN and four digits. If the sheet gives two methods, conditions, parts or a range that this request does not fix, do not choose one. Do not convert units or calculate a value."
+   },
+   "text_sha256": "sha256:a122f28e90d1ca4e36ac071de54cf42092cdbb07665ee83e2a6525f4c385a71e"
+  },
+  {
+   "id": "sds-c09",
+   "kind": "sds",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://plytix-files.com/api/v1.1/file/public_files/pim/assets/45/7d/ae/5f/5fae7d45c573435950d65e1e/texts/58/7d/b5/67/67b57d58941bdb08a4d69ed8/56600-GB-GB.pdf",
+   "source_bytes": 167560,
+   "source_sha256": "sha256:4726c2d30c42f9907bc47536561c584c026c737d3503755e1206c3248d4160e4",
+   "source_pages": 11,
+   "approved_max_bytes": 167560,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "fernox-cleaners",
+   "terms_group": "A",
+   "license": "No affirmative open reuse grant; site terms permit a download, and their exact conditions are in source_checks.json. URL and SHA-256 provenance only.",
+   "license_source": "https://fernox.com/disclaimer/",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The named product in this safety data sheet",
+    "scope": "The value as Section 9 or Section 14 states it. Flash point and initial boiling point in degrees Celsius. pH and relative density without a unit. The UN number as UN and four digits. If the sheet gives two methods, conditions, parts or a range that this request does not fix, do not choose one. Do not convert units or calculate a value."
+   },
+   "text_sha256": "sha256:19ab0a1f6ff12cddf8ecded5451922e8a6a4f076420250793010a670f0bc30fd"
+  },
+  {
+   "id": "sds-c10",
+   "kind": "sds",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://plytix-files.com/api/v1.1/file/public_files/pim/assets/45/7d/ae/5f/5fae7d45c573435950d65e1e/texts/54/7d/b5/67/67b57d54941bdb08a4d69e1b/56603-GB-GB.pdf",
+   "source_bytes": 159561,
+   "source_sha256": "sha256:2c9afb63efc29523d59e3b21ccd15b1a429b65de9785d592fa25ca52f7deec10",
+   "source_pages": 10,
+   "approved_max_bytes": 159561,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "fernox-leak-sealers",
+   "terms_group": "A",
+   "license": "No affirmative open reuse grant; site terms permit a download, and their exact conditions are in source_checks.json. URL and SHA-256 provenance only.",
+   "license_source": "https://fernox.com/disclaimer/",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The named product in this safety data sheet",
+    "scope": "The value as Section 9 or Section 14 states it. Flash point and initial boiling point in degrees Celsius. pH and relative density without a unit. The UN number as UN and four digits. If the sheet gives two methods, conditions, parts or a range that this request does not fix, do not choose one. Do not convert units or calculate a value."
+   },
+   "text_sha256": "sha256:a9ba68457cfacdf41fe2da9187699c2c5a62014ceb62f7b984b875483e78d6da"
+  },
+  {
+   "id": "sds-c11",
+   "kind": "sds",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://www.clarkrubber.com.au/files/Page%20PDFs/Safety_Data_Sheet_Clark_Rubber_Filtrite_pH_Up.pdf",
+   "source_bytes": 172482,
+   "source_sha256": "sha256:cf23c5085df261691dd43b5a1ccb8f75a9b48c4b79fc9d3dac0c944502e4b158",
+   "source_pages": 6,
+   "approved_max_bytes": 172482,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "clarkrubber-filtrite-ph",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.clarkrubber.com.au/terms-conditions",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The named product in this safety data sheet",
+    "scope": "The value as Section 9 or Section 14 states it. Flash point and initial boiling point in degrees Celsius. pH and relative density without a unit. The UN number as UN and four digits. If the sheet gives two methods, conditions, parts or a range that this request does not fix, do not choose one. Do not convert units or calculate a value."
+   },
+   "text_sha256": "sha256:fb18e09ff591fc59023a5a980d33407e0ee6d2ce5fbaf73acf87c05b6f5ebe73"
+  },
+  {
+   "id": "sds-c12",
+   "kind": "sds",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://www.clarkrubber.com.au/files/Page%20PDFs/4671_FILTRITE_PH_DOWN_FILTRITE_SPA_PH_DOWN__AU.pdf",
+   "source_bytes": 172560,
+   "source_sha256": "sha256:9c4e797ec2873ff0c69ce602485b6a81eb9463a7cc2f2a334894e94a3f7275cd",
+   "source_pages": 6,
+   "approved_max_bytes": 172560,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "clarkrubber-filtrite-ph",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.clarkrubber.com.au/terms-conditions",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The named product in this safety data sheet",
+    "scope": "The value as Section 9 or Section 14 states it. Flash point and initial boiling point in degrees Celsius. pH and relative density without a unit. The UN number as UN and four digits. If the sheet gives two methods, conditions, parts or a range that this request does not fix, do not choose one. Do not convert units or calculate a value."
+   },
+   "text_sha256": "sha256:d8fc6a044f9c4a75dea9542cafc02123140e0b05d0e24184c2144fb79d68c753"
+  },
+  {
+   "id": "sds-c13",
+   "kind": "sds",
+   "split": "development",
+   "selection_status": "frozen_member",
+   "source": "https://www.clarkrubber.com.au/files/Page%20PDFs/Safety_Data_Sheet_Clark_Rubber_Filtrite_Tile_Vinyl_Cleaner.pdf",
+   "source_bytes": 353806,
+   "source_sha256": "sha256:54305cef84aa7c61b1fd5e45467392628fba54e0355a4b313a9133350614e674",
+   "source_pages": 6,
+   "approved_max_bytes": 353806,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "clarkrubber-filtrite-cleaners",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.clarkrubber.com.au/terms-conditions",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The named product in this safety data sheet",
+    "scope": "The value as Section 9 or Section 14 states it. Flash point and initial boiling point in degrees Celsius. pH and relative density without a unit. The UN number as UN and four digits. If the sheet gives two methods, conditions, parts or a range that this request does not fix, do not choose one. Do not convert units or calculate a value."
+   },
+   "text_sha256": "sha256:95f4ab1a520fd65f16c1d8746b4d987ff6a1f1d61ff144bfe5d93c026390b498"
+  },
+  {
+   "id": "sds-c14",
+   "kind": "sds",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://www.rustbullet.com/wp-content/uploads/SDS_Rust_Bullet.pdf",
+   "source_bytes": 745564,
+   "source_sha256": "sha256:3020f5669bbe4ea07b76bec1ab16514fde551cc9290516eff595f6229aa806c1",
+   "source_pages": 10,
+   "approved_max_bytes": 745564,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "rustbullet-coatings",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.rustbullet.com/terms-of-service",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The named product in this safety data sheet",
+    "scope": "The value as Section 9 or Section 14 states it. Flash point and initial boiling point in degrees Celsius. pH and relative density without a unit. The UN number as UN and four digits. If the sheet gives two methods, conditions, parts or a range that this request does not fix, do not choose one. Do not convert units or calculate a value."
+   },
+   "text_sha256": "sha256:d65ca143dc95547cfc23a6ecbeeacc87c344c0edb027345856cd1aae80262d03"
+  },
+  {
+   "id": "sds-c15",
+   "kind": "sds",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://www.rustbullet.com/wp-content/uploads/GHS_SDS_Rust_Bullet_Solvent.pdf",
+   "source_bytes": 697807,
+   "source_sha256": "sha256:b93bea14832b8bcb58c800e02d6ff807c21aecf548a5854eae8f161ad9c7d57e",
+   "source_pages": 8,
+   "approved_max_bytes": 697807,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "rustbullet-solvent",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.rustbullet.com/terms-of-service",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The named product in this safety data sheet",
+    "scope": "The value as Section 9 or Section 14 states it. Flash point and initial boiling point in degrees Celsius. pH and relative density without a unit. The UN number as UN and four digits. If the sheet gives two methods, conditions, parts or a range that this request does not fix, do not choose one. Do not convert units or calculate a value."
+   },
+   "text_sha256": "sha256:31f5457f2f178af3a9a8497f5d636dfac40453351534959fab19e3224f2f7887"
+  },
+  {
+   "id": "sds-c16",
+   "kind": "sds",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://www.rustbullet.com/wp-content/uploads/GHS_SDS_Metal_Blast.pdf",
+   "source_bytes": 424572,
+   "source_sha256": "sha256:0b7a118eb2050e877df57df10b9e48533cc1ec075ca5539726e0cc2817374fed",
+   "source_pages": 8,
+   "approved_max_bytes": 424572,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "rustbullet-surface-prep",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.rustbullet.com/terms-of-service",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The named product in this safety data sheet",
+    "scope": "The value as Section 9 or Section 14 states it. Flash point and initial boiling point in degrees Celsius. pH and relative density without a unit. The UN number as UN and four digits. If the sheet gives two methods, conditions, parts or a range that this request does not fix, do not choose one. Do not convert units or calculate a value."
+   },
+   "text_sha256": "sha256:a8f7f20df27fd85d16f2113d502b67b29c01ddc99e0e0788c2cc2586e06b0d26"
+  },
+  {
+   "id": "sds-c17",
+   "kind": "sds",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://otistec.com/content/SDS%20-%20Otis%20Technology/SDS_OTIS_O85%20IP-902-085.pdf",
+   "source_bytes": 420051,
+   "source_sha256": "sha256:c48711e31439c0e90b224c756723d08b91539233d8cf5aa94bc6dcce67c35e5b",
+   "source_pages": 7,
+   "approved_max_bytes": 420051,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "otis-bore-cleaners",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://otistec.com/terms-and-conditions/",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The named product in this safety data sheet",
+    "scope": "The value as Section 9 or Section 14 states it. Flash point and initial boiling point in degrees Celsius. pH and relative density without a unit. The UN number as UN and four digits. If the sheet gives two methods, conditions, parts or a range that this request does not fix, do not choose one. Do not convert units or calculate a value."
+   },
+   "text_sha256": "sha256:2469c9941c93d861af4da2c07e47c78468b5d44792b239d7487cc960f8e8054d"
+  },
+  {
+   "id": "sds-c18",
+   "kind": "sds",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://dustbane2025.objects.frb.io/uploads/files/sds/Degreaser.pdf?v=1760897349",
+   "source_bytes": 243689,
+   "source_sha256": "sha256:e598ac4ded82045c94d6e25964e44c4a1982acefc48b72da5439d8cfffbce790",
+   "source_pages": 9,
+   "approved_max_bytes": 243689,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "dustbane-cleaning-chemicals",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.dustbane.ca/terms-of-use",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The named product in this safety data sheet",
+    "scope": "The value as Section 9 or Section 14 states it. Flash point and initial boiling point in degrees Celsius. pH and relative density without a unit. The UN number as UN and four digits. If the sheet gives two methods, conditions, parts or a range that this request does not fix, do not choose one. Do not convert units or calculate a value."
+   },
+   "text_sha256": "sha256:756ac032841129e6f796f3b9003d1ec6c5bd7cd1c60767b2f070c2d96c6875e1"
+  },
+  {
+   "id": "sds-c19",
+   "kind": "sds",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://dustbane2025.objects.frb.io/uploads/files/sds/Glass-Cleaner.pdf?v=1760897336",
+   "source_bytes": 244700,
+   "source_sha256": "sha256:0b0855b36df423ecedbf932b8da4aa3c46768c47dcd674598b5b07d87cdf102f",
+   "source_pages": 9,
+   "approved_max_bytes": 244700,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "dustbane-cleaning-chemicals",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.dustbane.ca/terms-of-use",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The named product in this safety data sheet",
+    "scope": "The value as Section 9 or Section 14 states it. Flash point and initial boiling point in degrees Celsius. pH and relative density without a unit. The UN number as UN and four digits. If the sheet gives two methods, conditions, parts or a range that this request does not fix, do not choose one. Do not convert units or calculate a value."
+   },
+   "text_sha256": "sha256:58c7e7ed6a497430def1e78b7578107fc719ae0cd240ee3c6a5aa27c0ecb1609"
+  },
+  {
+   "id": "sds-c20",
+   "kind": "sds",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://dustbane2025.objects.frb.io/uploads/files/sds/Oven_Cleaner.pdf?v=1760903942",
+   "source_bytes": 291336,
+   "source_sha256": "sha256:726d6d9b4da92e7143d74c59f0c8c2b2955227923849541f293e738de63629fd",
+   "source_pages": 12,
+   "approved_max_bytes": 291336,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "dustbane-cleaning-chemicals",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.dustbane.ca/terms-of-use",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The named product in this safety data sheet",
+    "scope": "The value as Section 9 or Section 14 states it. Flash point and initial boiling point in degrees Celsius. pH and relative density without a unit. The UN number as UN and four digits. If the sheet gives two methods, conditions, parts or a range that this request does not fix, do not choose one. Do not convert units or calculate a value."
+   },
+   "text_sha256": "sha256:c297d08764ed2c548ddb92787658629263bf8badaae692f807cbdd92a4556d11"
+  },
+  {
+   "id": "sds-c21",
+   "kind": "sds",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://cdn.shopify.com/s/files/1/0440/7889/1168/files/Colourtrend_Gloss_2023.pdf?v=1683189333",
+   "source_bytes": 1066769,
+   "source_sha256": "sha256:2c4006137ad36d900cbcd44f4009c528181874ed0640664b22321d2d0f7ebcf0",
+   "source_pages": 10,
+   "approved_max_bytes": 1066769,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "colourtrend-trade-finishes",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://colourtrend.ie/policies/terms-of-service",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The named product in this safety data sheet",
+    "scope": "The value as Section 9 or Section 14 states it. Flash point and initial boiling point in degrees Celsius. pH and relative density without a unit. The UN number as UN and four digits. If the sheet gives two methods, conditions, parts or a range that this request does not fix, do not choose one. Do not convert units or calculate a value."
+   },
+   "text_sha256": "sha256:fb238e6ce05f35e319fc4ba5eb09d672c2b4bd3c5e44a36f7453ab902b2334e9"
+  },
+  {
+   "id": "sds-c22",
+   "kind": "sds",
+   "split": "development",
+   "selection_status": "frozen_member",
+   "source": "https://cdn.shopify.com/s/files/1/0440/7889/1168/files/Colourtrend-Fungicidal-wash_-_MD.pdf?v=1607679388",
+   "source_bytes": 329739,
+   "source_sha256": "sha256:d32aa480e67fe665b6f039e3ddc85333286ae16ccb95cc588484c0306aae52f0",
+   "source_pages": 6,
+   "approved_max_bytes": 329739,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "colourtrend-surface-prep",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://colourtrend.ie/policies/terms-of-service",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The named product in this safety data sheet",
+    "scope": "The value as Section 9 or Section 14 states it. Flash point and initial boiling point in degrees Celsius. pH and relative density without a unit. The UN number as UN and four digits. If the sheet gives two methods, conditions, parts or a range that this request does not fix, do not choose one. Do not convert units or calculate a value."
+   },
+   "text_sha256": "sha256:216374d65b3716a903351925f5ef75e9e106e22f8c461440dc3ac1fcc04030e5"
+  },
+  {
+   "id": "sds-c23",
+   "kind": "sds",
+   "split": "heldout",
+   "selection_status": "frozen_member",
+   "source": "https://cdn.shopify.com/s/files/1/0440/7889/1168/files/Sustain_Epoxy_Floor_and_Wall_Paint_Activator_2023.pdf?v=1683189334",
+   "source_bytes": 838412,
+   "source_sha256": "sha256:c8db1689efef69a8e78fb292c93a38fe4c7a322473de3577e5450ce469390464",
+   "source_pages": 9,
+   "approved_max_bytes": 838412,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "colourtrend-sustain-epoxy",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://colourtrend.ie/policies/terms-of-service",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The named product in this safety data sheet",
+    "scope": "The value as Section 9 or Section 14 states it. Flash point and initial boiling point in degrees Celsius. pH and relative density without a unit. The UN number as UN and four digits. If the sheet gives two methods, conditions, parts or a range that this request does not fix, do not choose one. Do not convert units or calculate a value."
+   },
+   "text_sha256": "sha256:a52c86ff5749fe5fd5c4dcb6a6336b191c4c393a967784bc4e05ed05bbad603b"
+  },
+  {
+   "id": "sds-c24",
+   "kind": "sds",
+   "split": "development",
+   "selection_status": "frozen_member",
+   "source": "https://www.methanex.com/wp-content/uploads/UL-METHANOL-NA_Methanol_NGHS_English_01.31.2025v6.pdf",
+   "source_bytes": 379269,
+   "source_sha256": "sha256:d4bdb9d8b795d1460bbc7986cdef89ca859c403de5d74df21086bea1efb45b17",
+   "source_pages": 14,
+   "approved_max_bytes": 379269,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "methanex-methanol",
+   "terms_group": "A",
+   "license": "No affirmative open reuse grant; site terms permit a download, and their exact conditions are in source_checks.json. URL and SHA-256 provenance only.",
+   "license_source": "https://www.methanex.com/terms-of-use/",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The named product in this safety data sheet",
+    "scope": "The value as Section 9 or Section 14 states it. Flash point and initial boiling point in degrees Celsius. pH and relative density without a unit. The UN number as UN and four digits. If the sheet gives two methods, conditions, parts or a range that this request does not fix, do not choose one. Do not convert units or calculate a value."
+   },
+   "text_sha256": "sha256:1a381a306f323bcede67ec3bd636102cc31d492a3dc2acb021effea19991ead8"
+  },
+  {
+   "id": "sds-c25",
+   "kind": "sds",
+   "split": "development",
+   "selection_status": "frozen_member",
+   "source": "https://www.methanex.com/wp-content/uploads/FINAL-UL-METH-NA_Ammonia_NGHS_English_04.30.2025.pdf",
+   "source_bytes": 373728,
+   "source_sha256": "sha256:4a3aa46a3645271827c499560d11eb3d1a67d0faef7a547a4deeaa547907d5c1",
+   "source_pages": 13,
+   "approved_max_bytes": 373728,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "methanex-ammonia",
+   "terms_group": "A",
+   "license": "No affirmative open reuse grant; site terms permit a download, and their exact conditions are in source_checks.json. URL and SHA-256 provenance only.",
+   "license_source": "https://www.methanex.com/terms-of-use/",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The named product in this safety data sheet",
+    "scope": "The value as Section 9 or Section 14 states it. Flash point and initial boiling point in degrees Celsius. pH and relative density without a unit. The UN number as UN and four digits. If the sheet gives two methods, conditions, parts or a range that this request does not fix, do not choose one. Do not convert units or calculate a value."
+   },
+   "text_sha256": "sha256:e94084c27919f90b2075815be154bb6647a30487cacce07e2bf4b2e03f49bc07"
+  },
+  {
+   "id": "sds-c32",
+   "kind": "sds",
+   "split": "development",
+   "selection_status": "frozen_member",
+   "source": "https://www.seasol.com.au/wp-content/uploads/2021/09/SEASOL_EARTHCARE_WHITE_OIL_CONCENTRATE-AUS_GHS-1.pdf",
+   "source_bytes": 490719,
+   "source_sha256": "sha256:20409e724d9cf96774809e671ba44fe943f3110dab573808301b7b91b6e9c8cc",
+   "source_pages": 6,
+   "approved_max_bytes": 490719,
+   "download_approved": "2026-10-20",
+   "source_retention": "original PDF in local work storage; not committed",
+   "source_family_group": "seasol-earthcare",
+   "terms_group": "B",
+   "license": "No affirmative open reuse grant; site terms allow only personal, noncommercial or internal use. Member for local, internal measurement only. URL and SHA-256 provenance only.",
+   "license_source": "https://www.seasol.com.au/site-terms/",
+   "license_other_notices": "Notices printed in the original are retained there. No PDF or source text is published.",
+   "request_context": {
+    "subject": "The named product in this safety data sheet",
+    "scope": "The value as Section 9 or Section 14 states it. Flash point and initial boiling point in degrees Celsius. pH and relative density without a unit. The UN number as UN and four digits. If the sheet gives two methods, conditions, parts or a range that this request does not fix, do not choose one. Do not convert units or calculate a value."
+   },
+   "text_sha256": "sha256:3e1a70f37d823a7bca62cb24376e3b551c4186e57c0d6f4826115e48a7ce0909"
+  }
+ ]
+}
