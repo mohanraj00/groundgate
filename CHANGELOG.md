@@ -98,6 +98,12 @@ Spec 0.10, a draft. Receipts name `"groundgate": "0.10"` and every digest uses t
   list of released digests or has another digest. The how-to
   [Keep pack files with receipts](docs/howto/keep-packs.md) shows a folder layout. A loader
   check error of `load_pack` now names the file. No decision changes.
+- The review page names the packs of a receipt (#339). Its header lists each pack with its type,
+  version, digest and status: `draft`, or the number of measured routes. Each admitted value
+  whose decision member `packs` names a pack gets the mark "draft pack", because a route with no
+  status row is `draft` and the receipt does not say which route admitted the value. The page
+  says that a mark means that groundgate read the pack, not that the pack changed the outcome.
+  The page escapes each pack string from the receipt. No decision changes.
 - A candidate can cite up to 8 field items, such as a row label and a column header (#300).
   The field check passes when one of them passes. Two items of any other role stay
   `CANDIDATE_INVALID`.

@@ -105,6 +105,10 @@ The page shows:
   sentence each, the cited text, each role item and whether it passed, and the missing parts;
 - the source of an outside decision: the reference id, the external URL, or "from the extractor's
   knowledge", with the quoted or stated text;
+- the packs that the receipt names, each with its type, its version, its digest and its status.
+  A route that nobody measured is `draft`, and no pack has a measured route yet. Each admitted
+  value that read a pack has the mark "draft pack". The mark says that groundgate read the pack
+  for the value. It does not say that the pack changed the outcome;
 - the document, with each value span marked in the color of its outcome and each role item
   underlined.
 

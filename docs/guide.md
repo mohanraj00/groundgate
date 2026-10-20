@@ -594,8 +594,9 @@ schema = {"packs": [{"id": "lac-x-myapp", "version": "1.0.0"}], "fields": {...}}
 receipt = gg.admit(text, schema, candidates, packs=[lac])
 ```
 
-The receipt names each pack with its digest, and each decision names the packs that it read. A
-pack only adds words, and a pack that fails a check makes the packet invalid. If you build a
+The receipt names each pack with its digest, and each decision names the packs that it read. The
+review page lists each pack with its status, and marks each admitted value that read a `draft`
+pack ([Review receipts](howto/review.md#2-render-the-review-page)). A pack only adds words, and a pack that fails a check makes the packet invalid. If you build a
 `gg.Schema` yourself, give the packs to `gg.Schema.from_dict(schema, packs)`.
 
 The pack `finance` 1.0.0 is built in. It gives the loss words of a role `sign` item. Name it in

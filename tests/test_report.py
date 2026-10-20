@@ -345,3 +345,116 @@ def test_report_reads_the_evidence_once_per_card(monkeypatch: pytest.MonkeyPatch
     html = render(receipt, doc, cands, schema=schema)
     assert "quoted “Nope 7”, not found" in html
     assert calls <= 3
+
+
+# The packs of a receipt and their status (#339, docs/design/packs.md §6 and §9)
+PACK_DOC = "Total revenue was $5 in the year. Net income was 7 in the year."
+PACK_SCHEMA: dict[str, Any] = {
+    "packs": [{"id": "us-10k", "version": "1.0.0"}],
+    "fields": {
+        "revenue": {"template": "us-10k/revenue"},
+        "net_income": {"template": "us-10k/net_income"},
+    },
+}
+PACK_CANDS: list[Any] = [
+    {"id": "a", "field": "revenue", "value": "5", "unit": "USD", "evidence": ev("$5", PACK_DOC)},
+    {"id": "b", "field": "net_income", "value": "7", "unit": "USD",
+     "evidence": ev("7", PACK_DOC)},
+]  # fmt: skip
+
+
+def pack_receipt() -> dict[str, Any]:
+    receipt = gg.admit(PACK_DOC, PACK_SCHEMA, PACK_CANDS).to_dict()
+    outcomes = {d["field"]: (d["outcome"], d["packs"]) for d in receipt["decisions"]}
+    assert outcomes == {
+        "revenue": ("admitted", ["us-10k"]),
+        "net_income": ("rejected", ["us-10k"]),
+    }
+    return receipt
+
+
+def test_report_lists_each_pack_with_its_version_digest_and_status() -> None:
+    receipt = pack_receipt()
+    html = render(receipt, PACK_DOC, PACK_CANDS, schema=PACK_SCHEMA)
+    assert "receipt verified" in html
+    for p in receipt["packs"]:
+        assert f"<code>{p['id']}</code> {p['type']} {p['version']} " in html
+        assert f'title="{p["sha256"]}"' in html
+    assert html.count('<span class="pill draft">draft</span></li>') == 2
+    assert "1 admitted value read a pack with a draft route." in html
+    assert "A mark means that groundgate read the pack for the value. It does not mean" in html
+
+
+def test_report_marks_only_an_admitted_value_that_read_a_draft_pack() -> None:
+    receipt = pack_receipt()
+    html = render(receipt, PACK_DOC, PACK_CANDS, schema=PACK_SCHEMA)
+    cards = html.split('<div class="card ')[1:]
+    admitted = next(c for c in cards if c.startswith("admitted"))
+    rejected = next(c for c in cards if c.startswith("rejected"))
+    assert '<span class="pill draft">draft pack</span>' in admitted
+    assert "read packs with a draft route: <code>us-10k</code>." in admitted
+    assert "draft pack" not in rejected  # its packs names us-10k, but it admitted nothing
+    assert "revenue = 5 USD: Admitted, read a draft pack" in html
+    assert 'net_income = 7 USD: Rejected (UNIT_NOT_IN_EVIDENCE)"' in html
+
+
+def test_report_without_packs_has_no_pack_list() -> None:
+    receipt = gg.admit(DOC, SCHEMA, CANDS).to_dict()
+    assert receipt["packs"] == []
+    html = render(receipt, DOC, CANDS, schema=SCHEMA)
+    assert 'class="packs"' not in html and "draft pack" not in html
+    del receipt["packs"]  # an older receipt has no member packs
+    assert 'class="packs"' not in render(receipt, DOC, CANDS)
+
+
+def test_report_counts_the_measured_routes_of_a_built_in_pack(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from groundgate import report
+
+    row = {"kind": "us-10k", "field": "revenue", "code": "X", "status": "measured"}
+    monkeypatch.setattr(report, "built_in_pack", lambda pid, v: {"status": [row]})
+    receipt = pack_receipt()
+    html = render(receipt, PACK_DOC, PACK_CANDS)
+    assert html.count("1 measured route, the other routes draft") == 2
+    # a route with no row is draft, and the receipt does not name the route: still marked
+    assert "1 admitted value read a pack with a draft route." in html
+    receipt["packs"][0]["sha256"] = "sha256:" + "0" * 64  # not the released digest: no row
+    html = render(receipt, PACK_DOC, PACK_CANDS)
+    assert html.count("1 measured route") == 1
+
+
+def test_report_escapes_the_packs_of_an_untrusted_receipt() -> None:
+    receipt = pack_receipt()
+    bad = '<script>x</script>"\ud800'
+    receipt["packs"] = [
+        {"id": bad, "type": bad, "version": bad, "sha256": bad},
+        {"id": ["<bx>"], "version": {"<ix>": 1}},
+        "<not a pack>",
+    ]
+    for d in receipt["decisions"]:
+        d["packs"] = [bad, {"<ux>": "<ux>"}, 3]
+    html = render(receipt, PACK_DOC, PACK_CANDS)
+    assert "<script" not in html and "<bx>" not in html and "<ix>" not in html
+    assert "<ux>" not in html and "not a pack" not in html
+    assert "&lt;script&gt;x&lt;/script&gt;&quot;�" in html
+    assert "1 admitted value read a pack with a draft route." in html
+    receipt["packs"] = "<script>"
+    for d in receipt["decisions"]:
+        d["packs"] = "<script>"  # not a list: no mark
+    html = render(receipt, PACK_DOC, PACK_CANDS)
+    assert "<script" not in html and "draft pack" not in html
+
+
+def test_cli_report_names_the_packs(tmp_path: Path) -> None:
+    doc, schema, cands = tmp_path / "d.txt", tmp_path / "s.json", tmp_path / "c.json"
+    doc.write_text(PACK_DOC, encoding="utf-8")
+    schema.write_text(json.dumps(PACK_SCHEMA))
+    cands.write_text(json.dumps(PACK_CANDS))
+    receipt, report = tmp_path / "r.json", tmp_path / "r.html"
+    args = [str(doc), str(schema), str(cands)]
+    assert main(["admit", *args, "-o", str(receipt)]) == 0
+    assert main(["report", str(receipt), *args, "-o", str(report)]) == 0
+    html = report.read_text(encoding="utf-8")
+    assert "<code>us-10k</code> kind 1.0.0" in html and "<code>finance</code> vocabulary" in html
+    assert '<span class="pill draft">draft pack</span>' in html
