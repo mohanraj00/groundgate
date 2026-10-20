@@ -204,8 +204,10 @@ def server(w: Work, port: int) -> tuple[ThreadingHTTPServer, str]:
             except (ValueError, RecursionError):  # deep nesting fits in 64 KiB
                 self.refuse(400, "the body is not JSON")
                 return
-            it = by_id.get(body.get("id")) if isinstance(body, dict) else None
-            value = body.get("value") if isinstance(body, dict) else None
+            if not isinstance(body, dict) or not isinstance(body.get("id"), str):
+                self.send("{}", code=400)  # an id that is a list or a dict cannot be a key
+                return
+            it, value = by_id.get(body["id"]), body.get("value")
             if self.path != "/label" or it is None or not q.valid_label(question, it, value):
                 self.send("{}", code=400)
                 return

@@ -1012,6 +1012,9 @@ def test_the_label_server_refuses_a_body_that_is_not_json(tmp_path: Path, kind: 
         assert call("POST", "/label", sent, {"Content-Type": kind})[0] == 415
         assert call("POST", "/label", b"{not json", {"Content-Type": "application/json"})[0] == 400
         assert call("POST", "/label", b"[1]", {"Content-Type": "application/json"})[0] == 400
+        for bad in ([], {}, 1, None):
+            sent = json.dumps({"id": bad, "value": True}).encode()
+            assert call("POST", "/label", sent, {"Content-Type": "application/json"})[0] == 400
         deep = b"[" * 60000  # deep nesting fits in 64 KiB and raises RecursionError
         assert call("POST", "/label", deep, {"Content-Type": "application/json"})[0] == 400
     assert not (work.path / "labels.json").exists()
