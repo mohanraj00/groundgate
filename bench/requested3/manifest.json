@@ -252,7 +252,7 @@
   "code_freeze": {
     "commit": "c5ba774f07688c2fd155a023d4b1c9fd61d20fb3",
     "frozen_on": "2026-10-20",
-    "note": "All 0.10 code is merged at this commit. The run configuration pins the code by its code_sha256. A code change after this freeze voids it. The harness at this commit runs the baseline arm and the runner arm. The arm runner_drop_rounded needs a replay mode in bench/requested/run_set.py (#376). That change must merge before the first model call. Then the code freeze moves to its merge commit, and this manifest is pinned again before any model output."
+    "note": "The 0.10 rules and the runner are merged at this commit. The run configuration pins the code by its code_sha256. A code change after this freeze voids it. The harness at this commit runs the baseline arm and the runner arm. The arm runner_drop_rounded needs a replay mode in bench/requested/run_set.py (#376). That change must merge before the first model call. Then the code freeze moves to its merge commit, and this manifest is pinned again before any model output."
   },
   "arms": [
     {

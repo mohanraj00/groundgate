@@ -84,7 +84,7 @@ bracketed total liabilities line. Revenue is negative in these three reports.
 
 ## Code freeze and arms
 
-The code freeze is origin/main c5ba774, where all 0.10 code is merged. `groundgate.read` at that
+The code freeze is origin/main c5ba774, where the 0.10 rules and the runner are merged. `groundgate.read` at that
 commit made the reader texts. The run configuration pins the code by its `code_sha256`, and a code
 change after the freeze voids it. The frozen manifest names three arms:
 
