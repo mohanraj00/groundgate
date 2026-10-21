@@ -27,9 +27,11 @@ needs the maintainer's approval after the freeze. With no manifest, `run` refuse
 from __future__ import annotations
 
 import argparse
+import contextlib
 import hashlib
 import json
 import os
+import signal
 import subprocess
 import sys
 import tempfile
@@ -262,10 +264,25 @@ def parse(reply: str, names: list[str]) -> Json:
 
 
 def _subprocess(cmd: list[str], stdin: str, env: dict[str, str]) -> tuple[int, str, str]:
-    proc = subprocess.run(
-        cmd, input=stdin, capture_output=True, text=True, timeout=TIMEOUT, check=False, env=env
-    )
-    return proc.returncode, proc.stdout, proc.stderr
+    """Run cmd in its own process group. On a timeout, kill the whole group, so no process
+    that codex started stays."""
+    with subprocess.Popen(
+        cmd,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+        env=env,
+        start_new_session=True,
+    ) as proc:
+        try:
+            out, err = proc.communicate(stdin, timeout=TIMEOUT)
+        except subprocess.TimeoutExpired:
+            with contextlib.suppress(ProcessLookupError):
+                os.killpg(proc.pid, signal.SIGKILL)
+            proc.communicate()
+            raise
+    return proc.returncode, out, err
 
 
 def environment() -> dict[str, str]:
@@ -288,7 +305,8 @@ class Codex:
         model: str,
         effort: str | None = None,
         runner: Runner = _subprocess,
-        workdir: str | None = None,
+        *,
+        workdir: str,
         pause: float = 5,
     ) -> None:
         if not model.strip() or model.startswith("-"):
@@ -296,7 +314,7 @@ class Codex:
         if effort is not None and effort not in EFFORTS:
             raise JudgeError(f"effort must be one of {', '.join(EFFORTS)}")
         self.model, self.effort, self.runner = model, effort, runner
-        self.workdir = workdir or tempfile.mkdtemp(prefix="groundgate-judge-")
+        self.workdir = workdir  # an empty folder that the caller owns and removes
         self.pause = pause  # seconds to wait after a failed call
         self.calls = 0
 
@@ -435,14 +453,22 @@ class Cache:
         _write(self.path(key), json.dumps(body, ensure_ascii=False, indent=1, sort_keys=True))
 
 
-def _write(path: Path, body: str) -> None:
-    """Write through a new file in the same folder, so a stopped run leaves no half file."""
+def _write(path: Path, body: str, new: bool = False) -> None:
+    """Write through a new file in the same folder, so a stopped run leaves no half file. With
+    new, refuse a path that is there already, also when it came after an earlier check."""
     tmp = None
     try:
         fd, tmp = tempfile.mkstemp(dir=path.parent, prefix=".tmp-", suffix=".json")
         with os.fdopen(fd, "w", encoding="utf-8") as f:
             f.write(body + "\n")
-        os.replace(tmp, path)
+        if new:
+            os.link(tmp, path)  # fails when path is there
+            os.unlink(tmp)
+        else:
+            os.replace(tmp, path)
+    except FileExistsError as e:
+        Path(tmp or "").unlink(missing_ok=True)
+        raise JudgeError(f"{path} is there already") from e
     except OSError as e:
         if tmp is not None:
             Path(tmp).unlink(missing_ok=True)
@@ -613,16 +639,18 @@ def main(argv: list[str] | None = None, runner: Runner = _subprocess) -> None:
             raise JudgeError(f"{args.out} is there already")
         if not args.out.parent.is_dir():
             raise JudgeError(f"no folder {args.out.parent}")
-        result = run(
-            items,
-            Codex(args.model, args.effort, runner),
-            Cache(args.cache),
-            manifest=args.manifest,
-            max_calls=args.max_calls,
-            run_number=args.run,
-            allow_heldout=args.allow_heldout,
-        )
-        _write(args.out, json.dumps(result, ensure_ascii=False, indent=1, sort_keys=True))
+        with tempfile.TemporaryDirectory(prefix="groundgate-judge-") as work:
+            result = run(
+                items,
+                Codex(args.model, args.effort, runner, workdir=work),
+                Cache(args.cache),
+                manifest=args.manifest,
+                max_calls=args.max_calls,
+                run_number=args.run,
+                allow_heldout=args.allow_heldout,
+            )
+        body = json.dumps(result, ensure_ascii=False, indent=1, sort_keys=True)
+        _write(args.out, body, new=True)
         print(f"wrote {args.out}: {len(result['answers'])} answers, {result['calls']} calls")
     except JudgeError as e:
         raise SystemExit(f"judge: {e}") from e

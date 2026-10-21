@@ -72,8 +72,8 @@ entry also records the Codex CLI version that answered. `--run 2` asks again, fo
 
 The judge refuses a cache folder or a cache file that is a link, and a cache file that is not
 valid JSON, that differs from its digest, or whose model, effort, run or template is not the one
-of the current call. The digest finds a corrupt or changed file. It is not a secret, so it does not find a forged file: keep the cache folder
-writable only by you.
+of the current call. The digest finds a corrupt or changed file. It is not a secret, so it does
+not find a forged file: keep the cache folder writable only by you.
 
 The answers file (`codex-judge-answers/1`) has, for each item, the option, the candidate it
 names, the confidence, the prompt digest and the Codex CLI version that answered. Its `meta` has

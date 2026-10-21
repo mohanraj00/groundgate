@@ -4,6 +4,9 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import os
+import sys
+import time
 from pathlib import Path
 from typing import Any
 
@@ -168,7 +171,7 @@ def test_command_keeps_the_sandbox(tmp_path: Path) -> None:
         "in_app_browser",
     }
     with pytest.raises(judge.JudgeError):
-        judge.Codex("--dangerously-bypass-approvals-and-sandbox")
+        judge.Codex("--dangerously-bypass-approvals-and-sandbox", workdir=str(tmp_path))
 
 
 @pytest.mark.parametrize(
@@ -361,6 +364,48 @@ def test_a_linked_cache_folder_is_refused(tmp_path: Path) -> None:
     with pytest.raises(judge.JudgeError, match="is a link"):
         ask([item()], fake, tmp_path)
     assert fake.commands == []
+
+
+def test_a_timeout_kills_the_whole_process_group(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    pidfile = tmp_path / "child.pid"
+    script = (
+        "import pathlib, subprocess, sys, time\n"
+        "c = subprocess.Popen([sys.executable, '-c', 'import time; time.sleep(60)'])\n"
+        f"pathlib.Path({str(pidfile)!r}).write_text(str(c.pid))\n"
+        "time.sleep(60)\n"
+    )
+    monkeypatch.setattr(judge, "TIMEOUT", 2)
+    with pytest.raises(judge.subprocess.TimeoutExpired):
+        judge._subprocess([sys.executable, "-c", script], "", dict(os.environ))
+    child = int(pidfile.read_text())
+    for _ in range(50):
+        try:
+            os.kill(child, 0)
+        except ProcessLookupError:
+            break
+        time.sleep(0.1)
+    else:
+        pytest.fail("the child of the timed-out process is still running")
+
+
+def test_subprocess_returns_code_and_output() -> None:
+    code, out, err = judge._subprocess(
+        [sys.executable, "-c", "import sys; print(sys.stdin.read()); sys.exit(3)"],
+        "hello",
+        dict(os.environ),
+    )
+    assert (code, out.strip(), err) == (3, "hello", "")
+
+
+def test_the_answers_file_is_never_replaced(tmp_path: Path) -> None:
+    out = tmp_path / "answers.json"
+    out.write_text("old")
+    with pytest.raises(judge.JudgeError, match="there already"):
+        judge._write(out, "new", new=True)
+    assert out.read_text() == "old"
+    assert list(tmp_path.glob(".tmp-*")) == []
 
 
 def test_budget_guard(tmp_path: Path) -> None:
