@@ -536,15 +536,20 @@ class FolderStore:
             raise NotFound(f"{rel} is not in the store") from exc
         if not stat.S_ISREG(info.st_mode):
             raise StoreError(f"{rel} is not a regular file, so forget does not remove it")
-        with self._hold(folder, name):  # no writer can append while the log goes
-            time = self._clock().astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-            self._append(("deleted",), {"log": list(log), "reason": reason, "time": time})
-            try:
-                os.unlink(folder / f"{name}.jsonl")
-            except OSError as exc:
-                raise StoreError(
-                    f"{rel} is in the deleted log, but the unlink failed: {exc}"
-                ) from exc
+        try:
+            with self._hold(folder, name):  # no writer can append while the log goes
+                if not os.path.lexists(folder / f"{name}.jsonl"):  # gone after the lstat
+                    raise NotFound(f"{rel} is not in the store")
+                time = self._clock().astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+                self._append(("deleted",), {"log": list(log), "reason": reason, "time": time})
+                try:
+                    os.unlink(folder / f"{name}.jsonl")
+                except OSError as exc:
+                    raise StoreError(
+                        f"{rel} is in the deleted log, but the unlink failed: {exc}"
+                    ) from exc
+        except FileNotFoundError as exc:  # the lock: another forget removed the folder
+            raise NotFound(f"{rel} is not in the store") from exc
         if word == "answers":
             with contextlib.suppress(OSError):  # the packet folder, if it is now empty
                 os.rmdir(folder)

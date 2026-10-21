@@ -17,6 +17,7 @@ from groundgate.extract import extract
 from groundgate.store import (
     FolderStore,
     Locked,
+    NotFound,
     StoreError,
     Torn,
     key,
@@ -650,3 +651,26 @@ def test_forget_all_after_another_forget_of_the_packet(
         done = forget_packet(store, packet, "all", everything=True)
     assert done[-1] == ("packet@1", packet, "absent", 0)
     assert ("log", _log_rel(log), "absent", 0) in done
+
+
+@pytest.mark.parametrize("folder_too", [False, True])
+def test_forget_log_after_another_forget_took_the_log(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, folder_too: bool
+) -> None:
+    root = tmp_path / "s"
+    log = ("answers", key("packet@1", b"{}"), reviewer_key("ana"))
+    with FolderStore(root) as store:
+        store.append(log, {"answer": "yes"})
+    hold = FolderStore._hold
+
+    def late(self: FolderStore, folder: Path, name: str) -> Any:
+        (folder / f"{name}.jsonl").unlink()  # the other forget, after the lstat
+        if folder_too:
+            folder.rmdir()
+        return hold(self, folder, name)
+
+    monkeypatch.setattr(FolderStore, "_hold", late)
+    with FolderStore(root) as store:
+        with pytest.raises(NotFound):
+            store.forget_log(log, "asked")
+        assert store.read(("deleted",)) == []
