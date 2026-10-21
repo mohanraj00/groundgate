@@ -254,6 +254,37 @@ it sends to review and the baseline admits. It did not complete 15 of the 20 ann
 not meet the goal on this set. [bench/requested3/RESULTS.md](bench/requested3/RESULTS.md) has
 every number.
 
+### Spec 0.11 on requested fields
+
+`bench/requested4` has 91 documents in the four kinds and field lists of `bench/requested3`. It
+is the first set with a development split and a held-out split: a hash of the source family puts
+32 documents in development and 59 in held-out. Two blind passes labeled each field from the
+original PDFs before any model output. The learning loop ran only on the development split, and
+the code froze before the first held-out model call. The 59 held-out documents state 204 of the
+labeled values. The arms are the arms of 0.10, with `gpt-6.1-sol` at medium effort.
+
+| Arm | Right values admitted | Right absences | Escapes | Reviews | Silent misses | Miss rate |
+|---|---:|---:|---:|---:|---:|---:|
+| One-pass extraction with feedback (baseline) | 76 | 0 | 1 | 103 | 25 | 62.75% |
+| `groundgate.extract` | 79 | 0 | 1 | 97 | 28 | 61.27% |
+| `groundgate.extract` with `drop_rounded` | 81 | 0 | 1 | 95 | 28 | 60.29% |
+
+`groundgate.extract` misses 125 of 204 (61.27%) and the baseline misses 128 of 204 (62.75%).
+Each arm admits 1 wrong value. The gap of 3 misses is inside the run noise of the development
+split, so I do not claim a difference between the arms. No document stopped at a harness limit.
+Every arm misses more than 60% of the stated values, so 0.11 does not meet the goal on this set.
+[bench/requested4/RESULTS.md](bench/requested4/RESULTS.md) has every number.
+
+A judge can clear part of the reviews. A Codex judge (`gpt-6.1-sol`, frozen at threshold 0.9)
+answered each of the 104 held-out fields that `groundgate.extract` sent to review with a
+candidate, two times. It clears 91 right values in run 1 and 94 in run 2, with no escape. With
+these clears, the miss rate would be 16.67% and 15.20%. The judge is a recorded input, not part of
+a decision, and these numbers hold for documents that do not attack the model.
+[bench/requested4/judge/heldout/RESULTS.md](bench/requested4/judge/heldout/RESULTS.md) has every
+number. The review answers of a person did not pass the bar for use as labels: 10 of 132 scored
+answers are wrong, with a 95% upper bound of 0.1251 against a bar of 0.05
+([bench/requested4/review/RESULTS.md](bench/requested4/review/RESULTS.md)).
+
 ## Quickstart
 
 ```bash
@@ -450,35 +481,38 @@ a changed document, schema, policy, candidate or outcome.
 
 ## Status
 
-Alpha. groundgate 0.10.0 implements spec v0.10. [CHANGELOG.md](CHANGELOG.md) lists what each
-version changes, with its measure. 0.10 adds vocabulary and kind packs (#333 to #339), relations
-across fields (#321), currency scales and heading units (#301, #313, #315, #365), up to 8 field
-items for one value (#300), label cells (#316), dash variants in aliases (#317), and the runner
-rules of #318 and #319. 0.9 moves the reader to `groundgate.read` (#289), adds the
-extraction loop `groundgate.extract` (#281), keeps an empty table cell in its column and refuses
-ambiguous column keys (#280), and keeps PDF running heads out of tables and blank cells in their
-column (#279). 0.8 writes PDF table rows as lines with tabs (#230), scales a
-value by its scale item (#242), takes the value's occurrence where the field item passes (#249),
-lets a title key reach a table with one number column (#250), puts a string value at its first
-occurrence in its span (#140), and offers the role `key` only on a field with keys (#256). 0.7 passes a unit item that is away from the number only at a
-unit place of the value (#164). 0.6 passes a unit item that repeats the unit (#145), reads
-`between` with words before an `and` range (#159) and a scale heading over a table (#162), and
-adds a `description` to each field (#171). 0.6.1 adds `gg.feedback_message` (#173).
-0.5 makes the evidence a list of items (#141): a value can cite
-its sign, scale, unit, field and key, and outside sources, under the app's policy, and
-`gg.candidate_schema()` (#147) gives the candidate's JSON Schema. 0.5.1 adds `gg.extractor_schema`
-and `groundgate schema` (#148), a JSON Schema for a model's structured output. 0.5.2 adds
-`groundgate schema check` (#168) and batch `admit` (#169). 0.4 added recorded
-judgments (#116), an experimental way for a judge's answers to clear a key flag or add doubt, with no model call in the decision. 0.3 brought
-a wider change rule (#51), abbreviation dots that no longer end a sentence for qualifiers (#63,
-#77), Indian digit grouping (#59), ASCII digits (#94), and keys that stop at a label line (#52) or
-read a table by its lines (#87). A receipt names the spec
-version it was decided under, and only that version verifies it.
+Alpha. groundgate 0.11.0 implements spec v0.11. [CHANGELOG.md](CHANGELOG.md) lists what each version
+changes, with its measure. 0.11 adds the store (#288, #402 to #405), the review step and its local
+page (#287, #408 to #412), and `groundgate calibrate` inside groundgate (#385). It reads currency
+headings and currency names (#367, #368, #423), refuses a bad field name (#359), and cuts large
+search regions in the extraction loop (#382). 0.10 adds vocabulary and kind packs (#333 to #339),
+relations across fields (#321), currency scales and heading units (#301, #313, #315, #365), up to 8
+field items for one value (#300), label cells (#316), dash variants in aliases (#317), and the
+runner rules of #318 and #319. 0.9 moves the reader to `groundgate.read` (#289), adds the extraction
+loop `groundgate.extract` (#281), keeps an empty table cell in its column and refuses ambiguous
+column keys (#280), and keeps PDF running heads out of tables and blank cells in their column
+(#279). 0.8 writes PDF table rows as lines with tabs (#230), scales a value by its scale item
+(#242), takes the value's occurrence where the field item passes (#249), lets a title key reach a
+table with one number column (#250), puts a string value at its first occurrence in its span (#140),
+and offers the role `key` only on a field with keys (#256). 0.7 passes a unit item that is away from
+the number only at a unit place of the value (#164). 0.6 passes a unit item that repeats the unit
+(#145), reads `between` with words before an `and` range (#159) and a scale heading over a table
+(#162), and adds a `description` to each field (#171). 0.6.1 adds `gg.feedback_message` (#173). 0.5
+makes the evidence a list of items (#141): a value can cite its sign, scale, unit, field and key,
+and outside sources, under the app's policy, and `gg.candidate_schema()` (#147) gives the
+candidate's JSON Schema. 0.5.1 adds `gg.extractor_schema` and `groundgate schema` (#148), a JSON
+Schema for a model's structured output. 0.5.2 adds `groundgate schema check` (#168) and batch
+`admit` (#169). 0.4 added recorded judgments (#116), an experimental way for a judge's answers to
+clear a key flag or add doubt, with no model call in the decision. 0.3 brought a wider change rule
+(#51), abbreviation dots that no longer end a sentence for qualifiers (#63, #77), Indian digit
+grouping (#59), ASCII digits (#94), and keys that stop at a label line (#52) or read a table by its
+lines (#87). A receipt names the spec version it was decided under, and only that version verifies
+it.
 
 [Locale packs](docs/design/locale-packs.md) for number formats outside English are a design,
 not yet code. Of the [hybrid decisions](docs/design/hybrid-decisions.md) design, 0.4 has the
-recorded judgments for the key and field questions. The audit sample and model-proposed
-locations are not code yet.
+recorded judgments for the key and field questions, and the review step of 0.11 has the audit
+sample (#409). Model-proposed locations are not code yet.
 
 ## License
 
