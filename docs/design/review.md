@@ -1,9 +1,10 @@
 # Review: the step that collects a person's answers
 
 Status: approved on 2026-10-20, issue #287. The formats of section 5 (#408), `review tasks`
-(#409), `review resolve` (#410) and `review serve` (#411) are built. It changes no decision. The review step keeps its
-data in the store of [store.md](store.md) (#288), so the two notes go together. The last
-section lists the code issues.
+(#409), `review resolve` (#410), `review serve` (#411) and the command `review measures` (#412)
+are built. The first measure of section 13, issue 5, waits for answers. This note changes no
+decision. The review step keeps its data in the store of [store.md](store.md) (#288), so the two
+notes go together. The last section lists the code issues.
 
 ## 1. The answers in short
 

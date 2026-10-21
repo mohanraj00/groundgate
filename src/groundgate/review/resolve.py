@@ -25,6 +25,7 @@ from .tasks import DEFAULT_POLICY, Slot, check_policy, checked_packet, make_task
 __all__ = [
     "AnswerError",
     "Resolved",
+    "Seen",
     "lines",
     "resolve",
     "write_resolution",
@@ -118,6 +119,18 @@ class _Checked:
     memo: tuple[str, str] = ("", "")
 
 
+@dataclass(frozen=True)
+class Seen:
+    """One answer record that ``resolve`` checked and read: the reviewer, the record, the key
+    and the task of the record, and what the answer counts as under §6.1."""
+
+    reviewer: str
+    record: Mapping[str, Any]
+    task_key: str
+    task: dict[str, Any]
+    answer: _Answer
+
+
 def _store_key(kind: str, value: Any) -> str:
     from ..store import key
 
@@ -138,13 +151,16 @@ def resolve(
     *,
     layout: Layout | None = None,
     correct: Correct | None = None,
+    seen: list[Seen] | None = None,
 ) -> tuple[dict[str, Any], dict[str, dict[str, Any]]]:
     """The ``resolution@1`` object of the packet, and each task that it names by key.
 
     ``packet`` is a ``groundgate.store.packets.Packet`` whose receipt matches its inputs, and
     ``schema`` is its schema. ``logs`` maps each reviewer name to the records of its answer
     log, in log order. ``correct`` runs ``admit`` for a correction and gives the receipt and
-    its store key. Without it, ``resolve`` runs ``admit`` and keeps nothing.
+    its store key. Without it, ``resolve`` runs ``admit`` and keeps nothing. If ``seen`` is a
+    list, ``resolve`` adds a ``Seen`` for each record, in code point order of the reviewer
+    name and then in log order (``review measures`` reads them).
     """
     policy = check_policy(policy)
     receipt = packet.receipt
@@ -175,13 +191,15 @@ def resolve(
     checked = []
     for name in sorted(logs):  # check each record before the first call to admit
         records = logs[name]
-        checked += [_check(name, record, by_key, schema, ids) for record in records]
+        checked += [(r, _check(name, r, by_key, schema, ids)) for r in records]
         if records:
             heads.append({"reviewer": name, "head": records[-1]["entry_sha256"]})
-    for c in checked:
+    for record, c in checked:
         answer = c.answer or _read(c, schema, packet, decisions, run, cache)
         answered.add(c.task_key)
         latest.setdefault(c.task_key, {})[c.name] = answer
+        if seen is not None:
+            seen.append(Seen(c.name, record, c.task_key, c.task, answer))
 
     out_slots = []
     named: dict[str, dict[str, Any]] = {}

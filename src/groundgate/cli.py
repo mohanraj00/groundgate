@@ -12,6 +12,7 @@
   groundgate review   tasks --store DIR PACKET          > task keys
   groundgate review   resolve --store DIR PACKET --reviewer NAME
   groundgate review   serve --store DIR --reviewer NAME  (the review page on 127.0.0.1)
+  groundgate review   measures --store DIR [--json]     (the measures of the answers)
   groundgate schema   SCHEMA                            > extractor.schema.json
   groundgate schema check SCHEMA
   groundgate store    check   --store DIR [--repair]
@@ -254,6 +255,29 @@ def _parser() -> argparse.ArgumentParser:
     sv.add_argument(
         "--port", type=int, default=0, help="the port; 0 (the default) takes a free one"
     )
+    ms = steps.add_parser(
+        "measures",
+        help="print the measures of the answers in a store, for each item kind and field",
+        description="Read each answer log of the store, resolve each packet, and print the "
+        "measures of docs/design/review.md section 10 for each item kind and for each field: "
+        "the median time, the answers given with one key, the agreement with blind labels and "
+        "the escapes that the audit finds. Write nothing to the store. A packet whose receipt "
+        "does not match its inputs, or whose answers break their tasks, is left out and named "
+        "on stderr. Exit codes: 0 success, 1 a packet is left out, 2 invalid input.",
+    )
+    ms.add_argument("--store", metavar="DIR", required=True, help="the store folder")
+    ms.add_argument(
+        "--policy",
+        metavar="FILE",
+        help="a review-policy@1 JSON file for agree and leads; without it, agree 1 and no lead",
+    )
+    ms.add_argument("--set", metavar="NAME", help="the set of the splits log; needs --split")
+    ms.add_argument(
+        "--split",
+        metavar="NAME",
+        help="measure only the documents in this split of --set, for example development",
+    )
+    ms.add_argument("--json", action="store_true", help="print the measures as JSON")
     # main() sends `store` to its own parser before this parser runs; the entry is here so that
     # --help names the command
     sub.add_parser(
@@ -395,6 +419,8 @@ def main(argv: list[str] | None = None) -> int:
             return _review_resolve(args)
         if args.command == "review" and args.step == "serve":
             return _review_serve(args)
+        if args.command == "review" and args.step == "measures":
+            return _review_measures(args)
         if args.command == "review":
             return _review_tasks(args)
         if args.command == "admit" and args.docs is not None:
@@ -583,6 +609,22 @@ def _review_serve(args: argparse.Namespace) -> int:
         finally:
             httpd.server_close()
     return 0
+
+
+def _review_measures(args: argparse.Namespace) -> int:
+    from .review.measures import lines, measures
+
+    policy = _json(args.policy) if args.policy else None
+    with _store(args.store, make=False) as store:
+        measured = measures(store, policy, set_name=args.set, split=args.split)
+    for line in measured.skipped:  # each line escapes the control characters of store data
+        print(f"skipped: {line}", file=sys.stderr)
+    if args.json:
+        print(json.dumps(measured.to_dict(), indent=2, sort_keys=True, ensure_ascii=True))
+    else:
+        for line in lines(measured):
+            print(line)
+    return 1 if measured.skipped else 0
 
 
 def _review_resolve(args: argparse.Namespace) -> int:
