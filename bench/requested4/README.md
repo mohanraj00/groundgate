@@ -178,9 +178,10 @@ without one. The other three kinds get worse: annual from 27 to 29 misses, compo
 21 and sds from 11 to 12. In component, the model quotes only the alias, such as "Supply
 voltage", and that quote can match a place far from the value.
 
-Loop 03 keeps the change, because the runner arms have a lower total miss rate and no new
-escape. The keep rests on the sbc candidates without a field item. The next loop must look at
-the component field items and at candidates that cite no field item.
+Loop 03 drops the change (`decide` is `drop` in `loop/03.json`), and #449 reverts #441. The
+runner gain of 3 misses is the same size as the baseline noise of 3 misses. Annual, component
+and sds get worse, and the sbc gain comes from candidates that cite no field item. The
+question of a required field item is in #450.
 
 ## What comes next
 

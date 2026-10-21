@@ -1,7 +1,7 @@
 {
  "calibrate": null,
  "decide": {
-  "outcome": "keep",
+  "outcome": "drop",
   "previous": "loop/02.json"
  },
  "diagnose": {
