@@ -12,6 +12,9 @@
   groundgate review   tasks --store DIR PACKET          > task keys
   groundgate schema   SCHEMA                            > extractor.schema.json
   groundgate schema check SCHEMA
+  groundgate store    check   --store DIR [--repair]
+  groundgate store    rebuild --store DIR
+  groundgate store    forget  --store DIR PACKET --reason TEXT [--all]
   groundgate calibrate STEP ...                         (experimental; calibrate --help)
 
 DOC may be "-" to read the document from standard input. Exit codes: 0 success, 1 the receipt
@@ -205,6 +208,11 @@ def _parser() -> argparse.ArgumentParser:
         metavar="FILE",
         help="a review-policy@1 JSON file; without it, no audit and no task for a rejected slot",
     )
+    # main() sends `store` to its own parser before this parser runs; the entry is here so that
+    # --help names the command
+    sub.add_parser(
+        "store", help="check, rebuild and forget in a store folder (store --help)", add_help=False
+    )
     # main() sends `calibrate` to groundgate.calibrate before this parser runs; the entry is here
     # so that --help names the command
     sub.add_parser(
@@ -232,6 +240,76 @@ def _check_parser() -> argparse.ArgumentParser:
     return ap
 
 
+def _store_parser() -> argparse.ArgumentParser:
+    ap = argparse.ArgumentParser(
+        prog="groundgate store",
+        description="Check, rebuild and forget in a store folder (docs/design/store.md). Exit "
+        "codes: 0 success, 1 check has a finding or forget could not read an object, 2 invalid "
+        "input or a store error.",
+    )
+    sub = ap.add_subparsers(dest="action", required=True)
+    c = sub.add_parser("check", help="check each object, each chain and each packet")
+    c.add_argument("--store", metavar="DIR", required=True, help="the store folder")
+    c.add_argument("--repair", action="store_true", help="cut a torn last line, and print it")
+    b = sub.add_parser("rebuild", help="build the views again from the objects and logs")
+    b.add_argument("--store", metavar="DIR", required=True, help="the store folder")
+    f = sub.add_parser(
+        "forget",
+        help="remove the document data of a packet and record each deletion",
+        description="Remove the objects of PACKET that hold document data, and record each "
+        "deletion in logs/deleted.jsonl. An object that two packets share goes for both. "
+        "The packet, the receipt and the other kept objects stay, and verify then reports "
+        "'input deleted'. The run record goes too if a line holds document text: a string of "
+        "8 or more characters that is in the text. That check is not a proof. If forget "
+        "cannot read an object, it prints 'unchecked', removes the rest and exits 1.",
+    )
+    f.add_argument("--store", metavar="DIR", required=True, help="the store folder")
+    f.add_argument("packet", metavar="PACKET", help="the packet key")
+    f.add_argument("--reason", required=True, help="the reason, for the deleted log")
+    f.add_argument(
+        "--all",
+        action="store_true",
+        help="remove each object and answer log of the packet, and the packet. A kept object "
+        "that another packet names stays. Run store check first: a packet that cannot be read "
+        "names nothing.",
+    )
+    return ap
+
+
+def _store_command(args: argparse.Namespace) -> int:
+    from .store.maintain import check, forget_packet, rebuild
+    from .store.packets import printable
+
+    with _store(args.store, make=False) as store:
+        if args.action == "rebuild":
+            for path in rebuild(store):
+                print(f"wrote {path}")
+            return 0
+        if args.action == "forget":
+            done = forget_packet(store, args.packet, args.reason, everything=args.all)
+            for kind, name, state, shared in done:
+                line = f"{state} {kind} {name}" if kind != "log" else f"{state} {name}"
+                if shared:
+                    line += f" ({shared} other packet{'s' if shared > 1 else ''} name"
+                    line += "s it)" if shared == 1 else " it)"
+                print(line)
+            return 1 if any(state == "unchecked" for _, _, state, _ in done) else 0
+        report = check(store, repair=args.repair)
+    for path, cut in report.cut:
+        text = cut.decode("utf-8", errors="backslashreplace")
+        print(f"cut from {path}: {printable(text, limit=None)}")
+    for entry in report.deleted:
+        print(f"input deleted: {entry}")
+    for run in report.unchecked:
+        print(f"not checked: the run record {run}, because its text is not in the store")
+    for finding in report.findings:
+        print(f"finding: {printable(finding, limit=None)}")
+    print(
+        f"checked {report.objects} objects and {report.logs} logs: {len(report.findings)} findings"
+    )
+    return 1 if report.findings else 0
+
+
 def main(argv: list[str] | None = None) -> int:
     argv = sys.argv[1:] if argv is None else list(argv)
     if argv[:1] == ["extract"]:  # 0.9 moved the reader to `read`, with any old options
@@ -246,6 +324,13 @@ def main(argv: list[str] | None = None) -> int:
 
         calibrate(argv[1:])
         return 0
+    if argv[:1] == ["store"]:
+        store_args = _store_parser().parse_args(argv[1:])
+        try:
+            return _store_command(store_args)
+        except (ValueError, OSError) as e:
+            print(f"groundgate: {e}", file=sys.stderr)
+            return 2
     check = argv[:2] == ["schema", "check"]
     parser = _check_parser() if check else _parser()
     args = parser.parse_args(argv[2:] if check else argv)

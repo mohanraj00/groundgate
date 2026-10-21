@@ -17,7 +17,7 @@ import secrets
 import stat
 import tempfile
 import unicodedata
-from collections.abc import Callable
+from collections.abc import Callable, Iterator
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Protocol
@@ -32,6 +32,7 @@ __all__ = [
     "NotFound",
     "Store",
     "StoreError",
+    "Torn",
     "key",
     "reviewer_key",
     "set_key",
@@ -46,6 +47,10 @@ LOGS = {"answers": 2, "splits": 1, "deleted": 0}
 CHAIN = ("sequence", "previous", "entry_sha256")
 _UTF8 = frozenset({"text@1", "prompt@1", "reply@1"})
 _RUN = re.compile(r"run@[1-9][0-9]{0,8}")
+_HEX2 = re.compile(r"[0-9a-f]{2}")
+_HEX62 = re.compile(r"[0-9a-f]{62}")
+_HEX64 = re.compile(r"[0-9a-f]{64}")
+_VIEW = re.compile(r"[a-z][a-z0-9-]{0,62}\.json")
 
 LogName = tuple[str, ...]
 Record = dict[str, Any]
@@ -61,6 +66,10 @@ class NotFound(StoreError):
 
 class Locked(StoreError):
     """Another writer has the log. The message names the lock."""
+
+
+class Torn(StoreError):
+    """The last line of a log has no line break. ``groundgate store check --repair`` cuts it."""
 
 
 class Store(Protocol):
@@ -195,7 +204,7 @@ def _records(word: str, data: bytes, rel: str) -> list[Record]:
     except UnicodeDecodeError as exc:
         raise StoreError(f"{rel} is not UTF-8") from exc
     if not text.endswith("\n"):
-        raise StoreError(f"{rel} has a torn last line: it has no line break")
+        raise Torn(f"{rel} has a torn last line: it has no line break")
     records: list[Record] = []
     previous: str | None = None
     for n, line in enumerate(text[:-1].split("\n"), 1):
@@ -374,6 +383,186 @@ class FolderStore:
         except NotFound:
             return []
         return _records(word, data, rel)
+
+    # Maintenance: the folder walks of `groundgate store check`, `rebuild` and `forget`
+
+    def object_keys(self) -> tuple[list[str], list[str]]:
+        """The key of each object file, in order, and a problem for each other entry under
+        ``objects``. A ``.tmp-`` file of a killed ``put`` is not a problem."""
+        keys: list[str] = []
+        problems: list[str] = []
+        try:
+            top = self._folder(["objects"], make=False)
+        except NotFound:
+            return keys, problems
+        for first in sorted(os.listdir(top)):
+            rel = f"objects/{first}"
+            if not (_HEX2.fullmatch(first) and stat.S_ISDIR(os.lstat(top / first).st_mode)):
+                problems.append(f"{rel} is not an object folder")
+                continue
+            for rest in sorted(os.listdir(top / first)):
+                if rest.startswith(".tmp-"):
+                    continue
+                if not _HEX62.fullmatch(rest):
+                    problems.append(f"{rel}/{rest} is not an object file")
+                    continue
+                keys.append(f"sha256:{first}{rest}")
+        return keys, problems
+
+    def object_bytes(self, key: str) -> bytes:
+        """The bytes of the object file of ``key``, with no check of the key. ``check`` uses
+        this to find the kind of an object, because the key covers the kind."""
+        hexes = _check_key(key)
+        rel = f"objects/{hexes[:2]}/{hexes[2:]}"
+        try:
+            folder = self._folder(["objects", hexes[:2]], make=False)
+        except NotFound as exc:
+            raise NotFound(f"object {key} is not in the store") from exc
+        return self._file(folder / hexes[2:], rel)
+
+    def log_names(self) -> tuple[list[LogName], list[str]]:
+        """The name of each log file, in order, and a problem for each other entry under
+        ``logs``. A ``.lock`` file is not a problem."""
+        names: list[LogName] = []
+        problems: list[str] = []
+        try:
+            top = self._folder(["logs"], make=False)
+        except NotFound:
+            return names, problems
+
+        def kind(path: Path) -> str:
+            mode = os.lstat(path).st_mode
+            return "dir" if stat.S_ISDIR(mode) else "file" if stat.S_ISREG(mode) else "other"
+
+        def stem(entry: str) -> str | None:
+            if entry.endswith(".jsonl") and _HEX64.fullmatch(entry[:-6]):
+                return entry[:-6]
+            return None
+
+        for entry in sorted(os.listdir(top)):
+            rel = f"logs/{entry}"
+            if entry == "deleted.jsonl" and kind(top / entry) == "file":
+                names.append(("deleted",))
+            elif entry in ("deleted.lock", "answers", "splits"):
+                continue
+            else:
+                problems.append(f"{rel} is not a log")
+        for word in ("splits", "answers"):
+            folder = top / word
+            if not folder.exists() and not folder.is_symlink():
+                continue
+            if kind(folder) != "dir":
+                problems.append(f"logs/{word} is not a folder")
+                continue
+            for entry in sorted(os.listdir(folder)):
+                rel = f"logs/{word}/{entry}"
+                if word == "splits":
+                    found = stem(entry)
+                    if found is not None and kind(folder / entry) == "file":
+                        names.append(("splits", "sha256:" + found))
+                    elif not (entry.endswith(".lock") and stem(entry[:-5] + ".jsonl")):
+                        problems.append(f"{rel} is not a log")
+                    continue
+                if not (_HEX64.fullmatch(entry) and kind(folder / entry) == "dir"):
+                    problems.append(f"{rel} is not a packet folder")
+                    continue
+                for name in sorted(os.listdir(folder / entry)):
+                    found = stem(name)
+                    if found is not None and kind(folder / entry / name) == "file":
+                        names.append(("answers", "sha256:" + entry, "sha256:" + found))
+                    elif not (name.endswith(".lock") and stem(name[:-5] + ".jsonl")):
+                        problems.append(f"{rel}/{name} is not a log")
+        return names, problems
+
+    def repair(self, log: LogName) -> bytes | None:
+        """Cut a torn last line from a log, and return the bytes that were cut, or ``None`` if
+        the log has no torn line. ``repair`` takes the lock of the log for the cut."""
+        _check_log(log)
+        if log in self._heads:
+            raise StoreError("this writer holds the log: close the store, then repair")
+        parts, name = self._log_parts(log)
+        rel = "/".join([*parts, name + ".jsonl"])
+        folder = self._folder(parts, make=False)
+        with self._hold(folder, name):
+            data = self._file(folder / f"{name}.jsonl", rel)
+            if not data or data.endswith(b"\n"):
+                return None
+            size = data.rfind(b"\n") + 1
+            fd = os.open(folder / f"{name}.jsonl", os.O_WRONLY | _NOFOLLOW | _NONBLOCK)
+            try:
+                if not stat.S_ISREG(os.fstat(fd).st_mode):
+                    raise StoreError(f"{rel} is not a regular file")
+                os.ftruncate(fd, size)
+                os.fsync(fd)
+            finally:
+                os.close(fd)
+            return data[size:]
+
+    @contextlib.contextmanager
+    def _hold(self, folder: Path, name: str) -> Iterator[None]:
+        """Hold the lock of the log ``folder/<name>.jsonl`` for one change, then remove it."""
+        lock = folder / f"{name}.lock"
+        mark = f"{os.getpid()}\n{secrets.token_hex(16)}\n".encode("ascii")
+        try:
+            fd = os.open(lock, os.O_WRONLY | os.O_CREAT | os.O_EXCL | _NOFOLLOW, self.file_mode)
+        except FileExistsError as exc:
+            raise Locked(f"{lock} exists: {self._holder(lock)}") from exc
+        try:
+            try:
+                os.write(fd, mark)
+            finally:
+                os.close(fd)
+            yield
+        finally:
+            self._unlink_own(lock, mark)
+
+    def forget_log(self, log: LogName, reason: str) -> None:
+        """Remove an answer log or a splits log, and record the log name, the time and the
+        reason in the deleted log. ``forget_log`` holds the lock of the log for the change, so
+        another writer of the log stops it with ``Locked``."""
+        word, _ = _check_log(log)
+        if word == "deleted":
+            raise ValueError("forget_log does not remove the deleted log")
+        if not isinstance(reason, str) or not reason:
+            raise ValueError("forget needs a reason")
+        if log in self._heads:
+            raise StoreError("this writer holds the log: close the store, then forget it")
+        parts, name = self._log_parts(log)
+        rel = "/".join([*parts, name + ".jsonl"])
+        try:
+            folder = self._folder(parts, make=False)
+            info = os.lstat(folder / f"{name}.jsonl")
+        except (NotFound, FileNotFoundError) as exc:
+            raise NotFound(f"{rel} is not in the store") from exc
+        if not stat.S_ISREG(info.st_mode):
+            raise StoreError(f"{rel} is not a regular file, so forget does not remove it")
+        with contextlib.ExitStack() as stack:
+            try:  # no writer can append while the log goes
+                stack.enter_context(self._hold(folder, name))
+            except FileNotFoundError as exc:  # another forget removed the folder
+                raise NotFound(f"{rel} is not in the store") from exc
+            if not os.path.lexists(folder / f"{name}.jsonl"):  # gone after the lstat
+                raise NotFound(f"{rel} is not in the store")
+            time = self._clock().astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+            self._append(("deleted",), {"log": list(log), "reason": reason, "time": time})
+            try:
+                os.unlink(folder / f"{name}.jsonl")
+            except OSError as exc:
+                raise StoreError(
+                    f"{rel} is in the deleted log, but the unlink failed: {exc}"
+                ) from exc
+        if word == "answers":
+            with contextlib.suppress(OSError):  # the packet folder, if it is now empty
+                os.rmdir(folder)
+
+    def write_view(self, name: str, data: bytes) -> str:
+        """Write the view file ``views/<name>`` in place of the old one, and return its path in
+        the store. ``name`` is a fixed word of the code, never a name from input."""
+        if not _VIEW.fullmatch(name):
+            raise ValueError(f"{_short(name)} is not a view name")
+        folder = self._folder(["views"], make=True)
+        self._replace(folder, folder / name, data)
+        return f"views/{name}"
 
     def _append(self, log: LogName, record: Record) -> str:
         word, _ = _check_log(log)

@@ -2,6 +2,7 @@
 
 Status: approved on 2026-10-20, issue #288. Code issue 1 is built: `groundgate.store` (#402).
 Code issue 2 is built: packets and readings (#403).
+Code issue 3 is built: `store check`, `store rebuild` and `store forget` (#404).
 The rest is not built. The note changes no decision and no receipt.
 [review.md](review.md) (#287) keeps its data here. The last section lists the code issues.
 
@@ -192,6 +193,11 @@ Views are JSON files under `views/`. `groundgate store rebuild` builds them agai
 objects and logs. Format 1 has five views: the reading cache, the review queue, the latest
 resolution of each packet, the labels for calibrate and the measures.
 
+`store rebuild` builds the reading cache now, as `views/readings.json`. It maps each source,
+reader and options to its readings, and it leaves out a reading whose text is deleted. The other
+four views need the review formats (review.md §13) and the calibrate labels (issue 5), and each
+comes with its issue (#432).
+
 ## 8. Rules
 
 1. **Name objects only by their digest.** A path or a name from a document, a reply, a manifest
@@ -209,8 +215,17 @@ resolution of each packet, the labels for calibrate and the measures.
    The kept objects hold digests, values, offsets, codes and questions, and no document text
    other than the values. A review question and its choices can quote a value.
    Issue 3 checks that no line of a run record holds document text, and `forget` removes the
-   record if a line does. A value is still document data. If an app must also remove the values,
-   `groundgate store forget --all PACKET` removes each object and log of the packet.
+   record if a line does. A line holds document text if one of its strings has 8 or more
+   characters and is in the text. A store key, a field name of the schema, the document id and
+   the document source do not count, because the kept objects hold them. This check is not a
+   proof. If the text is already gone, `check` cannot check the lines and prints "not
+   checked", and `forget` removes the record. If `forget` cannot read an object, it prints
+   "unchecked", removes the rest and exits 1. A run record whose lines cannot be read goes.
+   If a run record names an object that `forget` cannot find, each object of the store that it
+   cannot read is "unchecked".
+   A value is still document data. If an app must also remove the values,
+   `groundgate store forget --all PACKET` removes each object and log of the packet. An object
+   of the "Kept" column that another packet names stays.
    One object can serve two packets, because the same text has one key. `forget` of that text
    removes it for both packets, which is correct for one document.
    After `forget`, `verify` reports "input deleted", with the key, the time and the reason from
