@@ -62,14 +62,14 @@ def store(root: Path) -> tuple[FolderStore, dict[str, str]]:
     audit: revenue is an audit task with one choice, 3900000.
       ana not_in_document, blind (5000 ms, 1 key); ben confirm, blind (1500 ms, 3 keys). ben
       first answered unsure (9000 ms); only the latest answer counts.
-      Pairs: ana with ben and ben with ana disagree. With no lead the slot is disputed, so it
-      is not an audit slot that an answer settles. With ana as lead it is not_in_document: an
-      escape.
+      Pairs: the blind labels of ana and ben make one pair, and it disagrees. With no lead the
+      slot is disputed, so it is not an audit slot that an answer settles. With ana as lead it
+      is not_in_document: an escape.
     text: lessor is a review task with one choice at 13 to 41.
       ana adjust_span to 21 to 41 (8000 ms, 3 keys): the start moves 8 characters.
 
     number: 7 answers, times 2000 4000 1000 3000 700 5000 1500, median 2000; one key: 5 of 7
-    (ben revenue 2 keys, ben audit 3 keys); agreement 1 of 3.
+    (ben revenue 2 keys, ben audit 3 keys); agreement 1 of 2.
     """
     s = FolderStore(root)
     conflict, ct = _packet(s, "conflict")
@@ -98,11 +98,11 @@ def test_the_numbers_of_a_store_made_by_hand(tmp_path: Path) -> None:
     got = measures(s)
     assert got.skipped == () and got.packets == 3
     number = got.kinds["number"]
-    assert {k: v for k, v in number.items() if k != "fields"} == _m(7, 2000, [5, 7], [1, 3], [0, 1])
+    assert {k: v for k, v in number.items() if k != "fields"} == _m(7, 2000, [5, 7], [1, 2], [0, 1])
     assert number["fields"] == {
         # 1000 3000 700 2000 4000 5000 1500 -> net_income 700 1000 3000, revenue 1500 to 5000
         "net_income": _m(3, 1000, [3, 3], [1, 1], [0, 1]),
-        "revenue": _m(4, 3000, [2, 4], [0, 2], [0, 0]),
+        "revenue": _m(4, 3000, [2, 4], [0, 1], [0, 0]),
     }
     text = got.kinds["text"]
     assert {k: v for k, v in text.items() if k != "fields"} == {
@@ -130,6 +130,8 @@ def test_a_split_measures_only_its_documents(tmp_path: Path) -> None:
     s.append(log, {"set": "set-a", "document": texts["audit"], "split": "held-out"})
     got = measures(s, set_name="set-a", split="development")
     assert got.packets == 1 and set(got.kinds) == {"number"}
+    assert (got.other_split, got.no_split) == (1, 1)  # audit is held-out; text has no record
+    assert lines(got)[0] == "packets: 1, left out: 1 in another split, 1 not in the splits log"
     assert got.kinds["number"]["answers"] == 5
     with pytest.raises(ValueError, match="together"):
         measures(s, set_name="set-a")
@@ -155,7 +157,7 @@ def test_the_command(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None
     assert out[0] == "packets: 3"
     assert out[1] == (
         "number: answers 7, median time 2000 ms, one key 5 of 7, agreement with blind labels "
-        "1 of 3, escapes 0 of 1 audit slots"
+        "1 of 2, escapes 0 of 1 audit slots"
     )
     assert out[-1] == (
         "  text lessor: answers 1, median time 8000 ms, one key 0 of 1, agreement with blind "

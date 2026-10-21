@@ -433,7 +433,8 @@ number: answers 2, median time 2100 ms, one key 2 of 2, agreement with blind lab
 
 On the command line, `groundgate review measures --store work/store` prints the same lines, and
 `--json` prints them as JSON. With `--set NAME --split development`, it measures only the
-documents that the `splits` log of the set puts in that split.
+documents that the `splits` log of the set puts in that split, and it counts the packets that it
+leaves out.
 
 The page is for one person on one computer. The server binds to `127.0.0.1` and refuses another
 `Host`. Each API request must send the token of the start URL, so keep the URL private. Any

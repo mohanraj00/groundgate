@@ -8,9 +8,10 @@ these measures for each item kind, and for each field in that kind:
 - ``ms_median``: the median time for each item, from ``ms``.
 - ``one_key``: the answers given with one key, from ``keys``, and ``answers``.
 - ``agreement``: the pairs that agree, and the pairs. A pair is an answer and a blind label of
-  another reviewer on the same task. A blind label is an answer to an audit task with
-  ``reason_seen`` false (§10 point 1). Two answers agree under §6.1 rule 4. An ``unsure``
-  answer, and a correction that does not count, are in no pair.
+  another reviewer on the same task, and two blind labels on one task make one pair. A blind
+  label is an answer to an audit task with ``reason_seen`` false (§10 point 1). Two answers
+  agree under §6.1 rule 4. An ``unsure`` answer, and a correction that does not count, are in
+  no pair.
 - ``escapes``: the audit slots that resolve to a value other than the admitted value, or to
   ``not_in_document``, and the audit slots that an answer settles (§6.1 rule 7).
 
@@ -70,14 +71,24 @@ class _Tally:
 class Measured:
     """The result of ``measures``. ``kinds`` maps each item kind to its measures, and its
     member ``fields`` maps each field to the same measures. ``packets`` is the number of
-    packets measured. ``skipped`` has one line for each packet that is left out."""
+    packets measured. ``skipped`` has one line for each packet that is left out. With a split,
+    ``other_split`` counts the packets of a document in another split, and ``no_split`` the
+    packets of a document that the ``splits`` log does not name."""
 
     kinds: dict[str, dict[str, Any]]
     packets: int
     skipped: tuple[str, ...] = ()
+    other_split: int = 0
+    no_split: int = 0
 
     def to_dict(self) -> dict[str, Any]:
-        return {"kinds": self.kinds, "packets": self.packets, "skipped": list(self.skipped)}
+        return {
+            "kinds": self.kinds,
+            "packets": self.packets,
+            "skipped": list(self.skipped),
+            "other_split": self.other_split,
+            "no_split": self.no_split,
+        }
 
 
 def _median(values: Sequence[int]) -> int | float | None:
@@ -160,9 +171,10 @@ def measures(
     """The measures of §10 over each answer log of ``store``, a ``FolderStore``. ``policy``
     sets ``agree`` and ``leads`` for the resolution of each packet; without it, the default
     policy of ``review tasks`` applies. With ``set_name`` and ``split``, only the packets of a
-    document in that split of the set count, and a packet of a document that the ``splits``
-    log does not name is left out."""
+    document in that split of the set count. The result counts the packets of the other
+    documents, and the split check comes before the receipt check."""
     from ..store import StoreError
+    from ..store.packets import load_packet
 
     checked = check_policy(DEFAULT_POLICY if policy is None else policy)
     if (set_name is None) != (split is None):
@@ -171,15 +183,19 @@ def measures(
     logs, skipped = _logs(store)
     tallies: dict[str, _Tally] = {}
     by_field: dict[str, dict[str, _Tally]] = {}
-    packets = 0
+    packets = other_split = no_split = 0
     for pk in sorted(logs):
         seen: list[Seen] = []
         try:
+            if splits is not None:
+                named = splits.get(_document(store, load_packet(store, pk)))
+                if named != split:
+                    other_split += named is not None
+                    no_split += named is None
+                    continue
             packet, schema, layout, problems = checked_packet(store, pk)
             if problems or schema is None:
                 skipped.append(f"packet {pk}: the receipt does not match its inputs")
-                continue
-            if splits is not None and splits.get(_document(store, packet)) != split:
                 continue
             resolution, _ = resolve(pk, packet, schema, checked, logs[pk], layout=layout,
                                     seen=seen)  # fmt: skip
@@ -193,7 +209,7 @@ def measures(
         found = tallies[item].out(item)
         found["fields"] = {f: t.out(item) for f, t in sorted(by_field[item].items())}
         kinds[item] = found
-    return Measured(kinds, packets, tuple(skipped))
+    return Measured(kinds, packets, tuple(skipped), other_split, no_split)
 
 
 def _count(
@@ -220,8 +236,8 @@ def _count(
                 t.ms.append(s.record["ms"])
                 t.one_key += s.record["keys"] == 1
                 if s.answer.target is not None:
-                    for b in blind:
-                        if b.reviewer != s.reviewer:
+                    for b in blind:  # two blind labels make one pair, not two
+                        if b.reviewer != s.reviewer and (s not in blind or s.reviewer < b.reviewer):
                             t.pairs += 1
                             t.agree += b.answer.target == s.answer.target
                 if item in _SPANS and s.answer.verdict == "adjust_span":
@@ -289,6 +305,11 @@ def lines(measured: Measured) -> list[str]:
         return _printable(name) + ": " + ", ".join(parts)
 
     out = [f"packets: {measured.packets}"]
+    if measured.other_split or measured.no_split:
+        out[0] += (
+            f", left out: {measured.other_split} in another split, {measured.no_split} not in "
+            "the splits log"
+        )
     for item, m in measured.kinds.items():
         out.append(line(item, m))
         for f, fm in m["fields"].items():
