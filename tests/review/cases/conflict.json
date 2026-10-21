@@ -1,0 +1,240 @@
+{
+  "about": "Two candidates for revenue conflict, so the slot gets a review task with two choices. Net income is admitted, and the audit is off.",
+  "packet": {
+    "text": "Revenue was 4,200 thousand in 2025.\nNet income was 310 thousand in 2025.\n",
+    "schema": {"fields": {"net_income": {"type": "number"}, "revenue": {"type": "number"}}},
+    "policy": null,
+    "candidates": [
+      {"id": "c1", "field": "revenue", "value": "4200000", "evidence": {"start": 12, "end": 26, "text": "4,200 thousand"}},
+      {"id": "c2", "field": "revenue", "value": "4200", "evidence": {"start": 12, "end": 26, "text": "4,200 thousand"}},
+      {"id": "n1", "field": "net_income", "value": "310000", "evidence": {"start": 51, "end": 63, "text": "310 thousand"}}
+    ],
+    "judgments": null
+  },
+  "decisions": {
+    "c1": {"outcome": "needs_verification", "codes": ["CONFLICTING_CANDIDATES"]},
+    "c2": {"outcome": "needs_verification", "codes": ["SCALE_WORD", "CONFLICTING_CANDIDATES"]},
+    "n1": {"outcome": "admitted", "codes": []}
+  },
+  "coverage": [],
+  "cases": [
+    {
+      "name": "latest-answer-counts",
+      "rules": ["6.1.1", "6.1.5"],
+      "about": "Ana changes her answer. Her latest answer counts.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 1, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "choose", "choice": "c2"},
+        {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "choose", "choice": "c1"}
+      ],
+      "expected": {"slots": [
+        {"field": "net_income", "key": null, "candidates": ["n1"], "status": "admitted", "value": "310000", "unit": null, "evidence": {"start": 51, "end": 63}, "receipt": "packet", "task": null},
+        {"field": "revenue", "key": null, "candidates": ["c1", "c2"], "status": "chosen", "value": "4200000", "unit": null, "evidence": {"start": 12, "end": 26}, "receipt": "packet", "task": "review"}
+      ]}
+    },
+    {
+      "name": "no-answer-is-open",
+      "rules": ["6.1.5"],
+      "about": "The slot has a task and no answer.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 1, "leads": [], "rejected": false},
+      "answers": [],
+      "expected": {"slots": [
+        {"field": "net_income", "key": null, "candidates": ["n1"], "status": "admitted", "value": "310000", "unit": null, "evidence": {"start": 51, "end": 63}, "receipt": "packet", "task": null},
+        {"field": "revenue", "key": null, "candidates": ["c1", "c2"], "status": "open", "value": null, "unit": null, "evidence": null, "receipt": "packet", "task": "review"}
+      ]}
+    },
+    {
+      "name": "unsure-is-no-answer",
+      "rules": ["6.1.2"],
+      "about": "An unsure answer never settles a task.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 1, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "unsure"}
+      ],
+      "expected": {"slots": [
+        {"field": "net_income", "key": null, "candidates": ["n1"], "status": "admitted", "value": "310000", "unit": null, "evidence": {"start": 51, "end": 63}, "receipt": "packet", "task": null},
+        {"field": "revenue", "key": null, "candidates": ["c1", "c2"], "status": "open", "value": null, "unit": null, "evidence": null, "receipt": "packet", "task": "review"}
+      ]}
+    },
+    {
+      "name": "latest-unsure-replaces-an-answer",
+      "rules": ["6.1.1", "6.1.2"],
+      "about": "Ana chooses, then says unsure. Her latest answer is unsure, so she has no answer.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 1, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "choose", "choice": "c1"},
+        {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "unsure"}
+      ],
+      "expected": {"slots": [
+        {"field": "net_income", "key": null, "candidates": ["n1"], "status": "admitted", "value": "310000", "unit": null, "evidence": {"start": 51, "end": 63}, "receipt": "packet", "task": null},
+        {"field": "revenue", "key": null, "candidates": ["c1", "c2"], "status": "open", "value": null, "unit": null, "evidence": null, "receipt": "packet", "task": "review"}
+      ]}
+    },
+    {
+      "name": "unsure-does-not-agree",
+      "rules": ["6.1.2", "6.1.5"],
+      "about": "Two reviewers must agree. Ben is unsure, so only one answer counts.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 2, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "choose", "choice": "c1"},
+        {"reviewer": "ben", "slot": {"field": "revenue", "key": null}, "verdict": "unsure"}
+      ],
+      "expected": {"slots": [
+        {"field": "net_income", "key": null, "candidates": ["n1"], "status": "admitted", "value": "310000", "unit": null, "evidence": {"start": 51, "end": 63}, "receipt": "packet", "task": null},
+        {"field": "revenue", "key": null, "candidates": ["c1", "c2"], "status": "open", "value": null, "unit": null, "evidence": null, "receipt": "packet", "task": "review"}
+      ]}
+    },
+    {
+      "name": "confirm-on-two-choices-is-invalid",
+      "rules": ["6.1.3", "6.3.5"],
+      "about": "A task with two choices has no confirm. The answer log breaks its task, so the resolution stops and names the answer.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 1, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "confirm"}
+      ],
+      "expected": {"error": {"reviewer": "ana", "sequence": 1}}
+    },
+    {
+      "name": "choice-of-another-slot-is-invalid",
+      "rules": ["6.3.5"],
+      "about": "Ana chooses the decision of net income on the revenue task. That decision is not a choice of the task.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 1, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "choose", "choice": "c1"},
+        {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "choose", "choice": "n1"}
+      ],
+      "expected": {"error": {"reviewer": "ana", "sequence": 2}}
+    },
+    {
+      "name": "two-answers-agree",
+      "rules": ["6.1.4", "6.1.5"],
+      "about": "Two reviewers must agree, and both choose the same decision.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 2, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "choose", "choice": "c1"},
+        {"reviewer": "ben", "slot": {"field": "revenue", "key": null}, "verdict": "choose", "choice": "c1"}
+      ],
+      "expected": {"slots": [
+        {"field": "net_income", "key": null, "candidates": ["n1"], "status": "admitted", "value": "310000", "unit": null, "evidence": {"start": 51, "end": 63}, "receipt": "packet", "task": null},
+        {"field": "revenue", "key": null, "candidates": ["c1", "c2"], "status": "chosen", "value": "4200000", "unit": null, "evidence": {"start": 12, "end": 26}, "receipt": "packet", "task": "review"}
+      ]}
+    },
+    {
+      "name": "one-answer-is-not-enough",
+      "rules": ["6.1.5"],
+      "about": "Two reviewers must agree, and only Ana answers.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 2, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "choose", "choice": "c1"}
+      ],
+      "expected": {"slots": [
+        {"field": "net_income", "key": null, "candidates": ["n1"], "status": "admitted", "value": "310000", "unit": null, "evidence": {"start": 51, "end": 63}, "receipt": "packet", "task": null},
+        {"field": "revenue", "key": null, "candidates": ["c1", "c2"], "status": "open", "value": null, "unit": null, "evidence": null, "receipt": "packet", "task": "review"}
+      ]}
+    },
+    {
+      "name": "one-disagreement-disputes",
+      "rules": ["6.1.5", "6.1.6"],
+      "about": "Two reviewers agree, but a third chooses another decision.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 2, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "choose", "choice": "c1"},
+        {"reviewer": "ben", "slot": {"field": "revenue", "key": null}, "verdict": "choose", "choice": "c1"},
+        {"reviewer": "cy", "slot": {"field": "revenue", "key": null}, "verdict": "choose", "choice": "c2"}
+      ],
+      "expected": {"slots": [
+        {"field": "net_income", "key": null, "candidates": ["n1"], "status": "admitted", "value": "310000", "unit": null, "evidence": {"start": 51, "end": 63}, "receipt": "packet", "task": null},
+        {"field": "revenue", "key": null, "candidates": ["c1", "c2"], "status": "disputed", "value": null, "unit": null, "evidence": null, "receipt": "packet", "task": "review"}
+      ]}
+    },
+    {
+      "name": "no-lead-stays-disputed",
+      "rules": ["6.1.4", "6.1.6"],
+      "about": "Same verdict, other target: the answers disagree, and no lead settles them.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 1, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "choose", "choice": "c1"},
+        {"reviewer": "ben", "slot": {"field": "revenue", "key": null}, "verdict": "choose", "choice": "c2"}
+      ],
+      "expected": {"slots": [
+        {"field": "net_income", "key": null, "candidates": ["n1"], "status": "admitted", "value": "310000", "unit": null, "evidence": {"start": 51, "end": 63}, "receipt": "packet", "task": null},
+        {"field": "revenue", "key": null, "candidates": ["c1", "c2"], "status": "disputed", "value": null, "unit": null, "evidence": null, "receipt": "packet", "task": "review"}
+      ]}
+    },
+    {
+      "name": "lead-settles-a-dispute",
+      "rules": ["6.1.6"],
+      "about": "Ana and Ben disagree. Cy is the lead, and his answer settles the dispute alone.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 1, "leads": ["cy"], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "choose", "choice": "c1"},
+        {"reviewer": "ben", "slot": {"field": "revenue", "key": null}, "verdict": "choose", "choice": "c2"},
+        {"reviewer": "cy", "slot": {"field": "revenue", "key": null}, "verdict": "choose", "choice": "c2"}
+      ],
+      "expected": {"slots": [
+        {"field": "net_income", "key": null, "candidates": ["n1"], "status": "admitted", "value": "310000", "unit": null, "evidence": {"start": 51, "end": 63}, "receipt": "packet", "task": null},
+        {"field": "revenue", "key": null, "candidates": ["c1", "c2"], "status": "chosen", "value": "4200", "unit": null, "evidence": {"start": 12, "end": 26}, "receipt": "packet", "task": "review"}
+      ]}
+    },
+    {
+      "name": "latest-answer-of-the-lead",
+      "rules": ["6.1.1", "6.1.6"],
+      "about": "The lead changes his answer. His latest answer settles the dispute.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 1, "leads": ["cy"], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "choose", "choice": "c1"},
+        {"reviewer": "ben", "slot": {"field": "revenue", "key": null}, "verdict": "choose", "choice": "c2"},
+        {"reviewer": "cy", "slot": {"field": "revenue", "key": null}, "verdict": "choose", "choice": "c2"},
+        {"reviewer": "cy", "slot": {"field": "revenue", "key": null}, "verdict": "choose", "choice": "c1"}
+      ],
+      "expected": {"slots": [
+        {"field": "net_income", "key": null, "candidates": ["n1"], "status": "admitted", "value": "310000", "unit": null, "evidence": {"start": 51, "end": 63}, "receipt": "packet", "task": null},
+        {"field": "revenue", "key": null, "candidates": ["c1", "c2"], "status": "chosen", "value": "4200000", "unit": null, "evidence": {"start": 12, "end": 26}, "receipt": "packet", "task": "review"}
+      ]}
+    },
+    {
+      "name": "unsure-lead-does-not-settle",
+      "rules": ["6.1.2", "6.1.6"],
+      "about": "The lead is unsure, so he has no answer, and the dispute stays.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 1, "leads": ["cy"], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "choose", "choice": "c1"},
+        {"reviewer": "ben", "slot": {"field": "revenue", "key": null}, "verdict": "choose", "choice": "c2"},
+        {"reviewer": "cy", "slot": {"field": "revenue", "key": null}, "verdict": "unsure"}
+      ],
+      "expected": {"slots": [
+        {"field": "net_income", "key": null, "candidates": ["n1"], "status": "admitted", "value": "310000", "unit": null, "evidence": {"start": 51, "end": 63}, "receipt": "packet", "task": null},
+        {"field": "revenue", "key": null, "candidates": ["c1", "c2"], "status": "disputed", "value": null, "unit": null, "evidence": null, "receipt": "packet", "task": "review"}
+      ]}
+    },
+    {
+      "name": "two-leads-disagree",
+      "rules": ["6.1.6", "6.3.4"],
+      "about": "Ana and Ben are both leads, and they disagree. No lead settles the dispute.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 1, "leads": ["ana", "ben"], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "choose", "choice": "c1"},
+        {"reviewer": "ben", "slot": {"field": "revenue", "key": null}, "verdict": "choose", "choice": "c2"}
+      ],
+      "expected": {"slots": [
+        {"field": "net_income", "key": null, "candidates": ["n1"], "status": "admitted", "value": "310000", "unit": null, "evidence": {"start": 51, "end": 63}, "receipt": "packet", "task": null},
+        {"field": "revenue", "key": null, "candidates": ["c1", "c2"], "status": "disputed", "value": null, "unit": null, "evidence": null, "receipt": "packet", "task": "review"}
+      ]}
+    },
+    {
+      "name": "two-leads-agree",
+      "rules": ["6.1.6", "6.3.4"],
+      "about": "Cy disagrees with the two leads, and the two leads agree. Their answers settle the dispute.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 1, "leads": ["ana", "ben"], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "choose", "choice": "c1"},
+        {"reviewer": "ben", "slot": {"field": "revenue", "key": null}, "verdict": "choose", "choice": "c1"},
+        {"reviewer": "cy", "slot": {"field": "revenue", "key": null}, "verdict": "choose", "choice": "c2"}
+      ],
+      "expected": {"slots": [
+        {"field": "net_income", "key": null, "candidates": ["n1"], "status": "admitted", "value": "310000", "unit": null, "evidence": {"start": 51, "end": 63}, "receipt": "packet", "task": null},
+        {"field": "revenue", "key": null, "candidates": ["c1", "c2"], "status": "chosen", "value": "4200000", "unit": null, "evidence": {"start": 12, "end": 26}, "receipt": "packet", "task": "review"}
+      ]}
+    }
+  ]
+}

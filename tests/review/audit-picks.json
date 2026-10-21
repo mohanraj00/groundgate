@@ -1,0 +1,15 @@
+{
+  "about": "The audit pick of docs/design/review.md section 6.3, point 2. A Python script with only hashlib and json made these rows, not groundgate. hashed is the exact text before SHA-256, and first_8_bytes is H in hex. Each second-last rate is the largest decimal with 18 digits that does not pick the slot.",
+  "vectors": [
+    {"seed": "cases", "packet": "sha256:2563192958eb20cd51510fc184bc436e218dade28f6e6d38a425348624622a82", "field": "revenue", "key": null, "decision": null, "hashed": "groundgate-audit/1:[\"cases\",\"sha256:2563192958eb20cd51510fc184bc436e218dade28f6e6d38a425348624622a82\",\"revenue\",null,null]", "first_8_bytes": "df1c455d3f30be64",
+     "picks": [{"rate": "0", "picked": false}, {"rate": "1", "picked": true}, {"rate": "0.5", "picked": false}, {"rate": "0.8715251305249607", "picked": false}, {"rate": "0.871525130524960701", "picked": true}]},
+    {"seed": "cases", "packet": "sha256:2563192958eb20cd51510fc184bc436e218dade28f6e6d38a425348624622a82", "field": "revenue", "key": "2025", "decision": null, "hashed": "groundgate-audit/1:[\"cases\",\"sha256:2563192958eb20cd51510fc184bc436e218dade28f6e6d38a425348624622a82\",\"revenue\",\"2025\",null]", "first_8_bytes": "bd905b69bf143d35",
+     "picks": [{"rate": "0", "picked": false}, {"rate": "1", "picked": true}, {"rate": "0.5", "picked": false}, {"rate": "0.740483964268677535", "picked": false}, {"rate": "0.740483964268677536", "picked": true}]},
+    {"seed": "cases", "packet": "sha256:b79fdaf028db2cf1a763de88e19219783d0c98daf0c3912c892e38049b482523", "field": "revenue", "key": null, "decision": null, "hashed": "groundgate-audit/1:[\"cases\",\"sha256:b79fdaf028db2cf1a763de88e19219783d0c98daf0c3912c892e38049b482523\",\"revenue\",null,null]", "first_8_bytes": "17705ba2ca644eb3",
+     "picks": [{"rate": "0", "picked": false}, {"rate": "1", "picked": true}, {"rate": "0.5", "picked": true}, {"rate": "0.091558196300313125", "picked": false}, {"rate": "0.091558196300313126", "picked": true}]},
+    {"seed": "Zürich 2026", "packet": "sha256:2563192958eb20cd51510fc184bc436e218dade28f6e6d38a425348624622a82", "field": "net_income", "key": null, "decision": null, "hashed": "groundgate-audit/1:[\"Zürich 2026\",\"sha256:2563192958eb20cd51510fc184bc436e218dade28f6e6d38a425348624622a82\",\"net_income\",null,null]", "first_8_bytes": "1024fb8ca0925103",
+     "picks": [{"rate": "0", "picked": false}, {"rate": "1", "picked": true}, {"rate": "0.5", "picked": true}, {"rate": "0.063064309914417707", "picked": false}, {"rate": "0.063064309914417708", "picked": true}]},
+    {"seed": "cases", "packet": "sha256:2563192958eb20cd51510fc184bc436e218dade28f6e6d38a425348624622a82", "field": "risk_factor", "key": null, "decision": 3, "hashed": "groundgate-audit/1:[\"cases\",\"sha256:2563192958eb20cd51510fc184bc436e218dade28f6e6d38a425348624622a82\",\"risk_factor\",null,3]", "first_8_bytes": "a64fcd501ce99a5c",
+     "picks": [{"rate": "0", "picked": false}, {"rate": "1", "picked": true}, {"rate": "0.5", "picked": false}, {"rate": "0.649655181940863723", "picked": false}, {"rate": "0.649655181940863724", "picked": true}]}
+  ]
+}

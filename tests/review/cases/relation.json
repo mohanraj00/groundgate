@@ -1,0 +1,91 @@
+{
+  "about": "A relation says that the total is segment A plus segment B. The total has a low confidence. The correction runs with the segment candidates, so the relation checks the value of the person.",
+  "packet": {
+    "text": "Segment A revenue was 1,000. Segment B revenue was 3,000. Total revenue was 4,000. Restated total revenue was 4,100.\n",
+    "schema": {
+      "fields": {"segment_a": {"type": "number"}, "segment_b": {"type": "number"}, "total_revenue": {"type": "number"}},
+      "relations": [{"id": "sum", "total": "total_revenue", "parts": [{"field": "segment_a"}, {"field": "segment_b"}]}]
+    },
+    "policy": {"min_confidence": 0.9},
+    "candidates": [
+      {"id": "a1", "field": "segment_a", "value": "1000", "evidence": {"start": 22, "end": 27, "text": "1,000"}},
+      {"id": "b1", "field": "segment_b", "value": "3000", "evidence": {"start": 51, "end": 56, "text": "3,000"}},
+      {"id": "t1", "field": "total_revenue", "value": "4000", "confidence": 0.5, "evidence": {"start": 76, "end": 81, "text": "4,000"}}
+    ],
+    "judgments": null
+  },
+  "decisions": {
+    "a1": {"outcome": "admitted", "codes": []},
+    "b1": {"outcome": "admitted", "codes": []},
+    "t1": {"outcome": "needs_verification", "codes": ["LOW_CONFIDENCE"]}
+  },
+  "coverage": [],
+  "cases": [
+    {
+      "name": "relation-holds",
+      "rules": ["6.2", "6.2.1"],
+      "about": "Ana selects 4,000. The relation holds, and the correction is admitted.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 1, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "total_revenue", "key": null}, "verdict": "correct",
+         "candidate": {"id": "ana-1", "field": "total_revenue", "value": "4000", "proposer": "person:ana", "evidence": {"start": 76, "end": 81, "text": "4,000"}},
+         "admit": {"outcome": "admitted", "codes": []}}
+      ],
+      "expected": {"slots": [
+        {"field": "segment_a", "key": null, "candidates": ["a1"], "status": "admitted", "value": "1000", "unit": null, "evidence": {"start": 22, "end": 27}, "receipt": "packet", "task": null},
+        {"field": "segment_b", "key": null, "candidates": ["b1"], "status": "admitted", "value": "3000", "unit": null, "evidence": {"start": 51, "end": 56}, "receipt": "packet", "task": null},
+        {"field": "total_revenue", "key": null, "candidates": ["t1"], "status": "corrected", "value": "4000", "unit": null, "evidence": {"start": 76, "end": 81}, "receipt": "correction ana", "task": "review"}
+      ]}
+    },
+    {
+      "name": "relation-flags-the-correction",
+      "rules": ["6.2", "6.2.2"],
+      "about": "Ana selects the restated 4,100. The relation fails, Ana keeps no code, and the correction does not count.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 1, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "total_revenue", "key": null}, "verdict": "correct",
+         "candidate": {"id": "ana-1", "field": "total_revenue", "value": "4100", "proposer": "person:ana", "evidence": {"start": 110, "end": 115, "text": "4,100"}},
+         "admit": {"outcome": "needs_verification", "codes": ["RELATION_FAILED"]}}
+      ],
+      "expected": {"slots": [
+        {"field": "segment_a", "key": null, "candidates": ["a1"], "status": "admitted", "value": "1000", "unit": null, "evidence": {"start": 22, "end": 27}, "receipt": "packet", "task": null},
+        {"field": "segment_b", "key": null, "candidates": ["b1"], "status": "admitted", "value": "3000", "unit": null, "evidence": {"start": 51, "end": 56}, "receipt": "packet", "task": null},
+        {"field": "total_revenue", "key": null, "candidates": ["t1"], "status": "open", "value": null, "unit": null, "evidence": null, "receipt": "packet", "task": "review"}
+      ]}
+    },
+    {
+      "name": "relation-code-kept",
+      "rules": ["6.2.2"],
+      "about": "Ana keeps RELATION_FAILED, so the correction counts. The segment slots keep the values of the gate: the resolution takes only the decision of the candidate of the person.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 1, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "total_revenue", "key": null}, "verdict": "correct",
+         "candidate": {"id": "ana-1", "field": "total_revenue", "value": "4100", "proposer": "person:ana", "evidence": {"start": 110, "end": 115, "text": "4,100"}},
+         "codes_kept": ["RELATION_FAILED"],
+         "admit": {"outcome": "needs_verification", "codes": ["RELATION_FAILED"]}}
+      ],
+      "expected": {"slots": [
+        {"field": "segment_a", "key": null, "candidates": ["a1"], "status": "admitted", "value": "1000", "unit": null, "evidence": {"start": 22, "end": 27}, "receipt": "packet", "task": null},
+        {"field": "segment_b", "key": null, "candidates": ["b1"], "status": "admitted", "value": "3000", "unit": null, "evidence": {"start": 51, "end": 56}, "receipt": "packet", "task": null},
+        {"field": "total_revenue", "key": null, "candidates": ["t1"], "status": "corrected", "value": "4100", "unit": null, "evidence": {"start": 110, "end": 115}, "receipt": "correction ana", "task": "review"}
+      ]}
+    },
+    {
+      "name": "informational-code-need-not-be-kept",
+      "rules": ["6.2.2", "6.3.8"],
+      "about": "Ana cites the span of 4,000 for the value 4100. The gate moves the evidence to the one 4,100 and adds EVIDENCE_REANCHORED. That code is informational, so Ana keeps only RELATION_FAILED. The value has the span of the moved evidence.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 1, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "total_revenue", "key": null}, "verdict": "correct",
+         "candidate": {"id": "ana-1", "field": "total_revenue", "value": "4100", "proposer": "person:ana", "evidence": {"start": 76, "end": 81, "text": "4,100"}},
+         "codes_kept": ["RELATION_FAILED"],
+         "admit": {"outcome": "needs_verification", "codes": ["RELATION_FAILED", "EVIDENCE_REANCHORED"]}}
+      ],
+      "expected": {"slots": [
+        {"field": "segment_a", "key": null, "candidates": ["a1"], "status": "admitted", "value": "1000", "unit": null, "evidence": {"start": 22, "end": 27}, "receipt": "packet", "task": null},
+        {"field": "segment_b", "key": null, "candidates": ["b1"], "status": "admitted", "value": "3000", "unit": null, "evidence": {"start": 51, "end": 56}, "receipt": "packet", "task": null},
+        {"field": "total_revenue", "key": null, "candidates": ["t1"], "status": "corrected", "value": "4100", "unit": null, "evidence": {"start": 110, "end": 115}, "receipt": "correction ana", "task": "review"}
+      ]}
+    }
+  ]
+}

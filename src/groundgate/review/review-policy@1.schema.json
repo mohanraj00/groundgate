@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/mohanraj00/groundgate/blob/main/src/groundgate/review/review-policy@1.schema.json",
+  "title": "groundgate review policy, format review-policy@1",
+  "description": "The rules that select the review tasks of a packet and settle its answers (docs/design/review.md section 5.1). A stored policy gives every member, so that one policy has one store key.",
+  "type": "object",
+  "required": ["format", "audit", "agree", "leads", "rejected"],
+  "additionalProperties": false,
+  "properties": {
+    "format": { "const": "review-policy@1" },
+    "audit": {
+      "description": "The audit pick. A slot with exactly one passed decision, and that decision admitted, gets an audit task when H * 10^d < n * 2^64. H is the first 8 bytes, big-endian, of SHA-256 over the ASCII bytes 'groundgate-audit/1:' and then the UTF-8 canonical JSON (RFC 8785) of the list [seed, packet key, field, key, decision]. key is null for a field without keys. decision is the index of the decision in the receipt for a multiple field, and null for other fields. rate is the decimal n / 10^d, with d digits after the point.",
+      "type": "object",
+      "required": ["rate", "seed"],
+      "additionalProperties": false,
+      "properties": {
+        "rate": {
+          "description": "The share of admitted slots that get an audit task: a decimal string from 0 to 1, with at most 18 digits after the point and no last 0 after the point. \"0\" turns the audit off, and \"1\" picks every slot.",
+          "type": "string",
+          "pattern": "^(0|1|0\\.[0-9]{0,17}[1-9])$"
+        },
+        "seed": {
+          "description": "Any text. A new seed picks other slots.",
+          "type": "string"
+        }
+      }
+    },
+    "agree": {
+      "description": "How many reviewers must give answers that agree before a slot resolves.",
+      "type": "integer",
+      "minimum": 1
+    },
+    "leads": {
+      "description": "The reviewers whose answers settle a dispute. Can be empty.",
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/reviewer" }
+    },
+    "rejected": {
+      "description": "true also makes a task for a slot whose decisions are all rejected.",
+      "type": "boolean"
+    }
+  },
+  "$defs": {
+    "reviewer": {
+      "description": "A reviewer name.",
+      "type": "string",
+      "pattern": "\\S"
+    }
+  }
+}

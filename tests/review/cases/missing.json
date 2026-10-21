@@ -1,0 +1,116 @@
+{
+  "about": "Net income is required and has no candidate, so the receipt gives REQUIRED_FIELD_MISSING. The staff candidate is rejected. Revenue is admitted, and the audit is off.",
+  "packet": {
+    "text": "Revenue was 4,200 thousand in 2025.\nNet income was 310 thousand in 2025.\nStaff count was 52.\n",
+    "schema": {"fields": {"net_income": {"type": "number", "required": true}, "revenue": {"type": "number"}, "staff": {"type": "integer"}}},
+    "policy": null,
+    "candidates": [
+      {"id": "c1", "field": "revenue", "value": "4200000", "evidence": {"start": 12, "end": 26, "text": "4,200 thousand"}},
+      {"id": "s1", "field": "staff", "value": "53", "evidence": {"start": 89, "end": 91, "text": "52"}}
+    ],
+    "judgments": null
+  },
+  "decisions": {
+    "c1": {"outcome": "admitted", "codes": []},
+    "s1": {"outcome": "rejected", "codes": ["VALUE_NOT_IN_EVIDENCE"]}
+  },
+  "coverage": ["net_income"],
+  "cases": [
+    {
+      "name": "missing-and-rejected-with-no-answer",
+      "rules": ["5.2", "6.1.5"],
+      "about": "The missing field has a task and no answer, so it is open. The rejected slot has no task.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 1, "leads": [], "rejected": false},
+      "answers": [],
+      "expected": {"slots": [
+        {"field": "net_income", "key": null, "candidates": [], "status": "open", "value": null, "unit": null, "evidence": null, "receipt": "packet", "task": "review"},
+        {"field": "revenue", "key": null, "candidates": ["c1"], "status": "admitted", "value": "4200000", "unit": null, "evidence": {"start": 12, "end": 26}, "receipt": "packet", "task": null},
+        {"field": "staff", "key": null, "candidates": ["s1"], "status": "rejected", "value": null, "unit": null, "evidence": null, "receipt": "packet", "task": null}
+      ]}
+    },
+    {
+      "name": "rejected-slot-gets-a-task",
+      "rules": ["5.2"],
+      "about": "With rejected true, the rejected slot gets a task. It has no answer, so it is open.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 1, "leads": [], "rejected": true},
+      "answers": [],
+      "expected": {"slots": [
+        {"field": "net_income", "key": null, "candidates": [], "status": "open", "value": null, "unit": null, "evidence": null, "receipt": "packet", "task": "review"},
+        {"field": "revenue", "key": null, "candidates": ["c1"], "status": "admitted", "value": "4200000", "unit": null, "evidence": {"start": 12, "end": 26}, "receipt": "packet", "task": null},
+        {"field": "staff", "key": null, "candidates": ["s1"], "status": "open", "value": null, "unit": null, "evidence": null, "receipt": "packet", "task": "review"}
+      ]}
+    },
+    {
+      "name": "missing-field-corrected",
+      "rules": ["6.2", "6.2.1"],
+      "about": "Ana selects the net income. The correction runs with the other candidates of the packet and is admitted.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 1, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "net_income", "key": null}, "verdict": "correct",
+         "candidate": {"id": "ana-1", "field": "net_income", "value": "310000", "proposer": "person:ana", "evidence": {"start": 51, "end": 63, "text": "310 thousand"}},
+         "admit": {"outcome": "admitted", "codes": []}}
+      ],
+      "expected": {"slots": [
+        {"field": "net_income", "key": null, "candidates": [], "status": "corrected", "value": "310000", "unit": null, "evidence": {"start": 51, "end": 63}, "receipt": "correction ana", "task": "review"},
+        {"field": "revenue", "key": null, "candidates": ["c1"], "status": "admitted", "value": "4200000", "unit": null, "evidence": {"start": 12, "end": 26}, "receipt": "packet", "task": null},
+        {"field": "staff", "key": null, "candidates": ["s1"], "status": "rejected", "value": null, "unit": null, "evidence": null, "receipt": "packet", "task": null}
+      ]}
+    },
+    {
+      "name": "missing-field-not-in-document",
+      "rules": ["6.1.5"],
+      "about": "Ana says that the document does not give the field.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 1, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "net_income", "key": null}, "verdict": "not_in_document"}
+      ],
+      "expected": {"slots": [
+        {"field": "net_income", "key": null, "candidates": [], "status": "not_in_document", "value": null, "unit": null, "evidence": null, "receipt": "packet", "task": "review"},
+        {"field": "revenue", "key": null, "candidates": ["c1"], "status": "admitted", "value": "4200000", "unit": null, "evidence": {"start": 12, "end": 26}, "receipt": "packet", "task": null},
+        {"field": "staff", "key": null, "candidates": ["s1"], "status": "rejected", "value": null, "unit": null, "evidence": null, "receipt": "packet", "task": null}
+      ]}
+    },
+    {
+      "name": "confirm-with-no-choice-is-invalid",
+      "rules": ["6.1.3", "6.3.5"],
+      "about": "The task of a missing field has no choice, so it has no confirm.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 1, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "net_income", "key": null}, "verdict": "confirm"}
+      ],
+      "expected": {"error": {"reviewer": "ana", "sequence": 1}}
+    },
+    {
+      "name": "rejected-slot-corrected",
+      "rules": ["6.2", "6.2.1"],
+      "about": "Ana corrects the staff count. The correction runs without the rejected candidate of the slot.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 1, "leads": [], "rejected": true},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "staff", "key": null}, "verdict": "correct",
+         "candidate": {"id": "ana-1", "field": "staff", "value": "52", "proposer": "person:ana", "evidence": {"start": 89, "end": 91, "text": "52"}},
+         "admit": {"outcome": "admitted", "codes": []}}
+      ],
+      "expected": {"slots": [
+        {"field": "net_income", "key": null, "candidates": [], "status": "open", "value": null, "unit": null, "evidence": null, "receipt": "packet", "task": "review"},
+        {"field": "revenue", "key": null, "candidates": ["c1"], "status": "admitted", "value": "4200000", "unit": null, "evidence": {"start": 12, "end": 26}, "receipt": "packet", "task": null},
+        {"field": "staff", "key": null, "candidates": ["s1"], "status": "corrected", "value": "52", "unit": null, "evidence": {"start": 89, "end": 91}, "receipt": "correction ana", "task": "review"}
+      ]}
+    },
+    {
+      "name": "rejected-slot-answer-after-a-policy-change",
+      "rules": ["6.3.1"],
+      "about": "An earlier policy with rejected true made the staff task, and Ana answered it. The new policy makes no such task, but the answer still counts.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 1, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "staff", "key": null}, "verdict": "correct",
+         "candidate": {"id": "ana-1", "field": "staff", "value": "52", "proposer": "person:ana", "evidence": {"start": 89, "end": 91, "text": "52"}},
+         "admit": {"outcome": "admitted", "codes": []}}
+      ],
+      "expected": {"slots": [
+        {"field": "net_income", "key": null, "candidates": [], "status": "open", "value": null, "unit": null, "evidence": null, "receipt": "packet", "task": "review"},
+        {"field": "revenue", "key": null, "candidates": ["c1"], "status": "admitted", "value": "4200000", "unit": null, "evidence": {"start": 12, "end": 26}, "receipt": "packet", "task": null},
+        {"field": "staff", "key": null, "candidates": ["s1"], "status": "corrected", "value": "52", "unit": null, "evidence": {"start": 89, "end": 91}, "receipt": "correction ana", "task": "review"}
+      ]}
+    }
+  ]
+}

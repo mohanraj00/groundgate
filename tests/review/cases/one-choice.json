@@ -1,0 +1,148 @@
+{
+  "about": "One candidate for revenue has a low confidence, so the slot gets a review task with one choice. The document gives the value two times. A recorded judgment names the candidate, so each correction must remove that judgment.",
+  "packet": {
+    "text": "Revenue was 4,200 thousand in 2025.\nThe revenue of 4,200 thousand for 2025 is final.\n",
+    "schema": {"fields": {"revenue": {"type": "number"}}},
+    "policy": {"min_confidence": 0.9},
+    "candidates": [
+      {"id": "c1", "field": "revenue", "value": "4200000", "confidence": 0.5, "evidence": {"start": 12, "end": 26, "text": "4,200 thousand"}}
+    ],
+    "judgments": [
+      {"candidate_id": "c1", "question": "field_match", "judge": {"id": "j", "digest": "j-1"}, "p": 0.1}
+    ]
+  },
+  "decisions": {
+    "c1": {"outcome": "needs_verification", "codes": ["LOW_CONFIDENCE"]}
+  },
+  "coverage": [],
+  "cases": [
+    {
+      "name": "confirm-agrees-with-choose",
+      "rules": ["6.1.3", "6.1.4", "6.3.3"],
+      "about": "Ana confirms the only choice, and Ben chooses it. The two answers agree. The task has one choice, so the status is confirmed.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 2, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "confirm"},
+        {"reviewer": "ben", "slot": {"field": "revenue", "key": null}, "verdict": "choose", "choice": "c1"}
+      ],
+      "expected": {"slots": [
+        {"field": "revenue", "key": null, "candidates": ["c1"], "status": "confirmed", "value": "4200000", "unit": null, "evidence": {"start": 12, "end": 26}, "receipt": "packet", "task": "review"}
+      ]}
+    },
+    {
+      "name": "choose-the-only-choice-is-confirmed",
+      "rules": ["6.1.3", "6.3.3"],
+      "about": "A choose of the only choice is a confirm.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 1, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "choose", "choice": "c1"}
+      ],
+      "expected": {"slots": [
+        {"field": "revenue", "key": null, "candidates": ["c1"], "status": "confirmed", "value": "4200000", "unit": null, "evidence": {"start": 12, "end": 26}, "receipt": "packet", "task": "review"}
+      ]}
+    },
+    {
+      "name": "number-corrections-agree-at-two-spans",
+      "rules": ["6.1.4", "6.2", "6.2.1", "6.3.6"],
+      "about": "Two corrections give the same canonical value at two spans. For a number the target is the value, the unit and the key, so they agree. The value comes from the correction of Ana, the first reviewer in code point order.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 2, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ben", "slot": {"field": "revenue", "key": null}, "verdict": "correct",
+         "candidate": {"id": "ben-1", "field": "revenue", "value": "4200000", "proposer": "person:ben", "evidence": {"start": 12, "end": 26, "text": "4,200 thousand"}},
+         "admit": {"outcome": "admitted", "codes": []}},
+        {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "correct",
+         "candidate": {"id": "ana-1", "field": "revenue", "value": "4200000", "proposer": "person:ana", "evidence": {"start": 51, "end": 65, "text": "4,200 thousand"}},
+         "admit": {"outcome": "admitted", "codes": []}}
+      ],
+      "expected": {"slots": [
+        {"field": "revenue", "key": null, "candidates": ["c1"], "status": "corrected", "value": "4200000", "unit": null, "evidence": {"start": 51, "end": 65}, "receipt": "correction ana", "task": "review"}
+      ]}
+    },
+    {
+      "name": "correct-and-confirm-disagree",
+      "rules": ["6.1.4", "6.1.6"],
+      "about": "Two answers with other verdicts disagree, also when they give the same value.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 1, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "correct",
+         "candidate": {"id": "ana-1", "field": "revenue", "value": "4200000", "proposer": "person:ana", "evidence": {"start": 51, "end": 65, "text": "4,200 thousand"}},
+         "admit": {"outcome": "admitted", "codes": []}},
+        {"reviewer": "ben", "slot": {"field": "revenue", "key": null}, "verdict": "confirm"}
+      ],
+      "expected": {"slots": [
+        {"field": "revenue", "key": null, "candidates": ["c1"], "status": "disputed", "value": null, "unit": null, "evidence": null, "receipt": "packet", "task": "review"}
+      ]}
+    },
+    {
+      "name": "kept-code-counts",
+      "rules": ["6.2", "6.2.2"],
+      "about": "Ana types 4200 for a value in thousands. The gate flags SCALE_WORD, and Ana keeps that code, so the correction counts.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 1, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "correct",
+         "candidate": {"id": "ana-1", "field": "revenue", "value": "4200", "proposer": "person:ana", "evidence": {"start": 12, "end": 26, "text": "4,200 thousand"}},
+         "codes_kept": ["SCALE_WORD"],
+         "admit": {"outcome": "needs_verification", "codes": ["SCALE_WORD"]}}
+      ],
+      "expected": {"slots": [
+        {"field": "revenue", "key": null, "candidates": ["c1"], "status": "corrected", "value": "4200", "unit": null, "evidence": {"start": 12, "end": 26}, "receipt": "correction ana", "task": "review"}
+      ]}
+    },
+    {
+      "name": "code-not-kept",
+      "rules": ["6.2.2", "6.3.7"],
+      "about": "The same correction without the kept code does not count. It is no answer, so the slot stays open.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 1, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "correct",
+         "candidate": {"id": "ana-1", "field": "revenue", "value": "4200", "proposer": "person:ana", "evidence": {"start": 12, "end": 26, "text": "4,200 thousand"}},
+         "admit": {"outcome": "needs_verification", "codes": ["SCALE_WORD"]}}
+      ],
+      "expected": {"slots": [
+        {"field": "revenue", "key": null, "candidates": ["c1"], "status": "open", "value": null, "unit": null, "evidence": null, "receipt": "packet", "task": "review"}
+      ]}
+    },
+    {
+      "name": "rejected-correction-never-counts",
+      "rules": ["6.2.3", "6.3.7"],
+      "about": "The span does not hold 4300000, so the gate rejects the correction. It is no answer.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 1, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "correct",
+         "candidate": {"id": "ana-1", "field": "revenue", "value": "4300000", "proposer": "person:ana", "evidence": {"start": 12, "end": 26, "text": "4,200 thousand"}},
+         "admit": {"outcome": "rejected", "codes": ["VALUE_NOT_IN_EVIDENCE"]}}
+      ],
+      "expected": {"slots": [
+        {"field": "revenue", "key": null, "candidates": ["c1"], "status": "open", "value": null, "unit": null, "evidence": null, "receipt": "packet", "task": "review"}
+      ]}
+    },
+    {
+      "name": "rejected-correction-does-not-dispute",
+      "rules": ["6.2.3", "6.3.7"],
+      "about": "A correction that does not count is no answer, so it does not disagree with the confirm of Ben.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 1, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "correct",
+         "candidate": {"id": "ana-1", "field": "revenue", "value": "4300000", "proposer": "person:ana", "evidence": {"start": 12, "end": 26, "text": "4,200 thousand"}},
+         "admit": {"outcome": "rejected", "codes": ["VALUE_NOT_IN_EVIDENCE"]}},
+        {"reviewer": "ben", "slot": {"field": "revenue", "key": null}, "verdict": "confirm"}
+      ],
+      "expected": {"slots": [
+        {"field": "revenue", "key": null, "candidates": ["c1"], "status": "confirmed", "value": "4200000", "unit": null, "evidence": {"start": 12, "end": 26}, "receipt": "packet", "task": "review"}
+      ]}
+    },
+    {
+      "name": "not-in-document-agrees",
+      "rules": ["6.1.4", "6.1.5"],
+      "about": "not_in_document has no target, so two such answers agree.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 2, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "not_in_document"},
+        {"reviewer": "ben", "slot": {"field": "revenue", "key": null}, "verdict": "not_in_document"}
+      ],
+      "expected": {"slots": [
+        {"field": "revenue", "key": null, "candidates": ["c1"], "status": "not_in_document", "value": null, "unit": null, "evidence": null, "receipt": "packet", "task": "review"}
+      ]}
+    }
+  ]
+}

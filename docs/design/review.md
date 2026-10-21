@@ -1,8 +1,8 @@
 # Review: the step that collects a person's answers
 
-Status: approved on 2026-10-20, issue #287. Nothing in this file is built, and it changes no
-decision. The review step keeps its data in the store of [store.md](store.md) (#288), so the two
-notes go together. The last section lists the code issues.
+Status: approved on 2026-10-20, issue #287. Only the formats of section 5 are built (#408). It
+changes no decision. The review step keeps its data in the store of [store.md](store.md) (#288),
+so the two notes go together. The last section lists the code issues.
 
 ## 1. The answers in short
 
@@ -92,7 +92,8 @@ gets a new meaning (store.md §4). Each format gets a JSON Schema in the package
 - `audit.rate` is the share of admitted slots that get an audit task. `"0"` turns the audit off.
 - A slot gets an audit task when the first 8 bytes of SHA-256 over `seed`, the packet key, the
   field and the key, as an integer divided by 2^64, are less than `rate`. The pick is a function
-  of the policy, so it needs no log, and anyone can check it.
+  of the policy, so it needs no log, and anyone can check it. Section 6.3, point 2, gives the
+  exact bytes and the comparison.
 - `agree` is how many reviewers must agree before a slot resolves. The default is 1.
 - `leads` names the reviewers who can settle a dispute. The default is none.
 - `rejected: true` also makes a task for a slot whose decisions are all rejected. The default
@@ -111,7 +112,7 @@ gets a new meaning (store.md §4). Each format gets a JSON Schema in the package
 
 ```json
 {"format": "task@1",
- "packet": "sha256:...", "policy": "sha256:...",
+ "packet": "sha256:...",
  "slot": {"field": "total_revenue", "key": "2025", "decisions": [3, 7]},
  "item": "number", "mode": "review", "template": "number@1",
  "question": "Which amount is total revenue for 2025?",
@@ -134,7 +135,10 @@ gets a new meaning (store.md §4). Each format gets a JSON Schema in the package
 - A task holds offsets, pages and boxes. It holds no document text other than the values that its
   question and choices quote. The page reads the text from the store. Thus `forget` can remove
   the text and keep the tasks, and `forget --all` also removes the values (store.md §8).
-- The same packet and policy always give the same task bytes, so a task always has the same key.
+- The task names no review policy. The same packet always gives the same task bytes for a slot,
+  so a task always has the same key, and a new policy keeps the answers (section 6.3, point 1).
+- `slot.decisions` lists each decision of the slot, passed or rejected, in receipt order. The
+  page reads a rejected decision from the receipt.
 
 ### 5.3 The answer
 
@@ -175,14 +179,17 @@ each packet.
 ```json
 {"format": "resolution@1", "packet": "sha256:...", "policy": "sha256:...",
  "answers": [{"reviewer": "ana", "head": "sha256:..."}],
- "slots": [{"field": "total_revenue", "key": "2025", "status": "corrected",
+ "slots": [{"field": "total_revenue", "key": "2025", "decisions": [3, 7], "status": "corrected",
             "value": "4200000", "unit": "USD", "evidence": {"start": 18120, "end": 18125},
-            "receipt": "sha256:...", "task": "sha256:..."}]}
+            "receipt": "sha256:...", "task": "sha256:...", "statements": null, "nodes": null}]}
 ```
 
-`answers` names the head of each answer log that the resolution read. Thus the app can show
-which answers it used. `receipt` is the correction receipt when the value comes from a
-correction. If not, it is the receipt of the packet.
+`answers` names the head of each answer log that the resolution read, in code point order of
+the reviewer name. Thus the app can show which answers it used. `receipt` is the correction
+receipt when the value comes from a correction. If not, it is the receipt of the packet. Slots
+are in code point order of the field, then of the key with null first, then of the first
+decision. `decisions` tells apart two slots of a `multiple` field. `statements` and `nodes` are
+null in format 1 (section 7).
 
 | Status | The app gets |
 |---|---|
@@ -247,6 +254,47 @@ adds the part as a role item.
 
 The server runs the same `admit` call when the person answers, so the page shows the outcome at
 once. The resolution runs it again and does not trust the server.
+
+### 6.3 Points that the cases settle
+
+The note review (#397) left open points, and the cases of #408 need an answer for each. The
+cases under `tests/review/cases/` name these points as rules `6.3.1` to `6.3.9`.
+
+1. **A policy change keeps the answers.** A task names no review policy. Each slot has at most
+   one task, and the receipt sets its mode: `audit` for a slot with one passed decision that is
+   admitted, and `review` for each other slot. An answer counts when its task is the task of a
+   slot of the packet, also when the current policy does not make that task. The policy sets
+   which tasks the queue shows, and `agree` and `leads`. Thus a new lead or a new audit rate
+   never removes an answer.
+2. **The audit pick.** H is the first 8 bytes, big-endian, of SHA-256 over the ASCII bytes
+   `groundgate-audit/1:` and then the UTF-8 canonical JSON (RFC 8785) of the list
+   `[seed, packet key, field, key, decision]`. `key` is null for a field without keys.
+   `decision` is the receipt index of the decision for a `multiple` field, and null for other
+   fields. JSON quotes each string, so two different lists never give the same bytes. `rate` is
+   a decimal string with at most 18 digits after the point, and no last 0 after the point. With
+   `rate` = n / 10^d, the slot gets an audit task when H * 10^d < n * 2^64. This is integer
+   arithmetic, with no float. `tests/review/audit-picks.json` has vectors.
+3. **The status names.** A slot that resolves to a choice is `confirmed` when its task has one
+   choice, and `chosen` when it has two or more. `correct` and `adjust_span` give `corrected`.
+   An audit confirm gives `admitted` (rule 7).
+4. **Two leads.** The latest answers of the leads settle a dispute when they agree with each
+   other. If two leads disagree, the slot stays `disputed`. A lead whose latest answer is
+   `unsure` has no answer.
+5. **An answer that breaks its task.** For example: `confirm` on a task with no choice or with
+   two or more choices, `choose` of a decision that is not a choice, or a candidate for another
+   field or key. Then the resolution stops with an error that names the reviewer and the
+   sequence of the record. It does not skip the record, because the server checks each answer
+   before the write (section 9, rule 8), so such a record shows a fault.
+6. **Agreeing corrections at two spans.** For a number, two corrections at different spans can
+   agree (rule 4). The value, the evidence and the receipt then come from the correction of the
+   first reviewer in code point order of the name.
+7. **A correction that does not count** (section 6.2, rules 2 and 3) is no answer under rules 4
+   to 6. Under rule 7 it still removes an admitted value, because the person said that the value
+   is wrong.
+8. **The kept codes.** `codes_kept` must hold each code of the correction decision that is not
+   informational. `EVIDENCE_REANCHORED`, `VALUE_DERIVED`, `KEY_CITED`, `ADMITTED_BY_POLICY` and
+   `MODEL_CLEARED` do not need a key.
+9. **The order.** Section 5.4 gives the order of `answers` and of `slots`.
 
 ## 7. Item kinds
 
@@ -392,7 +440,8 @@ issues 1 and 2. No issue changes a decision.
 
 1. **Review formats, with resolution cases by hand.** JSON Schemas for the four formats. Cases
    under `tests/review/cases/`: a packet, a policy, answers and the expected resolution, written
-   by hand before the code. They cover each rule of section 6.
+   by hand before the code. They cover each rule of section 6. Done in #408, with the points of
+   section 6.3.
 2. **`groundgate review tasks`.** The rules of section 5.2, the audit pick, and the templates
    `number@1`, `text@1` and `span@1`.
 3. **`groundgate review resolve`.** The rules of section 6, with corrections through `admit` and
