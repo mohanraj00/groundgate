@@ -169,8 +169,10 @@ moves by the same 3 misses, but the kinds move apart. `diagnose.review_codes` in
 counts 22 runner review decisions with `FIELD_CITATION_INVALID` that carry a right value, down
 from 68.
 
-The sbc misses of the runner fall from 18 to 6. This is not a gain in field items. In the run
-cache, most runner sbc admits of loop 03 cite no field item, and no runner admit of loop 02 did.
+The sbc misses of the runner fall from 18 to 6. This is not a gain in field items. Most runner
+sbc admits of loop 03 cite no field item, and no runner admit of loop 02 did. I counted this in
+the local run cache of the candidates. The repo does not hold that cache, so this count cannot be
+checked from the repo.
 SPEC §4.6 checks the field only when a candidate cites a field item, so these candidates pass
 without one. The other three kinds get worse: annual from 27 to 29 misses, component from 15 to
 21 and sds from 11 to 12. In component, the model quotes only the alias, such as "Supply
