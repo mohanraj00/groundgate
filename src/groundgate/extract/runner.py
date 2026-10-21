@@ -600,6 +600,8 @@ class _Engine:
         self.references = references
         self.sources = {"document": text, **{f"reference:{r['id']}": r["text"] for r in references}}
         self.offsets = {name: _ByteOffsets(body) for name, body in self.sources.items()}
+        # The byte spans of the alias mentions in each source, read once (#395).
+        self.mentions: dict[tuple[str, tuple[str, ...]], list[tuple[int, int]]] = {}
         self.record: list[Json] = []
         self.artifacts: dict[str, str] = {}
         self.event(
@@ -1412,14 +1414,18 @@ class _Engine:
         found = self.token(d)
         start, end = d.evidence if found is None else found[:2]
         field = self.schema.fields.get(d.field) if d.field is not None else None
-        mentions: list[tuple[int, int]] = []
+        # Without aliases or a source text, no_alias does not apply. FIELD_CITATION_INVALID needs
+        # aliases (SPEC §4.6), so this is a guard only.
+        mentions: list[tuple[int, int]] | None = None
         if field is not None and field.aliases and d.source in {"document", "reference"}:
             source = "document" if d.source == "document" else f"reference:{d.ref}"
-            offsets = self.offsets[source]
-            mentions = [
-                (offsets.to_bytes(x), offsets.to_bytes(y))
-                for x, y, _ in key_mentions(self.sources[source], field.aliases)
-            ]
+            mentions = self.mentions.get((source, field.aliases))
+            if mentions is None:
+                offsets = self.offsets[source]
+                mentions = self.mentions[source, field.aliases] = [
+                    (offsets.to_bytes(x), offsets.to_bytes(y))
+                    for x, y, _ in key_mentions(self.sources[source], field.aliases)
+                ]
         causes = []
         for part in d.parts:
             if part.role != "field" or part.passed or part.span is None:
@@ -1429,9 +1435,7 @@ class _Engine:
                 causes.append("holds_value")
             elif a >= end:
                 causes.append("after_value")
-            elif d.source in {"document", "reference"} and not any(
-                a <= x and y <= b for x, y in mentions
-            ):
+            elif mentions is not None and not any(a <= x and y <= b for x, y in mentions):
                 causes.append("no_alias")
         return causes
 

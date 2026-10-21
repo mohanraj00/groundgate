@@ -1317,6 +1317,22 @@ def test_repair_names_the_cause_of_a_field_item_that_cannot_pass(text, field, ca
     assert_replays(result, text, CAUSE_SCHEMA)
 
 
+def test_repair_lists_every_alias_for_a_field_item_in_a_reference():
+    # The no_alias cause reads the reference that the decision cites (#395).
+    schema = {"fields": {"amount": {"type": "integer", "aliases": ["Amount", "Total"]}}}
+    references = [{"id": "r", "text": "Sum: Amount 5."}]
+    first = candidate(evidence=[item("5", ref="r"), item("Sum", "field", ref="r")])
+    new = candidate(evidence=[item("5", ref="r"), item("Amount", "field", ref="r")])
+    client = Client(envelope(first), new)
+    result = execute("Nothing.", client, schema, references=references)
+    repair = json.loads(client.prompts[1].split("\n", 1)[1])
+    assert 'word for word: "Amount", "Total".' in repair["feedback"]
+    call = next(e for e in result.record if e["kind"] == "call" and e["phase"] == "repair")
+    assert call["field_causes"] == ["no_alias"]
+    assert result.receipt.decisions[0].outcome == "admitted"
+    assert_replays(result, "Nothing.", schema, references=references)
+
+
 def test_final_admission_keeps_the_field_cause_after_the_last_repair():
     first = candidate(evidence=[item("5"), item("Amount 5", "field")])
     client = Client(envelope(first), first)
