@@ -408,6 +408,22 @@ def test_the_answers_file_is_never_replaced(tmp_path: Path) -> None:
     assert list(tmp_path.glob(".tmp-*")) == []
 
 
+def test_the_answers_file_is_written_with_no_hard_links(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    def no_links(src: str, dst: Path) -> None:
+        raise OSError("no hard links here")
+
+    monkeypatch.setattr(judge.os, "link", no_links)
+    out = tmp_path / "answers.json"
+    judge._write(out, "new", new=True)
+    assert out.read_text() == "new\n"
+    with pytest.raises(judge.JudgeError, match="there already"):
+        judge._write(out, "newer", new=True)
+    assert out.read_text() == "new\n"
+    assert list(tmp_path.glob(".tmp-*")) == []
+
+
 def test_budget_guard(tmp_path: Path) -> None:
     fake = FakeCodex()
     with pytest.raises(judge.JudgeError, match="budget"):

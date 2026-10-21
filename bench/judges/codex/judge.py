@@ -280,7 +280,9 @@ def _subprocess(cmd: list[str], stdin: str, env: dict[str, str]) -> tuple[int, s
         except subprocess.TimeoutExpired:
             with contextlib.suppress(ProcessLookupError):
                 os.killpg(proc.pid, signal.SIGKILL)
-            proc.communicate()
+            # a process outside the group can hold the pipes open; do not wait for it
+            with contextlib.suppress(subprocess.TimeoutExpired):
+                proc.communicate(timeout=5)
             raise
     return proc.returncode, out, err
 
@@ -453,6 +455,19 @@ class Cache:
         _write(self.path(key), json.dumps(body, ensure_ascii=False, indent=1, sort_keys=True))
 
 
+def _link_new(tmp: str, path: Path, body: str) -> None:
+    """Make path, which must not be there, with the bytes of tmp: a hard link, or on a file
+    system with no hard links, a file that is opened only if it is new."""
+    try:
+        os.link(tmp, path)
+    except FileExistsError:
+        raise
+    except OSError:
+        fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o644)
+        with os.fdopen(fd, "w", encoding="utf-8") as f:
+            f.write(body + "\n")
+
+
 def _write(path: Path, body: str, new: bool = False) -> None:
     """Write through a new file in the same folder, so a stopped run leaves no half file. With
     new, refuse a path that is there already, also when it came after an earlier check."""
@@ -462,12 +477,13 @@ def _write(path: Path, body: str, new: bool = False) -> None:
         with os.fdopen(fd, "w", encoding="utf-8") as f:
             f.write(body + "\n")
         if new:
-            os.link(tmp, path)  # fails when path is there
+            _link_new(tmp, path, body)
             os.unlink(tmp)
         else:
             os.replace(tmp, path)
     except FileExistsError as e:
-        Path(tmp or "").unlink(missing_ok=True)
+        if tmp:
+            Path(tmp).unlink(missing_ok=True)
         raise JudgeError(f"{path} is there already") from e
     except OSError as e:
         if tmp is not None:
