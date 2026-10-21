@@ -5663,6 +5663,47 @@ vector(
     ],
 )  # fmt: skip
 
+vector(
+    "125-scale-form-longest-currency-form",
+    "Scale form 3 reads the longest currency form of the field's unit that ends at the scale "
+    "word, and 'per' or '/' before that form stops it. In 'tCO2e/US$ million' the longest form "
+    "of USD is US$, and '/' stands before it, so the $ inside US$ does not count. 'US$ million' "
+    "as a column header counts (spec 0.11, #423).",
+    "Carbon intensity (tCO2e/US$ million of net sales)\n\nScope 1\t12.4\n\n"
+    "Carbon intensity (tCO2e per US$ million of net sales)\n\nScope 2\t8.6\n\n"
+    "\tUS$ million\nRevenue\t$5,200\n",
+    {"fields": {"usd": money("USD", "Revenue", "Scope 1", "Scope 2", multiple=True)}},
+    [
+        # the $ inside US$ does not count; needs_verification in spec 0.10 too
+        c("sf19", "usd", "12400000", "USD", [q("12.4"), row("Scope 1"), scale_item("US$ million")],
+          SCALE_FAILS),
+        c("sf20", "usd", "12400000", "USD", [q("12.4"), row("Scope 1"), scale_item("$ million")],
+          SCALE_FAILS),
+        # "per" stands before US$; needs_verification in spec 0.10 too
+        c("sf21", "usd", "8600000", "USD", [q("8.6"), row("Scope 2"), scale_item("US$ million")],
+          SCALE_FAILS),
+        # needs_verification with SCALE_CITATION_INVALID in spec 0.10
+        c("sf22", "usd", "5200000000", "USD",
+          [q("$5,200"), REV, scale_item("US$ million")], DERIVED),
+    ],
+)  # fmt: skip
+
+for suffix, form, why in [
+    ("empty", "", "an empty prefix"),
+    ("space", " ", "a prefix of one space"),
+    ("whitespace", "\t\n ", "a prefix of only whitespace"),
+]:
+    INVALID.append(
+        {
+            "name": f"schema-unit-form-{suffix}",
+            "description": f"A unit with {why} breaks the rule of SPEC 2.3: each prefix and "
+            "suffix is a string that is not blank (spec 0.11, #423).",
+            "document": "x",
+            "schema": {"fields": {"usd": USD}, "units": {"USD": {"prefix": [form], "suffix": []}}},
+            "policy": None,
+        }
+    )
+
 
 def main() -> None:
     out_dir = HERE / "vectors"

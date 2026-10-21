@@ -1,0 +1,26 @@
+{
+ "name": "schema-unit-form-space",
+ "description": "A unit with a prefix of one space breaks the rule of SPEC 2.3: each prefix and suffix is a string that is not blank (spec 0.11, #423).",
+ "document": "x",
+ "schema": {
+  "fields": {
+   "usd": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  },
+  "units": {
+   "USD": {
+    "prefix": [
+     " "
+    ],
+    "suffix": []
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

@@ -1,0 +1,138 @@
+{
+ "name": "125-scale-form-longest-currency-form",
+ "description": "Scale form 3 reads the longest currency form of the field's unit that ends at the scale word, and 'per' or '/' before that form stops it. In 'tCO2e/US$ million' the longest form of USD is US$, and '/' stands before it, so the $ inside US$ does not count. 'US$ million' as a column header counts (spec 0.11, #423).",
+ "document": "Carbon intensity (tCO2e/US$ million of net sales)\n\nScope 1\t12.4\n\nCarbon intensity (tCO2e per US$ million of net sales)\n\nScope 2\t8.6\n\n\tUS$ million\nRevenue\t$5,200\n",
+ "schema": {
+  "fields": {
+   "usd": {
+    "type": "number",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "Revenue",
+     "Scope 1",
+     "Scope 2"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "sf19",
+   "field": "usd",
+   "value": "12400000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 59,
+     "end": 63,
+     "text": "12.4"
+    },
+    {
+     "role": "field",
+     "text": "Scope 1"
+    },
+    {
+     "role": "scale",
+     "text": "US$ million"
+    }
+   ]
+  },
+  {
+   "id": "sf20",
+   "field": "usd",
+   "value": "12400000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 59,
+     "end": 63,
+     "text": "12.4"
+    },
+    {
+     "role": "field",
+     "text": "Scope 1"
+    },
+    {
+     "role": "scale",
+     "text": "$ million"
+    }
+   ]
+  },
+  {
+   "id": "sf21",
+   "field": "usd",
+   "value": "8600000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 128,
+     "end": 131,
+     "text": "8.6"
+    },
+    {
+     "role": "field",
+     "text": "Scope 2"
+    },
+    {
+     "role": "scale",
+     "text": "US$ million"
+    }
+   ]
+  },
+  {
+   "id": "sf22",
+   "field": "usd",
+   "value": "5200000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 154,
+     "end": 160,
+     "text": "$5,200"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "US$ million"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SCALE_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SCALE_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SCALE_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}
