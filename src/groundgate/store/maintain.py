@@ -16,6 +16,7 @@ from __future__ import annotations
 import hashlib
 import json
 from collections.abc import Iterator, Mapping
+from contextlib import suppress
 from dataclasses import dataclass, field
 from typing import Any
 
@@ -545,7 +546,8 @@ def rebuild(store: FolderStore) -> list[str]:
 def _others(objects: _Objects, packet: str) -> dict[str, int]:
     """For each key, how many other packets name it, with their readings, their run records
     and the objects of the run records. A packet that cannot be read names nothing: ``check``
-    reports it."""
+    reports it. A reading or a run record that cannot be read names nothing, but the rest of
+    its packet still counts."""
     counts: dict[str, int] = {}
     for k in objects.of("packet@1"):
         if k == packet:
@@ -553,16 +555,20 @@ def _others(objects: _Objects, packet: str) -> dict[str, int]:
         try:
             obj = _packet(objects, k)
             named = {n for _, n in _named(obj)}
-            for n in _keys(obj["reading"]):
-                named.add(n)
-                if objects.kinds.get(n) == "reading@1":
-                    named.update(m for _, m in _reading_named(objects, n))
-            for n in _keys(obj["run"]):
-                named.add(n)
-                if (objects.kinds.get(n) or "").startswith("run@"):
-                    named.update(m for _, m in _run_objects(objects, _run(objects, n))[0])
+            readings = _keys(obj["reading"])
+            runs = _keys(obj["run"])
         except (StoreError, ValueError, RecursionError):
             continue
+        for n in readings:
+            named.add(n)
+            if objects.kinds.get(n) == "reading@1":
+                with suppress(StoreError, ValueError, RecursionError):  # check reports it
+                    named.update(m for _, m in _reading_named(objects, n))
+        for n in runs:
+            named.add(n)
+            if (objects.kinds.get(n) or "").startswith("run@"):
+                with suppress(StoreError, ValueError, RecursionError):  # check reports it
+                    named.update(m for _, m in _run_objects(objects, _run(objects, n))[0])
         for n in named:
             counts[n] = counts.get(n, 0) + 1
     return counts
@@ -667,8 +673,16 @@ def forget_packet(
         logs, _ = store.log_names()
         for log in logs:
             if log[0] == "answers" and log[1] == packet:
-                store.forget_log(log, reason)
+                try:
+                    store.forget_log(log, reason)
+                except NotFound:  # another forget removed it after the list
+                    done.append(("log", _log_rel(log), "absent", 0))
+                    continue
                 done.append(("log", _log_rel(log), "deleted", 0))
-        store.forget(packet, reason)
-        done.append(("packet@1", packet, "deleted", 0))
+        try:
+            store.forget(packet, reason)
+        except NotFound:  # another forget removed it after the walk
+            done.append(("packet@1", packet, "absent", 0))
+        else:
+            done.append(("packet@1", packet, "deleted", 0))
     return done

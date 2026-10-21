@@ -14,8 +14,24 @@ import pytest
 from groundgate.canonical import jcs
 from groundgate.cli import main
 from groundgate.extract import extract
-from groundgate.store import FolderStore, Locked, StoreError, Torn, key, reviewer_key, set_key
-from groundgate.store.maintain import REMOVED, _rel, check, forget_packet, kind_of, rebuild
+from groundgate.store import (
+    FolderStore,
+    Locked,
+    StoreError,
+    Torn,
+    key,
+    reviewer_key,
+    set_key,
+)
+from groundgate.store.maintain import (
+    REMOVED,
+    _log_rel,
+    _rel,
+    check,
+    forget_packet,
+    kind_of,
+    rebuild,
+)
 from groundgate.store.packets import admit_packet, put_reading
 
 TEXT = "Invoice\n\nThe amount is 5 dollars. Pay it by Friday.\n"
@@ -498,6 +514,25 @@ def test_forget_removes_a_run_record_with_a_bad_line(tmp_path: Path) -> None:
     assert not path.exists()
 
 
+def test_forget_all_keeps_a_schema_of_a_packet_with_a_bad_run_line(tmp_path: Path) -> None:
+    root = tmp_path / "s"
+    with FolderStore(root) as store:
+        packet = save_run(store)
+        obj = json.loads(store.get("packet@1", packet))
+        bad_run = store.get("run@3", obj["run"]) + b"[1]\n"
+        obj["run"] = key("run@3", bad_run)
+        path = path_of(root, obj["run"])
+        path.parent.mkdir(exist_ok=True)
+        path.write_bytes(bad_run)
+        other = store.put("packet@1", jcs(obj).encode("utf-8"))
+        path_of(root, packet).unlink()  # only the packet with the bad run line names the schema
+        one = save_run(store, "Other: 5 dollars.", document_id="one")
+        assert json.loads(store.get("packet@1", one))["schema"] == obj["schema"]
+        done = forget_packet(store, one, "all", everything=True)
+    assert ("schema@1", obj["schema"], "kept", 1) in done
+    assert path_of(root, obj["schema"]).exists() and path_of(root, other).exists()
+
+
 def test_forget_ignores_a_symlink_that_is_not_an_object(
     tmp_path: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:
@@ -588,3 +623,30 @@ def test_forget_counts_a_run_object_that_another_run_names(
     assert main(["store", "forget", "--store", str(root), one, "--reason", "asked"]) == 0
     out = capsys.readouterr().out
     assert re.search(r"deleted reply@1 sha256:[0-9a-f]{64} \(1 other packet names it\)", out)
+
+
+def test_forget_all_after_another_forget_of_the_packet(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    root = tmp_path / "s"
+    with FolderStore(root) as store:
+        packet = save_run(store)
+        log = ("answers", packet, reviewer_key("ana"))
+        store.append(log, {"answer": "yes"})
+    forget, forget_log = FolderStore.forget, FolderStore.forget_log
+
+    def race(self: FolderStore, k: str, reason: str) -> None:
+        forget(self, k, reason)
+        if k == packet:  # raises NotFound, as for the second of two forgets
+            forget(self, k, reason)
+
+    def race_log(self: FolderStore, name: tuple[str, ...], reason: str) -> None:
+        forget_log(self, name, reason)
+        forget_log(self, name, reason)  # raises NotFound, as for the second of two forgets
+
+    monkeypatch.setattr(FolderStore, "forget", race)
+    monkeypatch.setattr(FolderStore, "forget_log", race_log)
+    with FolderStore(root) as store:
+        done = forget_packet(store, packet, "all", everything=True)
+    assert done[-1] == ("packet@1", packet, "absent", 0)
+    assert ("log", _log_rel(log), "absent", 0) in done
