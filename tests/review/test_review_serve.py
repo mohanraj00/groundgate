@@ -209,8 +209,25 @@ def test_the_server_refuses_each_request_of_section_9(served: Served) -> None:
             ),
             400,
         ),
-        # a number that has no canonical JSON form
-        (call("POST", "/api/answer", answer(tasks["net_income"], "unsure", ms=2**60)), 409),
+        (call("POST", "/api/answer", answer(tasks["net_income"], "unsure", ms=2**60)), 400),
+        (call("POST", "/api/answer", answer(tasks["net_income"], "unsure", keys=2**31)), 400),
+        # a kept code that the correction does not have, and a check with a verdict of no type
+        (
+            call(
+                "POST",
+                "/api/answer",
+                answer(
+                    tasks["revenue"],
+                    "correct",
+                    start=12,
+                    end=26,
+                    codes_kept=["SCALE_WORD", "NOT_A_CODE"],
+                ),
+            ),
+            400,
+        ),
+        (call("POST", "/api/check", {"task": tasks["revenue"], "verdict": ["correct"]}), 400),
+        (call("POST", "/api/check", {"task": [tasks["revenue"]], "verdict": "correct"}), 400),
         # a correction that the gate rejects, and one whose codes the person did not keep
         (
             call(
@@ -232,6 +249,7 @@ def test_the_server_refuses_each_request_of_section_9(served: Served) -> None:
         "error": "the Host header must be 127.0.0.1 and the port"
     }
     assert "the gate rejects this correction" in json.loads(refused[-4][0][2])["error"]
+    assert "the correction has no code NOT_A_CODE" in json.loads(refused[-7][0][2])["error"]
     assert "keep each code of the correction: SCALE_WORD" in json.loads(refused[-3][0][2])["error"]
     for status, headers, _ in seen:
         if status != 501:  # http.server answers an unknown method itself
@@ -373,14 +391,32 @@ def test_a_packet_that_does_not_match_its_receipt_gives_no_task(tmp_path: Path) 
         assert line.startswith("packet sha256:1111") and "not in the store" in line
 
 
+def test_a_packet_of_a_bad_shape_gives_a_skipped_line_and_not_a_stop(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    store, k, _ = store_with_tasks(tmp_path / "store")
+
+    def bad(*args: Any, **kwargs: Any) -> Any:
+        raise KeyError("decisions")
+
+    monkeypatch.setattr(serve, "make_tasks", bad)
+    with store:
+        review = Review(store, "ana")
+    assert review.queue()["tasks"] == []
+    assert review.skipped == [f"packet {k}: 'decisions'"]
+
+
 # The source views
 
 
 def test_an_html_source_goes_into_a_sandboxed_frame(tmp_path: Path) -> None:
     page = tmp_path / "lease.html"
     page.write_text(
-        "<html><head><title>Lease</title><script>alert(1)</script></head><body>"
+        '<html><head><meta HTTP-EQUIV="refresh" content="0;url=https://example.org/">'
+        "<title>Lease</title><script>alert(1)</script></head><body>"
         '<p>The monthly rent is <b>$2,450</b>.</p><img src="https://example.org/x.png">'
+        '<a href = "https://example.org/">More</a><svg><a><set attributeName="xlink:Href" '
+        'to="https://example.org/"/><text>Terms</text></a></svg>'
         "<p>The deposit is $4,900.</p></body></html>",
         "utf-8",
     )
@@ -403,6 +439,9 @@ def test_an_html_source_goes_into_a_sandboxed_frame(tmp_path: Path) -> None:
             assert headers["Content-Security-Policy"] == frame_csp(f"http://127.0.0.1:{port}")
             assert "sandbox" in headers["Content-Security-Policy"].split("; ")
             assert '<b>$<mark style="' in html and ">2,450</mark></b>" in html
+            # no meta refresh and no link: the frame cannot go to another host
+            assert "equiv" in html and "http-equiv" not in html.lower()
+            assert "data-href" in html and "href" not in html.lower().replace("data-href", "")
             # the ticket works one time, and a frame request still needs the right Host
             assert call("GET", view["frame"], token=None)[0] == 404
             again = json.loads(call("GET", f"/api/task/{tk}")[2])["view"]["frame"]
@@ -443,6 +482,11 @@ def test_a_value_that_occurs_two_times_is_not_marked_in_the_frame() -> None:
     html = "<p>Rent $75.</p><p>Fee $75.</p>"
     assert serve._marked(html, "$75") == (html, False, 2)
     assert serve._marked('<a title="$75">x</a>', "$75")[1] is False  # inside a tag
+    for inside in ("<script>var a = '$75';</script>", "<STYLE>p::after{content:'$75'}</style>",
+                   "<title>$75</title>", "<textarea\n>$75</textarea>", "<!-- $75 -->"):  # fmt: skip
+        assert serve._marked(f"<p>Rent</p>{inside}", "$75") == (f"<p>Rent</p>{inside}", False, 1)
+    assert serve._marked("<script></script><p>$75</p>", "$75")[1] is True
+    assert serve._marked("<!-- a --><p>$75</p>", "$75")[1] is True
     assert serve._marked("<p>a\n  b</p>", "a b")[0] == (
         '<p><mark style="background:#ffe066;outline:3px solid #c92a2a">a\n  b</mark></p>'
     )

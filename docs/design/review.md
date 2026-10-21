@@ -386,8 +386,10 @@ The review page needs a script, so it is a separate local server. Its rules:
 5. Put document text into the page only with `textContent`, never with `innerHTML`.
 6. Serve an HTML source in a frame with `sandbox=""` and its own CSP, `default-src 'none';
    style-src 'unsafe-inline'; form-action 'none'; base-uri 'none'; frame-ancestors
-   http://127.0.0.1:<port>; sandbox`. It runs no script and loads no image, so it cannot call
-   an outside host. Only the review page can hold the frame.
+   http://127.0.0.1:<port>; sandbox`. It runs no script and loads no image. The CSP does not
+   stop a meta refresh or a link that the person clicks, so the server changes each
+   `http-equiv` and `href` attribute name to `data-equiv` and `data-href`. Thus the frame
+   cannot go to another host. Only the review page can hold the frame.
 7. Read objects only by a store key that matches `sha256:[0-9a-f]{64}`. Take no path or URL from
    a document, a reply, a task or a request.
 8. Check each answer against its task before the write: a verdict that the kind permits, a

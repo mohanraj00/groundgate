@@ -92,6 +92,15 @@ MAX_PARTS = 8
 ROLES = ("sign", "scale", "unit", "field", "key")
 _SETTLED = frozenset({"admitted", "confirmed", "chosen", "corrected", "not_in_document"})
 _MARK = '<mark style="background:#ffe066;outline:3px solid #c92a2a">'
+# A frame cannot go to another host (§9 rule 6). The CSP stops each load, but not a meta refresh
+# or a link that the person clicks. An attribute name has no escape form, so these two patterns
+# find each http-equiv attribute and each href attribute, also an SVG animation of an href.
+_EQUIV = re.compile(r"http-equiv", re.IGNORECASE)
+_HREF = re.compile(r"\bhref\b", re.IGNORECASE)
+# Elements whose text is not markup, where a box would show as text or break the element.
+_RAW = ("script", "style", "title", "textarea", "xmp", "noscript", "noembed", "noframes",
+        "iframe", "plaintext", "template")  # fmt: skip
+_LIMIT = 2**31  # keys and ms
 
 
 def frame_csp(origin: str) -> str:
@@ -230,7 +239,7 @@ class Review:
         for pk in sorted(found):
             try:
                 doc = self._doc(pk, found[pk])
-            except (StoreError, PacketError, ValueError) as exc:
+            except Exception as exc:  # a packet in the store is untrusted input (§9)
                 self.skipped.append(f"packet {pk}: {_printable(str(exc))}")
                 continue
             other = len(found[pk]) - len(doc.tasks)
@@ -496,7 +505,7 @@ class Review:
         A ticket works one time."""
         found = self.tickets.pop(ticket, None)
         html = None if found is None else self.docs[found[0]].html
-        return None if found is None or html is None else _marked(html, found[1])[0]
+        return None if found is None or html is None else _marked(_inert(html), found[1])[0]
 
     def reason(self, tk: object) -> dict[str, Any]:
         """The codes of the task and the outcome of each choice (§8, The reason is closed)."""
@@ -572,7 +581,7 @@ class Review:
         (§6.2). This writes nothing."""
         _, doc, slot, task = self._task(body.get("task"))
         verdict = body.get("verdict")
-        if verdict not in CORRECTIONS:
+        if not isinstance(verdict, str) or verdict not in CORRECTIONS:
             raise Refused(400, "the verdict must be correct or adjust_span")
         candidate = self._candidate(doc, slot, task, body)
 
@@ -611,6 +620,9 @@ class Review:
             raise Refused(400, "the verdict is not an answer@1 verdict")
         candidate = None
         kept = body.get("codes_kept") or []
+        for name in ("keys", "ms"):
+            if type(body.get(name)) is int and body[name] >= _LIMIT:
+                raise Refused(400, f"{name} must be less than 2^31")
         if verdict in CORRECTIONS:
             candidate = self._candidate(doc, slot, task, body)
         record = {
@@ -637,6 +649,9 @@ class Review:
                              _admit_only(doc.packet), {})  # fmt: skip
                 assert read.correction is not None
                 d = read.correction.decision
+                extra = [c for c in kept if c not in d["codes"]]
+                if extra:
+                    raise Refused(400, "the correction has no code " + ", ".join(extra))
                 if d["outcome"] == "rejected":
                     raise Refused(409, "the gate rejects this correction: " + ", ".join(d["codes"]))
                 if read.target is None:
@@ -654,6 +669,12 @@ class Review:
         return self.queue()
 
 
+def _inert(source: str) -> str:
+    """``source`` with no meta refresh and no link, so that the frame cannot go to another host.
+    This changes each http-equiv and href attribute name, also in the text."""
+    return _HREF.sub("data-href", _EQUIV.sub("data-equiv", source))
+
+
 def _marked(source: str, value: str | None) -> tuple[str, bool, int]:
     """``source`` with a box around ``value`` when the value occurs one time and not inside a
     tag. Return the HTML, whether it has the box, and the count of occurrences."""
@@ -663,8 +684,16 @@ def _marked(source: str, value: str | None) -> tuple[str, bool, int]:
     if len(found) != 1:
         return source, False, len(found)
     m = found[0]
-    if source.rfind("<", 0, m.start()) > source.rfind(">", 0, m.start()):
+    at = m.start()
+    if source.rfind("<", 0, at) > source.rfind(">", 0, at):
         return source, False, 1  # inside a tag: a box there would change the tag
+    if source.rfind("<!--", 0, at) > source.rfind("-->", 0, at):
+        return source, False, 1  # inside a comment
+    low = source[:at].lower()
+    for name in _RAW:
+        opened = [o.start() for o in re.finditer(rf"<{name}[\t\n\f\r />]", low)]
+        if opened and opened[-1] > low.rfind(f"</{name}"):
+            return source, False, 1  # inside an element whose text is not markup
     return source[: m.start()] + _MARK + m.group() + "</mark>" + source[m.end() :], True, 1
 
 

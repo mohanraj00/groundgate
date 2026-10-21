@@ -416,3 +416,7 @@ The page is for one person on one computer. The server binds to `127.0.0.1` and 
 `Host`. Each API request must send the token of the start URL, so keep the URL private. Any
 holder of the URL can answer as the name that `--reviewer` gives. The server does not
 authenticate that name. Thus a lead answer of the review policy is not an authenticated act.
+
+The server reads the answer logs when it starts and after each answer of its own reviewer. If
+another reviewer answers while the page is open, the page does not show it. To see the answers
+of the other reviewers, restart `review serve`.
