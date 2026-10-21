@@ -327,7 +327,7 @@ def test_bad_targeted_quote_fails_only_its_field():
 def test_targeted_trim_drops_the_worst_ranked_region_first():
     schema = {"fields": {"net_income": {"type": "integer", "description": "the yearly profit"}}}
     text = "".join(f"profit line {i} y\n" for i in range(6)) + "Net income 42."
-    for limit in (3058, 3358, 3658):
+    for limit in (3207, 3507, 3807):
         client = Client(envelope(missing=("net_income",)), envelope(missing=("net_income",)))
         settings = RunPolicy(search_context_chars=1, max_prompt_chars=limit)
         result = execute(text, client, schema, run_policy=settings)
@@ -1285,6 +1285,8 @@ CAUSE_SCHEMA = {"fields": {"amount": {"type": "integer", "aliases": ["Amount"]}}
         ("Amount 5, Amount.", "Amount.", "after_value"),
         # The value quote holds more than the token: the token decides the cause.
         ("Amount 5 total.", "total", "after_value"),
+        # The item is before the value but names no alias of the field (#395).
+        ("Sum: Amount 5.", "Sum", "no_alias"),
     ],
 )
 def test_repair_names_the_cause_of_a_field_item_that_cannot_pass(text, field, cause):
@@ -1299,9 +1301,15 @@ def test_repair_names_the_cause_of_a_field_item_that_cannot_pass(text, field, ca
     result = execute(text, client, CAUSE_SCHEMA)
     assert "It must not hold the value." in client.prompts[0]
     repair = json.loads(client.prompts[1].split("\n", 1)[1])
-    expected = {"holds_value": "holds the value", "after_value": "comes after the value"}
+    expected = {
+        "holds_value": "holds the value",
+        "after_value": "comes after the value",
+        "no_alias": "names no alias of the field. Quote a label before the value that holds one "
+        'of these aliases, word for word: "Amount".',
+    }
     assert expected[cause] in repair["feedback"]
     assert "label before the value" in repair["feedback"]
+    assert "It holds one of the field's aliases, word for word." in client.prompts[0]
     call = next(e for e in result.record if e["kind"] == "call" and e["phase"] == "repair")
     assert call["field_causes"] == [cause]
     assert result.receipt.decisions[0].outcome == "admitted"
