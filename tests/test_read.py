@@ -94,6 +94,12 @@ def test_layout_round_trip(pdf: Path) -> None:
         Layout.from_dict({**raw, "words": raw["words"][::-1]})
     with pytest.raises(gg.PacketError, match="text order"):
         Layout.from_dict({**raw, "pages": raw["pages"][::-1]})
+    absent = {k: v for k, v in raw.items() if k != "document_sha256"}
+    with pytest.raises(gg.PacketError, match="malformed layout: 'document_sha256'"):
+        Layout.from_dict(absent)
+    for bad in ({"a": 1}, "sha256:00", None):
+        with pytest.raises(gg.PacketError, match="document_sha256 is not a digest"):
+            Layout.from_dict({**raw, "document_sha256": bad})
 
 
 def test_a_pdf_decision_admits_against_extracted_text(pdf: Path) -> None:

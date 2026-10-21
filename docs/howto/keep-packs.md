@@ -189,3 +189,38 @@ not there makes an old receipt fail.
 
 A receipt also needs the groundgate release of its spec version, for the base pack and the
 built-in packs. See [Pin the groundgate version](review.md#6-pin-the-groundgate-version).
+
+## 6. Or keep the packs in a store
+
+A store does steps 2 and 3 for you. `admit_packet` writes each pack that you give as a `pack@1`
+object, with the receipt and the other inputs, and returns the key of a packet. The packet names
+each pack by its store key. `load_packet` gets the packs back, so `verify` needs no pack folder:
+
+```python
+from groundgate.store import FolderStore
+from groundgate.store.packets import admit_packet, load_packet
+
+with FolderStore(work / "store") as store:
+    packet, receipt = admit_packet(
+        store, text, schema, candidates, document_id="grant-0042", packs=[lac]
+    )
+    found = load_packet(store, packet)
+print([p["id"] for p in found.packs])
+check = gg.verify(found.receipt, found.text, found.schema, found.candidates, **found.inputs())
+print(check.ok, check.problems)
+```
+
+```text
+['lac-x-myapp']
+True ()
+```
+
+The command line takes the same `--pack` files and prints the packet key:
+
+```bash
+groundgate admit --store store grant.txt schema.json candidates.json --pack lac-x-myapp.json --document-id grant-0042
+groundgate verify --store store sha256:...
+```
+
+The store keeps the pack that you gave. Built-in packs stay in groundgate, as in step 2.
+`verify --store` still takes `--pack-dir` for a pack that the packet does not hold.
