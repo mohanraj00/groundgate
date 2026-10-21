@@ -118,7 +118,7 @@ jobs:
         run: uv run python bench/pdfrows/pdfrows.py results --check
       - name: String set (#140) results match the recorded decisions and labels
         run: uv run python bench/strings/measure.py results --check
-      - name: Changed-value test (#322) results match the fixed changes, spec 0.10 in process
+      - name: Changed-value test (#322) results match the fixed changes, spec 0.11 in process
         run: uv run python bench/changed/changed.py results --check
       - name: Status-set key calibration report matches its recorded answers, on the 0.6.1 wheel and calibrate 0.2.0
         run: |
