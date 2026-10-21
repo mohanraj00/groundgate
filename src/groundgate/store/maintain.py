@@ -550,7 +550,8 @@ def forget_packet(
 
     With ``everything``, remove each object and each answer log of the packet, and the packet
     last. An object of the "Kept" column that another packet names stays. Tasks and
-    resolutions are not in the store yet, so ``everything`` does not look for them (#432). If
+    resolutions are not in the store yet, so ``everything`` does not look for them (#432). A
+    packet that cannot be read counts as a packet that names nothing, so run ``check`` first. If
     an answer log is locked, ``everything`` stops before it removes the packet, so a second
     call can finish the work.
 

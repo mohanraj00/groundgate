@@ -268,7 +268,8 @@ def _store_parser() -> argparse.ArgumentParser:
         "--all",
         action="store_true",
         help="remove each object and answer log of the packet, and the packet. A kept object "
-        "that another packet names stays.",
+        "that another packet names stays. Run store check first: a packet that cannot be read "
+        "names nothing.",
     )
     return ap
 
