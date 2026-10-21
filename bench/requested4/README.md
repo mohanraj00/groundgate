@@ -236,8 +236,9 @@ sets have different documents, so the comparison is not of the same documents.
 
 The table gives only the total for `runner_drop_rounded`; `COMPARE.md` has each kind and the
 `search_limit` counts. In 0.10, 19 runner documents stopped at `search_limit` (56 fields). In
-0.11, none did. In 0.11, the runner misses fewer values than the baseline (125 against 128 of
-204), and each arm has 1 escape.
+0.11, none did. In 0.11, the runner misses 125 values and the baseline 128 of 204, and each arm
+has 1 escape. The gap of 3 misses is inside the run noise that loop 04 shows, so I do not claim
+a difference between the arms.
 
 ## What comes next
 
