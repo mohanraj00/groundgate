@@ -128,8 +128,7 @@ class Layout:
                 raise PacketError("malformed layout: page size is not a finite number")
         for w in words:
             b = w.box
-            if not (isfinite(b.x0) and isfinite(b.top)
-                    and isfinite(b.x1) and isfinite(b.bottom)):
+            if not (isfinite(b.x0) and isfinite(b.top) and isfinite(b.x1) and isfinite(b.bottom)):
                 raise PacketError("malformed layout: a word box is not a finite number")
         prev = 0
         for w in words:
