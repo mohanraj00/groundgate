@@ -308,6 +308,9 @@ def _checks(raw: Any) -> dict[str, Json]:
         values = c.get("values", [])
         if (c["status"] == "present") != bool(values) or not isinstance(values, list):
             raise ValueError(f"the check of {c['task']} needs values only when it is present")
+        for v in values:
+            if not isinstance(v, dict) or set(v) != {"value", "unit"}:
+                raise ValueError(f"each value of the check of {c['task']} needs value and unit")
         if c["task"] in out:
             raise ValueError(f"two checks name the task {c['task']}")
         out[c["task"]] = c

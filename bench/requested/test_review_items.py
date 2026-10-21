@@ -242,6 +242,7 @@ def test_build_score_and_report(tmp_path: Path) -> None:
     for bad, why in (
         ({"checks": [{**check, "status": "maybe"}]}, "needs a status"),
         ({"checks": [{**check, "values": []}]}, "needs values only when it is present"),
+        ({"checks": [{**check, "values": [{"val": "85"}]}]}, "needs value and unit"),
         ({"checks": [check, other]}, "1 tasks that are not a disagreement"),
     ):
         checks.write_text(json.dumps(bad), encoding="utf-8")
