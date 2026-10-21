@@ -264,3 +264,63 @@ def test_the_committed_results_come_from_the_committed_answers() -> None:
     if not answers:
         pytest.skip("no committed answers")
     score.main(["--answers", *map(str, answers), "--out", str(out), "--check"])
+
+
+def freeze(**change: Any) -> dict[str, Any]:
+    return {
+        "format": "codex-judge-freeze/1",
+        "model": "m",
+        "effort": "low",
+        "template_sha256": "t",
+        "ceiling": 0.1,
+        "threshold": 0.9,
+        "code_sha256": score.code_sha256(),
+    } | change
+
+
+def test_a_freeze_refuses_other_code_or_another_model() -> None:
+    a = answers_file({}, {})
+    score.check_freeze(freeze(), [a])
+    with pytest.raises(score.ScoreError, match="code changed"):
+        score.check_freeze(freeze(code_sha256="sha256:0"), [a])
+    with pytest.raises(score.ScoreError, match="another model"):
+        score.check_freeze(freeze(model="other"), [a])
+    with pytest.raises(score.ScoreError, match="not one of"):
+        score.check_freeze(freeze(threshold=0.85), [a])
+
+
+def test_agreement_at_the_frozen_threshold_by_kind() -> None:
+    its = {"d/a": item("a", ["1", "2"], ["1"]), "d/b": item("b", ["1", "2"], ["1"])}
+    a = answers_file(its, {"d/a": ans("1", 0.95), "d/b": ans("1", 0.95)})
+    b = answers_file(its, {"d/a": ans("1", 0.8), "d/b": ans("1", 0.99)}, run=2)
+    got = score.agreement(a, b, its, 0.9)
+    assert got["total"] == {
+        "items": 2,
+        "same_option": 2,
+        "both": 1,
+        "first_only": 1,
+        "second_only": 0,
+    }
+    assert got["a"]["first_only"] == 1 and got["b"]["both"] == 1
+
+
+def test_the_committed_heldout_results_come_from_the_committed_answers() -> None:
+    out = score.SET / "judge" / "heldout"
+    answers = sorted((out / "answers").glob("*.json"))
+    if not answers:
+        pytest.skip("no committed held-out answers")
+    score.main(
+        [
+            "--answers",
+            *map(str, answers),
+            "--out",
+            str(out),
+            "--run",
+            str(score.SET / "runs" / "runner.json"),
+            "--loop-results",
+            str(score.SET / "results.json"),
+            "--freeze",
+            str(score.SET / "judge" / "freeze.json"),
+            "--check",
+        ]
+    )
