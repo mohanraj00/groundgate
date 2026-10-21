@@ -469,7 +469,9 @@ def main(argv: list[str] | None = None) -> None:
     report = markdown(result)
     files = {args.out / "results.json": body, args.out / "RESULTS.md": report}
     if args.check:
-        stale = [p.name for p, b in files.items() if not p.exists() or p.read_text() != b]
+        stale = [
+            p.name for p, b in files.items() if not p.exists() or p.read_text(encoding="utf-8") != b
+        ]
         if stale:
             raise SystemExit(f"score: {', '.join(stale)} differ from the answers; run score again")
         print("results.json and RESULTS.md match the answers")
