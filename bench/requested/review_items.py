@@ -238,8 +238,8 @@ def build(
     }
     out = set_dir / "review"
     if (out / "items.json").exists():
-        if _load(out / "items.json") != items:
-            raise ValueError("this build gives other items than review/items.json")
+        if _load(out / "items.json") != items or _load(out / "policy.json") != review:
+            raise ValueError("this build gives other items than review/items.json and policy.json")
     else:
         _dump(out / "items.json", items)
         _dump(out / "policy.json", review)

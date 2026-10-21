@@ -187,6 +187,11 @@ def test_build_score_and_report(tmp_path: Path) -> None:
     assert [d["id"] for d in items["documents"]] == ["doc-a", "doc-b"]
     assert items["policy"]["audit"]["seed"] == review_items.SEED
     assert review_items.build(set_dir, sources, cache, store_dir, audit=3) == items  # same keys
+    policy = set_dir / "review" / "policy.json"
+    policy.write_text(policy.read_text().replace(review_items.SEED, "other"), encoding="utf-8")
+    with pytest.raises(ValueError, match="other items"):
+        review_items.build(set_dir, sources, cache, store_dir, audit=3)
+    policy.write_text(json.dumps(items["policy"]), encoding="utf-8")
     with FolderStore(store_dir) as store:
         splits = store.read(("splits", set_key("requested9")))
     assert sorted(r["split"] for r in splits) == ["heldout", "heldout"]
