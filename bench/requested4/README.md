@@ -146,8 +146,8 @@ Loop 03 ran the three arms on the same 32 documents on origin/main 7967dde (`loo
 `loop/03/results.json`, `loop/03/RESULTS.md`, `loop/03/COMPARE.md`). The one change is the runner
 prompt of #441: a field item holds one of the field's aliases, and a repair names the cause
 `no_alias`. 840db78 changed only the review tasks. The configuration is the same as in loop 02
-except the code. The baseline made 150 calls and the runner made 215. No document was
-incomplete, had a transport error or stopped at `search_limit`.
+except the code. No document was incomplete, had a transport error or stopped at
+`search_limit`.
 
 | Arm | Kind | Miss rate, loop 02 | Miss rate, loop 03 | Escapes, loop 02 | Escapes, loop 03 |
 |---|---|---:|---:|---:|---:|
@@ -167,8 +167,18 @@ The table gives only the total for `runner_drop_rounded`; `loop/03/COMPARE.md` h
 The baseline prompt did not change, so its move from 76 to 73 misses is run noise. The runner
 moves by the same 3 misses, but the kinds move apart. `diagnose.review_codes` in `loop/03.json`
 counts 22 runner review decisions with `FIELD_CITATION_INVALID` that carry a right value, down
-from 68. The sbc misses fall from 18 to 6, and the component misses rise from 15 to 21. The
-runner arms have a lower total miss rate and no new escape, so loop 03 keeps the change.
+from 68.
+
+The sbc misses of the runner fall from 18 to 6. This is not a gain in field items. In the run
+cache, most runner sbc admits of loop 03 cite no field item, and no runner admit of loop 02 did.
+SPEC §4.6 checks the field only when a candidate cites a field item, so these candidates pass
+without one. The other three kinds get worse: annual from 27 to 29 misses, component from 15 to
+21 and sds from 11 to 12. In component, the model quotes only the alias, such as "Supply
+voltage", and that quote can match a place far from the value.
+
+Loop 03 keeps the change, because the runner arms have a lower total miss rate and no new
+escape. The keep rests on the sbc candidates without a field item. The next loop must look at
+the component field items and at candidates that cite no field item.
 
 ## What comes next
 
