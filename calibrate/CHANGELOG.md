@@ -3,7 +3,7 @@
 Versions follow [SemVer](https://semver.org). groundgate-calibrate is released apart from
 groundgate, with tags `calibrate-v*`.
 
-## 0.4.0 (unreleased)
+## 0.4.0 (2026-10-21)
 
 The last release ([#385](https://github.com/mohanraj00/groundgate/issues/385)). The tool moved
 into groundgate 0.11 as the command `groundgate calibrate`, with the same steps and options.
