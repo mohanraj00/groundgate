@@ -16,10 +16,11 @@ import pytest
 from groundgate import admit
 from groundgate.canonical import jcs
 from groundgate.cli import main
+from groundgate.model import PacketError
 from groundgate.review import format_schema
 from groundgate.review.resolve import AnswerError, lines, resolve, write_resolution
 from groundgate.review.tasks import checked_packet, write_tasks
-from groundgate.store import FolderStore, key, reviewer_key
+from groundgate.store import FolderStore, NotFound, key, reviewer_key
 from groundgate.store.packets import admit_packet, load_packet
 
 HERE = Path(__file__).parent
@@ -383,3 +384,49 @@ def test_command_line(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> Non
     assert "reviewer name" in capsys.readouterr().err
     with pytest.raises(SystemExit):
         main(["review", "resolve", k])  # --store is required
+
+
+def test_an_error_of_admit_shows_no_control_character(tmp_path: Path) -> None:
+    """A message of admit can quote the candidate, so the message of AnswerError escapes each
+    control character (security review of #443, finding 1)."""
+    store, k, tk, _ = one_choice(tmp_path)
+    with store:
+        log = ("answers", k, reviewer_key("ana"))
+        store.append(log, record(tk, "ana", "correct", candidate=correction("4200000")))
+        packet, schema, _, _ = checked_packet(store, k)
+        assert schema is not None
+        logs = {"ana": store.read(log)}
+
+    def run(candidates: list[Any], judgments: list[Any] | None) -> Any:
+        raise PacketError("candidate key '\x1b[2J' is invalid")
+
+    with pytest.raises(AnswerError) as info:
+        resolve(k, packet, schema, policy(), logs, correct=run)
+    assert "\x1b" not in str(info.value) and "\\u001b[2J" in str(info.value)
+    assert "\n" not in str(AnswerError("a\nb", 1, "line\none"))
+
+
+def test_a_broken_answer_runs_no_correction_and_writes_nothing(tmp_path: Path) -> None:
+    """Each record is checked before the first correction runs, and the corrections go to the
+    store only after the resolution succeeds (security review of #443, finding 2)."""
+    store, k, tk, data = one_choice(tmp_path)
+    with store:
+        log = ("answers", k, reviewer_key("ana"))
+        store.append(log, record(tk, "ana", "correct", candidate=correction("4200000")))
+        store.append(log, record(tk, "ana", "choose", decision=99))
+        packet, schema, _, _ = checked_packet(store, k)
+        assert schema is not None
+        calls: list[Any] = []
+
+        def run(candidates: list[Any], judgments: list[Any] | None) -> Any:
+            calls.append(candidates)
+            raise AssertionError("no correction runs")
+
+        with pytest.raises(AnswerError, match="not a choice"):
+            resolve(k, packet, schema, policy(), {"ana": store.read(log)}, correct=run)
+        assert calls == []
+        with pytest.raises(AnswerError, match="not a choice"):
+            write_resolution(store, k, policy(), ["ana"])
+        rkey = correction_receipt(data["packet"], correction("4200000"))
+        with pytest.raises(NotFound):
+            store.get("receipt@1", rkey)

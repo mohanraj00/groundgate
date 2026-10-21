@@ -64,15 +64,21 @@ class AnswerError(ValueError):
     def __init__(self, reviewer: str, sequence: object, message: str) -> None:
         self.reviewer = reviewer
         self.sequence = sequence
+        # The message can quote an error of admit about the candidate: escape it too.
         super().__init__(
-            f"answer {_printable(sequence)} of the reviewer {_printable(reviewer)}: {message}"
+            f"answer {_printable(sequence)} of the reviewer {_printable(reviewer)}: "
+            + _escape(message)
         )
+
+
+def _escape(text: str) -> str:
+    """``text`` with each control character as an escape."""
+    return "".join(c if c.isprintable() else f"\\u{ord(c):04x}" for c in text)
 
 
 def _printable(value: object) -> str:
     """A value from the store as text with no control character, for a message."""
-    text = value if isinstance(value, str) else repr(value)
-    text = "".join(c if c.isprintable() else f"\\u{ord(c):04x}" for c in text)
+    text = _escape(value if isinstance(value, str) else repr(value))
     return text if len(text) <= 200 else text[:197] + "..."
 
 
@@ -91,6 +97,22 @@ class _Answer:
     keeps: bool  # an audit answer that keeps the admitted value: unsure, or a confirm
     decision: int | None = None
     correction: _Correction | None = None
+
+
+@dataclass(frozen=True)
+class _Checked:
+    """A record that passed each check of its task. A correction has not run ``admit`` yet."""
+
+    name: str
+    sequence: object
+    task_key: str
+    slot: Slot
+    task: dict[str, Any]
+    answer: _Answer | None  # None for a correction
+    verdict: str = ""
+    candidate: Mapping[str, Any] | None = None
+    kept: tuple[str, ...] = ()
+    memo: tuple[str, str] = ("", "")
 
 
 def _store_key(kind: str, value: Any) -> str:
@@ -147,16 +169,16 @@ def resolve(
     answered: set[str] = set()
     heads = []
     cache: dict[tuple[str, str], _Correction] = {}
-    for name in sorted(logs):
+    checked = []
+    for name in sorted(logs):  # check each record before the first call to admit
         records = logs[name]
-        for record in records:
-            answer, task_key = _answer(
-                name, record, by_key, schema, ids, packet, decisions, run, cache
-            )
-            answered.add(task_key)
-            latest.setdefault(task_key, {})[name] = answer
+        checked += [_check(name, record, by_key, schema, ids) for record in records]
         if records:
             heads.append({"reviewer": name, "head": records[-1]["entry_sha256"]})
+    for c in checked:
+        answer = c.answer or _read(c, schema, packet, decisions, run, cache)
+        answered.add(c.task_key)
+        latest.setdefault(c.task_key, {})[c.name] = answer
 
     out_slots = []
     named: dict[str, dict[str, Any]] = {}
@@ -243,18 +265,15 @@ def _settle(
     return ("confirmed" if len(task["choices"]) == 1 else "chosen"), first.decision
 
 
-def _answer(
+def _check(
     name: str,
     record: Mapping[str, Any],
     by_key: Mapping[str, tuple[Slot, dict[str, Any]]],
     schema: Schema,
     ids: Sequence[object],
-    packet: Any,
-    decisions: Sequence[Mapping[str, Any]],
-    run: Correct,
-    cache: dict[tuple[str, str], _Correction],
-) -> tuple[_Answer, str]:
-    """Check one record of the answer log of ``name`` against its task, and read it."""
+) -> _Checked:
+    """Check one record of the answer log of ``name`` against its task. Read each answer that
+    is not a correction."""
     sequence = record.get("sequence") if isinstance(record, Mapping) else None
 
     def fail(message: str) -> AnswerError:
@@ -296,17 +315,21 @@ def _answer(
         raise fail(f"a {verdict} answer has no decision")
     if verdict not in CORRECTIONS and record["candidate"] is not None:
         raise fail(f"a {verdict} answer has no candidate")
+    found = slot, task
     if verdict == "unsure":
-        return _Answer(name, verdict, None, True), task_key
+        return _Checked(name, sequence, task_key, *found, _Answer(name, verdict, None, True))
     if verdict == "not_in_document":
-        return _Answer(name, verdict, ("not_in_document",), False), task_key
+        target = ("not_in_document",)
+        return _Checked(name, sequence, task_key, *found, _Answer(name, verdict, target, False))
     if verdict == "confirm":
         if len(choices) != 1:  # rule 3
             raise fail("confirm needs a task with exactly one choice")
         decision = choices[0]
         verdict = "choose"
     if verdict == "choose":
-        return _Answer(name, verdict, ("choose", decision), len(choices) == 1, decision), task_key
+        one = len(choices) == 1
+        answer = _Answer(name, verdict, ("choose", decision), one, decision)
+        return _Checked(name, sequence, task_key, *found, answer)
 
     candidate = record["candidate"]
     if not isinstance(candidate, Mapping):
@@ -328,9 +351,28 @@ def _answer(
         memo = (task_key, jcs(candidate))
     except (TypeError, ValueError, RecursionError) as exc:
         raise fail(f"the candidate has no canonical JSON form: {exc}") from exc
-    if memo not in cache:
-        cache[memo] = _correct(slot, candidate, packet, decisions, run, fail)
-    correction = cache[memo]
+    return _Checked(name, sequence, task_key, *found, None, verdict, candidate, tuple(kept), memo)
+
+
+def _read(
+    c: _Checked,
+    schema: Schema,
+    packet: Any,
+    decisions: Sequence[Mapping[str, Any]],
+    run: Correct,
+    cache: dict[tuple[str, str], _Correction],
+) -> _Answer:
+    """Run ``admit`` for a checked correction (§6.2), and read its decision."""
+    slot, task, verdict, kept = c.slot, c.task, c.verdict, c.kept
+    assert c.candidate is not None
+
+    def fail(message: str) -> AnswerError:
+        return AnswerError(c.name, c.sequence, message)
+
+    field = schema.fields[slot.field]
+    if c.memo not in cache:
+        cache[c.memo] = _correct(slot, c.candidate, packet, decisions, run, fail)
+    correction = cache[c.memo]
     found = correction.decision
     if found["outcome"] != "rejected" and (
         found.get("field") != slot.field or _key(found.get("key"), field) != slot.key
@@ -346,7 +388,7 @@ def _answer(
         else:
             span = found.get("evidence") or {}
             target = (verdict, found.get("ref"), span.get("start"), span.get("end"))
-    return _Answer(name, verdict, target, False, None, correction), task_key
+    return _Answer(c.name, verdict, target, False, None, correction)
 
 
 def _correct(
@@ -427,9 +469,11 @@ def write_resolution(
     reviewers: Sequence[str] = (),
 ) -> Resolved:
     """Get the packet ``packet_key`` and the answer log of each reviewer in ``reviewers`` from
-    ``store``, decide the packet again, and resolve it. Keep each correction as a packet in the
+    ``store``, decide the packet again, and resolve it. Check each answer before the first
+    correction runs. Only after the resolution succeeds, keep each correction as a packet in the
     store, and write the review policy, each task that the resolution names and the
-    ``resolution@1`` object. Without ``policy``, the default policy of ``review tasks`` applies.
+    ``resolution@1`` object. An answer that breaks its task writes nothing. Without
+    ``policy``, the default policy of ``review tasks`` applies.
     A log with no record adds nothing."""
     from ..store import reviewer_key
     from ..store.packets import admit_packet
@@ -447,7 +491,18 @@ def write_resolution(
         name: store.read(("answers", packet_key, reviewer_key(name))) for name in set(reviewers)
     }
 
+    pure = _admit_only(packet)
+    corrections: list[tuple[list[Any], list[Any] | None, str]] = []
+
     def run(candidates: list[Any], judgments: list[Any] | None) -> tuple[dict[str, Any], str]:
+        receipt, rkey = pure(candidates, judgments)
+        corrections.append((candidates, judgments, rkey))
+        return receipt, rkey
+
+    resolution, tasks = resolve(
+        packet_key, packet, schema, checked, logs, layout=layout, correct=run
+    )
+    for candidates, judgments, rkey in corrections:  # only after the resolution succeeds
         _, receipt = admit_packet(
             store,
             packet.text,
@@ -461,12 +516,8 @@ def write_resolution(
             packs=packet.packs,
             reading=packet.reading,
         )
-        data = receipt.to_dict()
-        return data, _store_key("receipt@1", data)
-
-    resolution, tasks = resolve(
-        packet_key, packet, schema, checked, logs, layout=layout, correct=run
-    )
+        if _store_key("receipt@1", receipt.to_dict()) != rkey:
+            raise PacketError("a correction gave another receipt in the store")
     for task in tasks.values():
         store.put("task@1", jcs(task).encode("utf-8"))
     store.put("review-policy@1", jcs(checked).encode("utf-8"))
