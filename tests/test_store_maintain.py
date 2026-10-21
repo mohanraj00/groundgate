@@ -496,3 +496,41 @@ def test_forget_removes_a_run_record_with_a_bad_line(tmp_path: Path) -> None:
     assert ("run@3", obj["run"], "deleted", 0) in done
     assert ("text@1", obj["document"]["text"], "deleted", 1) in done
     assert not path.exists()
+
+
+def test_forget_skips_an_object_that_get_refuses(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    root = tmp_path / "s"
+    with FolderStore(root) as store:
+        packet = save_run(store)
+    target = tmp_path / "outside"
+    target.write_bytes(b"x")
+    link = path_of(root, key("reply@1", b"x"))
+    link.parent.mkdir(exist_ok=True)
+    os.symlink(target, link)  # get refuses a symlink
+    assert main(["store", "forget", "--store", str(root), packet, "--reason", "asked"]) == 0
+    assert "deleted reply@1" in capsys.readouterr().out
+    assert link.is_symlink() and target.read_bytes() == b"x"
+
+
+@pytest.mark.parametrize("depth", [100, 900, 990, 5000])
+def test_forget_and_check_go_on_past_a_deep_run_line(tmp_path: Path, depth: int) -> None:
+    root = tmp_path / "s"
+    with FolderStore(root) as store:
+        packet = save_run(store)
+        obj = json.loads(store.get("packet@1", packet))
+        header = store.get("run@3", obj["run"]).split(b"\n")[0]
+        deep = b'{"a":' + b"[" * depth + b'"x"' + b"]" * depth + b"}"
+        run = header + b"\n" + deep + b"\n"
+        obj["run"] = key("run@3", run)
+        path_of(root, obj["run"]).parent.mkdir(exist_ok=True)
+        path_of(root, obj["run"]).write_bytes(run)
+        other = store.put("packet@1", jcs(obj).encode("utf-8"))
+        assert check(store).findings  # a finding, not a crash
+        done = forget_packet(store, other, "asked")
+    assert ("text@1", obj["document"]["text"], "deleted", 1) in done
+    # A line that parses and holds no text keeps the record. A line that cannot be read
+    # removes it.
+    unread = ("run@3", obj["run"], "unchecked", 0) in done
+    assert path_of(root, obj["run"]).exists() is not unread

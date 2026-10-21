@@ -193,12 +193,17 @@ class _Objects:
     def by_run_key(self, runner: str) -> dict[str, tuple[str, str]]:
         """The store kind and key of each prompt, reply and admission object, by its key in a
         run record of ``runner``. The hash takes the bytes as they are, so an object that is
-        not UTF-8 needs no decode."""
+        not UTF-8 needs no decode. An object that ``get`` refuses is skipped: the walk of
+        ``__init__`` read each object, so only a change after the walk does this."""
         if runner not in self._by_run:
             index: dict[str, tuple[str, str]] = {}
             for word, kind in _RUN_OBJECTS.values():
-                for k in self.of(kind):
-                    data = self.store.get(kind, k)
+                for k in list(self.of(kind)):
+                    try:
+                        data = self.store.get(kind, k)
+                    except StoreError:  # it changed or went after the walk: check names it
+                        self.kinds[k] = None
+                        continue
                     index[run_hash(runner, word, data)] = (kind, k)
             self._by_run[runner] = index
         return self._by_run[runner]
@@ -456,7 +461,7 @@ def check(store: FolderStore, *, repair: bool = False) -> Report:
                     report.unchecked.append(n)
                 for line in lines or []:
                     report.find(f"the run record {n}: line {line} holds document text")
-            except (StoreError, ValueError) as exc:  # bytes that match a key but not a format
+            except (StoreError, ValueError, RecursionError) as exc:  # a key, but not a format
                 report.find(f"{owner}: {exc}")
     for k in sorted(readings):
         if objects.kinds.get(k) != "reading@1":
@@ -593,13 +598,13 @@ def forget_packet(
             continue
         try:
             run = _run(objects, k)
-        except (StoreError, ValueError):  # the lines cannot be read: remove the record
+        except (StoreError, ValueError, RecursionError):  # remove a record that it cannot read
             unchecked.append((kind, k))
             plan.append((kind, k, True))
             continue
         try:
             lines = _holds_text(objects, obj, run)
-        except (StoreError, ValueError):  # the text or the schema cannot be read
+        except (StoreError, ValueError, RecursionError):  # the text or schema cannot be read
             lines = None
         # The record goes after the objects that it names: a forget that stops can find them
         # again from the record.
