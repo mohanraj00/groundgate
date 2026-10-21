@@ -77,13 +77,16 @@ _BYTES = frozenset({"source@1", "text@1", "prompt@1", "reply@1"})
 @dataclass
 class Report:
     """What ``check`` found. ``findings`` are problems. ``deleted`` names each input that
-    ``forget`` removed, which is not a problem. ``cut`` holds each torn line that ``repair``
+    ``forget`` removed, which is not a problem. ``unchecked`` names each run record whose text
+    is not in the store: ``check`` cannot look for text in its lines, and ``forget`` of its
+    packet removes it. ``cut`` holds each torn line that ``repair``
     cut, with the log path."""
 
     objects: int = 0
     logs: int = 0
     findings: list[str] = field(default_factory=list)
     deleted: list[str] = field(default_factory=list)
+    unchecked: list[str] = field(default_factory=list)
     cut: list[tuple[str, bytes]] = field(default_factory=list)
 
     def find(self, text: str) -> None:
@@ -437,7 +440,10 @@ def check(store: FolderStore, *, repair: bool = False) -> Report:
                     continue
                 for problem in _compare_inputs(objects, packet, run):
                     report.find(f"{owner}: {problem}")
-                for line in _holds_text(objects, packet, run) or []:
+                lines = _holds_text(objects, packet, run)
+                if lines is None and n not in report.unchecked:
+                    report.unchecked.append(n)
+                for line in lines or []:
                     report.find(f"the run record {n}: line {line} holds document text")
             except (StoreError, ValueError) as exc:  # bytes that match a key but not a format
                 report.find(f"{owner}: {exc}")
@@ -544,7 +550,9 @@ def forget_packet(
 
     With ``everything``, remove each object and each answer log of the packet, and the packet
     last. An object of the "Kept" column that another packet names stays. Tasks and
-    resolutions are not in the store yet, so ``everything`` does not look for them (#432).
+    resolutions are not in the store yet, so ``everything`` does not look for them (#432). If
+    an answer log is locked, ``everything`` stops before it removes the packet, so a second
+    call can finish the work.
 
     Return the kind, the key, the state (``deleted``, ``absent`` or ``kept``) and the number
     of other packets that name the key, for each object. A log has the kind ``log`` and its

@@ -439,6 +439,9 @@ def test_forget_removes_a_run_record_whose_text_is_gone(tmp_path: Path) -> None:
         packet = save_run(store, model_id="Pay it by Friday")
         obj = json.loads(store.get("packet@1", packet))
         store.forget(obj["document"]["text"], "an earlier forget that stopped")
+    with FolderStore(root) as store:
+        report = check(store)
+        assert report.findings == [] and report.unchecked == [obj["run"]]
         done = forget_packet(store, packet, "again")
     assert done[0] == ("run@3", obj["run"], "deleted", 0)  # the run record goes first
     assert not path_of(root, obj["run"]).exists()

@@ -297,6 +297,8 @@ def _store_command(args: argparse.Namespace) -> int:
         print(f"cut from {path}: {printable(text, limit=None)}")
     for entry in report.deleted:
         print(f"input deleted: {entry}")
+    for run in report.unchecked:
+        print(f"not checked: the run record {run}, because its text is not in the store")
     for finding in report.findings:
         print(f"finding: {printable(finding, limit=None)}")
     print(
