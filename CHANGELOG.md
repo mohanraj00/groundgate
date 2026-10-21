@@ -3,6 +3,156 @@
 Versions follow [SemVer](https://semver.org). A change to how any candidate is decided is a new
 spec version, and receipts name the spec version they were decided under.
 
+## 0.11.0 (2026-10-21)
+
+Spec 0.11. Receipts name `"groundgate": "0.11"` and every digest uses the `groundgate/0.11:`
+prefix, so all hashes differ from 0.10.0. 0.11 adds the tools for an app's own documents: a
+store, a review step with its own page, and `groundgate calibrate` inside groundgate. The spec
+changes read currency headings and currency names (#367, #368, #423) and refuse a bad field name
+(#359). I measured 0.11 on a new set with a development split and a held-out split. On the
+held-out split, the extraction loop misses 125 of the 204 stated values (61.27%) and the baseline
+misses 128 (62.75%), with 1 escape each. So 0.11 does not meet the goal of fewer misses yet.
+
+Spec 0.11:
+
+- On the outside path, a heading conflict at the deciding external item lists `unit` in
+  `missing` and gives `PART_MISSING`. The action does not change: an admit by policy goes to
+  review with `ADMITTED_BY_POLICY` (#367).
+- The base pack is `en` 1.1.0. It adds currency names with no sign for JPY, CNY, CHF, KRW, SEK,
+  NOK, DKK, ZAR, BRL and MXN, so a statement such as "presented in Japanese yen" gives a heading
+  conflict to a value of another currency, and these codes are currency units (#368). The base
+  pack digest is `sha256:15fb3c027b33e5aa83561ef894053a54f7c7e469825960c50266c6d0f03e6f0c`.
+- A field name and a template name follow one rule (§2.3, #359): 1 to 64 characters, each a
+  lowercase ASCII letter, a digit or `_`, and a letter first. A name that breaks the rule makes
+  the packet invalid. In 0.10 it loaded.
+- A scale item can hold a currency form of the field's unit with the scale word, as in "(in €
+  million)", "(millions of Canadian dollars" or "EUR million". A form after "per" or "/" does
+  not count, and form 3 reads the longest currency form (#423).
+- A schema unit form that is blank makes the packet invalid (#423).
+- A unit item can hold the currency name or the code of a unit that has no form in the unit
+  table, such as "Canadian dollars" for CAD (#423).
+
+The extraction loop:
+
+- Breaking: the extract run record is `groundgate-run/3` (#382). Replay of a `groundgate-run/2`
+  record from 0.10.0 fails with the message `runner version differs`.
+- `groundgate.extract` cuts a search region longer than `RunPolicy.max_region_chars` (default
+  6000) to a window around its best match, and does not drop it (#382).
+- When no search region fits the prompt, `groundgate.extract` runs a second sweep over the ranked
+  regions, in at most `RunPolicy.max_sweep_calls` calls (default 2). The record has `sweep` and
+  `sweep_stop` entries (#382).
+- The extract prompt asks for the whole scale heading (#428). A scale or unit item quotes the
+  heading or caption that states the scale or the currency, such as "(in € million)", not a bare
+  "million". The prompt asks for no scale item when the scale word directly follows the number,
+  as in "4.2 million". Each prompt digest changes. The record stays `groundgate-run/3`.
+
+The store (design note [docs/design/store.md](docs/design/store.md), #288):
+
+- `groundgate.store`: the store key, the five operations `put`, `get`, `append`, `read` and
+  `forget`, and `FolderStore`, a store in a folder with byte limits, file modes and one lock for
+  each log (#402).
+- `groundgate.store.contract`: checks that an app runs against its own store (#402).
+- `read`, `admit`, `verify` and `report` take `--store DIR` (#403). `read --store` writes a
+  reading and prints its key. `admit --store` writes the inputs, the receipt and a packet, and
+  prints the packet key. `verify --store DIR PACKET` and `report --store DIR PACKET` get each
+  input from the store.
+- After `forget`, `verify --store` reports "input deleted" with the key, the time and the
+  reason. An absent input with no deletion record gives "input missing". Both exit 2 (#403).
+- `Layout.from_dict` raises `PacketError` for a layout with no `document_sha256`, or with a value
+  that is not a digest. Before, an absent member raised `KeyError` (#403).
+- New module `groundgate.store.packets` with `put_reading`, `admit_packet`, `load_packet` and
+  `load_reading` (#403).
+- `RunResult.save(store)` writes a run into the store: its objects, the `run@3` record and a
+  packet. It returns the packet key (#405). Replay from the store comes with the next record
+  version (#429).
+- `groundgate store check` checks each object, chain and packet of a store. `--repair` cuts a
+  torn last line (#404).
+- `groundgate store rebuild` builds the reading cache view again (#404).
+- `groundgate store forget PACKET` removes the document data of a packet and records each
+  deletion. `--all` removes the whole packet (#404).
+
+The review step (design note [docs/design/review.md](docs/design/review.md), #287):
+
+- `groundgate.review` with the JSON Schemas of the review formats `review-policy@1`, `task@1`,
+  `answer@1` and `resolution@1`, and `format_schema()` to load them (#408).
+- `groundgate review tasks --store DIR PACKET` writes a `task@1` object for each slot that
+  review.md §5.2 selects, and prints each task key (#409).
+- `groundgate review resolve --store DIR PACKET --reviewer NAME` resolves the answers to the
+  review tasks of one packet (review.md §6). It runs `admit` for each correction, keeps each
+  correction in the store, and prints one line for each field (#410).
+- `groundgate review serve --store DIR --reviewer NAME`: the local review page of review.md §8
+  for `number`, `text` and `span` tasks. It binds to 127.0.0.1, checks the `Host` header and a
+  token, sends a CSP, and checks each answer against its task before the write (#411).
+- `groundgate review measures` prints the measures of the review answers in a store for each
+  item kind and field: the median time, the answers given with one key, the agreement with blind
+  labels and the escapes that the audit finds (#412).
+
+Calibration:
+
+- `groundgate calibrate` (experimental) is the calibration tool, inside groundgate. It has the
+  same steps and options as `groundgate-calibrate`, and needs no other package (#385).
+- groundgate-calibrate 0.4.0 is its last release: it requires `groundgate>=0.11` and runs
+  `groundgate calibrate` (#385). After it is on PyPI, `calibrate/` and its release workflow go.
+- `groundgate calibrate label` refuses a request for another host, an API request without the
+  token of its start URL, and a POST that is not JSON or is over 64 KiB. It sends a
+  Content-Security-Policy. Open the full start URL that it prints, with the part after `#`
+  (#391).
+- `groundgate calibrate split --store DIR --set NAME` writes the `splits` log of a set (store.md
+  §10). A second split for one document stops the view, and `groundgate store check` reports it
+  (#406).
+
+The bench tools:
+
+- `bench/core_time.py` measures the CPU time of the core in a replay with no model call. On
+  `bench/requested3` the core uses 2.133% of the live wall time (#384,
+  [bench/requested3/CORE_TIME.md](bench/requested3/CORE_TIME.md)).
+- A manifest `split_rule` sets the development and held-out split of each source family, and the
+  scorer and harness recompute it (#383).
+- `bench/requested/loop.py` writes and checks the learning-loop records `loop/NN.json` on the
+  development split (#383).
+- A held-out run needs the frozen code digest, and a set has one held-out binding (#383).
+- Run projections and `results.json` count the fields at `search_limit`;
+  `bench/requested3/limits.json` gives the 0.10 count (#383).
+- `score.py --runs/--out` and `report.py --compare` (#383).
+- `bench/judges/codex` asks a Codex model one choice for each review field, with the candidates
+  and none, and records the answer, the confidence, the prompt digest and the model (#67).
+- `bench/judges/codex/items.py` and `score.py` make the review items of a `bench/requested4`
+  split and score the Codex judge answers by hybrid design §9 (#67).
+- `bench/requested4/judge/freeze.json` freezes the Codex judge, and `score.py --freeze` scores
+  the held-out answers at its threshold only (#67).
+- `bench/requested/review_items.py` writes the review items of the held-out `runner` arm of
+  `bench/requested4` to a store, and scores the answers of a reviewer against the sealed labels
+  (#234).
+
+The measure (#395, #67, #234):
+
+- `bench/requested4` has 91 documents in the four kinds of `bench/requested3`. A hash of the
+  source family puts 32 in the development split and 59 in the held-out split (#383). Two blind
+  passes labeled each field before any model output. The learning loop ran only on the
+  development split, and the code froze before the first held-out model call.
+- With `gpt-6.1-sol` at medium effort, on the 59 held-out documents, the baseline misses 128 of
+  the 204 stated values (62.75%), with 76 right values admitted and 1 escape in 77 admits. The
+  0.11 extraction loop misses 125 of 204 (61.27%), with 79 right values admitted and 1 escape in
+  80 admits. The gap of 3 misses is inside the run noise of the development split, so I do not
+  claim a difference between the arms.
+- With `drop_rounded` on, a replay of the loop's calls misses 123 of 204 (60.29%), with 81 right
+  values admitted and 1 escape.
+- No document stopped at a limit or at `search_limit`.
+- On requested4 the loop reports no absence: 0 right absences and 76 unreported absences. The
+  cause: #382 cuts a region longer than 6,000 characters, a cut marks the search truncated, and
+  the bench writes an absence only for a search that is not truncated. The queries of each field
+  include words such as "the" and "and", so the regions cover most of the document. So this miss
+  rate is not comparable with the 0.10 loop on requested3. Both problems are open for 0.12: #464
+  and #466.
+- The judge (#67): `gpt-6.1-sol` at medium effort, frozen at threshold 0.9, answered each of the
+  104 held-out fields that the loop sent to review with a candidate, two times. It clears 91
+  right values in run 1 and 94 in run 2, with 0 escapes in each run. With these clears, the loop
+  would miss 34 of 204 (16.67%) and 31 of 204 (15.20%). The judge is a recorded input, not part
+  of a decision, and these numbers hold for documents that do not attack the model.
+- The review answers (#234): of 147 held-out review and audit items, 132 are scored, 122 agree
+  with the blind label and 10 are wrong. The 95% upper bound of the rate of wrong answers is
+  0.1251, above the bar of 0.05. So review answers do not count as labels for these kinds.
+
 ## 0.10.0 (2026-10-20)
 
 Spec 0.10. Receipts name `"groundgate": "0.10"` and every digest uses the `groundgate/0.10:`
