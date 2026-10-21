@@ -13,18 +13,19 @@ question and choices quote.
 
 from __future__ import annotations
 
+import bisect
 import hashlib
+import math
 import re
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from decimal import Decimal, InvalidOperation
-from fractions import Fraction
 from typing import Any
 
 from ..canonical import digest, jcs
 from ..model import PacketError, Schema
 from ..read.layout import Layout
-from ..text import normalize_ws, quote_pattern, tokens
+from ..text import canonical, normalize_ws, quote_pattern, tokens
 
 __all__ = [
     "DEFAULT_POLICY",
@@ -217,7 +218,7 @@ def _task(
     passed: list[int],
     audit: bool,
     schema: Schema,
-    texts: Mapping[str | None, str],
+    texts: Mapping[str | None, _Source],
     layout: Layout | None,
 ) -> dict[str, Any]:
     field = schema.fields[slot.field]
@@ -291,7 +292,7 @@ def _question(item: str, slot: Slot, unit: str | None, shown: list[str]) -> tupl
     return f"Which text is the {subject}?", named
 
 
-def _number(value: str, unit: object, span: tuple[int, int] | None, text: str | None) -> str:
+def _number(value: str, unit: object, span: tuple[int, int] | None, text: _Source | None) -> str:
     """The value with each part named: the amount in full, the unit, and the number as written
     with its scale and its sign. For example "4,200,000 USD (written 4,200, in thousands,
     positive)"."""
@@ -311,49 +312,82 @@ def _number(value: str, unit: object, span: tuple[int, int] | None, text: str | 
     return f"{full} {unit_text} (written {token}, {_SCALES[scale]}, {sign})"
 
 
-def _long(decision: Mapping[str, Any], texts: Mapping[str | None, str]) -> bool:
+def _long(decision: Mapping[str, Any], texts: Mapping[str | None, _Source]) -> bool:
     """A string value is long (§7) when it has more than 300 characters, or when its first
     occurrence in its evidence span has a line break. The receipt gives the value with each
     whitespace run as one space, so the line break comes from the text."""
     value = decision["value"]
     if len(value) > SPAN_CHARS:
         return True
-    text = texts.get(decision.get("ref"))
+    source = texts.get(decision.get("ref"))
     span = _span(decision.get("evidence"))
-    chars = None if text is None or span is None else _chars(text, span)
-    if chars is None or not value.strip():
+    chars = None if source is None or span is None else source.chars(span)
+    if source is None or chars is None or not value.strip():
         return False
-    found = quote_pattern(value).search(text, *chars)  # type: ignore[arg-type]
+    found = quote_pattern(value).search(source.text, *chars)
     return found is not None and bool(_BREAKS.intersection(found.group()))
 
 
-def _chars(text: str, span: tuple[int, int]) -> tuple[int, int] | None:
-    """The UTF-8 byte span ``span`` of ``text`` in code points, or None when it is not a span of
-    the text."""
-    data = text.encode("utf-8")
-    if not 0 <= span[0] <= span[1] <= len(data):
-        return None
-    try:
-        start = len(data[: span[0]].decode("utf-8"))
-        end = start + len(data[span[0] : span[1]].decode("utf-8"))
-    except UnicodeDecodeError:
-        return None
-    return start, end
+class _Source:
+    """A text and its UTF-8 bytes, encoded one time. ``chars`` turns a byte span into a span in
+    code points without a new decode of the text."""
+
+    def __init__(self, text: str) -> None:
+        self.text = text
+        self.data = text.encode("utf-8")
+        # the byte offset after each character of more than one byte, and the sum of the extra
+        # bytes up to that offset
+        self._ends: list[int] = []
+        self._extra: list[int] = []
+        if len(self.data) != len(text):
+            at = extra = 0
+            for ch in text:
+                size = len(ch.encode("utf-8"))
+                at += size
+                if size > 1:
+                    extra += size - 1
+                    self._ends.append(at)
+                    self._extra.append(extra)
+
+    def _char(self, offset: int) -> int | None:
+        if offset < len(self.data) and 0x80 <= self.data[offset] < 0xC0:
+            return None  # inside a character
+        n = bisect.bisect_right(self._ends, offset)
+        return offset - (self._extra[n - 1] if n else 0)
+
+    def chars(self, span: tuple[int, int]) -> tuple[int, int] | None:
+        """The UTF-8 byte span ``span`` in code points, or None when it is not a span of the
+        text."""
+        if not 0 <= span[0] <= span[1] <= len(self.data):
+            return None
+        start, end = self._char(span[0]), self._char(span[1])
+        return None if start is None or end is None else (start, end)
 
 
-def _written(amount: Decimal, span: tuple[int, int], text: str) -> tuple[str, int] | None:
-    """The first number token in ``span`` of ``text`` that gives ``amount`` with a scale of 1,
+def _times_ten(digits: str, power: int) -> str:
+    """The canonical decimal ``digits`` times 10^``power``, as a canonical decimal, by a move of
+    the point. This is exact, and its time is linear in the digits."""
+    whole, _, frac = digits.partition(".")
+    frac += "0" * power
+    whole = (whole + frac[:power]).lstrip("0") or "0"
+    frac = frac[power:].rstrip("0")
+    return f"{whole}.{frac}" if frac else whole
+
+
+def _written(amount: Decimal, span: tuple[int, int], source: _Source) -> tuple[str, int] | None:
+    """The first number token in ``span`` of the text that gives ``amount`` with a scale of 1,
     a thousand, a million, a billion or a trillion, and the power of ten of that scale."""
-    chars = _chars(text, span)
+    chars = source.chars(span)
     if chars is None:
         return None
-    want = abs(Fraction(amount))  # exact: Decimal arithmetic rounds to 28 digits
-    for tok in tokens(text, *chars):
+    want = canonical(amount.copy_abs())  # abs() rounds to 28 digits
+    for tok in tokens(source.text, *chars):
         if tok.value is None:
             continue
+        digits = canonical(tok.value.copy_abs())
         for power in _SCALES:
-            if abs(Fraction(tok.value)) * 10**power == want:
-                return text[tok.start : tok.end], power
+            if _times_ten(digits, power) == want:
+                return source.text[tok.start : tok.end], power
     return None
 
 
@@ -376,14 +410,14 @@ def _span(evidence: object) -> tuple[int, int] | None:
     return start, end
 
 
-def _texts(text: str, references: Sequence[Any] | None) -> dict[str | None, str]:
+def _texts(text: str, references: Sequence[Any] | None) -> dict[str | None, _Source]:
     """The document text under ``None``, and the text of each reference under its id."""
-    out: dict[str | None, str] = {None: text}
+    out: dict[str | None, _Source] = {None: _Source(text)}
     for ref in references or ():
         if isinstance(ref, Mapping) and isinstance(ref.get("id"), str):
             body = ref.get("text")
             if isinstance(body, str):
-                out[ref["id"]] = body
+                out[ref["id"]] = _Source(body)
     return out
 
 
@@ -403,6 +437,8 @@ def _places(ds: Sequence[Mapping[str, Any]], layout: Layout | None) -> list[dict
         if layout is not None:
             page = layout.page_at(start)
             boxes = [b for b in layout.locate(start, end) if b.page == page]
+            if any(not math.isfinite(v) for b in boxes for v in (b.x0, b.top, b.x1, b.bottom)):
+                raise PacketError(f"the layout has a box that is not a finite number at {start}")
             if boxes:
                 box = [
                     min(b.x0 for b in boxes),
@@ -454,4 +490,5 @@ def write_tasks(store: Any, packet_key: str, policy: Mapping[str, Any] | None = 
         references=packet.references,
         layout=layout,
     )
-    return Written([(store.put("task@1", jcs(t).encode("utf-8")), t) for t in tasks])
+    encoded = [(jcs(t).encode("utf-8"), t) for t in tasks]  # each task, before any write
+    return Written([(store.put("task@1", data), t) for data, t in encoded])

@@ -7,6 +7,7 @@ The tasks code must agree with them.
 from __future__ import annotations
 
 import json
+import time
 from pathlib import Path
 from typing import Any
 
@@ -14,10 +15,12 @@ import pytest
 
 from groundgate.canonical import digest, jcs
 from groundgate.cli import main
+from groundgate.model import PacketError
 from groundgate.review import format_schema
 from groundgate.review.tasks import (
     DEFAULT_POLICY,
     _number,
+    _Source,
     audit_hash,
     audit_picked,
     check_policy,
@@ -286,14 +289,33 @@ def test_the_audit_rate_picks_by_the_hash(tmp_path: Path) -> None:
 
 def test_the_scale_is_exact_for_long_numbers() -> None:
     text = "Total 12345678901234567890123456789 here"
-    assert _number("12345678901234567890123456789000", "USD", (6, 35), text) == (
+    assert _number("12345678901234567890123456789000", "USD", (6, 35), _Source(text)) == (
         "12,345,678,901,234,567,890,123,456,789,000 USD "
         "(written 12345678901234567890123456789, in thousands, positive)"
     )
     # Decimal arithmetic with 28 digits rounds the token to 12345678901234567890123456790
-    assert _number("12345678901234567890123456790", "USD", (6, 35), text).endswith(
+    assert _number("12345678901234567890123456790", "USD", (6, 35), _Source(text)).endswith(
         "(written form not found, positive)"
     )
+
+
+def test_a_long_number_takes_linear_time() -> None:
+    digits = "7" * 200_000
+    text = f"Revenue {digits} here."
+    start = time.perf_counter()
+    shown = _number(digits + "000", None, (8, 8 + len(digits)), _Source(text))
+    assert time.perf_counter() - start < 0.5
+    assert shown.endswith(f"(written {digits}, in thousands, positive)")
+
+
+def test_source_spans_in_code_points() -> None:
+    source = _Source("€ 1,5 ü x")
+    assert source.chars((0, 3)) == (0, 1)
+    assert source.chars((4, 7)) == (2, 5)
+    assert source.chars((8, 10)) == (6, 7)
+    assert source.chars((1, 3)) is None  # inside the euro sign
+    assert source.chars((0, 99)) is None
+    assert _Source("abc").chars((1, 2)) == (1, 2)
 
 
 # No document text (§5.2)
@@ -366,6 +388,40 @@ def test_page_and_box_come_from_the_layout(tmp_path: Path) -> None:
     assert task["places"] == [
         {"start": at, "end": at + 5, "page": 2, "box": [150.5, 80, 180.25, 92]}
     ]
+
+
+def test_a_box_that_is_not_finite_writes_no_task(tmp_path: Path) -> None:
+    text = "Revenue 10 and 20.\n"
+    layout = {
+        "groundgate_layout": "0.1",
+        "document_sha256": digest("document", {"text": text}),
+        "pages": [{"page": 1, "width": 612, "height": 792, "start": 0, "end": len(text)}],
+        "words": [[8, 10, 1, 72, 80, 90, 92], [15, 17, 1, "nan", 80, 120, 92]],
+    }
+    with FolderStore(tmp_path / "s") as store:
+        reading = {
+            "format": "reading@1",
+            "source": store.put("source@1", text.encode()),
+            "reader": {"name": "groundgate.read", "version": "0"},
+            "options": {"pages": None},
+            "text": store.put("text@1", text.encode()),
+            "layout": store.put("layout@1", jcs(layout).encode()),
+            "document": None,
+        }
+        schema = {"fields": {"a": {"type": "number"}, "b": {"type": "number"}}}
+        candidates = [
+            {"field": "a", "value": "10", "evidence": ev("10", text)},
+            {"field": "b", "value": "20", "evidence": ev("20", text)},
+        ]
+        k, _ = admit_packet(
+            store, text, schema, candidates, reading=store.put("reading@1", jcs(reading).encode())
+        )
+        with pytest.raises(PacketError, match="not a finite number"):
+            write_tasks(store, k, policy("1"))
+    objects = [p for p in (tmp_path / "s" / "objects").rglob("*") if p.is_file()]
+    names = {"sha256:" + p.parent.name + p.name: p.read_bytes() for p in objects}
+    kinds = {"task@1" for name, data in names.items() if key("task@1", data) == name}
+    assert kinds == set()  # the task of field a is not in the store either
 
 
 def _tampered(store: FolderStore, k: str) -> str:

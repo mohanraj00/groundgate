@@ -418,8 +418,9 @@ def _review_tasks(args: argparse.Namespace) -> int:
     policy = _json(args.policy) if args.policy else None
     with _store(args.store, make=False) as store:
         written = write_tasks(store, args.packet, policy)
-    for problem in written.problems:
-        print(f"mismatch: {problem}", file=sys.stderr)
+    for problem in written.problems:  # a problem can quote store data: escape each control
+        shown = "".join(c if c.isprintable() else f"\\u{ord(c):04x}" for c in problem)
+        print(f"mismatch: {shown}", file=sys.stderr)
     if written.problems:
         print("groundgate: no task for a receipt that does not match", file=sys.stderr)
         return 1
