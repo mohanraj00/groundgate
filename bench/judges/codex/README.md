@@ -80,6 +80,19 @@ ceiling (hybrid design §9), with one threshold for all kinds. "Miss rate with t
 the cleared right values from the runner misses of the loop results. A test checks that the
 committed `results.json` and `RESULTS.md` come from the committed answers.
 
+The freeze (`bench/requested4/judge/freeze.json`) names the model, the effort, the prompt
+template, the ceiling, the threshold and `code_sha256`, the digest of `items.py`, `judge.py`
+and `score.py`. `score.py --freeze` scores the held-out split at the frozen threshold only. It
+refuses answers of another model, effort or template, and judge code that changed after the
+freeze.
+
+Only the frozen threshold is a held-out result. The held-out `RESULTS.md` also shows the other
+thresholds and the calibration bins, but no threshold may be chosen from them. A test checks the
+held-out results with `--freeze`, so any later change to `items.py`, `judge.py` or `score.py`
+fails it. A change to the judge code needs a new freeze and a new held-out run, approved by the
+maintainer. If the judge code must change for another reason, the test can drop the held-out
+check, and the freeze commit stays the record of the code that scored the answers.
+
 ## Held-out gate
 
 The items file states a split, but `run` does not trust it. `run` reads the set's manifest

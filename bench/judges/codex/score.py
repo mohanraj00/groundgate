@@ -13,6 +13,11 @@ clears is below the ceiling (hybrid design §9). The thresholds and the ceilings
 before the first model call. One threshold is pooled over the kinds, and the split gives its
 counts for each kind.
 
+With `--freeze`, the split is scored at the frozen threshold only, and picks no threshold of its
+own. The freeze names the model, the effort, the prompt template, the ceiling, the threshold and
+the digest of the judge code (`code_sha256`). The scorer refuses answers of another model,
+effort or template, and judge code that changed after the freeze.
+
 The script writes `results.json` and `RESULTS.md`. `--check` compares them with the files in
 `--out` and writes nothing. Labels of the other split are not read: only the documents of the
 split of the run file are taken from the label file.
@@ -50,6 +55,19 @@ def _load(name: str, path: Path) -> Any:
 
 items_mod = _load("codex_judge_items", Path(__file__).with_name("items.py"))
 metrics = _load("requested_metrics", ROOT / "bench" / "requested" / "metrics.py")
+
+
+FREEZE_FORMAT = "codex-judge-freeze/1"
+CODE = ("items.py", "judge.py", "score.py")  # the judge code that a freeze pins
+
+
+def code_sha256() -> str:
+    """The digest of the judge code: sha256 over sorted lines "name NUL sha256(file) LF"."""
+    h = hashlib.sha256()
+    for name in CODE:
+        body = (Path(__file__).with_name(name)).read_bytes()
+        h.update(f"{name}\0{hashlib.sha256(body).hexdigest()}\n".encode())
+    return "sha256:" + h.hexdigest()
 
 
 class ScoreError(Exception):
@@ -268,12 +286,59 @@ def compare(a: Json, b: Json, items: dict[str, Json]) -> Json:
     }
 
 
+def check_freeze(freeze: Json, answers: list[Json]) -> None:
+    """The judge code, the model, the effort and the prompt template must be the frozen ones."""
+    if freeze.get("format") != FREEZE_FORMAT:
+        raise ScoreError(f"the freeze is not a {FREEZE_FORMAT} file")
+    if freeze["code_sha256"] != code_sha256():
+        raise ScoreError("the judge code changed after the freeze")
+    if freeze["threshold"] not in THRESHOLDS:
+        raise ScoreError("the frozen threshold is not one of the thresholds")
+    for a in answers:
+        m = a["meta"]
+        for name in ("model", "effort", "template_sha256"):
+            if m[name] != freeze[name]:
+                raise ScoreError(f"an answer file has another {name} than the freeze")
+
+
+def at_threshold(j: Json, kinds: list[str], loop: Json, t: float) -> Json:
+    """The counts of one judge at the frozen threshold, in total and for each kind."""
+    runner = loop["runs"]["runner"]
+    out = {}
+    for k, part in [("total", runner["total"]), *[(k, runner["by_kind"][k]) for k in kinds]]:
+        at = (j["total"] if k == "total" else j["by_kind"][k])["by_threshold"][str(t)]
+        miss = part["miss_rate"]
+        out[k] = {
+            "clears_right": at["clears_right"],
+            "escapes": at["escapes"],
+            "escape_rate_upper_95": at["escape_rate_upper_95"],
+            "runner_miss": {"k": miss["k"], "n": miss["n"]},
+            "miss_with_clears": {"k": miss["k"] - at["clears_right"], "n": miss["n"]},
+            "runner_escapes": part["escapes"],
+            "escapes_with_clears": part["escapes"] + at["escapes"],
+        }
+    return out
+
+
+def agreement(a: Json, b: Json, items: dict[str, Json], t: float) -> Json:
+    """Two runs at the frozen threshold, in total and for each kind: the same option, and the
+    items that each run clears."""
+    kinds = sorted({it["kind"] for it in items.values()})
+    out = {}
+    for k in ["total", *kinds]:
+        part = {i: it for i, it in items.items() if k == "total" or it["kind"] == k}
+        got = compare(a, b, part)
+        out[k] = {"items": got["items"], "same_option": got["same_option"]} | got["clears"][str(t)]
+    return out
+
+
 def score(
     run_path: Path,
     loop_path: Path,
     labels_path: Path,
     manifest_path: Path,
     answer_paths: list[Path],
+    freeze_path: Path | None = None,
 ) -> Json:
     run, manifest, loop = read(run_path), read(manifest_path), read(loop_path)
     if loop["labels_sha256"] != run["labels_sha256"]:
@@ -297,7 +362,35 @@ def score(
         if same_model or (a["meta"]["run"] == 1 and b["meta"]["run"] == 1):
             pairs.append(compare(a, b, items))
     kinds = sorted({it["kind"] for it in items.values()})
-    return {
+    frozen: Json = {}
+    if freeze_path is not None:
+        freeze = read(freeze_path)
+        check_freeze(freeze, answers)
+        t = freeze["threshold"]
+        for j in judges.values():
+            del j["by_ceiling"]  # a split scored at a freeze picks no threshold of its own
+        frozen = {
+            "frozen": {
+                "freeze": rel(freeze_path),
+                "freeze_sha256": digest(freeze_path),
+                "model": freeze["model"],
+                "effort": freeze["effort"],
+                "ceiling": freeze["ceiling"],
+                "threshold": t,
+                "code_sha256": freeze["code_sha256"],
+                "judges": {
+                    label(a["meta"]): at_threshold(judges[label(a["meta"])], kinds, loop, t)
+                    for a in answers
+                },
+                "pairs": [
+                    {"first": label(a["meta"]), "second": label(b["meta"])}
+                    | {"by_kind": agreement(a, b, items, t)}
+                    for a, b in itertools.combinations(answers, 2)
+                    if a["meta"]["model"] == b["meta"]["model"]
+                ],
+            }
+        }
+    return frozen | {
         "format": FORMAT,
         "split": run["split"],
         "inputs": {
@@ -334,7 +427,7 @@ def markdown(r: Json) -> str:
     kinds = sorted(r["items"]["by_kind"])
     per_kind = ", ".join(f"{k} {r['items']['by_kind'][k]}" for k in kinds)
     lines = [
-        "# Codex judge on the review fields: development split",
+        f"# Codex judge on the review fields: {r['split']} split",
         "",
         "This file comes from `results.json` through `bench/judges/codex/score.py`.",
         "",
@@ -358,6 +451,8 @@ def markdown(r: Json) -> str:
         "",
         '"Right candidate" counts the items where a candidate matches the label. "None, right" '
         "is a none choice on an item with no right candidate.",
+    ]
+    picks = [
         "",
         "## Threshold at each ceiling",
         "",
@@ -369,19 +464,19 @@ def markdown(r: Json) -> str:
         "|---|---:|---:|---:|---:|---:|---:|---:|---:|",
     ]
     for name, j in r["judges"].items():
-        for c, row in j["by_ceiling"].items():
+        for c, row in j.get("by_ceiling", {}).items():
             if row["threshold"] is None:
-                lines.append(f"| {name} | {c} | none | | | | | | |")
+                picks.append(f"| {name} | {c} | none | | | | | | |")
                 continue
             tot = row["total"]
-            lines.append(
+            picks.append(
                 f"| {name} | {c} | {row['threshold']} | {tot['clears_right']} | {tot['escapes']} "
                 f"| {bound(tot['escape_rate_upper_95'])} "
                 f"| {pct(tot['runner_miss']['k'], tot['runner_miss']['n'])} "
                 f"| {pct(tot['miss_with_clears']['k'], tot['miss_with_clears']['n'])} "
                 f"| {tot['escapes_with_clears']} |"
             )
-    lines += [
+    picks += [
         "",
         "## Each kind at the threshold",
         "",
@@ -390,17 +485,19 @@ def markdown(r: Json) -> str:
         "|---|---:|---:|---|---:|---:|---:|---:|---:|",
     ]
     for name, j in r["judges"].items():
-        for c, row in j["by_ceiling"].items():
+        for c, row in j.get("by_ceiling", {}).items():
             if row["threshold"] is None:
                 continue
             for k in kinds:
                 x = row[k]
-                lines.append(
+                picks.append(
                     f"| {name} | {c} | {row['threshold']} | {k} | {j['by_kind'][k]['items']} "
                     f"| {x['clears_right']} | {x['escapes']} "
                     f"| {pct(x['runner_miss']['k'], x['runner_miss']['n'])} "
                     f"| {pct(x['miss_with_clears']['k'], x['miss_with_clears']['n'])} |"
                 )
+    if "frozen" not in r:
+        lines += picks
     lines += [
         "",
         "## All thresholds",
@@ -429,6 +526,42 @@ def markdown(r: Json) -> str:
             if b["items"]:
                 lines.append(
                     f"| {name} | {b['from']} to {b['to']} | {b['items']} | {b['correct']} |"
+                )
+    if "frozen" in r:
+        f = r["frozen"]
+        lines += [
+            "",
+            "## Frozen threshold",
+            "",
+            f"The freeze (`{f['freeze']}`) names {f['model']} at effort {f['effort']}, ceiling "
+            f"{f['ceiling']} and threshold {f['threshold']} for all kinds.",
+            "",
+            "| Judge | Kind | Right values cleared | Escapes | Upper 95% | Runner miss rate "
+            "| Miss rate with the clears | Runner escapes | Escapes with the clears |",
+            "|---|---|---:|---:|---:|---:|---:|---:|---:|",
+        ]
+        for name, rows in f["judges"].items():
+            for k, x in rows.items():
+                lines.append(
+                    f"| {name} | {k} | {x['clears_right']} | {x['escapes']} "
+                    f"| {bound(x['escape_rate_upper_95'])} "
+                    f"| {pct(x['runner_miss']['k'], x['runner_miss']['n'])} "
+                    f"| {pct(x['miss_with_clears']['k'], x['miss_with_clears']['n'])} "
+                    f"| {x['runner_escapes']} | {x['escapes_with_clears']} |"
+                )
+        lines += [
+            "",
+            "Agreement of the runs at the frozen threshold:",
+            "",
+            "| First | Second | Kind | Items | Same option | Cleared by both | First only "
+            "| Second only |",
+            "|---|---|---|---:|---:|---:|---:|---:|",
+        ]
+        for p in f["pairs"]:
+            for k, x in p["by_kind"].items():
+                lines.append(
+                    f"| {p['first']} | {p['second']} | {k} | {x['items']} | {x['same_option']} "
+                    f"| {x['both']} | {x['first_only']} | {x['second_only']} |"
                 )
     if r["pairs"]:
         lines += [
@@ -459,10 +592,13 @@ def main(argv: list[str] | None = None) -> None:
     ap.add_argument("--loop-results", type=Path, default=SET / "loop" / "04" / "results.json")
     ap.add_argument("--labels", type=Path, default=SET / "labels.json")
     ap.add_argument("--manifest", type=Path, default=SET / "manifest.json")
+    ap.add_argument("--freeze", type=Path, help="score at the threshold of this freeze")
     ap.add_argument("--check", action="store_true", help="compare with the files in --out")
     args = ap.parse_args(argv)
     try:
-        result = score(args.run, args.loop_results, args.labels, args.manifest, args.answers)
+        result = score(
+            args.run, args.loop_results, args.labels, args.manifest, args.answers, args.freeze
+        )
     except (ScoreError, KeyError, ValueError, OSError) as e:
         raise SystemExit(f"score: {e}") from e
     body = json.dumps(result, ensure_ascii=False, indent=1, sort_keys=True) + "\n"
