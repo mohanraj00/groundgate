@@ -193,15 +193,15 @@ class _Objects:
     def by_run_key(self, runner: str) -> dict[str, tuple[str, str]]:
         """The store kind and key of each prompt, reply and admission object, by its key in a
         run record of ``runner``. The hash takes the bytes as they are, so an object that is
-        not UTF-8 needs no decode. An object that ``get`` refuses is skipped: the walk of
-        ``__init__`` read each object, so only a change after the walk does this."""
+        not UTF-8 needs no decode. An object that ``get`` refuses after the walk is skipped,
+        and its kind in ``kinds`` becomes ``None``, so ``unread`` names it."""
         if runner not in self._by_run:
             index: dict[str, tuple[str, str]] = {}
             for word, kind in _RUN_OBJECTS.values():
                 for k in list(self.of(kind)):
                     try:
                         data = self.store.get(kind, k)
-                    except StoreError:  # it changed or went after the walk: check names it
+                    except StoreError:  # it changed or went after the walk
                         self.kinds[k] = None
                         continue
                     index[run_hash(runner, word, data)] = (kind, k)
