@@ -464,8 +464,12 @@ def _link_new(tmp: str, path: Path, body: str) -> None:
         raise
     except OSError:
         fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o644)
-        with os.fdopen(fd, "w", encoding="utf-8") as f:
-            f.write(body + "\n")
+        try:  # path is new from here, so a failed write removes it
+            with os.fdopen(fd, "w", encoding="utf-8") as f:
+                f.write(body + "\n")
+        except BaseException:
+            path.unlink(missing_ok=True)
+            raise
 
 
 def _write(path: Path, body: str, new: bool = False) -> None:

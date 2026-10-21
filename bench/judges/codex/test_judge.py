@@ -422,6 +422,27 @@ def test_the_answers_file_is_written_with_no_hard_links(
         judge._write(out, "newer", new=True)
     assert out.read_text() == "new\n"
     assert list(tmp_path.glob(".tmp-*")) == []
+    # a write that fails after the new file is open removes that file
+    real_fdopen = judge.os.fdopen
+
+    class FullDisk:
+        def __init__(self, fd: int) -> None:
+            self.f = real_fdopen(fd, "w")
+
+        def __enter__(self) -> FullDisk:
+            return self
+
+        def __exit__(self, *exc: object) -> None:
+            self.f.close()
+
+        def write(self, text: str) -> int:
+            raise OSError("disk full")
+
+    monkeypatch.setattr(judge.os, "fdopen", lambda fd, *a, **k: FullDisk(fd))
+    second = tmp_path / "second.json"
+    with pytest.raises(OSError, match="disk full"):
+        judge._link_new(str(tmp_path / "unused"), second, "x")
+    assert not second.exists()
 
 
 def test_budget_guard(tmp_path: Path) -> None:
