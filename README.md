@@ -272,6 +272,12 @@ labeled values. The arms are the arms of 0.10, with `gpt-6.1-sol` at medium effo
 `groundgate.extract` misses 125 of 204 (61.27%) and the baseline misses 128 of 204 (62.75%).
 Each arm admits 1 wrong value. The gap of 3 misses is inside the run noise of the development
 split, so I do not claim a difference between the arms. No document stopped at a harness limit.
+`groundgate.extract` reports no absence on this set: 0 right absences and 76 unreported
+absences. The cause: #382 cuts a region longer than 6,000 characters, a cut marks the search
+truncated, and the bench writes an absence only for a search that is not truncated. The queries
+of each field include words such as "the" and "and", so the regions cover most of the document.
+So its miss rate is not comparable with the 0.10 `groundgate.extract` on `bench/requested3`. Both
+problems are open for 0.12 (#464, #466).
 Every arm misses more than 60% of the stated values, so 0.11 does not meet the goal on this set.
 [bench/requested4/RESULTS.md](bench/requested4/RESULTS.md) has every number.
 

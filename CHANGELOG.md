@@ -138,6 +138,12 @@ The measure (#395, #67, #234):
 - With `drop_rounded` on, a replay of the loop's calls misses 123 of 204 (60.29%), with 81 right
   values admitted and 1 escape.
 - No document stopped at a limit or at `search_limit`.
+- On requested4 the loop reports no absence: 0 right absences and 76 unreported absences. The
+  cause: #382 cuts a region longer than 6,000 characters, a cut marks the search truncated, and
+  the bench writes an absence only for a search that is not truncated. The queries of each field
+  include words such as "the" and "and", so the regions cover most of the document. So this miss
+  rate is not comparable with the 0.10 loop on requested3. Both problems are open for 0.12: #464
+  and #466.
 - The judge (#67): `gpt-6.1-sol` at medium effort, frozen at threshold 0.9, answered each of the
   104 held-out fields that the loop sent to review with a candidate, two times. It clears 91
   right values in run 1 and 94 in run 2, with 0 escapes in each run. With these clears, the loop
