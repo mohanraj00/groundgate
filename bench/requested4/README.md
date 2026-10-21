@@ -252,6 +252,87 @@ medium: `gpt-6.1-sol`, the runner's model, and `gpt-6-luna`. The answers are in
 `bench/judges/codex/score.py`. No held-out item, label or output was read. The held-out judge
 run needs the maintainer's approval.
 
+## Review answers (#234)
+
+#234 asks if a person who sees an item for the first time, with groundgate's reading, gives
+answers as good as blind labels. The items come from the held-out run of the `runner` arm. That
+run is frozen: `bench/requested/review_items.py` reads its cached results and changes no rule,
+prompt or code of the run. No model runs in these steps.
+
+`build` wrote one packet for each of the 59 held-out documents to the store
+`.cache/review/store`. The receipt of each packet must be the recorded receipt of the run, or
+`build` stops. Each packet names a reading of its PDF, so the page shows the PDF page with the
+value in a box. The store has two kinds of task, and `review/items.json` counts them:
+
+- a review task for each field with a flagged value;
+- an audit task for a sample of the admitted values. The sample is the slots with the smallest
+  audit hash for the seed in `review/policy.json`. The audit rate of that policy picks the same
+  slots.
+
+An audit task looks the same as a review task with one value. The page shows no code and no
+outcome until you press `r`. The store holds no label.
+
+### The steps for the maintainer
+
+Run each command from the root of the repository.
+
+1. Do not open `labels.json`, `loop/` or `review/results.json` before the last answer.
+2. Start the page:
+
+   ```bash
+   uv run groundgate review serve --store bench/requested4/.cache/review/store --reviewer maintainer
+   ```
+
+3. Open the URL that the command prints, and answer each item. Press `r` only when you need the
+   codes, because the answer records that you saw them. The page records the time and the keys
+   of each answer. To stop, press Ctrl-C. The same command shows only the items that have no
+   answer.
+4. After the last answer, score the answers against the sealed labels:
+
+   ```bash
+   PYTHONPATH=bench uv run python -m requested.review_items score --set bench/requested4 \
+       --store bench/requested4/.cache/review/store --reviewer maintainer
+   ```
+
+   If an item has no answer, the command stops before it reads a label. It writes
+   `review/results.json` and `review/checks-needed.json`.
+5. Give `review/checks-needed.json` to an independent checker. For each disagreement, the file
+   names the document, the field and the page, with no answer and no label. The checker labels
+   each item blind from the original PDF, and writes `review/checks.json`:
+
+   ```json
+   {"checks": [{"task": "sha256:...", "status": "present", "values": [{"value": "85", "unit": "C"}]}]}
+   ```
+
+   `status` is `present`, `absent` or `unclear`, as in `labels.json`.
+6. Score again with the checks, then write `review/RESULTS.md` from `review/results.json`:
+
+   ```bash
+   PYTHONPATH=bench uv run python -m requested.review_items score --set bench/requested4 \
+       --store bench/requested4/.cache/review/store --reviewer maintainer \
+       --checks bench/requested4/review/checks.json
+   PYTHONPATH=bench uv run python -m requested.review_items report --set bench/requested4
+   ```
+
+An answer agrees with its label when it gives the labeled value and unit, or `not_in_document`
+for an absent label. An `unsure` answer and an `unclear` label are not scored. A disagreement is
+a wrong answer when the check does not give the answer, and the item is not scored when the
+check is `unclear`. The result passes the bar of #234 when the 95% upper bound of the rate of
+wrong answers is below 0.05. The results also count the answers that take a value of groundgate
+(`confirm` or `choose`) and are not the label, before the checks. They also give the median
+time of each group.
+
+This command gives the measures of the review page itself:
+
+```bash
+uv run groundgate review measures --store bench/requested4/.cache/review/store \
+    --set requested4 --split heldout --policy bench/requested4/review/policy.json
+```
+
+Do not run `build` on another store or with another groundgate version, because the keys of the
+packets and tasks change. A second `build` on the same store stops if it gives other items than
+`review/items.json`.
+
 ## What comes next
 
 The learning loop runs on the development split only (`bench/requested/loop.py`). It writes one

@@ -1,0 +1,10 @@
+{
+ "format": "review-policy@1",
+ "audit": {
+  "rate": "0.42",
+  "seed": "requested4-234-audit"
+ },
+ "agree": 1,
+ "leads": [],
+ "rejected": false
+}
