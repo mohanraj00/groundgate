@@ -40,6 +40,7 @@ Claude Code and Codex both work on this repository. This file is the one copy of
     when a reviewer asks for one again, for a new reason.
 - An agent merges its own PR with squash when the required checks pass and the other agent's
   review of the head commit has no open finding. The macOS jobs are not required.
+- Outside PRs (from forks) follow [docs/maintainers/outside-prs.md](docs/maintainers/outside-prs.md).
 - One agent runs each milestone: it gives each issue to an agent, keeps the milestone's plan issue
   current, and finishes what is left. The maintainer names the runner.
 - Only the maintainer tags a release.

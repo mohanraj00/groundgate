@@ -22,6 +22,25 @@ uv run ruff check . && uv run ruff format --check . && uv run mypy && uv run pyt
 `uv run --group langextract pytest tests/test_langextract.py` also runs the adapter against a
 real LangExtract install.
 
+## Outside pull requests
+
+If you do not have write access to this repository, your PR comes from a fork. I read each one,
+and these steps make it fast:
+
+1. Open an issue first, or name the issue that the PR fixes. The PR body says `Fixes #N`.
+2. Run the full check before you push:
+   `uv run ruff check . && uv run ruff format --check . && uv run mypy && uv run pytest`.
+3. Enable Actions in your fork, and push your branch there. CI runs on a push to any branch of a
+   fork. Link the green run in the PR body.
+4. Do not edit `CHANGELOG.md`. Put the changelog line in a `## Changelog` section of the PR body
+   instead, or write "none" if users will not notice the change.
+5. Do not change `.github/`, `SPEC.md` or `conformance/` unless the maintainer approved it on an
+   issue. The CI job `outside-pr-paths` fails a fork PR that changes these paths, until I add
+   the label `maintainer-approved`.
+
+What happens next is in [docs/maintainers/outside-prs.md](docs/maintainers/outside-prs.md): who
+reviews the PR, the labels, and when an open PR closes.
+
 ## Rules that keep the project honest
 
 - **A spec change comes with vectors.** If a rule in SPEC.md changes, add or edit a vector in
