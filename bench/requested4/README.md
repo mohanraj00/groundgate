@@ -240,6 +240,18 @@ The table gives only the total for `runner_drop_rounded`; `COMPARE.md` has each 
 has 1 escape. The gap of 3 misses is inside the run noise that loop 04 shows, so I do not claim
 a difference between the arms.
 
+## Judge calibration (#67)
+
+The Codex judge of `bench/judges/codex` asks one choice for each field of the `runner` arm that
+ends in review with at least one candidate. The development split is the calibration part. The
+items come from the loop 04 runner output, the code that the held-out run froze.
+
+Two models of the installed Codex account answered each development item two times, at effort
+medium: `gpt-6.1-sol`, the runner's model, and `gpt-6-luna`. The answers are in
+`judge/answers/`. `judge/results.json` and `judge/RESULTS.md` come from them through
+`bench/judges/codex/score.py`. No held-out item, label or output was read. The held-out judge
+run needs the maintainer's approval.
+
 ## What comes next
 
 The learning loop runs on the development split only (`bench/requested/loop.py`). It writes one

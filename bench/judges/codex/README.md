@@ -2,8 +2,8 @@
 
 This judge asks a Codex model about the fields that the 0.11 runner sends to review (#67). For
 each field with at least one candidate, it asks one choice: which candidate does the document
-state as the field, or none. The plan is on #67. This folder has the code only. The development
-answers come in a later PR, after `bench/requested4` has its development labels.
+state as the field, or none. The plan is on #67. The development answers and their scores are in
+[bench/requested4/judge](../../requested4/judge/RESULTS.md).
 
 ```bash
 uv run python bench/judges/codex/judge.py prompt --items ITEMS.json --id ID
@@ -19,6 +19,22 @@ the field name and description, the text, and the candidates. The text is the wh
 of the document, byte for byte the file that the manifest pins with `text_sha256`. A candidate
 has a value, a scale, a unit and its spans, in code points of the text. `code_point_span`
 changes a UTF-8 byte span, such as the evidence of a decision, into code points.
+
+`items.py` makes the items of one split of `bench/requested4`:
+
+```bash
+uv run python bench/judges/codex/items.py --run bench/requested4/loop/04/runs/runner.json \
+    --results CACHE/runs/loop04/BINDING/runner/development --texts CACHE/run_sources \
+    --out CACHE/judge/items-development.json
+```
+
+An item is one field of the `runner` arm with no admitted value and at least one
+`needs_verification` decision. Each review decision is a candidate. Its value already holds the
+printed scale, so the candidate has no scale. Its spans are the evidence span and the cited parts
+of the decision receipt. The committed run file selects the items, and the decisions of the run
+cache must be the same. The reader text must have the manifest `text_sha256`. An items file holds
+whole reader texts, so it stays in the ignored `bench/requested4/.cache/judge/`. `items.py`
+refuses a held-out run file unless it gets `--allow-heldout`.
 
 ## Question
 
@@ -43,6 +59,26 @@ The judge runs the model only through the installed Codex CLI and its logged-in 
 If a reply used a tool, or is not a valid answer, the judge asks again, at most 3 times for each
 item. `--max-calls` caps the calls of a run, failed calls included. The plan allows at most 1,700
 development calls.
+
+## Scores
+
+`score.py` scores answer files against the sealed labels and writes `results.json` and
+`RESULTS.md`:
+
+```bash
+uv run python bench/judges/codex/score.py \
+    --answers bench/requested4/judge/answers/*.json --out bench/requested4/judge [--check]
+```
+
+It selects the items again from the committed run file, so it needs no cache. It takes from the
+label file only the documents of the run file's split. A clear is a candidate choice at
+confidence t or more, for t of 0.5, 0.7, 0.8, 0.9, 0.95 and 0.99. The clear is right when the
+label holds the chosen value and unit by the match rule of `bench/requested/metrics.py`, and an
+escape when it does not. An unclear slot is left out. For each ceiling of 0.05, 0.1 and 0.2, the
+threshold is the lowest t whose one-sided 95% upper bound on escapes among clears is below the
+ceiling (hybrid design §9), with one threshold for all kinds. "Miss rate with the clears" takes
+the cleared right values from the runner misses of the loop results. A test checks that the
+committed `results.json` and `RESULTS.md` come from the committed answers.
 
 ## Held-out gate
 
