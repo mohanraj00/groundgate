@@ -244,7 +244,8 @@ def _store_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(
         prog="groundgate store",
         description="Check, rebuild and forget in a store folder (docs/design/store.md). Exit "
-        "codes: 0 success, 1 check has a finding, 2 invalid input or a store error.",
+        "codes: 0 success, 1 check has a finding or forget could not read an object, 2 invalid "
+        "input or a store error.",
     )
     sub = ap.add_subparsers(dest="action", required=True)
     c = sub.add_parser("check", help="check each object, each chain and each packet")
@@ -259,7 +260,8 @@ def _store_parser() -> argparse.ArgumentParser:
         "deletion in logs/deleted.jsonl. An object that two packets share goes for both. "
         "The packet, the receipt and the other kept objects stay, and verify then reports "
         "'input deleted'. The run record goes too if a line holds document text: a string of "
-        "8 or more characters that is in the text. That check is not a proof.",
+        "8 or more characters that is in the text. That check is not a proof. If forget "
+        "cannot read an object, it prints 'unchecked', removes the rest and exits 1.",
     )
     f.add_argument("--store", metavar="DIR", required=True, help="the store folder")
     f.add_argument("packet", metavar="PACKET", help="the packet key")
@@ -291,7 +293,7 @@ def _store_command(args: argparse.Namespace) -> int:
                     line += f" ({shared} other packet{'s' if shared > 1 else ''} name"
                     line += "s it)" if shared == 1 else " it)"
                 print(line)
-            return 0
+            return 1 if any(state == "unchecked" for _, _, state, _ in done) else 0
         report = check(store, repair=args.repair)
     for path, cut in report.cut:
         text = cut.decode("utf-8", errors="backslashreplace")

@@ -173,6 +173,8 @@ class _Objects:
             except ValueError as exc:
                 report.find(f"{_rel(k)} is not a valid {found} object: {exc}")
         self._deleted: dict[str, Mapping[str, Any]] | None = None
+        self._by_run: dict[str, dict[str, tuple[str, str]]] = {}
+        self.unreadable: dict[str, str] = {}  # the key and kind of each object not read
 
     def of(self, kind: str) -> Iterator[str]:
         return (k for k, v in self.kinds.items() if v == kind)
@@ -187,6 +189,22 @@ class _Objects:
             except StoreError:
                 pass  # check reports the log itself
         return self._deleted
+
+    def by_run_key(self, runner: str) -> dict[str, tuple[str, str]]:
+        """The store kind and key of each prompt, reply and admission object, by its key in a
+        run record of ``runner``. An object that is not UTF-8 goes into ``unreadable``."""
+        if runner not in self._by_run:
+            index: dict[str, tuple[str, str]] = {}
+            for word, kind in _RUN_OBJECTS.values():
+                for k in self.of(kind):
+                    try:
+                        data = self.store.get(kind, k).decode("utf-8")
+                    except (StoreError, ValueError):
+                        self.unreadable[k] = kind
+                        continue
+                    index[run_hash(runner, word, data)] = (kind, k)
+            self._by_run[runner] = index
+        return self._by_run[runner]
 
     def json(self, kind: str, k: str) -> Any:
         data = self.store.get(kind, k)
@@ -334,19 +352,15 @@ def _holds_text(objects: _Objects, packet: Mapping[str, Any], run: _Run) -> list
 
 def _run_objects(objects: _Objects, run: _Run) -> list[tuple[str, str]]:
     """The store kind and key of each prompt, reply and admission that the run record names.
-    The record names them by run keys, so each object of these kinds is hashed again."""
-    wanted: dict[str, str] = {}
+    The record names them by run keys: ``_Objects.by_run_key`` hashes each object of these
+    kinds one time for each runner version."""
+    index = objects.by_run_key(run.runner)
+    found = []
     for line in run.lines:
         for member, (_, kind) in _RUN_OBJECTS.items():
             value = line.get(member)
-            if isinstance(value, str):
-                wanted[value] = kind
-    found = []
-    for word, kind in _RUN_OBJECTS.values():
-        for k in objects.of(kind):
-            data = objects.store.get(kind, k).decode("utf-8")
-            if wanted.get(run_hash(run.runner, word, data)) == kind:
-                found.append((kind, k))
+            if isinstance(value, str) and value in index and index[value][0] == kind:
+                found.append(index[value])
     return found
 
 
@@ -555,34 +569,58 @@ def forget_packet(
     an answer log is locked, ``everything`` stops before it removes the packet, so a second
     call can finish the work.
 
-    Return the kind, the key, the state (``deleted``, ``absent`` or ``kept``) and the number
-    of other packets that name the key, for each object. A log has the kind ``log`` and its
-    path in place of the key."""
+    An object that ``forget`` cannot read is ``unchecked``, and the rest is still removed. A
+    run record whose lines cannot be read is removed, but the prompts, replies and admissions
+    that it names cannot be found. A prompt, reply or admission that is not UTF-8 cannot be
+    matched to a run record, so it stays.
+
+    Return the kind, the key, the state (``deleted``, ``absent``, ``kept`` or ``unchecked``)
+    and the number of other packets that name the key, for each object. A log has the kind
+    ``log`` and its path in place of the key."""
     if not isinstance(packet, str) or not KEY.fullmatch(packet):
         raise ValueError(f"{printable(packet)} is not a store key")
     objects = _Objects(store)
     if objects.kinds.get(packet) != "packet@1":
         raise NotFound(f"the packet {packet} is not in the store")
     obj = _packet(objects, packet)
+    named = _named(obj)  # a packet with bad members raises: then nothing is known
     plan: list[tuple[str, str, bool]] = []  # the kind, the key, and "remove in any mode"
+    unchecked: list[tuple[str, str]] = []
     for k in _keys(obj["run"]):
         kind = objects.kinds.get(k, "absent")
         if kind is None or kind == "absent" or not kind.startswith("run@"):
             plan.append(("run@N", k, kind is None))  # a changed record cannot be checked
+            if kind is None:
+                unchecked.append(("run@N", k))
             continue
-        run = _run(objects, k)
-        lines = _holds_text(objects, obj, run)
+        try:
+            run = _run(objects, k)
+        except (StoreError, ValueError):  # the lines cannot be read: remove the record
+            unchecked.append((kind, k))
+            plan.append((kind, k, True))
+            continue
+        try:
+            lines = _holds_text(objects, obj, run)
+        except (StoreError, ValueError):  # the text or the schema cannot be read
+            lines = None
         plan.append((run.kind, k, lines is None or bool(lines)))
         plan += [(kind, n, False) for kind, n in _run_objects(objects, run)]
-    plan += [(kind, k, False) for kind, k in _named(obj)]
+    plan += [(kind, k, False) for kind, k in named]
     for k in _keys(obj["reading"]):
         plan.append(("reading@1", k, False))
         if objects.kinds.get(k) == "reading@1":
-            plan += [(kind, n, False) for kind, n in _reading_named(objects, k)]
+            try:
+                plan += [(kind, n, False) for kind, n in _reading_named(objects, k)]
+            except StoreError:
+                unchecked.append(("reading@1", k))
     if not everything:
         plan = [(kind, k, always) for kind, k, always in plan if kind in REMOVED or always]
     others = _others(objects, packet)
-    done: list[tuple[str, str, str, int]] = []
+    done: list[tuple[str, str, str, int]] = [
+        (kind, k, "unchecked", others.get(k, 0)) for kind, k in unchecked
+    ]
+    # A prompt, reply or admission that is not UTF-8 cannot be matched to a run record.
+    done += [(kind, k, "unchecked", 0) for k, kind in sorted(objects.unreadable.items())]
     seen: set[str] = set()
     for kind, k, always in plan:
         if k in seen:

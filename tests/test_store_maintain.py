@@ -35,40 +35,10 @@ def client(prompt: str) -> str:
 def save_run(
     store: FolderStore, text: str = TEXT, *, model_id: str = "fixed-1", document_id: str = "inv-1"
 ) -> str:
-    """Write a run into the store as issue 4 will, and return the packet key. The run record
-    names its objects by run keys, so each object is put as its store kind."""
+    """Run the extractor with a fixed client, save the run into the store (#430), and return
+    the packet key."""
     result = extract(text, SCHEMA, client=client, model_id=model_id, document_id=document_id)
-    art = result.artifacts
-    inputs = result.record[0]["inputs"]
-    for line in result.record:
-        for member, kind in (
-            ("prompt_sha256", "prompt@1"),
-            ("reply_sha256", "reply@1"),
-            ("admission_sha256", "admission@1"),
-        ):
-            if member in line:
-                store.put(kind, art[line[member]].encode("utf-8"))
-    run = "".join(jcs(line) + "\n" for line in result.record).encode("utf-8")
-    number = result.record[0]["runner"].removeprefix("groundgate-run/")
-    packet = {
-        "format": "packet@1",
-        "spec": result.receipt.to_dict()["groundgate"],
-        "document": {
-            "id": document_id,
-            "source": None,
-            "text": store.put("text@1", art[inputs["document"]["sha256"]].encode("utf-8")),
-        },
-        "reading": None,
-        "schema": store.put("schema@1", art[inputs["schema_sha256"]].encode("utf-8")),
-        "policy": store.put("policy@1", art[inputs["policy_sha256"]].encode("utf-8")),
-        "references": [],
-        "packs": [],
-        "candidates": store.put("candidates@1", jcs(result.candidates).encode("utf-8")),
-        "judgments": None,
-        "receipt": store.put("receipt@1", jcs(result.receipt.to_dict()).encode("utf-8")),
-        "run": store.put(f"run@{number}", run),
-    }
-    return store.put("packet@1", jcs(packet).encode("utf-8"))
+    return result.save(store)
 
 
 def candidates(text: str = TEXT) -> list[Any]:
@@ -466,3 +436,43 @@ def test_forget_log_and_repair_take_the_lock(tmp_path: Path) -> None:
         path.with_suffix(".lock").unlink()
         store.forget_log(log, "x")
     assert not path.exists() and not path.parent.exists()
+
+
+def test_forget_goes_on_past_an_unreadable_reply(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    root = tmp_path / "s"
+    with FolderStore(root) as store:
+        packet = save_run(store)
+        obj = json.loads(store.get("packet@1", packet))
+    data = b"\xff\xfe"  # not UTF-8, with the key of these bytes as reply@1
+    bad = key("reply@1", data)
+    path_of(root, bad).parent.mkdir(exist_ok=True)
+    path_of(root, bad).write_bytes(data)
+    cmd = ["store", "forget", "--store", str(root), packet, "--reason", "asked"]
+    assert main(cmd) == 1
+    out = capsys.readouterr().out.splitlines()
+    assert f"unchecked reply@1 {bad}" in out
+    assert f"deleted text@1 {obj['document']['text']}" in out
+    assert path_of(root, bad).exists()
+    after = all_keys(root)
+    assert not [k for k, kind in after.items() if kind in REMOVED and k != bad]
+
+
+def test_forget_removes_a_run_record_with_a_bad_line(tmp_path: Path) -> None:
+    root = tmp_path / "s"
+    with FolderStore(root) as store:
+        packet = save_run(store)
+        obj = json.loads(store.get("packet@1", packet))
+        run = store.get("run@3", obj["run"])
+        bad_run = run + b"[1]\n"  # a line that is not a JSON object
+        obj["run"] = key("run@3", bad_run)
+        path = path_of(root, obj["run"])
+        path.parent.mkdir(exist_ok=True)
+        path.write_bytes(bad_run)
+        other = store.put("packet@1", jcs(obj).encode("utf-8"))
+        done = forget_packet(store, other, "asked")
+    assert done[0] == ("run@3", obj["run"], "unchecked", 0)
+    assert ("run@3", obj["run"], "deleted", 0) in done
+    assert ("text@1", obj["document"]["text"], "deleted", 1) in done
+    assert not path.exists()
