@@ -311,6 +311,7 @@ def _store_command(args: argparse.Namespace) -> int:
 
 
 def main(argv: list[str] | None = None) -> int:
+    from .store.packets import printable
     argv = sys.argv[1:] if argv is None else list(argv)
     if argv[:1] == ["extract"]:  # 0.9 moved the reader to `read`, with any old options
         print(
@@ -369,8 +370,8 @@ def main(argv: list[str] | None = None) -> int:
         stored = _json(args.receipt)
         extra["pack_dir"] = args.pack_dir  # verify and report read the folder in the same way
         result = verify(stored, text, schema, candidates, policy, judgments, **extra)
-        for problem in result.problems:
-            print(f"mismatch: {problem}", file=sys.stderr)
+        for problem in result.problems:  # a problem can quote a candidate: escape each control
+            print(f"mismatch: {printable(problem, limit=None)}", file=sys.stderr)
         if args.command == "verify":
             if result.ok:
                 print("receipt verified")
@@ -477,14 +478,14 @@ def _admit_store(
 
 
 def _from_store(args: argparse.Namespace) -> int:
-    from .store.packets import load_packet
+    from .store.packets import load_packet, printable
 
     with _store(args.store, make=False) as store:
         packet = load_packet(store, args.receipt, layout=args.command == "report")
     extra = {**packet.inputs(), "pack_dir": args.pack_dir}
     result = verify(packet.receipt, packet.text, packet.schema, packet.candidates, **extra)
-    for problem in result.problems:
-        print(f"mismatch: {problem}", file=sys.stderr)
+    for problem in result.problems:  # a problem can quote store data: escape each control
+        print(f"mismatch: {printable(problem, limit=None)}", file=sys.stderr)
     if args.command == "verify":
         if result.ok:
             print("receipt verified")

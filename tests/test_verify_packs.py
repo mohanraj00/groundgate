@@ -173,6 +173,27 @@ def test_a_big_or_broken_file_in_the_folder_is_never_used(tmp_path: Path) -> Non
     assert "has the id of a built-in pack (L7)" in problems[-1]
 
 
+def test_the_mismatch_lines_escape_a_control_character(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """A problem can quote the receipt's own members (#440): each control character is
+    escaped on the way to the terminal, as `review tasks` does."""
+    r = receipt()
+    r["groundgate"] = "0\x1b[2J.9"  # a receipt from another spec version, carrying an escape
+    doc = tmp_path / "doc.txt"
+    doc.write_text(DOC, encoding="utf-8")
+    schema = write(tmp_path, "schema.json", SCHEMA)
+    cands = write(tmp_path, "cands.json", CANDS)
+    receipt_path = write(tmp_path, "receipt.json", resealed(r))
+    assert (
+        main(["verify", str(receipt_path), str(doc), str(schema), str(cands)])
+        == 1
+    )
+    err = capsys.readouterr().err
+    assert "\\u001b[2J" in err
+    assert "\x1b" not in err
+
+
 def test_a_pack_folder_with_too_many_files_or_no_folder_is_invalid(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
