@@ -321,3 +321,98 @@ input deleted: the text@1 object
 
 The command line prints the same message with the key, the time and the reason, and exits 2.
 An object that is not in the store and has no deletion record gives "input missing".
+
+## 9. Answer the tasks on the review page
+
+The report page of section 2 shows the flagged facts, but it takes no answer. The review page
+takes an answer for each flagged fact and keeps it in the store (see the
+[review note](../design/review.md)). First, `write_tasks` writes a task for each flagged fact of
+the packet. The `admit_packet` call puts the text back after the `forget` of section 8:
+
+```python
+from groundgate.review.resolve import lines, write_resolution
+from groundgate.review.serve import Review
+from groundgate.review.tasks import write_tasks
+
+store = FolderStore(work / "store")
+packet, receipt = admit_packet(store, text, schema, candidates, document_id="lease-0417")
+for task_key, task in write_tasks(store, packet).tasks:
+    print(task["question"])
+```
+
+```text
+Is late fee 75 USD (written form not found, positive)?
+Is security deposit 4,900 USD (written 4,900, not scaled, positive)?
+```
+
+The question names each part that the person checks: the amount in full, the number as written,
+the scale and the sign. On the command line, `review tasks` writes the same tasks, and
+`review serve` starts the page:
+
+```bash
+groundgate review tasks --store work/store sha256:3e0c27fa...
+groundgate review serve --store work/store --reviewer ana
+```
+
+`review serve` prints a start URL, `http://127.0.0.1:<port>/#<token>`. Open it in a browser. The
+page shows one task at a time, in page order. The source is on the left, with the value in a
+box. The question and the values are on the right. One key gives each answer:
+
+| Key | Answer |
+|---|---|
+| `y` | The value is right (`confirm`). |
+| `1` to `9` | This value is right, when the task has two or more values (`choose`). |
+| `n` | No value is right. Select the right value in the text, then press `Enter` (`correct`). |
+| `s` | The value is right, but its span is not. Select the span again, then press `Enter` (`adjust_span`). |
+| `x` | The document does not give this field (`not_in_document`). |
+| `u` | I cannot tell (`unsure`). Another reviewer gets the task. |
+| `r` | Show the codes and the outcome of each value. |
+| `k` | Keep the codes of a flagged correction, and save it. |
+| `Esc`, the arrow keys | Stop a selection, and go back and forward. |
+
+The page does not show a code or an outcome until you press `r`. A correction goes through the
+same `admit` call as `review resolve`, and the page shows the outcome at once. If the gate
+rejects the selection, select again. If the gate flags it, press `k` to keep its codes. If a
+part is missing, select the part, for example the scale line, and press `Enter`. You can also
+type the value in full. After each answer, the next task opens.
+
+The page calls the methods of `Review`, so a script can give the same answers. Offsets count
+UTF-16 code units in the text, as a browser selection does:
+
+```python
+review = Review(store, "ana")
+deposit, fee = (t["task"] for t in review.queue()["tasks"])
+answer = {"decision": None, "codes_kept": [], "reason_seen": False, "keys": 1, "ms": 2100}
+review.answer({**answer, "task": deposit, "verdict": "confirm"})
+at = text.index("$75")
+check = review.check({"task": fee, "verdict": "correct", "start": at, "end": at + 3})
+print(check["outcome"], check["shown"])
+left = review.answer({**answer, "task": fee, "verdict": "correct", "start": at, "end": at + 3})
+print(len(left["tasks"]))
+```
+
+```text
+admitted 75 USD (written 75, not scaled, positive)
+0
+```
+
+Each answer is a record of the answer log of `ana` for this packet. `review resolve` reads the
+logs again, runs `admit` again for each correction, and gives the final value of each field:
+
+```python
+resolved = write_resolution(store, packet, reviewers=["ana"])
+for line in lines(resolved.resolution):
+    print(line)
+store.close()
+```
+
+```text
+late_fee: 75 USD (corrected)
+monthly_rent: 2450 USD (admitted)
+security_deposit: 4900 USD (confirmed)
+```
+
+The page is for one person on one computer. The server binds to `127.0.0.1` and refuses another
+`Host`. Each API request must send the token of the start URL, so keep the URL private. Any
+holder of the URL can answer as the name that `--reviewer` gives. The server does not
+authenticate that name. Thus a lead answer of the review policy is not an authenticated act.

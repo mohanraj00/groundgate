@@ -47,6 +47,8 @@ _MEMBERS = frozenset(
         "sequence", "previous", "entry_sha256",
     }
 )  # fmt: skip
+# The members of an answer before the store adds the chain members (review serve checks this).
+ANSWER_MEMBERS = _MEMBERS - {"sequence", "previous", "entry_sha256"}
 _REASONS = {
     "not_in_document": "a reviewer says that the document does not give it",
     "rejected": "the gate rejected each candidate, and the review policy makes no task",
@@ -64,6 +66,7 @@ class AnswerError(ValueError):
     def __init__(self, reviewer: str, sequence: object, message: str) -> None:
         self.reviewer = reviewer
         self.sequence = sequence
+        self.reason = _escape(message)  # the message without the reviewer and the sequence
         # The message can quote an error of admit about the candidate: escape it too.
         super().__init__(
             f"answer {_printable(sequence)} of the reviewer {_printable(reviewer)}: "
@@ -271,15 +274,16 @@ def _check(
     by_key: Mapping[str, tuple[Slot, dict[str, Any]]],
     schema: Schema,
     ids: Sequence[object],
+    members: frozenset[str] = _MEMBERS,
 ) -> _Checked:
     """Check one record of the answer log of ``name`` against its task. Read each answer that
-    is not a correction."""
+    is not a correction. ``members`` are the members that the record must have."""
     sequence = record.get("sequence") if isinstance(record, Mapping) else None
 
     def fail(message: str) -> AnswerError:
         return AnswerError(name, sequence, message)
 
-    if not isinstance(record, Mapping) or set(record) != _MEMBERS:
+    if not isinstance(record, Mapping) or set(record) != members:
         raise fail("the record does not have the members of answer@1")
     if record["format"] != "answer@1":
         raise fail("the record format is not answer@1")
