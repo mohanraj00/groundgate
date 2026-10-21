@@ -40,6 +40,7 @@ from .text import (
     brackets_around,
     canonical,
     cells,
+    currency_name,
     currency_scale,
     first_token_end,
     form_next,
@@ -49,7 +50,6 @@ from .text import (
     heading_rows,
     holds_form,
     host,
-    in_scale,
     item_scale,
     key_break,
     key_mentions,
@@ -60,6 +60,7 @@ from .text import (
     qualifiers,
     quote_pattern,
     scale_between,
+    scale_form,
     scale_word,
     scaled_value,
     sentence,
@@ -879,30 +880,43 @@ def _roles(
                     )
             elif role == "scale":
                 ok = (
-                    (in_scale(t.text, a, b) or currency_scale(t.text, a, b))
+                    (
+                        scale_form(t.text, a, b, f.unit, prefixes + suffixes)
+                        or currency_scale(t.text, a, b)
+                    )
                     and b <= tok.start
                     and not scale_between(t.text, b, tok.start, item_scale(t.text, a, b))
                 )
             elif role == "unit":
                 ok = (
-                    f.unit is not None
-                    and holds_form(t.text, a, b, prefixes + suffixes)
-                    and (
-                        _repeats(ctx, t, tok, prefixes, suffixes)
-                        or (
-                            passed.get("field", False)
-                            and b <= tok.start
-                            and not ctx.any_unit_at(t, tok)
-                            and places is not None
-                            and places(a, b)
+                    (
+                        f.unit is not None
+                        and holds_form(t.text, a, b, prefixes + suffixes)
+                        and (
+                            _repeats(ctx, t, tok, prefixes, suffixes)
+                            or (
+                                passed.get("field", False)
+                                and b <= tok.start
+                                and not ctx.any_unit_at(t, tok)
+                                and places is not None
+                                and places(a, b)
+                            )
                         )
                     )
-                ) or (
-                    f.unit is not None
-                    and passed.get("field", False)
-                    and b <= tok.start
-                    and not ctx.any_unit_at(t, tok)
-                    and _heading_unit(ctx, t, f.unit, tok, a, b)
+                    or (
+                        f.unit is not None
+                        and passed.get("field", False)
+                        and b <= tok.start
+                        and not ctx.any_unit_at(t, tok)
+                        and _heading_unit(ctx, t, f.unit, tok, a, b)
+                    )
+                    or (
+                        # a unit with no form is at every token: its name repeats it (#423)
+                        f.unit is not None
+                        and not prefixes
+                        and not suffixes
+                        and currency_name(t.text, a, b, f.unit)
+                    )
                 )
                 ok = ok and not conflict  # a heading conflict: the item fails (#365)
         passed[role] = ok or (role == "field" and passed.get("field", False))
