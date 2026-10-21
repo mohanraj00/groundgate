@@ -9,6 +9,7 @@
   groundgate verify   --store DIR PACKET
   groundgate report   RECEIPT DOC SCHEMA CANDIDATES [--pack-dir DIR] -o report.html
   groundgate report   --store DIR PACKET -o report.html
+  groundgate review   tasks --store DIR PACKET          > task keys
   groundgate schema   SCHEMA                            > extractor.schema.json
   groundgate schema check SCHEMA
   groundgate calibrate STEP ...                         (experimental; calibrate --help)
@@ -187,6 +188,23 @@ def _parser() -> argparse.ArgumentParser:
     r.add_argument("--layout", help="layout JSON from read, to show page numbers")
     r.add_argument("--title")
     r.add_argument("-o", "--output", help="write the HTML here instead of stdout")
+    rv = sub.add_parser("review", help="the review step (docs/design/review.md)")
+    steps = rv.add_subparsers(dest="step", required=True)
+    t = steps.add_parser(
+        "tasks",
+        help="write the review tasks of one packet to the store; print each task key",
+        description="Decide the packet again, then write a task@1 object for each slot that "
+        "docs/design/review.md section 5.2 selects. Print each task key, one on each line, in "
+        "slot order. Exit codes: 0 success, 1 the receipt does not match its inputs, 2 invalid "
+        "input, or an input that is not in the store.",
+    )
+    t.add_argument("packet", metavar="PACKET", help="the packet key from admit --store")
+    t.add_argument("--store", metavar="DIR", required=True, help="the store folder")
+    t.add_argument(
+        "--policy",
+        metavar="FILE",
+        help="a review-policy@1 JSON file; without it, no audit and no task for a rejected slot",
+    )
     # main() sends `calibrate` to groundgate.calibrate before this parser runs; the entry is here
     # so that --help names the command
     sub.add_parser(
@@ -242,6 +260,8 @@ def main(argv: list[str] | None = None) -> int:
             return _read(args)
         if args.command == "schema":
             return _schema(args)
+        if args.command == "review":
+            return _review_tasks(args)
         if args.command == "admit" and args.docs is not None:
             return _batch_admit(args)
         if args.command in ("verify", "report") and args.store is not None:
@@ -390,6 +410,23 @@ def _from_store(args: argparse.Namespace) -> int:
     layout = _json(args.layout) if args.layout else packet.layout
     extra["schema"] = packet.schema
     return _report(args, packet.receipt, packet.text, packet.candidates, extra, layout, None)
+
+
+def _review_tasks(args: argparse.Namespace) -> int:
+    from .review.tasks import write_tasks
+
+    policy = _json(args.policy) if args.policy else None
+    with _store(args.store, make=False) as store:
+        written = write_tasks(store, args.packet, policy)
+    for problem in written.problems:  # a problem can quote store data: escape each control
+        shown = "".join(c if c.isprintable() else f"\\u{ord(c):04x}" for c in problem)
+        print(f"mismatch: {shown}", file=sys.stderr)
+    if written.problems:
+        print("groundgate: no task for a receipt that does not match", file=sys.stderr)
+        return 1
+    for k, _ in written.tasks:
+        print(k)
+    return 0
 
 
 def _batch_admit(args: argparse.Namespace) -> int:

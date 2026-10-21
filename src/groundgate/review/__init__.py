@@ -1,8 +1,8 @@
 """The review step (docs/design/review.md): tasks, answers and a resolution, outside ``admit``.
 
-This package has only the four formats of §5 now. Each format is a store kind with a version,
-and each has a JSON Schema in this package. The core (``admit``, ``verify``) does not import
-this package.
+This package has the four formats of §5 and the tasks of §5.2 (``groundgate.review.tasks``).
+Each format is a store kind with a version, and each has a JSON Schema in this package. The core
+(``admit``, ``verify``) does not import this package.
 """
 
 from __future__ import annotations
