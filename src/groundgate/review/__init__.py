@@ -1,6 +1,7 @@
 """The review step (docs/design/review.md): tasks, answers and a resolution, outside ``admit``.
 
-This package has the four formats of §5 and the tasks of §5.2 (``groundgate.review.tasks``).
+This package has the four formats of §5, the tasks of §5.2 (``groundgate.review.tasks``) and
+the resolution of §6 (``groundgate.review.resolve``).
 Each format is a store kind with a version, and each has a JSON Schema in this package. The core
 (``admit``, ``verify``) does not import this package.
 """

@@ -1,9 +1,9 @@
 # Review: the step that collects a person's answers
 
-Status: approved on 2026-10-20, issue #287. The formats of section 5 (#408) and `review tasks`
-(#409) are built. It changes no decision. The review step keeps its data in the store of
-[store.md](store.md) (#288), so the two notes go together. The last section lists the code
-issues.
+Status: approved on 2026-10-20, issue #287. The formats of section 5 (#408), `review tasks`
+(#409) and `review resolve` (#410) are built. It changes no decision. The review step keeps its
+data in the store of [store.md](store.md) (#288), so the two notes go together. The last
+section lists the code issues.
 
 ## 1. The answers in short
 
@@ -48,11 +48,15 @@ The module is `groundgate.review`. It is outside `admit`, as `groundgate.extract
 ```bash
 groundgate review tasks    --store DIR PACKET            # write the tasks of one packet
 groundgate review serve    --store DIR --reviewer ana    # answer them in the browser
-groundgate review resolve  --store DIR PACKET            # write and print the resolution
+groundgate review resolve  --store DIR PACKET --reviewer ana --reviewer ben
+                                                         # write and print the resolution
 groundgate review measures --store DIR                   # the measures of section 10
 ```
 
-`PACKET` is the store key of one `admit` call (store.md §5). A user sees this:
+`PACKET` is the store key of one `admit` call (store.md §5). `review resolve` reads the answer
+log of each `--reviewer`. The store interface cannot list logs, and a log file has the digest of
+the name, not the name (store.md §6). The resolution names each log that it read. A user sees
+this:
 
 1. `review serve` prints `http://127.0.0.1:<port>/#<token>`. The user opens it.
 2. The page shows one item. The source page with the value in a box is on the left. The
@@ -237,6 +241,12 @@ each such answer, with:
   candidate;
 - the judgments of the packet, without the judgments of the removed candidates. A judgment for
   a candidate that is not in the packet makes the packet invalid (SPEC §2.6).
+
+The writer of the answer chooses the id of the person's candidate. It must differ from each
+candidate id of the packet: if not, a judgment can apply to the wrong candidate, and the
+decision of the person's candidate is not clear. A writer can take the first of `review-1`,
+`review-2` and so on that no candidate of the packet has. The resolution stops on an id of the
+packet, as section 6.3, point 5, says.
 
 The other candidates stay, so a relation (SPEC §3.4) checks the person's value against the
 other fields. The resolution takes from this correction receipt only the decision of the
