@@ -7,9 +7,9 @@ output for the document.
 
 ``read_split`` is the view of the log: the split of each document. If two records give one
 document two splits, the view fails, and each tool that reads it stops. ``write_split`` adds
-only the records that the log does not have, and it adds none if one of them gives a document
-another split. The log is untrusted input, so a message shows its values with no control
-character.
+only the records that the log does not have, and it adds none if the log already gives one of
+the documents another split. The log is untrusted input, so a message shows its values with
+no control character.
 """
 
 from __future__ import annotations
@@ -54,8 +54,9 @@ def write_split(store: Store, set_name: str, splits: Mapping[str, str]) -> int:
     """Add a record to the splits log of ``set_name`` for each document of ``splits`` (a
     document key to its split) that the log does not name, in key order. Return the number
     of records added. If the log already gives a document another split, raise
-    ``ValueError`` and add no record. If the log has a second split for a document after the
-    records are added, raise ``ValueError``."""
+    ``ValueError`` and add no record. The check comes before the lock of the log: if another
+    writer appends another split for a document at the same time, both records go in. Then
+    the view fails, and this call raises ``ValueError`` after its records are added."""
     if not isinstance(set_name, str) or not set_name.strip():
         raise ValueError("a set name must have a character that is not a space")
     for document, split in splits.items():

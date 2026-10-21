@@ -113,7 +113,7 @@ def test_calibrate_split_writes_the_splits_log(tmp_path: Path) -> None:
     assert set(parts.values()) == {"calibration", "test"}
     with FolderStore(store) as s:
         logged = read_split(s, "cal-a")
-    want = {key("text@1", text(n, False).encode("utf-8")): cli.part(name)
+    want = {key("text@1", text(n, False).encode("utf-8")): cli.LOG_SPLIT[cli.part(name)]
             for n, name in enumerate(names)}  # fmt: skip
     assert logged == want
     # the same documents in a new work folder: the log has them already, with the same parts
@@ -142,7 +142,7 @@ def test_calibrate_split_stops_on_another_split(tmp_path: Path) -> None:
     with FolderStore(store) as st:
         write_split(st, "cal-a", {document: "other"})
     run = ["split", "--work", str(work), "--store", str(store), "--set", "cal-a"]
-    with pytest.raises(SystemExit, match=f"split other, not {mine}"):
+    with pytest.raises(SystemExit, match=f"split other, not {cli.LOG_SPLIT[mine]}"):
         cli.main(run)
     assert not (work / "split.json").exists()
     cli.main([*run[:-1], "cal-b"])  # another set has its own log

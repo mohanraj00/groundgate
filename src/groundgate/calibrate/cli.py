@@ -135,10 +135,16 @@ def split(w: Work, store: Path | None = None, set_name: str | None = None) -> No
     print(f"wrote split.json: {n} calibration, {len(out) - n} test")
 
 
+# The split name in the splits log for each part (store.md §10): the calibration part chooses
+# the thresholds, as the development split of #383 does, and the test part only measures.
+LOG_SPLIT = {"calibration": "development", "test": "held-out"}
+
+
 def log_split(w: Work, items: list[dict[str, Any]], store: Path, set_name: str) -> None:
-    """Write the part of each document to the splits log of ``set_name`` in ``store``. The
-    document key is the text key, because calibrate has no source. The log comes before any
-    label, and a document that the log puts in another part stops the split."""
+    """Write the split of each document to the splits log of ``set_name`` in ``store``: the
+    calibration part is ``development`` and the test part is ``held-out``. The document key is
+    the text key, because calibrate has no source. The log comes before any label, and a
+    document that the log puts in another split stops the split."""
     from groundgate.store import FolderStore, StoreError, key
     from groundgate.store.splits import write_split
 
@@ -148,7 +154,7 @@ def log_split(w: Work, items: list[dict[str, Any]], store: Path, set_name: str) 
     names: dict[str, str] = {}
     for doc in sorted({it["doc"] for it in items}):
         k = key("text@1", w.text(doc).encode("utf-8"))
-        if parts.setdefault(k, part(doc)) != part(doc):
+        if parts.setdefault(k, LOG_SPLIT[part(doc)]) != LOG_SPLIT[part(doc)]:
             raise SystemExit(f"{names[k]} and {doc} have the same text but not the same part")
         names.setdefault(k, doc)
     try:
