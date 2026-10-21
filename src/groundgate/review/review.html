@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Review</title>
+<link rel="stylesheet" href="/review.css">
+</head>
+<body>
+<div class="wrap">
+  <main id="source"></main>
+  <aside>
+    <div class="progress" id="progress"></div>
+    <div class="doc" id="doc"></div>
+    <div class="q" id="question"></div>
+    <div class="parts" id="parts"></div>
+    <ol class="choices" id="choices"></ol>
+    <div class="answered" id="answered"></div>
+    <section id="correct" hidden>
+      <div class="help" id="correct-help"></div>
+      <label class="typed">Or type the value
+        <input id="typed" autocomplete="off" spellcheck="false">
+      </label>
+      <div class="selected" id="selected"></div>
+      <div class="outcome" id="outcome"></div>
+    </section>
+    <section class="reason" id="reason" hidden></section>
+    <div class="status" id="status" role="status"></div>
+    <div class="keys">
+      <div><kbd>y</kbd> yes, the value is right</div>
+      <div><kbd>1</kbd> to <kbd>9</kbd> choose this value</div>
+      <div><kbd>n</kbd> no: select the right value, then <kbd>Enter</kbd></div>
+      <div><kbd>s</kbd> the value is right, but select its span again</div>
+      <div><kbd>x</kbd> the document does not give it</div>
+      <div><kbd>u</kbd> not sure</div>
+      <div><kbd>r</kbd> show the reason</div>
+      <div><kbd>k</kbd> keep the codes of a correction and save it</div>
+      <div><kbd>Esc</kbd> stop the selection</div>
+      <div><kbd>&larr;</kbd> <kbd>&rarr;</kbd> back and forward</div>
+    </div>
+  </aside>
+</div>
+<script src="/review.js"></script>
+</body>
+</html>

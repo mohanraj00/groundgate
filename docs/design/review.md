@@ -1,7 +1,7 @@
 # Review: the step that collects a person's answers
 
 Status: approved on 2026-10-20, issue #287. The formats of section 5 (#408), `review tasks`
-(#409) and `review resolve` (#410) are built. It changes no decision. The review step keeps its
+(#409), `review resolve` (#410) and `review serve` (#411) are built. It changes no decision. The review step keeps its
 data in the store of [store.md](store.md) (#288), so the two notes go together. The last
 section lists the code issues.
 
@@ -375,19 +375,29 @@ The review page needs a script, so it is a separate local server. Its rules:
    This stops DNS rebinding.
 2. Make a random token at start with `secrets`. Put it in the start URL after `#`, so that it
    does not go into a server log. Each API request sends it in a header. Refuse a request
-   without it, so that another site cannot write an answer.
+   without it, so that another site cannot write an answer. A frame cannot send a header, so
+   the frame URL of rule 6 holds a random ticket instead. A ticket works one time and gives
+   only the source of its task.
 3. Accept a POST only with `Content-Type: application/json` and a body of at most 64 KiB.
 4. Send a CSP header with each response: `default-src 'none'; script-src 'self'; style-src
    'self'; connect-src 'self'; frame-src 'self'; img-src 'self'; form-action 'none'; base-uri
-   'none'; frame-ancestors 'none'`. The script and the style are files in the package.
+   'none'; frame-ancestors 'none'`. The script and the style are files in the package. The
+   frame response of rule 6 gets the CSP of rule 6 in place of this CSP.
 5. Put document text into the page only with `textContent`, never with `innerHTML`.
 6. Serve an HTML source in a frame with `sandbox=""` and its own CSP, `default-src 'none';
-   style-src 'unsafe-inline'`. It runs no script and loads no image, so it cannot call an
-   outside host.
+   style-src 'unsafe-inline'; form-action 'none'; base-uri 'none'; frame-ancestors
+   http://127.0.0.1:<port>; sandbox`. It runs no script and loads no image. The CSP does not
+   stop a meta refresh or a link that the person clicks, so the server changes each
+   `http-equiv` and `href` attribute name to `data-equiv` and `data-href`. Thus the frame
+   cannot go to another host. Only the review page can hold the frame.
 7. Read objects only by a store key that matches `sha256:[0-9a-f]{64}`. Take no path or URL from
    a document, a reply, a task or a request.
 8. Check each answer against its task before the write: a verdict that the kind permits, a
    decision in the choices, and a span inside the text.
+
+The server is for one local user. `--reviewer` is a name that the user gives, and the server
+does not authenticate it. Any holder of the token can answer as that name, also when the review
+policy names it as a lead. Thus a lead answer is not an authenticated act.
 
 A PR for the server needs a security review. The calibrate label page follows the same rules
 when it moves into this server (issue 6).
