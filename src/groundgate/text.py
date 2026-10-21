@@ -1083,6 +1083,7 @@ def _named(unit: str | None) -> str | None:
 
 
 _FormPatterns = tuple[re.Pattern[str], re.Pattern[str] | None, re.Pattern[str] | None]
+_FORM_CACHE = 256  # the most units whose patterns a vocabulary keeps
 
 
 def _scale_form_patterns(unit: str | None, forms: tuple[str, ...]) -> _FormPatterns:
@@ -1103,6 +1104,8 @@ def _scale_form_patterns(unit: str | None, forms: tuple[str, ...]) -> _FormPatte
     second = None if named is None else re.compile(rf"{word}\s+{folded_word('of')}\s+{named}")
     # a lookahead finds every start, also where two forms overlap, as "$" in "US$"
     third = re.compile(rf"(?=((?:{form})\s*{word}))") if form else None
+    if len(voc._scale_forms) >= _FORM_CACHE:
+        voc._scale_forms.clear()  # a schema can name any unit: the cache does not grow past this
     got = voc._scale_forms[(unit, forms)] = (first, second, third)
     return got
 
@@ -1130,6 +1133,8 @@ def currency_name(text: str, start: int, end: int, unit: str) -> bool:
     §4.6, spec 0.11, #423)."""
     voc = _VOCAB.get()
     if unit not in voc._names:
+        if len(voc._names) >= _FORM_CACHE:
+            voc._names.clear()
         named = _named(unit)
         voc._names[unit] = None if named is None else re.compile(named)
     pat = voc._names[unit]
