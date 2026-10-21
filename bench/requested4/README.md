@@ -117,6 +117,29 @@ The annual miss rate is 91.11% for the baseline and 93.33% for the runner. The r
 change: #423. The scale check fails on a header such as "(in € million)", and the unit check fails
 on items such as "Canadian dollars". This is a decision change, so it needs a new spec version.
 
+Loop 02 ran the three arms on the same 32 documents on origin/main 671c0fb (`loop/02.json`,
+`loop/02/results.json`, `loop/02/RESULTS.md`, `loop/02/COMPARE.md`). This code has spec 0.11 with
+#423 (74c1a1e) and the runner prompt change #428 (32f2b0e). The configuration is the same as in
+loop 01 except the code. The baseline made 149 calls and the runner made 249. No document was
+incomplete, had a transport error or stopped at `search_limit`.
+
+| Arm | Kind | Miss rate, loop 01 | Miss rate, loop 02 | Escapes, loop 01 | Escapes, loop 02 |
+|---|---|---:|---:|---:|---:|
+| baseline | total | 72.95% (89 of 122) | 62.30% (76 of 122) | 1 | 1 |
+| baseline | annual | 91.11% (41 of 45) | 66.67% (30 of 45) | 0 | 0 |
+| baseline | component | 61.54% (16 of 26) | 61.54% (16 of 26) | 1 | 1 |
+| baseline | sbc | 60.00% (21 of 35) | 54.29% (19 of 35) | 0 | 0 |
+| baseline | sds | 68.75% (11 of 16) | 68.75% (11 of 16) | 0 | 0 |
+| runner | total | 72.95% (89 of 122) | 58.20% (71 of 122) | 2 | 2 |
+| runner | annual | 93.33% (42 of 45) | 60.00% (27 of 45) | 0 | 0 |
+| runner | component | 61.54% (16 of 26) | 57.69% (15 of 26) | 2 | 2 |
+| runner | sbc | 57.14% (20 of 35) | 51.43% (18 of 35) | 0 | 0 |
+| runner | sds | 68.75% (11 of 16) | 68.75% (11 of 16) | 0 | 0 |
+| runner_drop_rounded | total | 72.95% (89 of 122) | 57.38% (70 of 122) | 2 | 2 |
+
+The changes lower the miss rate in each arm and add no escape, so loop 02 keeps them. The
+largest review code on right runner values is now `FIELD_CITATION_INVALID` (68 decisions).
+
 ## What comes next
 
 The learning loop runs on the development split only (`bench/requested/loop.py`). It writes one
