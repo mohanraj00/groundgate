@@ -591,7 +591,9 @@ def forget_packet(
     resolutions are not in the store yet, so ``everything`` does not look for them (#432). A
     packet that cannot be read counts as a packet that names nothing, so run ``check`` first. If
     an answer log is locked, ``everything`` stops before it removes the packet, so a second
-    call can finish the work.
+    call can finish the work. This is also the result when another ``forget`` of the same
+    packet holds the lock of the log. A log or packet that another ``forget`` removed first
+    is ``absent``.
 
     An object of the packet that ``forget`` cannot read is ``unchecked``, and the rest is still
     removed. If the run record names an object that is not found, each object of the store
