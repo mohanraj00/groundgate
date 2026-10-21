@@ -498,7 +498,7 @@ def test_forget_removes_a_run_record_with_a_bad_line(tmp_path: Path) -> None:
     assert not path.exists()
 
 
-def test_forget_skips_an_object_that_get_refuses(
+def test_forget_ignores_a_symlink_that_is_not_an_object(
     tmp_path: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:
     root = tmp_path / "s"
@@ -514,8 +514,10 @@ def test_forget_skips_an_object_that_get_refuses(
     assert link.is_symlink() and target.read_bytes() == b"x"
 
 
-@pytest.mark.parametrize("depth", [100, 900, 990, 5000])
-def test_forget_and_check_go_on_past_a_deep_run_line(tmp_path: Path, depth: int) -> None:
+@pytest.mark.parametrize(("depth", "removed"), [(100, False), (5000, True)])
+def test_forget_and_check_go_on_past_a_deep_run_line(
+    tmp_path: Path, depth: int, removed: bool
+) -> None:
     root = tmp_path / "s"
     with FolderStore(root) as store:
         packet = save_run(store)
@@ -532,5 +534,57 @@ def test_forget_and_check_go_on_past_a_deep_run_line(tmp_path: Path, depth: int)
     assert ("text@1", obj["document"]["text"], "deleted", 1) in done
     # A line that parses and holds no text keeps the record. A line that cannot be read
     # removes it.
-    unread = ("run@3", obj["run"], "unchecked", 0) in done
-    assert path_of(root, obj["run"]).exists() is not unread
+    assert (("run@3", obj["run"], "unchecked", 0) in done) is removed
+    assert path_of(root, obj["run"]).exists() is not removed
+
+
+def test_forget_reports_a_run_object_that_it_cannot_find(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    root = tmp_path / "s"
+    with FolderStore(root) as store:
+        packet = save_run(store)
+    replies = [k for k, kind in all_keys(root).items() if kind == "reply@1"]
+    assert len(replies) == 1
+    path_of(root, replies[0]).write_bytes(b"other bytes")  # the walk cannot match it
+    cmd = ["store", "forget", "--store", str(root), packet, "--reason", "asked"]
+    assert main(cmd) == 1
+    out = capsys.readouterr().out
+    assert f"unchecked object {replies[0]}" in out and "deleted text@1" in out
+    path_of(root, replies[0]).unlink()  # the user removes it by key
+    assert main(cmd) == 0  # a second forget finds nothing that it cannot read
+    assert "unchecked" not in capsys.readouterr().out
+
+
+def test_forget_reports_a_run_object_that_get_refuses_after_the_walk(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    root = tmp_path / "s"
+    with FolderStore(root) as store:
+        packet = save_run(store)
+    reply = next(k for k, kind in all_keys(root).items() if kind == "reply@1")
+    get = FolderStore.get
+
+    def refuse(self: FolderStore, kind: str, k: str) -> bytes:
+        if k == reply:
+            raise StoreError("refused")
+        return get(self, kind, k)
+
+    monkeypatch.setattr(FolderStore, "get", refuse)
+    with FolderStore(root) as store:
+        done = forget_packet(store, packet, "asked")
+    assert ("object", reply, "unchecked", 0) in done
+    assert path_of(root, reply).exists()
+    assert {kind for kind, _, state, _ in done if state == "deleted"} >= {"prompt@1", "text@1"}
+
+
+def test_forget_counts_a_run_object_that_another_run_names(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    root = tmp_path / "s"
+    with FolderStore(root) as store:
+        one = save_run(store)
+        save_run(store, "Other text. The amount is 5 dollars.", document_id="inv-2")
+    assert main(["store", "forget", "--store", str(root), one, "--reason", "asked"]) == 0
+    out = capsys.readouterr().out
+    assert re.search(r"deleted reply@1 sha256:[0-9a-f]{64} \(1 other packet names it\)", out)

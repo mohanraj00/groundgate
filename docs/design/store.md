@@ -221,6 +221,8 @@ comes with its issue (#432).
    proof. If the text is already gone, `check` cannot check the lines and prints "not
    checked", and `forget` removes the record. If `forget` cannot read an object, it prints
    "unchecked", removes the rest and exits 1. A run record whose lines cannot be read goes.
+   If a run record names an object that `forget` cannot find, each object of the store that it
+   cannot read is "unchecked".
    A value is still document data. If an app must also remove the values,
    `groundgate store forget --all PACKET` removes each object and log of the packet. An object
    of the "Kept" column that another packet names stays.

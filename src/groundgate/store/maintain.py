@@ -208,6 +208,11 @@ class _Objects:
             self._by_run[runner] = index
         return self._by_run[runner]
 
+    def unread(self) -> list[tuple[str, str | None]]:
+        """The key of each object that the walk could not read or match to a kind, with
+        ``None`` as its kind."""
+        return [(k, None) for k, v in sorted(self.kinds.items()) if v is None]
+
     def json(self, kind: str, k: str) -> Any:
         data = self.store.get(kind, k)
         try:
@@ -352,18 +357,24 @@ def _holds_text(objects: _Objects, packet: Mapping[str, Any], run: _Run) -> list
     return text_lines(run, text, kept)
 
 
-def _run_objects(objects: _Objects, run: _Run) -> list[tuple[str, str]]:
-    """The store kind and key of each prompt, reply and admission that the run record names.
-    The record names them by run keys: ``_Objects.by_run_key`` hashes each object of these
-    kinds one time for each runner version."""
+def _run_objects(objects: _Objects, run: _Run) -> tuple[list[tuple[str, str]], int]:
+    """The store kind and key of each prompt, reply and admission that the run record names,
+    and the number of run keys that match no object. The record names them by run keys:
+    ``_Objects.by_run_key`` hashes each object of these kinds one time for each runner
+    version."""
     index = objects.by_run_key(run.runner)
     found = []
+    missing = 0
     for line in run.lines:
         for member, (_, kind) in _RUN_OBJECTS.items():
             value = line.get(member)
-            if isinstance(value, str) and value in index and index[value][0] == kind:
+            if not isinstance(value, str):
+                continue
+            if value in index and index[value][0] == kind:
                 found.append(index[value])
-    return found
+            else:
+                missing += 1
+    return found, missing
 
 
 def _compare_inputs(objects: _Objects, packet: Mapping[str, Any], run: _Run) -> list[str]:
@@ -532,8 +543,9 @@ def rebuild(store: FolderStore) -> list[str]:
 
 
 def _others(objects: _Objects, packet: str) -> dict[str, int]:
-    """For each key, how many other packets name it, with their readings and run records. A
-    packet that cannot be read names nothing: ``check`` reports it."""
+    """For each key, how many other packets name it, with their readings, their run records
+    and the objects of the run records. A packet that cannot be read names nothing: ``check``
+    reports it."""
     counts: dict[str, int] = {}
     for k in objects.of("packet@1"):
         if k == packet:
@@ -545,8 +557,11 @@ def _others(objects: _Objects, packet: str) -> dict[str, int]:
                 named.add(n)
                 if objects.kinds.get(n) == "reading@1":
                     named.update(m for _, m in _reading_named(objects, n))
-            named.update(_keys(obj["run"]))
-        except StoreError:
+            for n in _keys(obj["run"]):
+                named.add(n)
+                if (objects.kinds.get(n) or "").startswith("run@"):
+                    named.update(m for _, m in _run_objects(objects, _run(objects, n))[0])
+        except (StoreError, ValueError, RecursionError):
             continue
         for n in named:
             counts[n] = counts.get(n, 0) + 1
@@ -573,9 +588,11 @@ def forget_packet(
     call can finish the work.
 
     An object of the packet that ``forget`` cannot read is ``unchecked``, and the rest is still
-    removed. ``unchecked`` means "could not check", so the same key can also be ``deleted``:
-    a run record whose lines cannot be read is removed, but the prompts, replies and
-    admissions that it names cannot be found.
+    removed. If the run record names an object that is not found, each object of the store
+    that cannot be read is ``unchecked``, because it can be that object. ``unchecked`` means
+    "could not check", so the same key can also be ``deleted``: a run record whose lines
+    cannot be read is removed, but the prompts, replies and admissions that it names cannot
+    be found.
 
     Return the kind, the key, the state (``deleted``, ``absent``, ``kept`` or ``unchecked``)
     and the number of other packets that name the key, for each object. A log has the kind
@@ -608,8 +625,13 @@ def forget_packet(
             lines = None
         # The record goes after the objects that it names: a forget that stops can find them
         # again from the record.
-        plan += [(kind, n, False) for kind, n in _run_objects(objects, run)]
+        found, missing = _run_objects(objects, run)
+        plan += [(kind, n, False) for kind, n in found]
         plan.append((run.kind, k, lines is None or bool(lines)))
+        if missing:
+            # A run key that matches no object: forgotten before, or an object that cannot be
+            # read. The objects that cannot be read are "unchecked", so the user can see them.
+            unchecked += [(kind or "object", n) for n, kind in objects.unread()]
     plan += [(kind, k, False) for kind, k in named]
     for k in _keys(obj["reading"]):
         plan.append(("reading@1", k, False))
@@ -622,7 +644,7 @@ def forget_packet(
         plan = [(kind, k, always) for kind, k, always in plan if kind in REMOVED or always]
     others = _others(objects, packet)
     done: list[tuple[str, str, str, int]] = [
-        (kind, k, "unchecked", others.get(k, 0)) for kind, k in unchecked
+        (kind, k, "unchecked", others.get(k, 0)) for kind, k in dict.fromkeys(unchecked)
     ]
     seen: set[str] = set()
     for kind, k, always in plan:
@@ -635,7 +657,11 @@ def forget_packet(
         elif everything and shared and kind not in REMOVED and not always:
             done.append((kind, k, "kept", shared))
         else:
-            store.forget(k, reason)
+            try:
+                store.forget(k, reason)
+            except NotFound:  # another forget removed it after the walk
+                done.append((kind, k, "absent", shared))
+                continue
             done.append((kind, k, "deleted", shared))
     if everything:
         logs, _ = store.log_names()
