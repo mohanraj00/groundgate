@@ -1,0 +1,146 @@
+{
+ "name": "122-scale-form-in-currency",
+ "description": "Scale form 1: 'in', a currency form of the field's unit and a scale word, as in '(in € million)'. A $ is no currency form of EUR, so '(in $ million)' fails for a value in EUR. A scale word between the item and the value still stops the item (spec 0.11, #423).",
+ "document": "Group balance sheet (in € million, unless otherwise stated)\n\nTotal assets\t13,011\t12,758\nEmployees (in thousands)\t4.2\t4.0\nTotal equity\t5,100\t4,900\n\nParent balance sheet (in $ million)\n\nTotal assets\t13,011\t12,758\n",
+ "schema": {
+  "fields": {
+   "eur": {
+    "type": "number",
+    "unit": "EUR",
+    "multiple": true,
+    "aliases": [
+     "Total assets",
+     "Total equity"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "sf1",
+   "field": "eur",
+   "value": "13011000000",
+   "unit": "EUR",
+   "evidence": [
+    {
+     "start": 76,
+     "end": 82,
+     "text": "13,011"
+    },
+    {
+     "role": "field",
+     "text": "Total assets"
+    },
+    {
+     "role": "scale",
+     "text": "(in € million, unless otherwise stated)"
+    }
+   ]
+  },
+  {
+   "id": "sf2",
+   "field": "eur",
+   "value": "12758000000",
+   "unit": "EUR",
+   "evidence": [
+    {
+     "start": 83,
+     "end": 89,
+     "text": "12,758"
+    },
+    {
+     "role": "field",
+     "text": "Total assets"
+    },
+    {
+     "role": "scale",
+     "text": "in € million"
+    },
+    {
+     "role": "unit",
+     "text": "€"
+    }
+   ]
+  },
+  {
+   "id": "sf3",
+   "field": "eur",
+   "value": "5100000000",
+   "unit": "EUR",
+   "evidence": [
+    {
+     "start": 136,
+     "end": 141,
+     "text": "5,100"
+    },
+    {
+     "role": "field",
+     "text": "Total equity"
+    },
+    {
+     "role": "scale",
+     "text": "(in € million"
+    }
+   ]
+  },
+  {
+   "id": "sf4",
+   "field": "eur",
+   "value": "12758000000",
+   "unit": "EUR",
+   "evidence": [
+    {
+     "start": 206,
+     "end": 212,
+     "text": "12,758"
+    },
+    {
+     "role": "field",
+     "start": 186,
+     "end": 198,
+     "text": "Total assets"
+    },
+    {
+     "role": "scale",
+     "text": "(in $ million)"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SCALE_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING",
+     "SCALE_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ],
+    "missing": [
+     "unit"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

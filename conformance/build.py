@@ -5545,6 +5545,117 @@ bad_kind("pack-l9-template-name-slash", "L9: a template name with a '/' (spec 0.
 # fmt: on
 
 
+# ---------------------------------------------------------------- scale forms (spec 0.11, #423)
+SCALE_FAILS = (REVIEW, ["SCALE_CITATION_INVALID", "VALUE_DERIVED"])
+
+vector(
+    "122-scale-form-in-currency",
+    "Scale form 1: 'in', a currency form of the field's unit and a scale word, as in "
+    "'(in € million)'. A $ is no currency form of EUR, so '(in $ million)' fails for a value in "
+    "EUR. A scale word between the item and the value still stops the item (spec 0.11, #423).",
+    "Group balance sheet (in € million, unless otherwise stated)\n\n"
+    "Total assets\t13,011\t12,758\nEmployees (in thousands)\t4.2\t4.0\n"
+    "Total equity\t5,100\t4,900\n\n"
+    "Parent balance sheet (in $ million)\n\nTotal assets\t13,011\t12,758\n",
+    {"fields": {"eur": money("EUR", "Total assets", "Total equity", multiple=True)}},
+    [
+        # needs_verification with SCALE_CITATION_INVALID in spec 0.10
+        c("sf1", "eur", "13011000000", "EUR",
+          [q("13,011"), row("Total assets"),
+           scale_item("(in € million, unless otherwise stated)")],
+          DERIVED),
+        c("sf2", "eur", "12758000000", "EUR",
+          [q("12,758"), row("Total assets"), scale_item("in € million"), unit_item("€")],
+          DERIVED),
+        # must not change: "thousands" lies between the item and the value
+        c("sf3", "eur", "5100000000", "EUR",
+          [q("5,100"), row("Total equity"), scale_item("(in € million")], SCALE_FAILS),
+        # must not change: $ is no currency form of EUR
+        c("sf4", "eur", "12758000000", "EUR",
+          [q("12,758", 2), q("Total assets", 2, role="field"), scale_item("(in $ million)")],
+          (REVIEW, ["PART_MISSING", "SCALE_CITATION_INVALID", "VALUE_DERIVED"], ["unit"])),
+    ],
+)  # fmt: skip
+
+vector(
+    "123-scale-form-of-currency",
+    "Scale form 2: a scale word, 'of' and a currency name or the code of the field's unit, as in "
+    "'(millions of Canadian dollars'. CAD has no form in the unit table, so a unit item that "
+    "holds its name repeats the unit. 'US dollars' is no name of CAD, '(thousands of customers' "
+    "names no currency, and a statement of USD that reaches the value gives CAD a heading "
+    "conflict (spec 0.11, #423).",
+    "Consolidated statement of income (millions of Canadian dollars)\n\n"
+    "Revenue\t7,400\t6,900\n\n"
+    "(in thousands of US dollars)\n\nRevenue\t5,300\n\n"
+    "(millions of US dollars)\n\nRevenue\t8,100\n\n"
+    "(thousands of customers)\n\nRevenue\t$1,450\n",
+    {"fields": {"cad": money("CAD", "Revenue", multiple=True),
+                "usd": money("USD", "Revenue", multiple=True)}},
+    [
+        # needs_verification with SCALE_CITATION_INVALID in spec 0.10
+        c("sf5", "cad", "7400000000", "CAD",
+          [q("7,400"), REV, scale_item("(millions of Canadian dollars")], DERIVED),
+        c("sf6", "usd", "8100000000", "USD",
+          [q("8,100"), REV, scale_item("millions of US dollars")], DERIVED),
+        # needs_verification with SCALE_CITATION_INVALID and UNIT_CITATION_INVALID in spec 0.10
+        c("sf7", "cad", "6900000000", "CAD",
+          [q("6,900"), REV, scale_item("(millions of Canadian dollars"),
+           unit_item("Canadian dollars")],
+          DERIVED),
+        # the scale item now passes; the unit item still fails: "US dollars" is no name of CAD
+        c("sf8", "cad", "7400000000", "CAD",
+          [q("7,400"), REV, scale_item("(millions of Canadian dollars"), unit_item("US dollars")],
+          UNIT_REVIEW),
+        # must not change: the statement of USD gives CAD a heading conflict
+        c("sf9", "cad", "5300000", "CAD",
+          [q("5,300"), REV, scale_item("(in thousands"), unit_item("Canadian dollars")],
+          UNIT_REVIEW),
+        # must not change: "US dollars" is no name of CAD
+        c("sf10", "cad", "8100000000", "CAD",
+          [q("8,100"), REV, scale_item("(millions of US dollars")], SCALE_FAILS),
+        # must not change: "customers" is no currency name
+        c("sf11", "usd", "1450000", "USD",
+          [q("$1,450"), REV, scale_item("(thousands of customers")], SCALE_FAILS),
+        # must not change: "millions" alone is no scale form
+        c("sf12", "cad", "6900000000", "CAD", [q("6,900"), REV, scale_item("millions")],
+          SCALE_FAILS),
+    ],
+)  # fmt: skip
+
+vector(
+    "124-scale-form-currency-scale-word",
+    "Scale form 3: a currency form of the field's unit and a scale word, as in 'DKK million' or "
+    "'EUR million'. The form does not count after 'per' or '/', as in a carbon intensity per "
+    "EUR million of sales. 'EUR million' is no scale form for a value in DKK. DKK has no form "
+    "in the unit table, so a unit item that holds its code repeats the unit (spec 0.11, #423).",
+    "DKK million\t2025\t2024\nRevenue\t3,960\t3,500\n\n"
+    "EUR million\tNote\t2025\t2024\nRevenue\t3\t2,870\t2,640\n\n"
+    "EUR million\n\nRevenue\t1,150\n\n"
+    "Carbon intensity (tCO2e per EUR million of net sales)\n\nScope 1\t12.4\n\n"
+    "Carbon intensity (tCO2e/EUR million of net sales)\n\nScope 2\t8.6\n",
+    {"fields": {"dkk": money("DKK", "Revenue", multiple=True),
+                "eur": money("EUR", "Revenue", "Scope 1", "Scope 2", multiple=True)}},
+    [
+        # needs_verification with SCALE_CITATION_INVALID in spec 0.10
+        c("sf13", "dkk", "3960000000", "DKK", [q("3,960"), REV, scale_item("DKK million")],
+          DERIVED),
+        c("sf14", "eur", "1150000000", "EUR", [q("1,150"), REV, scale_item("EUR million")],
+          DERIVED),
+        # needs_verification with SCALE_CITATION_INVALID and UNIT_CITATION_INVALID in spec 0.10
+        c("sf15", "dkk", "3500000000", "DKK",
+          [q("3,500"), REV, scale_item("DKK million"), unit_item("DKK")], DERIVED),
+        # must not change: EUR is no currency form of DKK
+        c("sf16", "dkk", "2870000000", "DKK",
+          [q("2,870"), q("Revenue", 2, role="field"), scale_item("EUR million")], SCALE_FAILS),
+        # must not change: "per" or "/" stands before the form
+        c("sf17", "eur", "12400000", "EUR", [q("12.4"), row("Scope 1"), scale_item("EUR million")],
+          SCALE_FAILS),
+        c("sf18", "eur", "8600000", "EUR", [q("8.6"), row("Scope 2"), scale_item("EUR million")],
+          SCALE_FAILS),
+    ],
+)  # fmt: skip
+
+
 def main() -> None:
     out_dir = HERE / "vectors"
     out_dir.mkdir(exist_ok=True)

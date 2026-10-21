@@ -1,0 +1,206 @@
+{
+ "name": "124-scale-form-currency-scale-word",
+ "description": "Scale form 3: a currency form of the field's unit and a scale word, as in 'DKK million' or 'EUR million'. The form does not count after 'per' or '/', as in a carbon intensity per EUR million of sales. 'EUR million' is no scale form for a value in DKK. DKK has no form in the unit table, so a unit item that holds its code repeats the unit (spec 0.11, #423).",
+ "document": "DKK million\t2025\t2024\nRevenue\t3,960\t3,500\n\nEUR million\tNote\t2025\t2024\nRevenue\t3\t2,870\t2,640\n\nEUR million\n\nRevenue\t1,150\n\nCarbon intensity (tCO2e per EUR million of net sales)\n\nScope 1\t12.4\n\nCarbon intensity (tCO2e/EUR million of net sales)\n\nScope 2\t8.6\n",
+ "schema": {
+  "fields": {
+   "dkk": {
+    "type": "number",
+    "unit": "DKK",
+    "multiple": true,
+    "aliases": [
+     "Revenue"
+    ]
+   },
+   "eur": {
+    "type": "number",
+    "unit": "EUR",
+    "multiple": true,
+    "aliases": [
+     "Revenue",
+     "Scope 1",
+     "Scope 2"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "sf13",
+   "field": "dkk",
+   "value": "3960000000",
+   "unit": "DKK",
+   "evidence": [
+    {
+     "start": 30,
+     "end": 35,
+     "text": "3,960"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "DKK million"
+    }
+   ]
+  },
+  {
+   "id": "sf14",
+   "field": "eur",
+   "value": "1150000000",
+   "unit": "EUR",
+   "evidence": [
+    {
+     "start": 114,
+     "end": 119,
+     "text": "1,150"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "EUR million"
+    }
+   ]
+  },
+  {
+   "id": "sf15",
+   "field": "dkk",
+   "value": "3500000000",
+   "unit": "DKK",
+   "evidence": [
+    {
+     "start": 36,
+     "end": 41,
+     "text": "3,500"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "DKK million"
+    },
+    {
+     "role": "unit",
+     "text": "DKK"
+    }
+   ]
+  },
+  {
+   "id": "sf16",
+   "field": "dkk",
+   "value": "2870000000",
+   "unit": "DKK",
+   "evidence": [
+    {
+     "start": 80,
+     "end": 85,
+     "text": "2,870"
+    },
+    {
+     "role": "field",
+     "start": 70,
+     "end": 77,
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "EUR million"
+    }
+   ]
+  },
+  {
+   "id": "sf17",
+   "field": "eur",
+   "value": "12400000",
+   "unit": "EUR",
+   "evidence": [
+    {
+     "start": 184,
+     "end": 188,
+     "text": "12.4"
+    },
+    {
+     "role": "field",
+     "text": "Scope 1"
+    },
+    {
+     "role": "scale",
+     "text": "EUR million"
+    }
+   ]
+  },
+  {
+   "id": "sf18",
+   "field": "eur",
+   "value": "8600000",
+   "unit": "EUR",
+   "evidence": [
+    {
+     "start": 249,
+     "end": 252,
+     "text": "8.6"
+    },
+    {
+     "role": "field",
+     "text": "Scope 2"
+    },
+    {
+     "role": "scale",
+     "text": "EUR million"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SCALE_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SCALE_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SCALE_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}
