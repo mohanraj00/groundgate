@@ -252,6 +252,14 @@ medium: `gpt-6.1-sol`, the runner's model, and `gpt-6-luna`. The answers are in
 `bench/judges/codex/score.py`. No held-out item, label or output was read. The held-out judge
 run needs the maintainer's approval.
 
+The maintainer approved the held-out judge run on 2026-10-21. `judge/freeze.json` freezes
+`gpt-6.1-sol` at effort medium, ceiling 0.1 and threshold 0.9 for all kinds, with the digest of
+the judge code. I committed it before the first held-out judge call. Then the frozen judge
+answered each held-out item two times (`judge/heldout/answers/`). `judge/heldout/results.json`
+and `judge/heldout/RESULTS.md` score them at the frozen threshold only, through
+`bench/judges/codex/score.py --freeze`. No threshold, prompt or code changed after a held-out
+answer.
+
 ## Review answers (#234)
 
 #234 asks if a person who sees an item for the first time, with groundgate's reading, gives

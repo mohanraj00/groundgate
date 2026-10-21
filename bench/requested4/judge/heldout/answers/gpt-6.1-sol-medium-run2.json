@@ -1,0 +1,1243 @@
+{
+ "answers": {
+  "annual-c01/cost_of_sales": {
+   "call": "0a9da78ddc77970ada630fbfbc58eac99efe523e2346dbd5b0058febd3f57aa1",
+   "choice": {
+    "scale": null,
+    "unit": "EUR",
+    "value": "9776000000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:ae6b88e23d6ddefd49b5bcfbf471263224e2bdaaaade5b1261efe35ed711e85a"
+  },
+  "annual-c01/gross_profit": {
+   "call": "a3cadf2bee1738ddf02109d14350ec4d9b8fbeba28a17f14840b34d45e633989",
+   "choice": {
+    "scale": null,
+    "unit": "EUR",
+    "value": "8058000000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:460021e8c2dad01c925ef52220a08731624490c152315c21de5f656b68ffe16f"
+  },
+  "annual-c01/revenue": {
+   "call": "3aeafc6fba6d7085db8455b202f9793c19c17c16891e11fcf2c8fba2bd6239e9",
+   "choice": {
+    "scale": null,
+    "unit": "EUR",
+    "value": "17834000000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:37d941bbc0fb081d74f2f98db28a1eba6d9e914010927e2ffac5baa1838ad6e6"
+  },
+  "annual-c01/total_assets": {
+   "call": "dd10df9e6df665ae8725eba4a65b2ae28a1aab8d425ea3e427935fcc7a52a8c1",
+   "choice": {
+    "scale": null,
+    "unit": "EUR",
+    "value": "26944000000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c2",
+   "prompt_sha256": "sha256:c54eb236d9a88b39a6217893fc47a01d3f1efea5c21f00acaeb3fa2418eda50d"
+  },
+  "annual-c01/total_equity": {
+   "call": "bd381acfd389545425471cee5ca6afb8ccbf776a72af056d86da3f223f32ab7f",
+   "choice": {
+    "scale": null,
+    "unit": "EUR",
+    "value": "10990000000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:e96f29dc7bb999e95a7e8202ecb4b4cbeb8514909f9bfe092f5e949ba4786b6d"
+  },
+  "annual-c01/total_liabilities": {
+   "call": "0db4ca7366f1a851b64de34b7b3eb0227d823974be3e7b8b51ec5877a3dda75d",
+   "choice": {
+    "scale": null,
+    "unit": "EUR",
+    "value": "15954000000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:6d43fa33c1420046ccc5b844f9a982cad8774eb365e2f5e45ab3ac9e4f7a52fd"
+  },
+  "annual-c03/cost_of_sales": {
+   "call": "3c3f68987e04d3b0c7f53437da2eec8aff1149f8dc0ec189447a171ab4748d1b",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "2885000000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:9b203d0b1fb01afc5d042609fb1b86dcbc5b6ded9e41d7e362d850ed03589b96"
+  },
+  "annual-c03/gross_profit": {
+   "call": "8470698d4b5c87295a2f1a38d9ba7286a6db495e108b1566ca0e90a8870bc134",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "1061400000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:a493c66df8921db470524e4be0360ca5ef3fb6ffdfd9d336dac8d8a5e2daabb2"
+  },
+  "annual-c03/revenue": {
+   "call": "c654e6f1b4d52232393a851a3e132a5b8ca313a3eb2e9b2fe15f30eaeeb70179",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "3946400000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c2",
+   "prompt_sha256": "sha256:0e9c7bf8f16113d537797fdbb0e83d32719d8ab558e7bd08f1efbff2c22b5cb8"
+  },
+  "annual-c03/total_assets": {
+   "call": "1fe9044f820502eaa25ebd0cf8b7d3cce0c8b00db7384578a72daa40e5c4bd4d",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "3974000000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:00cfa4f7fbf62ebacc1903c83424f11e4d92e01ff09dfda6b0497333a7d305cd"
+  },
+  "annual-c03/total_equity": {
+   "call": "0e447f7cf360c01fb0e2a613e53f8d48f87fd3bb3d9eba0a4be8799ef0b3182d",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "1927200000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:5ca00100b3998ec8e6d9eb7c270a0c283224e8c6694686d0eee34bcecc58c88c"
+  },
+  "annual-c03/total_liabilities": {
+   "call": "4254237a7832287f323e98710d8dc5eb956a217f1e3d7b7f8f511ea88b772a68",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "2046800000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:937d068b91af73be67b130894ed32947a67265a144b647663edc79d155d69d64"
+  },
+  "annual-c04/revenue": {
+   "call": "7a11bf6220dc59bf8c25586fb4d17171b5e12e8bdd8e01cbc5e5fda2b995100e",
+   "choice": {
+    "scale": null,
+    "unit": "CAD",
+    "value": "31950000000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:9dff211914da135e9997402eaf912cdec5f24bee5f20f3c551ac481a2b823d00"
+  },
+  "annual-c05/cost_of_sales": {
+   "call": "ec1288dfa46520128193794520575439af56fc6d33b17cb741d069ad4f67c57e",
+   "choice": {
+    "scale": null,
+    "unit": "CAD",
+    "value": "3249899000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:2cf45e845030e54e19ed63de5368058156866b9d1de9c75893518b7530f95d2f"
+  },
+  "annual-c05/revenue": {
+   "call": "38ead9d643d241648f355312d48bf266f1be99990a98d965baf247cb162e0a86",
+   "choice": {
+    "scale": null,
+    "unit": "CAD",
+    "value": "3912665000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:509601176460d21f71eeb982df511580aa0473fc2630fbbaf3b5b3dc5c58b8e4"
+  },
+  "annual-c05/total_equity": {
+   "call": "e87598a7b3440a0622f092f55dcfb4396a90357c0a5207db275fda31b22d31b2",
+   "choice": {
+    "scale": null,
+    "unit": "CAD",
+    "value": "1320994000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:3b2b5a49922a6b2ea007cca513044278e544bedd0be6b9bf99b5d4fb0bcf36f1"
+  },
+  "annual-c08/total_equity": {
+   "call": "e3b740ac1c96f0ce3d3c56db0ccd6b528a0822360bafa5d0a7a958ee310bbddf",
+   "choice": {
+    "scale": null,
+    "unit": "AUD",
+    "value": "7977000000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:fe5f0e987f6c396f295e0aaa91f6d1432adf0e4ea9612f9ab6341397f924e301"
+  },
+  "annual-c08/total_liabilities": {
+   "call": "21a40a975de4f5208ab4c5d65e0c9dcfdfa0bfb24da1a50c5cac1fe411db4f54",
+   "choice": {
+    "scale": null,
+    "unit": "AUD",
+    "value": "20907000000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:47c8af6d34ed0ecbbcc01b32a95c6c9e6a342699e7f1480738fb41830953eb3b"
+  },
+  "annual-c09/gross_profit": {
+   "call": "6b1ea180126bf8694d43e87f954849eb62afa1ccc8c23e59c5d20cc946e46ec3",
+   "choice": {
+    "scale": null,
+    "unit": "AUD",
+    "value": "1041100000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:2e0ce23428351bd0b73caa1089bc254075458c0b370dad92606e167a9311e39a"
+  },
+  "annual-c09/revenue": {
+   "call": "617f2052893318bd0a9764636d0f9b29e5589656c6102765e5a23f0d16e512b7",
+   "choice": {
+    "scale": null,
+    "unit": "AUD",
+    "value": "2626000000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:eca5d344c1085926c980877c29f5d4a39b073cc568dc85cdceb001b9a1889ad6"
+  },
+  "annual-c09/total_liabilities": {
+   "call": "25ca79612e9b56143c93858352ae5824c69a970b9bc020dd4baded7d22ff96a0",
+   "choice": {
+    "scale": null,
+    "unit": "AUD",
+    "value": "2949800000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c2",
+   "prompt_sha256": "sha256:e80ba48b3ef14e7b00d78f43bdf0d1c93cecf018417d04511855ff76eeb987fe"
+  },
+  "annual-c14/revenue": {
+   "call": "558c0c6dc2a03a0672af82fd5b5e2c87e2f11cf72b194fbfce5ea5710da099b2",
+   "choice": {
+    "scale": null,
+    "unit": "ZAR",
+    "value": "8807620000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:e041426fd54bc87577e17616df0e2e2fab9c8ac8d54c913acc8460933d64a7a3"
+  },
+  "annual-c14/total_assets": {
+   "call": "0b0bad2f65b0e7c450391c9cf09614e7aadb17a4d434a60280b1ea4d6d7c8659",
+   "choice": {
+    "scale": null,
+    "unit": "ZAR",
+    "value": "33300028000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:23d1c67cb07045b8e0b0d514a711c85f969ce1839cdc54bfa98b8d6206daf096"
+  },
+  "annual-c14/total_equity": {
+   "call": "f8ae7b673954bb389cc39198e0953b77f549f2f34c022438619ebc0e58b1c8a1",
+   "choice": {
+    "scale": null,
+    "unit": "ZAR",
+    "value": "21177886000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:982cae64573de702da0ad69cba186f5917ae297036cfac27fd576ef63a02371e"
+  },
+  "annual-c14/total_liabilities": {
+   "call": "d599ef0c910ceb4653b7c93f836eb8fa7bec337ff408cbbdc106ae2ad8bda527",
+   "choice": {
+    "scale": null,
+    "unit": "ZAR",
+    "value": "12122142000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:6b24364f6b3248526ab1baf43a3695d0905013ec335696d3331504996395c275"
+  },
+  "annual-c15/revenue": {
+   "call": "8a1339e9d2609fe02fbbe5de3d8c816cc5af7be9764bbf2ab5a2d59c9d7d237c",
+   "choice": {
+    "scale": null,
+    "unit": "HKD",
+    "value": "54326300000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:c852dca753c7364e87818e8686c712e0c5061a65719349cead8375a6f2a5669e"
+  },
+  "annual-c16/revenue": {
+   "call": "ff9642d770471b919bbf26a8c9ffb3fdf67bdc598bad9ca7e0877a00292953f6",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "15259533000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:83ab174ef03f307f04f409f69e3ba9cbcd500649502269f68b406495789e4001"
+  },
+  "annual-c16/total_equity": {
+   "call": "05ee4a710d9893cd02df295059570ba0550e385ab254420d47c07f889fb5c758",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "6958454000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c2",
+   "prompt_sha256": "sha256:22f5f28867691880b2613bcef5ca65a8cc42e51b61705312db448935e84e0f13"
+  },
+  "annual-c17/cost_of_sales": {
+   "call": "e2f2d18af1d3ab844052d478d35481ea119f234c49d23b0c955be320b2d202bf",
+   "choice": {
+    "scale": null,
+    "unit": "SGD",
+    "value": "931461000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:4724fb25bb4d8b5bd016d1076542298082fdcb22ea223cf66468788eac29ec27"
+  },
+  "annual-c17/total_equity": {
+   "call": "386e8390973c1ebaac86b5a310656820415be42d8b2daadd3dd42cc41038bd69",
+   "choice": {
+    "scale": null,
+    "unit": "SGD",
+    "value": "1083132000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c2",
+   "prompt_sha256": "sha256:ca9457c5b9a1f56a0092ea01b72daa9b04ba95c171317acb17ca9ae513698015"
+  },
+  "annual-c18/total_assets": {
+   "call": "0ae0bf7cea071da528a82463f161289f74028555a177bbd749ccd0675889fa03",
+   "choice": {
+    "scale": null,
+    "unit": "SGD",
+    "value": "22479755000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:ed1e0033f979c853b8eb32aec5ceed86291f2a0ed5d47427e376ee246063b1c0"
+  },
+  "annual-c18/total_liabilities": {
+   "call": "15a692f8b0a4ec0227bfe64245cc6618558000b21eca0d0f2103523e77257047",
+   "choice": {
+    "scale": null,
+    "unit": "SGD",
+    "value": "5812208000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:7a76ab1d857149273fee8f04c294c95c5585f86b0471479edd4a40d3498f6197"
+  },
+  "annual-c19/cost_of_sales": {
+   "call": "086d0a57f0fc3ee2502397fceabc1f1e381c28d0bdaebb769a19863dd5f45855",
+   "choice": {
+    "scale": null,
+    "unit": "IDR",
+    "value": "14373126000000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:1093619cce7ffc490996cb71ffdb6bff481e744c55beaa53d869b4a065b7f873"
+  },
+  "annual-c19/gross_profit": {
+   "call": "cc0392b6590ab75e87af6eee7f802ef0e4ddf786837eca2e01d70f53cbaf5c9a",
+   "choice": {
+    "scale": null,
+    "unit": "IDR",
+    "value": "5578317000000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:4447c1183f8a7a48f298686b5d4a5db250f5d972b6f32b31be850a02f77f3f2f"
+  },
+  "annual-c19/revenue": {
+   "call": "70db0360a8ad05996491892582eeaf7b5b0184a6926c9eda5367166347a0085d",
+   "choice": {
+    "scale": null,
+    "unit": "IDR",
+    "value": "19951443000000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:a1d222119f60db921a3d1a5ee6e97a391d5a5464d2ea81d1a18b150fd2da6f7a"
+  },
+  "annual-c19/total_assets": {
+   "call": "41067f4c43e3fa8922bfc9d6d7cd71954565e412e56445a48d898e717a7296ec",
+   "choice": {
+    "scale": null,
+    "unit": "IDR",
+    "value": "22864784000000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:34e0b4dbc37af30a12e61e6b396725b063b166ed0851a07e1b18074e1022a244"
+  },
+  "annual-c19/total_equity": {
+   "call": "3054be5d358c6c4664edbba18bfe33c923febb3a4dd2c8bddcac11ad2c962cad",
+   "choice": {
+    "scale": null,
+    "unit": "IDR",
+    "value": "17364234000000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:cc8f93f6e839e7ead496bb75f8507053afc63f0a231bfe0117db63fd1ba95517"
+  },
+  "annual-c19/total_liabilities": {
+   "call": "bfbfa3af0b0943c32f7968ab75a6e93aefd80a63678f0ed9851b1cbfbc83890c",
+   "choice": {
+    "scale": null,
+    "unit": "IDR",
+    "value": "5500550000000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:0adb52a428d581ef434e31cc246330fe36bae59c7421dbb69155d6f485bb8901"
+  },
+  "annual-c20/revenue": {
+   "call": "8a72c9f28f1bcfbb7b4c8707e3c5346caa8f7c6ba9773c06c4331decf7779998",
+   "choice": {
+    "scale": null,
+    "unit": "INR",
+    "value": "202904300000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c2",
+   "prompt_sha256": "sha256:ee571060acc34ab8b24f07d3c4ed3fc4f72ec7c1cdb8bd648976d58e73bdb033"
+  },
+  "annual-c20/total_assets": {
+   "call": "979d9caa1ed843773cff92ac405ee6794bdd83cd3ba13f69c665c64bf20e3902",
+   "choice": {
+    "scale": null,
+    "unit": "INR",
+    "value": "344529600000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:5c8317b775cbb83263a297ca173870bbef7521fc638efba27ce4c44799a9af2e"
+  },
+  "annual-c20/total_equity": {
+   "call": "2511f69afc482e6e4d316c7ad2532eb357fdf3b7abe9fc0ccca9231d635269c1",
+   "choice": {
+    "scale": null,
+    "unit": "INR",
+    "value": "231888600000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c2",
+   "prompt_sha256": "sha256:12af271156c73b4f606ac0560ad5370876530744546fbecbf5fc6706059ec4cf"
+  },
+  "annual-c20/total_liabilities": {
+   "call": "fdb017fe9f8c22fc923ea4f83565976e3c7675c0c3a9d1edc377faeb4cd0fe33",
+   "choice": {
+    "scale": null,
+    "unit": "INR",
+    "value": "112641000000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:de26d92b0c0b6aaeb0748e5f84b19ef2c1a4569ad75d4e9f4c42e0db192d28a0"
+  },
+  "annual-c24/total_equity": {
+   "call": "e021b5d83b6b29af85e90a57878c2c85aaafb8d1f0f0e2dbb1dffb2d46dbc198",
+   "choice": {
+    "scale": null,
+    "unit": "SEK",
+    "value": "93237000000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:2659a9316f6f863e3a7d5f33eda31ac84fda70e574b32d7958cca4d1dbe627af"
+  },
+  "component-c03/operating_temperature_max": {
+   "call": "bb967f6818308edb45e0a5b5bf78ca2fd74b9a6e6cafd86b71be562553fa0a43",
+   "choice": {
+    "scale": null,
+    "unit": "C",
+    "value": "125"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:e649525693077877f0e24c6c377fad04da93518ec17851961aeeb46229c8c436"
+  },
+  "component-c04/supply_current_typ": {
+   "call": "0c22c344990b4d6e9d53d8f2cabc91b4b307e5d1037456d33b72294f7beaf30b",
+   "choice": null,
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.96,
+   "option": "none",
+   "prompt_sha256": "sha256:b20960fccfb04907240943b182f4bf62b19ea3e5a59458cc4774acbc59e47bad"
+  },
+  "component-c11/operating_temperature_max": {
+   "call": "215696e9c341717740b2ecb60cb4413148b9b1e9d99a9d326911f41b7750a1f4",
+   "choice": {
+    "scale": null,
+    "unit": "C",
+    "value": "125"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:63ffa8730ac641abd2d12e8201e03eb90130daf54dfd6ffc839c3f0cff810aa7"
+  },
+  "component-c11/operating_temperature_min": {
+   "call": "791c20eab00c0799be2e9865953f28bd5ff85cd72a6f190b73cabfde8c6c37f6",
+   "choice": {
+    "scale": null,
+    "unit": "C",
+    "value": "-40"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:6731ac967565ddc5467de9d1399cc41f4bebdbe87c861e579d114fd0474b698a"
+  },
+  "component-c11/supply_current_typ": {
+   "call": "62b59fec78981303479b99b6705c3717d6ea8567abbcaa5260981c8a38801a92",
+   "choice": {
+    "scale": null,
+    "unit": "mA",
+    "value": "25.2"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:efb7555e664f4f1815b8980ee0463d12a8ae7d242bfd0e5628fced4ead63859f"
+  },
+  "component-c11/supply_voltage_min": {
+   "call": "8c67938c053226ac003fc56d78320cdc49b6d7dd7997418daf0efbbe3fcdebc3",
+   "choice": {
+    "scale": null,
+    "unit": "V",
+    "value": "3"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:648671c59ef3ba65255486fd097a52bf2b5ef8f168331c2c8750b4f38ebab67b"
+  },
+  "component-c18/supply_voltage_max": {
+   "call": "61fae41450a4b831169149f3cdd9d2cafd9f67f2ac3ca79bf93f4a01e9c180f2",
+   "choice": {
+    "scale": null,
+    "unit": "V",
+    "value": "3.3"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.98,
+   "option": "c1",
+   "prompt_sha256": "sha256:4682e11412943f62fdfe1087eb34d130f6905e065bd8f7793739bf895b127cdd"
+  },
+  "component-c18/supply_voltage_min": {
+   "call": "56c8ef5defe82a9d8a82d53694c40bfa1bb729af59af96871d16f556eeb0be63",
+   "choice": {
+    "scale": null,
+    "unit": "V",
+    "value": "1.8"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.98,
+   "option": "c1",
+   "prompt_sha256": "sha256:de33c6ecf7c60ab53059e06114f2a1dc8cb41159e90020ebc3691567cfe9806e"
+  },
+  "component-c20/supply_voltage_max": {
+   "call": "1640e91918dc9f5b87599e7ba5b1e04c87414afb36a4c6505359c2f13963a189",
+   "choice": {
+    "scale": null,
+    "unit": "V",
+    "value": "1.9"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:44ed2c983b5c24f9f85a0ff6ecbb68e6b2a03be5fb2c254ce2856dea5de79ebe"
+  },
+  "component-c20/supply_voltage_min": {
+   "call": "f34041ef14ec931329feeb4ed04560d9e58b9e141e320746bebb8c8955c9121d",
+   "choice": {
+    "scale": null,
+    "unit": "V",
+    "value": "0.7"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.96,
+   "option": "c1",
+   "prompt_sha256": "sha256:f9a7e7ba93c8760c0fd9359005453ed946091d907b8e4c08c9e1f5cbdffa4900"
+  },
+  "component-c21/supply_current_typ": {
+   "call": "f27f1f3c98c139d2c2d81a452496de14440b39e74dbeae1dd49b21a81006b705",
+   "choice": null,
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "none",
+   "prompt_sha256": "sha256:babfedaf2f7f6d426a40b4c02c2b8492a4877a634785d0a0d625526e3bd57632"
+  },
+  "component-c22/supply_current_typ": {
+   "call": "15d06effbf64e2a1bf07a8cfa3603adf89906e1689550d4ac884506e5bcf8d89",
+   "choice": {
+    "scale": null,
+    "unit": "mA",
+    "value": "2"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.98,
+   "option": "c1",
+   "prompt_sha256": "sha256:e4f15aed0309a5c6ba2d9462be7a077011e5d8230f55cc845b705871b19b2594"
+  },
+  "component-c22/supply_voltage_max": {
+   "call": "f5bb378c8f9cd93624fe01b36d792daafcb78bd364af8603423841f679c50f57",
+   "choice": {
+    "scale": null,
+    "unit": "V",
+    "value": "5"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:cd4892cc4a5b4f445b935afe92cafb756a3a140342316b66d1e609043cc979c4"
+  },
+  "component-c24/operating_temperature_max": {
+   "call": "051ebfaf700423269605d9e5000641d4db5b91dc48305f77c649ca40084daa80",
+   "choice": {
+    "scale": null,
+    "unit": "C",
+    "value": "85"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.94,
+   "option": "c1",
+   "prompt_sha256": "sha256:52b8d227257bfa3e6685da400e66acbd8093e31f045503a6c0e4ece36d169668"
+  },
+  "component-c24/operating_temperature_min": {
+   "call": "e065cbe5dcfd39aa66172704891438f73f61a7cc0a1ae755693b663e8d681416",
+   "choice": {
+    "scale": null,
+    "unit": "C",
+    "value": "-40"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.94,
+   "option": "c1",
+   "prompt_sha256": "sha256:d4358366d7f61cfd26c738c5730e6b787d34f2f7d6f3069eb6ba0a40e1b49694"
+  },
+  "component-c28/operating_temperature_max": {
+   "call": "4be74208ef943d6928129e2f9eb985184b642cc33f5a4ff8a07738fd28cb6341",
+   "choice": {
+    "scale": null,
+    "unit": "C",
+    "value": "85"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:754f5e33b46ae63c55b5c3b7a5d03e74695a4f8dcce47db21f34fdf86a39a8c4"
+  },
+  "component-c28/operating_temperature_min": {
+   "call": "c79a518c310d164030e316b2be070b12f76fa7458957beacf70d852b4b7426f2",
+   "choice": {
+    "scale": null,
+    "unit": "C",
+    "value": "-40"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:0a49da93f54451d251f622e7b0f2b0dce28f1be4a779929c22b179f995fcf95f"
+  },
+  "component-c28/supply_voltage_max": {
+   "call": "76024ffe1dc090ce8f98ba7a187067b7a6dcc46a570aa603f68cd6e32ede42f3",
+   "choice": {
+    "scale": null,
+    "unit": "V",
+    "value": "6.5"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:aae44e88ca4e1602d43f2bac1e17b51da991a804c1121ff9b242acb28766cca4"
+  },
+  "component-c28/supply_voltage_min": {
+   "call": "0a60e2fadcc0bbadca04677701294722152b6729f705f25e85f650df61dc3295",
+   "choice": {
+    "scale": null,
+    "unit": "V",
+    "value": "1.6"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:70edf54c3f9684c01bd1b00730d5fb6282e0c48c34d2b22affc705caeb2f2923"
+  },
+  "sbc-c03/deductible_family": {
+   "call": "1ce0a870ec901ecb8e187a06208344b77c8b60f077fd5d92dafc5019973ce50e",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "950"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:34cb4c2d6c11c8618b9010366c503b6aa50519ab758387f7ad7d5658171eae79"
+  },
+  "sbc-c03/out_of_pocket_family": {
+   "call": "98b7f8f6a538f120addea90d718fafaad1a34f27783b3bd73ead04ffdd5e280f",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "6750"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:9128bcfba9f3b2da5321e25b64dbea83a94387de644b1a604db59f4aad63d28a"
+  },
+  "sbc-c04/deductible_family": {
+   "call": "a3f388b92d4a068ed279664bd3850cc663bccf6dfde5d0b31d334e7d5498ca75",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "1400"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:4d054b16a12c5cf905a182035e737c3b7b8b764e8c0091351a4b0e1f7c346ce4"
+  },
+  "sbc-c04/out_of_pocket_family": {
+   "call": "a060abfa7d744b24266cf6e31844a5540fe770a98cab25d591d3a8b5ca1144ea",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "8700"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:3b8ed64dbccd481e652158c876bb311a9e36d76e42a385bf1959501095488dfd"
+  },
+  "sbc-c05/deductible_family": {
+   "call": "e393c7fdc022bb466ae2d0d583e83c3ed2370b7297e8cb73f2ea3a2ef9b648e6",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "1500"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:c14c6ef6429980457d4f9099a9ec900221be4e47e6ffe7579d4d7e59a9638ad7"
+  },
+  "sbc-c05/out_of_pocket_family": {
+   "call": "8bf43901408ba5b156d282cbe1675e581ad3e9a92290285065ead8b90963c63e",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "11500"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:dbe32b69237ad8cb76015ca48b88f070be418bb48a160db6cbc295ccbad18dd0"
+  },
+  "sbc-c05/specialist_copay": {
+   "call": "c25cda08e051f5fee2e700162b963b3c9ec8a83c8ac41b24dacba53bfb188d9c",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "50"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.92,
+   "option": "c2",
+   "prompt_sha256": "sha256:47ca4fda6b4beb7a9aa110fca09a9b443e1dfc825bc36970a88b2b833e5e5c77"
+  },
+  "sbc-c06/deductible_family": {
+   "call": "c7792bdb3d575abdced309d09b881c7607c606b6ea96e86ed152ab2805a440e9",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "900"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:855bdabbd5f219eb1e46cd14bee99e5ecac5c8d698d7511d53b20c519b0af63b"
+  },
+  "sbc-c06/out_of_pocket_family": {
+   "call": "95d75562acb2daca775e1487dea5d4ec0a5f025423c959133b7a54f76cca15ed",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "4900"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:d7f8f94194375cc9e18469e56b8085cf118ea03727e49ee965fbb42dbfe90bce"
+  },
+  "sbc-c06/specialist_copay": {
+   "call": "80b5f2be1597b278df2cf38fa1b538fe6b1f6a78e5823b7700d5f9b804f37c48",
+   "choice": null,
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.94,
+   "option": "none",
+   "prompt_sha256": "sha256:95efa4488d7151e0560c4f4dea315b2539fd8cf8dc0bfec61f71156441de9fa6"
+  },
+  "sbc-c09/deductible_family": {
+   "call": "e8970fcaaab8f955ab81b3e0275c8d04f3329dd5dee75598ef81b8fa26bf8385",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "5000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:b45e95edc0fc4894280bb21df14818a01f06b605bef73d21d5bb7e918a181931"
+  },
+  "sbc-c09/out_of_pocket_family": {
+   "call": "24be0a1e40f86bef2016a02caaf43fac0b4fb48800efc9136c17bbe22728e820",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "10000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:7d94c87be3d43d7738842c57c6aeadca47c3f6b235f701086eb30ac289eda48a"
+  },
+  "sbc-c10/deductible_family": {
+   "call": "39c746fe7c0ef8805901269932224bcffbb157a2f8f2684a2f952d9511c610cd",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "5000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:b271d08f42afdf1c77dea972f910f766c9ab4b275418360dbabf01fd1c9e1e54"
+  },
+  "sbc-c10/out_of_pocket_family": {
+   "call": "a771b05ea41d6623c5f3870918e12ab233c85dccd6a57bbaa51b68b8a11ac305",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "10000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:1f3b881ba9a1844858eabc2cd590fef638c0d9321de429ed371329d6a14d78c4"
+  },
+  "sbc-c11/out_of_pocket_family": {
+   "call": "755322787db188f30b3014975b154b78abeb6d6ea335ebda6a409cc808028362",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "2000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:58ad142512ce6d1d255c447f830570ad4c766d7bf11557901c80a07f28ec7b23"
+  },
+  "sbc-c12/deductible_family": {
+   "call": "67b4ff8809a30faae69fbe91ff2655a692d907b60dfe5b323bcb94b307a31166",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "3100"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:8b72160f9f2b7a093b1bec880870b4887be3db93e8bb60a473b5bc08401ae88d"
+  },
+  "sbc-c12/out_of_pocket_family": {
+   "call": "155d58dc7514b1da8d55f18d3d3833b42a9eff30c3f3ab932ca9e2ad124a9b07",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "4500"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:094d7a6a0d27414857be7e2ddd94b5db583719a0330c4cba7757bb31e9b7d6dd"
+  },
+  "sbc-c13/out_of_pocket_family": {
+   "call": "52e58221b1395d97d13abcf7d938685a95f2483fc3aa6271e4e2998da98df761",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "3000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:c18e6abb6b068c5052031f1ed3328c2b9312027031cc45aeb4150c1c40531c57"
+  },
+  "sbc-c14/out_of_pocket_family": {
+   "call": "52e58221b1395d97d13abcf7d938685a95f2483fc3aa6271e4e2998da98df761",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "3000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:c18e6abb6b068c5052031f1ed3328c2b9312027031cc45aeb4150c1c40531c57"
+  },
+  "sbc-c15/deductible_family": {
+   "call": "20e1ce70cfb949e0f4ba50d2fa11dd901d4fba127dcebeda092fd4b72e2032ad",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "2000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:42aa4d1fbfea266d67061ba2f2138f95cf18bd168eaf30e4d14c043d879cc357"
+  },
+  "sbc-c15/out_of_pocket_family": {
+   "call": "001f4d60dd6590932dc372281336be1ed65157f47ad896a0b7965aade6e901c8",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "8400"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:0c57b61bcd881b3c1c3f516a12494f706c9e30bf793d75a1b2cb07e94503d98a"
+  },
+  "sbc-c16/deductible_family": {
+   "call": "cb8e66ffb1d86da5f3d898aebf9e295b09be889d608c0a176794e01b1acc2e16",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "3500"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:9c4c0afca02bf4e2042007058b95a633f1756809061a53f3c191e7912daae4ce"
+  },
+  "sbc-c16/out_of_pocket_family": {
+   "call": "48084df16d801238b3d2175ecc766a2b97949e5d9b18e1cae4be8f8da6b5a7d0",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "12000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.98,
+   "option": "c1",
+   "prompt_sha256": "sha256:46cb4e898f72d0e1542075a6b2cad534424eab0e6b5ae52fdebd21ed013a1da1"
+  },
+  "sbc-c21/deductible_family": {
+   "call": "91dba7d2550180d88312c7f9d29586401fb6f85bc4f034c2bf4a77371bfa42f9",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "1200"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:f3fe479d09cb884a48f0e452e4b665376743c517cd10575684ac94845a86c5a2"
+  },
+  "sbc-c21/deductible_individual": {
+   "call": "60b10f05c59eac6a5bb53824bc6925f9a8eaaab3c71f1045e44bf65f2e0cb13e",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "600"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:a83fdec43cfe27d4f9981f754d60002e114f70faa52dade4a3aa5f33328695fb"
+  },
+  "sbc-c21/out_of_pocket_family": {
+   "call": "1b38aea847eaf0e10100c0f77d9bc7bc261b65a26c4c451fb42bea0a10bb7049",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "6000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:f997237ef295027f32dc6fc404f624da33da016fe19f9c266a52b96ca7398d5f"
+  },
+  "sbc-c21/out_of_pocket_individual": {
+   "call": "5ab703e255515f279dfa5293dd1af600934a2c86b0f3d78c1406d13264c9dd2a",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "3000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:6de4b3bd707d7296ed89029e300126094a1595a3890ad8b616af6e695edf8966"
+  },
+  "sbc-c21/specialist_copay": {
+   "call": "1b93d365d8e37e0bb3bee4c164e403f4ded2d213c33e53640d58fc4f23ff63b1",
+   "choice": null,
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "none",
+   "prompt_sha256": "sha256:7db7d4df6ef74b03add5b647a0653150853dafb29cbc0aab44e0f5be1c2f1de2"
+  },
+  "sbc-c22/deductible_family": {
+   "call": "b66af6110d88518c23a3cb6a1f8bccdab01acd6a7c53526320a5c5593bb86062",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "1200"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:aacdd8db07226f758b6942b02b9d2086ed13aa6973995f0742338ca53e2b95d3"
+  },
+  "sbc-c22/out_of_pocket_family": {
+   "call": "3c1eef7e3f988dd6ae01b06a154f7ebf2b15a7a31b607bfc4ae066fb3e3c4d6c",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "6000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:42edca7dfcbf1d5de52ae8fe270995d98a7e28bff093d77f4ad3f1c7ca83fe0e"
+  },
+  "sbc-c22/specialist_copay": {
+   "call": "eb389aaaa592c381bb3a3b8d2abb6d1504c85e67ad72c6689065a7bc4cf84723",
+   "choice": null,
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.94,
+   "option": "none",
+   "prompt_sha256": "sha256:455876cd87557b063756025becf04c08ffb8462a808027f906083b5d4efb5b3c"
+  },
+  "sbc-c23/specialist_copay": {
+   "call": "b4821ea3422e81ce4bb431e62cd3bb50d2b56cf240f19fd4fa5649fea4b61409",
+   "choice": null,
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "none",
+   "prompt_sha256": "sha256:0b2d62c1b20e7f1dde05b4b940f4c48c2029e5b9447e2f13a53341944199236e"
+  },
+  "sbc-c24/deductible_family": {
+   "call": "a1632361733bc3b7364c147dedeb6b6758afe977dcaf1a677daa676f5d27a778",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "4000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:b1c67d8ed6481769f6e574167650c70af272609fb461d83df524bbe2bc3f8f2e"
+  },
+  "sds-c02/initial_boiling_point": {
+   "call": "a69ed55f18caa6244e10fd48a3d6d7e93bb6cc3503289c0f10df224a90a6a88f",
+   "choice": {
+    "scale": null,
+    "unit": "C",
+    "value": "100"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:85bdb5f0ee07090ba096581b73638280fd41b302f8f33946cd83e36062cc1bb1"
+  },
+  "sds-c02/relative_density": {
+   "call": "9475266dfe417cfe9103ca212ee301d233b9b23a08504f66d2b5e184c7e224c6",
+   "choice": {
+    "scale": null,
+    "unit": null,
+    "value": "1"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:c9a765fe6b00f32e3d5fa235995b6260afbb880478a88fea556743d4b3155cf3"
+  },
+  "sds-c09/ph": {
+   "call": "ca560ccd013052451f9d1cf609e2d7a6402d653fdaecfe379a20e11820806dde",
+   "choice": {
+    "scale": null,
+    "unit": null,
+    "value": "6.4"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:7576662ae2ac147b7952e226dd0d83b32c0519c93c0a23cd2bb56536e8135057"
+  },
+  "sds-c11/ph": {
+   "call": "47ecba36429e45ea96bf9b97ccbfb77d5b1b547854ca1309e8dae29bb2501886",
+   "choice": {
+    "scale": null,
+    "unit": null,
+    "value": "11.3"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:6def24c4ba5e51cbe34a2ac6068020bbf16f79de3049a99b0469ea43a6a117b7"
+  },
+  "sds-c12/ph": {
+   "call": "bff709b29f9d6291c427786b0a1696764c16aeb74a0f0fa5bf2aa2ead9deee20",
+   "choice": {
+    "scale": null,
+    "unit": null,
+    "value": "1.3"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:3ed0cb8e099a3d8a1ad21952c09930a704409a80c920371d8cbcc96886853e97"
+  },
+  "sds-c14/flash_point": {
+   "call": "5bd284a58dff8d8916aeb860e3616bef424c4bb2d815b6ebf2f20aef81f3e185",
+   "choice": {
+    "scale": null,
+    "unit": "C",
+    "value": "50.56"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:4d36daa4808d555117ee240db10012be69207a241a9ab38fbf1dcc2e63371fd1"
+  },
+  "sds-c14/un_number": {
+   "call": "9bf025013bf52f4adb286bb2e9d7f58237bd0f12a1085b1675601daed9fd27ce",
+   "choice": null,
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.86,
+   "option": "none",
+   "prompt_sha256": "sha256:db8f764dc97d96e7cc065ccf5b46be764f7a31b965592531dadb2a8d8d199ccf"
+  },
+  "sds-c18/initial_boiling_point": {
+   "call": "3dd44a6f218388f1854a5a9f0a778cc31dbdcab260454fe20d6a7d43b8dc6935",
+   "choice": {
+    "scale": null,
+    "unit": "C",
+    "value": "100"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.98,
+   "option": "c1",
+   "prompt_sha256": "sha256:eac776570bc9be640c7afc7685f18c1db42d6cb093e3ca9e20ab21286838c8cc"
+  },
+  "sds-c19/initial_boiling_point": {
+   "call": "a1e80733466cad961ae50ffdce39bf322a5a884e62cacd1ef33c671dd5063e0f",
+   "choice": {
+    "scale": null,
+    "unit": "C",
+    "value": "100"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.98,
+   "option": "c1",
+   "prompt_sha256": "sha256:db2554085654f8397ff362b4826835b229cfac3a92642f3efdfdd82f3a37dec5"
+  }
+ },
+ "calls": 103,
+ "failures": [],
+ "format": "codex-judge-answers/1",
+ "meta": {
+  "codex_versions": [
+   "codex-cli 0.162.1"
+  ],
+  "effort": "medium",
+  "items": 104,
+  "manifest_sha256": "sha256:ead6e6942e9204f82f8bd0d32f88e6f4fc588fff532cf06d70448339694fc77e",
+  "model": "gpt-6.1-sol",
+  "prompts_sha256": "sha256:95860471c2bc19b404771aa0ddc48c821766c42aaa264e55aaa42a13dfe17487",
+  "run": 2,
+  "splits": [
+   "heldout"
+  ],
+  "template": "codex-choice/1",
+  "template_sha256": "sha256:17dd1f4412d737934c8913415bb402c183030ac0bed9050c8e965a21b5b695ab"
+ }
+}
