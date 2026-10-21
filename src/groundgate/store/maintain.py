@@ -104,10 +104,11 @@ def _log_rel(log: tuple[str, ...]) -> str:
     return "/".join(["logs", log[0], *(k[7:] for k in log[1:-1]), log[-1][7:] + ".jsonl"])
 
 
-def run_hash(runner: str, kind: str, data: str) -> str:
+def run_hash(runner: str, kind: str, data: str | bytes) -> str:
     """A key of the run record: SHA-256 over ``<runner>:<kind>``, a zero byte and the data, as
-    the runner calculates it (runner.md)."""
-    digest = hashlib.sha256(f"{runner}:{kind}\0".encode() + data.encode("utf-8"))
+    the runner calculates it (runner.md). A string counts as its UTF-8 bytes."""
+    raw = data.encode("utf-8") if isinstance(data, str) else data
+    digest = hashlib.sha256(f"{runner}:{kind}\0".encode() + raw)
     return "sha256:" + digest.hexdigest()
 
 
@@ -174,7 +175,6 @@ class _Objects:
                 report.find(f"{_rel(k)} is not a valid {found} object: {exc}")
         self._deleted: dict[str, Mapping[str, Any]] | None = None
         self._by_run: dict[str, dict[str, tuple[str, str]]] = {}
-        self.unreadable: dict[str, str] = {}  # the key and kind of each object not read
 
     def of(self, kind: str) -> Iterator[str]:
         return (k for k, v in self.kinds.items() if v == kind)
@@ -192,16 +192,13 @@ class _Objects:
 
     def by_run_key(self, runner: str) -> dict[str, tuple[str, str]]:
         """The store kind and key of each prompt, reply and admission object, by its key in a
-        run record of ``runner``. An object that is not UTF-8 goes into ``unreadable``."""
+        run record of ``runner``. The hash takes the bytes as they are, so an object that is
+        not UTF-8 needs no decode."""
         if runner not in self._by_run:
             index: dict[str, tuple[str, str]] = {}
             for word, kind in _RUN_OBJECTS.values():
                 for k in self.of(kind):
-                    try:
-                        data = self.store.get(kind, k).decode("utf-8")
-                    except (StoreError, ValueError):
-                        self.unreadable[k] = kind
-                        continue
+                    data = self.store.get(kind, k)
                     index[run_hash(runner, word, data)] = (kind, k)
             self._by_run[runner] = index
         return self._by_run[runner]
@@ -559,8 +556,9 @@ def forget_packet(
 
     ``forget`` also removes the run record if a line holds document text, if its text is not in
     the store (then the lines cannot be checked), or if it does not match its key. The run
-    record goes first, so a ``forget`` that stops can run again. The text check finds only a
-    string of ``MIN_TEXT`` or more characters that is in the text: it is not a proof.
+    record goes after the objects that it names, so a ``forget`` that stops can run again. The
+    text check finds only a string of ``MIN_TEXT`` or more characters that is in the text: it
+    is not a proof.
 
     With ``everything``, remove each object and each answer log of the packet, and the packet
     last. An object of the "Kept" column that another packet names stays. Tasks and
@@ -569,10 +567,10 @@ def forget_packet(
     an answer log is locked, ``everything`` stops before it removes the packet, so a second
     call can finish the work.
 
-    An object that ``forget`` cannot read is ``unchecked``, and the rest is still removed. A
-    run record whose lines cannot be read is removed, but the prompts, replies and admissions
-    that it names cannot be found. A prompt, reply or admission that is not UTF-8 cannot be
-    matched to a run record, so it stays.
+    An object of the packet that ``forget`` cannot read is ``unchecked``, and the rest is still
+    removed. ``unchecked`` means "could not check", so the same key can also be ``deleted``:
+    a run record whose lines cannot be read is removed, but the prompts, replies and
+    admissions that it names cannot be found.
 
     Return the kind, the key, the state (``deleted``, ``absent``, ``kept`` or ``unchecked``)
     and the number of other packets that name the key, for each object. A log has the kind
@@ -603,8 +601,10 @@ def forget_packet(
             lines = _holds_text(objects, obj, run)
         except (StoreError, ValueError):  # the text or the schema cannot be read
             lines = None
-        plan.append((run.kind, k, lines is None or bool(lines)))
+        # The record goes after the objects that it names: a forget that stops can find them
+        # again from the record.
         plan += [(kind, n, False) for kind, n in _run_objects(objects, run)]
+        plan.append((run.kind, k, lines is None or bool(lines)))
     plan += [(kind, k, False) for kind, k in named]
     for k in _keys(obj["reading"]):
         plan.append(("reading@1", k, False))
@@ -619,8 +619,6 @@ def forget_packet(
     done: list[tuple[str, str, str, int]] = [
         (kind, k, "unchecked", others.get(k, 0)) for kind, k in unchecked
     ]
-    # A prompt, reply or admission that is not UTF-8 cannot be matched to a run record.
-    done += [(kind, k, "unchecked", 0) for k, kind in sorted(objects.unreadable.items())]
     seen: set[str] = set()
     for kind, k, always in plan:
         if k in seen:

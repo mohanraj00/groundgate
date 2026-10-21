@@ -220,7 +220,8 @@ comes with its issue (#432).
    the document source do not count, because the kept objects hold them. This check is not a
    proof. If the text is already gone, `check` cannot check the lines and prints "not
    checked", and `forget` removes the record. If `forget` cannot read an object, it prints
-   "unchecked", removes the rest and exits 1. A run record whose lines cannot be read goes. A value is still document data. If an app must also remove the values,
+   "unchecked", removes the rest and exits 1. A run record whose lines cannot be read goes.
+   A value is still document data. If an app must also remove the values,
    `groundgate store forget --all PACKET` removes each object and log of the packet. An object
    of the "Kept" column that another packet names stays.
    One object can serve two packets, because the same text has one key. `forget` of that text

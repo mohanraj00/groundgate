@@ -15,7 +15,7 @@ from groundgate.canonical import jcs
 from groundgate.cli import main
 from groundgate.extract import extract
 from groundgate.store import FolderStore, Locked, StoreError, Torn, key, reviewer_key, set_key
-from groundgate.store.maintain import REMOVED, check, forget_packet, kind_of, rebuild
+from groundgate.store.maintain import REMOVED, _rel, check, forget_packet, kind_of, rebuild
 from groundgate.store.packets import admit_packet, put_reading
 
 TEXT = "Invoice\n\nThe amount is 5 dollars. Pay it by Friday.\n"
@@ -413,7 +413,7 @@ def test_forget_removes_a_run_record_whose_text_is_gone(tmp_path: Path) -> None:
         report = check(store)
         assert report.findings == [] and report.unchecked == [obj["run"]]
         done = forget_packet(store, packet, "again")
-    assert done[0] == ("run@3", obj["run"], "deleted", 0)  # the run record goes first
+    assert ("run@3", obj["run"], "deleted", 0) in done
     assert not path_of(root, obj["run"]).exists()
 
 
@@ -438,25 +438,45 @@ def test_forget_log_and_repair_take_the_lock(tmp_path: Path) -> None:
     assert not path.exists() and not path.parent.exists()
 
 
-def test_forget_goes_on_past_an_unreadable_reply(
+def test_forget_names_only_the_objects_of_its_packet(
     tmp_path: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:
     root = tmp_path / "s"
     with FolderStore(root) as store:
-        packet = save_run(store)
-        obj = json.loads(store.get("packet@1", packet))
-    data = b"\xff\xfe"  # not UTF-8, with the key of these bytes as reply@1
+        one = save_run(store)
+        two = save_run(store, "Other text. The amount is 5 dollars.", document_id="inv-2")
+        obj = json.loads(store.get("packet@1", one))
+    data = b"\xff\xfe"  # not UTF-8, with the key of these bytes as reply@1: of no packet
     bad = key("reply@1", data)
     path_of(root, bad).parent.mkdir(exist_ok=True)
     path_of(root, bad).write_bytes(data)
-    cmd = ["store", "forget", "--store", str(root), packet, "--reason", "asked"]
-    assert main(cmd) == 1
-    out = capsys.readouterr().out.splitlines()
-    assert f"unchecked reply@1 {bad}" in out
+    assert main(["store", "forget", "--store", str(root), one, "--reason", "asked"]) == 0
+    out = capsys.readouterr().out
+    assert bad not in out and "unchecked" not in out
     assert f"deleted text@1 {obj['document']['text']}" in out
     assert path_of(root, bad).exists()
-    after = all_keys(root)
-    assert not [k for k, kind in after.items() if kind in REMOVED and k != bad]
+    # The other packet keeps its prompts, replies and admissions.
+    with FolderStore(root) as store:
+        assert check(store).findings == [
+            f"{_rel(bad)} is not a valid reply@1 object: a reply@1 object is not UTF-8"
+        ]
+        done = forget_packet(store, two, "asked")
+    # The reply is the same for both runs, so the first forget removed it for both.
+    assert {kind for kind, _, state, _ in done if state == "deleted"} >= {
+        "prompt@1",
+        "admission@1",
+    }
+
+
+def test_forget_removes_the_run_record_after_its_objects(tmp_path: Path) -> None:
+    root = tmp_path / "s"
+    with FolderStore(root) as store:
+        packet = save_run(store, model_id="Pay it by Friday")
+        run = json.loads(store.get("packet@1", packet))["run"]
+        done = forget_packet(store, packet, "asked")
+    kinds = [kind for kind, _, state, _ in done if state == "deleted"]
+    assert kinds.index("run@3") > max(kinds.index(k) for k in ("prompt@1", "reply@1"))
+    assert ("run@3", run, "deleted", 0) in done
 
 
 def test_forget_removes_a_run_record_with_a_bad_line(tmp_path: Path) -> None:
