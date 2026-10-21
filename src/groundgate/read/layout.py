@@ -10,6 +10,7 @@ from __future__ import annotations
 import re
 from collections.abc import Mapping
 from dataclasses import dataclass
+from math import isfinite
 from typing import Any
 
 from ..model import PacketError
@@ -120,6 +121,16 @@ class Layout:
             if not end <= p.start <= p.end:
                 raise PacketError("malformed layout: pages must be in text order")
             end = p.end
+        for p in pages:
+            # `read` writes finite boxes, but a store someone edited can hold
+            # any JSON string: `float()` accepts "nan", "inf" and "1e999".
+            if not (isfinite(p.width) and isfinite(p.height)):
+                raise PacketError("malformed layout: page size is not a finite number")
+        for w in words:
+            b = w.box
+            if not (isfinite(b.x0) and isfinite(b.top)
+                    and isfinite(b.x1) and isfinite(b.bottom)):
+                raise PacketError("malformed layout: a word box is not a finite number")
         prev = 0
         for w in words:
             if not prev <= w.start < w.end <= end:
