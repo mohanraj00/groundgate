@@ -486,7 +486,14 @@ at most `max_bytes` (1 GiB by default), so a FIFO, a device or a huge file canno
 memory. It gets the inputs from the objects that the header names and replays the run, so a
 changed line, a changed, missing or oversized object, or a bad object key raises `ValueError`.
 The replay cost grows with the document and the record.
-A shared store for all the tools is #288, in [store.md](store.md).
+`RunResult.save(store)` writes the run into a store of [store.md](store.md) (#288, #405) and
+returns the packet key. It writes each object as its store kind (`text@1`, `schema@1`,
+`policy@1`, `reference@1`, `prompt@1`, `reply@1`, `admission@1`), then the record as one `run@3`
+object with the bytes of `run.jsonl`, then the final inputs, the receipt and a `packet@1` object
+whose `run` names the record. Before it writes, it checks each object against its key and runs
+`admit` again on the stored inputs. If that gives another receipt, it writes nothing. The record
+keeps its `groundgate-run/3` keys, so a store cannot replay the run yet: the store keys come with
+`groundgate-run/4` (#429). `RunResult.read(folder)` stays the replay path.
 
 Two fields are reserved for the document model (#285), so that a later reader output needs no
 new log format. An input of `kind: "document"` will name an extracted document and its reader

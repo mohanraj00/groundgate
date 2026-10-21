@@ -302,29 +302,44 @@ def admit_packet(
         text_key = key("text@1", text.encode("utf-8"))
         if load_reading(store, reading)["text"] != text_key:
             raise PacketError(f"the reading {reading} is of another text")
+    return _put_packet(store, text, given, receipt, document_source, reading, None), receipt
+
+
+def _put_packet(
+    store: Store,
+    text: str,
+    given: Mapping[str, Any],
+    receipt: Receipt,
+    document_source: str | None,
+    reading: str | None,
+    run: str | None,
+) -> str:
+    """Write the inputs in ``given``, the receipt and a ``packet@1`` object, and return the
+    packet key. The caller checked that these inputs give ``receipt``."""
 
     def put(kind: str, value: Any) -> str:
         return store.put(kind, _json(value, kind))
 
+    policy, judgments = given["policy"], given["judgments"]
     packet = {
         "format": "packet@1",
         "spec": SPEC_VERSION,
         "document": {
-            "id": document_id,
+            "id": given["document_id"],
             "source": document_source,
             "text": store.put("text@1", text.encode("utf-8")),
         },
         "reading": reading,
-        "schema": put("schema@1", schema),
+        "schema": put("schema@1", given["schema"]),
         "policy": None if policy is None else put("policy@1", policy),
         "references": [put("reference@1", r) for r in given["references"]],
         "packs": [put("pack@1", p) for p in given["packs"]],
-        "candidates": put("candidates@1", candidates),
+        "candidates": put("candidates@1", given["candidates"]),
         "judgments": None if judgments is None else put("judgments@1", judgments),
         "receipt": put("receipt@1", receipt.to_dict()),
-        "run": None,
+        "run": run,
     }
-    return put("packet@1", packet), receipt
+    return put("packet@1", packet)
 
 
 def load_packet(store: Store, k: str, *, layout: bool = False) -> Packet:
