@@ -403,7 +403,6 @@ logs again, runs `admit` again for each correction, and gives the final value of
 resolved = write_resolution(store, packet, reviewers=["ana"])
 for line in lines(resolved.resolution):
     print(line)
-store.close()
 ```
 
 ```text
@@ -411,6 +410,31 @@ late_fee: 75 USD (corrected)
 monthly_rent: 2450 USD (admitted)
 security_deposit: 4900 USD (confirmed)
 ```
+
+`review measures` reads each answer log of the store and gives the measures of the review for
+each item kind and each field: the median time, the answers given with one key, the agreement
+with blind labels and the escapes that the audit finds. A blind label is an answer to an audit
+task with `reason_seen` false. These tasks have no audit, so the last two measures are 0 of 0:
+
+```python
+from groundgate.review import measures
+
+for line in measures.lines(measures.measures(store)):
+    print(line)
+store.close()
+```
+
+```text
+packets: 1
+number: answers 2, median time 2100 ms, one key 2 of 2, agreement with blind labels 0 of 0, escapes 0 of 0 audit slots
+  number late_fee: answers 1, median time 2100 ms, one key 1 of 1, agreement with blind labels 0 of 0, escapes 0 of 0 audit slots
+  number security_deposit: answers 1, median time 2100 ms, one key 1 of 1, agreement with blind labels 0 of 0, escapes 0 of 0 audit slots
+```
+
+On the command line, `groundgate review measures --store work/store` prints the same lines, and
+`--json` prints them as JSON. With `--set NAME --split development`, it measures only the
+documents that the `splits` log of the set puts in that split, and it counts the packets that it
+leaves out.
 
 The page is for one person on one computer. The server binds to `127.0.0.1` and refuses another
 `Host`. Each API request must send the token of the start URL, so keep the URL private. Any
