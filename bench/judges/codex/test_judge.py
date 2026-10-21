@@ -97,7 +97,8 @@ def test_prompt_shows_400_before_and_150_after_each_span() -> None:
     assert len(first["before"]) == 400
     assert len(first["after"]) == 150
     assert data["options"]["none"]
-    assert "an annual report" in text
+    assert data["document"] == "an annual report"
+    assert "an annual report" not in text.split("Input:\n", 1)[0]  # only in the JSON data
     assert judge.prompt(item()) == text  # the same item gives the same bytes
 
 
@@ -117,7 +118,7 @@ def test_document_text_is_json_data() -> None:
     )
     data = json.loads(judge.prompt(it).split("Input:\n", 1)[1])
     assert data["options"]["c1"]["excerpts"][0]["before"] == hostile + "Revenue "
-    assert set(data) == {"field", "description", "options"}
+    assert set(data) == {"document", "field", "description", "options"}
     assert set(data["options"]) == {"c1", "none"}
 
 
@@ -198,7 +199,10 @@ def test_parse_refuses(reply: str) -> None:
 
 def manifest(tmp_path: Path, **splits: str) -> Path:
     path = tmp_path / f"manifest-{len(list(tmp_path.glob('manifest-*.json')))}.json"
-    docs = [{"id": d, "split": s} for d, s in (splits or {"doc-a": "development"}).items()]
+    docs = [
+        {"id": d, "split": s, "text_sha256": judge.sha256(TEXT)}
+        for d, s in (splits or {"doc-a": "development"}).items()
+    ]
     path.write_text(json.dumps({"documents": docs}))
     return path
 
@@ -287,6 +291,24 @@ def test_tool_use_bad_replies_and_failures_are_retried(tmp_path: Path) -> None:
         ask([item()], fake, tmp_path, cache="d")
 
 
+def test_only_the_first_line_of_a_failure_is_kept(tmp_path: Path) -> None:
+    def failing(cmd: list[str], stdin: str, env: dict[str, str]) -> tuple[int, str, str]:
+        if cmd == ["codex", "--version"]:
+            return 0, "codex-cli 0.0.0", ""
+        return 1, "", "\nfirst line " + "x" * 300 + "\n/Users/someone/.codex/auth.json token=abc\n"
+
+    c = judge.Codex("gpt-test", runner=failing, workdir=str(tmp_path), pause=0)
+    with pytest.raises(judge.JudgeError) as e:
+        c.call("prompt")
+    assert "auth.json" not in str(e.value)
+    assert len(str(e.value)) < 160
+    with pytest.raises(judge.JudgeError, match="no valid reply") as e:
+        judge.run(
+            [item()], c, judge.Cache(tmp_path / "c"), manifest=manifest(tmp_path), max_calls=4
+        )
+    assert "auth.json" not in str(e.value)
+
+
 def test_a_failed_turn_with_exit_0_is_refused(tmp_path: Path) -> None:
     failed = "\n".join(
         [
@@ -332,6 +354,15 @@ def test_an_unusable_cache_folder_is_refused_before_any_call(tmp_path: Path) -> 
     assert fake.commands == []
 
 
+def test_a_linked_cache_folder_is_refused(tmp_path: Path) -> None:
+    (tmp_path / "real").mkdir()
+    (tmp_path / "cache").symlink_to(tmp_path / "real")
+    fake = FakeCodex('{"choice": "c1", "confidence": 0.5}')
+    with pytest.raises(judge.JudgeError, match="is a link"):
+        ask([item()], fake, tmp_path)
+    assert fake.commands == []
+
+
 def test_budget_guard(tmp_path: Path) -> None:
     fake = FakeCodex()
     with pytest.raises(judge.JudgeError, match="budget"):
@@ -352,7 +383,11 @@ def test_the_manifest_sets_the_split(tmp_path: Path) -> None:
     with pytest.raises(judge.JudgeError, match="no manifest"):
         ask([item()], fake, tmp_path, manifest=tmp_path / "missing.json")
     twice = tmp_path / "twice.json"
-    docs = [{"id": "doc-a", "split": "heldout"}, {"id": "doc-a", "split": "development"}]
+    pin = judge.sha256(TEXT)
+    docs = [
+        {"id": "doc-a", "split": "heldout", "text_sha256": pin},
+        {"id": "doc-a", "split": "development", "text_sha256": pin},
+    ]
     twice.write_text(json.dumps({"documents": docs}))
     with pytest.raises(judge.JudgeError, match="more than once"):
         ask([item()], fake, tmp_path, manifest=twice)
@@ -360,6 +395,12 @@ def test_the_manifest_sets_the_split(tmp_path: Path) -> None:
         twice.write_text(json.dumps({"documents": [bad]}))
         with pytest.raises(judge.JudgeError, match="string id"):
             ask([item()], fake, tmp_path, manifest=twice)
+    # held-out text under the id of a development document
+    with pytest.raises(judge.JudgeError, match="not the manifest text"):
+        ask([item(text=TEXT + " ")], fake, tmp_path)
+    twice.write_text(json.dumps({"documents": [{"id": "doc-a", "split": "development"}]}))
+    with pytest.raises(judge.JudgeError, match="not the manifest text"):
+        ask([item()], fake, tmp_path, manifest=twice)  # no text_sha256
     assert fake.commands == []
     fake = FakeCodex('{"choice": "c1", "confidence": 0.5}')
     out = ask([item(split="heldout")], fake, tmp_path, manifest=held, allow_heldout=True)
