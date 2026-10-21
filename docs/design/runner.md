@@ -515,7 +515,10 @@ search cuts large regions and the second sweep adds entries (#382). `groundgate-
 `groundgate-run/1`, the version that 0.9.0 wrote, because the prompt, the field causes and the
 `rounding` line changed (#318, #319). An older record fails replay with the message
 `runner version differs`, which names both versions. It does not get to
-a prompt comparison. A client-error
+a prompt comparison. The prompt of `groundgate-run/3` changed before a release wrote it (#428):
+it asks for the whole scale heading. The `groundgate-run/3` records written before #428 are
+development loop records only, and their replay fails with `invalid replay record or inputs`.
+A client-error
 entry can verify the record of the attempted call, not reproduce the external failure.
 Replaying recorded replies is deterministic; a fresh model run need not produce those replies.
 
