@@ -490,3 +490,26 @@ def test_a_currency_name(text: str, unit: str, held: bool) -> None:
     """A unit item can hold a currency name or the code of a unit with no form (spec 0.11,
     #423). The code matches in capitals only, and a name as a whole word."""
     assert currency_name(text, 0, len(text), unit) is held
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        "tCO2e/US$ million",
+        "tCO2e per US$ million",
+        "tCO2e/US dollars million",
+        "tCO2e/U.S. dollars million",
+        "tCO2e /\tUnited  States dollars millions",
+    ],
+)
+def test_the_longest_form_reads_per_and_slash(text: str) -> None:
+    """Form 3 reads the longest currency form that ends at the scale word, so a "$" or
+    "dollars" inside a longer form after "/" or "per" does not count (spec 0.11, #423)."""
+    assert not scale_form(text, 0, len(text), "USD", USD_FORMS)
+    a = text.rindex("$") if "$" in text else text.rindex("dollars")
+    assert not scale_form(text, a, len(text), "USD", USD_FORMS)
+
+
+@pytest.mark.parametrize("text", ["\tUS$ million", "Amounts in US dollars million", "MUS$ million"])
+def test_a_longest_form_with_no_per_counts(text: str) -> None:
+    assert scale_form(text, 0, len(text), "USD", USD_FORMS)
