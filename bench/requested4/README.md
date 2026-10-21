@@ -183,6 +183,31 @@ runner gain of 3 misses is the same size as the baseline noise of 3 misses. Annu
 and sds get worse, and the sbc gain comes from candidates that cite no field item. The
 question of a required field item is in #450.
 
+Loop 04 ran the three arms on the same 32 documents on origin/main c0d2705 (`loop/04.json`,
+`loop/04/results.json`, `loop/04/RESULTS.md`, `loop/04/COMPARE.md`). It has no change: #449
+reverted #441, so the extraction code is the same as in loop 02. The later merges changed only
+the review and store code. Loop 04 records the code that the held-out run freezes. The
+configuration is the same as in loop 02 except the code digest. No document was incomplete,
+had a transport error or stopped at `search_limit`.
+
+| Arm | Kind | Miss rate, loop 02 | Miss rate, loop 04 | Escapes, loop 02 | Escapes, loop 04 |
+|---|---|---:|---:|---:|---:|
+| baseline | total | 62.30% (76 of 122) | 62.30% (76 of 122) | 1 | 0 |
+| baseline | annual | 66.67% (30 of 45) | 66.67% (30 of 45) | 0 | 0 |
+| baseline | component | 61.54% (16 of 26) | 61.54% (16 of 26) | 1 | 0 |
+| baseline | sbc | 54.29% (19 of 35) | 54.29% (19 of 35) | 0 | 0 |
+| baseline | sds | 68.75% (11 of 16) | 68.75% (11 of 16) | 0 | 0 |
+| runner | total | 58.20% (71 of 122) | 61.48% (75 of 122) | 2 | 2 |
+| runner | annual | 60.00% (27 of 45) | 62.22% (28 of 45) | 0 | 0 |
+| runner | component | 57.69% (15 of 26) | 57.69% (15 of 26) | 2 | 2 |
+| runner | sbc | 51.43% (18 of 35) | 60.00% (21 of 35) | 0 | 0 |
+| runner | sds | 68.75% (11 of 16) | 68.75% (11 of 16) | 0 | 0 |
+| runner_drop_rounded | total | 57.38% (70 of 122) | 60.66% (74 of 122) | 2 | 2 |
+
+The table gives only the total for `runner_drop_rounded`. `loop/04/COMPARE.md` compares each
+kind with loop 03. The runner extraction code is the same as in loop 02, so the move from 71 to
+75 misses is run noise. Loop 04 keeps the decision of loop 03: `decide` is `drop`.
+
 ## What comes next
 
 The learning loop runs on the development split only (`bench/requested/loop.py`). It writes one
