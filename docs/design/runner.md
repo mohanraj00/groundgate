@@ -490,8 +490,10 @@ The replay cost grows with the document and the record.
 returns the packet key. It writes each object as its store kind (`text@1`, `schema@1`,
 `policy@1`, `reference@1`, `prompt@1`, `reply@1`, `admission@1`), then the record as one `run@3`
 object with the bytes of `run.jsonl`, then the final inputs, the receipt and a `packet@1` object
-whose `run` names the record. Before it writes, it checks each object against its key and runs
-`admit` again on the stored inputs. If that gives another receipt, it writes nothing. The record
+whose `run` names the record. It writes only the objects that the record names, and it saves a
+run that is not complete too. Before the first write, it checks each object against its key and
+runs `admit` again on the stored inputs. If that gives another receipt, it raises before it
+writes. A store error during the writes can leave objects that no packet names. The record
 keeps its `groundgate-run/3` keys, so a store cannot replay the run yet: the store keys come with
 `groundgate-run/4` (#429). `RunResult.read(folder)` stays the replay path.
 

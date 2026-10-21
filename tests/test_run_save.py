@@ -151,9 +151,6 @@ def test_save_refuses_a_changed_artifact_before_it_writes(tmp_path: Path) -> Non
         {k: v for k, v in result.artifacts.items() if k != reply},
         result.complete,
     )
-    bad = RunResult(
-        result.receipt, result.candidates, result.record, {"../x": "{}"}, result.complete
-    )
     other = RunResult(
         run("Amount 5.", "5", document_id="other").receipt,
         result.candidates,
@@ -166,8 +163,24 @@ def test_save_refuses_a_changed_artifact_before_it_writes(tmp_path: Path) -> Non
             changed.save(store)
         with pytest.raises(ValueError, match="missing object"):
             missing.save(store)
-        with pytest.raises(ValueError, match="not a sha256 digest"):
-            bad.save(store)
         with pytest.raises(PacketError, match="another receipt"):
             other.save(store)
     assert not (tmp_path / "objects").exists() or not any((tmp_path / "objects").iterdir())
+
+
+def test_save_writes_only_the_objects_that_the_record_names(tmp_path: Path) -> None:
+    result = run("Amount 5.", "5")
+    extra = RunResult(
+        result.receipt,
+        result.candidates,
+        result.record,
+        {**result.artifacts, "sha256:" + "0" * 64: "not named"},
+        result.complete,
+    )
+
+    def files(folder: Path) -> set[str]:
+        return {p.name for p in (folder / "objects").rglob("*") if p.is_file()}
+
+    with FolderStore(tmp_path / "a") as a, FolderStore(tmp_path / "b") as b:
+        assert extra.save(a) == result.save(b)
+    assert files(tmp_path / "a") == files(tmp_path / "b")

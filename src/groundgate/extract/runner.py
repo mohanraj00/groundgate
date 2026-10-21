@@ -232,25 +232,28 @@ class RunResult:
         ``write``. The record keeps its ``groundgate-run/3`` keys, so the store cannot replay
         the run yet (#429): ``RunResult.read(folder)`` stays the replay path.
 
-        ``packs`` are the packs that the saved schema names, as for ``read``. Before it writes,
+        ``packs`` are the packs that the saved schema names, as for ``read``. ``save`` writes only
+        the objects that the record names, as ``read`` reads only those. A run that is not
+        complete is saved too, because its receipt still verifies. Before the first write,
         ``save`` checks each object against its key and its store kind, and runs ``admit`` again
         on the stored inputs. If the result is not the receipt of the run, ``save`` raises
-        ``PacketError`` and writes nothing, because ``verify`` from the packet would then fail.
-        A bad object or a record that does not name its inputs raises ``ValueError``."""
+        ``PacketError`` before it writes, because ``verify`` from the packet would then fail. A
+        bad object or a record that does not name its inputs raises ``ValueError``. A store error
+        during the writes, for example an object above the store limit, can leave objects that
+        no packet names. They do no harm, and ``save`` can run again."""
         from ..store import check_bytes
         from ..store.packets import _put_packet
 
+        inputs, keys = _named(self.record)
         kinds: dict[str, str] = {}
-        for k, body in self.artifacts.items():
-            if not isinstance(k, str) or not _KEY.fullmatch(k) or not isinstance(body, str):
-                raise ValueError("an artifact key is not a sha256 digest")
+        for k in dict.fromkeys(keys):  # only the objects of this run, as `read` takes them
+            body = self.artifacts.get(k)
+            if not isinstance(body, str):
+                raise ValueError(f"the log names a missing object {k}")
             kind = next((kind for kind in _STORE_KINDS if _hash(kind, body) == k), None)
             if kind is None:
                 raise ValueError(f"the artifact {k} does not match its key")
             kinds[k] = _STORE_KINDS[kind]
-        inputs, keys = _named(self.record)
-        if any(k not in self.artifacts for k in keys):
-            raise ValueError("the log names a missing object")
         try:
             text = self.artifacts[inputs["document"]["sha256"]]
             document_id = inputs["document"]["id"]
@@ -272,8 +275,8 @@ class RunResult:
             raise PacketError(f"the inputs have no canonical JSON form: {exc}") from exc
         lines = "".join(jcs(line) + "\n" for line in self.record).encode("utf-8")
         run_kind = "run@" + _VERSION.rsplit("/", 1)[1]
-        for k, body in self.artifacts.items():
-            check_bytes(kinds[k], body.encode("utf-8"))
+        for k, kind in kinds.items():
+            check_bytes(kind, self.artifacts[k].encode("utf-8"))
         check_bytes(run_kind, lines)
         again = admit(
             text,
@@ -290,8 +293,8 @@ class RunResult:
                 "admit on the stored inputs gives another receipt than the run. Give the packs "
                 "that the schema names."
             )
-        for k, body in sorted(self.artifacts.items()):
-            store.put(kinds[k], body.encode("utf-8"))
+        for k, kind in sorted(kinds.items()):
+            store.put(kind, self.artifacts[k].encode("utf-8"))
         run = store.put(run_kind, lines)
         return _put_packet(store, text, back, self.receipt, document_source, None, run)
 
