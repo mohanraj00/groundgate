@@ -456,7 +456,9 @@ permitted and actual diff. Each admission line names its admission packet: the e
 list and the core receipt. Search-only, limit and final-admission steps have lines too.
 A field item that fails because it holds the value's token or comes after the token has the
 cause `holds_value` or `after_value` (#318). The token is the one that the precision of section 4
-reads. Without it, the value span stands for the token. A repair call line lists the causes of its candidate in
+reads. Without it, the value span stands for the token. A field item before the token that holds
+no mention of an alias of the field has the cause `no_alias`, and the repair feedback lists the
+aliases (#395). A repair call line lists the causes of its candidate in
 `field_causes`. The final admission line maps each candidate id with a cause to its causes, in
 the same key, so that a bench can count each cause.
 
@@ -527,6 +529,8 @@ search cuts large regions and the second sweep adds entries (#382). `groundgate-
 a prompt comparison. The prompt of `groundgate-run/3` changed before a release wrote it (#428):
 it asks for the whole scale heading. The `groundgate-run/3` records written before #428 are
 development loop records only, and their replay fails with `invalid replay record or inputs`.
+The prompt changed again before a release (#395): a field item holds one of the field's aliases,
+and a repair names the cause `no_alias`. The same replay failure applies to the records before it.
 A client-error
 entry can verify the record of the attempted call, not reproduce the external failure.
 Replaying recorded replies is deterministic; a fresh model run need not produce those replies.

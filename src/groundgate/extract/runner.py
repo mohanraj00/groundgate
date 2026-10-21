@@ -24,7 +24,7 @@ from ..canonical import SPEC_VERSION, jcs
 from ..codes import INFO
 from ..feedback import feedback_message
 from ..model import Decision, PacketError, Policy, Receipt, Schema, extractor_schema
-from ..text import canonical, quote_pattern, tokens
+from ..text import canonical, key_mentions, quote_pattern, tokens
 
 if TYPE_CHECKING:
     from ..store import Store
@@ -67,7 +67,9 @@ _INSTRUCTIONS = (
     "JSON object, no fences. Copy evidence quotes from the pinned sources. Never invent a value. "
     "Use not_found for every requested field with no candidate. Do not supply ids, offsets, "
     "confidence, policies or judgments. A field item quotes the label before the value, such as "
-    "a row label or a column header. It must not hold the value. "
+    "a row label or a column header. It must not hold the value. It holds one of the field's "
+    "aliases, word for word. If no label at the value holds an alias, cite the same value at a "
+    "place where a label holds one. "
     "A scale or unit item quotes the whole heading or caption that states the scale or the "
     'currency, such as "(in € million)" or "(millions of Canadian dollars)", not a bare '
     '"million". Omit the scale item when the scale word directly follows the number, as in '
@@ -80,12 +82,15 @@ _INSTRUCTIONS = (
 )
 
 
-# Why a field item cannot pass (SPEC §4.6): it must end at or before the value's token (#318).
+# Why a field item cannot pass (SPEC §4.6): it must end at or before the value's token (#318),
+# and it must name the field with one of its aliases (#395).
 _FIELD_CAUSES = {
     "holds_value": 'A "field" item holds the value. Quote only the label before the value, '
     "without the number.",
     "after_value": 'A "field" item comes after the value. Quote the label before the value, '
     "such as its row label or column header.",
+    "no_alias": 'A "field" item names no alias of the field. Quote a label before the value '
+    "that holds one of these aliases, word for word:",
 }
 
 
@@ -595,6 +600,8 @@ class _Engine:
         self.references = references
         self.sources = {"document": text, **{f"reference:{r['id']}": r["text"] for r in references}}
         self.offsets = {name: _ByteOffsets(body) for name, body in self.sources.items()}
+        # The byte spans of the alias mentions in each source, read once (#395).
+        self.mentions: dict[tuple[str, tuple[str, ...]], list[tuple[int, int]]] = {}
         self.record: list[Json] = []
         self.artifacts: dict[str, str] = {}
         self.event(
@@ -1108,7 +1115,12 @@ class _Engine:
                     d, self.tips[cid], self.schema, self.text, self.references
                 )
                 if feedback is not None and causes:
-                    feedback += "".join(f"\n- {_FIELD_CAUSES[c]}" for c in dict.fromkeys(causes))
+                    field = self.schema.fields.get(d.field) if d.field is not None else None
+                    aliases = ", ".join(f'"{a}"' for a in (field.aliases if field else None) or ())
+                    feedback += "".join(
+                        f"\n- {_FIELD_CAUSES[c]}" + (f" {aliases}." if c == "no_alias" else "")
+                        for c in dict.fromkeys(causes)
+                    )
                 prompt = self.prompt(
                     "repair",
                     [old["field"]],
@@ -1394,12 +1406,26 @@ class _Engine:
 
     def field_causes(self, d: Decision) -> list[str]:
         """The cause of each failing field item, in evidence order, when no field item passes:
-        it holds the value's token, or it comes after the token (SPEC §4.6). Without a numeric
-        token, the value span stands for it. Other failures have no cause here."""
+        it holds the value's token, it comes after the token, or it holds no mention of an alias
+        of the field (SPEC §4.6). Without a numeric token, the value span stands for it. Other
+        failures have no cause here."""
         if "FIELD_CITATION_INVALID" not in d.codes or d.evidence is None:
             return []
         found = self.token(d)
         start, end = d.evidence if found is None else found[:2]
+        field = self.schema.fields.get(d.field) if d.field is not None else None
+        # Without aliases or a source text, no_alias does not apply. FIELD_CITATION_INVALID needs
+        # aliases (SPEC §4.6), so this is a guard only.
+        mentions: list[tuple[int, int]] | None = None
+        if field is not None and field.aliases and d.source in {"document", "reference"}:
+            source = "document" if d.source == "document" else f"reference:{d.ref}"
+            mentions = self.mentions.get((source, field.aliases))
+            if mentions is None:
+                offsets = self.offsets[source]
+                mentions = self.mentions[source, field.aliases] = [
+                    (offsets.to_bytes(x), offsets.to_bytes(y))
+                    for x, y, _ in key_mentions(self.sources[source], field.aliases)
+                ]
         causes = []
         for part in d.parts:
             if part.role != "field" or part.passed or part.span is None:
@@ -1409,6 +1435,8 @@ class _Engine:
                 causes.append("holds_value")
             elif a >= end:
                 causes.append("after_value")
+            elif mentions is not None and not any(a <= x and y <= b for x, y in mentions):
+                causes.append("no_alias")
         return causes
 
     def rounding(self) -> None:
