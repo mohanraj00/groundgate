@@ -1,7 +1,7 @@
 # Review: the step that collects a person's answers
 
-Status: approved on 2026-10-20, issue #287. Only the formats of section 5 are built (#408). It
-changes no decision. The review step keeps its data in the store of [store.md](store.md) (#288),
+Status: approved on 2026-10-20, issue #287. The formats of section 5 (#408) and `review tasks`
+(#409) are built. It changes no decision. The review step keeps its data in the store of [store.md](store.md) (#288),
 so the two notes go together. The last section lists the code issues.
 
 ## 1. The answers in short
