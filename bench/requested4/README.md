@@ -208,6 +208,38 @@ The table gives only the total for `runner_drop_rounded`. `loop/04/COMPARE.md` c
 kind with loop 03. The runner extraction code is the same as in loop 02, so the move from 71 to
 75 misses is run noise. Loop 04 keeps the decision of loop 03: `decide` is `drop`.
 
+## Held-out results
+
+The manifest `code_freeze` names b27d3d2, its code digest and `loop/04.json`. Then the three arms
+ran one time on the 59 held-out documents on 2026-10-21 (`runs/`, `results.json`, `RESULTS.md`).
+The model, transport and run limits are the same as in loop 04, with the installed Codex
+account. The held-out run had a limit of 1,500 model calls for all arms together.
+`runner_drop_rounded` replayed the runner calls. No document was incomplete, had a transport
+error or stopped at `search_limit`.
+
+`COMPARE.md` puts these numbers beside the 0.10 held-out results of `bench/requested3`. The two
+sets have different documents, so the comparison is not of the same documents.
+
+| Arm | Kind | Miss rate, 0.10 | Miss rate, 0.11 | Escapes, 0.10 | Escapes, 0.11 | Incomplete, 0.10 | Incomplete, 0.11 |
+|---|---|---:|---:|---:|---:|---:|---:|
+| baseline | total | 62.30% (190 of 305) | 62.75% (128 of 204) | 2 | 1 | 0 of 111 | 0 of 59 |
+| baseline | annual | 73.53% (50 of 68) | 65.12% (56 of 86) | 2 | 1 | 0 of 20 | 0 of 16 |
+| baseline | component | 89.39% (59 of 66) | 83.33% (25 of 30) | 0 | 0 | 0 of 18 | 0 of 9 |
+| baseline | sbc | 42.11% (40 of 95) | 45.83% (33 of 72) | 0 | 0 | 0 of 23 | 0 of 16 |
+| baseline | sds | 53.95% (41 of 76) | 87.50% (14 of 16) | 0 | 0 | 0 of 50 | 0 of 18 |
+| runner | total | 68.20% (208 of 305) | 61.27% (125 of 204) | 0 | 1 | 19 of 111 | 0 of 59 |
+| runner | annual | 97.06% (66 of 68) | 72.09% (62 of 86) | 0 | 0 | 15 of 20 | 0 of 16 |
+| runner | component | 92.42% (61 of 66) | 66.67% (20 of 30) | 0 | 1 | 4 of 18 | 0 of 9 |
+| runner | sbc | 43.16% (41 of 95) | 41.67% (30 of 72) | 0 | 0 | 0 of 23 | 0 of 16 |
+| runner | sds | 52.63% (40 of 76) | 81.25% (13 of 16) | 0 | 0 | 0 of 50 | 0 of 18 |
+| runner_drop_rounded | total | 67.54% (206 of 305) | 60.29% (123 of 204) | 0 | 1 | 19 of 111 | 0 of 59 |
+
+The table gives only the total for `runner_drop_rounded`; `COMPARE.md` has each kind and the
+`search_limit` counts. In 0.10, 19 runner documents stopped at `search_limit` (56 fields). In
+0.11, none did. In 0.11, the runner misses 125 values and the baseline 128 of 204, and each arm
+has 1 escape. The gap of 3 misses is inside the run noise that loop 04 shows, so I do not claim
+a difference between the arms.
+
 ## What comes next
 
 The learning loop runs on the development split only (`bench/requested/loop.py`). It writes one
