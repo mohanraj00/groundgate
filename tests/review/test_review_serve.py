@@ -487,6 +487,15 @@ def test_a_value_that_occurs_two_times_is_not_marked_in_the_frame() -> None:
         assert serve._marked(f"<p>Rent</p>{inside}", "$75") == (f"<p>Rent</p>{inside}", False, 1)
     assert serve._marked("<script></script><p>$75</p>", "$75")[1] is True
     assert serve._marked("<!-- a --><p>$75</p>", "$75")[1] is True
+
+
+def test_the_frame_marks_a_value_that_holds_href(tmp_path: Path) -> None:
+    review = Review(FolderStore(tmp_path / "store"), "ana")
+    review.docs["p"] = serve._Doc.__new__(serve._Doc)
+    review.docs["p"].html = "<p>see href=x</p>"
+    review.tickets["t"] = ("p", "href=x")
+    html = review.frame("t")
+    assert html is not None and "<mark" in html and "data-href=x</mark>" in html
     assert serve._marked("<p>a\n  b</p>", "a b")[0] == (
         '<p><mark style="background:#ffe066;outline:3px solid #c92a2a">a\n  b</mark></p>'
     )

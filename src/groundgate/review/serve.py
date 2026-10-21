@@ -505,7 +505,7 @@ class Review:
         A ticket works one time."""
         found = self.tickets.pop(ticket, None)
         html = None if found is None else self.docs[found[0]].html
-        return None if found is None or html is None else _marked(_inert(html), found[1])[0]
+        return None if found is None or html is None else _inert(_marked(html, found[1])[0])
 
     def reason(self, tk: object) -> dict[str, Any]:
         """The codes of the task and the outcome of each choice (§8, The reason is closed)."""

@@ -420,3 +420,6 @@ authenticate that name. Thus a lead answer of the review policy is not an authen
 The server reads the answer logs when it starts and after each answer of its own reviewer. If
 another reviewer answers while the page is open, the page does not show it. To see the answers
 of the other reviewers, restart `review serve`.
+
+The frame shows the original page with one change. Each `http-equiv` and `href` name becomes
+`data-equiv` and `data-href`, also in the text, so that the page cannot go to another host.
