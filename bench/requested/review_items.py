@@ -22,7 +22,8 @@ same keys.
 ``score`` reads the latest answer of the reviewer to each task, and the sealed labels. It stops
 before it reads a label if a task has no answer. An answer agrees with its label when it gives
 the labeled value and unit, or ``not_in_document`` for an absent label. ``unsure`` and an
-``unclear`` label are not scored. An independent blind check of the original document decides
+``unclear`` label are not scored. For a field with more than one value, an answer agrees when
+its value is one of the labeled values. An independent blind check of the original document decides
 each disagreement: ``review/checks-needed.json`` names each item to check with no answer and no
 label, and ``--checks`` reads the result in the same form as a label. Then the wrong answers are
 the disagreements where the check does not give the answer. The bar of #234: the 95% upper
@@ -293,6 +294,26 @@ def _summary(rows: list[Json]) -> Json:
     }
 
 
+def _checks(raw: Any) -> dict[str, Json]:
+    """The blind check of each task, from a ``{"checks": [...]}`` file. Each check has the
+    form of a label: ``task``, ``status``, and ``values`` for a present value."""
+    if not isinstance(raw, dict) or not isinstance(raw.get("checks"), list):
+        raise ValueError('the checks file must be {"checks": [...]}')
+    out: dict[str, Json] = {}
+    for c in raw["checks"]:
+        if not isinstance(c, dict) or not isinstance(c.get("task"), str):
+            raise ValueError("each check needs a task key")
+        if c.get("status") not in ("present", "absent", "unclear"):
+            raise ValueError(f"the check of {c['task']} needs a status: present, absent, unclear")
+        values = c.get("values", [])
+        if (c["status"] == "present") != bool(values) or not isinstance(values, list):
+            raise ValueError(f"the check of {c['task']} needs values only when it is present")
+        if c["task"] in out:
+            raise ValueError(f"two checks name the task {c['task']}")
+        out[c["task"]] = c
+    return out
+
+
 def score(set_dir: Path, store_dir: Path, reviewer: str, checks: Path | None = None) -> Json:
     """Score the latest answer of ``reviewer`` to each item against the sealed labels."""
     out = set_dir / "review"
@@ -330,14 +351,13 @@ def score(set_dir: Path, store_dir: Path, reviewer: str, checks: Path | None = N
     gold = {
         (d["id"], s["field"], s.get("key")): s for d in labels["documents"] for s in d["fields"]
     }
-    checked: dict[str, Json] = {}
-    if checks is not None:
-        for c in _load(checks)["checks"]:
-            checked[c["task"]] = c
+    checked = {} if checks is None else _checks(_load(checks))
     rows, needed = [], []
     for ident, tk, task, answer, kind in found:
         slot = task["slot"]
-        label = gold[(ident, slot["field"], slot["key"])]
+        label = gold.get((ident, slot["field"], slot["key"]))
+        if label is None:
+            raise ValueError(f"labels.json has no label for {ident} {slot['field']}")
         given = _answer_value(task, answer)
         if answer["verdict"] == "unsure":
             outcome = "unsure"
@@ -382,6 +402,9 @@ def score(set_dir: Path, store_dir: Path, reviewer: str, checks: Path | None = N
                 "outcome": outcome,
             }
         )
+    extra = sorted(set(checked) - {c["task"] for c in needed})
+    if extra:
+        raise ValueError(f"the checks name {len(extra)} tasks that are not a disagreement")
     groups: dict[str, list[Json]] = {}
     for r in rows:
         for g in (r["mode"], r["item"], f"{r['mode']} {r['item']}"):

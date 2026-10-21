@@ -233,6 +233,16 @@ def test_build_score_and_report(tmp_path: Path) -> None:
     assert (total["wrong"], total["pending"], total["label_wrong"]) == (1, 0, 0)
     assert total["passes"] is False and total["wrong_upper95"] is not None
 
+    other = {"task": "sha256:" + "d" * 64, "status": "absent"}  # not a disagreement
+    for bad, why in (
+        ({"checks": [{**check, "status": "maybe"}]}, "needs a status"),
+        ({"checks": [{**check, "values": []}]}, "needs values only when it is present"),
+        ({"checks": [check, other]}, "1 tasks that are not a disagreement"),
+    ):
+        checks.write_text(json.dumps(bad), encoding="utf-8")
+        with pytest.raises(ValueError, match=why):
+            review_items.score(set_dir, store_dir, "ana", checks)
+
     check["values"] = [{"value": "6", "unit": "V"}]  # the check gives the answer: label wrong
     checks.write_text(json.dumps({"checks": [check]}), encoding="utf-8")
     total = review_items.score(set_dir, store_dir, "ana", checks)["total"]

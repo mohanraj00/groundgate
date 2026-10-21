@@ -319,7 +319,8 @@ for an absent label. An `unsure` answer and an `unclear` label are not scored. A
 a wrong answer when the check does not give the answer, and the item is not scored when the
 check is `unclear`. The result passes the bar of #234 when the 95% upper bound of the rate of
 wrong answers is below 0.05. The results also count the answers that take a value of groundgate
-(`confirm` or `choose`) and are not the label, and give the median time of each group.
+(`confirm` or `choose`) and are not the label, before the checks. They also give the median
+time of each group.
 
 This command gives the measures of the review page itself:
 
