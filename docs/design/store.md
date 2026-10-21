@@ -3,6 +3,7 @@
 Status: approved on 2026-10-20, issue #288. Code issue 1 is built: `groundgate.store` (#402).
 Code issue 2 is built: packets and readings (#403).
 Code issue 3 is built: `store check`, `store rebuild` and `store forget` (#404).
+The `splits` log of code issue 5 is built (#406). The calibrate labels of issue 5 are not.
 The rest is not built. The note changes no decision and no receipt.
 [review.md](review.md) (#287) keeps its data here. The last section lists the code issues.
 

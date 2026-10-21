@@ -20,7 +20,7 @@ with a test judge. This page is the reference.
 ```bash
 groundgate calibrate sample --work W --docs D --candidates C --schema S --question key \
     --context "The text is from a 10-K filing."
-groundgate calibrate split  --work W        # before any model run
+groundgate calibrate split  --work W [--store DIR --set NAME]  # before any model run
 groundgate calibrate label  --work W        # label in the browser, blind, before ask
 groundgate calibrate ask    --work W --judge NAME   # NAME: a judge (see Judges)
 groundgate calibrate report --work W        # REPORT.md, report.json
@@ -83,6 +83,12 @@ documents for the ceiling that you need before you start.
   options. It never shows the candidate's key, groundgate's reading or a judge's answer.
 - **Split first.** `split` is written once, by document, on sha256 of the document name. It
   refuses to run after a judge has answered, and `ask` refuses to run without it.
+- **The splits log.** With `--store DIR --set NAME`, `split` also writes the part of each
+  document to the `splits` log of the set in the store
+  ([store.md §10](design/store.md#10-fit-with-other-work)). The document is the store key of
+  its text. The log comes before any label, so `split` refuses to write it when `labels.json`
+  has a label. If the log already puts a document in another part, `split` stops and writes
+  nothing. A work folder with no store works as before.
 - **Labels first.** `ask` refuses to run until every item has a label (not sure counts), and it
   records a digest of the labels. The label tool refuses changes once a judge has answered, and
   `report` refuses answers whose labels changed.

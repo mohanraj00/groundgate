@@ -1,7 +1,7 @@
 """groundgate calibrate (experimental): measure a judge's thresholds on your own documents (§9).
 
     groundgate calibrate sample --work W --docs D --candidates C --schema S --question key
-    groundgate calibrate split  --work W        # before any model run
+    groundgate calibrate split  --work W [--store DIR --set NAME]  # before any model run
     groundgate calibrate label  --work W        # label in the browser, blind, before ask
     groundgate calibrate ask    --work W --judge jev
     groundgate calibrate report --work W        # REPORT.md, report.json
@@ -115,17 +115,50 @@ def part(doc: str) -> str:
     return "calibration" if hashlib.sha256(doc.encode()).hexdigest()[0] in "01234567" else "test"
 
 
-def split(w: Work) -> None:
+def split(w: Work, store: Path | None = None, set_name: str | None = None) -> None:
+    """Write split.json. With a store and a set name, also write the part of each document to
+    the splits log of that set (store.md §10), before split.json."""
+    if (store is None) != (set_name is None):
+        raise SystemExit("give --store and --set together")
     if (w.path / "split.json").exists():
         raise SystemExit("split.json is there already; a split is written once")
     if list(w.path.glob("answers-*.json")):
         raise SystemExit("a model has answered already; a split comes before any model run")
-    out = {it["id"]: part(it["doc"]) for it in w.read("items.json")}
+    items = w.read("items.json")
+    out = {it["id"]: part(it["doc"]) for it in items}
+    if store is not None and set_name is not None:
+        log_split(w, items, store, set_name)
     w.write("split.json", out)
     # the prompts that the split is for: ask asks only these, and report scores only their answers
     w.write("prompts.json", {"prompts_sha256": prompts_sha256(w)})
     n = sum(v == "calibration" for v in out.values())
     print(f"wrote split.json: {n} calibration, {len(out) - n} test")
+
+
+def log_split(w: Work, items: list[dict[str, Any]], store: Path, set_name: str) -> None:
+    """Write the part of each document to the splits log of ``set_name`` in ``store``. The
+    document key is the text key, because calibrate has no source. The log comes before any
+    label, and a document that the log puts in another part stops the split."""
+    from groundgate.store import FolderStore, StoreError, key
+    from groundgate.store.splits import write_split
+
+    if w.read("labels.json", {}):
+        raise SystemExit("labels.json has labels; the splits log comes before any label")
+    parts: dict[str, str] = {}
+    names: dict[str, str] = {}
+    for doc in sorted({it["doc"] for it in items}):
+        k = key("text@1", w.text(doc).encode("utf-8"))
+        if parts.setdefault(k, part(doc)) != part(doc):
+            raise SystemExit(f"{names[k]} and {doc} have the same text but not the same part")
+        names.setdefault(k, doc)
+    try:
+        with FolderStore(store) as s:
+            added = write_split(s, set_name, parts)
+    except (StoreError, ValueError, OSError) as exc:
+        raise SystemExit(f"{store}: {exc}") from exc
+    print(
+        f"the splits log of {set_name}: {added} new documents, {len(parts) - added} there already"
+    )
 
 
 def prompts(w: Work) -> list[tuple[str, str, dict[str, Any]]]:
@@ -407,7 +440,14 @@ def main(argv: list[str] | None = None, prog: str = "groundgate calibrate") -> N
     p.add_argument("--context", default="", help='for example "The text is from a 10-K filing."')
     p = sub.add_parser("label", help="label the items in the browser")
     p.add_argument("--port", type=int, default=8780)
-    sub.add_parser("split", help="split the items, before any model run")
+    p = sub.add_parser("split", help="split the items, before any model run")
+    p.add_argument(
+        "--store",
+        type=Path,
+        metavar="DIR",
+        help="also write the part of each document to the splits log of --set in this store",
+    )
+    p.add_argument("--set", dest="set_name", metavar="NAME", help="the set of the splits log")
     p = sub.add_parser("ask", help="ask a judge every question")
     p.add_argument(
         "--judge", required=True, help="a judge name: chat, jev, or an installed plug-in"
@@ -435,7 +475,7 @@ def main(argv: list[str] | None = None, prog: str = "groundgate calibrate") -> N
 
         serve(w, args.port)
     elif args.cmd == "split":
-        split(w)
+        split(w, args.store, args.set_name)
     elif args.cmd == "ask":
         ask(w, args.judge)
     else:

@@ -115,26 +115,6 @@ def _document(store: Any, packet: Any) -> str:
     return key("text@1", packet.text.encode("utf-8"))
 
 
-def read_split(store: Any, set_name: str) -> dict[str, str]:
-    """The split of each document of the set ``set_name``, from its ``splits`` log. A record
-    of another set, a record that is not a split record, or a second split for one document
-    raises ``ValueError`` (store.md §10)."""
-    from ..store import KEY, set_key
-
-    out: dict[str, str] = {}
-    for r in store.read(("splits", set_key(set_name))):
-        document, split = r.get("document"), r.get("split")
-        if r.get("set") != set_name:
-            raise ValueError(f"splits record {_printable(r.get('sequence'))} names another set")
-        if not isinstance(document, str) or not KEY.fullmatch(document):
-            raise ValueError(f"splits record {_printable(r.get('sequence'))} has no document key")
-        if not isinstance(split, str) or not split:
-            raise ValueError(f"splits record {_printable(r.get('sequence'))} has no split")
-        if out.setdefault(document, split) != split:
-            raise ValueError(f"the splits log gives the document {document} two splits")
-    return out
-
-
 def _logs(store: Any) -> tuple[dict[str, dict[str, list[dict[str, Any]]]], list[str]]:
     """The answer logs of the store by packet and reviewer name, and a line for each log that
     is left out. The name in the first record must give the digest of the log name."""
@@ -175,6 +155,7 @@ def measures(
     documents, and the split check comes before the receipt check."""
     from ..store import StoreError
     from ..store.packets import load_packet
+    from ..store.splits import read_split
 
     checked = check_policy(DEFAULT_POLICY if policy is None else policy)
     if (set_name is None) != (split is None):
