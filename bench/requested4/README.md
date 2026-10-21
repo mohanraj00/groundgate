@@ -142,6 +142,47 @@ The changes lower the miss rate in each arm and add no escape, so loop 02 keeps 
 most frequent review code of the runner is now `FIELD_CITATION_INVALID`: `diagnose.review_codes`
 in `loop/02.json` counts 68 review decisions with this code that carry a right value.
 
+Loop 03 ran the three arms on the same 32 documents on origin/main 7967dde (`loop/03.json`,
+`loop/03/results.json`, `loop/03/RESULTS.md`, `loop/03/COMPARE.md`). The one change is the runner
+prompt of #441: a field item holds one of the field's aliases, and a repair names the cause
+`no_alias`. 840db78 changed only the review tasks. The configuration is the same as in loop 02
+except the code. No document was incomplete, had a transport error or stopped at
+`search_limit`.
+
+| Arm | Kind | Miss rate, loop 02 | Miss rate, loop 03 | Escapes, loop 02 | Escapes, loop 03 |
+|---|---|---:|---:|---:|---:|
+| baseline | total | 62.30% (76 of 122) | 59.84% (73 of 122) | 1 | 1 |
+| baseline | annual | 66.67% (30 of 45) | 68.89% (31 of 45) | 0 | 0 |
+| baseline | component | 61.54% (16 of 26) | 53.85% (14 of 26) | 1 | 1 |
+| baseline | sbc | 54.29% (19 of 35) | 48.57% (17 of 35) | 0 | 0 |
+| baseline | sds | 68.75% (11 of 16) | 68.75% (11 of 16) | 0 | 0 |
+| runner | total | 58.20% (71 of 122) | 55.74% (68 of 122) | 2 | 2 |
+| runner | annual | 60.00% (27 of 45) | 64.44% (29 of 45) | 0 | 0 |
+| runner | component | 57.69% (15 of 26) | 80.77% (21 of 26) | 2 | 2 |
+| runner | sbc | 51.43% (18 of 35) | 17.14% (6 of 35) | 0 | 0 |
+| runner | sds | 68.75% (11 of 16) | 75.00% (12 of 16) | 0 | 0 |
+| runner_drop_rounded | total | 57.38% (70 of 122) | 55.74% (68 of 122) | 2 | 2 |
+
+The table gives only the total for `runner_drop_rounded`; `loop/03/COMPARE.md` has each kind.
+The baseline prompt did not change, so its move from 76 to 73 misses is run noise. The runner
+moves by the same 3 misses, but the kinds move apart. `diagnose.review_codes` in `loop/03.json`
+counts 22 runner review decisions with `FIELD_CITATION_INVALID` that carry a right value, down
+from 68.
+
+The sbc misses of the runner fall from 18 to 6. This is not a gain in field items. Most runner
+sbc admits of loop 03 cite no field item, and no runner admit of loop 02 did. I counted this in
+the local run cache of the candidates. The repo does not hold that cache, so this count cannot be
+checked from the repo.
+SPEC §4.6 checks the field only when a candidate cites a field item, so these candidates pass
+without one. The other three kinds get worse: annual from 27 to 29 misses, component from 15 to
+21 and sds from 11 to 12. In component, the model quotes only the alias, such as "Supply
+voltage", and that quote can match a place far from the value.
+
+Loop 03 drops the change (`decide` is `drop` in `loop/03.json`), and #449 reverts #441. The
+runner gain of 3 misses is the same size as the baseline noise of 3 misses. Annual, component
+and sds get worse, and the sbc gain comes from candidates that cite no field item. The
+question of a required field item is in #450.
+
 ## What comes next
 
 The learning loop runs on the development split only (`bench/requested/loop.py`). It writes one
