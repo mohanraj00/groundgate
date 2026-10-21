@@ -82,7 +82,8 @@ def test_check_a_good_store(tmp_path: Path, capsys: pytest.CaptureFixture[str]) 
         reading, _ = put_reading(store, pdf)
         save_run(store)
         admit_packet(store, TEXT, SCHEMA, candidates(), reading=reading)
-        store.append(("splits", set_key("requested4")), {"split": "development"})
+        record = {"set": "requested4", "document": "sha256:" + "a" * 64, "split": "development"}
+        store.append(("splits", set_key("requested4")), record)
     with FolderStore(root) as store:
         report = check(store)
     assert report.findings == [] and report.cut == [] and report.deleted == []

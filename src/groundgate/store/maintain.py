@@ -1,11 +1,11 @@
 """Check, rebuild and forget in a folder store (docs/design/store.md §7.4, §8, §12 issue 3).
 
 ``check`` reads each object and each log of a ``FolderStore``. It finds the kind of each object
-from its key, checks each object that a packet, a reading or a run names, checks each chain,
-compares the inputs of a packet with the inputs that its run header names, and looks for
-document text in each run record. ``rebuild`` builds the views again from the objects and logs.
-``forget_packet`` removes the objects of a packet that §8 rule 3 lists as "Removed", or with
-``everything`` each object and log of the packet.
+from its key, checks each object that a packet, a reading or a run names, checks each chain and
+the view of each splits log (§10), compares the inputs of a packet with the inputs that its run
+header names, and looks for document text in each run record. ``rebuild`` builds the views
+again from the objects and logs. ``forget_packet`` removes the objects of a packet that §8 rule
+3 lists as "Removed", or with ``everything`` each object and log of the packet.
 
 The store data is untrusted. These functions build no path from it: each path comes from a key
 that matches ``sha256:[0-9a-f]{64}`` or from a fixed word.
@@ -490,7 +490,7 @@ def check(store: FolderStore, *, repair: bool = False) -> Report:
     report.logs = len(logs)
     for log in logs:
         try:
-            store.read(log)
+            _split_view(report, log, store.read(log))
             continue
         except StoreError as exc:
             if not (repair and isinstance(exc, Torn)):
@@ -500,10 +500,23 @@ def check(store: FolderStore, *, repair: bool = False) -> Report:
             cut = store.repair(log)
             if cut is not None:
                 report.cut.append((_log_rel(log), cut))
-            store.read(log)
+            _split_view(report, log, store.read(log))
         except StoreError as exc:
             report.find(str(exc))
     return report
+
+
+def _split_view(report: Report, log: tuple[str, ...], records: list[dict[str, Any]]) -> None:
+    """A finding for a splits log whose view fails: a bad record, or a second split for one
+    document (§10)."""
+    from .splits import split_view
+
+    if log[0] != "splits":
+        return
+    try:
+        split_view(records, log[1])
+    except ValueError as exc:
+        report.find(f"{_log_rel(log)}: {exc}")
 
 
 # rebuild
