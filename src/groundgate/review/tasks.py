@@ -35,6 +35,7 @@ __all__ = [
     "audit_hash",
     "audit_picked",
     "check_policy",
+    "checked_packet",
     "make_tasks",
     "slots",
     "write_tasks",
@@ -464,26 +465,38 @@ class Written:
     problems: tuple[str, ...] = ()
 
 
-def write_tasks(store: Any, packet_key: str, policy: Mapping[str, Any] | None = None) -> Written:
-    """Get the packet ``packet_key`` from ``store``, decide it again, and write a ``task@1``
-    object for each task. Return each task key with its task, in slot order. Without
-    ``policy``, the default policy gives no audit and no task for a rejected slot."""
+def checked_packet(
+    store: Any, packet_key: str
+) -> tuple[Any, Schema | None, Layout | None, tuple[str, ...]]:
+    """Get the packet ``packet_key`` from ``store`` with the layout of its reading, and decide
+    it again with ``verify``. Return the packet, its schema, its layout and the problems of
+    ``verify``. If there is a problem, the schema and the layout are None."""
     from ..admit import verify
-    from ..store import MAX_BYTES, check_bytes
     from ..store.packets import load_packet
 
-    checked = check_policy(DEFAULT_POLICY if policy is None else policy)
     packet = load_packet(store, packet_key, layout=True)
     result = verify(packet.receipt, packet.text, packet.schema, packet.candidates,
                     **packet.inputs())  # fmt: skip
     if not result.ok:
-        return Written([], tuple(result.problems))
+        return packet, None, None, tuple(result.problems)
     layout = None
     if packet.layout is not None:
         layout = Layout.from_dict(packet.layout)
         if layout.document_sha256 != digest("document", {"text": packet.text}):
             raise PacketError("the layout was extracted from a different document")
-    schema = Schema.from_dict(packet.schema, packet.packs)
+    return packet, Schema.from_dict(packet.schema, packet.packs), layout, ()
+
+
+def write_tasks(store: Any, packet_key: str, policy: Mapping[str, Any] | None = None) -> Written:
+    """Get the packet ``packet_key`` from ``store``, decide it again, and write a ``task@1``
+    object for each task. Return each task key with its task, in slot order. Without
+    ``policy``, the default policy gives no audit and no task for a rejected slot."""
+    from ..store import MAX_BYTES, check_bytes
+
+    checked = check_policy(DEFAULT_POLICY if policy is None else policy)
+    packet, schema, layout, problems = checked_packet(store, packet_key)
+    if problems or schema is None:
+        return Written([], problems)
     tasks = make_tasks(
         packet_key,
         packet.receipt,

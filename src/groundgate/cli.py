@@ -10,6 +10,7 @@
   groundgate report   RECEIPT DOC SCHEMA CANDIDATES [--pack-dir DIR] -o report.html
   groundgate report   --store DIR PACKET -o report.html
   groundgate review   tasks --store DIR PACKET          > task keys
+  groundgate review   resolve --store DIR PACKET --reviewer NAME
   groundgate schema   SCHEMA                            > extractor.schema.json
   groundgate schema check SCHEMA
   groundgate store    check   --store DIR [--repair]
@@ -208,6 +209,30 @@ def _parser() -> argparse.ArgumentParser:
         metavar="FILE",
         help="a review-policy@1 JSON file; without it, no audit and no task for a rejected slot",
     )
+    rs = steps.add_parser(
+        "resolve",
+        help="resolve the answers to the tasks of one packet; print one line for each field",
+        description="Decide the packet again, read the answer log of each reviewer, and run "
+        "admit for each correction (docs/design/review.md section 6). Write each correction "
+        "packet and a resolution@1 object to the store. Print the resolution key, then one "
+        "line for each slot: the final value, or the reason that there is none. Exit codes: 0 "
+        "success, 1 the receipt does not match its inputs, 2 invalid input, an answer that "
+        "breaks its task, or an input that is not in the store.",
+    )
+    rs.add_argument("packet", metavar="PACKET", help="the packet key from admit --store")
+    rs.add_argument("--store", metavar="DIR", required=True, help="the store folder")
+    rs.add_argument(
+        "--policy",
+        metavar="FILE",
+        help="a review-policy@1 JSON file; without it, agree 1, no lead and no audit",
+    )
+    rs.add_argument(
+        "--reviewer",
+        action="append",
+        default=[],
+        metavar="NAME",
+        help="read the answer log of this reviewer; repeat for each reviewer",
+    )
     # main() sends `store` to its own parser before this parser runs; the entry is here so that
     # --help names the command
     sub.add_parser(
@@ -345,6 +370,8 @@ def main(argv: list[str] | None = None) -> int:
             return _read(args)
         if args.command == "schema":
             return _schema(args)
+        if args.command == "review" and args.step == "resolve":
+            return _review_resolve(args)
         if args.command == "review":
             return _review_tasks(args)
         if args.command == "admit" and args.docs is not None:
@@ -511,6 +538,24 @@ def _review_tasks(args: argparse.Namespace) -> int:
         return 1
     for k, _ in written.tasks:
         print(k)
+    return 0
+
+
+def _review_resolve(args: argparse.Namespace) -> int:
+    from .review.resolve import lines, write_resolution
+
+    policy = _json(args.policy) if args.policy else None
+    with _store(args.store, make=False) as store:
+        resolved = write_resolution(store, args.packet, policy, args.reviewer)
+    for problem in resolved.problems:  # a problem can quote store data: escape each control
+        shown = "".join(c if c.isprintable() else f"\\u{ord(c):04x}" for c in problem)
+        print(f"mismatch: {shown}", file=sys.stderr)
+    if resolved.resolution is None:
+        print("groundgate: no resolution for a receipt that does not match", file=sys.stderr)
+        return 1
+    print(resolved.key)
+    for line in lines(resolved.resolution):
+        print(line)
     return 0
 
 
