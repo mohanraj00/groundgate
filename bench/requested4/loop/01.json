@@ -1,0 +1,376 @@
+{
+ "calibrate": null,
+ "decide": null,
+ "diagnose": {
+  "export_sha256": null,
+  "review_codes": {
+   "baseline": {
+    "CONFLICTING_CANDIDATES": {
+     "right": 16,
+     "unclear": 4,
+     "wrong": 8
+    },
+    "FIELD_CITATION_INVALID": {
+     "right": 141,
+     "unclear": 2,
+     "wrong": 15
+    },
+    "PART_MISSING": {
+     "right": 15,
+     "unclear": 0,
+     "wrong": 1
+    },
+    "QUALIFIED_VALUE": {
+     "right": 1,
+     "unclear": 4,
+     "wrong": 0
+    },
+    "SCALE_CITATION_INVALID": {
+     "right": 123,
+     "unclear": 0,
+     "wrong": 3
+    },
+    "SIGN_CITATION_INVALID": {
+     "right": 1,
+     "unclear": 0,
+     "wrong": 0
+    },
+    "UNIT_CITATION_INVALID": {
+     "right": 79,
+     "unclear": 0,
+     "wrong": 3
+    },
+    "VALUE_DERIVED": {
+     "right": 108,
+     "unclear": 0,
+     "wrong": 3
+    }
+   },
+   "runner": {
+    "CONFLICTING_CANDIDATES": {
+     "right": 24,
+     "unclear": 4,
+     "wrong": 10
+    },
+    "FIELD_CITATION_INVALID": {
+     "right": 70,
+     "unclear": 2,
+     "wrong": 11
+    },
+    "QUALIFIED_VALUE": {
+     "right": 0,
+     "unclear": 4,
+     "wrong": 1
+    },
+    "SCALE_CITATION_INVALID": {
+     "right": 62,
+     "unclear": 0,
+     "wrong": 2
+    },
+    "SIGN_CITATION_INVALID": {
+     "right": 1,
+     "unclear": 0,
+     "wrong": 0
+    },
+    "UNIT_CITATION_INVALID": {
+     "right": 66,
+     "unclear": 0,
+     "wrong": 3
+    },
+    "VALUE_DERIVED": {
+     "right": 57,
+     "unclear": 0,
+     "wrong": 2
+    }
+   },
+   "runner_drop_rounded": {
+    "CONFLICTING_CANDIDATES": {
+     "right": 24,
+     "unclear": 4,
+     "wrong": 10
+    },
+    "FIELD_CITATION_INVALID": {
+     "right": 70,
+     "unclear": 2,
+     "wrong": 11
+    },
+    "QUALIFIED_VALUE": {
+     "right": 0,
+     "unclear": 4,
+     "wrong": 1
+    },
+    "SCALE_CITATION_INVALID": {
+     "right": 62,
+     "unclear": 0,
+     "wrong": 2
+    },
+    "SIGN_CITATION_INVALID": {
+     "right": 1,
+     "unclear": 0,
+     "wrong": 0
+    },
+    "UNIT_CITATION_INVALID": {
+     "right": 66,
+     "unclear": 0,
+     "wrong": 3
+    },
+    "VALUE_DERIVED": {
+     "right": 57,
+     "unclear": 0,
+     "wrong": 2
+    }
+   }
+  }
+ },
+ "format": "requested-loop/1",
+ "iteration": 1,
+ "propose": {
+  "change": "spec",
+  "reference": "#423",
+  "summary": "Read a currency sign between in and the scale word, and check the annual unit items"
+ },
+ "run": {
+  "arms": [
+   "baseline",
+   "runner",
+   "runner_drop_rounded"
+  ],
+  "binding_sha256": "sha256:f543ca0c7f0e8c05bc588004decfe8e2ca64b5597c230c9c41ae4b050207e10e",
+  "code_sha256": "sha256:d3b5bb6940079179e7d2e389432eae2861b6dfe780d3158e46fbce1d1fde7167",
+  "configuration_sha256": "sha256:e4e2d11604ed44d06d32b0af460034248e50575c4e713ceaf88c9042118995c4",
+  "documents": [
+   "annual-c02",
+   "annual-c06",
+   "annual-c07",
+   "annual-c10",
+   "annual-c12",
+   "annual-c21",
+   "annual-c22",
+   "annual-c26",
+   "annual-c28",
+   "component-c01",
+   "component-c02",
+   "component-c09",
+   "component-c10",
+   "component-c12",
+   "component-c17",
+   "component-c19",
+   "sbc-c17",
+   "sbc-c18",
+   "sbc-c19",
+   "sbc-c20",
+   "sbc-c25",
+   "sbc-c26",
+   "sbc-c27",
+   "sbc-c28",
+   "sds-c05",
+   "sds-c06",
+   "sds-c07",
+   "sds-c13",
+   "sds-c22",
+   "sds-c24",
+   "sds-c25",
+   "sds-c32"
+  ],
+  "manifest_sha256": "sha256:435592c2d4013b9bec3b907d92401f23131676cfeeca5f0be2cc6f2d7de6f1e4",
+  "manifest_unfrozen_sha256": "sha256:e0253f7a17ad81166b54309254c027c34016e2287708a5e6e7d9d0be118eb7c1",
+  "split": "development"
+ },
+ "score": {
+  "by_arm": {
+   "baseline": {
+    "annual": {
+     "documents": 9,
+     "escapes": 0,
+     "incomplete": 0,
+     "miss_rate": {
+      "k": 41,
+      "n": 45,
+      "rate": 0.9111111111111111
+     },
+     "search_limit_documents": 0,
+     "search_limit_fields": 0
+    },
+    "component": {
+     "documents": 7,
+     "escapes": 1,
+     "incomplete": 0,
+     "miss_rate": {
+      "k": 16,
+      "n": 26,
+      "rate": 0.6153846153846154
+     },
+     "search_limit_documents": 0,
+     "search_limit_fields": 0
+    },
+    "sbc": {
+     "documents": 8,
+     "escapes": 0,
+     "incomplete": 0,
+     "miss_rate": {
+      "k": 21,
+      "n": 35,
+      "rate": 0.6
+     },
+     "search_limit_documents": 0,
+     "search_limit_fields": 0
+    },
+    "sds": {
+     "documents": 8,
+     "escapes": 0,
+     "incomplete": 0,
+     "miss_rate": {
+      "k": 11,
+      "n": 16,
+      "rate": 0.6875
+     },
+     "search_limit_documents": 0,
+     "search_limit_fields": 0
+    },
+    "total": {
+     "documents": 32,
+     "escapes": 1,
+     "incomplete": 0,
+     "miss_rate": {
+      "k": 89,
+      "n": 122,
+      "rate": 0.7295081967213115
+     },
+     "search_limit_documents": 0,
+     "search_limit_fields": 0
+    }
+   },
+   "runner": {
+    "annual": {
+     "documents": 9,
+     "escapes": 0,
+     "incomplete": 0,
+     "miss_rate": {
+      "k": 42,
+      "n": 45,
+      "rate": 0.9333333333333333
+     },
+     "search_limit_documents": 0,
+     "search_limit_fields": 0
+    },
+    "component": {
+     "documents": 7,
+     "escapes": 2,
+     "incomplete": 0,
+     "miss_rate": {
+      "k": 16,
+      "n": 26,
+      "rate": 0.6153846153846154
+     },
+     "search_limit_documents": 0,
+     "search_limit_fields": 0
+    },
+    "sbc": {
+     "documents": 8,
+     "escapes": 0,
+     "incomplete": 0,
+     "miss_rate": {
+      "k": 20,
+      "n": 35,
+      "rate": 0.5714285714285714
+     },
+     "search_limit_documents": 0,
+     "search_limit_fields": 0
+    },
+    "sds": {
+     "documents": 8,
+     "escapes": 0,
+     "incomplete": 0,
+     "miss_rate": {
+      "k": 11,
+      "n": 16,
+      "rate": 0.6875
+     },
+     "search_limit_documents": 0,
+     "search_limit_fields": 0
+    },
+    "total": {
+     "documents": 32,
+     "escapes": 2,
+     "incomplete": 0,
+     "miss_rate": {
+      "k": 89,
+      "n": 122,
+      "rate": 0.7295081967213115
+     },
+     "search_limit_documents": 0,
+     "search_limit_fields": 0
+    }
+   },
+   "runner_drop_rounded": {
+    "annual": {
+     "documents": 9,
+     "escapes": 0,
+     "incomplete": 0,
+     "miss_rate": {
+      "k": 42,
+      "n": 45,
+      "rate": 0.9333333333333333
+     },
+     "search_limit_documents": 0,
+     "search_limit_fields": 0
+    },
+    "component": {
+     "documents": 7,
+     "escapes": 2,
+     "incomplete": 0,
+     "miss_rate": {
+      "k": 16,
+      "n": 26,
+      "rate": 0.6153846153846154
+     },
+     "search_limit_documents": 0,
+     "search_limit_fields": 0
+    },
+    "sbc": {
+     "documents": 8,
+     "escapes": 0,
+     "incomplete": 0,
+     "miss_rate": {
+      "k": 20,
+      "n": 35,
+      "rate": 0.5714285714285714
+     },
+     "search_limit_documents": 0,
+     "search_limit_fields": 0
+    },
+    "sds": {
+     "documents": 8,
+     "escapes": 0,
+     "incomplete": 0,
+     "miss_rate": {
+      "k": 11,
+      "n": 16,
+      "rate": 0.6875
+     },
+     "search_limit_documents": 0,
+     "search_limit_fields": 0
+    },
+    "total": {
+     "documents": 32,
+     "escapes": 2,
+     "incomplete": 0,
+     "miss_rate": {
+      "k": 89,
+      "n": 122,
+      "rate": 0.7295081967213115
+     },
+     "search_limit_documents": 0,
+     "search_limit_fields": 0
+    }
+   }
+  },
+  "results": "loop/01/results.json",
+  "results_sha256": "sha256:54fdf1a568ddcd52494e4529497ec6af165f7789367fcc07ac67dabddaa9ebd8",
+  "runs_sha256": {
+   "baseline": "sha256:9840858dfdbe6ff216d36115d1b748216657742c9e1157f9c5361f9008925a72",
+   "runner": "sha256:86e7fa2fb0c1958da6f5b906c5cbb56836ef72f97030ce27fbf02c48e1436d27",
+   "runner_drop_rounded": "sha256:edc1deb6989d7a3234e2d278bee4eb24761b3a3eb58eeb8e1b904cc7f6bb4d22"
+  }
+ }
+}

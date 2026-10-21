@@ -99,6 +99,24 @@ The frozen manifest names the three arms of requested3:
 | `runner` | off, the default (main arm) | new calls on each split |
 | `runner_drop_rounded` | on | none: it replays the recorded calls of `runner` |
 
+## Learning loop
+
+Loop 01 ran all three arms on the 32 development documents on 2026-10-20, on origin/main
+ccaf944 (`loop/01.json`, `loop/01/results.json`, `loop/01/RESULTS.md`). The model, transport and
+run limits are the same as in requested3, with codex-cli 0.162.1. The baseline made 152 calls and
+the runner made 271. `runner_drop_rounded` replayed the runner calls. No document was incomplete,
+had a transport error or stopped at `search_limit`.
+
+| Arm | Miss rate | Escapes |
+|---|---:|---:|
+| baseline | 72.95% (89 of 122) | 1 |
+| runner | 72.95% (89 of 122) | 2 |
+| runner_drop_rounded | 72.95% (89 of 122) | 2 |
+
+The annual miss rate is 91.11% for the baseline and 93.33% for the runner. The record proposes one
+change: #423. The scale check fails on a header such as "(in € million)", and the unit check fails
+on items such as "Canadian dollars". This is a decision change, so it needs a new spec version.
+
 ## What comes next
 
 The learning loop runs on the development split only (`bench/requested/loop.py`). It writes one
