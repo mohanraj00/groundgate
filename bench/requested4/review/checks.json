@@ -1,0 +1,12 @@
+{"checks": [
+ {"task": "sha256:2978a2bdc8c9ae0c4c4c28bf079cafcc959b93ce7a2abeff7dfdae356121e893", "status": "present", "values": [{"value": "9776000000", "unit": "EUR"}]},
+ {"task": "sha256:97f0f57fdbbfccdf738a8cc62ba0fd42ec66af70a254b344c179e13f911d4322", "status": "present", "values": [{"value": "26944000000", "unit": "EUR"}]},
+ {"task": "sha256:41fd5152fe17be803539743edae38585d65ad702f1004a855d9841e4e360b7ac", "status": "present", "values": [{"value": "2885000000", "unit": "USD"}]},
+ {"task": "sha256:0a79abfe1196d313807ae92498338bcb0e22519379c1260b1f40d51a2a1918a2", "status": "present", "values": [{"value": "2626000000", "unit": "AUD"}]},
+ {"task": "sha256:121a4075f97b5f0670013677fa6a3a30009bc20a945bc54dd8eb61af607aae73", "status": "present", "values": [{"value": "2949800000", "unit": "AUD"}]},
+ {"task": "sha256:e8d3a643ca1815390178aca76d258ec7358615340d474abb5ba5e193f805513e", "status": "present", "values": [{"value": "1041100000", "unit": "AUD"}]},
+ {"task": "sha256:94cb43b9c8a2ebeb4867473a3047bbac80726d358d73a8317dafb1750d50ace5", "status": "absent", "values": []},
+ {"task": "sha256:1cda479546135f72d2d7b3155964534c730e5254fdc138c1d92171e75fdf9135", "status": "present", "values": [{"value": "1.9", "unit": "V"}]},
+ {"task": "sha256:9d1cc76bacf29fe74dce2729f8fc6ccc6c63f9cf30a6e2b2873e6f6035fd697a", "status": "present", "values": [{"value": "50", "unit": "USD"}]},
+ {"task": "sha256:64f5dad861c69e80bbf7bd7a45d309cb0c693022ec95605588bfbd4809d7d150", "status": "present", "values": [{"value": "20", "unit": "USD"}]}
+]}

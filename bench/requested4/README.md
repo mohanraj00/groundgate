@@ -268,7 +268,7 @@ run is frozen: `bench/requested/review_items.py` reads its cached results and ch
 prompt or code of the run. No model runs in these steps.
 
 `build` wrote one packet for each of the 59 held-out documents to the store
-`.cache/review/store`. The receipt of each packet must be the recorded receipt of the run, or
+`.cache/review/store2`. The receipt of each packet must be the recorded receipt of the run, or
 `build` stops. Each packet names a reading of its PDF, so the page shows the PDF page with the
 value in a box. The store has two kinds of task, and `review/items.json` counts them:
 
@@ -280,6 +280,13 @@ value in a box. The store has two kinds of task, and `review/items.json` counts 
 An audit task looks the same as a review task with one value. The page shows no code and no
 outcome until you press `r`. The store holds no label.
 
+I stopped my first session in `.cache/review/store` and started again in
+`.cache/review/store2`, without model help. The score reads only `store2`. The answers of the
+first session are not scored.
+
+The result is in `review/RESULTS.md`, and the checker's reasons for each disagreement are there
+too.
+
 ### The steps for the maintainer
 
 Run each command from the root of the repository.
@@ -288,7 +295,7 @@ Run each command from the root of the repository.
 2. Start the page:
 
    ```bash
-   uv run groundgate review serve --store bench/requested4/.cache/review/store --reviewer maintainer
+   uv run groundgate review serve --store bench/requested4/.cache/review/store2 --reviewer maintainer
    ```
 
 3. Open the URL that the command prints, and answer each item. Press `r` only when you need the
@@ -299,7 +306,7 @@ Run each command from the root of the repository.
 
    ```bash
    PYTHONPATH=bench uv run python -m requested.review_items score --set bench/requested4 \
-       --store bench/requested4/.cache/review/store --reviewer maintainer
+       --store bench/requested4/.cache/review/store2 --reviewer maintainer
    ```
 
    If an item has no answer, the command stops before it reads a label. It writes
@@ -317,7 +324,7 @@ Run each command from the root of the repository.
 
    ```bash
    PYTHONPATH=bench uv run python -m requested.review_items score --set bench/requested4 \
-       --store bench/requested4/.cache/review/store --reviewer maintainer \
+       --store bench/requested4/.cache/review/store2 --reviewer maintainer \
        --checks bench/requested4/review/checks.json
    PYTHONPATH=bench uv run python -m requested.review_items report --set bench/requested4
    ```
@@ -333,7 +340,7 @@ time of each group.
 This command gives the measures of the review page itself:
 
 ```bash
-uv run groundgate review measures --store bench/requested4/.cache/review/store \
+uv run groundgate review measures --store bench/requested4/.cache/review/store2 \
     --set requested4 --split heldout --policy bench/requested4/review/policy.json
 ```
 
