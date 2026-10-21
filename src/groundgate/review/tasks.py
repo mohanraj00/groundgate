@@ -3,7 +3,9 @@
 ``make_tasks`` is a pure function of a packet and a review policy. It gives a ``task@1`` object
 for each slot that the four rules of §5.2 select. ``write_tasks`` gets the packet from a store,
 decides it again with ``verify``, and writes the tasks to the store. It writes no task for a
-packet whose receipt does not match its inputs.
+packet whose receipt does not match its inputs, or when a task fails a check of the store. Only
+a failure of the store itself during the writes can leave some tasks. Each task is an object
+with its own key, so a second run writes the same objects again.
 
 A task holds no review policy. The receipt sets the mode of each slot, so the same packet always
 gives the same bytes for a slot, and a new policy keeps the answers to its tasks (§6.3 point 1).
@@ -467,6 +469,7 @@ def write_tasks(store: Any, packet_key: str, policy: Mapping[str, Any] | None = 
     object for each task. Return each task key with its task, in slot order. Without
     ``policy``, the default policy gives no audit and no task for a rejected slot."""
     from ..admit import verify
+    from ..store import MAX_BYTES, check_bytes
     from ..store.packets import load_packet
 
     checked = check_policy(DEFAULT_POLICY if policy is None else policy)
@@ -490,5 +493,12 @@ def write_tasks(store: Any, packet_key: str, policy: Mapping[str, Any] | None = 
         references=packet.references,
         layout=layout,
     )
-    encoded = [(jcs(t).encode("utf-8"), t) for t in tasks]  # each task, before any write
+    limit = getattr(store, "max_bytes", MAX_BYTES)
+    encoded = []
+    for t in tasks:  # each check of put, before any write
+        data = jcs(t).encode("utf-8")
+        if len(data) > limit:
+            raise ValueError("a task@1 object is larger than max_bytes")
+        check_bytes("task@1", data)
+        encoded.append((data, t))
     return Written([(store.put("task@1", data), t) for data, t in encoded])

@@ -424,6 +424,49 @@ def test_a_box_that_is_not_finite_writes_no_task(tmp_path: Path) -> None:
     assert kinds == set()  # the task of field a is not in the store either
 
 
+class _Small:
+    """A store that reads as ``inner`` reads, with a smaller ``max_bytes`` for a write."""
+
+    def __init__(self, inner: FolderStore, max_bytes: int) -> None:
+        self.inner, self.max_bytes = inner, max_bytes
+
+    def get(self, kind: str, k: str) -> bytes:
+        return self.inner.get(kind, k)
+
+    def read(self, log: tuple[str, ...]) -> list[Any]:
+        return self.inner.read(log)
+
+    def put(self, kind: str, data: bytes) -> str:
+        if len(data) > self.max_bytes:
+            raise ValueError(f"the {kind} object is larger than max_bytes")
+        return self.inner.put(kind, data)
+
+
+def test_a_task_over_max_bytes_writes_no_task(tmp_path: Path) -> None:
+    root = tmp_path / "s"
+    with FolderStore(root) as store:
+        k = stored(store, FILES["missing"]["packet"])
+        sizes = [len(jcs(t).encode()) for t in make(store, k)]
+        before = sorted(p for p in root.rglob("*") if p.is_file())
+        # the first task fits, and a later one does not
+        small = _Small(store, sizes[0])
+        assert max(sizes) > sizes[0]
+        with pytest.raises(ValueError, match="larger than max_bytes"):
+            write_tasks(small, k, EVERY)
+    assert sorted(p for p in root.rglob("*") if p.is_file()) == before
+
+
+def make(store: FolderStore, k: str) -> list[dict[str, Any]]:
+    """The tasks of ``k`` under EVERY, with no write."""
+    from groundgate.model import Schema
+    from groundgate.review.tasks import make_tasks
+    from groundgate.store.packets import load_packet
+
+    packet = load_packet(store, k)
+    schema = Schema.from_dict(packet.schema, packet.packs)
+    return make_tasks(k, packet.receipt, packet.text, schema, EVERY)
+
+
 def _tampered(store: FolderStore, k: str) -> str:
     packet = json.loads(store.get("packet@1", k))
     receipt = json.loads(store.get("receipt@1", packet["receipt"]))
