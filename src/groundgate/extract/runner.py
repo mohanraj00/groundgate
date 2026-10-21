@@ -17,7 +17,7 @@ from decimal import Decimal, InvalidOperation
 from fractions import Fraction
 from itertools import chain
 from pathlib import Path
-from typing import Any, cast
+from typing import TYPE_CHECKING, Any, cast
 
 from ..admit import MAX_FIELD_ITEMS, Verification, admit
 from ..canonical import SPEC_VERSION, jcs
@@ -25,6 +25,9 @@ from ..codes import INFO
 from ..feedback import feedback_message
 from ..model import Decision, PacketError, Policy, Receipt, Schema, extractor_schema
 from ..text import canonical, quote_pattern, tokens
+
+if TYPE_CHECKING:
+    from ..store import Store
 
 Json = dict[str, Any]
 # groundgate-run/3 (#382): the search cuts large regions, and a second sweep can follow
@@ -203,19 +206,7 @@ class RunResult:
             record = [_strict_json(line) for line in _lines(_take(folder / "run.jsonl", room))]
         except RecursionError as exc:
             raise ValueError("a log line nests too deep") from exc
-        try:
-            inputs = record[0]["inputs"]
-            keys = [
-                inputs["document"]["sha256"],
-                inputs["schema_sha256"],
-                inputs["policy_sha256"],
-                *inputs["reference_sha256"],
-                *(line[k] for line in record for k in _OBJECT_KEYS if k in line),
-            ]
-        except (KeyError, TypeError, IndexError) as exc:
-            raise ValueError("the log does not name its inputs") from exc
-        if not all(isinstance(k, str) and _KEY.fullmatch(k) for k in keys):
-            raise ValueError("the log names an object with a bad key")
+        inputs, keys = _named(record)
         artifacts: dict[str, str] = {}
         for key in dict.fromkeys(keys):  # only this run's objects; runs may share the folder
             path = folder / "objects" / key.removeprefix("sha256:")
@@ -236,9 +227,113 @@ class RunResult:
             raise ValueError(result)
         return result
 
+    def save(self, store: Store, packs: Sequence[object] = ()) -> str:
+        """Write the run into ``store`` (docs/design/store.md §9), and return the packet key.
+
+        ``save`` writes each object of the run as its store kind (``text@1``, ``schema@1``,
+        ``policy@1``, ``reference@1``, ``prompt@1``, ``reply@1``, ``admission@1``), then the
+        record as one ``run@3`` object, then the final inputs, the receipt and a ``packet@1``
+        object that names the record. The record bytes are the bytes of ``run.jsonl`` from
+        ``write``. The record keeps its ``groundgate-run/3`` keys, so the store cannot replay
+        the run yet (#429): ``RunResult.read(folder)`` stays the replay path.
+
+        ``packs`` are the packs that the saved schema names, as for ``read``. ``save`` writes only
+        the objects that the record names, as ``read`` reads only those. A run that is not
+        complete is saved too, because its receipt still verifies. Before the first write,
+        ``save`` checks each object against its key and its store kind, and runs ``admit`` again
+        on the stored inputs. If the result is not the receipt of the run, ``save`` raises
+        ``PacketError`` before it writes, because ``verify`` from the packet would then fail. A
+        bad object or a record that does not name its inputs raises ``ValueError``. A store error
+        during the writes, for example an object above the store limit, can leave objects that
+        no packet names. They do no harm, and ``save`` can run again."""
+        from ..store import check_bytes
+        from ..store.packets import _put_packet
+
+        inputs, keys = _named(self.record)
+        kinds: dict[str, str] = {}
+        for k in dict.fromkeys(keys):  # only the objects of this run, as `read` takes them
+            body = self.artifacts.get(k)
+            if not isinstance(body, str):
+                raise ValueError(f"the log names a missing object {k}")
+            kind = next((kind for kind in _STORE_KINDS if _hash(kind, body) == k), None)
+            if kind is None:
+                raise ValueError(f"the artifact {k} does not match its key")
+            kinds[k] = _STORE_KINDS[kind]
+        try:
+            text = self.artifacts[inputs["document"]["sha256"]]
+            document_id = inputs["document"]["id"]
+            document_source = inputs["document"]["source"]
+            given = {
+                "schema": _strict_json(self.artifacts[inputs["schema_sha256"]]),
+                "policy": _strict_json(self.artifacts[inputs["policy_sha256"]]),
+                "references": [_strict_json(self.artifacts[h]) for h in inputs["reference_sha256"]],
+                "packs": list(packs),
+                "candidates": self.candidates,
+                "judgments": None,
+                "document_id": document_id,
+            }
+        except (KeyError, TypeError, RecursionError) as exc:
+            raise ValueError("the log does not name its inputs") from exc
+        try:
+            back = json.loads(jcs(given))
+        except (TypeError, ValueError, RecursionError) as exc:
+            raise PacketError(f"the inputs have no canonical JSON form: {exc}") from exc
+        lines = "".join(jcs(line) + "\n" for line in self.record).encode("utf-8")
+        run_kind = "run@" + _VERSION.rsplit("/", 1)[1]
+        for k, kind in kinds.items():
+            check_bytes(kind, self.artifacts[k].encode("utf-8"))
+        check_bytes(run_kind, lines)
+        again = admit(
+            text,
+            back["schema"],
+            back["candidates"],
+            back["policy"],
+            document_id,
+            references=back["references"] or None,
+            document_source=document_source,
+            packs=back["packs"],
+        )
+        if again.to_dict() != self.receipt.to_dict():
+            raise PacketError(
+                "admit on the stored inputs gives another receipt than the run. Give the packs "
+                "that the schema names."
+            )
+        for k, kind in sorted(kinds.items()):
+            store.put(kind, self.artifacts[k].encode("utf-8"))
+        run = store.put(run_kind, lines)
+        return _put_packet(store, text, back, self.receipt, document_source, None, run)
+
 
 _KEY = re.compile(r"sha256:[0-9a-f]{64}")
 _OBJECT_KEYS = ("prompt_sha256", "reply_sha256", "admission_sha256")
+# The store kind of each runner kind (docs/design/store.md §4).
+_STORE_KINDS = {
+    "text": "text@1",
+    "schema": "schema@1",
+    "policy": "policy@1",
+    "reference": "reference@1",
+    "prompt": "prompt@1",
+    "reply": "reply@1",
+    "admission": "admission@1",
+}
+
+
+def _named(record: Sequence[Mapping[str, Any]]) -> tuple[Json, list[str]]:
+    """The header inputs of a record and the key of each object that the record names."""
+    try:
+        inputs = record[0]["inputs"]
+        keys = [
+            inputs["document"]["sha256"],
+            inputs["schema_sha256"],
+            inputs["policy_sha256"],
+            *inputs["reference_sha256"],
+            *(line[k] for line in record for k in _OBJECT_KEYS if k in line),
+        ]
+    except (KeyError, TypeError, IndexError) as exc:
+        raise ValueError("the log does not name its inputs") from exc
+    if not all(isinstance(k, str) and _KEY.fullmatch(k) for k in keys):
+        raise ValueError("the log names an object with a bad key")
+    return cast(Json, inputs), keys
 
 
 def _file(path: Path, limit: int) -> bytes:
