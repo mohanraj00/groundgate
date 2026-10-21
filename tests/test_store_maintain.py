@@ -14,7 +14,7 @@ import pytest
 from groundgate.canonical import jcs
 from groundgate.cli import main
 from groundgate.extract import extract
-from groundgate.store import FolderStore, Locked, key, reviewer_key, set_key
+from groundgate.store import FolderStore, Locked, StoreError, Torn, key, reviewer_key, set_key
 from groundgate.store.maintain import REMOVED, check, forget_packet, kind_of, rebuild
 from groundgate.store.packets import admit_packet, put_reading
 
@@ -269,15 +269,18 @@ def test_forget_removes_the_document_data(
     after = all_keys(root)
     gone = {k for k in before if k not in after}
     assert sorted(before[k] for k in gone) == ["candidates@1", "source@1", "text@1"]
-    assert {f"deleted {before[k]} {k}" for k in gone} == set(out)
+    assert {line.split(" (")[0] for line in out} == {f"deleted {before[k]} {k}" for k in gone}
+    text_key = next(k for k in gone if before[k] == "text@1")
+    assert f"deleted text@1 {text_key} (1 other packet names it)" in out
     # The run of the other packet keeps its prompt, reply and admission until it is forgotten.
+    # Its text is gone now, so forget cannot check the run record, and the record goes too.
     assert main(["store", "forget", "--store", str(root), packet, "--reason", "asked"]) == 0
     assert "absent text@1" in capsys.readouterr().out
     after = all_keys(root)
     assert not [k for k, kind in after.items() if kind in REMOVED]
     gone = {k for k in before if k not in after}
     assert sorted({before[k] for k in gone}) == sorted(
-        ["text@1", "candidates@1", "source@1", "prompt@1", "reply@1", "admission@1"]
+        ["text@1", "candidates@1", "source@1", "prompt@1", "reply@1", "admission@1", "run@3"]
     )
     assert {kind for kind in after.values()} == {
         "packet@1",
@@ -285,7 +288,6 @@ def test_forget_removes_the_document_data(
         "receipt@1",
         "schema@1",
         "policy@1",
-        "run@3",
     }
     with FolderStore(root) as store:
         records = store.read(("deleted",))
@@ -301,7 +303,6 @@ def test_forget_removes_the_document_data(
 
     assert main(["store", "check", "--store", str(root)]) == 0
     out = capsys.readouterr().out
-    text_key = next(k for k in gone if before[k] == "text@1")
     assert f"input deleted: text@1 {text_key}\n" in out
 
     assert main(["store", "forget", "--store", str(root), admitted, "--reason", "again"]) == 0
@@ -318,10 +319,10 @@ def test_one_text_that_two_packets_share_goes_for_both(tmp_path: Path) -> None:
         text = json.loads(store.get("packet@1", one))["document"]["text"]
         assert json.loads(store.get("packet@1", two))["document"]["text"] == text
         done = forget_packet(store, one, "the tenant asked")
-    assert ("text@1", text, "deleted") in done
+    assert ("text@1", text, "deleted", 1) in done
     assert not path_of(root, text).exists()
     with FolderStore(root) as store:
-        assert forget_packet(store, two, "the tenant asked")[0] == ("text@1", text, "absent")
+        assert forget_packet(store, two, "the tenant asked")[0] == ("text@1", text, "absent", 1)
 
 
 def test_forget_removes_a_run_record_with_document_text(tmp_path: Path) -> None:
@@ -334,7 +335,7 @@ def test_forget_removes_a_run_record_with_document_text(tmp_path: Path) -> None:
         assert f"the run record {run}: line 1 holds document text" in findings
         assert all(f.endswith("holds document text") for f in findings)
         done = forget_packet(store, packet, "text in the record")
-    assert ("run@3", run, "deleted") in done
+    assert ("run@3", run, "deleted", 0) in done
     assert not path_of(root, run).exists()
 
     root = tmp_path / "plain"
@@ -369,8 +370,10 @@ def test_forget_all_removes_each_object_and_log_of_the_packet(
         records = store.read(("deleted",))
         assert store.read(("answers", other, reviewer_key("ana")))[0]["answer"] == "no"
     assert packet not in after and all(path_of(root, k).exists() for k in (kept["receipt"],))
-    # The text is shared with the other packet, so it goes for both.
-    assert kept["document"]["text"] not in after and kept["schema"] in after
+    # The text is shared with the other packet, so it goes for both. The kept objects that
+    # the other packet names stay.
+    assert kept["document"]["text"] not in after
+    assert f"deleted text@1 {kept['document']['text']} (1 other packet names it)" in out
     assert {r.get("key") for r in records} - {None} == set(before) - set(after)
     assert [r["log"] for r in records if "log" in r] == [list(log)]
 
@@ -416,3 +419,47 @@ def test_check_names_strange_entries(tmp_path: Path) -> None:
         "logs/deleted.jsonl is not a log",
         "logs/other.jsonl is not a log",
     ]
+
+
+def test_forget_all_keeps_a_schema_that_another_packet_names(tmp_path: Path) -> None:
+    root = tmp_path / "s"
+    with FolderStore(root) as store:
+        one, _ = admit_packet(store, TEXT, SCHEMA, candidates(), document_id="one")
+        two, _ = admit_packet(store, "Other: 5 dollars.", SCHEMA, [], document_id="two")
+        schema = json.loads(store.get("packet@1", one))["schema"]
+        done = forget_packet(store, one, "all", everything=True)
+    assert ("schema@1", schema, "kept", 1) in done
+    assert path_of(root, schema).exists() and not path_of(root, one).exists()
+    assert main(["verify", "--store", str(root), two]) == 0
+
+
+def test_forget_removes_a_run_record_whose_text_is_gone(tmp_path: Path) -> None:
+    root = tmp_path / "s"
+    with FolderStore(root) as store:
+        packet = save_run(store, model_id="Pay it by Friday")
+        obj = json.loads(store.get("packet@1", packet))
+        store.forget(obj["document"]["text"], "an earlier forget that stopped")
+        done = forget_packet(store, packet, "again")
+    assert done[0] == ("run@3", obj["run"], "deleted", 0)  # the run record goes first
+    assert not path_of(root, obj["run"]).exists()
+
+
+def test_forget_log_and_repair_take_the_lock(tmp_path: Path) -> None:
+    root = tmp_path / "s"
+    log = ("answers", key("packet@1", b"{}"), reviewer_key("ana"))
+    with FolderStore(root) as store:
+        store.append(log, {"answer": "yes"})
+        with pytest.raises(StoreError, match="this writer holds the log"):
+            store.forget_log(log, "x")
+    path = root / "logs" / "answers" / log[1][7:] / f"{log[2][7:]}.jsonl"
+    with path.open("ab") as f:
+        f.write(b"{")
+    with FolderStore(root) as store:
+        with pytest.raises(Torn):
+            store.read(log)
+        path.with_suffix(".lock").write_bytes(b"1\n")
+        with pytest.raises(Locked):
+            store.forget_log(log, "x")
+        path.with_suffix(".lock").unlink()
+        store.forget_log(log, "x")
+    assert not path.exists() and not path.parent.exists()

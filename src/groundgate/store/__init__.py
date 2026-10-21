@@ -17,7 +17,7 @@ import secrets
 import stat
 import tempfile
 import unicodedata
-from collections.abc import Callable
+from collections.abc import Callable, Iterator
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Protocol
@@ -32,6 +32,7 @@ __all__ = [
     "NotFound",
     "Store",
     "StoreError",
+    "Torn",
     "key",
     "reviewer_key",
     "set_key",
@@ -65,6 +66,10 @@ class NotFound(StoreError):
 
 class Locked(StoreError):
     """Another writer has the log. The message names the lock."""
+
+
+class Torn(StoreError):
+    """The last line of a log has no line break. ``groundgate store check --repair`` cuts it."""
 
 
 class Store(Protocol):
@@ -199,7 +204,7 @@ def _records(word: str, data: bytes, rel: str) -> list[Record]:
     except UnicodeDecodeError as exc:
         raise StoreError(f"{rel} is not UTF-8") from exc
     if not text.endswith("\n"):
-        raise StoreError(f"{rel} has a torn last line: it has no line break")
+        raise Torn(f"{rel} has a torn last line: it has no line break")
     records: list[Record] = []
     previous: str | None = None
     for n, line in enumerate(text[:-1].split("\n"), 1):
@@ -478,17 +483,7 @@ class FolderStore:
         parts, name = self._log_parts(log)
         rel = "/".join([*parts, name + ".jsonl"])
         folder = self._folder(parts, make=False)
-        lock = folder / f"{name}.lock"
-        mark = f"{os.getpid()}\n{secrets.token_hex(16)}\n".encode("ascii")
-        try:
-            fd = os.open(lock, os.O_WRONLY | os.O_CREAT | os.O_EXCL | _NOFOLLOW, self.file_mode)
-        except FileExistsError as exc:
-            raise Locked(f"{lock} exists: {self._holder(lock)}") from exc
-        try:
-            try:
-                os.write(fd, mark)
-            finally:
-                os.close(fd)
+        with self._hold(folder, name):
             data = self._file(folder / f"{name}.jsonl", rel)
             if not data or data.endswith(b"\n"):
                 return None
@@ -502,12 +497,29 @@ class FolderStore:
             finally:
                 os.close(fd)
             return data[size:]
+
+    @contextlib.contextmanager
+    def _hold(self, folder: Path, name: str) -> Iterator[None]:
+        """Hold the lock of the log ``folder/<name>.jsonl`` for one change, then remove it."""
+        lock = folder / f"{name}.lock"
+        mark = f"{os.getpid()}\n{secrets.token_hex(16)}\n".encode("ascii")
+        try:
+            fd = os.open(lock, os.O_WRONLY | os.O_CREAT | os.O_EXCL | _NOFOLLOW, self.file_mode)
+        except FileExistsError as exc:
+            raise Locked(f"{lock} exists: {self._holder(lock)}") from exc
+        try:
+            try:
+                os.write(fd, mark)
+            finally:
+                os.close(fd)
+            yield
         finally:
             self._unlink_own(lock, mark)
 
     def forget_log(self, log: LogName, reason: str) -> None:
         """Remove an answer log or a splits log, and record the log name, the time and the
-        reason in the deleted log. The lock of the log must be absent."""
+        reason in the deleted log. ``forget_log`` holds the lock of the log for the change, so
+        another writer of the log stops it with ``Locked``."""
         word, _ = _check_log(log)
         if word == "deleted":
             raise ValueError("forget_log does not remove the deleted log")
@@ -524,15 +536,15 @@ class FolderStore:
             raise NotFound(f"{rel} is not in the store") from exc
         if not stat.S_ISREG(info.st_mode):
             raise StoreError(f"{rel} is not a regular file, so forget does not remove it")
-        lock = folder / f"{name}.lock"
-        if os.path.lexists(lock):
-            raise Locked(f"{lock} exists: {self._holder(lock)}")
-        time = self._clock().astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-        self._append(("deleted",), {"log": list(log), "reason": reason, "time": time})
-        try:
-            os.unlink(folder / f"{name}.jsonl")
-        except OSError as exc:
-            raise StoreError(f"{rel} is in the deleted log, but the unlink failed: {exc}") from exc
+        with self._hold(folder, name):  # no writer can append while the log goes
+            time = self._clock().astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+            self._append(("deleted",), {"log": list(log), "reason": reason, "time": time})
+            try:
+                os.unlink(folder / f"{name}.jsonl")
+            except OSError as exc:
+                raise StoreError(
+                    f"{rel} is in the deleted log, but the unlink failed: {exc}"
+                ) from exc
         if word == "answers":
             with contextlib.suppress(OSError):  # the packet folder, if it is now empty
                 os.rmdir(folder)

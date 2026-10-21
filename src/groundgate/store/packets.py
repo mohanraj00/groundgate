@@ -100,12 +100,15 @@ class Packet:
         }
 
 
-def _printable(value: object, limit: int | None = 200) -> str:
+def printable(value: object, limit: int | None = 200) -> str:
     """A value from the store as text with no control character, for a message. With a
     ``limit``, a longer text is cut."""
     text = value if isinstance(value, str) else repr(value)
     text = "".join(c if c.isprintable() else f"\\u{ord(c):04x}" for c in text)
     return text if limit is None or len(text) <= limit else text[: limit - 3] + "..."
+
+
+_printable = printable
 
 
 def _json(value: Any, what: str) -> bytes:

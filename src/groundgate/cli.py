@@ -258,7 +258,8 @@ def _store_parser() -> argparse.ArgumentParser:
         description="Remove the objects of PACKET that hold document data, and record each "
         "deletion in logs/deleted.jsonl. An object that two packets share goes for both. "
         "The packet, the receipt and the other kept objects stay, and verify then reports "
-        "'input deleted'.",
+        "'input deleted'. The run record goes too if a line holds document text: a string of "
+        "8 or more characters that is in the text. That check is not a proof.",
     )
     f.add_argument("--store", metavar="DIR", required=True, help="the store folder")
     f.add_argument("packet", metavar="PACKET", help="the packet key")
@@ -266,14 +267,15 @@ def _store_parser() -> argparse.ArgumentParser:
     f.add_argument(
         "--all",
         action="store_true",
-        help="remove each object and answer log of the packet, and the packet",
+        help="remove each object and answer log of the packet, and the packet. A kept object "
+        "that another packet names stays.",
     )
     return ap
 
 
 def _store_command(args: argparse.Namespace) -> int:
     from .store.maintain import check, forget_packet, rebuild
-    from .store.packets import _printable
+    from .store.packets import printable
 
     with _store(args.store, make=False) as store:
         if args.action == "rebuild":
@@ -282,17 +284,21 @@ def _store_command(args: argparse.Namespace) -> int:
             return 0
         if args.action == "forget":
             done = forget_packet(store, args.packet, args.reason, everything=args.all)
-            for kind, name, state in done:
-                print(f"{state} {kind} {name}" if kind != "log" else f"{state} {name}")
+            for kind, name, state, shared in done:
+                line = f"{state} {kind} {name}" if kind != "log" else f"{state} {name}"
+                if shared:
+                    line += f" ({shared} other packet{'s' if shared > 1 else ''} name"
+                    line += "s it)" if shared == 1 else " it)"
+                print(line)
             return 0
         report = check(store, repair=args.repair)
     for path, cut in report.cut:
         text = cut.decode("utf-8", errors="backslashreplace")
-        print(f"cut from {path}: {_printable(text, limit=None)}")
+        print(f"cut from {path}: {printable(text, limit=None)}")
     for entry in report.deleted:
         print(f"input deleted: {entry}")
     for finding in report.findings:
-        print(f"finding: {_printable(finding, limit=None)}")
+        print(f"finding: {printable(finding, limit=None)}")
     print(
         f"checked {report.objects} objects and {report.logs} logs: {len(report.findings)} findings"
     )

@@ -217,8 +217,11 @@ comes with its issue (#432).
    Issue 3 checks that no line of a run record holds document text, and `forget` removes the
    record if a line does. A line holds document text if one of its strings has 8 or more
    characters and is in the text. A store key, a field name of the schema, the document id and
-   the document source do not count, because the kept objects hold them. A value is still document data. If an app must also remove the values,
-   `groundgate store forget --all PACKET` removes each object and log of the packet.
+   the document source do not count, because the kept objects hold them. This check is not a
+   proof. If the text is already gone, `forget` cannot check the lines, so it removes the
+   record. A value is still document data. If an app must also remove the values,
+   `groundgate store forget --all PACKET` removes each object and log of the packet. An object
+   of the "Kept" column that another packet names stays.
    One object can serve two packets, because the same text has one key. `forget` of that text
    removes it for both packets, which is correct for one document.
    After `forget`, `verify` reports "input deleted", with the key, the time and the reason from

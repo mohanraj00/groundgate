@@ -20,8 +20,8 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from ..canonical import jcs
-from . import KEY, FolderStore, NotFound, StoreError, _canonical, check_bytes, key
-from .packets import _PACKET, _READING, _printable
+from . import KEY, FolderStore, NotFound, StoreError, Torn, _canonical, check_bytes, key
+from .packets import _PACKET, _READING, printable
 
 __all__ = ["Report", "check", "forget_packet", "rebuild"]
 
@@ -220,7 +220,7 @@ def _keys(value: Any) -> list[str]:
         return [value]
     if isinstance(value, list) and all(isinstance(v, str) and KEY.fullmatch(v) for v in value):
         return list(value)
-    raise StoreError(f"{_printable(value)} is not a store key, a list of keys or null")
+    raise StoreError(f"{printable(value)} is not a store key, a list of keys or null")
 
 
 def _named(packet: Mapping[str, Any]) -> list[tuple[str, str]]:
@@ -459,7 +459,7 @@ def check(store: FolderStore, *, repair: bool = False) -> Report:
             store.read(log)
             continue
         except StoreError as exc:
-            if not (repair and "torn last line" in str(exc)):
+            if not (repair and isinstance(exc, Torn)):
                 report.find(str(exc))
                 continue
         try:
@@ -509,54 +509,90 @@ def rebuild(store: FolderStore) -> list[str]:
 # forget
 
 
+def _others(objects: _Objects, packet: str) -> dict[str, int]:
+    """For each key, how many other packets name it, with their readings and run records. A
+    packet that cannot be read names nothing: ``check`` reports it."""
+    counts: dict[str, int] = {}
+    for k in objects.of("packet@1"):
+        if k == packet:
+            continue
+        try:
+            obj = _packet(objects, k)
+            named = {n for _, n in _named(obj)}
+            for n in _keys(obj["reading"]):
+                named.add(n)
+                if objects.kinds.get(n) == "reading@1":
+                    named.update(m for _, m in _reading_named(objects, n))
+            named.update(_keys(obj["run"]))
+        except StoreError:
+            continue
+        for n in named:
+            counts[n] = counts.get(n, 0) + 1
+    return counts
+
+
 def forget_packet(
     store: FolderStore, packet: str, reason: str, *, everything: bool = False
-) -> list[tuple[str, str, str]]:
+) -> list[tuple[str, str, str, int]]:
     """Remove the objects of a packet that §8 rule 3 lists as "Removed", and record each
-    deletion in ``logs/deleted.jsonl``. If a line of the run record holds document text, also
-    remove the run record. With ``everything``, remove each object and each answer log of the
-    packet, and the packet last. An object that two packets share goes for both. Return the
-    kind, the key and ``deleted`` or ``absent`` for each object, and ``log`` and the log path
-    for each log."""
+    deletion in ``logs/deleted.jsonl``. An object that two packets share goes for both.
+
+    ``forget`` also removes the run record if a line holds document text, if its text is not in
+    the store (then the lines cannot be checked), or if it does not match its key. The run
+    record goes first, so a ``forget`` that stops can run again. The text check finds only a
+    string of ``MIN_TEXT`` or more characters that is in the text: it is not a proof.
+
+    With ``everything``, remove each object and each answer log of the packet, and the packet
+    last. An object of the "Kept" column that another packet names stays. Tasks and
+    resolutions are not in the store yet, so ``everything`` does not look for them (#432).
+
+    Return the kind, the key, the state (``deleted``, ``absent`` or ``kept``) and the number
+    of other packets that name the key, for each object. A log has the kind ``log`` and its
+    path in place of the key."""
     if not isinstance(packet, str) or not KEY.fullmatch(packet):
-        raise ValueError(f"{_printable(packet)} is not a store key")
+        raise ValueError(f"{printable(packet)} is not a store key")
     objects = _Objects(store)
     if objects.kinds.get(packet) != "packet@1":
         raise NotFound(f"the packet {packet} is not in the store")
     obj = _packet(objects, packet)
-    plan = _named(obj)
-    for k in _keys(obj["reading"]):
-        plan.append(("reading@1", k))
-        if objects.kinds.get(k) == "reading@1":
-            plan += _reading_named(objects, k)
-    holds_text = False
+    plan: list[tuple[str, str, bool]] = []  # the kind, the key, and "remove in any mode"
     for k in _keys(obj["run"]):
-        if (objects.kinds.get(k) or "").startswith("run@"):
-            run = _run(objects, k)
-            plan += _run_objects(objects, run)
-            holds_text = holds_text or bool(_holds_text(objects, obj, run))
-            plan.append((run.kind, k))
-        else:
-            plan.append(("run@N", k))
+        kind = objects.kinds.get(k, "absent")
+        if kind is None or kind == "absent" or not kind.startswith("run@"):
+            plan.append(("run@N", k, kind is None))  # a changed record cannot be checked
+            continue
+        run = _run(objects, k)
+        lines = _holds_text(objects, obj, run)
+        plan.append((run.kind, k, lines is None or bool(lines)))
+        plan += [(kind, n, False) for kind, n in _run_objects(objects, run)]
+    plan += [(kind, k, False) for kind, k in _named(obj)]
+    for k in _keys(obj["reading"]):
+        plan.append(("reading@1", k, False))
+        if objects.kinds.get(k) == "reading@1":
+            plan += [(kind, n, False) for kind, n in _reading_named(objects, k)]
     if not everything:
-        plan = [(kind, k) for kind, k in plan if kind in REMOVED or (holds_text and "run@" in kind)]
-    done: list[tuple[str, str, str]] = []
+        plan = [(kind, k, always) for kind, k, always in plan if kind in REMOVED or always]
+    others = _others(objects, packet)
+    done: list[tuple[str, str, str, int]] = []
     seen: set[str] = set()
-    for kind, k in plan:
+    for kind, k, always in plan:
         if k in seen:
             continue
         seen.add(k)
-        if objects.kinds.get(k, "absent") == "absent":
-            done.append((kind, k, "absent"))
-            continue
-        store.forget(k, reason)
-        done.append((kind, k, "deleted"))
+        shared = others.get(k, 0)
+        if k not in objects.kinds:
+            done.append((kind, k, "absent", shared))
+        elif everything and shared and kind not in REMOVED and not always:
+            done.append((kind, k, "kept", shared))
+        else:
+            store.forget(k, reason)
+            done.append((kind, k, "deleted", shared))
     if everything:
         logs, _ = store.log_names()
         for log in logs:
             if log[0] == "answers" and log[1] == packet:
                 store.forget_log(log, reason)
-                done.append(("log", _log_rel(log), "deleted"))
+                done.append(("log", _log_rel(log), "deleted", 0))
         store.forget(packet, reason)
-        done.append(("packet@1", packet, "deleted"))
+        done.append(("packet@1", packet, "deleted", 0))
     return done
