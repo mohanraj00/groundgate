@@ -1,0 +1,375 @@
+{
+ "calibrate": null,
+ "decide": {
+  "outcome": "keep",
+  "previous": "loop/02.json"
+ },
+ "diagnose": {
+  "export_sha256": null,
+  "review_codes": {
+   "baseline": {
+    "CONFLICTING_CANDIDATES": {
+     "right": 8,
+     "unclear": 6,
+     "wrong": 4
+    },
+    "FIELD_CITATION_INVALID": {
+     "right": 158,
+     "unclear": 4,
+     "wrong": 10
+    },
+    "PART_MISSING": {
+     "right": 12,
+     "unclear": 0,
+     "wrong": 1
+    },
+    "QUALIFIED_VALUE": {
+     "right": 1,
+     "unclear": 4,
+     "wrong": 1
+    },
+    "SCALE_CITATION_INVALID": {
+     "right": 69,
+     "unclear": 0,
+     "wrong": 1
+    },
+    "SIGN_CITATION_INVALID": {
+     "right": 1,
+     "unclear": 0,
+     "wrong": 0
+    },
+    "UNIT_CITATION_INVALID": {
+     "right": 52,
+     "unclear": 0,
+     "wrong": 4
+    },
+    "VALUE_DERIVED": {
+     "right": 79,
+     "unclear": 0,
+     "wrong": 3
+    }
+   },
+   "runner": {
+    "CONFLICTING_CANDIDATES": {
+     "right": 8,
+     "unclear": 4,
+     "wrong": 4
+    },
+    "FIELD_CITATION_INVALID": {
+     "right": 22,
+     "unclear": 4,
+     "wrong": 0
+    },
+    "PART_MISSING": {
+     "right": 2,
+     "unclear": 0,
+     "wrong": 0
+    },
+    "QUALIFIED_VALUE": {
+     "right": 2,
+     "unclear": 4,
+     "wrong": 0
+    },
+    "SCALE_CITATION_INVALID": {
+     "right": 5,
+     "unclear": 0,
+     "wrong": 0
+    },
+    "UNIT_CITATION_INVALID": {
+     "right": 11,
+     "unclear": 0,
+     "wrong": 0
+    },
+    "VALUE_DERIVED": {
+     "right": 16,
+     "unclear": 0,
+     "wrong": 0
+    }
+   },
+   "runner_drop_rounded": {
+    "CONFLICTING_CANDIDATES": {
+     "right": 8,
+     "unclear": 4,
+     "wrong": 4
+    },
+    "FIELD_CITATION_INVALID": {
+     "right": 22,
+     "unclear": 4,
+     "wrong": 0
+    },
+    "PART_MISSING": {
+     "right": 2,
+     "unclear": 0,
+     "wrong": 0
+    },
+    "QUALIFIED_VALUE": {
+     "right": 2,
+     "unclear": 4,
+     "wrong": 0
+    },
+    "SCALE_CITATION_INVALID": {
+     "right": 5,
+     "unclear": 0,
+     "wrong": 0
+    },
+    "UNIT_CITATION_INVALID": {
+     "right": 11,
+     "unclear": 0,
+     "wrong": 0
+    },
+    "VALUE_DERIVED": {
+     "right": 16,
+     "unclear": 0,
+     "wrong": 0
+    }
+   }
+  }
+ },
+ "format": "requested-loop/1",
+ "iteration": 3,
+ "propose": null,
+ "run": {
+  "arms": [
+   "baseline",
+   "runner",
+   "runner_drop_rounded"
+  ],
+  "binding_sha256": "sha256:18c69a053a6ba8c399476738a2965018fd89cf70dffc4c05cc87022248d0eae4",
+  "code_sha256": "sha256:3e4b9a319e942c86e6901643fabd12d4f3682fb27cd54df2670c268d7479131a",
+  "configuration_sha256": "sha256:66f089c5bbda81df5bd1814141f9220a37dcd9b572f74e7805bdc00138dcc0d7",
+  "documents": [
+   "annual-c02",
+   "annual-c06",
+   "annual-c07",
+   "annual-c10",
+   "annual-c12",
+   "annual-c21",
+   "annual-c22",
+   "annual-c26",
+   "annual-c28",
+   "component-c01",
+   "component-c02",
+   "component-c09",
+   "component-c10",
+   "component-c12",
+   "component-c17",
+   "component-c19",
+   "sbc-c17",
+   "sbc-c18",
+   "sbc-c19",
+   "sbc-c20",
+   "sbc-c25",
+   "sbc-c26",
+   "sbc-c27",
+   "sbc-c28",
+   "sds-c05",
+   "sds-c06",
+   "sds-c07",
+   "sds-c13",
+   "sds-c22",
+   "sds-c24",
+   "sds-c25",
+   "sds-c32"
+  ],
+  "manifest_sha256": "sha256:435592c2d4013b9bec3b907d92401f23131676cfeeca5f0be2cc6f2d7de6f1e4",
+  "manifest_unfrozen_sha256": "sha256:e0253f7a17ad81166b54309254c027c34016e2287708a5e6e7d9d0be118eb7c1",
+  "split": "development"
+ },
+ "score": {
+  "by_arm": {
+   "baseline": {
+    "annual": {
+     "documents": 9,
+     "escapes": 0,
+     "incomplete": 0,
+     "miss_rate": {
+      "k": 31,
+      "n": 45,
+      "rate": 0.6888888888888889
+     },
+     "search_limit_documents": 0,
+     "search_limit_fields": 0
+    },
+    "component": {
+     "documents": 7,
+     "escapes": 1,
+     "incomplete": 0,
+     "miss_rate": {
+      "k": 14,
+      "n": 26,
+      "rate": 0.5384615384615384
+     },
+     "search_limit_documents": 0,
+     "search_limit_fields": 0
+    },
+    "sbc": {
+     "documents": 8,
+     "escapes": 0,
+     "incomplete": 0,
+     "miss_rate": {
+      "k": 17,
+      "n": 35,
+      "rate": 0.4857142857142857
+     },
+     "search_limit_documents": 0,
+     "search_limit_fields": 0
+    },
+    "sds": {
+     "documents": 8,
+     "escapes": 0,
+     "incomplete": 0,
+     "miss_rate": {
+      "k": 11,
+      "n": 16,
+      "rate": 0.6875
+     },
+     "search_limit_documents": 0,
+     "search_limit_fields": 0
+    },
+    "total": {
+     "documents": 32,
+     "escapes": 1,
+     "incomplete": 0,
+     "miss_rate": {
+      "k": 73,
+      "n": 122,
+      "rate": 0.5983606557377049
+     },
+     "search_limit_documents": 0,
+     "search_limit_fields": 0
+    }
+   },
+   "runner": {
+    "annual": {
+     "documents": 9,
+     "escapes": 0,
+     "incomplete": 0,
+     "miss_rate": {
+      "k": 29,
+      "n": 45,
+      "rate": 0.6444444444444445
+     },
+     "search_limit_documents": 0,
+     "search_limit_fields": 0
+    },
+    "component": {
+     "documents": 7,
+     "escapes": 2,
+     "incomplete": 0,
+     "miss_rate": {
+      "k": 21,
+      "n": 26,
+      "rate": 0.8076923076923077
+     },
+     "search_limit_documents": 0,
+     "search_limit_fields": 0
+    },
+    "sbc": {
+     "documents": 8,
+     "escapes": 0,
+     "incomplete": 0,
+     "miss_rate": {
+      "k": 6,
+      "n": 35,
+      "rate": 0.17142857142857143
+     },
+     "search_limit_documents": 0,
+     "search_limit_fields": 0
+    },
+    "sds": {
+     "documents": 8,
+     "escapes": 0,
+     "incomplete": 0,
+     "miss_rate": {
+      "k": 12,
+      "n": 16,
+      "rate": 0.75
+     },
+     "search_limit_documents": 0,
+     "search_limit_fields": 0
+    },
+    "total": {
+     "documents": 32,
+     "escapes": 2,
+     "incomplete": 0,
+     "miss_rate": {
+      "k": 68,
+      "n": 122,
+      "rate": 0.5573770491803278
+     },
+     "search_limit_documents": 0,
+     "search_limit_fields": 0
+    }
+   },
+   "runner_drop_rounded": {
+    "annual": {
+     "documents": 9,
+     "escapes": 0,
+     "incomplete": 0,
+     "miss_rate": {
+      "k": 29,
+      "n": 45,
+      "rate": 0.6444444444444445
+     },
+     "search_limit_documents": 0,
+     "search_limit_fields": 0
+    },
+    "component": {
+     "documents": 7,
+     "escapes": 2,
+     "incomplete": 0,
+     "miss_rate": {
+      "k": 21,
+      "n": 26,
+      "rate": 0.8076923076923077
+     },
+     "search_limit_documents": 0,
+     "search_limit_fields": 0
+    },
+    "sbc": {
+     "documents": 8,
+     "escapes": 0,
+     "incomplete": 0,
+     "miss_rate": {
+      "k": 6,
+      "n": 35,
+      "rate": 0.17142857142857143
+     },
+     "search_limit_documents": 0,
+     "search_limit_fields": 0
+    },
+    "sds": {
+     "documents": 8,
+     "escapes": 0,
+     "incomplete": 0,
+     "miss_rate": {
+      "k": 12,
+      "n": 16,
+      "rate": 0.75
+     },
+     "search_limit_documents": 0,
+     "search_limit_fields": 0
+    },
+    "total": {
+     "documents": 32,
+     "escapes": 2,
+     "incomplete": 0,
+     "miss_rate": {
+      "k": 68,
+      "n": 122,
+      "rate": 0.5573770491803278
+     },
+     "search_limit_documents": 0,
+     "search_limit_fields": 0
+    }
+   }
+  },
+  "results": "loop/03/results.json",
+  "results_sha256": "sha256:818d796ab95cad0704dee7c7984599c233f79b189238ec9d254688b4f2a950b1",
+  "runs_sha256": {
+   "baseline": "sha256:83e69c3c322eaeae7f65e6c7c977609b212d5b2c9df9aaaca83a73a5e169222a",
+   "runner": "sha256:665d04eb96c49d0c92292514e5259e7b2cff3ac17f3bc6caeead6f1c5ed7b6b4",
+   "runner_drop_rounded": "sha256:ae0143f1d89a0cc384bacc6720499fcc4ca9aae0b11b7f5711e164ca6ffdb1f3"
+  }
+ }
+}
