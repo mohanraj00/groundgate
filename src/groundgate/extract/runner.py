@@ -29,7 +29,8 @@ from ..text import canonical, quote_pattern, tokens
 Json = dict[str, Any]
 # groundgate-run/3 (#382): the search cuts large regions, and a second sweep can follow
 # `search_limit`. groundgate-run/2 (#318, #319) had a new prompt, field item causes and rounding
-# lines. An older record fails replay with a version message.
+# lines. An older record fails replay with a version message. The run/3 prompt asks for the
+# whole scale heading (#428); the run/3 records from before #428 were never released.
 _VERSION = "groundgate-run/3"
 _ROLES = {"value", "sign", "scale", "unit", "field", "key"}
 _SEARCH_MATCH_LIMIT = 1024
@@ -64,6 +65,10 @@ _INSTRUCTIONS = (
     "Use not_found for every requested field with no candidate. Do not supply ids, offsets, "
     "confidence, policies or judgments. A field item quotes the label before the value, such as "
     "a row label or a column header. It must not hold the value. "
+    "A scale or unit item quotes the whole heading or caption that states the scale or the "
+    'currency, such as "(in € million)" or "(millions of Canadian dollars)", not a bare '
+    '"million". Omit the scale item when the scale word directly follows the number, as in '
+    '"4.2 million": the number already carries its scale. '
     "A repair may change only the named evidence roles. "
     "Keep field, unit, key and source fixed. Keep the value fixed for an evidence repair. "
     "If the value changes, even unexpectedly, it is a new terminal proposal: the original stays "
