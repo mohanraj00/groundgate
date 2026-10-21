@@ -117,7 +117,8 @@ operating income field. A field item (§4.6) is checked against them. They follo
 `keys`: null or a non-empty list of strings, none blank, no two equal after whitespace
 normalisation (§4.4) and the fold of each letter (§4).
 `units` extends and overrides the built-in table (§4.3). Each unit is an object with only
-`prefix` and `suffix`, each a list of non-empty strings; an absent list is empty.
+`prefix` and `suffix`, each a list of non-blank strings (spec 0.11, #423); an absent list is
+empty.
 `packs` names each vocabulary pack and kind pack that the packet reads besides the base pack
 (§4.8, §4.9), by `id` and `version`. The schema does not have to name a vocabulary pack that a
 named kind pack needs. An entry can also give `sha256`: then the given pack must have that digest. This
@@ -544,6 +545,7 @@ The rule applies to these words:
   currency statement (§4.3)
 - keys and aliases (§4.5, §4.6)
 - the loss words, the gain words and the negations of a sign item (§4.6)
+- the `in`, the `of` and the `per` of a scale form (§4.6, spec 0.11, #423)
 
 A form whose cases are listed matches only as listed: the scale suffixes and the currency scales
 (§4.1), and the codes of a currency statement (§4.3). The prefixes and suffixes of the unit table
@@ -761,6 +763,12 @@ The currency table is this table and the `heading_units` of the packet's packs (
 with no sign is allowed by no currency header. Two currencies can share a sign, as six share `$`.
 A lone-sign header then allows each of them, and only a statement or a prefix in the unit table
 settles the heading currency (spec 0.11, #368).
+
+A **currency form** of a unit is a prefix or a suffix of the unit in the unit table. For a code
+of the currency table, it is also a currency name of its row, or the code in capitals, matched
+as in a currency statement (whole words, case-insensitively, also in the singular). So `€`,
+`EUR` and `euros` are currency forms of `EUR`, and `Canadian dollars` and `CAD` are currency
+forms of `CAD` (spec 0.11, #423).
 
 A heading unit **reaches** a token as a heading scale does (§4.1).
 
@@ -982,10 +990,25 @@ than a key or field item fails. Otherwise it passes when its role's check holds:
 | Role | Passes when |
 |---|---|
 | `sign` | The item holds **brackets around the value**: a `(` before the token with only whitespace and prefixes of the field's unit between them, and a `)` after it with only whitespace between them. Or it holds a **loss word** (a `sign.loss` word of the packs that the packet reads; the base pack gives none, and the built-in pack `finance` of §4.8 gives `loss`, `losses`, `deficit`, `deficits`) with no negation (`no`, `not`, `without`) directly before it, only whitespace between, and at most 4 words (runs of letters) between the loss word and the token. A loss-word item ends at or before the token in the value's sentence (§4.5), and from the start of the item to the token there is no number token, no line break, no tab and no **gain word** (`income`, `gain`, `gains`, `profit`, `profits`, `earnings`). Each word is matched whole and case-insensitively. |
-| `scale` | The item holds `in`, whitespace and a scale word (§4.1), also with a final `s`, as in "(in thousands", or it holds a currency scale (§4.1), as in "£m" (spec 0.10). It ends at or before the token. No scale word, also with a final `s`, lies between its end and the token, and no currency scale with a power of ten other than the item's scale (below) lies there. So the second `£m` of the header row `\t£m\t£m` does not stop an item on the first. |
-| `unit` | The item holds a prefix or suffix of the field's unit as a whole (with no letter or digit directly before a form that starts with one, and none directly after a form that ends with one). Then either the field's unit is at the token (§4.3), so the item repeats it, or the field check passes (below), the item ends at or before the token, no unit form is next to the token (§3.1), and the item is at a unit place of the value (below). Or the item holds a heading unit (§4.3) that reaches the token, the field check passes, the item ends at or before the token, no unit form is next to the token, and the token's heading currency is the field's unit (spec 0.10). In each case, the token has no heading conflict (§4.3, spec 0.10, #365). |
+| `scale` | The item holds a scale form (below). Or the item holds a currency scale (§4.1), as in "£m" (spec 0.10). It ends at or before the token. No scale word, also with a final `s`, lies between its end and the token, and no currency scale with a power of ten other than the item's scale (below) lies there. So the second `£m` of the header row `\t£m\t£m` does not stop an item on the first. |
+| `unit` | The item holds a prefix or suffix of the field's unit as a whole (with no letter or digit directly before a form that starts with one, and none directly after a form that ends with one). Then either the field's unit is at the token (§4.3), so the item repeats it, or the field check passes (below), the item ends at or before the token, no unit form is next to the token (§3.1), and the item is at a unit place of the value (below). Or the item holds a heading unit (§4.3) that reaches the token, the field check passes, the item ends at or before the token, no unit form is next to the token, and the token's heading currency is the field's unit (spec 0.10). Or the field's unit has no prefix and no suffix in the unit table, so it is at every token (§4.3), and the item holds a currency name of the field's unit or its code (§4.3). The item then repeats the unit (spec 0.11, #423). In each case, the token has no heading conflict (§4.3, spec 0.10, #365). |
 | `field` | The field has `aliases`, the item holds a mention of one of them (matched as key mentions are, §4.5, in the whole text, so a mention inside a longer mention does not count), and the item ends at or before the token. Then one of these holds: no letter (general category L) lies between the item's end and the token (the item is at the **row**); the item is a **label cell** for the token (below); or the item is in the value's sentence with no number token between its end and the token, and the token is not after the end of a label slot that holds the item. |
 | `key` | The item holds a key mention of the candidate's `key` (a mention of the whole text, §4.5). |
+
+**Scale forms (spec 0.11, #423).** A scale item holds a **scale form** when it holds one of
+these:
+
+1. `in`, whitespace, optionally a currency form of the field's unit (§4.3) and optional
+   whitespace, and a scale word (§4.1), as in "(in thousands" or "(in € million)";
+2. a scale word, whitespace, `of`, whitespace, and a currency name of the field's unit or its
+   code (§4.3), as in "(millions of Canadian dollars";
+3. a currency form of the field's unit, optional whitespace, and a scale word, as in
+   "EUR million" or "DKK million". Of the currency forms of the field's unit that end at the
+   same place, the form is the longest one, also when it starts before the item. The form does
+   not count when `per` or `/` stands before it, with only whitespace between. So in
+   "tCO2e/US$ million" the form is `US$`, and the `$` inside it does not count.
+
+Each scale word also matches with a final `s` (spec 0.11, #423).
 
 **Several field items.** A candidate can cite more than one field item, for example the row label
 and the column header of a table cell (#300). Each field item is checked on its own, as the table

@@ -4155,7 +4155,9 @@ vector(
     "unit item that holds it gives the field's unit there. A lone $ agrees with each dollar "
     "currency, so $m under 'presented in Australian dollars' gives AUD, and a USD field there "
     "goes to review. A unit form next to the value, or a field check that does not pass, makes "
-    "the item fail (spec 0.10, #315).",
+    "the item fail (spec 0.10, #315). AUD has no form in the unit table, so it is at every token. Since spec 0.11, a unit "
+    "item that holds its name repeats the unit and passes, as the candidate with no unit "
+    "item passes (#423).",
     AUD_STATEMENT,
     HEADING_UNIT_FIELDS,
     [
@@ -4167,10 +4169,10 @@ vector(
         # the statement and the field disagree
         c("u11", "usd", "5200000000", "USD", [q("5,200"), REV, scale_item("$m"), unit_item("$m")],
           UNIT_REVIEW),
-        # the field check must pass
+        # the field check must pass; needs_verification in spec 0.10, admitted by the name (#423)
         c("u20", "aud", "5200000000", "AUD",
           [q("5,200"), scale_item("$m"), unit_item("presented in Australian dollars")],
-          UNIT_REVIEW),
+          DERIVED),
     ],
 )  # fmt: skip
 
@@ -4179,7 +4181,9 @@ vector(
     "A currency statement reaches the rows after it as a heading scale does: across blank lines "
     "before the first line with a tab, and up to the first line with no tab. A line of prose "
     "after it, or the end of a table, stops it, and a line with a tab holds no statement "
-    "(spec 0.10, #315).",
+    "(spec 0.10, #315). AUD has no form in the unit table, so it is at every token. Since spec 0.11, a unit "
+    "item that holds its name repeats the unit and passes, as the candidate with no unit "
+    "item passes (#423).",
     "Income statement (in millions of Canadian dollars)\n\t2025\t2024\nRevenue\t5,200\t4,900\n\n"
     "The figures are presented in Australian dollars.\n\n\t$m\t$m\nRevenue\t6,300\t5,800\n\n"
     "Amounts are presented in Australian dollars.\nThe notes form part of these statements.\n"
@@ -4202,16 +4206,16 @@ vector(
         c("u15", "aud", "7400000000", "AUD",
           [q("7,400"), q("Revenue", 3, role="field"), q("$m", 3, role="scale"),
            q("presented in Australian dollars", 2, role="unit")],
-          UNIT_REVIEW),
+          DERIVED),  # needs_verification in spec 0.10 (#423)
         # the value is in the second table
         c("u16", "aud", "8500000000", "AUD",
           [q("8,500"), q("Revenue", 4, role="field"), q("$m", 5, role="scale"),
            q("in Australian dollars", 3, role="unit")],
-          UNIT_REVIEW),
+          DERIVED),  # needs_verification in spec 0.10 (#423)
         # the statement is on the value's own line, which holds a tab
         c("u17", "aud", "9600", "AUD",
           [q("9,600"), q("Revenue", 5, role="field"), q("in Australian dollars", 4, role="unit")],
-          (REVIEW, ["UNIT_CITATION_INVALID"])),
+          ADMIT),  # needs_verification in spec 0.10 (#423)
     ],
 )  # fmt: skip
 
@@ -4259,8 +4263,10 @@ vector(
     "71-heading-unit-disagree",
     "When the heading units that reach a value do not agree on the field's unit, the unit item "
     "fails and the value goes to review. groundgate never chooses between them: two statements "
-    "of two currencies, a statement of another currency over £m, or a unit form next to the "
-    "value (spec 0.10, #315).",
+    "of two currencies, or a statement of another currency over £m (spec 0.10, #315). AUD has "
+    "no form in the unit table, so it is at every token, also next to a £. Since spec 0.11, a "
+    "unit item that holds its name repeats the unit and passes there, as the candidate with no "
+    "unit item passes (#423).",
     "Group figures in Australian dollars, parent figures in New Zealand dollars\n\t$m\n"
     "Revenue\t5,200\n\n"
     "(in thousands of US dollars)\n\t£m\nRevenue\t6,300\n\n"
@@ -4281,11 +4287,11 @@ vector(
           [q("7,400"), q("Revenue", 3, role="field"), q("$m", 2, role="scale"),
            q("in millions of dollars", role="unit")],
           UNIT_REVIEW),
-        # a unit form next to the value
+        # a unit form next to the value; needs_verification in spec 0.10 (#423)
         c("u19", "aud", "8500000000", "AUD",
           [q("8,500"), q("Revenue", 4, role="field"), q("$m", 4, role="scale"),
            q("presented in Australian dollars", role="unit")],
-          UNIT_REVIEW),
+          DERIVED),  # needs_verification in spec 0.10 (#423)
     ],
 )  # fmt: skip
 
@@ -4305,13 +4311,15 @@ vector(
 vector(
     "73-heading-unit-one-line",
     "A currency statement lies on one line, which holds no tab. A statement that runs onto a "
-    "line with a tab is none, so it gives no unit (spec 0.10, #315).",
+    "line with a tab is none, so it gives no unit (spec 0.10, #315). AUD has no form in the unit table, so it is at every token. Since spec 0.11, a unit "
+    "item that holds its name repeats the unit and passes, as the candidate with no unit "
+    "item passes (#423).",
     "Figures in\nAustralian dollars\t2025\t2024\nRevenue\t5,200\t4,900\n",
     {"fields": {"aud": revenue("AUD")}},
     [
         c("u22", "aud", "5200", "AUD",
           [q("5,200"), REV, q("in\nAustralian dollars", role="unit")],
-          (REVIEW, ["UNIT_CITATION_INVALID"])),
+          ADMIT),  # needs_verification in spec 0.10 (#423)
     ],
 )  # fmt: skip
 
@@ -5543,6 +5551,158 @@ bad_kind("pack-l9-template-name-long", "L9: a template name of 65 characters (sp
 bad_kind("pack-l9-template-name-slash", "L9: a template name with a '/' (spec 0.11, #359).",
          kind(fields={"net_sales": SALES, "net/sales": SALES}))
 # fmt: on
+
+
+# ---------------------------------------------------------------- scale forms (spec 0.11, #423)
+SCALE_FAILS = (REVIEW, ["SCALE_CITATION_INVALID", "VALUE_DERIVED"])
+
+vector(
+    "122-scale-form-in-currency",
+    "Scale form 1: 'in', a currency form of the field's unit and a scale word, as in "
+    "'(in € million)'. A $ is no currency form of EUR, so '(in $ million)' fails for a value in "
+    "EUR. A scale word between the item and the value still stops the item (spec 0.11, #423).",
+    "Group balance sheet (in € million, unless otherwise stated)\n\n"
+    "Total assets\t13,011\t12,758\nEmployees (in thousands)\t4.2\t4.0\n"
+    "Total equity\t5,100\t4,900\n\n"
+    "Parent balance sheet (in $ million)\n\nTotal assets\t13,011\t12,758\n",
+    {"fields": {"eur": money("EUR", "Total assets", "Total equity", multiple=True)}},
+    [
+        # needs_verification with SCALE_CITATION_INVALID in spec 0.10
+        c("sf1", "eur", "13011000000", "EUR",
+          [q("13,011"), row("Total assets"),
+           scale_item("(in € million, unless otherwise stated)")],
+          DERIVED),
+        c("sf2", "eur", "12758000000", "EUR",
+          [q("12,758"), row("Total assets"), scale_item("in € million"), unit_item("€")],
+          DERIVED),
+        # must not change: "thousands" lies between the item and the value
+        c("sf3", "eur", "5100000000", "EUR",
+          [q("5,100"), row("Total equity"), scale_item("(in € million")], SCALE_FAILS),
+        # must not change: $ is no currency form of EUR
+        c("sf4", "eur", "12758000000", "EUR",
+          [q("12,758", 2), q("Total assets", 2, role="field"), scale_item("(in $ million)")],
+          (REVIEW, ["PART_MISSING", "SCALE_CITATION_INVALID", "VALUE_DERIVED"], ["unit"])),
+    ],
+)  # fmt: skip
+
+vector(
+    "123-scale-form-of-currency",
+    "Scale form 2: a scale word, 'of' and a currency name or the code of the field's unit, as in "
+    "'(millions of Canadian dollars'. CAD has no form in the unit table, so a unit item that "
+    "holds its name repeats the unit. 'US dollars' is no name of CAD, '(thousands of customers' "
+    "names no currency, and a statement of USD that reaches the value gives CAD a heading "
+    "conflict (spec 0.11, #423).",
+    "Consolidated statement of income (millions of Canadian dollars)\n\n"
+    "Revenue\t7,400\t6,900\n\n"
+    "(in thousands of US dollars)\n\nRevenue\t5,300\n\n"
+    "(millions of US dollars)\n\nRevenue\t8,100\n\n"
+    "(thousands of customers)\n\nRevenue\t$1,450\n",
+    {"fields": {"cad": money("CAD", "Revenue", multiple=True),
+                "usd": money("USD", "Revenue", multiple=True)}},
+    [
+        # needs_verification with SCALE_CITATION_INVALID in spec 0.10
+        c("sf5", "cad", "7400000000", "CAD",
+          [q("7,400"), REV, scale_item("(millions of Canadian dollars")], DERIVED),
+        c("sf6", "usd", "8100000000", "USD",
+          [q("8,100"), REV, scale_item("millions of US dollars")], DERIVED),
+        # needs_verification with SCALE_CITATION_INVALID and UNIT_CITATION_INVALID in spec 0.10
+        c("sf7", "cad", "6900000000", "CAD",
+          [q("6,900"), REV, scale_item("(millions of Canadian dollars"),
+           unit_item("Canadian dollars")],
+          DERIVED),
+        # the scale item now passes; the unit item still fails: "US dollars" is no name of CAD
+        c("sf8", "cad", "7400000000", "CAD",
+          [q("7,400"), REV, scale_item("(millions of Canadian dollars"), unit_item("US dollars")],
+          UNIT_REVIEW),
+        # must not change: the statement of USD gives CAD a heading conflict
+        c("sf9", "cad", "5300000", "CAD",
+          [q("5,300"), REV, scale_item("(in thousands"), unit_item("Canadian dollars")],
+          UNIT_REVIEW),
+        # must not change: "US dollars" is no name of CAD
+        c("sf10", "cad", "8100000000", "CAD",
+          [q("8,100"), REV, scale_item("(millions of US dollars")], SCALE_FAILS),
+        # must not change: "customers" is no currency name
+        c("sf11", "usd", "1450000", "USD",
+          [q("$1,450"), REV, scale_item("(thousands of customers")], SCALE_FAILS),
+        # must not change: "millions" alone is no scale form
+        c("sf12", "cad", "6900000000", "CAD", [q("6,900"), REV, scale_item("millions")],
+          SCALE_FAILS),
+    ],
+)  # fmt: skip
+
+vector(
+    "124-scale-form-currency-scale-word",
+    "Scale form 3: a currency form of the field's unit and a scale word, as in 'DKK million' or "
+    "'EUR million'. The form does not count after 'per' or '/', as in a carbon intensity per "
+    "EUR million of sales. 'EUR million' is no scale form for a value in DKK. DKK has no form "
+    "in the unit table, so a unit item that holds its code repeats the unit (spec 0.11, #423).",
+    "DKK million\t2025\t2024\nRevenue\t3,960\t3,500\n\n"
+    "EUR million\tNote\t2025\t2024\nRevenue\t3\t2,870\t2,640\n\n"
+    "EUR million\n\nRevenue\t1,150\n\n"
+    "Carbon intensity (tCO2e per EUR million of net sales)\n\nScope 1\t12.4\n\n"
+    "Carbon intensity (tCO2e/EUR million of net sales)\n\nScope 2\t8.6\n",
+    {"fields": {"dkk": money("DKK", "Revenue", multiple=True),
+                "eur": money("EUR", "Revenue", "Scope 1", "Scope 2", multiple=True)}},
+    [
+        # needs_verification with SCALE_CITATION_INVALID in spec 0.10
+        c("sf13", "dkk", "3960000000", "DKK", [q("3,960"), REV, scale_item("DKK million")],
+          DERIVED),
+        c("sf14", "eur", "1150000000", "EUR", [q("1,150"), REV, scale_item("EUR million")],
+          DERIVED),
+        # needs_verification with SCALE_CITATION_INVALID and UNIT_CITATION_INVALID in spec 0.10
+        c("sf15", "dkk", "3500000000", "DKK",
+          [q("3,500"), REV, scale_item("DKK million"), unit_item("DKK")], DERIVED),
+        # must not change: EUR is no currency form of DKK
+        c("sf16", "dkk", "2870000000", "DKK",
+          [q("2,870"), q("Revenue", 2, role="field"), scale_item("EUR million")], SCALE_FAILS),
+        # must not change: "per" or "/" stands before the form
+        c("sf17", "eur", "12400000", "EUR", [q("12.4"), row("Scope 1"), scale_item("EUR million")],
+          SCALE_FAILS),
+        c("sf18", "eur", "8600000", "EUR", [q("8.6"), row("Scope 2"), scale_item("EUR million")],
+          SCALE_FAILS),
+    ],
+)  # fmt: skip
+
+vector(
+    "125-scale-form-longest-currency-form",
+    "Scale form 3 reads the longest currency form of the field's unit that ends at the scale "
+    "word, and 'per' or '/' before that form stops it. In 'tCO2e/US$ million' the longest form "
+    "of USD is US$, and '/' stands before it, so the $ inside US$ does not count. 'US$ million' "
+    "as a column header counts (spec 0.11, #423).",
+    "Carbon intensity (tCO2e/US$ million of net sales)\n\nScope 1\t12.4\n\n"
+    "Carbon intensity (tCO2e per US$ million of net sales)\n\nScope 2\t8.6\n\n"
+    "\tUS$ million\nRevenue\t$5,200\n",
+    {"fields": {"usd": money("USD", "Revenue", "Scope 1", "Scope 2", multiple=True)}},
+    [
+        # the $ inside US$ does not count; needs_verification in spec 0.10 too
+        c("sf19", "usd", "12400000", "USD", [q("12.4"), row("Scope 1"), scale_item("US$ million")],
+          SCALE_FAILS),
+        c("sf20", "usd", "12400000", "USD", [q("12.4"), row("Scope 1"), scale_item("$ million")],
+          SCALE_FAILS),
+        # "per" stands before US$; needs_verification in spec 0.10 too
+        c("sf21", "usd", "8600000", "USD", [q("8.6"), row("Scope 2"), scale_item("US$ million")],
+          SCALE_FAILS),
+        # needs_verification with SCALE_CITATION_INVALID in spec 0.10
+        c("sf22", "usd", "5200000000", "USD",
+          [q("$5,200"), REV, scale_item("US$ million")], DERIVED),
+    ],
+)  # fmt: skip
+
+for suffix, form, why in [
+    ("empty", "", "an empty prefix"),
+    ("space", " ", "a prefix of one space"),
+    ("whitespace", "\t\n ", "a prefix of only whitespace"),
+]:
+    INVALID.append(
+        {
+            "name": f"schema-unit-form-{suffix}",
+            "description": f"A unit with {why} breaks the rule of SPEC 2.3: each prefix and "
+            "suffix is a string that is not blank (spec 0.11, #423).",
+            "document": "x",
+            "schema": {"fields": {"usd": USD}, "units": {"USD": {"prefix": [form], "suffix": []}}},
+            "policy": None,
+        }
+    )
 
 
 def main() -> None:

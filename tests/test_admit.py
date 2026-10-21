@@ -1038,3 +1038,13 @@ def test_evidence_units_report_reads_only_the_units_that_reach(
         return calls[0]
 
     assert cost(10) == cost(10_000) == 2
+
+
+@pytest.mark.parametrize("form", ["", " ", "\t\n", "\u00a0"])
+def test_a_blank_unit_form_is_refused(form: str) -> None:
+    """A blank prefix or suffix would match at every point, so the schema refuses it (SPEC §2.3,
+    spec 0.11, #423)."""
+    for forms in ({"prefix": [form]}, {"suffix": ["USD", form]}):
+        schema = {"fields": {"usd": {"type": "number", "unit": "USD"}}, "units": {"USD": forms}}
+        with pytest.raises(gg.PacketError, match="non-blank strings"):
+            gg.admit("x", schema, [])

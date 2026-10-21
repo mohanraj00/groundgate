@@ -16,6 +16,7 @@ from groundgate.text import (
     _label_line_in,
     _mixed_header_lines,
     canonical,
+    currency_name,
     first_token_end,
     heading_units,
     in_scale,
@@ -24,6 +25,7 @@ from groundgate.text import (
     keys_at,
     parse_value,
     qualifiers,
+    scale_form,
     sentence,
     sentence_index,
     token_scale,
@@ -410,3 +412,104 @@ def test_an_abbreviation_matches_by_the_fold(abbreviation: str) -> None:
     """SPEC §4.2 reads an abbreviation letter by letter by the fold (#356)."""
     s = f"The fee is in {abbreviation} dollars and is 5."
     assert sentence(s, len(s) - 2, qualifiers=True) == (0, len(s))
+
+
+EUR_FORMS = ["€", "EUR", "euros"]
+USD_FORMS = ["$", "US$", "USD", "dollars"]
+
+
+@pytest.mark.parametrize(
+    ("text", "unit", "forms"),
+    [
+        ("(in thousands)", None, []),
+        ("(in € million)", "EUR", EUR_FORMS),
+        ("(In €million, unless otherwise stated)", "EUR", EUR_FORMS),
+        ("in EUR thousands", "EUR", EUR_FORMS),
+        ("in euro millions", "EUR", EUR_FORMS),
+        ("(MILLIONS OF CANADIAN DOLLARS)", "CAD", []),
+        ("thousands of USD", "USD", USD_FORMS),
+        ("billions of U.S. dollars", "USD", USD_FORMS),
+        ("DKK million", "DKK", []),
+        ("Danish krone millions", "DKK", []),
+        ("$ millions", "USD", USD_FORMS),
+        ("EUR million (per share data in EUR)", "EUR", EUR_FORMS),
+    ],
+)
+def test_a_scale_form(text: str, unit: str | None, forms: list[str]) -> None:
+    """The three scale forms of SPEC §4.6 (spec 0.11, #423)."""
+    assert scale_form(text, 0, len(text), unit, forms)
+
+
+@pytest.mark.parametrize(
+    ("text", "unit", "forms"),
+    [
+        ("(in € million)", None, []),
+        ("(in $ million)", "EUR", EUR_FORMS),
+        ("(thousands of customers)", "USD", USD_FORMS),
+        ("(thousands of dollars)", "USD", USD_FORMS),
+        ("(millions of US dollars)", "CAD", []),
+        ("millions of cad", "CAD", []),
+        ("EUR million", "DKK", []),
+        ("tCO2e per EUR million", "EUR", EUR_FORMS),
+        ("tCO2e PER\nEUR million", "EUR", EUR_FORMS),
+        ("tCO2e/EUR million", "EUR", EUR_FORMS),
+        ("tCO2e / EUR million", "EUR", EUR_FORMS),
+        ("EURmillion", "EUR", EUR_FORMS),
+        ("millions", "CAD", []),
+        ("in Canadian dollars", "CAD", []),
+    ],
+)
+def test_no_scale_form(text: str, unit: str | None, forms: list[str]) -> None:
+    """Texts that hold no scale form for the field's unit (SPEC §4.6, spec 0.11, #423)."""
+    assert not scale_form(text, 0, len(text), unit, forms)
+
+
+def test_per_before_the_item_stops_form_3() -> None:
+    """The "per" stands before the item, outside it: the form still does not count."""
+    text = "Carbon intensity (tCO2e per EUR million of net sales)"
+    a = text.index("EUR")
+    assert not scale_form(text, a, a + len("EUR million"), "EUR", EUR_FORMS)
+    assert scale_form("Super EUR million", 6, 17, "EUR", EUR_FORMS)
+
+
+@pytest.mark.parametrize(
+    ("text", "unit", "held"),
+    [
+        ("Canadian dollars", "CAD", True),
+        ("canadian DOLLAR", "CAD", True),
+        ("in CAD", "CAD", True),
+        ("in cad", "CAD", False),
+        ("US dollars", "CAD", False),
+        ("CADS", "CAD", False),
+        ("Danish kroner", "DKK", True),
+        ("kroner", "DKK", False),
+        ("Canadian dollars", "XYZ", False),
+    ],
+)
+def test_a_currency_name(text: str, unit: str, held: bool) -> None:
+    """A unit item can hold a currency name or the code of a unit with no form (spec 0.11,
+    #423). The code matches in capitals only, and a name as a whole word."""
+    assert currency_name(text, 0, len(text), unit) is held
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        "tCO2e/US$ million",
+        "tCO2e per US$ million",
+        "tCO2e/US dollars million",
+        "tCO2e/U.S. dollars million",
+        "tCO2e /\tUnited  States dollars millions",
+    ],
+)
+def test_the_longest_form_reads_per_and_slash(text: str) -> None:
+    """Form 3 reads the longest currency form that ends at the scale word, so a "$" or
+    "dollars" inside a longer form after "/" or "per" does not count (spec 0.11, #423)."""
+    assert not scale_form(text, 0, len(text), "USD", USD_FORMS)
+    a = text.rindex("$") if "$" in text else text.rindex("dollars")
+    assert not scale_form(text, a, len(text), "USD", USD_FORMS)
+
+
+@pytest.mark.parametrize("text", ["\tUS$ million", "Amounts in US dollars million", "MUS$ million"])
+def test_a_longest_form_with_no_per_counts(text: str) -> None:
+    assert scale_form(text, 0, len(text), "USD", USD_FORMS)

@@ -161,7 +161,7 @@ A suffix that ends with a letter must not have a letter or digit directly after 
 at the 5 in "5 grams", but `mg` is at the 500 in "500mg".
 
 **Custom units.** Add a code under `units` with its `prefix` and `suffix` lists. A code that is
-also in the built-in table replaces the built-in forms. Each list holds non-empty strings, and an
+also in the built-in table replaces the built-in forms. Each list holds non-blank strings, and an
 absent list is empty.
 
 ```json
@@ -680,7 +680,7 @@ field bound limit.maximum: integer is outside [-(2^53-1), 2^53-1]
 field 'limit' has unknown keys ['min']
 field 'limit' required must be a boolean
 field 'dose' keys must be distinct, non-blank text
-unit 'inHg' surfaces must be non-empty strings
+unit 'inHg' surfaces must be non-blank strings
 ```
 
 ## Check a schema

@@ -1070,6 +1070,128 @@ def in_scale(text: str, start: int, end: int) -> bool:
     return bool(voc._IN_SCALE.search(text, start, end))
 
 
+def _named(unit: str | None) -> str | None:
+    """A currency name of the row of ``unit`` in the currency table, or its code in capitals,
+    matched as in a currency statement (SPEC §4.3, spec 0.11, #423). None when the unit is not
+    a code of the currency table."""
+    voc = _VOCAB.get()
+    names = voc.CURRENCY_NAMES.get(unit or "")
+    if names is None or unit is None:
+        return None
+    alts = _any([*(_name_pattern(n) for n in names[0]), re.escape(unit)])
+    return rf"(?<![^\W_])(?:{alts})(?![^\W_])"
+
+
+_FormPatterns = tuple[re.Pattern[str], re.Pattern[str] | None, re.Pattern[str] | None]
+_FORM_CACHE = 256  # the most units whose patterns a vocabulary keeps
+
+
+def _scale_form_patterns(unit: str | None, forms: tuple[str, ...]) -> _FormPatterns:
+    """The patterns of the three scale forms for a field's unit with these prefixes and suffixes
+    in the unit table (SPEC §4.6, spec 0.11, #423). The second is None when the unit has no
+    currency name, and the third when it has no currency form."""
+    voc = _VOCAB.get()
+    got = voc._scale_forms.get((unit, forms))
+    if got is not None:
+        return got
+    word = rf"(?<![^\W_])(?:{voc._SCALE_WORDS}){folded_word('s')}?(?![^\W_])"
+    named = _named(unit)
+    # a currency form: a prefix or a suffix of the unit, or a currency name or the code (§4.3)
+    alts = [re.escape(f) for f in sorted(forms, key=len, reverse=True) if f]
+    form = "|".join(alts + ([] if named is None else [named]))
+    optional = rf"(?:(?:{form})\s*)?" if form else ""
+    first = re.compile(rf"(?<![^\W_]){folded_word('in')}\s+{optional}{word}")
+    second = None if named is None else re.compile(rf"{word}\s+{folded_word('of')}\s+{named}")
+    # a lookahead finds every start, also where two forms overlap, as "$" in "US$"
+    third = re.compile(rf"(?=({form})\s*{word})") if form else None
+    if len(voc._scale_forms) >= _FORM_CACHE:
+        voc._scale_forms.clear()  # a schema can name any unit: the cache does not grow past this
+    got = voc._scale_forms[(unit, forms)] = (first, second, third)
+    return got
+
+
+def scale_form(text: str, start: int, end: int, unit: str | None, forms: list[str]) -> bool:
+    """Whether text[start:end] holds a scale form for a field whose unit is ``unit``, with these
+    prefixes and suffixes in the unit table (SPEC §4.6, spec 0.11, #423): "in", an optional
+    currency form and a scale word; a scale word, "of" and a currency name or the code; or a
+    currency form and a scale word with no "per" or "/" before the form."""
+    voc = _VOCAB.get()
+    first, second, third = _scale_form_patterns(unit, tuple(forms))
+    if first.search(text, start, end) or (second is not None and second.search(text, start, end)):
+        return True
+    for m in () if third is None else third.finditer(text, start, end):
+        # the longest currency form that ends where this one ends, also before the item
+        j = _longest_form(text, m.start(1), m.end(1), unit, forms)
+        while j > 0 and text[j - 1].isspace():
+            j -= 1  # only whitespace between "per" or "/" and the form
+        if not (j > 0 and text[j - 1] == "/") and not voc._PER_END.search(text, max(0, j - 3), j):
+            return True
+    return False
+
+
+_WORD_CHAR = re.compile(r"[^\W_]")
+
+
+def _word_at(text: str, i: int) -> bool:
+    return 0 <= i < len(text) and _WORD_CHAR.match(text, i) is not None
+
+
+def _name_ends_at(text: str, end: int, name: str) -> int | None:
+    """The start of a match of the currency name that ends at ``end``, read backwards as a
+    statement matches it (SPEC §4.3): each word by the fold of each letter, and a whitespace run
+    on one line between two words. None when no match ends there."""
+    pos = end
+    words = name.split()
+    for n, w in enumerate(reversed(words)):
+        a = pos - len(w)
+        if a < 0 or fold_text(text[a:pos]) != fold_text(w):
+            return None
+        pos = a
+        if n < len(words) - 1:
+            k = pos
+            while k > 0 and text[k - 1].isspace() and text[k - 1] != "\n":
+                k -= 1
+            if k == pos:
+                return None
+            pos = k
+    return None if _word_at(text, pos - 1) or _word_at(text, end) else pos
+
+
+def _longest_form(text: str, start: int, end: int, unit: str | None, forms: list[str]) -> int:
+    """The start of the longest currency form of ``unit`` that ends at ``end``, where a form
+    starts at ``start`` (SPEC §4.6, form 3). It can start before the item."""
+    voc = _VOCAB.get()
+    out = start
+    for f in forms:
+        if f and len(f) <= end and text.startswith(f, end - len(f)):
+            out = min(out, end - len(f))
+    names = voc.CURRENCY_NAMES.get(unit or "")
+    if names is None or unit is None:
+        return out
+    a = end - len(unit)  # the code, in capitals, as a whole word
+    if a >= 0 and text.startswith(unit, a) and not _word_at(text, a - 1):
+        out = min(out, a) if not _word_at(text, end) else out
+    for name in names[0]:
+        got = _name_ends_at(text, end, name)
+        if got is not None:
+            out = min(out, got)
+    return out
+
+
+def currency_name(text: str, start: int, end: int, unit: str) -> bool:
+    """Whether text[start:end] holds a currency name of ``unit`` or its code in capitals (SPEC
+    §4.6, spec 0.11, #423)."""
+    voc = _VOCAB.get()
+    try:
+        pat = voc._names[unit]  # one read: another thread can clear the cache (#423)
+    except KeyError:
+        if len(voc._names) >= _FORM_CACHE:
+            voc._names.clear()
+        named = _named(unit)
+        pat = voc._names[unit] = None if named is None else re.compile(named)
+    return pat is not None and pat.search(text, start, end) is not None
+
+
 def currency_scale(text: str, start: int, end: int) -> bool:
     """Whether text[start:end] holds a currency scale, such as "£m" (SPEC §4.1)."""
     voc = _VOCAB.get()
@@ -1499,6 +1621,10 @@ class Vocabulary:
         self._ITEM_SCALE = re.compile(
             rf"(?<![^\W_])({self._SCALE_WORDS}){final_s}(?![^\W_])|" + self._CURRENCY_FORM
         )
+        # "per" before a currency form, with only whitespace between (SPEC §4.6, spec 0.11, #423)
+        self._PER_END = re.compile(rf"(?<![^\W_]){folded_word('per')}\Z")
+        self._scale_forms: dict[tuple[str | None, tuple[str, ...]], _FormPatterns] = {}
+        self._names: dict[str, re.Pattern[str] | None] = {}
         self._IN_SCALE = re.compile(
             rf"(?<![^\W_]){folded_word('in')}\s+(?:{self._SCALE_WORDS}){final_s}(?![^\W_])"
         )

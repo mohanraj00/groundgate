@@ -245,8 +245,10 @@ class Schema:
                 raise PacketError(f"unit {code!r} must be an object with prefix/suffix lists")
             prefix, suffix = forms.get("prefix", []), forms.get("suffix", [])
             for lst in (prefix, suffix):
-                if not isinstance(lst, list) or not all(isinstance(x, str) and x for x in lst):
-                    raise PacketError(f"unit {code!r} surfaces must be non-empty strings")
+                if not isinstance(lst, list) or not all(
+                    isinstance(x, str) and x.strip() for x in lst
+                ):  # a blank form matches at every point (#423)
+                    raise PacketError(f"unit {code!r} surfaces must be non-blank strings")
             units[code] = (list(prefix), list(suffix))
             raw_units[code] = {"prefix": list(prefix), "suffix": list(suffix)}
         raw: dict[str, Any] = {"fields": {n: f._raw for n, f in fields.items()}, "units": raw_units}

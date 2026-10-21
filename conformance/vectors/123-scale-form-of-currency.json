@@ -1,0 +1,266 @@
+{
+ "name": "123-scale-form-of-currency",
+ "description": "Scale form 2: a scale word, 'of' and a currency name or the code of the field's unit, as in '(millions of Canadian dollars'. CAD has no form in the unit table, so a unit item that holds its name repeats the unit. 'US dollars' is no name of CAD, '(thousands of customers' names no currency, and a statement of USD that reaches the value gives CAD a heading conflict (spec 0.11, #423).",
+ "document": "Consolidated statement of income (millions of Canadian dollars)\n\nRevenue\t7,400\t6,900\n\n(in thousands of US dollars)\n\nRevenue\t5,300\n\n(millions of US dollars)\n\nRevenue\t8,100\n\n(thousands of customers)\n\nRevenue\t$1,450\n",
+ "schema": {
+  "fields": {
+   "cad": {
+    "type": "number",
+    "unit": "CAD",
+    "multiple": true,
+    "aliases": [
+     "Revenue"
+    ]
+   },
+   "usd": {
+    "type": "number",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "Revenue"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "sf5",
+   "field": "cad",
+   "value": "7400000000",
+   "unit": "CAD",
+   "evidence": [
+    {
+     "start": 73,
+     "end": 78,
+     "text": "7,400"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "(millions of Canadian dollars"
+    }
+   ]
+  },
+  {
+   "id": "sf6",
+   "field": "usd",
+   "value": "8100000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 165,
+     "end": 170,
+     "text": "8,100"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "millions of US dollars"
+    }
+   ]
+  },
+  {
+   "id": "sf7",
+   "field": "cad",
+   "value": "6900000000",
+   "unit": "CAD",
+   "evidence": [
+    {
+     "start": 79,
+     "end": 84,
+     "text": "6,900"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "(millions of Canadian dollars"
+    },
+    {
+     "role": "unit",
+     "text": "Canadian dollars"
+    }
+   ]
+  },
+  {
+   "id": "sf8",
+   "field": "cad",
+   "value": "7400000000",
+   "unit": "CAD",
+   "evidence": [
+    {
+     "start": 73,
+     "end": 78,
+     "text": "7,400"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "(millions of Canadian dollars"
+    },
+    {
+     "role": "unit",
+     "text": "US dollars"
+    }
+   ]
+  },
+  {
+   "id": "sf9",
+   "field": "cad",
+   "value": "5300000",
+   "unit": "CAD",
+   "evidence": [
+    {
+     "start": 124,
+     "end": 129,
+     "text": "5,300"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "(in thousands"
+    },
+    {
+     "role": "unit",
+     "text": "Canadian dollars"
+    }
+   ]
+  },
+  {
+   "id": "sf10",
+   "field": "cad",
+   "value": "8100000000",
+   "unit": "CAD",
+   "evidence": [
+    {
+     "start": 165,
+     "end": 170,
+     "text": "8,100"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "(millions of US dollars"
+    }
+   ]
+  },
+  {
+   "id": "sf11",
+   "field": "usd",
+   "value": "1450000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 206,
+     "end": 212,
+     "text": "$1,450"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "(thousands of customers"
+    }
+   ]
+  },
+  {
+   "id": "sf12",
+   "field": "cad",
+   "value": "6900000000",
+   "unit": "CAD",
+   "evidence": [
+    {
+     "start": 79,
+     "end": 84,
+     "text": "6,900"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "millions"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "UNIT_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SCALE_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SCALE_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SCALE_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}
