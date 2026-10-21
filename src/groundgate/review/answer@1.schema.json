@@ -60,7 +60,7 @@
       ]
     },
     "nodes": {
-      "description": "Reserved for the structure kind (section 7): each node that the person accepted or corrected. The correction of a node comes with the document model (#285). null in format 1.",
+      "description": "Reserved for the structure kind (section 7): each node that the person accepted or corrected. The correction of a node comes with the document model (#285), so a node item takes other members. null in format 1.",
       "anyOf": [
         { "type": "null" },
         {

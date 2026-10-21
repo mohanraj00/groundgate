@@ -217,7 +217,8 @@ logs. It reads no clock and calls no model. The same inputs give the same bytes.
 5. A slot resolves when at least `agree` reviewers give answers that agree, and no reviewer
    gives an answer that disagrees.
 6. If two answers disagree, the slot is `disputed`. The latest answer of a lead settles a
-   dispute alone. With no lead, the slot stays `disputed`.
+   dispute alone. With two or more leads, their latest answers must agree with each other
+   (section 6.3, point 4). With no lead, the slot stays `disputed`.
 7. An audit answer that confirms the value keeps the slot `admitted`. Each other answer, except
    `unsure`, removes the admitted value. Rules 1 to 6 then apply to the answers of the slot.
 

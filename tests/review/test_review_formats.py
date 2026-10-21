@@ -232,6 +232,12 @@ BAD = [
     ("resolution@1", _resolution, ("slots", 0, "status"), "pending"),
     ("resolution@1", _resolution, ("slots", 0, "task"), None),
     ("resolution@1", _resolution, ("slots", 0, "nodes"), _DROP),
+    (
+        "resolution@1",
+        _resolution,
+        ("slots", 0, "nodes"),
+        [{"node": "n1", "verdict": "accepted", "box": [0, 0, 1, 1]}],
+    ),
 ]
 
 

@@ -105,6 +105,7 @@
               "items": {
                 "type": "object",
                 "required": ["node", "verdict"],
+                "additionalProperties": false,
                 "properties": {
                   "node": { "type": "string", "pattern": "\\S" },
                   "verdict": { "enum": ["accepted", "corrected"] }

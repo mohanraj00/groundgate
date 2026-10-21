@@ -150,7 +150,7 @@
     {
       "name": "no-lead-stays-disputed",
       "rules": ["6.1.4", "6.1.6"],
-      "about": "Same verdict, other target: the answers disagree, and no lead settles them.",
+      "about": "Ana and Ben both choose, but they choose two different decisions. The answers disagree, and the policy has no lead, so the slot stays disputed.",
       "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 1, "leads": [], "rejected": false},
       "answers": [
         {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "choose", "choice": "c1"},
