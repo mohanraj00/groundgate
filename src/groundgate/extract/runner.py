@@ -64,6 +64,10 @@ _INSTRUCTIONS = (
     "Use not_found for every requested field with no candidate. Do not supply ids, offsets, "
     "confidence, policies or judgments. A field item quotes the label before the value, such as "
     "a row label or a column header. It must not hold the value. "
+    "A scale or unit item quotes the whole heading or caption that states the scale or the "
+    'currency, such as "(in € million)" or "(millions of Canadian dollars)", not a bare '
+    '"million". Omit the scale item when the scale word directly follows the number, as in '
+    '"4.2 million": the number already carries its scale. '
     "A repair may change only the named evidence roles. "
     "Keep field, unit, key and source fixed. Keep the value fixed for an evidence repair. "
     "If the value changes, even unexpectedly, it is a new terminal proposal: the original stays "

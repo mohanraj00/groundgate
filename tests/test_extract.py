@@ -327,7 +327,7 @@ def test_bad_targeted_quote_fails_only_its_field():
 def test_targeted_trim_drops_the_worst_ranked_region_first():
     schema = {"fields": {"net_income": {"type": "integer", "description": "the yearly profit"}}}
     text = "".join(f"profit line {i} y\n" for i in range(6)) + "Net income 42."
-    for limit in (2750, 3050, 3350):
+    for limit in (3058, 3358, 3658):
         client = Client(envelope(missing=("net_income",)), envelope(missing=("net_income",)))
         settings = RunPolicy(search_context_chars=1, max_prompt_chars=limit)
         result = execute(text, client, schema, run_policy=settings)
@@ -1699,6 +1699,17 @@ def test_search_limit_runs_a_second_sweep_in_rank_order():
     assert fields[-2:] == ["targeted_not_found", "proposed"] and "search_limit" not in fields
     assert result.complete and result.candidates[0]["value"] == "3"
     assert_replays(result, SWEEP_TEXT, SWEEP_SCHEMA)
+
+
+def test_the_prompt_asks_for_the_whole_scale_heading():
+    # A scale item quotes the whole heading, and a scale word after the number needs none (#428).
+    client = Client(NOT_FOUND)
+    execute("Amount 5.", client, CAUSE_SCHEMA)
+    instructions = client.prompts[0].split("\n", 1)[0]
+    assert '"(in € million)" or "(millions of Canadian dollars)", not a bare "million"' in (
+        instructions
+    )
+    assert "Omit the scale item when the scale word directly follows the number" in instructions
 
 
 def test_the_second_sweep_prompt_length_is_exact():
