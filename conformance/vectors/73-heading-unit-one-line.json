@@ -1,6 +1,6 @@
 {
  "name": "73-heading-unit-one-line",
- "description": "A currency statement lies on one line, which holds no tab. A statement that runs onto a line with a tab is none, so it gives no unit (spec 0.10, #315).",
+ "description": "A currency statement lies on one line, which holds no tab. A statement that runs onto a line with a tab is none, so it gives no unit (spec 0.10, #315). AUD has no form in the unit table, so it is at every token. Since spec 0.11, a unit item that holds its name repeats the unit and passes, as the candidate with no unit item passes (#423).",
  "document": "Figures in\nAustralian dollars\t2025\t2024\nRevenue\t5,200\t4,900\n",
  "schema": {
   "fields": {
@@ -42,10 +42,8 @@
  "expected": {
   "decisions": [
    {
-    "outcome": "needs_verification",
-    "codes": [
-     "UNIT_CITATION_INVALID"
-    ]
+    "outcome": "admitted",
+    "codes": []
    }
   ],
   "coverage": []

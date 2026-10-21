@@ -1,6 +1,6 @@
 {
  "name": "71-heading-unit-disagree",
- "description": "When the heading units that reach a value do not agree on the field's unit, the unit item fails and the value goes to review. groundgate never chooses between them: two statements of two currencies, a statement of another currency over £m, or a unit form next to the value (spec 0.10, #315).",
+ "description": "When the heading units that reach a value do not agree on the field's unit, the unit item fails and the value goes to review. groundgate never chooses between them: two statements of two currencies, or a statement of another currency over £m (spec 0.10, #315). AUD has no form in the unit table, so it is at every token, also next to a £. Since spec 0.11, a unit item that holds its name repeats the unit and passes there, as the candidate with no unit item passes (#423).",
  "document": "Group figures in Australian dollars, parent figures in New Zealand dollars\n\t$m\nRevenue\t5,200\n\n(in thousands of US dollars)\n\t£m\nRevenue\t6,300\n\n(in millions of dollars)\n\t$m\nRevenue\t7,400\n\nThe figures are presented in Australian dollars.\n\t$m\t$m\nRevenue\t£8,500\t£7,900\n",
  "schema": {
   "fields": {
@@ -179,9 +179,8 @@
     ]
    },
    {
-    "outcome": "needs_verification",
+    "outcome": "admitted",
     "codes": [
-     "UNIT_CITATION_INVALID",
      "VALUE_DERIVED"
     ]
    }

@@ -4155,7 +4155,9 @@ vector(
     "unit item that holds it gives the field's unit there. A lone $ agrees with each dollar "
     "currency, so $m under 'presented in Australian dollars' gives AUD, and a USD field there "
     "goes to review. A unit form next to the value, or a field check that does not pass, makes "
-    "the item fail (spec 0.10, #315).",
+    "the item fail (spec 0.10, #315). AUD has no form in the unit table, so it is at every token. Since spec 0.11, a unit "
+    "item that holds its name repeats the unit and passes, as the candidate with no unit "
+    "item passes (#423).",
     AUD_STATEMENT,
     HEADING_UNIT_FIELDS,
     [
@@ -4167,10 +4169,10 @@ vector(
         # the statement and the field disagree
         c("u11", "usd", "5200000000", "USD", [q("5,200"), REV, scale_item("$m"), unit_item("$m")],
           UNIT_REVIEW),
-        # the field check must pass
+        # the field check must pass; needs_verification in spec 0.10, admitted by the name (#423)
         c("u20", "aud", "5200000000", "AUD",
           [q("5,200"), scale_item("$m"), unit_item("presented in Australian dollars")],
-          UNIT_REVIEW),
+          DERIVED),
     ],
 )  # fmt: skip
 
@@ -4179,7 +4181,9 @@ vector(
     "A currency statement reaches the rows after it as a heading scale does: across blank lines "
     "before the first line with a tab, and up to the first line with no tab. A line of prose "
     "after it, or the end of a table, stops it, and a line with a tab holds no statement "
-    "(spec 0.10, #315).",
+    "(spec 0.10, #315). AUD has no form in the unit table, so it is at every token. Since spec 0.11, a unit "
+    "item that holds its name repeats the unit and passes, as the candidate with no unit "
+    "item passes (#423).",
     "Income statement (in millions of Canadian dollars)\n\t2025\t2024\nRevenue\t5,200\t4,900\n\n"
     "The figures are presented in Australian dollars.\n\n\t$m\t$m\nRevenue\t6,300\t5,800\n\n"
     "Amounts are presented in Australian dollars.\nThe notes form part of these statements.\n"
@@ -4202,16 +4206,16 @@ vector(
         c("u15", "aud", "7400000000", "AUD",
           [q("7,400"), q("Revenue", 3, role="field"), q("$m", 3, role="scale"),
            q("presented in Australian dollars", 2, role="unit")],
-          UNIT_REVIEW),
+          DERIVED),  # needs_verification in spec 0.10 (#423)
         # the value is in the second table
         c("u16", "aud", "8500000000", "AUD",
           [q("8,500"), q("Revenue", 4, role="field"), q("$m", 5, role="scale"),
            q("in Australian dollars", 3, role="unit")],
-          UNIT_REVIEW),
+          DERIVED),  # needs_verification in spec 0.10 (#423)
         # the statement is on the value's own line, which holds a tab
         c("u17", "aud", "9600", "AUD",
           [q("9,600"), q("Revenue", 5, role="field"), q("in Australian dollars", 4, role="unit")],
-          (REVIEW, ["UNIT_CITATION_INVALID"])),
+          ADMIT),  # needs_verification in spec 0.10 (#423)
     ],
 )  # fmt: skip
 
@@ -4259,8 +4263,10 @@ vector(
     "71-heading-unit-disagree",
     "When the heading units that reach a value do not agree on the field's unit, the unit item "
     "fails and the value goes to review. groundgate never chooses between them: two statements "
-    "of two currencies, a statement of another currency over £m, or a unit form next to the "
-    "value (spec 0.10, #315).",
+    "of two currencies, or a statement of another currency over £m (spec 0.10, #315). AUD has "
+    "no form in the unit table, so it is at every token, also next to a £. Since spec 0.11, a "
+    "unit item that holds its name repeats the unit and passes there, as the candidate with no "
+    "unit item passes (#423).",
     "Group figures in Australian dollars, parent figures in New Zealand dollars\n\t$m\n"
     "Revenue\t5,200\n\n"
     "(in thousands of US dollars)\n\t£m\nRevenue\t6,300\n\n"
@@ -4281,11 +4287,11 @@ vector(
           [q("7,400"), q("Revenue", 3, role="field"), q("$m", 2, role="scale"),
            q("in millions of dollars", role="unit")],
           UNIT_REVIEW),
-        # a unit form next to the value
+        # a unit form next to the value; needs_verification in spec 0.10 (#423)
         c("u19", "aud", "8500000000", "AUD",
           [q("8,500"), q("Revenue", 4, role="field"), q("$m", 4, role="scale"),
            q("presented in Australian dollars", role="unit")],
-          UNIT_REVIEW),
+          DERIVED),  # needs_verification in spec 0.10 (#423)
     ],
 )  # fmt: skip
 
@@ -4305,13 +4311,15 @@ vector(
 vector(
     "73-heading-unit-one-line",
     "A currency statement lies on one line, which holds no tab. A statement that runs onto a "
-    "line with a tab is none, so it gives no unit (spec 0.10, #315).",
+    "line with a tab is none, so it gives no unit (spec 0.10, #315). AUD has no form in the unit table, so it is at every token. Since spec 0.11, a unit "
+    "item that holds its name repeats the unit and passes, as the candidate with no unit "
+    "item passes (#423).",
     "Figures in\nAustralian dollars\t2025\t2024\nRevenue\t5,200\t4,900\n",
     {"fields": {"aud": revenue("AUD")}},
     [
         c("u22", "aud", "5200", "AUD",
           [q("5,200"), REV, q("in\nAustralian dollars", role="unit")],
-          (REVIEW, ["UNIT_CITATION_INVALID"])),
+          ADMIT),  # needs_verification in spec 0.10 (#423)
     ],
 )  # fmt: skip
 
