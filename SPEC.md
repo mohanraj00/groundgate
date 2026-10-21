@@ -117,7 +117,8 @@ operating income field. A field item (§4.6) is checked against them. They follo
 `keys`: null or a non-empty list of strings, none blank, no two equal after whitespace
 normalisation (§4.4) and the fold of each letter (§4).
 `units` extends and overrides the built-in table (§4.3). Each unit is an object with only
-`prefix` and `suffix`, each a list of non-empty strings; an absent list is empty.
+`prefix` and `suffix`, each a list of non-blank strings (spec 0.11, #423); an absent list is
+empty.
 `packs` names each vocabulary pack and kind pack that the packet reads besides the base pack
 (§4.8, §4.9), by `id` and `version`. The schema does not have to name a vocabulary pack that a
 named kind pack needs. An entry can also give `sha256`: then the given pack must have that digest. This
@@ -1002,8 +1003,10 @@ these:
 2. a scale word, whitespace, `of`, whitespace, and a currency name of the field's unit or its
    code (§4.3), as in "(millions of Canadian dollars";
 3. a currency form of the field's unit, optional whitespace, and a scale word, as in
-   "EUR million" or "DKK million". The form does not count when `per` or `/` stands before it,
-   with only whitespace between.
+   "EUR million" or "DKK million". Of the currency forms of the field's unit that end at the
+   same place, the form is the longest one, also when it starts before the item. The form does
+   not count when `per` or `/` stands before it, with only whitespace between. So in
+   "tCO2e/US$ million" the form is `US$`, and the `$` inside it does not count.
 
 Each scale word also matches with a final `s` (spec 0.11, #423).
 
