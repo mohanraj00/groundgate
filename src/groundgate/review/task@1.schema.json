@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/mohanraj00/groundgate/blob/main/src/groundgate/review/task@1.schema.json",
+  "title": "groundgate review task, format task@1",
+  "description": "One question about one slot of a packet (docs/design/review.md section 5.2). The task holds no policy key: the same packet always gives the same task for a slot, so a change of the review policy keeps the answers to its tasks. The task holds offsets, pages and boxes, and no document text other than the values that its question and choices quote.",
+  "type": "object",
+  "required": [
+    "format", "packet", "slot", "item", "mode", "template", "question", "parts", "codes",
+    "choices", "places"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "format": { "const": "task@1" },
+    "packet": { "$ref": "#/$defs/key" },
+    "slot": {
+      "description": "The slot: a field and a key, or one decision of a multiple field. decisions lists the index in the receipt of each decision of the slot, passed or rejected, in receipt order. It is empty for a required field with no decision.",
+      "type": "object",
+      "required": ["field", "key", "decisions"],
+      "additionalProperties": false,
+      "properties": {
+        "field": { "$ref": "#/$defs/field" },
+        "key": { "type": ["string", "null"] },
+        "decisions": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "integer", "minimum": 0 }
+        }
+      }
+    },
+    "item": {
+      "description": "The item kind (section 7). Format 1 builds number, text and span. closed_set, model_text and structure are reserved for later kinds.",
+      "enum": ["number", "text", "span", "closed_set", "model_text", "structure"]
+    },
+    "mode": {
+      "description": "review, or audit for an admitted value that the review policy picked.",
+      "enum": ["review", "audit"]
+    },
+    "template": {
+      "description": "The question template and its version, for example number@1.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*@[1-9][0-9]*$"
+    },
+    "question": { "type": "string", "pattern": "\\S" },
+    "parts": {
+      "description": "Each part that the person checks, for example amount, scale, sign, unit, field and key. The question names each of them.",
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[a-z][a-z_]*$" }
+    },
+    "codes": {
+      "description": "The codes of the decisions of the slot, or REQUIRED_FIELD_MISSING.",
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/code" }
+    },
+    "choices": {
+      "description": "Each passed decision of the slot, in decision order. A task with no choice asks for a correction or not_in_document.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["decision", "value", "unit", "shown", "evidence"],
+        "additionalProperties": false,
+        "properties": {
+          "decision": { "type": "integer", "minimum": 0 },
+          "value": { "description": "The canonical value of the decision.", "type": "string" },
+          "unit": { "type": ["string", "null"] },
+          "shown": {
+            "description": "The value as the question shows it, with each part named.",
+            "type": "string",
+            "pattern": "\\S"
+          },
+          "evidence": {
+            "description": "The value span of the decision, or null on the outside path.",
+            "anyOf": [{ "type": "null" }, { "$ref": "#/$defs/span" }]
+          }
+        }
+      }
+    },
+    "places": {
+      "description": "Each place that the page shows: a span, and the page and the box of a PDF.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["start", "end", "page", "box"],
+        "additionalProperties": false,
+        "properties": {
+          "start": { "type": "integer", "minimum": 0 },
+          "end": { "type": "integer", "minimum": 0 },
+          "page": { "type": ["integer", "null"], "minimum": 1 },
+          "box": {
+            "description": "x0, y0, x1 and y1 on the page, or null.",
+            "anyOf": [
+              { "type": "null" },
+              { "type": "array", "minItems": 4, "maxItems": 4, "items": { "type": "number" } }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "key": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "field": { "type": "string", "pattern": "^[a-z][a-z0-9_]{0,63}$" },
+    "code": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]*$" },
+    "span": {
+      "description": "UTF-8 byte offsets, end exclusive (SPEC.md section 2.2).",
+      "type": "object",
+      "required": ["start", "end"],
+      "additionalProperties": false,
+      "properties": {
+        "start": { "type": "integer", "minimum": 0 },
+        "end": { "type": "integer", "minimum": 0 }
+      }
+    }
+  }
+}

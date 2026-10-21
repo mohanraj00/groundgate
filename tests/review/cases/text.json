@@ -1,0 +1,83 @@
+{
+  "about": "A text field. The candidate has the right value, but its span is too wide, and its confidence is low. The document gives the value two times.",
+  "packet": {
+    "text": "The lease is between Example Holdings Ltd, the lessor, and Sample Retail Inc, the lessee. Example Holdings Ltd signs first.\n",
+    "schema": {"fields": {"lessor": {"type": "string"}}},
+    "policy": {"min_confidence": 0.9},
+    "candidates": [
+      {"id": "c1", "field": "lessor", "value": "Example Holdings Ltd", "confidence": 0.5, "evidence": {"start": 13, "end": 41, "text": "between Example Holdings Ltd"}}
+    ],
+    "judgments": null
+  },
+  "decisions": {
+    "c1": {"outcome": "needs_verification", "codes": ["LOW_CONFIDENCE"]}
+  },
+  "coverage": [],
+  "cases": [
+    {
+      "name": "adjust-span",
+      "rules": ["6.2.1", "6.3.3"],
+      "about": "Ana moves the start of the span. The correction is admitted, and the status is corrected.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 1, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "lessor", "key": null}, "verdict": "adjust_span",
+         "candidate": {"id": "ana-1", "field": "lessor", "value": "Example Holdings Ltd", "proposer": "person:ana", "evidence": {"start": 21, "end": 41, "text": "Example Holdings Ltd"}},
+         "admit": {"outcome": "admitted", "codes": []}}
+      ],
+      "expected": {"slots": [
+        {"field": "lessor", "key": null, "candidates": ["c1"], "status": "corrected", "value": "Example Holdings Ltd", "unit": null, "evidence": {"start": 21, "end": 41}, "receipt": "correction ana", "task": "review"}
+      ]}
+    },
+    {
+      "name": "text-spans-agree",
+      "rules": ["6.1.4", "6.1.5"],
+      "about": "For text the target is the start and the end. Two corrections at the same span agree.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 2, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "lessor", "key": null}, "verdict": "correct",
+         "candidate": {"id": "ana-1", "field": "lessor", "value": "Example Holdings Ltd", "proposer": "person:ana", "evidence": {"start": 21, "end": 41, "text": "Example Holdings Ltd"}},
+         "admit": {"outcome": "admitted", "codes": []}},
+        {"reviewer": "ben", "slot": {"field": "lessor", "key": null}, "verdict": "correct",
+         "candidate": {"id": "ben-1", "field": "lessor", "value": "Example Holdings Ltd", "proposer": "person:ben", "evidence": {"start": 21, "end": 41, "text": "Example Holdings Ltd"}},
+         "admit": {"outcome": "admitted", "codes": []}}
+      ],
+      "expected": {"slots": [
+        {"field": "lessor", "key": null, "candidates": ["c1"], "status": "corrected", "value": "Example Holdings Ltd", "unit": null, "evidence": {"start": 21, "end": 41}, "receipt": "correction ana", "task": "review"}
+      ]}
+    },
+    {
+      "name": "text-spans-differ",
+      "rules": ["6.1.4", "6.1.6"],
+      "about": "The same text at two spans: the targets differ, so the answers disagree.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 2, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "lessor", "key": null}, "verdict": "correct",
+         "candidate": {"id": "ana-1", "field": "lessor", "value": "Example Holdings Ltd", "proposer": "person:ana", "evidence": {"start": 21, "end": 41, "text": "Example Holdings Ltd"}},
+         "admit": {"outcome": "admitted", "codes": []}},
+        {"reviewer": "ben", "slot": {"field": "lessor", "key": null}, "verdict": "correct",
+         "candidate": {"id": "ben-1", "field": "lessor", "value": "Example Holdings Ltd", "proposer": "person:ben", "evidence": {"start": 90, "end": 110, "text": "Example Holdings Ltd"}},
+         "admit": {"outcome": "admitted", "codes": []}}
+      ],
+      "expected": {"slots": [
+        {"field": "lessor", "key": null, "candidates": ["c1"], "status": "disputed", "value": null, "unit": null, "evidence": null, "receipt": "packet", "task": "review"}
+      ]}
+    },
+    {
+      "name": "verdicts-differ",
+      "rules": ["6.1.4", "6.1.6"],
+      "about": "adjust_span and correct with the same span: the verdicts differ, so the answers disagree.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 1, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "lessor", "key": null}, "verdict": "adjust_span",
+         "candidate": {"id": "ana-1", "field": "lessor", "value": "Example Holdings Ltd", "proposer": "person:ana", "evidence": {"start": 21, "end": 41, "text": "Example Holdings Ltd"}},
+         "admit": {"outcome": "admitted", "codes": []}},
+        {"reviewer": "ben", "slot": {"field": "lessor", "key": null}, "verdict": "correct",
+         "candidate": {"id": "ben-1", "field": "lessor", "value": "Example Holdings Ltd", "proposer": "person:ben", "evidence": {"start": 21, "end": 41, "text": "Example Holdings Ltd"}},
+         "admit": {"outcome": "admitted", "codes": []}}
+      ],
+      "expected": {"slots": [
+        {"field": "lessor", "key": null, "candidates": ["c1"], "status": "disputed", "value": null, "unit": null, "evidence": null, "receipt": "packet", "task": "review"}
+      ]}
+    }
+  ]
+}

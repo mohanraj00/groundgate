@@ -1,0 +1,145 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/mohanraj00/groundgate/blob/main/src/groundgate/review/resolution@1.schema.json",
+  "title": "groundgate review resolution, format resolution@1",
+  "description": "The final state and value of each slot of a packet, from the packet, the review policy, the tasks and the answer logs (docs/design/review.md sections 5.4 and 6). The app reads it.",
+  "type": "object",
+  "required": ["format", "packet", "policy", "answers", "slots"],
+  "additionalProperties": false,
+  "properties": {
+    "format": { "const": "resolution@1" },
+    "packet": { "$ref": "#/$defs/key" },
+    "policy": { "description": "The key of the review-policy@1 object.", "$ref": "#/$defs/key" },
+    "answers": {
+      "description": "The head of each answer log that the resolution read, in code point order of the reviewer name.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["reviewer", "head"],
+        "additionalProperties": false,
+        "properties": {
+          "reviewer": { "type": "string", "pattern": "\\S" },
+          "head": { "$ref": "#/$defs/key" }
+        }
+      }
+    },
+    "slots": {
+      "description": "Each slot of the packet: in code point order of the field, then of the key with null first, then of the first decision.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/slot" }
+    }
+  },
+  "$defs": {
+    "key": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "span": {
+      "description": "UTF-8 byte offsets, end exclusive (SPEC.md section 2.2).",
+      "type": "object",
+      "required": ["start", "end"],
+      "additionalProperties": false,
+      "properties": {
+        "start": { "type": "integer", "minimum": 0 },
+        "end": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "slot": {
+      "type": "object",
+      "required": [
+        "field", "key", "decisions", "status", "value", "unit", "evidence", "receipt", "task",
+        "statements", "nodes"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "field": { "type": "string", "pattern": "^[a-z][a-z0-9_]{0,63}$" },
+        "key": { "type": ["string", "null"] },
+        "decisions": {
+          "description": "The index in the receipt of each decision of the slot, as in the task.",
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "integer", "minimum": 0 }
+        },
+        "status": {
+          "description": "admitted: the value of the gate, with no task or with an audit that does not remove it. confirmed, chosen, corrected: the value of the person. not_in_document, rejected, open, disputed: no value.",
+          "enum": [
+            "admitted", "confirmed", "chosen", "corrected", "not_in_document", "rejected", "open",
+            "disputed"
+          ]
+        },
+        "value": { "description": "The canonical value, or null.", "type": ["string", "null"] },
+        "unit": { "type": ["string", "null"] },
+        "evidence": {
+          "description": "The value span of the decision that gives the value, or null.",
+          "anyOf": [{ "type": "null" }, { "$ref": "#/$defs/span" }]
+        },
+        "receipt": {
+          "description": "The correction receipt when the value comes from a correction. Otherwise the receipt of the packet.",
+          "$ref": "#/$defs/key"
+        },
+        "task": {
+          "description": "The task of the slot, or null when the slot has no task.",
+          "anyOf": [{ "type": "null" }, { "$ref": "#/$defs/key" }]
+        },
+        "statements": {
+          "description": "Reserved for the model_text kind (section 7). null in format 1.",
+          "anyOf": [
+            { "type": "null" },
+            {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["statement", "verdict"],
+                "additionalProperties": false,
+                "properties": {
+                  "statement": { "type": "integer", "minimum": 0 },
+                  "verdict": { "enum": ["supported", "unsupported", "unsure"] }
+                }
+              }
+            }
+          ]
+        },
+        "nodes": {
+          "description": "Reserved for the structure kind (section 7). null in format 1.",
+          "anyOf": [
+            { "type": "null" },
+            {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["node", "verdict"],
+                "additionalProperties": false,
+                "properties": {
+                  "node": { "type": "string", "pattern": "\\S" },
+                  "verdict": { "enum": ["accepted", "corrected"] }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "status": { "enum": ["admitted", "confirmed", "chosen", "corrected"] } }
+          },
+          "then": { "properties": { "value": { "type": "string" } } },
+          "else": {
+            "properties": {
+              "value": { "type": "null" },
+              "unit": { "type": "null" },
+              "evidence": { "type": "null" }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": ["confirmed", "chosen", "corrected", "not_in_document", "open", "disputed"]
+              }
+            }
+          },
+          "then": { "properties": { "task": { "$ref": "#/$defs/key" } } }
+        }
+      ]
+    }
+  }
+}

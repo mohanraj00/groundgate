@@ -1,0 +1,153 @@
+{
+  "about": "The gate admits the 2024 revenue as revenue, because the field has no key. The slot has exactly one passed decision, and it is admitted. With the rate \"1\", the audit picks every such slot.",
+  "packet": {
+    "text": "Revenue was 4,200 thousand in 2025, up from 3,900 thousand in 2024.\n",
+    "schema": {"fields": {"revenue": {"type": "number"}}},
+    "policy": null,
+    "candidates": [
+      {"id": "c1", "field": "revenue", "value": "3900000", "evidence": {"start": 44, "end": 58, "text": "3,900 thousand"}}
+    ],
+    "judgments": null
+  },
+  "decisions": {
+    "c1": {"outcome": "admitted", "codes": []}
+  },
+  "coverage": [],
+  "cases": [
+    {
+      "name": "audit-with-no-answer",
+      "rules": ["6.1.7"],
+      "about": "The slot has an audit task and no answer. It stays admitted.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "1", "seed": "cases"}, "agree": 1, "leads": [], "rejected": false},
+      "answers": [],
+      "expected": {"slots": [
+        {"field": "revenue", "key": null, "candidates": ["c1"], "status": "admitted", "value": "3900000", "unit": null, "evidence": {"start": 44, "end": 58}, "receipt": "packet", "task": "audit"}
+      ]}
+    },
+    {
+      "name": "audit-confirm-keeps-admitted",
+      "rules": ["6.1.7", "6.3.3"],
+      "about": "An audit answer that confirms the value keeps the slot admitted.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "1", "seed": "cases"}, "agree": 1, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "confirm"}
+      ],
+      "expected": {"slots": [
+        {"field": "revenue", "key": null, "candidates": ["c1"], "status": "admitted", "value": "3900000", "unit": null, "evidence": {"start": 44, "end": 58}, "receipt": "packet", "task": "audit"}
+      ]}
+    },
+    {
+      "name": "audit-confirm-with-agree-2",
+      "rules": ["6.1.7"],
+      "about": "One confirm keeps the slot admitted, also when the policy asks two reviewers to agree.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "1", "seed": "cases"}, "agree": 2, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "confirm"}
+      ],
+      "expected": {"slots": [
+        {"field": "revenue", "key": null, "candidates": ["c1"], "status": "admitted", "value": "3900000", "unit": null, "evidence": {"start": 44, "end": 58}, "receipt": "packet", "task": "audit"}
+      ]}
+    },
+    {
+      "name": "audit-unsure-keeps-admitted",
+      "rules": ["6.1.2", "6.1.7"],
+      "about": "unsure is the one answer that does not remove the admitted value.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "1", "seed": "cases"}, "agree": 1, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "unsure"}
+      ],
+      "expected": {"slots": [
+        {"field": "revenue", "key": null, "candidates": ["c1"], "status": "admitted", "value": "3900000", "unit": null, "evidence": {"start": 44, "end": 58}, "receipt": "packet", "task": "audit"}
+      ]}
+    },
+    {
+      "name": "audit-correct",
+      "rules": ["6.1.7", "6.2", "6.2.1"],
+      "about": "Ana corrects the value to the 2025 revenue. The correction is admitted, so it counts.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "1", "seed": "cases"}, "agree": 1, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "correct",
+         "candidate": {"id": "ana-1", "field": "revenue", "value": "4200000", "proposer": "person:ana", "evidence": {"start": 12, "end": 26, "text": "4,200 thousand"}},
+         "admit": {"outcome": "admitted", "codes": []}}
+      ],
+      "expected": {"slots": [
+        {"field": "revenue", "key": null, "candidates": ["c1"], "status": "corrected", "value": "4200000", "unit": null, "evidence": {"start": 12, "end": 26}, "receipt": "correction ana", "task": "audit"}
+      ]}
+    },
+    {
+      "name": "audit-not-in-document",
+      "rules": ["6.1.7"],
+      "about": "One answer that is not a confirm removes the admitted value. With agree 1 it then settles the slot.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "1", "seed": "cases"}, "agree": 1, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "not_in_document"}
+      ],
+      "expected": {"slots": [
+        {"field": "revenue", "key": null, "candidates": ["c1"], "status": "not_in_document", "value": null, "unit": null, "evidence": null, "receipt": "packet", "task": "audit"}
+      ]}
+    },
+    {
+      "name": "audit-confirm-and-a-no",
+      "rules": ["6.1.6", "6.1.7"],
+      "about": "Ben removes the admitted value. Then the confirm of Ana and the answer of Ben disagree.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "1", "seed": "cases"}, "agree": 1, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "confirm"},
+        {"reviewer": "ben", "slot": {"field": "revenue", "key": null}, "verdict": "not_in_document"}
+      ],
+      "expected": {"slots": [
+        {"field": "revenue", "key": null, "candidates": ["c1"], "status": "disputed", "value": null, "unit": null, "evidence": null, "receipt": "packet", "task": "audit"}
+      ]}
+    },
+    {
+      "name": "audit-correct-with-agree-2",
+      "rules": ["6.1.5", "6.1.7"],
+      "about": "The correction removes the admitted value, but one answer does not settle the slot when two must agree.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "1", "seed": "cases"}, "agree": 2, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "correct",
+         "candidate": {"id": "ana-1", "field": "revenue", "value": "4200000", "proposer": "person:ana", "evidence": {"start": 12, "end": 26, "text": "4,200 thousand"}},
+         "admit": {"outcome": "admitted", "codes": []}}
+      ],
+      "expected": {"slots": [
+        {"field": "revenue", "key": null, "candidates": ["c1"], "status": "open", "value": null, "unit": null, "evidence": null, "receipt": "packet", "task": "audit"}
+      ]}
+    },
+    {
+      "name": "audit-rejected-correction-removes-the-value",
+      "rules": ["6.1.7", "6.2.3", "6.3.7"],
+      "about": "The gate rejects the correction, so it does not count. But Ana says that the value is wrong, so the admitted value goes, and the slot is open.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "1", "seed": "cases"}, "agree": 1, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "correct",
+         "candidate": {"id": "ana-1", "field": "revenue", "value": "4300000", "proposer": "person:ana", "evidence": {"start": 12, "end": 26, "text": "4,200 thousand"}},
+         "admit": {"outcome": "rejected", "codes": ["VALUE_NOT_IN_EVIDENCE"]}}
+      ],
+      "expected": {"slots": [
+        {"field": "revenue", "key": null, "candidates": ["c1"], "status": "open", "value": null, "unit": null, "evidence": null, "receipt": "packet", "task": "audit"}
+      ]}
+    },
+    {
+      "name": "audit-off",
+      "rules": ["5.1"],
+      "about": "The rate \"0\" turns the audit off. The slot has no task.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 1, "leads": [], "rejected": false},
+      "answers": [],
+      "expected": {"slots": [
+        {"field": "revenue", "key": null, "candidates": ["c1"], "status": "admitted", "value": "3900000", "unit": null, "evidence": {"start": 44, "end": 58}, "receipt": "packet", "task": null}
+      ]}
+    },
+    {
+      "name": "audit-answer-after-a-policy-change",
+      "rules": ["6.1.7", "6.3.1"],
+      "about": "An earlier policy picked the slot, and Ana answered its audit task. The new policy turns the audit off. The task key does not change with the policy, so the answer still counts.",
+      "policy": {"format": "review-policy@1", "audit": {"rate": "0", "seed": "cases"}, "agree": 1, "leads": [], "rejected": false},
+      "answers": [
+        {"reviewer": "ana", "slot": {"field": "revenue", "key": null}, "verdict": "not_in_document"}
+      ],
+      "expected": {"slots": [
+        {"field": "revenue", "key": null, "candidates": ["c1"], "status": "not_in_document", "value": null, "unit": null, "evidence": null, "receipt": "packet", "task": "audit"}
+      ]}
+    }
+  ]
+}
