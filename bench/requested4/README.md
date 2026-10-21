@@ -137,8 +137,10 @@ incomplete, had a transport error or stopped at `search_limit`.
 | runner | sds | 68.75% (11 of 16) | 68.75% (11 of 16) | 0 | 0 |
 | runner_drop_rounded | total | 72.95% (89 of 122) | 57.38% (70 of 122) | 2 | 2 |
 
+The table gives only the total for `runner_drop_rounded`; `loop/02/COMPARE.md` has each kind.
 The changes lower the miss rate in each arm and add no escape, so loop 02 keeps them. The
-largest review code on right runner values is now `FIELD_CITATION_INVALID` (68 decisions).
+most frequent review code of the runner is now `FIELD_CITATION_INVALID`: `diagnose.review_codes`
+in `loop/02.json` counts 68 review decisions with this code that carry a right value.
 
 ## What comes next
 
