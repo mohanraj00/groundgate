@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 
-import time
 from pathlib import Path
 
 import pytest
+from timing import best_seconds
 
 from groundgate.read import read
 from groundgate.read.grid import PAGE_RULES, PAGE_TABLES, Grid, grids
@@ -231,12 +231,14 @@ def test_grid_needs_a_closed_cell() -> None:
 
 def test_too_many_rules_give_no_grid_quickly() -> None:
     rules = [(0.0, float(y), 300.0, y + 0.5) for y in range(PAGE_RULES + 1)]
-    started = time.perf_counter()
-    assert _grid(rules) == []
     many = [(0.0, float(y), 300.0, y + 0.5) for y in range(0, 2000, 2)]
     many += [(float(x), 0.0, x + 0.5, 2000.0) for x in range(0, 2000, 2)]
-    assert _grid(many) == []  # a mesh of 1000 by 1000 rules, such as a chart
-    assert time.perf_counter() - started < 2
+
+    def run() -> None:
+        assert _grid(rules) == []
+        assert _grid(many) == []  # a mesh of 1000 by 1000 rules, such as a chart
+
+    assert best_seconds(run) < 2
 
 
 def test_a_page_of_many_small_tables_gives_none() -> None:
@@ -258,7 +260,9 @@ def test_the_largest_tables_under_the_limits_are_fast() -> None:
         return out + [(left + 4.0 * x, 0.0, left + 4.0 * x + 0.5, side) for x in range(n + 1)]
 
     rules = table(0.0) + table(1000.0)  # 400 by 400 rules: more tables pass the pair limit
-    started = time.perf_counter()
-    assert len(_grid(rules)) == 2
-    assert time.perf_counter() - started < 2
+
+    def run() -> None:
+        assert len(_grid(rules)) == 2
+
+    assert best_seconds(run) < 2
     assert _grid(rules + table(2000.0)) == []

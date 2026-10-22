@@ -302,9 +302,12 @@ def test_the_scale_is_exact_for_long_numbers() -> None:
 def test_a_long_number_takes_linear_time() -> None:
     digits = "7" * 200_000
     text = f"Revenue {digits} here."
-    start = time.perf_counter()
-    shown = _number(digits + "000", None, (8, 8 + len(digits)), _Source(text))
-    assert time.perf_counter() - start < 0.5
+    times = []
+    for _ in range(3):  # the best of three runs, so a pause of a shared runner does not count
+        start = time.perf_counter()
+        shown = _number(digits + "000", None, (8, 8 + len(digits)), _Source(text))
+        times.append(time.perf_counter() - start)
+    assert min(times) < 0.5
     assert shown.endswith(f"(written {digits}, in thousands, positive)")
 
 

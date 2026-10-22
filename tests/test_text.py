@@ -1,12 +1,13 @@
 from __future__ import annotations
 
 import re
-import time
+from collections.abc import Callable
 from decimal import Decimal
 
 import pytest
 from hypothesis import given
 from hypothesis import strategies as st
+from timing import assert_linear, best_seconds
 
 import groundgate as gg
 from groundgate.text import (
@@ -157,31 +158,28 @@ def test_a_line_of_spaces_is_blank_for_a_label_line() -> None:
 def test_a_long_line_of_spaces_takes_linear_time() -> None:
     mentions = key_mentions("Hypertension", ("Hypertension",))
     text = "Hypertension\n" + " " * 200_000 + "\nThe dose is 5 mg."
-    t0 = time.perf_counter()
     assert keys_at(text, mentions, text.index("5 mg")) == {"Hypertension"}
-    assert time.perf_counter() - t0 < 1
+    assert best_seconds(lambda: keys_at(text, mentions, text.index("5 mg"))) < 1
 
 
 def test_repeated_key_lines_scale_with_many_values() -> None:
     """Four times the header lines and value lookups must not cost quadratic work."""
 
-    def time_for(lines: int, values: int) -> float:
+    def prepare(lines: int) -> Callable[[], None]:
+        values = lines * 32 // 1000
         text = "2024\n" * lines + "Cash $100\n" * values
         # Build source offsets directly; key matching is outside this regression's scope.
         mentions = [(i * 5, i * 5 + 4, "2024") for i in range(lines)]
-        best = float("inf")
-        for _ in range(2):
-            started = time.perf_counter()
+
+        def run() -> None:
             with sentence_index():
                 for i in range(values):
                     # Different header occurrences prevent a per-position memo from hiding scans.
                     assert not _mixed_header_lines(text, mentions, mentions[-1 - i][0])
-            best = min(best, time.perf_counter() - started)
-        return best
 
-    small = time_for(1000, 32)
-    large = time_for(4000, 128)
-    assert large < 8 * small, (small, large)
+        return run
+
+    assert_linear(prepare, 1000, 4000)
 
 
 def test_mixed_header_index_keeps_key_sets_separate_and_expires() -> None:
@@ -239,17 +237,15 @@ def test_heading_units_read_each_line_once() -> None:
     """A table with a currency header on every row stays linear (#315): four times the rows take
     less than eight times as long."""
 
-    def time_for(rows: int) -> float:
+    def prepare(rows: int) -> Callable[[], None]:
         text = "(in Australian dollars)\n" + "\t$m\n" * rows
-        best = float("inf")
-        for _ in range(2):
-            began = time.perf_counter()
-            found = heading_units(text)
-            best = min(best, time.perf_counter() - began)
-            assert len(found) == rows + 1
-        return best
 
-    assert time_for(20000) < 8 * time_for(5000)
+        def run() -> None:
+            assert len(heading_units(text)) == rows + 1
+
+        return run
+
+    assert_linear(prepare, 5000, 20000)
 
 
 def test_heading_index_checks_each_kind_once() -> None:
@@ -258,21 +254,20 @@ def test_heading_index_checks_each_kind_once() -> None:
     than eight times as long."""
     units = {"USD": (["US$", "$"], ["USD", "dollars"])}
 
-    def time_for(rows: int) -> float:
+    def prepare(rows: int) -> Callable[[], None]:
         head = "(in Australian dollars)\n"
         text = head + "".join(f"Revenue\t{k + 1}\t$m\n" for k in range(rows))
         index = HeadingIndex(text)
         places = [text.index(f"\t{k + 1}\t") + 1 for k in range(0, rows, 4)]
-        best = float("inf")
-        for _ in range(2):
-            began = time.perf_counter()
+
+        def run() -> None:
             for pos in places:
                 assert index.held(1, 22, pos)
                 assert index.currency(pos, "AUD", units)
-            best = min(best, time.perf_counter() - began)
-        return best
 
-    assert time_for(20000) < 8 * time_for(5000)
+        return run
+
+    assert_linear(prepare, 5000, 20000)
 
 
 def test_heading_conflict_reads_only_currency_units() -> None:
@@ -340,19 +335,18 @@ def test_heading_index_held_skips_units_that_reach_nothing() -> None:
     """An item span that holds many headers that reach nothing does not read them one by one
     (#315): four times the headers and the checks take less than eight times as long."""
 
-    def time_for(rows: int) -> float:
+    def prepare(rows: int) -> Callable[[], None]:
         text = "£m\n" * rows + "No table here.\nRevenue\t5\n"
         index = HeadingIndex(text)
         pos = text.index("\t5") + 1
-        best = float("inf")
-        for _ in range(2):
-            began = time.perf_counter()
+
+        def run() -> None:
             for _ in range(rows // 4):
                 assert not index.held(0, pos, pos)
-            best = min(best, time.perf_counter() - began)
-        return best
 
-    assert time_for(40000) < 8 * time_for(10000)
+        return run
+
+    assert_linear(prepare, 10000, 40000)
 
 
 def test_a_long_s_in_a_scale_word_gives_a_receipt() -> None:

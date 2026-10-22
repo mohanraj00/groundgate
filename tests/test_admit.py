@@ -2,11 +2,13 @@ from __future__ import annotations
 
 import json
 import random
+from collections.abc import Callable
 from importlib import import_module
 from pathlib import Path
 from typing import Any
 
 import pytest
+from timing import assert_linear
 
 import groundgate as gg
 from groundgate.cli import main
@@ -642,49 +644,45 @@ def test_an_early_reject_of_a_quoted_reference_item_names_its_source() -> None:
     )
 
 
-def _seconds(text: str, cand: dict[str, Any]) -> float:
-    """The best of two times to decide one candidate on an integer field."""
-    import time
+def _decide(text: str, cand: dict[str, Any]) -> Callable[[], None]:
+    """The run that decides one candidate on an integer field."""
 
-    best = float("inf")
-    for _ in range(2):
-        began = time.perf_counter()
+    def run() -> None:
         r = gg.admit(text, {"fields": {"n": {"type": "integer"}}}, [cand])
-        best = min(best, time.perf_counter() - began)
         assert r.decisions[0].missing == ("scale",)
-    return best
+
+    return run
 
 
 def test_heading_scale_reads_a_long_table_once() -> None:
     """Many copies of the value in a table under a heading scale stay linear (#206): four
     times the rows take less than eight times as long."""
 
-    def time_for(rows: int) -> float:
+    def prepare(rows: int) -> Callable[[], None]:
         text = "(in thousands)\n\n" + "Row\t0\t0\n" * rows
         span = {"source": "document", "start": 0, "end": len(text.encode())}
-        return _seconds(text, {"id": "c", "field": "n", "value": 0, "evidence": [span]})
+        return _decide(text, {"id": "c", "field": "n", "value": 0, "evidence": [span]})
 
-    assert time_for(8000) < 8 * time_for(2000)
+    assert_linear(prepare, 2000, 8000)
 
 
 def test_heading_scale_reads_a_wide_row_once() -> None:
     """Many copies of the value on one wide row under a heading scale stay linear (#206)."""
 
-    def time_for(cells: int) -> float:
+    def prepare(cells: int) -> Callable[[], None]:
         text = "(in thousands)\nRow\t" + "\t".join("0" for _ in range(cells)) + "\n"
-        return _seconds(text, {"id": "c", "field": "n", "value": 0, "evidence": [{"text": "0"}]})
+        return _decide(text, {"id": "c", "field": "n", "value": 0, "evidence": [{"text": "0"}]})
 
-    assert time_for(80_000) < 8 * time_for(20_000)
+    assert_linear(prepare, 20_000, 80_000)
 
 
 def test_unit_places_read_a_long_table_once() -> None:
     """A unit quote with many occurrences in a long table stays linear (#164): four times the
     rows take less than eight times as long."""
-    import time
 
     schema = {"fields": {"total": {"type": "integer", "unit": "USD", "aliases": ["total"]}}}
 
-    def time_for(rows: int) -> float:
+    def prepare(rows: int) -> Callable[[], None]:
         text = "Row\t$\t1\t$\t2\n" * rows + "Total\t3\t7\n"
         cand = {
             "id": "c",
@@ -697,25 +695,23 @@ def test_unit_places_read_a_long_table_once() -> None:
                 {"role": "field", "text": "Total"},
             ],
         }
-        best = float("inf")
-        for _ in range(2):
-            began = time.perf_counter()
-            r = gg.admit(text, schema, [cand])
-            best = min(best, time.perf_counter() - began)
-            assert r.decisions[0].outcome == "admitted"
-        return best
 
-    assert time_for(4000) < 8 * time_for(1000)
+        def run() -> None:
+            r = gg.admit(text, schema, [cand])
+            assert r.decisions[0].outcome == "admitted"
+
+        return run
+
+    assert_linear(prepare, 1000, 4000)
 
 
 def test_label_cells_read_a_long_table_once() -> None:
     """The label cell rule (#316) reads the lines, tabs and words of a text once: four times the
     rows of a question/answer table take less than eight times as long."""
-    import time
 
     schema = {"fields": {"ded": {"type": "integer", "unit": "USD", "aliases": ["deductible"]}}}
 
-    def time_for(rows: int) -> float:
+    def prepare(rows: int) -> Callable[[], None]:
         line = "What is the deductible?\tIn-Network: Individual $7 " + "word " * 50 + "\n"
         text = line * rows
         cand = {
@@ -725,26 +721,24 @@ def test_label_cells_read_a_long_table_once() -> None:
             "unit": "USD",
             "evidence": [{"text": "$7"}, {"role": "field", "text": "deductible"}],
         }
-        best = float("inf")
-        for _ in range(2):
-            began = time.perf_counter()
-            r = gg.admit(text, schema, [cand])
-            best = min(best, time.perf_counter() - began)
-            assert r.decisions[0].outcome == "admitted"
-        return best
 
-    assert time_for(4000) < 8 * time_for(1000)
+        def run() -> None:
+            r = gg.admit(text, schema, [cand])
+            assert r.decisions[0].outcome == "admitted"
+
+        return run
+
+    assert_linear(prepare, 1000, 4000)
 
 
 def test_unit_places_read_a_wide_row_once() -> None:
     """A unit quote with many occurrences on one wide row stays linear (#164), also when none
     is at a unit place, so each one is checked: four times the columns take less than eight
     times as long."""
-    import time
 
     schema = {"fields": {"amount": {"type": "integer", "unit": "USD", "aliases": ["amount"]}}}
 
-    def time_for(cols: int) -> float:
+    def prepare(cols: int) -> Callable[[], None]:
         head = "Head" + "".join(f"\t$\t{n + 1}" for n in range(cols))
         text = head + "\nAmount" + "\t7" * cols + "\t9\n"  # one column more than the head
         cand = {
@@ -758,15 +752,14 @@ def test_unit_places_read_a_wide_row_once() -> None:
                 {"role": "field", "text": "Amount"},
             ],
         }
-        best = float("inf")
-        for _ in range(2):
-            began = time.perf_counter()
-            r = gg.admit(text, schema, [cand])
-            best = min(best, time.perf_counter() - began)
-            assert r.decisions[0].codes == ("UNIT_CITATION_INVALID",)
-        return best
 
-    assert time_for(1600) < 8 * time_for(400)
+        def run() -> None:
+            r = gg.admit(text, schema, [cand])
+            assert r.decisions[0].codes == ("UNIT_CITATION_INVALID",)
+
+        return run
+
+    assert_linear(prepare, 400, 1600)
 
 
 def test_reanchor_needs_the_unit_next_to_the_value() -> None:
@@ -801,7 +794,6 @@ def test_field_occurrences_stay_linear(layout: str) -> None:
     """Many copies of a value quote with a field item stay linear (#249): the occurrences of
     the field item, the sentence ends and the next letter and number are read once, also when
     no copy has the unit. Four times the copies take less than eight times as long."""
-    import time
 
     schema = {"fields": {"revenue": {"type": "integer", "unit": "USD", "aliases": ["revenue"]}}}
     cand = {
@@ -812,28 +804,26 @@ def test_field_occurrences_stay_linear(layout: str) -> None:
         "evidence": [{"text": "160"}, {"role": "field", "text": "Revenue"}],
     }
 
-    def time_for(copies: int) -> float:
+    def prepare(copies: int) -> Callable[[], None]:
         text = layout.format(" ".join(["160"] * copies))
-        best = float("inf")
-        for _ in range(2):
-            began = time.perf_counter()
-            r = gg.admit(text, schema, [cand])
-            best = min(best, time.perf_counter() - began)
-            assert r.decisions[0].missing == ("unit",)
-        return best
 
-    assert time_for(2000) < 8 * time_for(500)
+        def run() -> None:
+            r = gg.admit(text, schema, [cand])
+            assert r.decisions[0].missing == ("unit",)
+
+        return run
+
+    assert_linear(prepare, 500, 2000)
 
 
 def test_unit_places_find_lines_and_cells_once() -> None:
     """A wide row of empty cells above the value stays linear (#164): the line of each unit form
     and the whitespace after each empty cell are not read again for each form. Four times the
     columns take less than six times as long."""
-    import time
 
     schema = {"fields": {"amount": {"type": "integer", "unit": "USD", "aliases": ["amount"]}}}
 
-    def time_for(cols: int) -> float:
+    def prepare(cols: int) -> Callable[[], None]:
         text = "Head\tX" + "\t$" * cols + "\nAmount\t9\n"  # no $ is in the value's column
         at = text.index("\t9") + 1
         cand = {
@@ -847,15 +837,14 @@ def test_unit_places_find_lines_and_cells_once() -> None:
                 {"role": "field", "text": "Amount"},
             ],
         }
-        best = float("inf")
-        for _ in range(2):
-            began = time.perf_counter()
-            r = gg.admit(text, schema, [cand])
-            best = min(best, time.perf_counter() - began)
-            assert r.decisions[0].codes == ("UNIT_CITATION_INVALID",)
-        return best
 
-    assert time_for(40000) < 6 * time_for(10000)
+        def run() -> None:
+            r = gg.admit(text, schema, [cand])
+            assert r.decisions[0].codes == ("UNIT_CITATION_INVALID",)
+
+        return run
+
+    assert_linear(prepare, 10000, 40000, 6)
 
 
 def test_field_items_are_read_once_per_value(monkeypatch: pytest.MonkeyPatch) -> None:
