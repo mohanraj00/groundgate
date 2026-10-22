@@ -210,7 +210,7 @@ def test_the_answer_logs_give_the_labels_and_the_report_of_the_old_page(
     with pytest.raises(SystemExit, match="labels are frozen"):
         cli.main(["label", "--work", str(new), "--store", str(store), "--reviewer", "ana"])
     monkeypatch.setitem(judges.BUILT_IN, "fake2", fake(judge))
-    with pytest.raises(SystemExit, match=r"answer logs changed after answers-fake\.json"):
+    with pytest.raises(SystemExit, match=r"answers-fake\.json has its labels from another source"):
         cli.main(["ask", "--work", str(new), "--judge", "fake2", "--store", str(store),
                   "--reviewer", "ana"])  # fmt: skip
     assert not list(new.glob("*answers-fake2*"))
@@ -504,3 +504,45 @@ def test_a_space_on_a_key_counts_as_a_key() -> None:
     space = script[script.index('if (e.key !== " ") return;') :]
     space = space[: space.index("pickKey(i);")]
     assert "st.keys += 1" in space
+
+
+def test_a_label_write_after_a_judge_run_starts_is_refused(tmp_path: Path) -> None:
+    from groundgate.review.serve import Refused
+
+    store = tmp_path / "store"
+    work = sampled(tmp_path, "field", store)
+    w = cli.Work(work)
+    first, second = [t["task"] for t in json.loads((work / "tasks.json").read_text()).values()][:2]
+    with FolderStore(store) as s:
+        review = cli.label_review(w, s, "ana")
+        review.answer(answer(first, "confirm"))
+        # a judge run starts while the page is open
+        (work / ".answers-fake.partial.json").write_text('{"meta": {}, "answers": {}}')
+        with pytest.raises(Refused, match="frozen") as refused:
+            review.answer(answer(second, "confirm"))
+        assert refused.value.code == 409
+        packets = {t["packet"] for t in json.loads((work / "tasks.json").read_text()).values()}
+        logs = [s.read(("answers", pk, reviewer_key("ana"))) for pk in sorted(packets)]
+        assert [r["task"] for log in logs for r in log] == [first]
+
+
+@pytest.mark.parametrize("first_store", [True, False])
+def test_one_folder_never_mixes_label_sources(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, first_store: bool
+) -> None:
+    store = tmp_path / "store"
+    work = sampled(tmp_path, "field", store)
+    items = json.loads((work / "items.json").read_text())
+    tasks = json.loads((work / "tasks.json").read_text())
+    with FolderStore(store) as s:
+        for it in items:
+            Review(s, "ana").answer(answer(tasks[it["id"]]["task"], "confirm"))
+    (work / "labels.json").write_text(json.dumps({it["id"]: True for it in items}))
+    monkeypatch.setitem(judges.BUILT_IN, "fake", fake({"field": {"noul": 0.2}}))
+    monkeypatch.setitem(judges.BUILT_IN, "fake2", fake({"field": {"noul": 0.2}}))
+    with_store = ["--store", str(store), "--reviewer", "ana"]
+    first, then = (with_store, []) if first_store else ([], with_store)
+    cli.main(["ask", "--work", str(work), "--judge", "fake", *first])
+    with pytest.raises(SystemExit, match="labels from another source"):
+        cli.main(["ask", "--work", str(work), "--judge", "fake2", *then])
+    assert not list(work.glob("*answers-fake2*"))

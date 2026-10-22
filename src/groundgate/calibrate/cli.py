@@ -277,16 +277,15 @@ def ask(w: Work, judge: str, store: Path | None = None, reviewer: str | None = N
     if store is not None and reviewer is not None:
         labels, heads = stored_labels(w, store, reviewer)
         source = {"labels_from": {"reviewer": reviewer, "heads": heads}}
-        # every judge of the folder scores the same labels: the logs stay at the earlier heads
-        for path in sorted(
-            [*w.path.glob("answers-*.json"), *w.path.glob(".answers-*.partial.json")]
-        ):
-            given = json.loads(path.read_text(encoding="utf-8"))["meta"].get("labels_from")
-            if given is not None and given != source["labels_from"]:
-                raise SystemExit(
-                    f"the answer logs changed after {path.name}; the labels are frozen once a "
-                    "judge has answered"
-                )
+    # every judge of the folder scores the same labels from the same source: a run without a
+    # store has no labels_from, and a run with a store keeps the reviewer and the log heads
+    for path in sorted([*w.path.glob("answers-*.json"), *w.path.glob(".answers-*.partial.json")]):
+        given = json.loads(path.read_text(encoding="utf-8"))["meta"].get("labels_from")
+        if given != source.get("labels_from"):
+            raise SystemExit(
+                f"{path.name} has its labels from another source, or the answer logs changed "
+                "after it; the labels are frozen once a judge has answered"
+            )
     missing = [iid for iid, _, _ in ps if iid not in labels]
     if missing:
         raise SystemExit(f"{len(missing)} items are not labeled yet; label before a judge answers")
@@ -592,20 +591,39 @@ def main(argv: list[str] | None = None, prog: str = "groundgate calibrate") -> N
         report(w, args.check, args.store)
 
 
+def judged(w: Work) -> bool:
+    """True once a judge run starts in the work folder: the labels are frozen then."""
+    return any(w.path.glob("answers-*.json")) or any(w.path.glob(".answers-*.partial.json"))
+
+
+def label_review(w: Work, store: Any, reviewer: str) -> Any:
+    """The review of the tasks of the work folder. Like the label page, it refuses each answer
+    once a judge run starts, also while the server runs."""
+    from collections.abc import Mapping
+
+    from groundgate.review.serve import Refused, Review
+
+    class Frozen(Review):
+        def answer(self, body: Mapping[str, Any]) -> dict[str, Any]:
+            if judged(w):
+                raise Refused(409, "the labels are frozen once a judge has answered")
+            return super().answer(body)
+
+    return Frozen(store, reviewer, only={t["task"] for t in w.read("tasks.json").values()})
+
+
 def review_serve(w: Work, store: Path | None, reviewer: str | None, port: int) -> None:
     """Open the review page on the tasks of the work folder (docs/design/review.md §9, §11)."""
-    from groundgate.review.serve import Review, server
+    from groundgate.review.serve import server
     from groundgate.store import FolderStore, StoreError
 
     if store is None or reviewer is None:
         raise SystemExit("give --store and --reviewer together")
-    tasks = w.read("tasks.json")
-    # the same rule as the label page: once a judge has answered, the labels do not change
-    if any(w.path.glob("answers-*.json")) or any(w.path.glob(".answers-*.partial.json")):
+    if judged(w):
         raise SystemExit("a judge has answered already; the labels are frozen")
     try:
         with FolderStore(store) as s:
-            review = Review(s, reviewer, only={t["task"] for t in tasks.values()})
+            review = label_review(w, s, reviewer)
             for line in review.skipped:
                 print(f"skipped: {line}")
             httpd, url = server(review, port)
