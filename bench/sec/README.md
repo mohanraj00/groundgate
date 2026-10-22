@@ -5,6 +5,9 @@ set used: Item 7 (Management's Discussion and Analysis) of 10-K annual reports. 
 walk rule were posted on #112 before the walk, and the labels were made before any model answered.
 [RESULTS.md](RESULTS.md) has every number.
 
+These runs used groundgate 0.4.0 and groundgate-calibrate 0.1.0, as the CI check does. The
+calibrate steps now run as `groundgate calibrate` with the same subcommands and options.
+
 ```bash
 SEC_USER_AGENT="name email" uv run python bench/sec/sec.py pick    # sources.json, log
 SEC_USER_AGENT="name email" uv run python bench/sec/sec.py docs    # docs/, from the cache

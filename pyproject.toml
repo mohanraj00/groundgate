@@ -50,16 +50,9 @@ dev = [
   "ruff>=0.6",
   "rfc8785>=0.1.4",
   "pdfminer.six>=20231228",
-  "groundgate-calibrate",
   "jsonschema>=4.18",
 ]
 langextract = ["langextract>=1.0"]
-
-[tool.uv.workspace]
-members = ["calibrate"]
-
-[tool.uv.sources]
-groundgate-calibrate = { workspace = true }
 
 [tool.hatch.version]
 path = "src/groundgate/__init__.py"
@@ -106,10 +99,10 @@ known-local-folder = ["pdfgen"]
 [tool.mypy]
 strict = true
 python_version = "3.10"
-files = ["src", "calibrate/src"]
+files = ["src"]
 
 [tool.pytest.ini_options]
-testpaths = ["tests", "calibrate/tests", "bench/requested", "bench/judges/codex"]
+testpaths = ["tests", "bench/requested", "bench/judges/codex"]
 addopts = "-q"
 
 [tool.coverage.run]

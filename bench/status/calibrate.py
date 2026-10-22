@@ -13,6 +13,9 @@ that spec 0.6 flags KEY_NOT_AT_VALUE in the roles run of bench/evidence.
         uv run groundgate-calibrate ask --work bench/status/calibrate/work --judge chat
     uv run groundgate-calibrate report --work bench/status/calibrate/work [--check]
 
+These runs used groundgate 0.6.1 and groundgate-calibrate 0.2.0, as the CI check does. The
+calibrate steps now run as `uv run groundgate calibrate` with the same subcommands and options.
+
 An item that is an amount of the status set gets its label from labels.json, which a person gave
 blind (#128): the filing statuses that the amount belongs to, or None for not sure. That is the
 answer that the key question asks for. A person labels every other item on the PDF page of
