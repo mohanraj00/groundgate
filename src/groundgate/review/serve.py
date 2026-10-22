@@ -40,6 +40,7 @@ from typing import Any
 
 from ..canonical import jcs
 from ..codes import DESCRIPTIONS, INFO
+from ..escape import escape
 from ..model import PacketError, Schema
 from ..read.layout import Layout
 from ..read.markup import html_text
@@ -123,7 +124,7 @@ class Refused(Exception):
 
 def _printable(value: object) -> str:
     text = value if isinstance(value, str) else repr(value)
-    text = "".join(c if c.isprintable() else f"\\u{ord(c):04x}" for c in text)
+    text = escape(text)
     return text if len(text) <= 300 else text[:297] + "..."
 
 

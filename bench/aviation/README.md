@@ -15,7 +15,7 @@ uv run python bench/aviation/aviation.py pick --count   # how many reports the w
 uv run python bench/aviation/aviation.py pick           # write sources.json, selection-log.json
 uv run python bench/fetch.py --set bench/aviation       # download, verify, write docs/
 uv run python bench/aviation/aviation.py items          # write items.json from docs/
-uv run python bench/aviation/aviation.py web            # label at http://127.0.0.1:8772
+uv run python bench/aviation/aviation.py web            # label at the start URL it prints (port 8772)
 ```
 
 ## Reports
