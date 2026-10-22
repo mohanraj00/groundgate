@@ -163,7 +163,7 @@ def labels_view(store: Any) -> bytes:
             continue
         try:
             task = json.loads(data)
-        except ValueError:
+        except (ValueError, RecursionError):  # deep nesting fits in a store object
             continue
         if isinstance(task, dict) and task.get("template") in QUESTIONS:
             tasks[k] = task

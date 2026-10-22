@@ -551,6 +551,8 @@ def test_one_folder_never_mixes_label_sources(
 def test_ask_freezes_the_labels_before_its_snapshot(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
+    import threading
+
     from groundgate.review.serve import Refused
 
     store = tmp_path / "store"
@@ -579,14 +581,29 @@ def test_ask_freezes_the_labels_before_its_snapshot(
     assert not partial.exists()
     with FolderStore(store) as s:
         Review(s, "ana").answer(answer(tasks[items[0]["id"]]["task"], "confirm"))
-    snapshot, seen = cli.stored_labels, []
+    snapshot, seen, late = cli.stored_labels, [], []
+
+    def write_late() -> None:
+        with FolderStore(store) as s:
+            try:
+                cli.label_review(w, s, "ana").answer(
+                    answer(tasks[items[0]["id"]]["task"], "unsure")
+                )
+            except Refused as exc:
+                late.append(exc.code)
 
     def frozen_snapshot(*a: Any, **k: Any) -> Any:
-        # the marker is there before the snapshot, so a label write now is refused
+        # the marker is there before the snapshot, and ask holds the labels lock: a label write
+        # now waits for the lock, and then the freeze refuses it
         assert partial.exists()
-        with FolderStore(store) as s, pytest.raises(Refused, match="frozen"):
-            cli.label_review(w, s, "ana").answer(answer(tasks[items[0]["id"]]["task"], "unsure"))
+        writer = threading.Thread(target=write_late)
+        writer.start()
+        writer.join(0.3)
+        assert writer.is_alive()
+        threads.append(writer)
         return snapshot(*a, **k)
+
+    threads: list[threading.Thread] = []
 
     class Judge(fake({"field": {"noul": 0.2}})):  # type: ignore[misc]
         def ask(self, state: str, qs: dict[str, Any]) -> dict[str, Any]:
@@ -600,5 +617,84 @@ def test_ask_freezes_the_labels_before_its_snapshot(
     assert seen and all(x is not None and x["reviewer"] == "ana" for x in seen)
     assert not partial.exists() and (work / "answers-fake.json").exists()
     assert cli.stored_labels is frozen_snapshot
+    (writer,) = threads
+    writer.join(10)
+    assert late == [409]
     labels, _ = snapshot(w, store, "ana")
     assert set(labels.values()) == {True}
+
+
+def test_a_deep_task_object_is_left_out(tmp_path: Path) -> None:
+    from groundgate.store import key as store_key
+
+    store = tmp_path / "store"
+    work = sampled(tmp_path, "field", store)
+    item = next(iter(json.loads((work / "tasks.json").read_text()).values()))
+    depth = 200_000  # 400 KB, far under the byte limit of the store
+    data = b'{"template":"calibrate_field@1","packet":' + b"[" * depth + b"]" * depth + b"}"
+    k = store_key("task@1", data)
+    folder = store / "objects" / k[7:9]
+    folder.mkdir(exist_ok=True)
+    (folder / k[9:]).write_bytes(data)  # put refuses it, so a local writer puts it in place
+    with FolderStore(store) as s:
+        Review(s, "ana").answer(answer(item["task"], "confirm"))
+        s.append(("answers", item["packet"], reviewer_key("ana")),
+                 {**{m: v for m, v in s.read(("answers", item["packet"],
+                     reviewer_key("ana")))[0].items()
+                     if m not in {"sequence", "previous", "entry_sha256"}}, "task": k})  # fmt: skip
+        assert rebuild(s)[1] == "views/calibrate-labels.json"
+        assert k not in {t["task"] for t in Review(s, "ana").queue()["tasks"]}
+    view = json.loads((store / "views" / "calibrate-labels.json").read_text())
+    assert view["labels"] == [{"task": item["task"], "reviewer": "ana", "label": True}]
+
+
+def test_ask_waits_for_a_label_write_that_holds_the_lock(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    import threading
+    import time
+
+    store = tmp_path / "store"
+    work = sampled(tmp_path, "field", store)
+    w = cli.Work(work)
+    items = json.loads((work / "items.json").read_text())
+    tasks = json.loads((work / "tasks.json").read_text())
+    with FolderStore(store) as s:
+        for it in items:
+            Review(s, "ana").answer(answer(tasks[it["id"]]["task"], "confirm"))
+    checked = threading.Event()
+    real = cli.judged
+
+    def slow(x: Any) -> bool:
+        # the first writer passes the freeze check, then waits inside the lock
+        frozen = real(x)
+        if threading.current_thread() is not threading.main_thread():
+            checked.set()
+            time.sleep(0.5)
+        return frozen
+
+    monkeypatch.setattr(cli, "judged", slow)
+    monkeypatch.setitem(judges.BUILT_IN, "fake", fake({"field": {"noul": 0.2}}))
+    first = tasks[items[0]["id"]]
+    results: list[Any] = []
+
+    def write() -> None:
+        with FolderStore(store) as s:
+            results.append(cli.label_review(w, s, "ana").answer(answer(first["task"], "unsure")))
+
+    writer = threading.Thread(target=write)
+    writer.start()
+    assert checked.wait(10)
+    # the second writer: ask takes the lock only after the label write ends
+    cli.main(["ask", "--work", str(work), "--judge", "fake", "--store", str(store),
+              "--reviewer", "ana"])  # fmt: skip
+    writer.join(10)
+    assert results  # the write was in time, so it is a label of the snapshot
+    with FolderStore(store) as s:
+        last = s.read(("answers", first["packet"], reviewer_key("ana")))[-1]
+    meta = json.loads((work / "answers-fake.json").read_text())["meta"]
+    assert last["verdict"] == "unsure"
+    assert meta["labels_from"]["heads"][first["packet"]] == last["entry_sha256"]
+    # after the run, a label write is refused
+    with FolderStore(store) as s, pytest.raises(Exception, match="frozen"):
+        cli.label_review(w, s, "ana").answer(answer(first["task"], "confirm"))

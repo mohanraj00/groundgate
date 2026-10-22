@@ -50,11 +50,13 @@ groundgate calibrate report --work W [--store DIR]  # REPORT.md, report.json
   `u` if you are not sure. Each question shows the description of the field. `ask --store DIR
   --reviewer NAME` reads the labels from the answer logs and keeps the head of each log. `report
   --store DIR` reads the logs only up to those heads, so a later answer does not change the
-  report. After a judge run starts, `label --store` refuses to open and refuses each answer,
-  as the label page does. `ask` writes its partial file before it reads the labels, so no label
-  write falls between the two. One work folder never mixes label sources: `ask` refuses when an
-  earlier judge run has its labels from another source, or from other log heads. Without
-  `--store`, `W/labels.json` holds the labels, as in 0.10.
+  report. After a judge run starts, `label --store` refuses to open and refuses each answer, as
+  the label page does. Each label write, on the label page or through `label --store`, holds the
+  lock `W/.labels.lock` across the freeze check and the write. `ask` holds the same lock while
+  it writes its partial file and reads the labels, so no label write falls between the two. The
+  lock is `flock`, so a stopped process does not leave it held. One work folder never mixes
+  label sources: `ask` refuses when an earlier judge run has its labels from another source, or
+  from other log heads. Without `--store`, `W/labels.json` holds the labels, as in 0.10.
 - `report --check` writes nothing. It fails when `REPORT.md` or `report.json` differs from what
   `W` gives, so a CI job can check a committed report.
 

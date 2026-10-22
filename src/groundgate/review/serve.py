@@ -239,7 +239,7 @@ class Review:
                 continue
             try:
                 task = json.loads(data)
-            except ValueError:
+            except (ValueError, RecursionError):  # deep nesting fits in a store object
                 continue
             pk = task.get("packet") if isinstance(task, dict) else None
             if isinstance(pk, str) and _KEY.fullmatch(pk):

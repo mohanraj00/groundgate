@@ -32,7 +32,7 @@ from typing import Any
 
 from groundgate.canonical import SPEC_VERSION
 
-from . import judges
+from . import judges, label
 from . import questions as q
 from .stats import CEILINGS, needed
 
@@ -274,15 +274,16 @@ def ask(w: Work, judge: str, store: Path | None = None, reviewer: str | None = N
     # the partial file freezes the labels (label and label --store refuse each write while it is
     # there), so it is written before the label snapshot and stays until the run ends
     partial = w.path / f".answers-{judge}.partial.json"
-    fresh = not partial.exists()
-    if fresh:
-        partial.write_text(json.dumps({"meta": {"pending": True}, "answers": {}}), "utf-8")
-    try:
-        jd, record, answers = _ask_start(w, judge, ps, digest, partial, fresh, store, reviewer)
-    except BaseException:
+    with label.labels_lock(w.path):
+        fresh = not partial.exists()
         if fresh:
-            partial.unlink(missing_ok=True)  # no judge was asked, so the labels are open again
-        raise
+            partial.write_text(json.dumps({"meta": {"pending": True}, "answers": {}}), "utf-8")
+        try:
+            jd, record, answers = _ask_start(w, judge, ps, digest, partial, fresh, store, reviewer)
+        except BaseException:
+            if fresh:
+                partial.unlink(missing_ok=True)  # no judge was asked: the labels are open again
+            raise
     question = w.config["question"]
     for n, (iid, st, qs) in enumerate(ps, 1):
         if iid in answers:
@@ -622,7 +623,7 @@ def main(argv: list[str] | None = None, prog: str = "groundgate calibrate") -> N
 
 def judged(w: Work) -> bool:
     """True once a judge run starts in the work folder: the labels are frozen then."""
-    return any(w.path.glob("answers-*.json")) or any(w.path.glob(".answers-*.partial.json"))
+    return label.judged(w.path)
 
 
 def label_review(w: Work, store: Any, reviewer: str) -> Any:
@@ -634,9 +635,10 @@ def label_review(w: Work, store: Any, reviewer: str) -> Any:
 
     class Frozen(Review):
         def answer(self, body: Mapping[str, Any]) -> dict[str, Any]:
-            if judged(w):
-                raise Refused(409, "the labels are frozen once a judge has answered")
-            return super().answer(body)
+            with label.labels_lock(w.path):
+                if judged(w):
+                    raise Refused(409, "the labels are frozen once a judge has answered")
+                return super().answer(body)
 
     return Frozen(store, reviewer, only={t["task"] for t in w.read("tasks.json").values()})
 
