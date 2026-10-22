@@ -530,8 +530,9 @@ def test_forget_keeps_a_run_record_with_a_bad_line(
     args = ["store", "forget", "--store", str(root), other, "--reason", "asked"]
     assert main(args + ["--all"] * everything) == 1
     out = capsys.readouterr().out
-    assert out.startswith(f"unchecked run@3 {obj['run']}\n")
-    assert f"deleted run@3 {obj['run']}" not in out
+    kind = "run@N" if header else "run@3"  # with no header, the version is not known
+    assert out.startswith(f"unchecked {kind} {obj['run']}\n")
+    assert "deleted run@" not in out
     assert path.read_bytes() == bad_run  # kept, not removed
     assert f"deleted text@1 {obj['document']['text']}" in out
     # The prompts and replies stay, because only the kept record names them.
@@ -558,8 +559,32 @@ def test_forget_all_finishes_after_a_manual_removal_of_a_bad_run_record(
     assert not path.exists() and not path_of(root, other).exists()
 
 
+def test_kind_of_hashes_an_object_at_most_once_for_each_kind(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A large object that is not a run record gets no extra hash for the run kinds."""
+    from groundgate.store import maintain
+
+    calls: list[str] = []
+    real = maintain.key
+
+    def counted(kind: str, data: bytes) -> str:
+        calls.append(kind)
+        return real(kind, data)
+
+    monkeypatch.setattr(maintain, "key", counted)
+    data = b"x" * (1 << 20)
+    assert kind_of(key("source@1", data), data) == "source@1"
+    assert calls.count("source@1") == 1 and not any(c.startswith("run@") for c in calls)
+    calls.clear()
+    bad_run = b"[1]\n" + b"{}\n" * 1000  # a run record with a header that cannot be read
+    assert kind_of(key("run@3", bad_run), bad_run) is None
+    assert len(calls) == len(set(calls)) and not any(c.startswith("run@") for c in calls)
+
+
 def test_forget_removes_a_run_record_that_matches_no_kind(tmp_path: Path) -> None:
-    """A record whose bytes changed matches its key as no kind. It goes, as before (#486)."""
+    """A record whose bytes changed, with a header that can be read, matches its key as no
+    kind. It goes, as before (#486)."""
     root = tmp_path / "s"
     with FolderStore(root) as store:
         packet = save_run(store)

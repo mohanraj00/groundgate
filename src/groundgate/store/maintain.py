@@ -131,22 +131,11 @@ def _run_kind(data: bytes) -> tuple[str, str] | None:
     return f"run@{number}", runner
 
 
-# A run record whose header cannot be read gives no kind, so ``kind_of`` tries the run kinds
-# up to this number. groundgate writes run@3 now.
-_RUN_PROBE = 99
-
-
 def kind_of(k: str, data: bytes) -> str | None:
-    """The kind that gives ``data`` the key ``k``, or ``None``. A run record whose header
-    cannot be read still gets its kind, up to ``run@99``: then the bytes match the key, and
-    only the lines are bad."""
+    """The kind that gives ``data`` the key ``k``, or ``None``."""
     run = _run_kind(data)
     if run is not None and key(run[0], data) == k:
         return run[0]
-    if run is None:
-        for n in range(1, _RUN_PROBE + 1):
-            if key(f"run@{n}", data) == k:
-                return f"run@{n}"
     json_like = data[:1] in (b"{", b"[")  # canonical JSON of an object or a list
     for kind in KINDS:
         if (json_like or kind in _BYTES) and key(kind, data) == k:
@@ -599,6 +588,15 @@ def _others(objects: _Objects, packet: str) -> dict[str, int]:
     return counts
 
 
+def _no_header(store: FolderStore, k: str) -> bool:
+    """True if the object ``k`` can be read but has no run header that ``forget`` can read.
+    This reads the bytes one time and hashes nothing."""
+    try:
+        return _run_kind(store.object_bytes(k)) is None
+    except StoreError:  # it cannot be read, or it went after the walk
+        return False
+
+
 def forget_packet(
     store: FolderStore, packet: str, reason: str, *, everything: bool = False
 ) -> list[tuple[str, str, str, int]]:
@@ -621,17 +619,17 @@ def forget_packet(
     is ``absent``.
 
     An object of the packet that ``forget`` cannot read is ``unchecked``, and the rest is still
-    removed. A run record whose bytes match its key but whose lines cannot be read, the header
-    too, is ``unchecked`` and stays, because only the record names its prompts, replies and
-    admissions. With ``everything``, the packet then stays too, so ``check`` and ``forget``
-    still name the record. No edit can repair the record, because other bytes have another
-    key. To remove it, call ``FolderStore.forget`` on its key: the objects that it names then
-    stay with no record that names them, and a second ``forget`` with ``everything`` removes
-    the packet. If the run
-    record names an object that is not found, each object of the store that cannot be read is
-    ``unchecked``, because it can be that object. ``unchecked`` means "could not check", so
-    the same key can also be ``deleted``: a run record that matches its key as no kind is
-    removed (#486).
+    removed. A run record whose lines cannot be read, the header too, is ``unchecked`` and
+    stays, because only the record names its prompts, replies and admissions. With
+    ``everything``, the packet then stays too, so ``check`` and ``forget`` still name the
+    record. An edit gives the record another key, so it cannot repair the record. Put back a
+    copy of the original record, or call ``FolderStore.forget`` on its key: then the objects
+    that it names stay with no record that names them, and a second ``forget`` with
+    ``everything`` removes the packet. If the run record names an object that is not found,
+    each object of the store that cannot be read is ``unchecked``, because it can be that
+    object. ``unchecked`` means "could not check", so
+    the same key can also be ``deleted``: a run record with a header that matches its key as
+    no kind is removed (#486).
 
     Return the kind, the key, the state (``deleted``, ``absent``, ``kept`` or ``unchecked``)
     and the number of other packets that name the key, for each object. A log has the kind
@@ -648,10 +646,15 @@ def forget_packet(
     unread_runs: list[str] = []  # the run records that cannot be read, which stay
     for k in _keys(obj["run"]):
         kind = objects.kinds.get(k, "absent")
+        if kind is None and _no_header(store, k):
+            # The packet names it as its run record, but the header cannot be read, so the
+            # kind is not known. Keep it, as a record whose lines cannot be read.
+            unchecked.append(("run@N", k))
+            unread_runs.append(k)
+            continue
         if kind is None or kind == "absent" or not kind.startswith("run@"):
-            # A record that matches its key as no kind changed, and it goes (#486). A record
-            # whose bytes match its key but whose header cannot be read has a kind here: it
-            # goes to the branch below, and stays.
+            # A record with a header that matches its key as no kind changed, and it goes
+            # (#486).
             plan.append(("run@N", k, kind is None))
             if kind is None:
                 unchecked.append(("run@N", k))
