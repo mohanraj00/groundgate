@@ -205,13 +205,13 @@ def test_input_deleted_and_input_missing(
     with FolderStore(root, clock=clock) as store:
         k, _ = admit_packet(store, TEXT, SCHEMA, cands())
         packet = json.loads(store.get("packet@1", k))
-        store.forget(packet["document"]["text"], "the tenant asked\x1b[31m")
+        store.forget(packet["document"]["text"], "the tenant asked\x1b[31m\U000e0001")
     assert main(["verify", "--store", str(root), k]) == 2
     err = capsys.readouterr().err
     text_key = packet["document"]["text"]
     assert err == (
         f"groundgate: input deleted: the text@1 object {text_key} was deleted at "
-        "2026-10-20T09:30:00Z, reason: the tenant asked\\u001b[31m\n"
+        "2026-10-20T09:30:00Z, reason: the tenant asked\\u001b[31m\\U000e0001\n"
     )
     assert "mismatch" not in err
     assert main(["report", "--store", str(root), k]) == 2

@@ -11,7 +11,7 @@ The plan is on #230. No rule of #230 came from these reports.
     uv run python bench/afr/run.py --tabs [--old-text] --provider codex --model gpt-6.1-sol \
         --effort high
     uv run python bench/afr/tabs.py decide            # the replay and the new runs
-    uv run python bench/afr/tabs.py web               # blind labels, http://127.0.0.1:8778
+    uv run python bench/afr/tabs.py web               # blind labels, port 8778
     uv run python bench/afr/tabs.py results [--check]
 
 The replay decides the replies of #229, which the models wrote from the 0.7 text, against the

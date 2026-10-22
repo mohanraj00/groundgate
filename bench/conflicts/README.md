@@ -15,7 +15,7 @@ uv run python bench/conflicts/conflicts.py pick --count   # how many labels the 
 uv run python bench/conflicts/conflicts.py pick           # write sources.json, selection-log.json
 uv run python bench/fetch.py --set bench/conflicts        # download, verify, write docs/
 uv run python bench/conflicts/conflicts.py items          # write items.json from docs/
-uv run python bench/conflicts/conflicts.py web            # label at http://127.0.0.1:8771
+uv run python bench/conflicts/conflicts.py web            # label at the start URL it prints (port 8771)
 ```
 
 ## Labels

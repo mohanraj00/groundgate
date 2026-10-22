@@ -18,6 +18,7 @@ from typing import Any
 
 from ..canonical import digest, jcs
 from ..codes import INFO
+from ..escape import escape
 from ..model import PacketError, Schema
 from ..read.layout import Layout
 from .tasks import DEFAULT_POLICY, Slot, check_policy, checked_packet, make_tasks, slots
@@ -77,7 +78,7 @@ class AnswerError(ValueError):
 
 def _escape(text: str) -> str:
     """``text`` with each control character as an escape."""
-    return "".join(c if c.isprintable() else f"\\u{ord(c):04x}" for c in text)
+    return escape(text)
 
 
 def _printable(value: object) -> str:
@@ -563,4 +564,4 @@ def lines(resolution: Mapping[str, Any]) -> list[str]:
         else:
             unit = "" if s["unit"] is None else f" {s['unit']}"
             out.append(f"{name}: {s['value']}{unit} ({s['status']})")
-    return ["".join(c if c.isprintable() else f"\\u{ord(c):04x}" for c in line) for line in out]
+    return [escape(line) for line in out]

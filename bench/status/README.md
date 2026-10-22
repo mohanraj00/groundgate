@@ -15,7 +15,7 @@ uv run python bench/status/status.py pick             # write sources.json, sele
 uv run python bench/fetch.py --set bench/status       # download, verify, write docs/
 uv run python bench/status/status.py items            # write items.json from docs/
 uv run python bench/status/status.py label            # label them in the terminal
-uv run python bench/status/web.py                     # or in a browser, at 127.0.0.1:8767
+uv run python bench/status/web.py                     # or in a browser, at the start URL it prints (port 8767)
 uv run python bench/status/status.py score            # RESULTS.md: spec 0.2 and 0.3
 ```
 

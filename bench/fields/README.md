@@ -17,7 +17,7 @@ uv run python bench/fields/fields.py pick           # write sources.json, select
 uv run python bench/fetch.py --set bench/fields     # download, verify, write docs/
 uv run python bench/fields/fields.py items          # write items.json from docs/
 uv run python bench/fields/fields.py label          # label them in the terminal
-uv run python bench/fields/fields.py web            # or at http://127.0.0.1:8770
+uv run python bench/fields/fields.py web            # or at the start URL it prints (port 8770)
 ```
 
 ## Labels
