@@ -44,7 +44,7 @@ from ..escape import escape
 from ..model import PacketError, Schema
 from ..read.layout import Layout
 from ..read.markup import html_text
-from ..text import canonical, normalize_ws, parse_value, quote_pattern, tokens
+from ..text import canonical, normalize_ws, parse_value, quote_pattern, scaled_value, tokens
 from .resolve import (
     ANSWER_MEMBERS,
     CORRECTIONS,
@@ -364,7 +364,7 @@ class Review:
 
     def view(self, tk: object) -> dict[str, Any]:
         """The task and its source, with each offset in UTF-16 code units."""
-        tk, doc, _, task = self._task(tk)
+        tk, doc, slot, task = self._task(tk)
         u = doc.units
         places = []  # (start, end in code points, kind, choice numbers)
         for p in task["places"]:
@@ -392,6 +392,7 @@ class Review:
             "document": doc.document,
             "item": task["item"],
             "question": task["question"],
+            "definition": doc.schema.fields[slot.field].description,
             "parts": task["parts"],
             "choices": choices,
             "answered": mine[-1].get("verdict") if mine else None,
@@ -547,10 +548,12 @@ class Review:
                 if number is None:
                     raise Refused(400, "the typed value is not a number")
             else:
-                found = [t.value for t in tokens(doc.units.text, a, b) if t.value is not None]
-                if not found:
+                found = [t for t in tokens(doc.units.text, a, b) if t.value is not None]
+                if not found or found[0].value is None:
                     raise Refused(400, "the selection has no number: select it, or type it")
-                number = found[0]
+                # The value in full (§8): a scale word or suffix inside the selection scales it.
+                scaled = scaled_value(doc.units.text[:b], found[0])
+                number = found[0].value if scaled is None else scaled
             candidate["value"] = canonical(number)
             units = [c["unit"] for c in task["choices"] if isinstance(c["unit"], str)]
             unit = spec.unit or (units[0] if units else None)

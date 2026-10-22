@@ -220,7 +220,7 @@ def test_the_server_refuses_each_request_of_section_9(served: Served) -> None:
                     tasks["revenue"],
                     "correct",
                     start=12,
-                    end=26,
+                    end=17,
                     codes_kept=["SCALE_WORD", "NOT_A_CODE"],
                 ),
             ),
@@ -237,7 +237,7 @@ def test_the_server_refuses_each_request_of_section_9(served: Served) -> None:
             ),
             409,
         ),
-        (call("POST", "/api/answer", answer(tasks["revenue"], "correct", start=12, end=26)), 409),
+        (call("POST", "/api/answer", answer(tasks["revenue"], "correct", start=12, end=17)), 409),
         (call("POST", "/api/check", {"task": tasks["revenue"], "verdict": "choose"}), 400),
         (call("DELETE", "/api/queue"), 501),
     ]
@@ -318,9 +318,19 @@ def test_an_answer_from_the_page_goes_into_the_answer_log(served: Served) -> Non
 def test_a_correction_runs_admit_and_shows_the_outcome_at_once(served: Served) -> None:
     store, k, tasks, call, _ = served
     revenue = tasks["revenue"]
-    # the selection "4,200 thousand" gives 4200: the gate flags the scale word
+    # the selection "4,200 thousand" holds its scale word: the page reads the value in full
     selection = {"task": revenue, "verdict": "correct", "start": 12, "end": 26}
     status, _, body = call("POST", "/api/check", selection)
+    assert status == 200 and json.loads(body) == {
+        "outcome": "admitted",
+        "codes": [],
+        "keep": [],
+        "missing": [],
+        "shown": "4,200,000 with no unit (written 4,200, in thousands, positive)",
+    }
+    # the selection "4,200" leaves the scale word out: it gives 4200, and the gate flags it
+    number = {"task": revenue, "verdict": "correct", "start": 12, "end": 17}
+    status, _, body = call("POST", "/api/check", number)
     assert status == 200 and json.loads(body) == {
         "outcome": "needs_verification",
         "codes": [{"code": "SCALE_WORD", "text": json.loads(body)["codes"][0]["text"]}],
@@ -329,11 +339,7 @@ def test_a_correction_runs_admit_and_shows_the_outcome_at_once(served: Served) -
         "shown": "4,200 with no unit (written 4,200, not scaled, positive)",
     }
     # the person types the value in full instead
-    status, _, body = call(
-        "POST",
-        "/api/check",
-        {"task": revenue, "verdict": "correct", "start": 12, "end": 26, "value": "4,200,000"},
-    )
+    status, _, body = call("POST", "/api/check", {**number, "value": "4,200,000"})
     assert json.loads(body)["outcome"] == "admitted"
     assert (
         json.loads(body)["shown"]
@@ -341,13 +347,13 @@ def test_a_correction_runs_admit_and_shows_the_outcome_at_once(served: Served) -
     )
     assert log(store, k) == []  # a check writes nothing
     # the flagged correction counts when the person keeps its code
-    kept = answer(revenue, "correct", start=12, end=26, codes_kept=["SCALE_WORD"], keys=3)
+    kept = answer(revenue, "correct", start=12, end=17, codes_kept=["SCALE_WORD"], keys=3)
     status, _, body = call("POST", "/api/answer", kept)
     assert status == 200, body
     (record,) = log(store, k)
     assert record["candidate"] == {
         "field": "revenue", "value": "4200", "id": "review-1", "proposer": "person:ana",
-        "evidence": [{"start": 12, "end": 26}],
+        "evidence": [{"start": 12, "end": 17}],
     }  # fmt: skip
     resolved = write_resolution(store, k, None, ["ana"])
     assert resolved.resolution is not None
@@ -532,3 +538,31 @@ def test_review_serve_needs_a_store_and_a_reviewer(tmp_path: Path, capsys: Any) 
         Review(FolderStore(tmp_path / "s"), " ")
     assert main(["review", "serve", "--store", str(tmp_path), "--reviewer", "a", "--port",
                  "70000"]) == 2  # fmt: skip
+
+
+def test_a_scale_suffix_in_the_selection_gives_the_value_in_full(tmp_path: Path) -> None:
+    """#460: "$4.2m" reads as 4200000, and the task view gives the field definition."""
+    text = "Revenue was $4.2m in 2025.\n"
+    definition = "Revenue as the income statement gives it, before <b>tax</b>."
+    schema = {"fields": {"revenue": {"type": "number", "unit": "USD", "description": definition}}}
+    value = {"start": 12, "end": 17, "text": "$4.2m"}
+    candidates = [{"id": "c1", "field": "revenue", "value": "4200000", "unit": "USD",
+                   "evidence": value}]  # fmt: skip
+    store = FolderStore(tmp_path / "store")
+    k, _ = admit_packet(store, text, schema, candidates, None, None, None)
+    ((tk, _),) = write_tasks(store, k, EVERY).tasks
+    review = Review(store, "ana")
+    # the definition is data in the JSON of the view, and the page sets it with textContent
+    assert review.view(tk)["definition"] == definition
+    check = review.check({"task": tk, "verdict": "correct", "start": 12, "end": 17})
+    assert (check["outcome"], check["codes"]) == ("admitted", [])
+    assert check["shown"].startswith("4,200,000 USD")
+    # without the suffix, the selection gives the number as written, and the gate flags it
+    check = review.check({"task": tk, "verdict": "correct", "start": 13, "end": 16})
+    assert check["outcome"] != "admitted" and check["shown"].startswith("4.2 USD")
+
+
+def test_a_field_with_no_definition_gives_none(served: Served) -> None:
+    _, _, tasks, call, _ = served
+    view = json.loads(call("GET", f"/api/task/{tasks['revenue']}")[2])
+    assert view["definition"] is None
