@@ -28,7 +28,7 @@ from .metrics import final_search_limits
 
 FORMAT = "requested-limits/1"
 # This read-only path counts the earlier record format of the requested3 cache. A run of the
-# current harness counts run/3 records in its own projection (metrics.search_limit_fields).
+# current harness counts run/4 records in its own projection (metrics.search_limit_fields).
 RECORD = "groundgate-run/2"
 STATES = ("documents", "search_limit_documents", "search_limit_fields")
 _BINDING = re.compile(r"sha256:[0-9a-f]{64}\Z")

@@ -30,11 +30,12 @@ if TYPE_CHECKING:
     from ..store import Store
 
 Json = dict[str, Any]
+# groundgate-run/4 (#466): the search leaves English function words out of the word queries.
 # groundgate-run/3 (#382): the search cuts large regions, and a second sweep can follow
 # `search_limit`. groundgate-run/2 (#318, #319) had a new prompt, field item causes and rounding
 # lines. An older record fails replay with a version message. The run/3 prompt asks for the
 # whole scale heading (#428); the run/3 records from before #428 were never released.
-_VERSION = "groundgate-run/3"
+_VERSION = "groundgate-run/4"
 _ROLES = {"value", "sign", "scale", "unit", "field", "key"}
 _SEARCH_MATCH_LIMIT = 1024
 # The rounding check (#319) reads only numbers with at most this many digits and this exponent.
@@ -246,9 +247,9 @@ class RunResult:
 
         ``save`` writes each object of the run as its store kind (``text@1``, ``schema@1``,
         ``policy@1``, ``reference@1``, ``prompt@1``, ``reply@1``, ``admission@1``), then the
-        record as one ``run@3`` object, then the final inputs, the receipt and a ``packet@1``
+        record as one ``run@4`` object, then the final inputs, the receipt and a ``packet@1``
         object that names the record. The record bytes are the bytes of ``run.jsonl`` from
-        ``write``. The record keeps its ``groundgate-run/3`` keys, so the store cannot replay
+        ``write``. The record keeps its ``groundgate-run/4`` keys, so the store cannot replay
         the run yet (#429): ``RunResult.read(folder)`` stays the replay path.
 
         ``packs`` are the packs that the saved schema names, as for ``read``. ``save`` writes only
