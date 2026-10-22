@@ -222,9 +222,13 @@ comes with its issue (#432).
    the document source do not count, because the kept objects hold them. This check is not a
    proof. If the text is already gone, `check` cannot check the lines and prints "not
    checked", and `forget` removes the record. If `forget` cannot read an object, it prints
-   "unchecked", removes the rest and exits 1. A run record whose lines cannot be read stays,
-   because only the record names its prompts, replies and admissions. With `--all`, its packet
-   stays too, so a second `forget` can finish after a repair of the record.
+   "unchecked", removes the rest and exits 1. A run record whose bytes match its key but
+   whose lines cannot be read, the header too, stays, because only the record names its
+   prompts, replies and admissions. With `--all`, its packet stays too, so `check` and
+   `forget` still name the record. No edit can repair the record, because other bytes have
+   another key. To remove it, call `FolderStore.forget` on its key. Its prompts, replies and
+   admissions then stay with no record that names them, and a second `forget --all` removes
+   the packet. A run record that matches its key as no kind changed, and `forget` removes it.
    If a run record names an object that `forget` cannot find, each object of the store that it
    cannot read is "unchecked".
    A value is still document data. If an app must also remove the values,

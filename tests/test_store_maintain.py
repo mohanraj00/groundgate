@@ -497,12 +497,16 @@ def test_forget_removes_the_run_record_after_its_objects(tmp_path: Path) -> None
     assert ("run@3", run, "deleted", 0) in done
 
 
-def _bad_run_packet(store: FolderStore, root: Path) -> tuple[str, dict[str, Any], Path]:
-    """A packet whose run record has a line that is not a JSON object. The record names the
+def _bad_run_packet(
+    store: FolderStore, root: Path, *, header: bool = False
+) -> tuple[str, dict[str, Any], Path]:
+    """A packet whose run record has a line that is not a JSON object: the last line, or with
+    ``header`` the first line. The bytes match the key of the record. The record names the
     prompts and replies of the run, which only this packet names now."""
     packet = save_run(store)
     obj = json.loads(store.get("packet@1", packet))
-    bad_run = store.get("run@3", obj["run"]) + b"[1]\n"
+    run = store.get("run@3", obj["run"])
+    bad_run = b"[1]\n" + run if header else run + b"[1]\n"
     obj["run"] = key("run@3", bad_run)
     path = path_of(root, obj["run"])
     path.parent.mkdir(exist_ok=True)
@@ -512,13 +516,14 @@ def _bad_run_packet(store: FolderStore, root: Path) -> tuple[str, dict[str, Any]
     return other, obj, path
 
 
+@pytest.mark.parametrize("header", [False, True])
 @pytest.mark.parametrize("everything", [False, True])
 def test_forget_keeps_a_run_record_with_a_bad_line(
-    tmp_path: Path, capsys: pytest.CaptureFixture[str], everything: bool
+    tmp_path: Path, capsys: pytest.CaptureFixture[str], everything: bool, header: bool
 ) -> None:
     root = tmp_path / "s"
     with FolderStore(root) as store:
-        other, obj, path = _bad_run_packet(store, root)
+        other, obj, path = _bad_run_packet(store, root, header=header)
     bad_run = path.read_bytes()
     named = [k for k, v in all_keys(root).items() if v in ("prompt@1", "reply@1")]
     assert named
@@ -534,6 +539,36 @@ def test_forget_keeps_a_run_record_with_a_bad_line(
     # With --all, the packet stays too: it is the way to the kept record.
     assert path_of(root, other).exists()
     assert (f"kept packet@1 {other}" in out) is everything
+
+
+def test_forget_all_finishes_after_a_manual_removal_of_a_bad_run_record(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    root = tmp_path / "s"
+    with FolderStore(root) as store:
+        other, obj, path = _bad_run_packet(store, root, header=True)
+    args = ["store", "forget", "--store", str(root), other, "--reason", "asked", "--all"]
+    assert main(args) == 1
+    with FolderStore(root) as store:  # the manual step of store.md §8 rule 3
+        store.forget(obj["run"], "the record cannot be read")
+    capsys.readouterr()
+    assert main(args) == 0
+    out = capsys.readouterr().out
+    assert f"absent run@N {obj['run']}" in out and f"deleted packet@1 {other}" in out
+    assert not path.exists() and not path_of(root, other).exists()
+
+
+def test_forget_removes_a_run_record_that_matches_no_kind(tmp_path: Path) -> None:
+    """A record whose bytes changed matches its key as no kind. It goes, as before (#486)."""
+    root = tmp_path / "s"
+    with FolderStore(root) as store:
+        packet = save_run(store)
+        run = json.loads(store.get("packet@1", packet))["run"]
+        path = path_of(root, run)
+        path.write_bytes(path.read_bytes() + b"[1]\n")
+        done = forget_packet(store, packet, "asked")
+    assert ("run@N", run, "unchecked", 0) in done and ("run@N", run, "deleted", 0) in done
+    assert not path.exists()
 
 
 def test_forget_all_keeps_a_schema_of_a_packet_with_a_bad_run_line(tmp_path: Path) -> None:
