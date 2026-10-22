@@ -293,6 +293,12 @@ schema order, individual words of the title in text order, then individual words
 description in text order. If aliases or the description are absent, their step adds no
 queries. An individual word is a maximal run of Unicode letters or digits with at least three
 code points. The minimum length applies to individual words, not full titles or aliases.
+An individual word is also not one of 78 English function words, such as "the", "and" and
+"for" (#466). The comparison is case-folded. The list is `_STOP_WORDS` in the runner. Its
+words come from English grammar: articles, conjunctions, prepositions, pronouns and auxiliary
+verbs. No benchmark set selected them. Before #466, each "the" and "and" of a description was
+a query, and their windows merged into one region of the whole document. The full title and
+the aliases keep their function words.
 
 The script collapses whitespace, trims each query, skips empty queries and case-folds for
 comparison. It keeps the first query when these forms are duplicates, so an earlier title or
@@ -442,7 +448,7 @@ completed repair rounds can leave `repair_limit`. A targeted not-found response 
 
 ## 8. The run record and replay
 
-The core receipt format stays unchanged. The `groundgate-run/3` record is a log: one line of
+The core receipt format stays unchanged. The `groundgate-run/4` record is a log: one line of
 canonical JSON for each entry. Each line has a `sequence`, the `previous` line's digest and its
 own `entry_sha256`. The first line, `header`, is the run manifest. It holds the runner version,
 core spec version, model id and every `RunPolicy` setting, and it names every input by digest:
@@ -467,7 +473,7 @@ cover exact UTF-8 bytes, including whitespace. Prompt digests cover the exact st
 `client`, encoded as UTF-8. Schema, policy, reference and admission objects are canonical JSON.
 Client errors have no reply digest.
 
-Runner digests use their own prefix, `groundgate-run/3:<kind>` followed by a zero byte and the
+Runner digests use their own prefix, `groundgate-run/4:<kind>` followed by a zero byte and the
 object bytes. They do not reuse the core `digest()`, whose prefix names the spec version, so the
 same text keeps its key in each spec version. There are no wall-clock times, host paths,
 credentials or random ids in this deterministic content. An app may keep times separately. The
@@ -488,14 +494,14 @@ changed line, a changed, missing or oversized object, or a bad object key raises
 The replay cost grows with the document and the record.
 `RunResult.save(store)` writes the run into a store of [store.md](store.md) (#288, #405) and
 returns the packet key. It writes each object as its store kind (`text@1`, `schema@1`,
-`policy@1`, `reference@1`, `prompt@1`, `reply@1`, `admission@1`), then the record as one `run@3`
+`policy@1`, `reference@1`, `prompt@1`, `reply@1`, `admission@1`), then the record as one `run@4`
 object with the bytes of `run.jsonl`, then the final inputs, the receipt and a `packet@1` object
 whose `run` names the record. It writes only the objects that the record names, and it saves a
 run that is not complete too. Before the first write, it checks each object against its key and
 runs `admit` again on the stored inputs. If that gives another receipt, it raises before it
 writes. A store error during the writes can leave objects that no packet names. The record
-keeps its `groundgate-run/3` keys, so a store cannot replay the run yet: the store keys come with
-`groundgate-run/4` (#429). `RunResult.read(folder)` stays the replay path.
+keeps its `groundgate-run/4` keys, so a store cannot replay the run yet: the store keys come with
+`groundgate-run/5` (#429). `RunResult.read(folder)` stays the replay path.
 
 Two fields are reserved for the document model (#285), so that a later reader output needs no
 new log format. An input of `kind: "document"` will name an extracted document and its reader
@@ -519,6 +525,9 @@ allocation ceilings for candidates and admission history are further bounded by 
 canonical record and artifact byte counts, even when the header declares larger budgets.
 It checks not-found and search-only entries too. Missing artifacts, changed
 settings, unknown runner versions or a different core version fail replay.
+`groundgate-run/4` replaced `groundgate-run/3`, the version that 0.11.0 wrote, because the
+search leaves English function words out of the word queries (#466). A run/3 record with such a
+query searches other regions in this runner, so its replay cannot match.
 `groundgate-run/3` replaced `groundgate-run/2`, the version that 0.10.0 wrote, because the
 search cuts large regions and the second sweep adds entries (#382). `groundgate-run/2` replaced
 `groundgate-run/1`, the version that 0.9.0 wrote, because the prompt, the field causes and the

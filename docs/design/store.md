@@ -255,6 +255,8 @@ comes with its issue (#432).
   record format must change, and with it the runner version. 0.11 already changes the runner
   (#382). If #382 makes `groundgate-run/3`, run/3 also takes the store keys, so there is one
   break, not two. If #382 keeps run/2, the key change waits for the next record change.
+  0.11.0 released run/3 without the store keys, and 0.12 made `groundgate-run/4` for the search
+  queries (#466). The store keys come with `groundgate-run/5` (#429).
 - `RunResult.write(folder)` stays for run folders. A new `RunResult.save(store)` writes the
   objects, the record and the packet into the store, and returns the packet key.
 - A run/2 folder cannot move into the store with new keys, because its record names the old keys.
