@@ -204,7 +204,8 @@ def test_rebuild_gives_the_same_view_bytes(
         again, _ = put_reading(store, doc, pages=[1])
         admit_packet(store, TEXT, SCHEMA, candidates(), reading=reading)
     assert main(["store", "rebuild", "--store", str(root)]) == 0
-    assert capsys.readouterr().out == "wrote views/readings.json\n"
+    out = "wrote views/readings.json\nwrote views/calibrate-labels.json\n"
+    assert capsys.readouterr().out == out
     view = root / "views" / "readings.json"
     first = view.read_bytes()
     found = json.loads(first)
@@ -231,9 +232,10 @@ def test_rebuild_gives_the_same_view_bytes(
         ),
     }
     view.unlink()
+    (root / "views" / "calibrate-labels.json").unlink()
     (root / "views").rmdir()
     with FolderStore(root) as store:
-        assert rebuild(store) == ["views/readings.json"]
+        assert rebuild(store) == ["views/readings.json", "views/calibrate-labels.json"]
     assert view.read_bytes() == first
     with FolderStore(root) as store:
         store.forget(json.loads(store.get("reading@1", again))["text"], "test")

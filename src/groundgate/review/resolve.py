@@ -21,6 +21,7 @@ from ..codes import INFO
 from ..escape import escape
 from ..model import PacketError, Schema
 from ..read.layout import Layout
+from .labels import TEMPLATES, label_tasks
 from .tasks import DEFAULT_POLICY, Slot, check_policy, checked_packet, make_tasks, slots
 
 __all__ = [
@@ -41,16 +42,17 @@ EVERY_TASK: dict[str, Any] = {
 }
 
 CORRECTIONS = frozenset({"correct", "adjust_span"})
-VERDICTS = frozenset({"confirm", "choose", "not_in_document", "unsure"}) | CORRECTIONS
-_MEMBERS = frozenset(
+VERDICTS = frozenset({"confirm", "choose", "not_in_document", "unsure", "wrong"}) | CORRECTIONS
+CHAIN = frozenset({"sequence", "previous", "entry_sha256"})  # the store adds these members
+# The members of each answer format before the store adds the chain members. answer@2 adds the
+# verdict wrong and the member field_keys (§5.3).
+_ANSWER_1 = frozenset(
     {
         "format", "task", "reviewer", "verdict", "decision", "candidate", "codes_kept",
         "statements", "nodes", "reason_seen", "keys", "ms", "time",
-        "sequence", "previous", "entry_sha256",
     }
 )  # fmt: skip
-# The members of an answer before the store adds the chain members (review serve checks this).
-ANSWER_MEMBERS = _MEMBERS - {"sequence", "previous", "entry_sha256"}
+ANSWER_MEMBERS = {"answer@1": _ANSWER_1, "answer@2": _ANSWER_1 | {"field_keys"}}
 _REASONS = {
     "not_in_document": "a reviewer says that the document does not give it",
     "rejected": "the gate rejected each candidate, and the review policy makes no task",
@@ -118,6 +120,7 @@ class _Checked:
     candidate: Mapping[str, Any] | None = None
     kept: tuple[str, ...] = ()
     memo: tuple[str, str] = ("", "")
+    label: bool = False  # an answer to a calibrate task: a label, not part of the resolution
 
 
 @dataclass(frozen=True)
@@ -190,12 +193,20 @@ def resolve(
     heads = []
     cache: dict[tuple[str, str], _Correction] = {}
     checked = []
+    labels: dict[str, tuple[Slot, dict[str, Any]]] | None = None
     for name in sorted(logs):  # check each record before the first call to admit
         records = logs[name]
-        checked += [(r, _check(name, r, by_key, schema, ids)) for r in records]
+        if labels is None and any(
+            isinstance(r, Mapping) and not (isinstance(r.get("task"), str) and r["task"] in by_key)
+            for r in records
+        ):
+            labels = label_tasks(packet_key, receipt, packet.text, schema, **texts)
+        checked += [(r, _check(name, r, by_key, schema, ids, labels=labels)) for r in records]
         if records:
             heads.append({"reviewer": name, "head": records[-1]["entry_sha256"]})
     for record, c in checked:
+        if c.label:  # a calibrate label settles no slot, and the measures leave it out
+            continue
         answer = c.answer or _read(c, schema, packet, decisions, run, cache)
         answered.add(c.task_key)
         latest.setdefault(c.task_key, {})[c.name] = answer
@@ -293,28 +304,37 @@ def _check(
     by_key: Mapping[str, tuple[Slot, dict[str, Any]]],
     schema: Schema,
     ids: Sequence[object],
-    members: frozenset[str] = _MEMBERS,
+    *,
+    chained: bool = True,
+    labels: Mapping[str, tuple[Slot, dict[str, Any]]] | None = None,
 ) -> _Checked:
     """Check one record of the answer log of ``name`` against its task. Read each answer that
-    is not a correction. ``members`` are the members that the record must have."""
+    is not a correction. With ``chained``, the record must have the members that the store adds.
+    ``labels`` holds the calibrate tasks of the packet (``label_tasks``)."""
     sequence = record.get("sequence") if isinstance(record, Mapping) else None
 
     def fail(message: str) -> AnswerError:
         return AnswerError(name, sequence, message)
 
+    form = record.get("format") if isinstance(record, Mapping) else None
+    if not isinstance(form, str) or form not in ANSWER_MEMBERS:
+        raise fail("the record format is not answer@1 or answer@2")
+    members = ANSWER_MEMBERS[form] | (CHAIN if chained else frozenset())
     if not isinstance(record, Mapping) or set(record) != members:
-        raise fail("the record does not have the members of answer@1")
-    if record["format"] != "answer@1":
-        raise fail("the record format is not answer@1")
+        raise fail(f"the record does not have the members of {form}")
     if record["reviewer"] != name:
         raise fail("the record names another reviewer than its log")
     task_key = record["task"]
-    if not isinstance(task_key, str) or task_key not in by_key:
+    label = labels is not None and isinstance(task_key, str) and task_key in labels
+    if not isinstance(task_key, str) or not (task_key in by_key or label):
         raise fail("the task is not a task of a slot of this packet")
-    slot, task = by_key[task_key]
+    slot, task = labels[task_key] if label and labels is not None else by_key[task_key]
     verdict = record["verdict"]
     if not isinstance(verdict, str) or verdict not in VERDICTS:
-        raise fail("the verdict is not an answer@1 verdict")
+        raise fail(f"the verdict is not an {form} verdict")
+    if verdict == "wrong" and form == "answer@1":
+        raise fail("the verdict wrong needs answer@2")
+    field_keys = record.get("field_keys")
     if record["statements"] is not None or record["nodes"] is not None:
         raise fail("statements and nodes must be null in format 1")
     kept = record["codes_kept"]
@@ -339,6 +359,12 @@ def _check(
     if verdict not in CORRECTIONS and record["candidate"] is not None:
         raise fail(f"a {verdict} answer has no candidate")
     found = slot, task
+    if label:
+        return _label(name, sequence, task_key, slot, task, verdict, field_keys, schema, fail)
+    if field_keys is not None:
+        raise fail("only a calibrate key task takes field_keys")
+    if verdict == "wrong":  # §6.1: no value, so the slot stays open
+        return _Checked(name, sequence, task_key, *found, _Answer(name, verdict, None, False))
     if verdict == "unsure":
         return _Checked(name, sequence, task_key, *found, _Answer(name, verdict, None, True))
     if verdict == "not_in_document":
@@ -375,6 +401,38 @@ def _check(
     except (TypeError, ValueError, RecursionError) as exc:
         raise fail(f"the candidate has no canonical JSON form: {exc}") from exc
     return _Checked(name, sequence, task_key, *found, None, verdict, candidate, tuple(kept), memo)
+
+
+def _label(
+    name: str,
+    sequence: object,
+    task_key: str,
+    slot: Slot,
+    task: dict[str, Any],
+    verdict: str,
+    field_keys: object,
+    schema: Schema,
+    fail: Callable[[str], AnswerError],
+) -> _Checked:
+    """Check an answer to a calibrate task (§11). A field task takes confirm, wrong or unsure.
+    A key task takes unsure, or confirm with field_keys: different keys of the field."""
+    allowed = {"confirm", "unsure"}
+    if task["template"] == TEMPLATES["field"]:
+        allowed.add("wrong")
+    if verdict not in allowed:
+        raise fail(f"a calibrate task takes only {', '.join(sorted(allowed))}")
+    if task["template"] == TEMPLATES["key"] and verdict == "confirm":
+        keys = schema.fields[slot.field].keys or ()
+        if (
+            not isinstance(field_keys, list)
+            or not all(isinstance(k, str) and k in keys for k in field_keys)
+            or len(set(field_keys)) != len(field_keys)
+        ):
+            raise fail("field_keys must be a list of different keys of the field")
+    elif field_keys is not None:
+        raise fail(f"a {verdict} answer has no field_keys")
+    answer = _Answer(name, verdict, None, False)
+    return _Checked(name, sequence, task_key, slot, task, answer, verdict, label=True)
 
 
 def _read(

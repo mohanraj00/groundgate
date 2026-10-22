@@ -17,6 +17,10 @@ checks each answer against its task, and appends the answer to the answer log of
    request.
 8. Each answer is checked against its task before the write.
 
+A calibrate task (§11, ``groundgate.review.labels``) is served only when the packet gives it. It
+shows no code and no outcome, and it takes an ``answer@2`` label. ``only`` limits the queue to
+the tasks of one calibrate work folder.
+
 The store data and each request are untrusted. The token holder can answer as any reviewer name,
 and a lead answer is not an authenticated act: the server is for one local user.
 """
@@ -31,7 +35,7 @@ import re
 import secrets
 import threading
 import unicodedata
-from collections.abc import Callable, Mapping
+from collections.abc import Callable, Collection, Mapping
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -45,8 +49,8 @@ from ..model import PacketError, Schema
 from ..read.layout import Layout
 from ..read.markup import html_text
 from ..text import canonical, normalize_ws, parse_value, quote_pattern, scaled_value, tokens
+from .labels import QUESTIONS, label_tasks
 from .resolve import (
-    ANSWER_MEMBERS,
     CORRECTIONS,
     EVERY_TASK,
     VERDICTS,
@@ -173,6 +177,7 @@ class _Doc:
     layout: Layout | None
     units: _Units
     by_key: dict[str, tuple[Slot, dict[str, Any]]]  # each task that the packet gives
+    labels: dict[str, tuple[Slot, dict[str, Any]]]  # each calibrate task of the store (§11)
     tasks: list[str]  # the tasks of this packet in the store
     ids: list[object]
     document: str
@@ -203,6 +208,7 @@ class Review:
         policy: Mapping[str, Any] | None = None,
         *,
         clock: Callable[[], datetime] | None = None,
+        only: Collection[str] | None = None,
     ) -> None:
         if not isinstance(reviewer, str) or not reviewer.strip():
             raise ValueError("a reviewer name must have a character that is not a space")
@@ -214,6 +220,7 @@ class Review:
         self.tasks: dict[str, str] = {}  # task key -> packet key
         self.skipped: list[str] = []
         self.tickets: dict[str, tuple[str, str | None]] = {}  # frame ticket -> packet, value
+        self._only = None if only is None else frozenset(only)  # calibrate label: its tasks
         self._load()
 
     # Loading
@@ -228,7 +235,7 @@ class Review:
                 data = self.store.object_bytes(k)
             except StoreError:
                 continue
-            if key("task@1", data) != k:
+            if key("task@1", data) != k or (self._only is not None and k not in self._only):
                 continue
             try:
                 task = json.loads(data)
@@ -267,6 +274,10 @@ class Review:
             slot = by_slot.get((s["field"], s["key"], tuple(s["decisions"])))
             if slot is not None:
                 by_key[_task_key(t)] = (slot, t)
+        labels: dict[str, tuple[Slot, dict[str, Any]]] = {}
+        if set(stored) - set(by_key):  # a calibrate task must come from this packet too
+            labels = label_tasks(pk, packet.receipt, packet.text, schema,
+                                 references=packet.references, layout=layout)  # fmt: skip
         document = packet.receipt.get("document", {}).get("id")
         doc = _Doc(
             key=pk,
@@ -275,7 +286,8 @@ class Review:
             layout=layout,
             units=_Units(packet.text),
             by_key=by_key,
-            tasks=sorted(k for k in set(stored) if k in by_key),
+            labels=labels,
+            tasks=sorted(k for k in set(stored) if k in by_key or k in labels),
             ids=[c.get("id") for c in packet.candidates if isinstance(c, Mapping)],
             document="" if document is None else _printable(document),
         )
@@ -328,7 +340,7 @@ class Review:
             for task, verdict in last.items():
                 latest.setdefault(task, set()).add(verdict)
         settled: set[str] = set()
-        try:
+        try:  # an answer to a calibrate task settles no slot
             resolution, _ = resolve(pk, doc.packet, doc.schema, self.policy, logs,
                                     layout=doc.layout)  # fmt: skip
         except (AnswerError, PacketError, ValueError):
@@ -345,7 +357,7 @@ class Review:
         items = []
         for pk, doc in self.docs.items():
             for tk in doc.open:
-                places = doc.by_key[tk][1]["places"]
+                places = (doc.by_key.get(tk) or doc.labels[tk])[1]["places"]
                 first = places[0]["start"] if places else len(doc.units.source.data)
                 page = places[0]["page"] if places else None
                 items.append(((doc.document, pk, first, tk),
@@ -359,7 +371,7 @@ class Review:
         if pk is None:
             raise Refused(404, "the task is not a task of this store")
         doc = self.docs[pk]
-        slot, task = doc.by_key[tk]
+        slot, task = doc.by_key.get(tk) or doc.labels[tk]
         return tk, doc, slot, task
 
     def view(self, tk: object) -> dict[str, Any]:
@@ -387,6 +399,11 @@ class Review:
             choices.append({"n": n, "decision": c["decision"], "shown": c["shown"],
                             "quote": quote})  # fmt: skip
         mine = [r for r in self._logs(doc.key).get(self.reviewer, []) if r.get("task") == tk]
+        label = None
+        if tk in doc.labels:  # the page asks a calibrate question (§11)
+            question = QUESTIONS[task["template"]]
+            keys = doc.schema.fields[task["slot"]["field"]].keys if question == "key" else None
+            label = {"question": question, "keys": list(keys or ())}
         return {
             "task": tk,
             "document": doc.document,
@@ -396,6 +413,7 @@ class Review:
             "parts": task["parts"],
             "choices": choices,
             "answered": mine[-1].get("verdict") if mine else None,
+            "label": label,
             "view": self._source(doc, task, places),
         }
 
@@ -512,6 +530,8 @@ class Review:
     def reason(self, tk: object) -> dict[str, Any]:
         """The codes of the task and the outcome of each choice (§8, The reason is closed)."""
         tk, doc, _, task = self._task(tk)
+        if tk in doc.labels:  # a calibrate task is blind: it shows no gate output
+            return {"codes": [], "choices": []}
         decisions = doc.packet.receipt["decisions"]
         return {
             "codes": [{"code": c, "text": DESCRIPTIONS.get(c, "")} for c in task["codes"]],
@@ -583,8 +603,10 @@ class Review:
     def check(self, body: Mapping[str, Any]) -> dict[str, Any]:
         """Run the ``admit`` call of ``review resolve`` for a correction, and give the outcome
         (§6.2). This writes nothing."""
-        _, doc, slot, task = self._task(body.get("task"))
+        tk, doc, slot, task = self._task(body.get("task"))
         verdict = body.get("verdict")
+        if tk in doc.labels:
+            raise Refused(400, "a calibrate task takes no correction")
         if not isinstance(verdict, str) or verdict not in CORRECTIONS:
             raise Refused(400, "the verdict must be correct or adjust_span")
         candidate = self._candidate(doc, slot, task, body)
@@ -621,7 +643,9 @@ class Review:
         tk, doc, slot, task = self._task(body.get("task"))
         verdict = body.get("verdict")
         if not isinstance(verdict, str) or verdict not in VERDICTS:
-            raise Refused(400, "the verdict is not an answer@1 verdict")
+            raise Refused(400, "the verdict is not an answer verdict")
+        if tk in doc.labels and verdict in CORRECTIONS:
+            raise Refused(400, "a calibrate task takes no correction")
         candidate = None
         kept = body.get("codes_kept") or []
         for name in ("keys", "ms"):
@@ -629,7 +653,7 @@ class Review:
                 raise Refused(400, f"{name} must be less than 2^31")
         if verdict in CORRECTIONS:
             candidate = self._candidate(doc, slot, task, body)
-        record = {
+        record: dict[str, Any] = {
             "format": "answer@1",
             "task": tk,
             "reviewer": self.reviewer,
@@ -644,10 +668,13 @@ class Review:
             "ms": body.get("ms"),
             "time": self._clock().astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         }
+        if tk in doc.labels or verdict == "wrong":  # §5.3: answer@2
+            record["format"] = "answer@2"
+            record["field_keys"] = body.get("field_keys")
         decisions = doc.packet.receipt["decisions"]
         try:
             checked = _check(self.reviewer, record, doc.by_key, doc.schema, doc.ids,
-                             members=ANSWER_MEMBERS)  # fmt: skip
+                             chained=False, labels=doc.labels)  # fmt: skip
             if checked.answer is None:
                 read = _read(checked, doc.schema, doc.packet, decisions,
                              _admit_only(doc.packet), {})  # fmt: skip
