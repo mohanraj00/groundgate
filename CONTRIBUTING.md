@@ -36,9 +36,10 @@ and these steps make it fast:
    instead, or write "none" if users will not notice the change.
 5. Do not change `.github/`, `SPEC.md` or `conformance/`, or a `.claude/`, `.codex/`,
    `.mcp.json`, `AGENTS.md` or `CLAUDE.md` (also the `.local.md` and `.override.md` forms) in any
-   directory, unless the maintainer approved it on an issue. The check `outside-pr-paths` fails a fork PR that changes these paths or `CHANGELOG.md`, until
-   I add the label `maintainer-approved`. After each new push, I read the new diff, then remove
-   the label and add it again.
+   directory, unless the maintainer approved it on an issue. The check `outside-pr-paths` fails a
+   fork PR that changes these paths or `CHANGELOG.md`, until I add the label
+   `maintainer-approved`. After each new push, I read the new diff, then remove the label and add
+   it again.
 
 What happens next is in [docs/maintainers/outside-prs.md](docs/maintainers/outside-prs.md): who
 reviews the PR, the labels, and when an open PR closes.

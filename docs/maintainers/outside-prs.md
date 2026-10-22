@@ -37,9 +37,10 @@ for the reason, and add `changes-requested`. If the diff is clean, approve the r
 
 The check `outside-pr-paths` fails a fork PR that changes `.github/`, `CHANGELOG.md`, `SPEC.md`
 or `conformance/`, or a `.claude/`, `.codex/`, `.mcp.json`, `AGENTS.md` or `CLAUDE.md` (also the
-`.local.md` and `.override.md` forms) in any directory. It comes from [outside-pr-paths.yml](../../.github/workflows/outside-pr-paths.yml) on
-`main`, on `pull_request_target`, so a fork PR cannot change it. It never checks out the PR code,
-and GitHub does not hold its runs for approval.
+`.local.md` and `.override.md` forms) in any directory. It comes from
+[outside-pr-paths.yml](../../.github/workflows/outside-pr-paths.yml) on `main`, on
+`pull_request_target`, so a fork PR cannot change it. It never checks out the PR code, and
+GitHub does not hold its runs for approval.
 
 - The check is not a required check yet. It becomes one only after a test fork PR shows that
   the check lands on the PR head. If it lands on the base commit, a follow-up PR that posts a
