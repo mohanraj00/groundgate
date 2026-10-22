@@ -3,13 +3,6 @@
 Versions follow [SemVer](https://semver.org). A change to how any candidate is decided is a new
 spec version, and receipts name the spec version they were decided under.
 
-## Unreleased
-
-- `Layout.from_dict` rejects a page size or a word box that is not a finite
-  number (`nan`, `inf`, `1e999`) with the `malformed layout` error (#439). An
-  edited store can hold such a box because the value is a JSON string;
-  `report --store` was the last caller that rendered it unchecked.
-
 ## 0.10.0 (2026-10-20)
 
 Spec 0.10. Receipts name `"groundgate": "0.10"` and every digest uses the `groundgate/0.10:`
