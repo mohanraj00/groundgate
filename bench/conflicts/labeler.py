@@ -1,7 +1,7 @@
 """The label tool of the conflicts set, in a browser: for each label and field, the person clicks
 the dose that the text states as the field, or says that the text states none.
 
-    uv run python bench/conflicts/conflicts.py web     # then open http://127.0.0.1:8771
+    uv run python bench/conflicts/conflicts.py web     # open the start URL it prints (port 8771)
 
 The page shows sections 2 and 3 as the pinned SPL formats them (bench/fields/web.py) and marks
 every dose. It never shows what spec 0.3 or a model reads.
@@ -11,13 +11,13 @@ from __future__ import annotations
 
 import json
 import sys
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
 
 HERE = Path(__file__).parent
-sys.path[:0] = [str(HERE.parent / "fields")]
+sys.path[:0] = [str(HERE.parent / "fields"), str(HERE.parent)]
 
+import localweb  # noqa: E402  (bench/localweb.py)
 import web  # noqa: E402  (bench/fields/web.py)
 from conflicts import FIELDS  # noqa: E402  (bench/conflicts/conflicts.py)
 
@@ -39,7 +39,7 @@ def serve() -> None:
         "fields": [{"name": f, "description": d["description"]} for f, d in FIELDS.items()],
     }
 
-    class Handler(BaseHTTPRequestHandler):
+    class Handler(localweb.LocalHandler):
         def send(self, body: str, kind: str = "application/json", code: int = 200) -> None:
             raw = body.encode("utf-8")
             self.send_response(code)
@@ -78,5 +78,4 @@ def serve() -> None:
         def log_message(self, *args: Any) -> None:
             pass
 
-    print(f"Open http://127.0.0.1:{PORT} and press Ctrl-C here when you finish.")
-    ThreadingHTTPServer(("127.0.0.1", PORT), Handler).serve_forever()
+    localweb.serve(Handler, PORT, f"{len(groups)} groups")

@@ -5,7 +5,7 @@ labeled by a person with the dose that the text states as each of three set-2 fi
     uv run python bench/conflicts/conflicts.py pick           # sources.json, selection-log.json
     uv run python bench/fetch.py --set bench/conflicts        # download, verify, write docs/
     uv run python bench/conflicts/conflicts.py items          # write items.json from docs/
-    uv run python bench/conflicts/conflicts.py web            # label at http://127.0.0.1:8771
+    uv run python bench/conflicts/conflicts.py web            # label at port 8771
 
 This is the pick of the keys-set tool (bench/keys/keys.py) with its own documents. The pick looks
 only at counts and prints no text. The label tool marks every dose and never shows what spec 0.3

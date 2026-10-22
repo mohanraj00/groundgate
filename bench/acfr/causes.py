@@ -2,7 +2,7 @@
 does not admit, the part that fails or is missing, and why. The plan is on #244.
 
     uv run python bench/acfr/causes.py causes             # causes/causes.json
-    uv run python bench/acfr/causes.py web                # blind labels, http://127.0.0.1:8779
+    uv run python bench/acfr/causes.py web                # blind labels, port 8779
     uv run python bench/acfr/causes.py results [--check]  # causes/results.json, RESULTS.md
 
 causes decides the replies of run.py again in process, under the groundgate that runs it. A script
