@@ -41,6 +41,9 @@ PR that edits `ci.yml` can change the job. That is one more reason to read the d
 
 ## 3. Review
 
+AGENTS.md says that the agent that opened a PR asks for its review. No agent opens an outside
+PR, so the milestone runner asks.
+
 1. The milestone runner asks for the review in a separate comment that holds only:
    `@claude review this PR. Use the Review guidelines in CLAUDE.md.`
    If Codex reviews, the comment holds only `@codex review`.

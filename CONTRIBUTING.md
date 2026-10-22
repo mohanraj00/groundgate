@@ -35,8 +35,8 @@ and these steps make it fast:
 4. Do not edit `CHANGELOG.md`. Put the changelog line in a `## Changelog` section of the PR body
    instead, or write "none" if users will not notice the change.
 5. Do not change `.github/`, `SPEC.md` or `conformance/` unless the maintainer approved it on an
-   issue. The CI job `outside-pr-paths` fails a fork PR that changes these paths, until I add
-   the label `maintainer-approved`.
+   issue. The CI job `outside-pr-paths` fails a fork PR that changes these paths or
+   `CHANGELOG.md`, until I add the label `maintainer-approved`.
 
 What happens next is in [docs/maintainers/outside-prs.md](docs/maintainers/outside-prs.md): who
 reviews the PR, the labels, and when an open PR closes.

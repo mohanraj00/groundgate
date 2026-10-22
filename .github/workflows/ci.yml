@@ -2,7 +2,7 @@ name: CI
 
 on:
   # A push to any branch runs CI in a fork, so that an outside contributor can link a green run.
-  # In this repository, only a push to main runs it. The scope job decides.
+  # In this repository, which is not a fork, only a push to main runs it. The scope job decides.
   push:
     branches: ["**"]
   # labeled and unlabeled rerun outside-pr-paths only. The scope job skips the other jobs.
@@ -10,14 +10,15 @@ on:
     types: [opened, synchronize, reopened, labeled, unlabeled]
 
 jobs:
-  # The other jobs need this job. If it is skipped, they are skipped, and their names get the
-  # suffix "-skipped". Thus a skipped job never has the name of a required check.
+  # The other jobs need this job. If it is skipped, they are skipped too. A skipped check passes a
+  # required check of the same name, so the name of each job is an expression. It gives the
+  # required name only after this job passed. On a skipped job, GitHub shows the expression text.
   scope:
     if: >-
       (github.event_name == 'pull_request'
       && github.event.action != 'labeled' && github.event.action != 'unlabeled')
       || (github.event_name == 'push'
-      && (github.ref == 'refs/heads/main' || github.repository != 'mohanraj00/groundgate'))
+      && (github.ref == 'refs/heads/main' || github.event.repository.fork))
     runs-on: ubuntu-latest
     steps:
       - run: echo "Full CI run for the $GITHUB_EVENT_NAME event"
