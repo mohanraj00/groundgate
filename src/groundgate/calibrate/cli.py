@@ -277,6 +277,16 @@ def ask(w: Work, judge: str, store: Path | None = None, reviewer: str | None = N
     if store is not None and reviewer is not None:
         labels, heads = stored_labels(w, store, reviewer)
         source = {"labels_from": {"reviewer": reviewer, "heads": heads}}
+        # every judge of the folder scores the same labels: the logs stay at the earlier heads
+        for path in sorted(
+            [*w.path.glob("answers-*.json"), *w.path.glob(".answers-*.partial.json")]
+        ):
+            given = json.loads(path.read_text(encoding="utf-8"))["meta"].get("labels_from")
+            if given is not None and given != source["labels_from"]:
+                raise SystemExit(
+                    f"the answer logs changed after {path.name}; the labels are frozen once a "
+                    "judge has answered"
+                )
     missing = [iid for iid, _, _ in ps if iid not in labels]
     if missing:
         raise SystemExit(f"{len(missing)} items are not labeled yet; label before a judge answers")
@@ -590,6 +600,9 @@ def review_serve(w: Work, store: Path | None, reviewer: str | None, port: int) -
     if store is None or reviewer is None:
         raise SystemExit("give --store and --reviewer together")
     tasks = w.read("tasks.json")
+    # the same rule as the label page: once a judge has answered, the labels do not change
+    if any(w.path.glob("answers-*.json")) or any(w.path.glob(".answers-*.partial.json")):
+        raise SystemExit("a judge has answered already; the labels are frozen")
     try:
         with FolderStore(store) as s:
             review = Review(s, reviewer, only={t["task"] for t in tasks.values()})

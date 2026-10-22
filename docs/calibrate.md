@@ -40,17 +40,19 @@ groundgate calibrate report --work W [--store DIR]  # REPORT.md, report.json
   token with each request, and the server refuses a request without it. Each click saves a label
   in `W/labels.json`: `true`, `false` or `null` (not sure) for the field question, and the list
   of the field's keys (empty for none) for the key question.
-- **Labels in a store.** With `--store DIR`, `sample` also writes a packet for each document
-  and a blind task for each item to the store, and `W/tasks.json` maps each item to its task
+- **Labels in a store.** With `--store DIR`, `sample` also writes a packet for each document and
+  a blind task for each item to the store, and `W/tasks.json` maps each item to its task
   ([review.md §11](design/review.md#11-fit-with-other-work)). Then `label --store DIR --reviewer
   NAME` opens the review page of `groundgate review serve` on these tasks, and each label is an
   `answer@2` in the answer log of the reviewer. Press `y` (yes), `w` (wrong) or `u` (not sure)
   for the field question. For the key question, click each key that the value gives, or press
   its number, then press `Enter`. You can also go to a key with `Tab` and press `Space`. Press
-  `u` if you are not sure. Each question shows the description of the field. `ask --store DIR --reviewer NAME` reads the labels from the
-  answer logs and keeps the head of each log. `report --store DIR` reads the logs only up to
-  those heads, so a later answer does not change the report. Without `--store`, `W/labels.json`
-  holds the labels, as in 0.10.
+  `u` if you are not sure. Each question shows the description of the field. `ask --store DIR
+  --reviewer NAME` reads the labels from the answer logs and keeps the head of each log. `report
+  --store DIR` reads the logs only up to those heads, so a later answer does not change the
+  report. After a judge run starts, `label --store` refuses to open, as the label page does.
+  `ask --store` refuses when the logs moved past the heads of an earlier judge run in the work
+  folder. Without `--store`, `W/labels.json` holds the labels, as in 0.10.
 - `report --check` writes nothing. It fails when `REPORT.md` or `report.json` differs from what
   `W` gives, so a CI job can check a committed report.
 

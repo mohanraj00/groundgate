@@ -206,6 +206,22 @@ def test_the_answer_logs_give_the_labels_and_the_report_of_the_old_page(
         Review(s, "ana").answer(answer(tasks[first]["task"], "unsure"))
     cli.main(["report", "--work", str(new), "--store", str(store), "--check"])
     assert cli.stored_labels(cli.Work(new), store, "ana")[0][first] is None
+    # the labels are frozen: no label page after a judge run, and no judge on the moved logs
+    with pytest.raises(SystemExit, match="labels are frozen"):
+        cli.main(["label", "--work", str(new), "--store", str(store), "--reviewer", "ana"])
+    monkeypatch.setitem(judges.BUILT_IN, "fake2", fake(judge))
+    with pytest.raises(SystemExit, match=r"answer logs changed after answers-fake\.json"):
+        cli.main(["ask", "--work", str(new), "--judge", "fake2", "--store", str(store),
+                  "--reviewer", "ana"])  # fmt: skip
+    assert not list(new.glob("*answers-fake2*"))
+
+
+def test_a_partial_judge_run_freezes_the_labels(tmp_path: Path) -> None:
+    store = tmp_path / "store"
+    work = sampled(tmp_path, "field", store)
+    (work / ".answers-fake.partial.json").write_text('{"meta": {}, "answers": {}}')
+    with pytest.raises(SystemExit, match="labels are frozen"):
+        cli.main(["label", "--work", str(work), "--store", str(store), "--reviewer", "ana"])
 
 
 def test_the_review_page_asks_a_blind_calibrate_question(tmp_path: Path) -> None:
