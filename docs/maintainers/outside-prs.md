@@ -67,9 +67,11 @@ Residual risks:
 AGENTS.md says that the agent that opened a PR asks for its review. No agent opens an outside
 PR, so the milestone runner asks.
 
-Nobody asks an agent to review an outside PR before the maintainer has read the diff for the
-protected paths in section 3. The review agents run on a checkout of the PR, and they read
-`.claude/`, `.codex/`, `.mcp.json` and the `AGENTS.md` and `CLAUDE.md` files from it.
+Nobody asks an agent to review an outside PR before the maintainer has read the whole diff. The
+review agents run on a checkout of the PR with their own credentials. They read `.claude/`,
+`.codex/`, `.mcp.json` and the `AGENTS.md` and `CLAUDE.md` files from it, and an agent that runs
+the tests also runs the PR's `conftest.py` and tests. The protected paths guard only the
+configuration, so this read is the only control on the code.
 
 1. The milestone runner asks for the review in a separate comment that holds only:
    `@claude review this PR. Use the Review guidelines in CLAUDE.md.`
@@ -95,3 +97,6 @@ Each outside PR ends with one of these labels:
   closing comment says that the author can reopen it.
 
 Remove `changes-requested` when the author pushes the changes. Keep `external` on the PR.
+
+Each of these label changes runs `outside-pr-paths` again without the approval. On a PR that
+needs `maintainer-approved`, set `accepted` first, and add `maintainer-approved` last.
