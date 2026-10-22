@@ -10,10 +10,16 @@ jobs:
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
       - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
+        with:
+          version: "0.10.8"
       - run: uv build --build-constraints .github/release-build-constraints.txt --require-hashes
       - name: The tag matches the package version
         run: test -f "dist/groundgate-${GITHUB_REF_NAME#v}-py3-none-any.whl"
-      - run: uvx twine==7.0.0 check --strict dist/*
+      - name: twine checks the files, installed from hashed requirements
+        run: |
+          uv venv -q "$RUNNER_TEMP/twine"
+          uv pip install -q --python "$RUNNER_TEMP/twine" --require-hashes -r .github/release-twine.txt
+          "$RUNNER_TEMP/twine/bin/twine" check --strict dist/*
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: dist
@@ -39,7 +45,8 @@ jobs:
       - name: The wheel that will be published passes the quickstart and the vectors
         run: |
           python -m venv /tmp/clean
-          /tmp/clean/bin/pip install -q dist/*.whl pytest
+          /tmp/clean/bin/pip install -q --require-hashes -r .github/release-smoke.txt
+          /tmp/clean/bin/pip install -q --no-deps --no-index dist/*.whl
           /tmp/clean/bin/python -m pytest -p no:cacheprovider \
             tests/test_package.py tests/test_readme.py tests/test_conformance.py
 
