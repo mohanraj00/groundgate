@@ -145,8 +145,9 @@ def label_of(task: Mapping[str, Any], record: Mapping[str, Any]) -> object:
 
 def labels_view(store: Any) -> bytes:
     """The view ``calibrate-labels@1``: for each calibrate task and each reviewer, the label of
-    the last answer. A log that the store cannot read, or a record that gives no label, is left
-    out: ``groundgate calibrate`` checks each record against its packet before it scores."""
+    the last answer. A task that its packet does not give, a log that the store cannot read, or
+    a record that gives no label, is left out: ``groundgate calibrate`` checks each record
+    against its packet before it scores."""
     import json
 
     from ..store import StoreError, key
@@ -166,6 +167,7 @@ def labels_view(store: Any) -> bytes:
             continue
         if isinstance(task, dict) and task.get("template") in QUESTIONS:
             tasks[k] = task
+    tasks = _from_packets(store, tasks)
     last: dict[tuple[str, str], object] = {}
     names, _ = store.log_names()
     for log in names:
@@ -186,3 +188,30 @@ def labels_view(store: Any) -> bytes:
                 last[tk, reviewer] = found
     rows = [{"task": t, "reviewer": n, "label": v} for (t, n), v in sorted(last.items())]
     return jcs({"format": "calibrate-labels@1", "labels": rows}).encode("utf-8")
+
+
+def _from_packets(store: Any, tasks: Mapping[str, Mapping[str, Any]]) -> dict[str, Any]:
+    """The tasks that their packet gives with the same bytes. A task object is untrusted local
+    data, so a task with a bad packet member, or a packet that the store cannot read or that
+    ``verify`` refuses, is left out."""
+    from ..store import StoreError
+    from .tasks import checked_packet
+
+    own: dict[str, set[str]] = {}
+    out: dict[str, Any] = {}
+    for k, task in tasks.items():
+        pk = task.get("packet")
+        if not isinstance(pk, str):
+            continue
+        if pk not in own:
+            own[pk] = set()
+            try:
+                packet, schema, layout, problems = checked_packet(store, pk)
+                if not problems and schema is not None:
+                    own[pk] = set(label_tasks(pk, packet.receipt, packet.text, schema,
+                                              layout=layout))  # fmt: skip
+            except (StoreError, PacketError, ValueError, KeyError, TypeError):
+                pass
+        if k in own[pk]:
+            out[k] = task
+    return out

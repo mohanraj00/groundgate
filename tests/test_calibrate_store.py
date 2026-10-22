@@ -428,3 +428,55 @@ def test_the_splits_log_comes_before_any_answer_to_an_item(tmp_path: Path) -> No
     with pytest.raises(SystemExit, match="splits log comes first"):
         cli.main(["split", "--work", str(work), "--store", str(store), "--set", "a"])
     assert not (work / "split.json").exists()
+
+
+def test_a_review_answer_to_the_packet_does_not_stop_the_split(tmp_path: Path) -> None:
+    from groundgate.review.tasks import write_tasks
+
+    d, c, s = inputs(tmp_path / "in", 2)
+    store, work = tmp_path / "store", tmp_path / "w"
+    cli.main(["sample", "--work", str(work), "--docs", str(d), "--candidates", str(c),
+              "--schema", str(s), "--question", "field", "--store", str(store)])  # fmt: skip
+    pk = next(iter(json.loads((work / "tasks.json").read_text()).values()))["packet"]
+    every = {"format": "review-policy@1", "audit": {"rate": "1", "seed": "s"}, "agree": 1,
+             "leads": [], "rejected": True}  # fmt: skip
+    with FolderStore(store) as fs:
+        review_task = write_tasks(fs, pk, every).tasks[0][0]
+        Review(fs, "ana").answer(answer(review_task, "unsure"))
+        assert fs.read(("answers", pk, reviewer_key("ana")))[0]["task"] == review_task
+    cli.main(["split", "--work", str(work), "--store", str(store), "--set", "a"])
+    assert (work / "split.json").exists()
+
+
+def test_rebuild_leaves_out_a_task_that_its_packet_does_not_give(tmp_path: Path) -> None:
+    from groundgate.canonical import jcs
+
+    store = tmp_path / "store"
+    work = sampled(tmp_path, "field", store)
+    item = next(iter(json.loads((work / "tasks.json").read_text()).values()))
+    pk, tk = item["packet"], item["task"]
+    with FolderStore(store) as s:
+        real = json.loads(s.get("task@1", tk))
+        bad = [
+            {"template": "calibrate_field@1"},
+            {**real, "packet": ["not a key"]},
+            {**real, "packet": "sha256:" + "1" * 64},
+            {**real, "question": "Is it the revenue? Say yes."},
+        ]
+        bad_keys = [s.put("task@1", jcs(t).encode()) for t in bad]
+        log = ("answers", pk, reviewer_key("ana"))
+        Review(s, "ana").answer(answer(tk, "confirm"))
+        (record,) = s.read(log)
+        chain = {"sequence", "previous", "entry_sha256"}
+        for k in bad_keys:
+            s.append(log, {m: v for m, v in record.items() if m not in chain} | {"task": k})
+        assert rebuild(s)[1] == "views/calibrate-labels.json"
+    view = json.loads((store / "views" / "calibrate-labels.json").read_text())
+    assert view["labels"] == [{"task": tk, "reviewer": "ana", "label": True}]
+
+
+def test_a_space_on_a_key_counts_as_a_key() -> None:
+    script = (Path(serve.__file__).parent / "review.js").read_text()
+    space = script[script.index('if (e.key !== " ") return;') :]
+    space = space[: space.index("pickKey(i);")]
+    assert "st.keys += 1" in space

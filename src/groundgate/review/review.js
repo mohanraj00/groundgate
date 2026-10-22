@@ -137,6 +137,8 @@ function drawLabel(focus) {
       if (e.key !== " ") return;
       e.preventDefault();
       e.stopPropagation();
+      if (!st || busy) return;
+      st.keys += 1; // a Space press counts as a key, the same as the other keys
       pickKey(i);
     });
     list.append(li);

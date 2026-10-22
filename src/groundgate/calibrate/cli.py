@@ -197,13 +197,22 @@ def log_split(w: Work, items: list[dict[str, Any]], store: Path, set_name: str) 
     if w.read("labels.json", {}):
         raise SystemExit("labels.json has labels; the splits log comes before any label")
     if (w.path / "tasks.json").exists():
-        packets = {t["packet"] for t in w.read("tasks.json").values()}
+        tasks = w.read("tasks.json").values()
+        packets, task_keys = {t["packet"] for t in tasks}, {t["task"] for t in tasks}
         try:
             with FolderStore(store) as s:
                 logs, _ = s.log_names()
+                # only an answer to a task of tasks.json is a label; a review answer is not
+                labeled = any(
+                    r.get("task") in task_keys
+                    for log in logs
+                    if log[0] == "answers" and log[1] in packets
+                    for r in s.read(log)
+                    if isinstance(r.get("task"), str)
+                )
         except (StoreError, OSError) as exc:
             raise SystemExit(f"{store}: {exc}") from exc
-        if any(log[0] == "answers" and log[1] in packets for log in logs):
+        if labeled:
             raise SystemExit("the store has answers to these items; the splits log comes first")
     parts: dict[str, str] = {}
     names: dict[str, str] = {}
