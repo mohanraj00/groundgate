@@ -356,7 +356,8 @@ groundgate review serve --store work/store --reviewer ana
 
 `review serve` prints a start URL, `http://127.0.0.1:<port>/#<token>`. Open it in a browser. The
 page shows one task at a time, in page order. The source is on the left, with the value in a
-box. The question and the values are on the right. One key gives each answer:
+box. The question and the values are on the right. If the schema gives a `description` for the
+field, the page shows it below the question. One key gives each answer:
 
 | Key | Answer |
 |---|---|
@@ -373,8 +374,16 @@ box. The question and the values are on the right. One key gives each answer:
 The page does not show a code or an outcome until you press `r`. A correction goes through the
 same `admit` call as `review resolve`, and the page shows the outcome at once. If the gate
 rejects the selection, select again. If the gate flags it, press `k` to keep its codes. If a
-part is missing, select the part, for example the scale line, and press `Enter`. You can also
-type the value in full. After each answer, the next task opens.
+part is missing, select the part, for example the scale line, and press `Enter`. Select all of
+the scale words, for example "in millions" or "$m": the "m" alone is not a scale. After each
+answer, the next task opens.
+
+A correction always needs a selection. The gate needs the value in full (SPEC §2.5). If the
+selection holds a scale word or suffix, for example "4,200 thousand" or "$4.2m", the page reads
+the value in full. If the scale is in another place, for example "in millions" in a heading, type
+the value in full: for 9,776 in millions, type 9776000000. A typed value only replaces the number
+that the page reads from the selection. After `n`, if the right value is at more than one place,
+select one of them. Each place gives the same answer.
 
 The page calls the methods of `Review`, so a script can give the same answers. Offsets count
 UTF-16 code units in the text, as a browser selection does:

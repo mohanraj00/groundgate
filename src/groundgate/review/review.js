@@ -61,7 +61,7 @@ function next() {
   if (k === null) {
     task = null;
     $("source").replaceChildren(el("p", "note", "No task is left in the queue."));
-    for (const id of ["question", "parts", "choices", "doc", "answered"]) $(id).replaceChildren();
+    for (const id of ["question", "definition", "parts", "choices", "doc", "answered"]) $(id).replaceChildren();
     $("correct").hidden = true;
     $("reason").hidden = true;
     progress();
@@ -93,6 +93,7 @@ async function open(k) {
   progress();
   $("doc").textContent = "Document: " + (task.document || "(no id)");
   $("question").textContent = task.question;
+  $("definition").textContent = task.definition ? "The field: " + task.definition : "";
   $("parts").textContent = "Check each part: " + task.parts.join(", ") + ".";
   $("answered").textContent = task.answered ? "You answered " + task.answered +
     ". A new answer replaces it." : "";
@@ -242,10 +243,33 @@ function startCorrection(mode) {
   $("correct").hidden = false;
   $("outcome").replaceChildren();
   $("selected").textContent = "";
-  $("correct-help").textContent = mode === "correct"
-    ? "Select the right value in the text, then press Enter. You can also type the value."
-    : "Select the span of the value again, then press Enter.";
+  const help = mode === "correct"
+    ? ["Select the right value in the text, then press Enter.",
+      "If the same right value is at more than one place, select one of them. " +
+      "Each place gives the same answer."]
+    : ["Select the span of the value again, then press Enter."];
+  if (mode === "correct" && task.item === "number") {
+    help.push("A selection is always necessary. A typed value only replaces the number " +
+      "that the page reads from the selection.");
+    help.push("The gate needs the value in full. If the selection holds a scale word, " +
+      "the page multiplies the number by it. If the scale is in another place, for example " +
+      "\"in millions\" in a heading, type the value in full: for 9,776 in millions, " +
+      "type 9776000000.");
+  } else if (mode === "correct") {
+    help.push("A selection is always necessary. A typed value only replaces the text " +
+      "that the page reads from the selection.");
+  }
+  $("correct-help").replaceChildren(...help.map((t) => el("p", "", t)));
 }
+
+// The help text when the gate asks for a part of the value
+const PART_HELP = {
+  sign: "Select the word or the mark that makes the value negative, for example \"loss\".",
+  scale: "Select all of the scale words, for example \"in millions\" or \"$m\". " +
+    "One letter, such as the \"m\" of \"$m\", is not a scale.",
+  unit: "Select the unit as the text writes it, for example \"EUR\" or \"$\".",
+  key: "Select the words that give the key, for example the year.",
+};
 
 async function onEnter() {
   const s = selection();
@@ -295,10 +319,16 @@ async function check() {
   } else if (r.missing.length) {
     st.need = r.missing[0];
     out.append(el("div", "", "Select the " + st.need + " in the text, then press Enter. " +
-      "If the text does not give it, press k to keep the codes and save the correction."));
+      (PART_HELP[st.need] || "")));
+    out.append(el("div", "", "If the text does not give it, press k to keep the codes " +
+      "and save the correction."));
   } else if (r.outcome === "admitted") {
     out.append(el("div", "", "Press Enter to save the correction."));
   } else {
+    if (r.codes.some((c) => c.code === "SCALE_WORD")) {
+      out.append(el("div", "", "The value is not in full. Select the number with its scale " +
+        "word, or type the value in full, then press Enter."));
+    }
     out.append(el("div", "", "Press k to keep these codes and save the correction."));
   }
 }
