@@ -1,0 +1,97 @@
+name: Outside PR paths
+
+# A PR from a fork must not change these paths unless the maintainer approved it with the label
+# maintainer-approved: .github/, CHANGELOG.md, SPEC.md and conformance/ at the root, and in any
+# directory .claude/, .codex/, .mcp.json, AGENTS.md, CLAUDE.md and their .local.md and
+# .override.md forms. The review agents read the agent files from the PR checkout.
+# If you change this list, change it in the pattern, the error text, CONTRIBUTING.md and
+# docs/maintainers/outside-prs.md too.
+#
+# This workflow uses pull_request_target, so it always comes from main, and a fork PR cannot edit
+# it. pull_request_target runs in the context of this repository. Thus:
+# - Never check out, build, install or run code from the PR here. Never add actions/checkout.
+# - Never put PR data (a title, a branch name, a file name, a label) in the text of a command.
+#   PR data goes through env vars only.
+# - Keep the token read-only, and give the job no secrets.
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, edited, labeled, unlabeled]
+
+permissions: {}
+
+# One run at a time for each PR. A run does not stop an earlier run, so the latest event decides.
+concurrency:
+  group: outside-pr-paths-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  outside-pr-paths:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+      issues: read
+    steps:
+      - name: A PR from a fork changes no protected path without the label maintainer-approved
+        env:
+          GH_TOKEN: ${{ github.token }}
+          HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          SENDER: ${{ github.event.sender.login }}
+          EVENT_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          # The label counts only in the run that adding the label starts. Any other event (a
+          # push, a reopen, an edit, a change to another label) checks the files without it, so
+          # the check can go red. The maintainer then adds the label again after reading the diff.
+          APPROVAL_EVENT: >-
+            ${{ github.event.action == 'labeled'
+            && github.event.label.name == 'maintainer-approved' }}
+        run: |
+          if [ "$HEAD_REPO" = "$GITHUB_REPOSITORY" ]; then
+            echo "The PR comes from this repository. Nothing to check."
+            exit 0
+          fi
+          if [ "$APPROVAL_EVENT" = "true" ]; then
+            # The sender of this event must be the maintainer. The latest "labeled" event in the
+            # events API names the same actor, so it adds little: it only refuses when that list
+            # names someone else. The list can lag, so an empty list is not a refusal.
+            labeler=$(gh api --paginate "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/events" \
+              --jq '.[] | select(.event == "labeled" and .label.name == "maintainer-approved")
+                | .actor.login' | tail -n 1)
+            if [ "$SENDER" = "mohanraj00" ] && { [ -z "$labeler" ] || [ "$labeler" = "mohanraj00" ]; }; then
+              # The label covers only the head at the time it was added. If the PR has a newer
+              # head, or this is a rerun of an old run, the approval does not count.
+              head=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER" --jq '.head.sha')
+              if [ "$head" != "$EVENT_HEAD_SHA" ]; then
+                echo "::error::The PR head changed after the label maintainer-approved was added. Read the new diff, then remove the label and add it again."
+                exit 1
+              fi
+              echo "The maintainer added the label maintainer-approved."
+              exit 0
+            fi
+            echo "::warning::Only the maintainer can add the label maintainer-approved. The job checks the files without it."
+          fi
+          # The count comes from the API in this step, so that a queued run or a rerun compares
+          # the list with a count of the same time, not with the count in the event.
+          changed=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER" --jq '.changed_files')
+          files="$RUNNER_TEMP/pr-files.jsonl"
+          # One JSON array for each file: the path, and the old path of a rename. JSON keeps a
+          # newline in a path inside one line, so the log shows it as text and not as a command.
+          gh api --paginate "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/files" \
+            --jq '.[] | [.filename, .previous_filename] | tojson' > "$files"
+          listed=$(wc -l < "$files")
+          if [ "$listed" -lt "$changed" ]; then
+            echo "::error::The API lists $listed of the $changed changed files. The maintainer must check this PR and add the label maintainer-approved."
+            exit 1
+          fi
+          pattern='^(\.github/|CHANGELOG\.md$|SPEC\.md$|conformance/)'
+          pattern="$pattern"'|(^|/)\.(claude|codex)/|(^|/)\.mcp\.json$'
+          pattern="$pattern"'|(^|/)(CLAUDE|AGENTS)(\.local|\.override)?\.md$'
+          protected=$(jq -c --arg re "$pattern" \
+            '.[] | select(. != null) | select(test($re; "i"))' "$files")
+          if [ -n "$protected" ]; then
+            echo "::error::This PR from a fork changes .github/, CHANGELOG.md, SPEC.md or conformance/, or a .claude/, .codex/, .mcp.json, AGENTS.md or CLAUDE.md (also the .local.md and .override.md forms) in any directory. These paths need an issue that the maintainer approved, and the label maintainer-approved on the PR. See CONTRIBUTING.md, Outside pull requests."
+            echo "The protected paths in this PR:"
+            printf '%s\n' "$protected"
+            exit 1
+          fi
+          echo "The PR changes no protected path."
