@@ -497,22 +497,102 @@ def test_forget_removes_the_run_record_after_its_objects(tmp_path: Path) -> None
     assert ("run@3", run, "deleted", 0) in done
 
 
-def test_forget_removes_a_run_record_with_a_bad_line(tmp_path: Path) -> None:
+def _bad_run_packet(
+    store: FolderStore, root: Path, *, header: bool = False
+) -> tuple[str, dict[str, Any], Path]:
+    """A packet whose run record has a line that is not a JSON object: the last line, or with
+    ``header`` the first line. The bytes match the key of the record. The record names the
+    prompts and replies of the run, which only this packet names now."""
+    packet = save_run(store)
+    obj = json.loads(store.get("packet@1", packet))
+    run = store.get("run@3", obj["run"])
+    bad_run = b"[1]\n" + run if header else run + b"[1]\n"
+    obj["run"] = key("run@3", bad_run)
+    path = path_of(root, obj["run"])
+    path.parent.mkdir(exist_ok=True)
+    path.write_bytes(bad_run)
+    other = store.put("packet@1", jcs(obj).encode("utf-8"))
+    path_of(root, packet).unlink()
+    return other, obj, path
+
+
+@pytest.mark.parametrize("header", [False, True])
+@pytest.mark.parametrize("everything", [False, True])
+def test_forget_keeps_a_run_record_with_a_bad_line(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str], everything: bool, header: bool
+) -> None:
+    root = tmp_path / "s"
+    with FolderStore(root) as store:
+        other, obj, path = _bad_run_packet(store, root, header=header)
+    bad_run = path.read_bytes()
+    named = [k for k, v in all_keys(root).items() if v in ("prompt@1", "reply@1")]
+    assert named
+    args = ["store", "forget", "--store", str(root), other, "--reason", "asked"]
+    assert main(args + ["--all"] * everything) == 1
+    out = capsys.readouterr().out
+    kind = "run@N" if header else "run@3"  # with no header, the version is not known
+    assert out.startswith(f"unchecked {kind} {obj['run']}\n")
+    assert "deleted run@" not in out
+    assert path.read_bytes() == bad_run  # kept, not removed
+    assert f"deleted text@1 {obj['document']['text']}" in out
+    # The prompts and replies stay, because only the kept record names them.
+    assert all(path_of(root, k).exists() for k in named)
+    # With --all, the packet stays too: it is the way to the kept record.
+    assert path_of(root, other).exists()
+    assert (f"kept packet@1 {other}" in out) is everything
+
+
+def test_forget_all_finishes_after_a_manual_removal_of_a_bad_run_record(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    root = tmp_path / "s"
+    with FolderStore(root) as store:
+        other, obj, path = _bad_run_packet(store, root, header=True)
+    args = ["store", "forget", "--store", str(root), other, "--reason", "asked", "--all"]
+    assert main(args) == 1
+    with FolderStore(root) as store:  # the manual step of store.md §8 rule 3
+        store.forget(obj["run"], "the record cannot be read")
+    capsys.readouterr()
+    assert main(args) == 0
+    out = capsys.readouterr().out
+    assert f"absent run@N {obj['run']}" in out and f"deleted packet@1 {other}" in out
+    assert not path.exists() and not path_of(root, other).exists()
+
+
+def test_kind_of_hashes_an_object_at_most_once_for_each_kind(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A large object that is not a run record gets no extra hash for the run kinds."""
+    from groundgate.store import maintain
+
+    calls: list[str] = []
+    real = maintain.key
+
+    def counted(kind: str, data: bytes) -> str:
+        calls.append(kind)
+        return real(kind, data)
+
+    monkeypatch.setattr(maintain, "key", counted)
+    data = b"x" * (1 << 20)
+    assert kind_of(key("source@1", data), data) == "source@1"
+    assert calls.count("source@1") == 1 and not any(c.startswith("run@") for c in calls)
+    calls.clear()
+    bad_run = b"[1]\n" + b"{}\n" * 1000  # a run record with a header that cannot be read
+    assert kind_of(key("run@3", bad_run), bad_run) is None
+    assert len(calls) == len(set(calls)) and not any(c.startswith("run@") for c in calls)
+
+
+def test_forget_removes_a_run_record_that_matches_no_kind(tmp_path: Path) -> None:
+    """A record whose bytes changed, with a header that can be read, matches its key as no
+    kind. It goes, as before (#486)."""
     root = tmp_path / "s"
     with FolderStore(root) as store:
         packet = save_run(store)
-        obj = json.loads(store.get("packet@1", packet))
-        run = store.get("run@3", obj["run"])
-        bad_run = run + b"[1]\n"  # a line that is not a JSON object
-        obj["run"] = key("run@3", bad_run)
-        path = path_of(root, obj["run"])
-        path.parent.mkdir(exist_ok=True)
-        path.write_bytes(bad_run)
-        other = store.put("packet@1", jcs(obj).encode("utf-8"))
-        done = forget_packet(store, other, "asked")
-    assert done[0] == ("run@3", obj["run"], "unchecked", 0)
-    assert ("run@3", obj["run"], "deleted", 0) in done
-    assert ("text@1", obj["document"]["text"], "deleted", 1) in done
+        run = json.loads(store.get("packet@1", packet))["run"]
+        path = path_of(root, run)
+        path.write_bytes(path.read_bytes() + b"[1]\n")
+        done = forget_packet(store, packet, "asked")
+    assert ("run@N", run, "unchecked", 0) in done and ("run@N", run, "deleted", 0) in done
     assert not path.exists()
 
 
@@ -551,9 +631,9 @@ def test_forget_ignores_a_symlink_that_is_not_an_object(
     assert link.is_symlink() and target.read_bytes() == b"x"
 
 
-@pytest.mark.parametrize(("depth", "removed"), [(100, False), (5000, True)])
+@pytest.mark.parametrize(("depth", "unread"), [(100, False), (5000, True)])
 def test_forget_and_check_go_on_past_a_deep_run_line(
-    tmp_path: Path, depth: int, removed: bool
+    tmp_path: Path, depth: int, unread: bool
 ) -> None:
     root = tmp_path / "s"
     with FolderStore(root) as store:
@@ -569,10 +649,11 @@ def test_forget_and_check_go_on_past_a_deep_run_line(
         assert check(store).findings  # a finding, not a crash
         done = forget_packet(store, other, "asked")
     assert ("text@1", obj["document"]["text"], "deleted", 1) in done
-    # A line that parses and holds no text keeps the record. A line that cannot be read
-    # removes it.
-    assert (("run@3", obj["run"], "unchecked", 0) in done) is removed
-    assert path_of(root, obj["run"]).exists() is not removed
+    # A line that parses and holds no text keeps the record. A line that cannot be read keeps
+    # it too, and makes it "unchecked".
+    assert (("run@3", obj["run"], "unchecked", 0) in done) is unread
+    assert ("run@3", obj["run"], "deleted", 0) not in done
+    assert path_of(root, obj["run"]).exists()
 
 
 def test_forget_reports_a_run_object_that_it_cannot_find(
