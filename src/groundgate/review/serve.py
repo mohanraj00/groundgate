@@ -409,7 +409,8 @@ class Review:
             "document": doc.document,
             "item": task["item"],
             "question": task["question"],
-            "definition": doc.schema.fields[slot.field].description,
+            # the question of a calibrate task holds the description already
+            "definition": None if label else doc.schema.fields[slot.field].description,
             "parts": task["parts"],
             "choices": choices,
             "answered": mine[-1].get("verdict") if mine else None,

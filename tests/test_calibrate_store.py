@@ -237,6 +237,7 @@ def test_the_review_page_asks_a_blind_calibrate_question(tmp_path: Path) -> None
         view = review.view(tk)
         # the page gets the keys of the field, and no key of the candidate and no gate output
         assert view["label"] == {"question": "key", "keys": KEYS}
+        assert view["definition"] is None
         assert view["question"] == (
             "Which keys of the revenue does the marked value give? It can give none."
         )
