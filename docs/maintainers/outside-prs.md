@@ -35,25 +35,41 @@ for the reason, and add `changes-requested`. If the diff is clean, approve the r
 
 ## 3. The label `maintainer-approved`
 
-The check `outside-pr-paths` fails a fork PR that changes `.github/`, `CHANGELOG.md`, `SPEC.md`,
-`conformance/`, `AGENTS.md` or `CLAUDE.md`. It comes from
-[outside-pr-paths.yml](../../.github/workflows/outside-pr-paths.yml) on `main`, on
-`pull_request_target`, so a fork PR cannot change it. It never checks out the PR code, and
-GitHub does not hold its runs for approval.
+The check `outside-pr-paths` fails a fork PR that changes `.github/`, `.claude/`, `.codex/`,
+`.mcp.json`, `CHANGELOG.md`, `SPEC.md`, `conformance/`, or an `AGENTS.md` or `CLAUDE.md` in any
+directory. It comes from [outside-pr-paths.yml](../../.github/workflows/outside-pr-paths.yml) on
+`main`, on `pull_request_target`, so a fork PR cannot change it. It never checks out the PR code,
+and GitHub does not hold its runs for approval.
 
 - Only the maintainer adds or removes `maintainer-approved`. The job accepts the label only if
-  the login `mohanraj00` added it.
-- The agents use the maintainer's login, so this check cannot tell an agent from the
-  maintainer. That is why AGENTS.md says that an agent never adds or removes the label.
-- The label counts only in the run that adding it starts. Any later event, such as a push, a
-  reopen or a change to another label, checks the files again without it.
-- If the maintainer approved the change on its issue, read the diff, then add the label. After
-  each new push, read the new diff, then remove the label and add it again.
+  the login `mohanraj00` added it. AGENTS.md says that an agent never adds or removes it.
+- The label covers the PR head at the time it is added. If the head changed before the job ran,
+  the job fails.
+- The label counts only in the run that adding it starts. Any other event, such as a push, a
+  reopen, an edit, or a change to another label, checks the files without it, so the check can
+  go red.
+- If the maintainer approved the change on its issue, read the diff, and add
+  `maintainer-approved` last, after all other labels. After any other label change or push,
+  read the diff again, then remove the label and add it again.
+
+Residual risks:
+
+- The agents use the maintainer's login, so the label check cannot tell an agent from the
+  maintainer. Only the rule in AGENTS.md stops an agent. A second account for the agents is a
+  later choice of the maintainer.
+- The label covers the head at the time it is added, not a commit that the maintainer named. If
+  the author pushes after the maintainer's last read and before the label, the label covers a
+  head that the maintainer did not read. Check the head commit on the PR page right before you
+  add the label.
 
 ## 4. Review
 
 AGENTS.md says that the agent that opened a PR asks for its review. No agent opens an outside
 PR, so the milestone runner asks.
+
+Nobody asks an agent to review an outside PR before the maintainer has read the diff for the
+protected paths in section 3. The review agents run on a checkout of the PR, and they read
+`.claude/`, `.codex/`, `.mcp.json` and the `AGENTS.md` and `CLAUDE.md` files from it.
 
 1. The milestone runner asks for the review in a separate comment that holds only:
    `@claude review this PR. Use the Review guidelines in CLAUDE.md.`
