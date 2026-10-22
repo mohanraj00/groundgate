@@ -24,7 +24,8 @@ GitHub holds the CI run of a first-time contributor until a person with write ac
 
 - a change under `.github/`, most of all a workflow;
 - `conftest.py`, a pytest plugin, or a change to the pytest settings in `pyproject.toml`;
-- the build settings in `pyproject.toml`, a build hook, or a new dependency;
+- the build settings in `pyproject.toml`, a build hook, or a new dependency in `pyproject.toml`
+  or `uv.lock`;
 - a script that a test or a CI step calls, such as `conformance/build.py`,
   `examples/irs-590a/build.py` or a `bench/` script;
 - a network call in a test or in a script.
@@ -32,14 +33,24 @@ GitHub holds the CI run of a first-time contributor until a person with write ac
 If one of these is in the diff and the issue does not ask for it, do not approve the run. Ask
 for the reason, and add `changes-requested`. If the diff is clean, approve the run.
 
-The job `outside-pr-paths` fails a fork PR that changes `.github/`, `CHANGELOG.md`, `SPEC.md` or
-`conformance/`. If the maintainer approved the change on its issue, add the label
-`maintainer-approved`. The label reruns the job. If GitHub holds that run, approve it too.
+## 3. The label `maintainer-approved`
 
-Do not trust a green `outside-pr-paths` alone. The job comes from the `ci.yml` of the PR, so a
-PR that edits `ci.yml` can change the job. That is one more reason to read the diff first.
+The check `outside-pr-paths` fails a fork PR that changes `.github/`, `CHANGELOG.md`, `SPEC.md`,
+`conformance/`, `AGENTS.md` or `CLAUDE.md`. It comes from
+[outside-pr-paths.yml](../../.github/workflows/outside-pr-paths.yml) on `main`, on
+`pull_request_target`, so a fork PR cannot change it. It never checks out the PR code, and
+GitHub does not hold its runs for approval.
 
-## 3. Review
+- Only the maintainer adds or removes `maintainer-approved`. The job accepts the label only if
+  the login `mohanraj00` added it.
+- The agents use the maintainer's login, so this check cannot tell an agent from the
+  maintainer. That is why AGENTS.md says that an agent never adds or removes the label.
+- The label counts only in the run that adding it starts. Any later event, such as a push, a
+  reopen or a change to another label, checks the files again without it.
+- If the maintainer approved the change on its issue, read the diff, then add the label. After
+  each new push, read the new diff, then remove the label and add it again.
+
+## 4. Review
 
 AGENTS.md says that the agent that opened a PR asks for its review. No agent opens an outside
 PR, so the milestone runner asks.
@@ -52,7 +63,7 @@ PR, so the milestone runner asks.
 3. After each push that fixes a finding, read the new diff again before you approve the run.
    Then ask for the review again.
 
-## 4. Disposition
+## 5. Disposition
 
 Each outside PR ends with one of these labels:
 

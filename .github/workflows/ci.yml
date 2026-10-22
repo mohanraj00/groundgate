@@ -5,9 +5,7 @@ on:
   # In this repository, which is not a fork, only a push to main runs it. The scope job decides.
   push:
     branches: ["**"]
-  # labeled and unlabeled rerun outside-pr-paths only. The scope job skips the other jobs.
   pull_request:
-    types: [opened, synchronize, reopened, labeled, unlabeled]
 
 jobs:
   # The other jobs need this job. If it is skipped, they are skipped too. A skipped check passes a
@@ -15,10 +13,8 @@ jobs:
   # required name only after this job passed. On a skipped job, GitHub shows the expression text.
   scope:
     if: >-
-      (github.event_name == 'pull_request'
-      && github.event.action != 'labeled' && github.event.action != 'unlabeled')
-      || (github.event_name == 'push'
-      && (github.ref == 'refs/heads/main' || github.event.repository.fork))
+      github.event_name == 'pull_request'
+      || github.ref == 'refs/heads/main' || github.event.repository.fork
     runs-on: ubuntu-latest
     steps:
       - run: echo "Full CI run for the $GITHUB_EVENT_NAME event"
@@ -177,49 +173,3 @@ jobs:
           $run04 groundgate-calibrate report --work bench/sec/work-field --check
           $run04 groundgate-calibrate report --work bench/sec/work-key --check
           $run04 python bench/sec/sec.py results --check
-
-  # A PR from a fork must not change these paths unless the maintainer approved it with the label
-  # maintainer-approved. The job reads the file list from the API and never checks out PR code.
-  # All PR data goes through env vars, never into the command text.
-  outside-pr-paths:
-    name: ${{ github.event_name == 'pull_request' && 'outside-pr-paths' || 'outside-pr-paths-skipped' }}
-    if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
-    permissions:
-      pull-requests: read
-    steps:
-      - name: A PR from a fork changes no protected path without the label maintainer-approved
-        env:
-          GH_TOKEN: ${{ github.token }}
-          HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
-          APPROVED: ${{ contains(github.event.pull_request.labels.*.name, 'maintainer-approved') }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-          CHANGED_FILES: ${{ github.event.pull_request.changed_files }}
-        run: |
-          if [ "$HEAD_REPO" = "$GITHUB_REPOSITORY" ]; then
-            echo "The PR comes from this repository. Nothing to check."
-            exit 0
-          fi
-          if [ "$APPROVED" = "true" ]; then
-            echo "The PR has the label maintainer-approved."
-            exit 0
-          fi
-          files="$RUNNER_TEMP/pr-files.jsonl"
-          # One JSON array for each file: the path, and the old path of a rename. JSON keeps a
-          # newline in a path inside one line, so the log shows it as text and not as a command.
-          gh api --paginate "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/files" \
-            --jq '.[] | [.filename, .previous_filename] | tojson' > "$files"
-          listed=$(wc -l < "$files")
-          if [ "$listed" -lt "$CHANGED_FILES" ]; then
-            echo "::error::The API lists $listed of the $CHANGED_FILES changed files. The maintainer must check this PR and add the label maintainer-approved."
-            exit 1
-          fi
-          protected=$(jq -c '.[] | select(. != null)
-            | select(test("^(\\.github/|CHANGELOG\\.md$|SPEC\\.md$|conformance/)"; "i"))' "$files")
-          if [ -n "$protected" ]; then
-            echo "::error::This PR from a fork changes .github/, CHANGELOG.md, SPEC.md or conformance/. These paths need an issue that the maintainer approved, and the label maintainer-approved on the PR. See CONTRIBUTING.md, Outside pull requests."
-            echo "The protected paths in this PR:"
-            printf '%s\n' "$protected"
-            exit 1
-          fi
-          echo "The PR changes no protected path."
