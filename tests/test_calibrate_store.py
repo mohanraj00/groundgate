@@ -486,6 +486,13 @@ def test_rebuild_leaves_out_a_task_that_its_packet_does_not_give(tmp_path: Path)
         chain = {"sequence", "previous", "entry_sha256"}
         for k in bad_keys:
             s.append(log, {m: v for m, v in record.items() if m not in chain} | {"task": k})
+        # records in the log of ana that must give no label: another reviewer, a record with
+        # too few members, and a verdict that a field task does not take
+        own = {m: v for m, v in record.items() if m not in chain}
+        s.append(log, {"task": tk, "reviewer": "mallory", "verdict": "confirm"})
+        s.append(log, own | {"reviewer": "mallory"})
+        s.append(log, {"task": tk, "reviewer": "ana", "verdict": "wrong"})
+        s.append(log, own | {"verdict": "not_in_document"})
         assert rebuild(s)[1] == "views/calibrate-labels.json"
     view = json.loads((store / "views" / "calibrate-labels.json").read_text())
     assert view["labels"] == [{"task": tk, "reviewer": "ana", "label": True}]

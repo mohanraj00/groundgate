@@ -145,9 +145,9 @@ def label_of(task: Mapping[str, Any], record: Mapping[str, Any]) -> object:
 
 def labels_view(store: Any) -> bytes:
     """The view ``calibrate-labels@1``: for each calibrate task and each reviewer, the label of
-    the last answer. A task that its packet does not give, a log that the store cannot read, or
-    a record that gives no label, is left out: ``groundgate calibrate`` checks each record
-    against its packet before it scores."""
+    the last answer. A task that its packet does not give, a log that the store cannot read, a
+    record that names another reviewer than its log or fails the check of ``resolve``, or a
+    record that gives no label, is left out."""
     import json
 
     from ..store import StoreError, key
@@ -167,51 +167,76 @@ def labels_view(store: Any) -> bytes:
             continue
         if isinstance(task, dict) and task.get("template") in QUESTIONS:
             tasks[k] = task
-    tasks = _from_packets(store, tasks)
+    tasks, packets = _from_packets(store, tasks)
     last: dict[tuple[str, str], object] = {}
     names, _ = store.log_names()
     for log in names:
-        if log[0] != "answers":
+        if log[0] != "answers" or log[1] not in packets:
             continue
         try:
             records = store.read(log)
         except StoreError:
             continue
         for r in records:
-            tk, reviewer = r.get("task"), r.get("reviewer")
-            if not isinstance(tk, str) or tk not in tasks or not isinstance(reviewer, str):
-                continue
-            if tasks[tk]["packet"] != log[1]:
-                continue
-            found = label_of(tasks[tk], r)
+            found = _record_label(r, log[2], packets[log[1]])
             if found is not NO_LABEL:
-                last[tk, reviewer] = found
+                last[r["task"], r["reviewer"]] = found
     rows = [{"task": t, "reviewer": n, "label": v} for (t, n), v in sorted(last.items())]
     return jcs({"format": "calibrate-labels@1", "labels": rows}).encode("utf-8")
 
 
-def _from_packets(store: Any, tasks: Mapping[str, Mapping[str, Any]]) -> dict[str, Any]:
-    """The tasks that their packet gives with the same bytes. A task object is untrusted local
-    data, so a task with a bad packet member, or a packet that the store cannot read or that
+def _record_label(record: Any, log_reviewer: str, packet: _Packet) -> object:
+    """The label of one record of an answer log, or ``NO_LABEL``. The record must name the
+    reviewer of its log and pass the check of ``resolve`` against its packet. A record that
+    fails is left out."""
+    from ..store import reviewer_key
+    from .resolve import AnswerError, _check
+
+    schema, ids, own = packet
+    if not isinstance(record, Mapping):
+        return NO_LABEL
+    name, tk = record.get("reviewer"), record.get("task")
+    if not isinstance(name, str) or not isinstance(tk, str) or tk not in own:
+        return NO_LABEL  # a review answer, or a task that the packet does not give
+    if reviewer_key(name) != log_reviewer:
+        return NO_LABEL
+    try:
+        c = _check(name, record, {}, schema, ids, labels=own)
+    except (AnswerError, KeyError, TypeError, ValueError):
+        return NO_LABEL
+    return label_of(c.task, record)
+
+
+_Packet = tuple[Schema, list[object], dict[str, tuple[Slot, dict[str, Any]]]]
+
+
+def _from_packets(
+    store: Any, tasks: Mapping[str, Mapping[str, Any]]
+) -> tuple[dict[str, Any], dict[str, _Packet]]:
+    """The tasks that their packet gives with the same bytes, and for each such packet its
+    schema, its candidate ids and its calibrate tasks. A task object is untrusted local data,
+    so a task with a bad packet member, or a packet that the store cannot read or that
     ``verify`` refuses, is left out."""
     from ..store import StoreError
     from .tasks import checked_packet
 
-    own: dict[str, set[str]] = {}
+    seen: set[str] = set()
+    packets: dict[str, _Packet] = {}
     out: dict[str, Any] = {}
     for k, task in tasks.items():
         pk = task.get("packet")
         if not isinstance(pk, str):
             continue
-        if pk not in own:
-            own[pk] = set()
+        if pk not in seen:
+            seen.add(pk)
             try:
                 packet, schema, layout, problems = checked_packet(store, pk)
                 if not problems and schema is not None:
-                    own[pk] = set(label_tasks(pk, packet.receipt, packet.text, schema,
-                                              layout=layout))  # fmt: skip
+                    own = label_tasks(pk, packet.receipt, packet.text, schema, layout=layout)
+                    ids = [c.get("id") for c in packet.candidates if isinstance(c, Mapping)]
+                    packets[pk] = (schema, ids, own)
             except (StoreError, PacketError, ValueError, KeyError, TypeError):
                 pass
-        if k in own[pk]:
+        if pk in packets and k in packets[pk][2]:
             out[k] = task
-    return out
+    return out, packets

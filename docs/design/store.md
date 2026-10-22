@@ -199,8 +199,9 @@ resolution of each packet, the labels for calibrate and the measures.
 reader and options to its readings, and it leaves out a reading whose text is deleted. It also
 builds the calibrate labels, as `views/calibrate-labels.json` (`calibrate-labels@1`, #406). For
 each calibrate task (review.md §11) and each reviewer, it gives the label of the last answer.
-It leaves out a task that its packet does not give with the same bytes, and a record that gives
-no label.
+It leaves out a task that its packet does not give with the same bytes. It also leaves out a
+record that names another reviewer than its log, that fails the check of `review resolve`, or
+that gives no label.
 `groundgate calibrate` does not read this file: it reads the answer logs, checks each record
 against its packet, and stops at the log heads of a judge run. The other three views come with
 their issues (#432).
