@@ -59,6 +59,11 @@ def label_task(
         raise PacketError(f"decision {decision} has no value in the document")
     if question == "key" and field.keys is None:
         raise PacketError(f"the field {name} has no keys")
+    # the predicate of questions.sample: a task is only for a decision that the sample takes
+    if question == "key" and "KEY_NOT_AT_VALUE" not in (d.get("codes") or ()):
+        raise PacketError(f"decision {decision} has no KEY_NOT_AT_VALUE: it is not a key item")
+    if question == "field" and d.get("outcome") != "admitted":
+        raise PacketError(f"decision {decision} is not admitted: it is not a field item")
     texts = _texts(text, references)
     if field.type in ("number", "integer"):
         item = "number"
@@ -68,15 +73,17 @@ def label_task(
         shown = _string(d["value"], item)
     key = d.get("key") if isinstance(d.get("key"), str) and field.keys is not None else None
     words = normalize_ws(name.replace("_", " "))
+    # the description in the packet schema, as the label page and the judge prompt show it
+    means = f" The field means: {field.description}" if field.description else ""
     if question == "field":
-        asked = f"Is {shown} the {words}?"
+        asked = f"Is {shown} the {words}?{means}"
         parts = [*_PARTS[item], "field"]
         choices = [
             {"decision": decision, "value": d["value"], "unit": d.get("unit"), "shown": shown,
              "evidence": {"start": span[0], "end": span[1]}}
         ]  # fmt: skip
     else:
-        asked = f"Which keys of the {words} does the marked value give? It can give none."
+        asked = f"Which keys of the {words} does the marked value give? It can give none.{means}"
         parts = ["field", "key"]
         choices = []
     return {

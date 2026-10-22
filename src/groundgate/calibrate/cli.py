@@ -107,7 +107,13 @@ def sample(w: Work, docs: Path, cands: Path, schema_path: Path, args: argparse.N
     if not items:
         raise SystemExit(f"no {args.question} items in these documents; there is nothing to label")
     if args.store is not None:
-        w.write("tasks.json", put_tasks(args.store, schema, found_by_doc, args.question))
+        # the packet schema holds each description, so a stored task asks what the page asks
+        described = {**schema, "fields": {
+            name: {**f, "description": config["descriptions"][name]}
+            if config["descriptions"].get(name) else f
+            for name, f in schema["fields"].items()
+        }}  # fmt: skip
+        w.write("tasks.json", put_tasks(args.store, described, found_by_doc, args.question))
     w.write("config.json", config)
     w.write("items.json", items)
     print(f"{len(items)} items in {len({it['doc'] for it in items})} documents")

@@ -117,19 +117,39 @@ async function open(k) {
 
 // A calibrate label (review.md section 11): a blind question with no correction
 
-function drawLabel() {
+function drawLabel(focus) {
   const help = task.label.question === "field"
     ? "Press y if it is, w if it is not, u if you are not sure."
-    : "Press a number to mark each key that the value gives, then Enter. " +
+    : "Click a key, or press its number, to mark each key that the value gives, then Enter. " +
+      "Tab to a key and press Space to mark it. " +
       "Enter with no key marked says that it gives none. Press u if you are not sure.";
   $("parts").textContent += " " + help;
   if (task.label.question !== "key") return;
   const list = $("choices");
   task.label.keys.forEach((k, i) => {
     const li = el("li", st.picked.includes(k) ? "picked" : "", k);
-    li.prepend(el("kbd", "", String(i + 1)));
+    if (i < 9) li.prepend(el("kbd", "", String(i + 1)));
+    li.tabIndex = 0;
+    li.setAttribute("role", "checkbox");
+    li.setAttribute("aria-checked", String(st.picked.includes(k)));
+    li.addEventListener("click", () => pickKey(i));
+    li.addEventListener("keydown", (e) => {
+      if (e.key !== " ") return;
+      e.preventDefault();
+      e.stopPropagation();
+      pickKey(i);
+    });
     list.append(li);
   });
+  if (focus !== undefined) list.children[focus].focus();
+}
+
+function pickKey(i) {
+  const key = task.label.keys[i];
+  st.picked = st.picked.includes(key) ? st.picked.filter((x) => x !== key) : [...st.picked, key];
+  $("choices").replaceChildren();
+  $("parts").textContent = "Check each part: " + task.parts.join(", ") + ".";
+  drawLabel(i);
 }
 
 function labelKey(k) {
@@ -139,11 +159,7 @@ function labelKey(k) {
     if (k === "y") save("confirm", {});
     else if (k === "w") save("wrong", {});
   } else if (/^[1-9]$/.test(k) && Number(k) <= keys.length) {
-    const key = keys[Number(k) - 1];
-    st.picked = st.picked.includes(key) ? st.picked.filter((x) => x !== key) : [...st.picked, key];
-    $("choices").replaceChildren();
-    $("parts").textContent = "Check each part: " + task.parts.join(", ") + ".";
-    drawLabel();
+    pickKey(Number(k) - 1);
   } else if (k === "Enter") {
     save("confirm", { field_keys: keys.filter((x) => st.picked.includes(x)) });
   }

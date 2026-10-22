@@ -321,6 +321,94 @@ def test_a_label_task_needs_a_value_in_the_document() -> None:
         label_task("sha256:" + "0" * 64, receipt, TEXT, Schema.from_dict(SCHEMA), 0, "other")
 
 
+def test_a_label_task_is_only_for_a_decision_that_the_sample_takes(tmp_path: Path) -> None:
+    import groundgate as gg
+    from groundgate.model import PacketError, Schema
+    from groundgate.review.labels import label_tasks
+    from groundgate.store.packets import admit_packet
+
+    _, c, _ = inputs(tmp_path / "in", 1)
+    cands = json.loads((c / "doc0.json").read_text())
+    receipt = gg.admit(TEXT, SCHEMA, cands, None).to_dict()
+    # decision 0 is flagged KEY_NOT_AT_VALUE, decision 1 is admitted with a key and no flag
+    assert [(d["outcome"], d["codes"]) for d in receipt["decisions"]] == [
+        ("needs_verification", ["KEY_NOT_AT_VALUE"]), ("admitted", []),
+    ]  # fmt: skip
+    schema, pk = Schema.from_dict(SCHEMA), "sha256:" + "0" * 64
+    with pytest.raises(PacketError, match="not a key item"):
+        label_task(pk, receipt, TEXT, schema, 1, "key")
+    with pytest.raises(PacketError, match="not a field item"):
+        label_task(pk, receipt, TEXT, schema, 0, "field")
+    with FolderStore(tmp_path / "store") as s:
+        k, _ = admit_packet(s, TEXT, SCHEMA, cands, None, "doc0")
+        given = gg.admit(TEXT, SCHEMA, cands, None).to_dict()
+        # the tasks that the old code made for the two decisions: the task text does not hold
+        # the outcome or the codes, so a receipt that passes the predicate gives the same task
+        loose = json.loads(json.dumps(given))
+        for d in loose["decisions"]:
+            d["outcome"], d["codes"] = "admitted", ["KEY_NOT_AT_VALUE"]
+        made = {(q, i): label_task(k, loose, TEXT, schema, i, q) for q in QUESTIONS.values()
+                for i in (0, 1)}  # fmt: skip
+        from groundgate.canonical import jcs
+        from groundgate.store import key as store_key
+
+        handmade = {store_key("task@1", jcs(made[q]).encode()) for q in (("key", 1), ("field", 0))}
+        for t in made.values():
+            s.put("task@1", jcs(t).encode())
+        assert set(label_tasks(k, given, TEXT, schema)) == {
+            store_key("task@1", jcs(made[q]).encode()) for q in (("key", 0), ("field", 1))
+        }
+        review = Review(s, "ana")
+        httpd, url = serve.server(review, 0)
+        with running(httpd, url) as call:
+            for tk in handmade:
+                assert call("GET", f"/api/task/{tk}")[0] == 404
+                assert call("POST", "/api/answer", answer(tk, "unsure"))[0] == 404
+            good = store_key("task@1", jcs(made["field", 1]).encode())
+            assert call("POST", "/api/answer", answer(good, "unsure"))[0] == 200
+        (record,) = s.read(("answers", k, reviewer_key("ana")))
+        chain = {"sequence", "previous", "entry_sha256"}
+        for tk in sorted(handmade):
+            bad = {m: v for m, v in record.items() if m not in chain} | {"task": tk}
+            s.append(("answers", k, reviewer_key("ana")), bad)
+        from groundgate.review.resolve import AnswerError
+
+        with pytest.raises(AnswerError, match="not a task of a slot of this packet"):
+            write_resolution(s, k, None, ["ana"])
+
+
+def test_a_stored_task_asks_with_the_description_of_the_field(tmp_path: Path) -> None:
+    d, c, s = inputs(tmp_path / "in", 1)
+    described = {
+        "fields": {
+            "revenue": {**SCHEMA["fields"]["revenue"], "description": "the total sales of the year"}
+        }
+    }
+    s.write_text(json.dumps(described))
+    over = tmp_path / "over.json"
+    over.write_text(json.dumps({"revenue": "the net sales of the fiscal year"}))
+    asked = {}
+    for name, more in (("schema", []), ("override", ["--descriptions", str(over)])):
+        store, work = tmp_path / f"store-{name}", tmp_path / f"work-{name}"
+        for question in ("field", "key"):
+            cli.main(["sample", "--work", str(work / question), "--docs", str(d),
+                      "--candidates", str(c), "--schema", str(s), "--question", question,
+                      "--store", str(store), *more])  # fmt: skip
+            (item,) = json.loads((work / question / "tasks.json").read_text()).values()
+            with FolderStore(store) as st:
+                asked[name, question] = json.loads(st.get("task@1", item["task"]))["question"]
+    shown = "5,200 with no unit (written 5,200, not scaled, positive)"
+    start = f"Is {shown} the revenue? The field means: "
+    assert asked == {
+        ("schema", "field"): start + "the total sales of the year",
+        ("schema", "key"): "Which keys of the revenue does the marked value give? It can give "
+        "none. The field means: the total sales of the year",
+        ("override", "field"): start + "the net sales of the fiscal year",
+        ("override", "key"): "Which keys of the revenue does the marked value give? It can give "
+        "none. The field means: the net sales of the fiscal year",
+    }
+
+
 def test_answer_2_adds_wrong_and_field_keys_to_answer_1() -> None:
     one, two = format_schema("answer@1"), format_schema("answer@2")
     assert set(two["required"]) - set(one["required"]) == {"field_keys"}

@@ -460,7 +460,10 @@ extra measure:
      same candidates as the sample. Thus each item is one decision of the receipt.
   2. Each item becomes one `task@1` with the template `calibrate_field@1` or
      `calibrate_key@1`. The mode is `audit`, and the task has no code. The slot holds the one
-     decision of the item. A field task has the value as its one choice. A key task has no
+     decision of the item. A key task is only for a decision with `KEY_NOT_AT_VALUE`, and a
+     field task is only for an admitted decision, as in the sample. The packet schema holds the
+     description of each field, from the schema or from `--descriptions`, and the question of
+     the task shows it. A field task has the value as its one choice. A key task has no
      choice, so the page does not show the key of the candidate. `tasks.json` in the work
      folder maps each item id to its packet and its task.
   3. A label is an `answer@2`. For the field question, `confirm` is true, `wrong` is false, and

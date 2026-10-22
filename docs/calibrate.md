@@ -45,8 +45,9 @@ groundgate calibrate report --work W [--store DIR]  # REPORT.md, report.json
   ([review.md §11](design/review.md#11-fit-with-other-work)). Then `label --store DIR --reviewer
   NAME` opens the review page of `groundgate review serve` on these tasks, and each label is an
   `answer@2` in the answer log of the reviewer. Press `y` (yes), `w` (wrong) or `u` (not sure)
-  for the field question. For the key question, press a number for each key that the value
-  gives, then `Enter`, or `u`. `ask --store DIR --reviewer NAME` reads the labels from the
+  for the field question. For the key question, click each key that the value gives, or press
+  its number, then press `Enter`. You can also go to a key with `Tab` and press `Space`. Press
+  `u` if you are not sure. Each question shows the description of the field. `ask --store DIR --reviewer NAME` reads the labels from the
   answer logs and keeps the head of each log. `report --store DIR` reads the logs only up to
   those heads, so a later answer does not change the report. Without `--store`, `W/labels.json`
   holds the labels, as in 0.10.
