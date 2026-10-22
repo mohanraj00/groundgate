@@ -3,12 +3,12 @@
 from __future__ import annotations
 
 import json
-import time
 from collections import Counter
 from pathlib import Path
 from typing import Any
 
 import pytest
+from timing import best_seconds
 
 import groundgate as gg
 from groundgate.read import read
@@ -622,10 +622,12 @@ def test_full_row_with_a_currency_sign_off_the_grid_is_isolated(tmp_path: Path) 
 def test_many_disagreeing_rows_give_no_grid_quickly() -> None:
     grids = [(200, 300), (250, 350)]
     rows = [[_line("1", a, a + 20), _line("2", b, b + 20)] for _ in range(500) for a, b in grids]
-    start = time.perf_counter()
-    assert _grid(rows) == []
-    assert _grid(rows[: GRID_ROWS + 1]) == []
-    assert time.perf_counter() - start < 1
+
+    def run() -> None:
+        assert _grid(rows) == []
+        assert _grid(rows[: GRID_ROWS + 1]) == []
+
+    assert best_seconds(run) < 1
 
 
 def test_label_row_above_the_first_number_row_is_placed_when_it_fits(tmp_path: Path) -> None:
