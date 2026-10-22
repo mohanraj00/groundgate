@@ -271,6 +271,43 @@ def ask(w: Work, judge: str, store: Path | None = None, reviewer: str | None = N
     digest = hashlib.sha256(json.dumps(ps).encode()).hexdigest()
     if digest != w.read("prompts.json")["prompts_sha256"]:
         raise SystemExit("the documents, items or config changed after the split")
+    # the partial file freezes the labels (label and label --store refuse each write while it is
+    # there), so it is written before the label snapshot and stays until the run ends
+    partial = w.path / f".answers-{judge}.partial.json"
+    fresh = not partial.exists()
+    if fresh:
+        partial.write_text(json.dumps({"meta": {"pending": True}, "answers": {}}), "utf-8")
+    try:
+        jd, record, answers = _ask_start(w, judge, ps, digest, partial, fresh, store, reviewer)
+    except BaseException:
+        if fresh:
+            partial.unlink(missing_ok=True)  # no judge was asked, so the labels are open again
+        raise
+    question = w.config["question"]
+    for n, (iid, st, qs) in enumerate(ps, 1):
+        if iid in answers:
+            continue
+        answers[iid] = q.keep(question, call(jd, st, qs, iid))
+        partial.write_text(json.dumps({"meta": record, "answers": answers}), encoding="utf-8")
+        print(f"{n}/{len(ps)}", end="\r", flush=True)
+    w.write(target.name, {"meta": {**record, "run": datetime.date.today().isoformat()},
+                          "answers": answers})  # fmt: skip
+    partial.unlink(missing_ok=True)
+    print(f"\nwrote {target.name}")
+
+
+def _ask_start(
+    w: Work,
+    judge: str,
+    ps: list[tuple[str, str, dict[str, Any]]],
+    digest: str,
+    partial: Path,
+    fresh: bool,
+    store: Path | None,
+    reviewer: str | None,
+) -> tuple[judges.Judge, dict[str, Any], dict[str, Any]]:
+    """Take the label snapshot while the partial file freezes the labels, check it, and write
+    the meta of the run to the partial file before the first judge call."""
     # every item is labeled before any judge answers, and those labels are the ones scored
     labels = w.read("labels.json", {})
     source: dict[str, Any] = {}
@@ -280,6 +317,8 @@ def ask(w: Work, judge: str, store: Path | None = None, reviewer: str | None = N
     # every judge of the folder scores the same labels from the same source: a run without a
     # store has no labels_from, and a run with a store keeps the reviewer and the log heads
     for path in sorted([*w.path.glob("answers-*.json"), *w.path.glob(".answers-*.partial.json")]):
+        if fresh and path == partial:
+            continue
         given = json.loads(path.read_text(encoding="utf-8"))["meta"].get("labels_from")
         if given != source.get("labels_from"):
             raise SystemExit(
@@ -298,24 +337,14 @@ def ask(w: Work, judge: str, store: Path | None = None, reviewer: str | None = N
         "scoring_sha256": scoring_sha256(w),
         **source,
     }
-    partial = w.path / f".answers-{judge}.partial.json"
     answers: dict[str, Any] = {}
-    if partial.exists():
+    if not fresh:
         saved = json.loads(partial.read_text(encoding="utf-8"))
         if saved["meta"] != record:
             raise SystemExit(f"{partial.name} is from another run; delete it")
         answers = saved["answers"]
-    question = w.config["question"]
-    for n, (iid, st, qs) in enumerate(ps, 1):
-        if iid in answers:
-            continue
-        answers[iid] = q.keep(question, call(jd, st, qs, iid))
-        partial.write_text(json.dumps({"meta": record, "answers": answers}), encoding="utf-8")
-        print(f"{n}/{len(ps)}", end="\r", flush=True)
-    w.write(target.name, {"meta": {**record, "run": datetime.date.today().isoformat()},
-                          "answers": answers})  # fmt: skip
-    partial.unlink(missing_ok=True)
-    print(f"\nwrote {target.name}")
+    partial.write_text(json.dumps({"meta": record, "answers": answers}), encoding="utf-8")
+    return jd, record, answers
 
 
 def call(jd: judges.Judge, st: str, qs: dict[str, Any], what: str) -> dict[str, Any]:

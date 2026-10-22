@@ -546,3 +546,59 @@ def test_one_folder_never_mixes_label_sources(
     with pytest.raises(SystemExit, match="labels from another source"):
         cli.main(["ask", "--work", str(work), "--judge", "fake2", *then])
     assert not list(work.glob("*answers-fake2*"))
+
+
+def test_ask_freezes_the_labels_before_its_snapshot(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    from groundgate.review.serve import Refused
+
+    store = tmp_path / "store"
+    work = sampled(tmp_path, "field", store)
+    w, partial = cli.Work(work), work / ".answers-fake.partial.json"
+    items = json.loads((work / "items.json").read_text())
+    tasks = json.loads((work / "tasks.json").read_text())
+    with FolderStore(store) as s:
+        for it in items[1:]:
+            Review(s, "ana").answer(answer(tasks[it["id"]]["task"], "confirm"))
+    monkeypatch.setitem(judges.BUILT_IN, "fake", fake({"field": {"noul": 0.2}}))
+    ask = [
+        "ask",
+        "--work",
+        str(work),
+        "--judge",
+        "fake",
+        "--store",
+        str(store),
+        "--reviewer",
+        "ana",
+    ]
+    # an ask that stops before the first judge call opens the labels again
+    with pytest.raises(SystemExit, match="not labeled yet"):
+        cli.main(ask)
+    assert not partial.exists()
+    with FolderStore(store) as s:
+        Review(s, "ana").answer(answer(tasks[items[0]["id"]]["task"], "confirm"))
+    snapshot, seen = cli.stored_labels, []
+
+    def frozen_snapshot(*a: Any, **k: Any) -> Any:
+        # the marker is there before the snapshot, so a label write now is refused
+        assert partial.exists()
+        with FolderStore(store) as s, pytest.raises(Refused, match="frozen"):
+            cli.label_review(w, s, "ana").answer(answer(tasks[items[0]["id"]]["task"], "unsure"))
+        return snapshot(*a, **k)
+
+    class Judge(fake({"field": {"noul": 0.2}})):  # type: ignore[misc]
+        def ask(self, state: str, qs: dict[str, Any]) -> dict[str, Any]:
+            # the marker holds the meta of the run before the first judge call
+            seen.append(json.loads(partial.read_text())["meta"].get("labels_from"))
+            return super().ask(state, qs)
+
+    monkeypatch.setattr(cli, "stored_labels", frozen_snapshot)
+    monkeypatch.setitem(judges.BUILT_IN, "fake", Judge)
+    cli.main(ask)
+    assert seen and all(x is not None and x["reviewer"] == "ana" for x in seen)
+    assert not partial.exists() and (work / "answers-fake.json").exists()
+    assert cli.stored_labels is frozen_snapshot
+    labels, _ = snapshot(w, store, "ana")
+    assert set(labels.values()) == {True}
