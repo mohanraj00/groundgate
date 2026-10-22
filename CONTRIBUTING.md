@@ -37,7 +37,7 @@ and these steps make it fast:
 5. Do not change `.github/`, `SPEC.md`, `conformance/`, `AGENTS.md` or `CLAUDE.md` unless the
    maintainer approved it on an issue. The check `outside-pr-paths` fails a fork PR that changes
    these paths or `CHANGELOG.md`, until I add the label `maintainer-approved`. After each new
-   push, I read the diff and add the label again.
+   push, I read the new diff, then remove the label and add it again.
 
 What happens next is in [docs/maintainers/outside-prs.md](docs/maintainers/outside-prs.md): who
 reviews the PR, the labels, and when an open PR closes.

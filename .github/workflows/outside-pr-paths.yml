@@ -2,6 +2,8 @@ name: Outside PR paths
 
 # A PR from a fork must not change these paths unless the maintainer approved it with the label
 # maintainer-approved: .github/, CHANGELOG.md, SPEC.md, conformance/, AGENTS.md and CLAUDE.md.
+# If you change this list, change it in the pattern, the error text, CONTRIBUTING.md and
+# docs/maintainers/outside-prs.md too.
 #
 # This workflow uses pull_request_target, so it always comes from main, and a fork PR cannot edit
 # it. pull_request_target runs in the context of this repository. Thus:
