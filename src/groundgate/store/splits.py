@@ -17,7 +17,7 @@ from __future__ import annotations
 from collections.abc import Mapping, Sequence
 from typing import Any
 
-from . import KEY, Store, set_key
+from . import KEY, FolderStore, Store, set_key
 from .packets import printable
 
 __all__ = ["read_split", "split_view", "write_split"]
@@ -54,9 +54,14 @@ def write_split(store: Store, set_name: str, splits: Mapping[str, str]) -> int:
     """Add a record to the splits log of ``set_name`` for each document of ``splits`` (a
     document key to its split) that the log does not name, in key order. Return the number
     of records added. If the log already gives a document another split, raise
-    ``ValueError`` and add no record. The check comes before the lock of the log: if another
-    writer appends another split for a document at the same time, both records go in. Then
-    the view fails, and this call raises ``ValueError`` after its records are added."""
+    ``ValueError`` and add no record.
+
+    With a ``FolderStore``, the call takes the lock of the log before it reads the log, so a
+    second writer stops with ``Locked`` before it appends. The lock stays until the store
+    closes. Another store has no lock operation (§6): there the check comes before the lock,
+    and if another writer appends another split for a document at the same time, both records
+    go in. Then the view fails, and this call raises ``ValueError`` after its records are
+    added."""
     if not isinstance(set_name, str) or not set_name.strip():
         raise ValueError("a set name must have a character that is not a space")
     for document, split in splits.items():
@@ -64,6 +69,8 @@ def write_split(store: Store, set_name: str, splits: Mapping[str, str]) -> int:
             raise ValueError(f"{printable(document)} is not a document key")
         if not isinstance(split, str) or not split:
             raise ValueError(f"the split of {document} is not a name")
+    if splits and isinstance(store, FolderStore):
+        store.take(("splits", set_key(set_name)))
     known = read_split(store, set_name)
     for document in sorted(splits):
         if known.get(document, splits[document]) != splits[document]:
@@ -78,7 +85,7 @@ def write_split(store: Store, set_name: str, splits: Mapping[str, str]) -> int:
             store.append(("splits", set_key(set_name)), record)
             added += 1
     if added:
-        # The first append takes the lock of the log. A writer that appended before it can
-        # have given a document another split: then the view fails here.
+        # A store with no lock takes it at the first append. A writer that appended before it
+        # can have given a document another split: then the view fails here.
         read_split(store, set_name)
     return added
