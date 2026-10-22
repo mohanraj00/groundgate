@@ -339,6 +339,7 @@ def test_lines() -> None:
             {**slot, "key": "2025\x1b[2J", "status": "open", "value": None, "unit": None},
             {**slot, "field": "tenant", "decisions": [1], "unit": None, "value": "A\nB"},
             {**slot, "field": "tenant", "decisions": [2], "status": "disputed", "value": None},
+            {**slot, "field": "note", "value": "\U000e0001\u200b1", "unit": None},
         ]
     }
     assert lines(resolution) == [
@@ -346,6 +347,7 @@ def test_lines() -> None:
         "rent [2025\\u001b[2J]: no value (open: no answer settles the task yet)",
         "tenant #1: A\\u000aB (chosen)",
         "tenant #2: no value (disputed: the reviewers do not agree)",
+        "note: \\U000e0001\\u200b1 (chosen)",  # one fixed length on each side of U+FFFF (#448)
     ]
 
 
@@ -398,11 +400,11 @@ def test_an_error_of_admit_shows_no_control_character(tmp_path: Path) -> None:
         logs = {"ana": store.read(log)}
 
     def run(candidates: list[Any], judgments: list[Any] | None) -> Any:
-        raise PacketError("candidate key '\x1b[2J' is invalid")
+        raise PacketError("candidate key '\x1b[2J\U0010ffff' is invalid")
 
     with pytest.raises(AnswerError) as info:
         resolve(k, packet, schema, policy(), logs, correct=run)
-    assert "\x1b" not in str(info.value) and "\\u001b[2J" in str(info.value)
+    assert "\x1b" not in str(info.value) and "\\u001b[2J\\U0010ffff'" in str(info.value)
     assert "\n" not in str(AnswerError("a\nb", 1, "line\none"))
 
 
