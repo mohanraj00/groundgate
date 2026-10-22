@@ -6,7 +6,7 @@ set-2 fields that the text states as that number.
     uv run python bench/aviation/aviation.py pick           # sources.json, selection-log.json
     uv run python bench/fetch.py --set bench/aviation       # download, verify, write docs/
     uv run python bench/aviation/aviation.py items          # write items.json from docs/
-    uv run python bench/aviation/aviation.py web            # label at http://127.0.0.1:8772
+    uv run python bench/aviation/aviation.py web            # label at port 8772
 
 Since #230, groundgate writes a PDF table as rows with tabs, so its PDF text differs from the
 committed text. Run pick, fetch.py, items and web on the 0.7.0 wheel, which writes it:

@@ -1,6 +1,6 @@
 """The label tool of the fields set in a browser, with each label shown as its SPL formats it.
 
-    uv run python bench/fields/fields.py web     # then open http://127.0.0.1:8770
+    uv run python bench/fields/fields.py web     # then open the start URL it prints (port 8770)
 
 The page shows sections 2 and 3 of the pinned label with its headings, lists and tables, and
 marks the dose to label. It saves to labels.json in the same format as the terminal tool. Like
@@ -15,13 +15,13 @@ import json
 import sys
 import xml.etree.ElementTree as ET
 from collections.abc import Callable
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
 
 HERE = Path(__file__).parent
 sys.path[:0] = [str(HERE.parent)]
 
+import localweb  # noqa: E402  (bench/localweb.py)
 from fetch import HL7, download  # noqa: E402  (bench/fetch.py)
 
 PORT = 8770
@@ -152,7 +152,7 @@ def serve(
         "pdf": pdf is not None,
     }
 
-    class Handler(BaseHTTPRequestHandler):
+    class Handler(localweb.LocalHandler):
         def send(self, body: str, kind: str = "application/json", code: int = 200) -> None:
             raw = body.encode("utf-8")
             self.send_response(code)
@@ -197,5 +197,4 @@ def serve(
         def log_message(self, *args: Any) -> None:
             pass
 
-    print(f"Open http://127.0.0.1:{port} and press Ctrl-C here when you finish.")
-    ThreadingHTTPServer(("127.0.0.1", port), Handler).serve_forever()
+    localweb.serve(Handler, port, f"{len(items)} items")

@@ -4,7 +4,7 @@ ships only if this measure says so. The plans are on #249 and #250, made before 
 set.
 
     uv run python bench/acfr2/measure.py decide          # each spec of SPECS, in process
-    uv run python bench/acfr2/measure.py web             # blind labels, http://127.0.0.1:8780
+    uv run python bench/acfr2/measure.py web             # blind labels, port 8780
     uv run python bench/acfr2/measure.py results [--check]
 
 A person labels every value that a decision admits, and every value whose outcome differs
@@ -25,11 +25,13 @@ import itertools
 import json
 import sys
 import threading
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
 
 HERE = Path(__file__).parent
+sys.path.append(str(HERE.parent))  # bench/, for localweb
+import localweb  # noqa: E402  (bench/localweb.py)
+
 RUNS = ("claude-haiku-5-5", "gpt-6-luna")
 SPECS = ("0.8", "0.8 #249", "0.8 #250")
 # the functions that turn each rule off when they return False
@@ -210,7 +212,7 @@ def serve(port: int) -> None:
     page = (HERE / "web.html").read_bytes()
     lock = threading.Lock()
 
-    class Handler(BaseHTTPRequestHandler):
+    class Handler(localweb.LocalHandler):
         def log_message(self, *args: Any) -> None:
             pass
 
@@ -251,9 +253,7 @@ def serve(port: int) -> None:
                 tmp.replace(path)  # a reader never sees half a file
             self.send(200, b"{}", "application/json")
 
-    server = ThreadingHTTPServer(("127.0.0.1", port), Handler)
-    print(f"{len(items)} items; open http://127.0.0.1:{port} (Ctrl-C to stop)")
-    server.serve_forever()
+    localweb.serve(Handler, port, f"{len(items)} items")
 
 
 # ------------------------------------------------------------------------------------ results

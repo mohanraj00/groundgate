@@ -7,7 +7,7 @@ then the messages. Its new candidates are decided alone, as in docs/howto/feedba
     uv run python bench/sec3/feedback.py ask --model gpt-6-luna
     uv run --isolated --no-project --no-sources --python 3.12 --with groundgate==0.6.1 \
         python bench/sec3/feedback.py decide            # spec 0.6, on the released wheel
-    uv run python bench/sec3/feedback.py web            # blind labels, http://127.0.0.1:8775
+    uv run python bench/sec3/feedback.py web            # blind labels, port 8775
     uv run python bench/sec3/feedback.py results [--check]
 
 The CLIs run as in run.py, with the same flags, isolation and default effort. The new replies

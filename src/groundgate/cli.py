@@ -574,13 +574,14 @@ def _from_store(args: argparse.Namespace) -> int:
 
 
 def _review_tasks(args: argparse.Namespace) -> int:
+    from .escape import escape
     from .review.tasks import write_tasks
 
     policy = _json(args.policy) if args.policy else None
     with _store(args.store, make=False) as store:
         written = write_tasks(store, args.packet, policy)
     for problem in written.problems:  # a problem can quote store data: escape each control
-        shown = "".join(c if c.isprintable() else f"\\u{ord(c):04x}" for c in problem)
+        shown = escape(problem)
         print(f"mismatch: {shown}", file=sys.stderr)
     if written.problems:
         print("groundgate: no task for a receipt that does not match", file=sys.stderr)
@@ -628,13 +629,14 @@ def _review_measures(args: argparse.Namespace) -> int:
 
 
 def _review_resolve(args: argparse.Namespace) -> int:
+    from .escape import escape
     from .review.resolve import lines, write_resolution
 
     policy = _json(args.policy) if args.policy else None
     with _store(args.store, make=False) as store:
         resolved = write_resolution(store, args.packet, policy, args.reviewer)
     for problem in resolved.problems:  # a problem can quote store data: escape each control
-        shown = "".join(c if c.isprintable() else f"\\u{ord(c):04x}" for c in problem)
+        shown = escape(problem)
         print(f"mismatch: {shown}", file=sys.stderr)
     if resolved.resolution is None:
         print("groundgate: no resolution for a receipt that does not match", file=sys.stderr)
