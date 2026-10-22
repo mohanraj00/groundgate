@@ -7,6 +7,12 @@ on:
     branches: ["**"]
   pull_request:
 
+# One group for each PR, and one for each commit on a push. A new PR run cancels the old one. Each
+# push has its own group, so no push run waits or is cancelled, and each commit on main gets a result.
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   # The other jobs need this job. If it is skipped, they are skipped too. A skipped check passes a
   # required check of the same name, so the name of each job is an expression. It gives the
