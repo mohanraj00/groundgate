@@ -34,9 +34,9 @@ and these steps make it fast:
    fork. Link the green run in the PR body.
 4. Do not edit `CHANGELOG.md`. Put the changelog line in a `## Changelog` section of the PR body
    instead, or write "none" if users will not notice the change.
-5. Do not change `.github/`, `.claude/`, `.codex/`, `.mcp.json`, `SPEC.md`, `conformance/`, or
-   an `AGENTS.md` or `CLAUDE.md` in any directory, unless the maintainer approved it on an issue.
-   The check `outside-pr-paths` fails a fork PR that changes these paths or `CHANGELOG.md`, until
+5. Do not change `.github/`, `SPEC.md` or `conformance/`, or a `.claude/`, `.codex/`,
+   `.mcp.json`, `AGENTS.md` or `CLAUDE.md` (also the `.local.md` and `.override.md` forms) in any
+   directory, unless the maintainer approved it on an issue. The check `outside-pr-paths` fails a fork PR that changes these paths or `CHANGELOG.md`, until
    I add the label `maintainer-approved`. After each new push, I read the new diff, then remove
    the label and add it again.
 

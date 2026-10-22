@@ -35,12 +35,15 @@ for the reason, and add `changes-requested`. If the diff is clean, approve the r
 
 ## 3. The label `maintainer-approved`
 
-The check `outside-pr-paths` fails a fork PR that changes `.github/`, `.claude/`, `.codex/`,
-`.mcp.json`, `CHANGELOG.md`, `SPEC.md`, `conformance/`, or an `AGENTS.md` or `CLAUDE.md` in any
-directory. It comes from [outside-pr-paths.yml](../../.github/workflows/outside-pr-paths.yml) on
+The check `outside-pr-paths` fails a fork PR that changes `.github/`, `CHANGELOG.md`, `SPEC.md`
+or `conformance/`, or a `.claude/`, `.codex/`, `.mcp.json`, `AGENTS.md` or `CLAUDE.md` (also the
+`.local.md` and `.override.md` forms) in any directory. It comes from [outside-pr-paths.yml](../../.github/workflows/outside-pr-paths.yml) on
 `main`, on `pull_request_target`, so a fork PR cannot change it. It never checks out the PR code,
 and GitHub does not hold its runs for approval.
 
+- The check is not a required check yet. It becomes one only after a test fork PR shows that
+  the check lands on the PR head. If it lands on the base commit, a follow-up PR that posts a
+  commit status with `statuses: write` goes to the maintainer first.
 - Only the maintainer adds or removes `maintainer-approved`. The job accepts the label only if
   the login `mohanraj00` added it. AGENTS.md says that an agent never adds or removes it.
 - The label covers the PR head at the time it is added. If the head changed before the job ran,
@@ -68,10 +71,10 @@ AGENTS.md says that the agent that opened a PR asks for its review. No agent ope
 PR, so the milestone runner asks.
 
 Nobody asks an agent to review an outside PR before the maintainer has read the whole diff. The
-review agents run on a checkout of the PR with their own credentials. They read `.claude/`,
-`.codex/`, `.mcp.json` and the `AGENTS.md` and `CLAUDE.md` files from it, and an agent that runs
-the tests also runs the PR's `conftest.py` and tests. The protected paths guard only the
-configuration, so this read is the only control on the code.
+review agents run on a checkout of the PR with their own credentials. They read the agent files
+of section 3 from it, and an agent that runs the tests also runs the PR's `conftest.py` and
+tests. The protected paths guard only the configuration, so this read is the only control on
+the code.
 
 1. The milestone runner asks for the review in a separate comment that holds only:
    `@claude review this PR. Use the Review guidelines in CLAUDE.md.`
