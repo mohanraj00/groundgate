@@ -3,7 +3,7 @@ the schema of #242, which offered it on every field. Every field of bench/acfr h
 
     uv run python bench/acfr/run.py ...                     # the runs (run.py)
     uv run python bench/acfr/keyrole.py decide              # keyrole/decisions.json
-    uv run python bench/acfr/keyrole.py web                 # blind labels, http://127.0.0.1:8780
+    uv run python bench/acfr/keyrole.py web                 # blind labels, port 8780
     uv run python bench/acfr/keyrole.py results [--check]   # keyrole/results.json, RESULTS.md
 
 Two sets, each with a pair of runs for each model:

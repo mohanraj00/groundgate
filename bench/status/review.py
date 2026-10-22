@@ -2,7 +2,7 @@
 groundgate's decision differ from the blind labels of the same items?
 
     uv run python bench/status/review.py reading            # review/reading.json
-    uv run python bench/status/review.py web                # answers at 127.0.0.1:8776
+    uv run python bench/status/review.py web                # answers at port 8776
     uv run python bench/status/review.py results [--check]  # review/results.json, RESULTS.md
 
 The items are the 79 key items of bench/status/calibrate/work, with their blind labels in its
@@ -20,7 +20,6 @@ import argparse
 import json
 import sys
 import threading
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
 
@@ -29,6 +28,7 @@ OUT = HERE / "review"
 WORK = HERE / "calibrate" / "work"
 sys.path[:0] = [str(HERE), str(HERE.parent)]
 
+import localweb  # noqa: E402  (bench/localweb.py)
 import status  # noqa: E402  (bench/status/status.py)
 import web  # noqa: E402  (bench/status/web.py)
 
@@ -107,7 +107,7 @@ def serve(port: int) -> None:
     page = (HERE / "review.html").read_bytes()
     lock = threading.Lock()
 
-    class Handler(BaseHTTPRequestHandler):
+    class Handler(localweb.LocalHandler):
         def log_message(self, *args: Any) -> None:
             pass
 
@@ -156,9 +156,7 @@ def serve(port: int) -> None:
                 tmp.replace(path)  # a reader never sees half a file
             self.send(200, b"{}", "application/json")
 
-    server = ThreadingHTTPServer(("127.0.0.1", port), Handler)
-    print(f"{len(items)} amounts; open http://127.0.0.1:{port} (Ctrl-C to stop)")
-    server.serve_forever()
+    localweb.serve(Handler, port, f"{len(items)} amounts")
 
 
 def score() -> dict[str, Any]:

@@ -7,10 +7,11 @@ correct or reject each fact, add any it missed, and confirm each absence. Saves 
 bench/gold/<id>.json. It never shows model output, so the labels stay blind to what the
 benchmarked models extracted.
 
-The server binds to 127.0.0.1 only, and every API call must carry a token that exists only in
-the page it served, so other sites in your browser cannot read or write the gold. The header
-links to the original document, and a pane shows a cached PDF at the page of the focused fact,
-because flattened tables are hard to read as text.
+The server binds to 127.0.0.1 only. It refuses a request whose Host header is not 127.0.0.1 and
+the port, so DNS rebinding cannot reach it (bench/localweb.py). Every API call must carry a token
+that exists only in the page it served, so other sites in your browser cannot read or write the
+gold. The header links to the original document, and a pane shows a cached PDF at the page of
+the focused fact, because flattened tables are hard to read as text.
 """
 
 from __future__ import annotations
@@ -24,7 +25,6 @@ import threading
 import time
 import webbrowser
 from http import HTTPStatus
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
 
@@ -32,6 +32,9 @@ from groundgate.text import parse_value
 
 HERE = Path(__file__).parent
 BENCH = HERE.parent
+sys.path.append(str(BENCH))  # for localweb
+import localweb  # noqa: E402  (bench/localweb.py)
+
 GOLD = BENCH / "gold"
 DOCS = BENCH / "docs"
 CACHE = BENCH / ".cache"  # fetch.py's downloads
@@ -158,8 +161,13 @@ def validate(gold: dict[str, Any], old: dict[str, Any], text: str) -> str | None
     return None
 
 
-class Handler(BaseHTTPRequestHandler):
+class Handler(localweb.LocalHandler):
+    """localweb checks the Host header and the POST body. The page holds the token, and the API
+    needs it in the X-Label-Token header, so the handler needs no cookie."""
+
     server_version = "groundgate-label"
+    needs_cookie = False
+    max_body = 5_000_000
 
     def log_message(self, fmt: str, *args: Any) -> None:  # quiet
         pass
@@ -169,18 +177,14 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("Content-Type", ctype)
         self.send_header("Content-Length", str(len(body)))
         self.send_header("Cache-Control", "no-store")
-        self.send_header("X-Content-Type-Options", "nosniff")
         self.end_headers()
         self.wfile.write(body)
 
     def _json(self, code: int, obj: Any) -> None:
         self._send(code, json.dumps(obj, ensure_ascii=False).encode(), "application/json")
 
-    def _local(self) -> bool:
-        return self.headers.get("Host", "").startswith("127.0.0.1:")
-
     def _authorized(self) -> bool:
-        return self.headers.get("X-Label-Token") == TOKEN and self._local()
+        return localweb.same(self.headers.get("X-Label-Token", ""), TOKEN)
 
     def _doc(self) -> str | None:
         doc_id = self.path.split("?", 1)[0].rsplit("/", 1)[-1]
@@ -193,7 +197,7 @@ class Handler(BaseHTTPRequestHandler):
             page = page.replace("__PASS__", mode)
             self._send(HTTPStatus.OK, page.encode(), "text/html; charset=utf-8")
             return
-        if self.path.startswith("/source/") and self._local() and (doc_id := self._doc()):
+        if self.path.startswith("/source/") and (doc_id := self._doc()):
             # opened in a new tab, so no token; it is a public document
             pdf = CACHE / f"{doc_id}.pdf"
             if pdf.exists():
@@ -243,12 +247,8 @@ class Handler(BaseHTTPRequestHandler):
         if doc_id is None:
             self._json(HTTPStatus.NOT_FOUND, {"error": "not found"})
             return
-        length = int(self.headers.get("Content-Length", "0"))
-        if length > 5_000_000:
-            self._json(HTTPStatus.REQUEST_ENTITY_TOO_LARGE, {"error": "too large"})
-            return
         try:
-            body = json.loads(self.rfile.read(length))
+            body = json.loads(self.rfile.read(int(self.headers["Content-Length"])))
             gold, done, seconds = body["gold"], bool(body.get("done")), int(body.get("seconds", 0))
         except (ValueError, KeyError, TypeError):
             self._json(HTTPStatus.BAD_REQUEST, {"error": "bad request"})
@@ -323,8 +323,8 @@ def main() -> None:
     root = args.set.resolve()
     GOLD, DOCS, CACHE = root / "gold", root / "docs", root / ".cache"
     SOURCES = root / "sources.json"
-    server = ThreadingHTTPServer(("127.0.0.1", args.port), Handler)
-    url = f"http://127.0.0.1:{args.port}/"
+    server = localweb.LocalServer(args.port, Handler)
+    url = f"http://{server.host}/"
     print(f"labeling app at {url}  (Ctrl-C to stop)", file=sys.stderr)
     if not args.no_browser:
         webbrowser.open(url)

@@ -3,7 +3,7 @@ table, and where their cells are. The plan is on #247, made before anyone read t
 
     uv run python bench/pdfrows/pdfrows.py pick     # .cache/, sources.json, selection-log.json
     uv run python bench/pdfrows/pdfrows.py rows     # rows.json
-    uv run python bench/pdfrows/pdfrows.py web      # blind labels, http://127.0.0.1:8783
+    uv run python bench/pdfrows/pdfrows.py web      # blind labels, port 8783
     uv run python bench/pdfrows/pdfrows.py results [--check]
 
 The set is the statement of net position and the statement of activities of the FY2025 ACFRs of
@@ -41,7 +41,6 @@ import random
 import statistics
 import sys
 import threading
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
 
@@ -49,6 +48,7 @@ HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE.parent))
 sys.path.insert(0, str(HERE.parent / "acfr2"))
 import acfr2  # noqa: E402  (bench/acfr2/acfr2.py: the cut and its check)
+import localweb  # noqa: E402  (bench/localweb.py)
 from fetch import download  # noqa: E402  (bench/fetch.py)
 
 REPORTS = 10
@@ -304,7 +304,7 @@ def serve(port: int) -> None:
     page = (HERE / "web.html").read_bytes()
     lock = threading.Lock()
 
-    class Handler(BaseHTTPRequestHandler):
+    class Handler(localweb.LocalHandler):
         def log_message(self, *args: Any) -> None:
             pass
 
@@ -346,9 +346,7 @@ def serve(port: int) -> None:
                 tmp.replace(path)  # a reader never sees half a file
             self.send(200, b"{}", "application/json")
 
-    server = ThreadingHTTPServer(("127.0.0.1", port), Handler)
-    print(f"{len(items)} items; open http://127.0.0.1:{port} (Ctrl-C to stop)")
-    server.serve_forever()
+    localweb.serve(Handler, port, f"{len(items)} items")
 
 
 def _range(xs: list[float]) -> str:
