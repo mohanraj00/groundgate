@@ -293,6 +293,12 @@ schema order, individual words of the title in text order, then individual words
 description in text order. If aliases or the description are absent, their step adds no
 queries. An individual word is a maximal run of Unicode letters or digits with at least three
 code points. The minimum length applies to individual words, not full titles or aliases.
+An individual word is also not one of 78 English function words, such as "the", "and" and
+"for" (#466). The comparison is case-folded. The list is `_STOP_WORDS` in the runner. Its
+words come from English grammar: articles, conjunctions, prepositions, pronouns and auxiliary
+verbs. No benchmark set selected them. Before #466, each "the" and "and" of a description was
+a query, and their windows merged into one region of the whole document. The full title and
+the aliases keep their function words.
 
 The script collapses whitespace, trims each query, skips empty queries and case-folds for
 comparison. It keeps the first query when these forms are duplicates, so an earlier title or

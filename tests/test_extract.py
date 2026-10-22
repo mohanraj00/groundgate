@@ -747,7 +747,7 @@ def test_targeted_title_beats_earlier_common_description_words():
             "revenue": {"type": "integer", "description": "Total revenue for the fiscal year"}
         }
     }
-    text = ("the " + "x" * 20 + "\n") * 1100 + "Revenue 5."
+    text = ("fiscal " + "x" * 17 + "\n") * 1100 + "Revenue 5."
     client = Client(envelope(missing=("revenue",)), envelope(candidate(field="revenue")))
     result = execute(
         text,
@@ -1639,6 +1639,31 @@ def test_a_cut_stays_inside_its_region_at_the_edge():
     search = next(e for e in result.record if e["kind"] == "search")
     assert (search["cut_regions"][0]["kept_start"], search["cut_regions"][0]["kept_end"]) == (0, 30)
     assert_replays(result, text, SWEEP_SCHEMA)
+
+
+def test_queries_leave_out_english_function_words():
+    # The full title and each alias stay. Individual words leave out "the", "and" and "for"
+    # (#466), in any case.
+    field = {"aliases": ["The Fees"], "description": "The fee FOR the charges and the costs"}
+    assert _queries("the_fee", field)[0] == ["the fee", "The Fees", "fee", "charges", "costs"]
+
+
+def test_function_words_of_a_description_do_not_cover_the_whole_document():
+    # Before #466 each "the" and "and" was a query, and their windows merged into one region
+    # of the whole text, which the runner then cut.
+    filler = "the cat and the dog " * 40
+    text = filler + "Fee 5 " + filler
+    schema = {"fields": {"amount": {"type": "integer", "description": "The fee and the cost"}}}
+    client = Client(envelope(missing=("amount",)), envelope(candidate()))
+    settings = RunPolicy(search_context_chars=10, max_region_chars=40)
+    result = execute(text, client, schema, run_policy=settings)
+    search = next(e for e in result.record if e["kind"] == "search")
+    assert search["queries"] == ["amount", "fee", "cost"]
+    start = text.index("Fee")
+    assert [(r["start"], r["end"]) for r in search["regions"]] == [(start - 10, start + 13)]
+    assert search["cut_regions"] == [] and search["status"] == "searched"
+    assert result.complete and result.receipt.decisions[0].outcome == "admitted"
+    assert_replays(result, text, schema)
 
 
 # One run of "Amount" merges to one region that is cut to 400 characters. Each "total" is a
