@@ -609,11 +609,12 @@ def forget_packet(
     is ``absent``.
 
     An object of the packet that ``forget`` cannot read is ``unchecked``, and the rest is still
-    removed. If the run record names an object that is not found, each object of the store
-    that cannot be read is ``unchecked``, because it can be that object. ``unchecked`` means
-    "could not check", so the same key can also be ``deleted``: a run record whose lines
-    cannot be read is removed, but the prompts, replies and admissions that it names cannot
-    be found.
+    removed. A run record whose lines cannot be read is ``unchecked`` and stays, because only
+    the record names its prompts, replies and admissions. With ``everything``, the packet then
+    stays too, so a second call can finish the work after a repair of the record. If the run
+    record names an object that is not found, each object of the store that cannot be read is
+    ``unchecked``, because it can be that object. ``unchecked`` means "could not check", so
+    the same key can also be ``deleted``: a run record that does not match its key is removed.
 
     Return the kind, the key, the state (``deleted``, ``absent``, ``kept`` or ``unchecked``)
     and the number of other packets that name the key, for each object. A log has the kind
@@ -627,6 +628,7 @@ def forget_packet(
     named = _named(obj)  # a packet with bad members raises: then nothing is known
     plan: list[tuple[str, str, bool]] = []  # the kind, the key, and "remove in any mode"
     unchecked: list[tuple[str, str]] = []
+    unread_runs: list[str] = []  # the run records that cannot be read, which stay
     for k in _keys(obj["run"]):
         kind = objects.kinds.get(k, "absent")
         if kind is None or kind == "absent" or not kind.startswith("run@"):
@@ -636,9 +638,11 @@ def forget_packet(
             continue
         try:
             run = _run(objects, k)
-        except (StoreError, ValueError, RecursionError):  # remove a record that it cannot read
+        except (StoreError, ValueError, RecursionError):
+            # Keep a record that cannot be read: it is the only thing that names its prompts,
+            # replies and admissions, so a later forget can find them after a repair.
             unchecked.append((kind, k))
-            plan.append((kind, k, True))
+            unread_runs.append(k)
             continue
         try:
             lines = _holds_text(objects, obj, run)
@@ -694,6 +698,9 @@ def forget_packet(
                     done.append(("log", _log_rel(log), "absent", 0))
                     continue
                 done.append(("log", _log_rel(log), "deleted", 0))
+        if unread_runs:  # the packet names the kept run record, so the packet stays too
+            done.append(("packet@1", packet, "kept", 0))
+            return done
         try:
             store.forget(packet, reason)
         except NotFound:  # another forget removed it after the walk

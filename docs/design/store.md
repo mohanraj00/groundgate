@@ -185,7 +185,8 @@ Each path part is a 64-digit hex digest or a fixed word.
 
 Each log has one writer. Before its first append, a writer makes `<log>.lock` with an exclusive
 create, and it removes the lock at the end. A second writer on the same log stops with a message
-that names the lock. Two reviewers write two logs, so they can answer at the same time. Objects
+that names the lock. A writer that reads a log and then appends to it makes the lock before
+the read: the splits writer does this, so a second writer stops before its append. Two reviewers write two logs, so they can answer at the same time. Objects
 need no lock, because two writers of one key write the same bytes.
 
 ### 7.4 Views
@@ -221,7 +222,9 @@ comes with its issue (#432).
    the document source do not count, because the kept objects hold them. This check is not a
    proof. If the text is already gone, `check` cannot check the lines and prints "not
    checked", and `forget` removes the record. If `forget` cannot read an object, it prints
-   "unchecked", removes the rest and exits 1. A run record whose lines cannot be read goes.
+   "unchecked", removes the rest and exits 1. A run record whose lines cannot be read stays,
+   because only the record names its prompts, replies and admissions. With `--all`, its packet
+   stays too, so a second `forget` can finish after a repair of the record.
    If a run record names an object that `forget` cannot find, each object of the store that it
    cannot read is "unchecked".
    A value is still document data. If an app must also remove the values,

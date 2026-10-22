@@ -9,7 +9,7 @@ import pytest
 
 from groundgate.calibrate import cli
 from groundgate.cli import main
-from groundgate.store import FolderStore, key, set_key
+from groundgate.store import FolderStore, Locked, key, set_key
 from groundgate.store.maintain import check
 from groundgate.store.splits import read_split, write_split
 
@@ -48,6 +48,28 @@ def test_write_split_adds_each_document_once(tmp_path: Path) -> None:
         records = s.read(("splits", set_key("set-a")))
     assert [r["document"] for r in records] == [A, B]  # key order
     assert records[0]["set"] == "set-a" and records[0]["split"] == "development"
+
+
+def test_write_split_takes_the_lock_before_it_reads_the_log(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Two writers give one new document two splits at the same time. The second writer
+    reads the log after the first writer reads it and before the first writer appends."""
+    root = tmp_path / "s"
+    first = FolderStore(root)
+    append = first.append
+
+    def late_append(log: tuple[str, ...], record: dict[str, object]) -> str:
+        with FolderStore(root) as second, pytest.raises(Locked):
+            write_split(second, "set-a", {A: "held-out"})
+        return append(log, record)
+
+    monkeypatch.setattr(first, "append", late_append)
+    with first:
+        assert write_split(first, "set-a", {A: "development"}) == 1
+    with FolderStore(root) as s:
+        assert read_split(s, "set-a") == {A: "development"}
+        assert len(s.read(("splits", set_key("set-a")))) == 1
 
 
 def test_a_second_split_for_one_document_stops_the_view(tmp_path: Path) -> None:

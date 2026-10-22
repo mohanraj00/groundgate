@@ -497,23 +497,43 @@ def test_forget_removes_the_run_record_after_its_objects(tmp_path: Path) -> None
     assert ("run@3", run, "deleted", 0) in done
 
 
-def test_forget_removes_a_run_record_with_a_bad_line(tmp_path: Path) -> None:
+def _bad_run_packet(store: FolderStore, root: Path) -> tuple[str, dict[str, Any], Path]:
+    """A packet whose run record has a line that is not a JSON object. The record names the
+    prompts and replies of the run, which only this packet names now."""
+    packet = save_run(store)
+    obj = json.loads(store.get("packet@1", packet))
+    bad_run = store.get("run@3", obj["run"]) + b"[1]\n"
+    obj["run"] = key("run@3", bad_run)
+    path = path_of(root, obj["run"])
+    path.parent.mkdir(exist_ok=True)
+    path.write_bytes(bad_run)
+    other = store.put("packet@1", jcs(obj).encode("utf-8"))
+    path_of(root, packet).unlink()
+    return other, obj, path
+
+
+@pytest.mark.parametrize("everything", [False, True])
+def test_forget_keeps_a_run_record_with_a_bad_line(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str], everything: bool
+) -> None:
     root = tmp_path / "s"
     with FolderStore(root) as store:
-        packet = save_run(store)
-        obj = json.loads(store.get("packet@1", packet))
-        run = store.get("run@3", obj["run"])
-        bad_run = run + b"[1]\n"  # a line that is not a JSON object
-        obj["run"] = key("run@3", bad_run)
-        path = path_of(root, obj["run"])
-        path.parent.mkdir(exist_ok=True)
-        path.write_bytes(bad_run)
-        other = store.put("packet@1", jcs(obj).encode("utf-8"))
-        done = forget_packet(store, other, "asked")
-    assert done[0] == ("run@3", obj["run"], "unchecked", 0)
-    assert ("run@3", obj["run"], "deleted", 0) in done
-    assert ("text@1", obj["document"]["text"], "deleted", 1) in done
-    assert not path.exists()
+        other, obj, path = _bad_run_packet(store, root)
+    bad_run = path.read_bytes()
+    named = [k for k, v in all_keys(root).items() if v in ("prompt@1", "reply@1")]
+    assert named
+    args = ["store", "forget", "--store", str(root), other, "--reason", "asked"]
+    assert main(args + ["--all"] * everything) == 1
+    out = capsys.readouterr().out
+    assert out.startswith(f"unchecked run@3 {obj['run']}\n")
+    assert f"deleted run@3 {obj['run']}" not in out
+    assert path.read_bytes() == bad_run  # kept, not removed
+    assert f"deleted text@1 {obj['document']['text']}" in out
+    # The prompts and replies stay, because only the kept record names them.
+    assert all(path_of(root, k).exists() for k in named)
+    # With --all, the packet stays too: it is the way to the kept record.
+    assert path_of(root, other).exists()
+    assert (f"kept packet@1 {other}" in out) is everything
 
 
 def test_forget_all_keeps_a_schema_of_a_packet_with_a_bad_run_line(tmp_path: Path) -> None:
@@ -551,9 +571,9 @@ def test_forget_ignores_a_symlink_that_is_not_an_object(
     assert link.is_symlink() and target.read_bytes() == b"x"
 
 
-@pytest.mark.parametrize(("depth", "removed"), [(100, False), (5000, True)])
+@pytest.mark.parametrize(("depth", "unread"), [(100, False), (5000, True)])
 def test_forget_and_check_go_on_past_a_deep_run_line(
-    tmp_path: Path, depth: int, removed: bool
+    tmp_path: Path, depth: int, unread: bool
 ) -> None:
     root = tmp_path / "s"
     with FolderStore(root) as store:
@@ -569,10 +589,11 @@ def test_forget_and_check_go_on_past_a_deep_run_line(
         assert check(store).findings  # a finding, not a crash
         done = forget_packet(store, other, "asked")
     assert ("text@1", obj["document"]["text"], "deleted", 1) in done
-    # A line that parses and holds no text keeps the record. A line that cannot be read
-    # removes it.
-    assert (("run@3", obj["run"], "unchecked", 0) in done) is removed
-    assert path_of(root, obj["run"]).exists() is not removed
+    # A line that parses and holds no text keeps the record. A line that cannot be read keeps
+    # it too, and makes it "unchecked".
+    assert (("run@3", obj["run"], "unchecked", 0) in done) is unread
+    assert ("run@3", obj["run"], "deleted", 0) not in done
+    assert path_of(root, obj["run"]).exists()
 
 
 def test_forget_reports_a_run_object_that_it_cannot_find(
