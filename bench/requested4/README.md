@@ -376,15 +376,21 @@ has 1 absence hit and 29 unreported absences. #466 alone does not give the absen
 `bench/requested/review_items.py --split development` builds the review items from this runner
 run. It writes `review/development/items.json` and `review/development/policy.json`, with the
 audit seed `requested4-463-audit`. The store has 32 packets, 77 review tasks and 30 audit tasks.
-The store is not in the old cache: it is in `groundgate-cache-463/review/store-development`
-beside the repository. An audit answer with no reason seen is a blind label of the word-box
-view. The two blind passes labeled from renders of the original PDF pages and gave the same
-label on 470 of 480 slots (section Labels). The result compares the agreement of the review
-answers on the word-box view with that number.
+The store is not in the old cache: it is in `groundgate-cache-463/review/store-development`,
+in the folder that holds the main checkout. An audit answer with no reason seen is a blind
+label of the word-box view. The two blind passes labeled from renders of the original PDF pages
+and gave the same label on 470 of 480 slots (section Labels). The result compares the agreement
+of the review answers on the word-box view with that number.
+
+The result is in `review/development/RESULTS.md`. Of 107 items, 92 are scored: 88 agree with
+the label and 4 are wrong. The upper bound of the rate of wrong answers is 0.0967, so the result
+does not pass the bar of #234. 30 of 30 blind audit answers agree with the label, so the audit
+gives no sign that the word-box view gives less agreement. 10 answers are `unsure`.
 
 ### The steps for the maintainer
 
-Run each command from the root of the repository. Do not open `labels.json`, `loop/`,
+Run each command from the root of the main checkout, so that `../groundgate-cache-463` is the
+store folder. From a worktree, give the store path in full. Do not open `labels.json`, `loop/`,
 `development/` or `review/development/results.json` before the last answer.
 
 1. Start the page, open the URL that the command prints, and answer each item:

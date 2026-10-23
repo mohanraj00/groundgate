@@ -1,0 +1,32 @@
+{
+ "checks_needed": [
+  {
+   "task": "sha256:2468d2aa587fbc897c34e83f994c7dcc78975b518624dc050e2b548121890172",
+   "document": "annual-c28",
+   "field": "cost_of_sales",
+   "key": null,
+   "page": 115
+  },
+  {
+   "task": "sha256:c1d9914a0a3ff7ba1a32ee041dcb0eaa01b44dcce2c55c8d7b9307c743ddb3b5",
+   "document": "annual-c28",
+   "field": "revenue",
+   "key": null,
+   "page": 27
+  },
+  {
+   "task": "sha256:21ccf8ec487587e43a24ae42ef5e4d4d08dae3f90e893d2a995c5bcd6e91fc14",
+   "document": "component-c09",
+   "field": "supply_current_typ",
+   "key": null,
+   "page": 4
+  },
+  {
+   "task": "sha256:e40cee25b27bf2ccefec319ae54d32142ed28dc78ff8488921af1b524c74afdc",
+   "document": "component-c12",
+   "field": "supply_current_typ",
+   "key": null,
+   "page": 2
+  }
+ ]
+}
