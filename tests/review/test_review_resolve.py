@@ -507,9 +507,9 @@ def test_forget_all_removes_the_review_objects_of_the_packet(tmp_path: Path) -> 
         # candidates are the same bytes as the candidates of this packet, so they go for both.
         mine = []
         for p in keys:
-            data = store.object_bytes(p)
-            if key("packet@1", data) == p and json.loads(data)["document"]["id"] == "other":
-                obj = json.loads(data)
+            raw = store.object_bytes(p)
+            if key("packet@1", raw) == p and json.loads(raw)["document"]["id"] == "other":
+                obj = json.loads(raw)
                 mine += [p, obj["schema"], obj["policy"], obj["receipt"]]
         assert len(mine) == 8
     with FolderStore(root) as store:
@@ -728,4 +728,66 @@ def test_forget_all_keeps_the_review_when_a_correction_cannot_be_told(tmp_path: 
         left, _ = store.object_keys()
     assert ("packet@1", fixed, "unchecked", 0) in done
     assert {k, got.key, tk, fixed} <= set(left)
+    assert (root / "logs" / "answers" / k[7:]).exists()
+
+
+def _one_correction(tmp_path: Path) -> tuple[Path, str, str, str, str, str]:
+    """A packet with one correction: the root, the packet, the task, the resolution, the
+    correction receipt and the correction packet."""
+    store, k, tk, data = one_choice(tmp_path)
+    with store:
+        store.append(
+            ("answers", k, reviewer_key("ana")),
+            record(tk, "ana", "correct", candidate=correction("4200000")),
+        )
+        got = write_resolution(store, k, policy(), ["ana"])
+        assert got.key is not None
+        receipt = correction_receipt(data["packet"], correction("4200000"))
+        return tmp_path / "s", k, tk, got.key, receipt, _correction_packet(store, receipt)
+
+
+def test_forget_all_finishes_after_a_stop_in_the_corrections(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    # The first forget --all stops at the candidates of the correction. The corrections go
+    # before the receipt, the judgments and the tasks of the packet, so the retry finds the
+    # correction again and finishes.
+    root, k, tk, rk, receipt, fixed = _one_correction(tmp_path)
+    with FolderStore(root) as store:
+        candidates = json.loads(store.get("packet@1", fixed))["candidates"]
+        original = json.loads(store.get("packet@1", k))
+    real = FolderStore.forget
+
+    def stop(self: FolderStore, k: str, reason: str, **more: Any) -> None:
+        if k == candidates:
+            raise RuntimeError("stopped")
+        real(self, k, reason, **more)
+
+    monkeypatch.setattr(FolderStore, "forget", stop)
+    with FolderStore(root) as store, pytest.raises(RuntimeError):
+        forget_packet(store, k, "all", everything=True)
+    with FolderStore(root) as store:
+        left, _ = store.object_keys()
+    assert {original["receipt"], original["judgments"], tk, rk, k} <= set(left)
+    monkeypatch.setattr(FolderStore, "forget", real)
+    with FolderStore(root) as store:
+        done = forget_packet(store, k, "all", everything=True)
+        left, _ = store.object_keys()
+    assert not any(state == "unchecked" for _, _, state, _ in done)
+    assert not {k, tk, rk, receipt, fixed, candidates} & set(left)
+
+
+def test_forget_all_keeps_the_review_when_the_receipt_of_the_packet_is_gone(
+    tmp_path: Path,
+) -> None:
+    # The receipt of the packet is gone, and a correction answer and a packet that can be its
+    # correction stay. Nothing tells if it is the correction, so forget --all reports it and
+    # keeps the packet and its review records.
+    root, k, tk, rk, receipt, fixed = _one_correction(tmp_path)
+    with FolderStore(root) as store:
+        store.forget(json.loads(store.get("packet@1", k))["receipt"], "by hand")
+        done = forget_packet(store, k, "all", everything=True)
+        left, _ = store.object_keys()
+    assert ("packet@1", fixed, "unchecked", 0) in done
+    assert {k, tk, rk, fixed, receipt} <= set(left)
     assert (root / "logs" / "answers" / k[7:]).exists()

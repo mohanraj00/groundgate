@@ -264,7 +264,10 @@ their issues (#432).
    resolution of another packet names its receipt, the correction is shared, and its packet
    and receipt stay. If an answer log of the packet cannot be read, `forget --all` prints it as
    "unchecked" and exits 1, because the log can name a correction. A packet that can be a
-   correction, but whose candidates and receipt cannot be read, is "unchecked" too. Then it
+   correction, but whose candidates and receipt cannot be read, is "unchecked" too. So is such
+   a packet when a correction answer stays, but the receipt or the judgments of the packet are
+   gone. The corrections go first, and the receipt, the judgments, the tasks and the
+   resolutions of the packet after them, so a `forget --all` that stops can finish later. Then it
    removes only what `forget` removes and the corrections that it finds. The packet, its kept
    objects, its tasks, its resolutions and its logs stay. Run `store check --repair` on a torn log, then `forget --all` again.
    One object can serve two packets, because the same text has one key. `forget` of that text
