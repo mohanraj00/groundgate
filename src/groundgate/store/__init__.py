@@ -346,8 +346,10 @@ class FolderStore:
         for the key.
 
         ``forget`` also removes the ``.tmp-<key>-`` files that a killed ``put`` of this object
-        left in its folder. It removes no file of another object, and no file outside that
-        folder. A ``put`` of the same object at the same time can fail with ``StoreError``.
+        left in its folder, also when the object is absent and ``forget`` raises ``NotFound``.
+        Then ``forget`` writes no record in the deleted log. It
+        removes no file of another object, and no file outside that folder. A ``put`` of the
+        same object at the same time can fail with ``StoreError``.
         A ``.tmp-`` file of an earlier version has no key in its name, so it stays. Where
         ``os.unlink`` takes no ``dir_fd``, for example on Windows, all ``.tmp-`` files stay."""
         hexes = _check_key(key)
@@ -361,8 +363,12 @@ class FolderStore:
         rel = f"objects/{hexes[:2]}/{hexes[2:]}"
         try:
             folder = self._folder(["objects", hexes[:2]], make=False)
+        except NotFound as exc:
+            raise NotFound(f"object {key} is not in the store") from exc
+        try:
             info = os.lstat(folder / hexes[2:])
-        except (NotFound, FileNotFoundError) as exc:
+        except FileNotFoundError as exc:
+            self._unlink_parts(folder, hexes[2:])  # a first put that was killed
             raise NotFound(f"object {key} is not in the store") from exc
         # Check that the unlink can work before the record says that it did.
         if not (stat.S_ISREG(info.st_mode) or stat.S_ISLNK(info.st_mode)):

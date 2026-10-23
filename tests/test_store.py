@@ -18,6 +18,7 @@ from groundgate.canonical import jcs
 from groundgate.store import (
     FolderStore,
     Locked,
+    NotFound,
     StoreError,
     contract,
     key,
@@ -568,3 +569,19 @@ def test_a_lock_with_a_pid_that_is_not_only_digits(root: Path, text: str) -> Non
     with pytest.raises(Locked, match="another writer has this log") as info:
         FolderStore(root).append(ANA, {"answer": "no"})
     assert "process 10" not in str(info.value)
+
+
+def test_forget_removes_the_temporary_file_of_a_first_put_that_was_killed(root: Path) -> None:
+    store = FolderStore(root)
+    k = key("text@1", TEXT)
+    folder = root / "objects" / k[7:9]
+    folder.mkdir(parents=True)  # the folder of a first put that was killed before the rename
+    mine = folder / f".tmp-{k[9:]}-abc123"
+    mine.write_bytes(TEXT)
+    near = folder / f".tmp-{k[9:-1]}{'0' if k[-1] != '0' else '1'}-abc123"
+    near.write_bytes(b"other")
+    with pytest.raises(NotFound):
+        store.forget(k, "the tenant asked")
+    assert not mine.exists()
+    assert near.read_bytes() == b"other"
+    assert store.read(("deleted",)) == []
