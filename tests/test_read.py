@@ -4,6 +4,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+from typing import Any
 
 import pytest
 
@@ -100,6 +101,45 @@ def test_layout_round_trip(pdf: Path) -> None:
     for bad in ({"a": 1}, "sha256:00", None):
         with pytest.raises(gg.PacketError, match="document_sha256 is not a digest"):
             Layout.from_dict({**raw, "document_sha256": bad})
+
+
+def _store_layout() -> dict[str, Any]:
+    """A minimal layout object of the shape the store can hold."""
+    return {
+        "groundgate_layout": "0.1",
+        "document_sha256": "sha256:" + "0" * 64,
+        "pages": [{"page": 1, "width": 612.0, "height": 792.0, "start": 0, "end": 10}],
+        "words": [[0, 2, 1, 10.0, 20.0, 30.0, 30.0]],
+    }
+
+
+def test_layout_rejects_a_box_that_is_not_a_finite_number() -> None:
+    """`float()` accepts "nan", "inf" and "1e999"; a layout must not.
+
+    Only an edited store can hold such a box (`read` writes finite ones), but
+    `report --store` renders whatever the layout says, so a NaN coordinate
+    must be rejected at the boundary instead of rendered.
+    """
+    assert Layout.from_dict(_store_layout()) is not None
+    for bad in ("nan", "inf", "-inf", "1e999"):
+        with pytest.raises(gg.PacketError, match="malformed layout: page size"):
+            Layout.from_dict(
+                {
+                    **_store_layout(),
+                    "pages": [{"page": 1, "width": bad, "height": 792.0, "start": 0, "end": 10}],
+                }
+            )
+        with pytest.raises(gg.PacketError, match="malformed layout: page size"):
+            Layout.from_dict(
+                {
+                    **_store_layout(),
+                    "pages": [{"page": 1, "width": 612.0, "height": bad, "start": 0, "end": 10}],
+                }
+            )
+        with pytest.raises(gg.PacketError, match="malformed layout: a word box"):
+            Layout.from_dict({**_store_layout(), "words": [[0, 2, 1, bad, 20.0, 30.0, 30.0]]})
+        with pytest.raises(gg.PacketError, match="malformed layout: a word box"):
+            Layout.from_dict({**_store_layout(), "words": [[0, 2, 1, 10.0, bad, 30.0, 30.0]]})
 
 
 def test_a_pdf_decision_admits_against_extracted_text(pdf: Path) -> None:
