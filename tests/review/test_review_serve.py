@@ -22,7 +22,7 @@ import pytest
 from groundgate.cli import main
 from groundgate.review import serve
 from groundgate.review.resolve import write_resolution
-from groundgate.review.serve import CSP, MAX_BODY, TOKEN_HEADER, Review, _Units, frame_csp
+from groundgate.review.serve import CSP, MAX_BODY, TOKEN_HEADER, Refused, Review, _Units, frame_csp
 from groundgate.review.tasks import write_tasks
 from groundgate.store import FolderStore, reviewer_key
 from groundgate.store.packets import admit_packet, put_reading
@@ -327,6 +327,7 @@ def test_a_correction_runs_admit_and_shows_the_outcome_at_once(served: Served) -
         "keep": [],
         "missing": [],
         "shown": "4,200,000 with no unit (written 4,200, in thousands, positive)",
+        "ask": [],
     }
     # the selection "4,200" leaves the scale word out: it gives 4200, and the gate flags it
     number = {"task": revenue, "verdict": "correct", "start": 12, "end": 17}
@@ -337,6 +338,7 @@ def test_a_correction_runs_admit_and_shows_the_outcome_at_once(served: Served) -
         "keep": ["SCALE_WORD"],
         "missing": [],
         "shown": "4,200 with no unit (written 4,200, not scaled, positive)",
+        "ask": [],
     }
     # the person types the value in full instead
     status, _, body = call("POST", "/api/check", {**number, "value": "4,200,000"})
@@ -560,6 +562,59 @@ def test_a_scale_suffix_in_the_selection_gives_the_value_in_full(tmp_path: Path)
     # without the suffix, the selection gives the number as written, and the gate flags it
     check = review.check({"task": tk, "verdict": "correct", "start": 13, "end": 16})
     assert check["outcome"] != "admitted" and check["shown"].startswith("4.2 USD")
+
+
+def test_a_correction_whose_parts_do_not_agree_asks_again(tmp_path: Path) -> None:
+    """#496: the selection "-3,266.2" under "EUR million" as the value -3266.2. The scale is
+    above the table, and the task gives a positive value. The page shows the parts and asks
+    again before it saves."""
+    text = (
+        "Statement of income\nEUR million Note 2025 2024\nNet sales\t1\t3,960.2\t4,126.3\n"
+        "Cost of sales\t\t-3,266.2\t-3,344.7\n"
+    )
+    schema = {"fields": {"cost_of_sales": {"type": "number", "unit": "EUR"}}}
+    at = text.index("-3,266.2")
+    scale = text.index("EUR million")
+    candidates = [{"id": "c1", "field": "cost_of_sales", "value": "3266200000", "unit": "EUR",
+                   "evidence": [{"start": at + 1, "end": at + 8},
+                                {"role": "scale", "start": scale, "end": scale + 11}]}]  # fmt: skip
+    store = FolderStore(tmp_path / "store")
+    k, _ = admit_packet(store, text, schema, candidates, None, None, None)
+    tasks = write_tasks(store, k, EVERY).tasks
+    assert len(tasks) == 1
+    ((tk, _),) = tasks
+    review = Review(store, "ana")
+    selection = {"task": tk, "verdict": "correct", "start": at, "end": at + 8}
+    check = review.check(selection)
+    assert [a["part"] for a in check["ask"]] == ["scale", "sign"]
+    scale_text, sign_text = (a["text"] for a in check["ask"])
+    assert 'scale: "EUR million Note 2025 2024"' in scale_text and "3266200000" in scale_text
+    assert "value 1 of the task is positive" in sign_text
+    plain = {"decision": None, "reason_seen": False, "keys": 2, "ms": 900}
+    with pytest.raises(Refused) as refused:
+        review.answer({**plain, **selection, "codes_kept": check["keep"]})
+    assert refused.value.code == 409 and "do not agree" in str(refused.value)
+    assert log(store, k) == []
+    # the person cites the scale: the page reads the value in full, and the sign still differs
+    part = {"role": "scale", "start": scale, "end": scale + 11}
+    check = review.check({**selection, "parts": [part]})
+    assert check["shown"].startswith("-3,266,200,000 EUR")
+    assert [a["part"] for a in check["ask"]] == ["sign"]
+    # a positive value under a negative written number is a question too
+    check = review.check({**selection, "parts": [part], "value": "3266200000"})
+    sign = "The value is positive, but the text writes the number -3,266.2 as negative."
+    assert check["ask"] == [{"part": "sign", "text": sign}]
+    # the number without its sign, with the scale: the parts agree, and the answer saves
+    unsigned = {**selection, "start": at + 1, "parts": [part]}
+    check = review.check(unsigned)
+    assert check["ask"] == [] and check["shown"].startswith("3,266,200,000 EUR")
+    review.answer({**plain, **unsigned, "codes_kept": check["keep"]})
+    (record,) = log(store, k)
+    assert record["candidate"]["value"] == "3266200000" and "parts_seen" not in record
+    # a person who saw the parts can save a value that does not agree
+    review.answer({**plain, **selection, "codes_kept": review.check(selection)["keep"],
+                   "parts_seen": True})  # fmt: skip
+    assert log(store, k)[-1]["candidate"]["value"] == "-3266.2"
 
 
 def test_a_field_with_no_definition_gives_none(served: Served) -> None:

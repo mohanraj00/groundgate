@@ -366,7 +366,9 @@ These rules come from the bench label pages, where I measured what works.
   reason. The arrow keys go back and forward.
 - **A correction is a selection.** The page reads the selected number with the core reader and
   shows the value in full. The person can type the value instead, and the gate then checks it
-  against the span.
+  against the span. Before the page saves, it compares the value with the scale words above the
+  number and with the sign of the number and of each choice. If they do not agree, the page
+  shows the parts and asks again (#496).
 - **The reason is closed.** The page shows no outcome and no code until the person presses `r`.
   This applies to each task, so a review task with one choice and an audit task look the same.
   The answer records `reason_seen`.

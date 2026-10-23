@@ -38,6 +38,7 @@ import unicodedata
 from collections.abc import Callable, Collection, Mapping
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
+from decimal import Decimal, InvalidOperation
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from importlib.resources import files
 from typing import Any
@@ -48,7 +49,18 @@ from ..escape import escape
 from ..model import PacketError, Schema
 from ..read.layout import Layout
 from ..read.markup import html_text
-from ..text import canonical, normalize_ws, parse_value, quote_pattern, scaled_value, tokens
+from ..text import (
+    Token,
+    brackets_around,
+    canonical,
+    item_scale,
+    normalize_ws,
+    parse_value,
+    quote_pattern,
+    scaled_value,
+    token_scale,
+    tokens,
+)
 from .labels import QUESTIONS, label_tasks
 from .resolve import (
     CORRECTIONS,
@@ -62,6 +74,7 @@ from .resolve import (
     resolve,
 )
 from .tasks import (
+    _SCALES,
     DEFAULT_POLICY,
     Slot,
     _number,
@@ -92,6 +105,7 @@ _API = re.compile(r"/api/(task|reason)/(.*)")
 _TICKET = re.compile(r"/frame/([A-Za-z0-9_-]{22})")
 CONTEXT_LINES = 5  # the lines before and after a value in the text view
 SPAN_LINES = 12  # a place with more lines than this shows its two ends, and the middle is closed
+SCALE_LINES = 10  # the lines above a selected number where the page looks for a scale (#496)
 MAX_TICKETS = 32
 MAX_PARTS = 8
 ROLES = ("sign", "scale", "unit", "field", "key")
@@ -553,6 +567,17 @@ class Review:
             raise Refused(400, "the selection is not a span inside the text")
         return a, b, doc.units.to_bytes(a), doc.units.to_bytes(b)
 
+    def _part_scale(self, doc: _Doc, body: Mapping[str, Any]) -> int | None:
+        """The power of ten of the first scale part of a request that gives one, or None."""
+        parts = body.get("parts")
+        for p in parts[:MAX_PARTS] if isinstance(parts, list) else []:
+            if isinstance(p, Mapping) and p.get("role") == "scale":
+                a, b, _, _ = self._span(doc, p.get("start"), p.get("end"))
+                power = item_scale(doc.units.text, a, b)
+                if power is not None:
+                    return power
+        return None
+
     def _candidate(
         self, doc: _Doc, slot: Slot, task: Mapping[str, Any], body: Mapping[str, Any]
     ) -> dict[str, Any]:
@@ -573,8 +598,12 @@ class Review:
                 found = [t for t in tokens(doc.units.text, a, b) if t.value is not None]
                 if not found or found[0].value is None:
                     raise Refused(400, "the selection has no number: select it, or type it")
-                # The value in full (§8): a scale word or suffix inside the selection scales it.
+                # The value in full (§8): a scale word or suffix inside the selection scales it,
+                # else a cited scale part (#496).
                 scaled = scaled_value(doc.units.text[:b], found[0])
+                power = self._part_scale(doc, body) if scaled is None else None
+                if power is not None:
+                    scaled = found[0].value.scaleb(power)
                 number = found[0].value if scaled is None else scaled
             candidate["value"] = canonical(number)
             units = [c["unit"] for c in task["choices"] if isinstance(c["unit"], str)]
@@ -601,6 +630,65 @@ class Review:
         candidate["proposer"] = f"person:{self.reviewer}"
         candidate["evidence"] = evidence
         return candidate
+
+    def _ask(
+        self,
+        doc: _Doc,
+        slot: Slot,
+        task: Mapping[str, Any],
+        body: Mapping[str, Any],
+        candidate: Mapping[str, Any],
+    ) -> list[dict[str, str]]:
+        """The parts of a number correction that do not agree, each with its part and the words
+        that the page shows (#496). The page asks again before it saves. The value must be the
+        selected number with the scale and the sign of the text near it: a scale in the
+        selection, a cited scale part, or a scale word on the lines above it. A choice of the
+        task that differs only in its sign is also a question."""
+        if task["item"] != "number":
+            return []
+        a, b, _, _ = self._span(doc, body.get("start"), body.get("end"))
+        text = doc.units.text
+        found = [t for t in tokens(text, a, b) if t.value is not None]
+        value = Decimal(candidate["value"])  # canonical() of a parsed number: finite
+        if not found or value == 0:
+            return []
+        tok = found[0]
+        assert tok.value is not None
+        written = text[tok.start : tok.end]
+        spec = doc.schema.fields[slot.field]
+        out = []
+        near = None
+        if token_scale(text[:b], tok) is None and not _cited(body, "scale") and spec.unit != "%":
+            near = _near_scale(text, tok)
+        if near is not None and abs(value) == abs(tok.value):
+            power, line = near
+            full = abs(tok.value).scaleb(power)
+            out.append({"part": "scale", "text": (
+                f"The value is the number as written, {written}, but the text above it gives a "
+                f'scale: "{line}". If the scale applies, select the scale words, or type the '
+                f'value in full: {canonical(full)}, with "-" for a negative value.'
+            )})  # fmt: skip
+        prefixes = doc.schema.units.get(spec.unit, ([], []))[0] if spec.unit else []
+        negative = tok.value < 0 or brackets_around(text, tok, prefixes) is not None
+        if (value < 0) != negative and abs(value) in _scaled(abs(tok.value)):
+            out.append({"part": "sign", "text": (
+                f"The value is {_sign(value)}, but the text writes the number {written} as "
+                f"{'negative' if negative else 'positive'}."
+            )})  # fmt: skip
+        for n, c in enumerate(task["choices"], 1):
+            try:
+                other = Decimal(c["value"])
+            except (InvalidOperation, TypeError):
+                continue
+            if not other.is_finite() or other == 0 or (other < 0) == (value < 0):
+                continue
+            if abs(other) in _scaled(abs(value)) or abs(value) in _scaled(abs(other)):
+                out.append({"part": "sign", "text": (
+                    f"The value is {_sign(value)}, but value {n} of the task is "
+                    f"{_sign(other)}: {c['shown']}. Read the sign that the field description "
+                    "asks for. For a positive amount, select the number without its sign."
+                )})  # fmt: skip
+        return out
 
     def check(self, body: Mapping[str, Any]) -> dict[str, Any]:
         """Run the ``admit`` call of ``review resolve`` for a correction, and give the outcome
@@ -634,6 +722,7 @@ class Review:
             "keep": [c for c in d["codes"] if c not in INFO],
             "missing": list(d.get("missing") or []),
             "shown": shown,
+            "ask": self._ask(doc, slot, task, body, candidate),
         }
 
     def answer(self, body: Mapping[str, Any]) -> dict[str, Any]:
@@ -692,6 +781,11 @@ class Review:
                     raise Refused(409, "keep each code of the correction: " + ", ".join(left))
         except AnswerError as exc:
             raise Refused(400, f"the answer breaks its task: {exc.reason}") from exc
+        if candidate is not None and body.get("parts_seen") is not True:
+            ask = self._ask(doc, slot, task, body, candidate)
+            if ask:
+                words = " ".join(x["text"] for x in ask)
+                raise Refused(409, "the parts of the correction do not agree: " + words)
         try:
             self.store.append(("answers", doc.key, reviewer_key(self.reviewer)), record)
         except (StoreError, ValueError) as exc:  # ValueError: a number out of the JSON range
@@ -700,6 +794,41 @@ class Review:
             ) from exc
         self._refresh(doc.key)
         return self.queue()
+
+
+def _near_scale(text: str, tok: Token) -> tuple[int, str] | None:
+    """The nearest scale word or currency scale above a number on its page (#496): on its line
+    before it, or on one of the ``SCALE_LINES`` lines above it. Its power of ten, and the words
+    of its line. This is a question for the person, not a decision of the gate."""
+    end = tok.start
+    for _ in range(SCALE_LINES + 1):
+        start = text.rfind("\n", 0, end) + 1
+        page = text.rfind("\f", start, end)
+        start = max(start, page + 1)
+        power = item_scale(text, start, end)
+        if power is not None:
+            line = normalize_ws(text[start:end]).strip()
+            return power, line if len(line) <= 80 else line[:77] + "..."
+        if page >= 0 or start == 0:
+            return None
+        end = start - 1
+    return None
+
+
+def _cited(body: Mapping[str, Any], role: str) -> bool:
+    parts = body.get("parts")
+    return isinstance(parts, list) and any(
+        isinstance(p, Mapping) and p.get("role") == role for p in parts
+    )
+
+
+def _scaled(amount: Decimal) -> set[Decimal]:
+    """``amount`` at each scale of a question, from not scaled to trillions."""
+    return {amount.scaleb(p) for p in _SCALES}
+
+
+def _sign(value: Decimal) -> str:
+    return "negative" if value < 0 else "positive"
 
 
 def _inert(source: str) -> str:
