@@ -259,8 +259,37 @@ their issues (#432).
    that `forget` cannot read is "unchecked". A deletion from 0.12 or earlier, or from a call of
    `forget(key, reason)` with no run keys, has no run keys, so the second rule applies to it.
    A value is still document data. If an app must also remove the values,
-   `groundgate store forget --all PACKET` removes each object and log of the packet. An object
-   of the "Kept" column that another packet names stays.
+   `groundgate store forget --all PACKET` removes each object and log of the packet. It also
+   removes each `task@1` and `resolution@1` that names the packet, and each correction packet
+   that `review resolve` wrote for it, with its candidates, judgments and receipt (#516). A
+   correction packet has the inputs of the packet, no run record, and the exact candidates
+   and judgments that `review resolve` gives to `admit` for a correction answer of the packet
+   (review.md §6.2). If a plain `forget` removed its candidates, its receipt tells, because it
+   names each candidate by its digest. A `review-policy@1` object stays, because it holds no document data and
+   other resolutions can name it. An object of the "Kept" column that another packet names
+   stays. A correction packet of the packet does not count as another packet. But if a
+   resolution of another packet names its receipt, the correction is shared, and its packet
+   and receipt stay. If an answer log of the packet cannot be read, `forget --all` prints it as
+   "unchecked" and exits 1, because the log can name a correction. A packet that can be a
+   correction, but whose candidates and receipt cannot be read, is "unchecked" too. So is such
+   a packet when a correction answer stays, but the receipt or the judgments of the packet are
+   gone. The corrections go first, then the tasks, the resolutions and the answer logs of the
+   packet, then its receipt and its judgments, and the packet last. So a `forget --all` that
+   stops can finish later. The receipt of a correction goes after its packet. A retry removes a receipt that no packet
+   names only if it proves the correction: its spec version, document, references, packs,
+   schema digest, policy digest and candidate digests match, the packet has no judgments, and
+   the receipt lists none. A receipt lists only the judgments that applied, so with judgments
+   it cannot prove the match. Then the receipt stays, and `forget` prints it as "unchecked".
+   The search for such receipts cannot run if an object of the store cannot be read: it can be
+   a packet that names the receipt. Then that object is "unchecked" too.
+   If a log, a packet or such an object is "unchecked", `forget --all` removes only what `forget` removes. The
+   packet, its kept objects, its corrections, its tasks, its resolutions and its logs stay. Run
+   `store check --repair` on a torn log, then `forget --all` again.
+   Last, `forget --all` applies one filter to all of these together. An object stays if a
+   packet, a receipt, a task or a resolution that stays names it. A packet names its objects,
+   its readings, its run records and the objects of the records. Repeat until no object
+   changes. The "Removed" objects of the packet itself and a run record that holds text are
+   not in this filter.
    One object can serve two packets, because the same text has one key. `forget` of that text
    removes it for both packets, which is correct for one document.
    After `forget`, `verify` reports "input deleted", with the key, the time and the reason from

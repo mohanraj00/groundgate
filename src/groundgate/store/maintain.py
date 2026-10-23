@@ -15,12 +15,13 @@ from __future__ import annotations
 
 import hashlib
 import json
+from collections import Counter
 from collections.abc import Iterator, Mapping
 from contextlib import suppress
 from dataclasses import dataclass, field
 from typing import Any
 
-from ..canonical import jcs
+from ..canonical import digest, jcs
 from . import KEY, FolderStore, NotFound, StoreError, Torn, _canonical, check_bytes, key
 from .packets import _PACKET, _READING, printable
 
@@ -614,35 +615,330 @@ def rebuild(store: FolderStore) -> list[str]:
 # forget
 
 
-def _others(objects: _Objects, packet: str) -> dict[str, int]:
-    """For each key, how many other packets name it, with their readings, their run records
-    and the objects of the run records. A packet that cannot be read names nothing: ``check``
-    reports it. A reading or a run record that cannot be read names nothing, but the rest of
-    its packet still counts."""
+def _packet_names(objects: _Objects, k: str) -> set[str] | None:
+    """The keys that a packet names, with its readings, its run records and the objects of the
+    run records, or None if the packet cannot be read. A reading or a run record that cannot be
+    read names nothing, but the rest of the packet still counts."""
+    try:
+        obj = _packet(objects, k)
+        named = {n for _, n in _named(obj)}
+        readings = _keys(obj["reading"])
+        runs = _keys(obj["run"])
+    except (StoreError, ValueError, RecursionError):
+        return None
+    for n in readings:
+        named.add(n)
+        if objects.kinds.get(n) == "reading@1":
+            with suppress(StoreError, ValueError, RecursionError):  # check reports it
+                named.update(m for _, m in _reading_named(objects, n))
+    for n in runs:
+        named.add(n)
+        if (objects.kinds.get(n) or "").startswith("run@"):
+            with suppress(StoreError, ValueError, RecursionError):  # check reports it
+                named.update(m for _, m in _run_objects(objects, _run(objects, n))[0])
+    return named
+
+
+def _others(objects: _Objects, packet: str, skip: frozenset[str] = frozenset()) -> dict[str, int]:
+    """For each key, how many other packets name it (``_packet_names``). A packet in ``skip``
+    does not count. A packet that cannot be read names nothing: ``check`` reports it."""
     counts: dict[str, int] = {}
     for k in objects.of("packet@1"):
+        if k == packet or k in skip:
+            continue
+        for n in _packet_names(objects, k) or ():
+            counts[n] = counts.get(n, 0) + 1
+    return counts
+
+
+def _named_by_rest(objects: _Objects, gone: set[str]) -> set[str]:
+    """The keys that the objects which stay name: each packet not in ``gone`` with
+    ``_packet_names``, and each receipt, task and resolution not in ``gone`` with each store key
+    in it. An object that cannot be read names nothing."""
+    named: set[str] = set()
+    for k in objects.of("packet@1"):
+        if k not in gone:
+            named |= _packet_names(objects, k) or set()
+    for kind in ("receipt@1", "task@1", "resolution@1"):
+        for k in objects.of(kind):
+            if k in gone:
+                continue
+            with suppress(StoreError, ValueError, RecursionError):
+                found = objects.json(kind, k)
+                named.update(s for s in _strings(found) if KEY.fullmatch(s))
+    return named
+
+
+# The members that a correction packet of ``review resolve`` shares with its packet (#516).
+_SAME_INPUTS = ("spec", "document", "reading", "schema", "policy", "references", "packs")
+_CORRECTIONS = frozenset({"correct", "adjust_span"})
+_RECORDS = frozenset({"task@1", "resolution@1"})  # the review records of a packet
+# The members of a receipt that record the inputs of ``admit`` other than the candidates.
+_RECEIPT_INPUTS = ("groundgate", "document", "references", "packs", "schema_sha256",
+                   "policy_sha256")  # fmt: skip
+
+
+def _review_plan(
+    objects: _Objects, packet: str, obj: Mapping[str, Any]
+) -> tuple[
+    list[tuple[str, str]],
+    frozenset[str],
+    dict[str, int],
+    list[tuple[str, str]],
+    list[tuple[str, str]],
+]:
+    """The review objects of a packet for ``forget`` with ``everything`` (#516): each
+    correction packet of ``review resolve`` with its candidates, judgments and receipt, then
+    each ``task@1`` and ``resolution@1`` that names the packet. Also return the keys of the
+    correction packets, and for each object of a correction packet whose receipt a resolution
+    of another packet names, the number of those packets: that correction is shared, so its
+    kept objects stay. Last, return each answer log of the packet that the store cannot read,
+    and each packet that can be a correction when neither its candidates nor its receipt can
+    tell: then ``forget`` keeps the review provenance and reports them as ``unchecked``. Also
+    return each receipt that no packet names and that can be the receipt of a correction, but
+    that does not record enough to prove it (``_orphans``): it stays, and ``forget`` reports it.
+    A ``review-policy@1`` object holds no document data and stays.
+
+    A correction packet is a packet with the inputs of the packet, no run record, and the exact
+    candidates and judgments that ``review resolve`` gives to ``admit`` for a correction answer
+    of the packet (review.md §6.2): the candidates of the packet without those of the slot, and
+    the person's candidate last. ``_correction_inputs`` finds them from the receipt, the
+    judgments and the task, which ``forget`` keeps, so a plain ``forget`` before does not hide
+    a correction. Each key comes from the list of store objects, never from an object or a
+    log, so no path comes from untrusted data. An object that cannot be read names nothing."""
+    tasks: dict[str, Any] = {}
+    resolutions: list[tuple[str, str]] = []
+    unread: list[tuple[str, str]] = []
+    elsewhere: dict[str, set[str]] = {}  # receipt -> the other packets whose resolution names it
+    for kind in ("task@1", "resolution@1"):
+        for k in sorted(objects.of(kind)):
+            with suppress(StoreError, ValueError, RecursionError):
+                found = objects.json(kind, k)
+                if not isinstance(found, dict) or not isinstance(found.get("packet"), str):
+                    continue
+                if found["packet"] != packet:
+                    if kind == "resolution@1" and isinstance(found.get("slots"), list):
+                        for slot in found["slots"]:
+                            r = slot.get("receipt") if isinstance(slot, dict) else None
+                            if isinstance(r, str):
+                                elsewhere.setdefault(r, set()).add(found["packet"])
+                elif kind == "task@1":
+                    tasks[k] = found
+                else:
+                    resolutions.append((kind, k))
+    wanted = _correction_inputs(objects, packet, obj, tasks, unread)
+    protected = {n for _, n in _named(obj)}
+    plan: list[tuple[str, str]] = []
+    corrections: set[str] = set()
+    shared: dict[str, int] = {}
+    for k in sorted(objects.of("packet@1")) if wanted is None or wanted else []:
         if k == packet:
             continue
         try:
-            obj = _packet(objects, k)
-            named = {n for _, n in _named(obj)}
-            readings = _keys(obj["reading"])
-            runs = _keys(obj["run"])
-        except (StoreError, ValueError, RecursionError):
+            other = _packet(objects, k)
+            if other["run"] is not None or any(other[m] != obj[m] for m in _SAME_INPUTS):
+                continue
+            named = _named(other)
+            found = None if wanted is None else _is_correction(objects, other, wanted)
+        except (StoreError, ValueError, TypeError, RecursionError):
             continue
-        for n in readings:
-            named.add(n)
-            if objects.kinds.get(n) == "reading@1":
-                with suppress(StoreError, ValueError, RecursionError):  # check reports it
-                    named.update(m for _, m in _reading_named(objects, n))
-        for n in runs:
-            named.add(n)
-            if (objects.kinds.get(n) or "").startswith("run@"):
-                with suppress(StoreError, ValueError, RecursionError):  # check reports it
-                    named.update(m for _, m in _run_objects(objects, _run(objects, n))[0])
-        for n in named:
-            counts[n] = counts.get(n, 0) + 1
-    return counts
+        if found is None:  # it can be a correction, but nothing tells: keep the provenance
+            unread.append(("packet@1", k))
+            continue
+        if not found:
+            continue
+        corrections.add(k)
+        # An object that the packet names is not an object of the correction: with an
+        # unchecked log, the packet keeps it, because it finds the corrections again.
+        own = [
+            (kind, n) for kind, n in named
+            if kind in ("candidates@1", "judgments@1") and n not in protected
+        ]  # fmt: skip
+        receipts = [(kind, n) for kind, n in named if kind == "receipt@1" and n not in protected]
+        # The receipt goes last, after the correction packet: a forget that stops before it
+        # finds the receipt again as a receipt that no packet names (``_orphans``).
+        plan += [*own, ("packet@1", k), *receipts]
+        users = set().union(*(elsewhere.get(n, set()) for _, n in receipts)) - {packet}
+        if users:  # the same correction of another packet: it is shared
+            for _, n in [*own, *receipts, ("packet@1", k)]:
+                shared[n] = shared.get(n, 0) + len(users)
+    unproven: list[tuple[str, str]] = []
+    if wanted:
+        proven, maybe, stops = _orphans(objects, obj, wanted)
+        unread += stops  # the search cannot run: keep the review provenance
+        plan += [("receipt@1", n) for n in proven if n not in elsewhere]
+        unproven = [("receipt@1", n) for n in maybe if n not in elsewhere]
+    review = plan + [("task@1", k) for k in tasks] + resolutions
+    return review, frozenset(corrections), shared, unread, unproven
+
+
+def _orphans(
+    objects: _Objects,
+    obj: Mapping[str, Any],
+    wanted: list[tuple[Counter[str], str, str | None, str]],
+) -> tuple[list[str], list[str], list[tuple[str, str]]]:
+    """The receipts of the corrections whose packets are gone: a ``forget`` that stopped
+    removed the correction packet before its receipt. Such a receipt is named by no packet. Its
+    spec version, document, references, packs, schema digest and policy digest are those of
+    the receipt of the packet, and its decisions name the candidates of one correction in
+    ``wanted`` by their digests.
+
+    A receipt lists only the judgments that applied, not the judgments that ``admit`` got. So
+    it proves a correction only when the packet has no judgments, and the receipt lists none:
+    each other input of ``admit`` is then in the receipt. Return the proven receipts, which
+    ``forget`` removes, and the receipts that match all the rest, which stay.
+
+    Last, return each object that stops the search: a packet that cannot be read can name any
+    receipt, an object that cannot be read can be a packet or a receipt, and a receipt that no
+    packet names and that cannot be read can be a correction. Then ``forget`` reports them as
+    ``unchecked`` and keeps the review provenance, so a second call after a repair can finish.
+    Then there are no proven receipts."""
+    stops = [(kind or "object", k) for k, kind in objects.unread()]
+    named: set[str] = set()
+    for k in objects.of("packet@1"):
+        try:
+            named.update(_keys(_packet(objects, k)["receipt"]))
+        except (StoreError, ValueError, TypeError, RecursionError):
+            stops.append(("packet@1", k))
+    try:
+        mine = objects.json("receipt@1", obj["receipt"])
+        inputs = [mine[m] for m in _RECEIPT_INPUTS]
+    except (StoreError, ValueError, TypeError, KeyError, RecursionError):
+        stops.append(("receipt@1", str(obj["receipt"])))
+    if stops:
+        return [], [], stops
+    proven, maybe = [], []
+    for k in sorted(objects.of("receipt@1")):
+        if k in named:
+            continue
+        try:
+            receipt = objects.json("receipt@1", k)
+            if [receipt[m] for m in _RECEIPT_INPUTS] != inputs:
+                continue
+            hashes = Counter(d["candidate_sha256"] for d in receipt["decisions"])
+            if not any(hashes == digests + Counter([c]) for digests, _, _, c in wanted):
+                continue
+            if obj["judgments"] is None and receipt["judgments"] == []:
+                proven.append(k)
+            else:
+                maybe.append(k)
+        except (StoreError, ValueError, TypeError, KeyError, RecursionError):
+            stops.append(("receipt@1", k))
+    if stops:
+        return [], [], stops
+    return proven, maybe, []
+
+
+def _correction_inputs(
+    objects: _Objects,
+    packet: str,
+    obj: Mapping[str, Any],
+    tasks: Mapping[str, Any],
+    unread: list[tuple[str, str]],
+) -> list[tuple[Counter[str], str, str | None, str]] | None:
+    """For each correction answer of the packet, the inputs that ``review resolve`` gives to
+    ``admit`` (review.md §6.2): the digests of the kept candidates, the person's candidate as
+    canonical JSON, the key of the kept judgments, and the digest of the person's candidate.
+    The kept candidates come from the candidate digests of the receipt, so the candidates of
+    the packet need not be in the store.
+    A record or a task that does not have the expected form gives nothing. Each answer log of
+    the packet that the store cannot read goes into ``unread``. None if a correction answer is
+    there, but the receipt or the judgments of the packet cannot be read: then nothing tells
+    which packets are its corrections."""
+    answers: list[tuple[Mapping[str, Any], Mapping[str, Any]]] = []  # the record and its task
+    logs, _ = objects.store.log_names()
+    for log in logs:
+        if log[0] != "answers" or log[1] != packet:
+            continue
+        try:
+            records = objects.store.read(log)
+        except StoreError:
+            unread.append(("log", _log_rel(log)))
+            continue
+        for r in records:
+            if not isinstance(r, dict):
+                continue
+            tk = r.get("task")
+            task = tasks.get(tk) if isinstance(tk, str) else None
+            verdict = r.get("verdict")  # a verdict that is not a string is no correction
+            if isinstance(verdict, str) and verdict in _CORRECTIONS and task:
+                if not isinstance(r.get("candidate"), dict):
+                    continue
+                answers.append((r, task))
+    if not answers:
+        return []
+    try:
+        receipt = objects.json("receipt@1", obj["receipt"])
+        decisions = receipt["decisions"]
+        judgments = None
+        if obj["judgments"] is not None:
+            judgments = objects.json("judgments@1", obj["judgments"])
+        if not isinstance(decisions, list) or not isinstance(judgments, (list, type(None))):
+            return None
+        every = [d["candidate_sha256"] for d in decisions]
+        if not all(isinstance(h, str) for h in every):
+            return None
+    except (StoreError, ValueError, TypeError, KeyError, RecursionError):
+        return None
+    out: list[tuple[Counter[str], str, str | None, str]] = []
+    for given, asked in answers:
+        with suppress(ValueError, TypeError, KeyError, IndexError, RecursionError):
+            c = given["candidate"]
+            slot = asked["slot"]["decisions"]
+            if not isinstance(slot, list) or not all(type(i) is int and i >= 0 for i in slot):
+                continue
+            removed = {decisions[i]["candidate_sha256"] for i in slot}
+            gone = {
+                d["candidate_id"] for d in decisions
+                if d["candidate_sha256"] in removed and type(d["candidate_id"]) in (str, int)
+            }  # fmt: skip
+            left = None
+            if judgments is not None:
+                left = _json_key("judgments@1", [
+                    j for j in judgments
+                    if not (isinstance(j, dict) and type(j.get("candidate_id")) in (str, int)
+                            and j["candidate_id"] in gone)
+                ])  # fmt: skip
+            kept = Counter(h for h in every if h not in removed)
+            out.append((kept, jcs(c), left, digest("candidate", c)))
+    return out
+
+
+def _is_correction(
+    objects: _Objects,
+    other: Mapping[str, Any],
+    wanted: list[tuple[Counter[str], str, str | None, str]],
+) -> bool | None:
+    """True if the candidates and the judgments of ``other`` are the exact inputs of one
+    correction in ``wanted``: the kept candidates, then the person's candidate last. If a plain
+    ``forget`` removed the candidates, the receipt tells: it names each candidate by its
+    digest. None if neither the candidates nor the receipt can be read."""
+    if not isinstance(other["candidates"], str) or not isinstance(other["receipt"], str):
+        return False
+    judged = [w for w in wanted if other["judgments"] == w[2]]
+    if not judged:
+        return False
+    if objects.kinds.get(other["candidates"]) == "candidates@1":
+        try:
+            found = objects.json("candidates@1", other["candidates"])
+        except StoreError:
+            found = None
+        if isinstance(found, list) and found:
+            last = jcs(found[-1])
+            kept = Counter(digest("candidate", c) for c in found[:-1])
+            return any(last == person and kept == digests for digests, person, _, _ in judged)
+        if found is not None:
+            return False
+    try:
+        receipt = objects.json("receipt@1", other["receipt"])
+        hashes = Counter(d["candidate_sha256"] for d in receipt["decisions"])
+    except (StoreError, ValueError, TypeError, KeyError, RecursionError):
+        return None
+    return any(hashes == digests + Counter([mine]) for digests, _, _, mine in judged)
+
+
+def _json_key(kind: str, value: Any) -> str:
+    return key(kind, jcs(value).encode("utf-8"))
 
 
 def forget_packet(
@@ -658,9 +954,23 @@ def forget_packet(
     is not a proof.
 
     With ``everything``, remove each object and each answer log of the packet, and the packet
-    last. An object of the "Kept" column that another packet names stays. Tasks and
-    resolutions are not in the store yet, so ``everything`` does not look for them (#432). A
-    packet that cannot be read counts as a packet that names nothing, so run ``check`` first. If
+    last. It also removes each ``task@1`` and ``resolution@1`` that names the packet, and
+    each correction packet that ``review resolve`` wrote for it, with its candidates, judgments
+    and receipt (#516). A ``review-policy@1`` object stays. If an answer log of the packet
+    cannot be read, it is ``unchecked``: it can name a correction. Then ``everything`` removes
+    only what a plain ``forget`` removes, and keeps the packet, its corrections, its tasks, its
+    resolutions and its logs, so a second call after a repair of the log can finish. The same
+    applies when the search for the receipt of a correction whose packet is gone cannot run,
+    because an object of the store cannot be read (``_orphans``). Last, one
+    filter applies to all the plans: an object that a packet, receipt, task or resolution
+    which stays names also stays (``_named_by_rest``). The "Removed" objects of the packet
+    itself and a run record that holds text go for all packets, so they are not in it.
+    The corrections go first, then the review records and the answer logs of the packet, then
+    its receipt and its judgments, and the packet last. The receipt of a correction goes after
+    its packet. So a call that stops can finish later. An object of the
+    "Kept" column that another packet names stays, but a correction packet of this packet does
+    not count. A packet that cannot be read counts as a packet that names nothing, so run
+    ``check`` first. If
     an answer log is locked, ``everything`` stops before it removes the packet, so a second
     call can finish the work. This is also the result when another ``forget`` of the same
     packet holds the lock of the log. A log or packet that another ``forget`` removed first
@@ -748,30 +1058,84 @@ def forget_packet(
                 plan += [(kind, n, False) for kind, n in _reading_named(objects, k)]
             except StoreError:
                 unchecked.append(("reading@1", k))
-    if not everything:
+    corrections: frozenset[str] = frozenset()
+    shared_corrections: dict[str, int] = {}
+    unread_review: list[tuple[str, str]] = []
+    late: list[tuple[str, str, bool]] = []  # the receipt and the judgments of the packet
+    if everything:
+        walked = _review_plan(objects, packet, obj)
+        review, corrections, shared_corrections, unread_review, unproven = walked
+        unchecked += unproven  # they stay, and they do not stop the rest
+        if unread_review:
+            # An answer log that cannot be read can name a correction, and a packet that
+            # cannot be told can be one. Keep what finds them again: the packet, its kept
+            # objects, its corrections, its tasks, its resolutions and its logs. A later forget
+            # with everything can then finish (#516).
+            plan = [(kind, k, always) for kind, k, always in plan if kind in REMOVED or always]
+            review = []
+            unchecked += unread_review
+        # The corrections go first, and the tasks, the resolutions and the logs of the packet
+        # after them. The receipt and the judgments of the packet go last, before the packet:
+        # with them, a forget that stops finds the rest of the corrections again, and tells
+        # that a packet of the same inputs is not a correction (#516).
+        first = [(kind, k, False) for kind, k in review if kind not in _RECORDS]
+        recovery = set(_keys(obj["receipt"])) | set(_keys(obj["judgments"]))
+        late = [(kind, k, a) for kind, k, a in plan if k in recovery]
+        plan = [(kind, k, a) for kind, k, a in plan if k not in recovery]
+        plan = first + plan + [(kind, k, False) for kind, k in review if kind in _RECORDS]
+    else:
         plan = [(kind, k, always) for kind, k, always in plan if kind in REMOVED or always]
-    others = _others(objects, packet)
+    others = _others(objects, packet, corrections)
+    for ck, cn in shared_corrections.items():
+        others[ck] = others.get(ck, 0) + cn
+    # The last filter, on all the plans together: an object that an object which stays names
+    # stays too (#516). The checks of each path above only choose what to try. A kind of the
+    # "Removed" column of the packet itself, and a run record that holds text, go for all
+    # packets (§8 rule 3), so they do not count here. Keep an object, and the objects that it
+    # names stay too: repeat until nothing changes.
+    keep: set[str] = set()
+    every = plan + late if everything else plan
+    if everything:
+        removed = {k for kind, k, always in every if (kind in REMOVED or always)}
+        removed -= {k for _, k, _ in first}
+        guarded = {k for _, k, _ in every} - removed
+        stays = bool(unread_review or unread_runs)
+        gone = {k for _, k, _ in every} | (set() if stays else {packet})
+        guarded |= set() if stays else {packet}
+        keep = set(shared_corrections) & guarded  # the correction of another packet too
+        gone -= keep
+        while more := _named_by_rest(objects, gone) & (gone & guarded):
+            keep |= more
+            gone -= more
     done: list[tuple[str, str, str, int]] = [
         (kind, k, "unchecked", others.get(k, 0)) for kind, k in dict.fromkeys(unchecked)
     ]
     seen: set[str] = set()
-    for kind, k, always in plan:
-        if k in seen:
-            continue
-        seen.add(k)
-        shared = others.get(k, 0)
-        if k not in objects.kinds:
-            done.append((kind, k, "absent", shared))
-        elif everything and shared and kind not in REMOVED and not always:
-            done.append((kind, k, "kept", shared))
-        else:
-            runs = objects.run_keys(k) if kind in _RUN_KINDS else []
-            try:
-                store.forget(k, reason, run_keys=runs)
-            except NotFound:  # another forget removed it after the walk
-                done.append((kind, k, "absent", shared))
+
+    def drop(entries: list[tuple[str, str, bool]]) -> None:
+        for kind, k, _ in entries:
+            if k in seen:
                 continue
-            done.append((kind, k, "deleted", shared))
+            seen.add(k)
+            shared = others.get(k, 0)
+            if k not in objects.kinds:
+                done.append((kind, k, "absent", shared))
+            elif k in keep:
+                done.append((kind, k, "kept", shared))
+            else:
+                runs = objects.run_keys(k) if kind in _RUN_KINDS else []
+                try:
+                    store.forget(k, reason, run_keys=runs)
+                except NotFound:  # another forget removed it after the walk
+                    done.append((kind, k, "absent", shared))
+                    continue
+                done.append((kind, k, "deleted", shared))
+
+    drop(plan)
+    if everything and (unread_review or packet in keep):
+        drop(late)
+        done.append(("packet@1", packet, "kept", 0))
+        return done
     if everything:
         logs, _ = store.log_names()
         for log in logs:
@@ -782,6 +1146,7 @@ def forget_packet(
                     done.append(("log", _log_rel(log), "absent", 0))
                     continue
                 done.append(("log", _log_rel(log), "deleted", 0))
+        drop(late)
         if unread_runs:  # the packet stays, so check and forget still name the kept record
             done.append(("packet@1", packet, "kept", 0))
             return done
