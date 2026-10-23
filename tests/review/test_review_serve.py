@@ -639,6 +639,43 @@ def test_a_cited_scale_gives_the_value_in_full_with_no_rounding(tmp_path: Path) 
     assert asked["part"] == "scale" and f"{number}000," in asked["text"]
 
 
+def test_a_crore_value_with_the_other_sign_asks_again(tmp_path: Path) -> None:
+    """#496: the sign question knows each scale of the reader, also a crore (10^7)."""
+    text = "Revenue was -1 crore in 2025.\n"
+    schema = {"fields": {"revenue": {"type": "number"}}}
+    at = text.index("-1")
+    candidates = [{"id": "c1", "field": "revenue", "value": "10000000",
+                   "evidence": {"start": at + 1, "end": at + 8}}]  # fmt: skip
+    store = FolderStore(tmp_path / "store")
+    k, _ = admit_packet(store, text, schema, candidates, None, None, None)
+    ((tk, _),) = write_tasks(store, k, EVERY).tasks
+    review = Review(store, "ana")
+    asked = review.check({"task": tk, "verdict": "correct", "start": at, "end": at + 2})["ask"]
+    assert [a["part"] for a in asked] == ["sign"]
+    assert "value 1 of the task is positive" in asked[0]["text"]
+
+
+def test_a_part_with_no_scale_keeps_the_scale_question(tmp_path: Path) -> None:
+    """#496: a scale part that holds no scale, such as "EUR" of "EUR million", does not stop
+    the question about the scale above the number."""
+    text = "EUR million Note 2025\nCost of sales\t\t3,266.2\n"
+    schema = {"fields": {"cost_of_sales": {"type": "number"}}}
+    at = text.index("3,266.2")
+    candidates = [{"id": "c1", "field": "cost_of_sales", "value": "5",
+                   "evidence": {"start": 0, "end": 3}}]  # fmt: skip
+    store = FolderStore(tmp_path / "store")
+    k, _ = admit_packet(store, text, schema, candidates, None, None, None)
+    ((tk, _),) = write_tasks(store, k, EVERY).tasks
+    review = Review(store, "ana")
+    body = {"task": tk, "verdict": "correct", "start": at, "end": at + 7}
+    eur = {"role": "scale", "start": 0, "end": 3}
+    asked = review.check({**body, "parts": [eur]})["ask"]
+    assert [a["part"] for a in asked] == ["scale"]
+    # a part with the scale words gives the value in full, and the question goes
+    million = {"role": "scale", "start": 0, "end": 11}
+    assert review.check({**body, "parts": [million]})["ask"] == []
+
+
 def test_a_field_with_no_definition_gives_none(served: Served) -> None:
     _, _, tasks, call, _ = served
     view = json.loads(call("GET", f"/api/task/{tasks['revenue']}")[2])

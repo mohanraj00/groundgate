@@ -57,6 +57,7 @@ from ..text import (
     normalize_ws,
     parse_value,
     quote_pattern,
+    scale_powers,
     scaled_value,
     token_scale,
     tokens,
@@ -74,7 +75,6 @@ from .resolve import (
     resolve,
 )
 from .tasks import (
-    _SCALES,
     DEFAULT_POLICY,
     Slot,
     _number,
@@ -659,7 +659,8 @@ class Review:
         spec = doc.schema.fields[slot.field]
         out = []
         near = None
-        if token_scale(text[:b], tok) is None and not _cited(body, "scale") and spec.unit != "%":
+        cited = self._part_scale(doc, body) is not None  # a part with no scale asks too
+        if token_scale(text[:b], tok) is None and not cited and spec.unit != "%":
             near = _near_scale(text, tok)
         if near is not None and value.copy_abs() == tok.value.copy_abs():
             power, line = near
@@ -818,16 +819,9 @@ def _near_scale(text: str, tok: Token) -> tuple[int, str] | None:
     return None
 
 
-def _cited(body: Mapping[str, Any], role: str) -> bool:
-    parts = body.get("parts")
-    return isinstance(parts, list) and any(
-        isinstance(p, Mapping) and p.get("role") == role for p in parts
-    )
-
-
 def _scaled(amount: Decimal) -> set[Decimal]:
-    """``amount`` at each scale of a question, from not scaled to trillions."""
-    return {amount.scaleb(p, _EXACT) for p in _SCALES}
+    """``amount`` at each scale that the reader knows, and not scaled."""
+    return {amount.scaleb(p, _EXACT) for p in scale_powers()}
 
 
 def _sign(value: Decimal) -> str:

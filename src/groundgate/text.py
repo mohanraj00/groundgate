@@ -400,6 +400,12 @@ def scale_word(text: str, tok: Token) -> bool:
     return token_scale(text, tok) is not None
 
 
+def scale_powers() -> frozenset[int]:
+    """The power of ten of each scale word and scale suffix that the reader knows, and 0."""
+    voc = _VOCAB.get()
+    return frozenset({0, *voc._SCALE_EXP.values(), *voc._SUFFIX_EXP.values()})
+
+
 def scaled_value(text: str, tok: Token) -> Decimal | None:
     """The token's value times its scale, or None (SPEC §4.1)."""
     k = token_scale(text, tok)
