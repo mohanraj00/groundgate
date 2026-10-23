@@ -487,7 +487,7 @@ a changed document, schema, policy, candidate or outcome.
 
 ## Status
 
-Alpha. groundgate 0.11.0 implements spec v0.11. [CHANGELOG.md](CHANGELOG.md) lists what each version
+Alpha. groundgate 0.12.0 implements spec v0.11. [CHANGELOG.md](CHANGELOG.md) lists what each version
 changes, with its measure. 0.11 adds the store (#288, #402 to #405), the review step and its local
 page (#287, #408 to #412), and `groundgate calibrate` inside groundgate (#385). It reads currency
 headings and currency names (#367, #368, #423), refuses a bad field name (#359), and cuts large

@@ -3,6 +3,66 @@
 Versions follow [SemVer](https://semver.org). A change to how any candidate is decided is a new
 spec version, and receipts name the spec version they were decided under.
 
+## 0.12.0 (2026-10-23)
+
+Spec 0.11, unchanged: every decision and receipt is the same as in 0.11.0. 0.12 removes English
+function words from the search queries of the extraction loop (#466), takes calibration labels
+through the review page (#406, #413), and fixes bugs in the store and the CLI. The extract run
+record is `groundgate-run/4`, so a record from 0.11.0 does not replay.
+
+The extraction loop:
+
+- Breaking: the extract run record is `groundgate-run/4` (#466). Replay of a `groundgate-run/3`
+  record from 0.11.0 fails with the message `runner version differs`. The store keys of #429 come
+  with `groundgate-run/5`.
+- The extract search leaves English function words such as "the" and "and" out of the word
+  queries of a field (#466). Before, their matches merged into one region of the whole document,
+  and the runner cut it.
+
+The store:
+
+- `groundgate store forget` keeps a run record that has lines it cannot read, the header too. It
+  prints the record as "unchecked" and exits 1. With `--all`, the packet stays too. Before, the
+  record went, and its prompts and replies stayed with no record that named them. To finish, put
+  back a copy of the original record, or call `FolderStore.forget` on its key and run `forget
+  --all` again (#444).
+- `write_split` and `groundgate calibrate split` take the lock of the splits log before they read
+  it, so a second writer stops before it appends another split for one document.
+  `FolderStore.take(log)` takes the lock of a log before the first append (#457).
+- `groundgate store rebuild` also writes `views/calibrate-labels.json` (#406).
+
+The review step:
+
+- `review serve` reads a selection with a scale word or suffix, such as "4,200 thousand" or
+  "$4.2m", as the value in full. The page shows the field description next to the question, and
+  help text at each step of a correction (#460).
+- The answer format `answer@2`: the verdict `wrong` and the member `field_keys`. `wrong` leaves
+  the slot open (#406).
+
+Calibration:
+
+- `groundgate calibrate sample`, `label`, `ask` and `report` take `--store DIR`. `label` and `ask`
+  also take `--reviewer NAME`. With a store, each label is an answer on the review page, and `ask`
+  and `report` read the labels from the answer logs (#406, #413).
+
+The CLI:
+
+- The CLI messages show a character above U+FFFF that is not printable as `\U` and 8 hex digits,
+  so each escape has a clear end (#448).
+
+The bench tools:
+
+- The label servers under `bench/` check the `Host` header and require a token (#400). Each one
+  prints a start URL such as `http://127.0.0.1:8781/?token=<token>`. Open that full URL: the plain
+  `http://127.0.0.1:<port>/` gives 403 now. `bench/label/app.py` keeps its URL, and its `Host`
+  check is exact now.
+
+The measure (#463):
+
+- `bench/requested4`: the three arms on the development split on the code after #466, and a first
+  measure of the review page on that split. 88 of 92 scored answers agree with the blind labels,
+  and 30 of 30 blind audit answers agree (#463).
+
 ## 0.11.0 (2026-10-21)
 
 Spec 0.11. Receipts name `"groundgate": "0.11"` and every digest uses the `groundgate/0.11:`
