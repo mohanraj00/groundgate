@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+from collections import Counter
 from collections.abc import Iterator, Mapping
 from contextlib import suppress
 from dataclasses import dataclass, field
@@ -640,92 +641,149 @@ def _others(objects: _Objects, packet: str, skip: frozenset[str] = frozenset()) 
 
 
 # The members that a correction packet of ``review resolve`` shares with its packet (#516).
-_SAME_INPUTS = ("document", "reading", "schema", "policy", "references", "packs")
+_SAME_INPUTS = ("spec", "document", "reading", "schema", "policy", "references", "packs")
+_CORRECTIONS = frozenset({"correct", "adjust_span"})
 
 
 def _review_plan(
     objects: _Objects, packet: str, obj: Mapping[str, Any]
-) -> tuple[list[tuple[str, str]], frozenset[str]]:
+) -> tuple[list[tuple[str, str]], frozenset[str], dict[str, int]]:
     """The review objects of a packet for ``forget`` with ``everything`` (#516): each
     correction packet of ``review resolve`` with its candidates, judgments and receipt, then
     each ``task@1`` and ``resolution@1`` that names the packet. Also return the keys of the
-    correction packets. A ``review-policy@1`` object holds no document data and stays.
+    correction packets, and for each object of a correction packet whose receipt a resolution
+    of another packet names, the number of those packets: that correction is shared, so its
+    kept objects stay. A ``review-policy@1`` object holds no document data and stays.
 
-    A correction packet has the inputs of the packet, no run record, and the candidate of a
-    correction answer in an answer log of the packet. Its candidates or its receipt hold that
-    candidate, or a resolution of the packet names its receipt. Each key comes from the list of
-    store objects, never from an object or a log, so no path comes from untrusted data. An
-    object that cannot be read names nothing."""
-    tasks: list[tuple[str, str]] = []
+    A correction packet is a packet with the inputs of the packet, no run record, and the exact
+    candidates and judgments that ``review resolve`` gives to ``admit`` for a correction answer
+    of the packet (review.md §6.2): the candidates of the packet without those of the slot, and
+    the person's candidate last. ``_correction_inputs`` finds them from the receipt, the
+    judgments and the task, which ``forget`` keeps, so a plain ``forget`` before does not hide
+    a correction. Each key comes from the list of store objects, never from an object or a
+    log, so no path comes from untrusted data. An object that cannot be read names nothing."""
+    tasks: dict[str, Any] = {}
     resolutions: list[tuple[str, str]] = []
-    receipts: set[str] = set()
-    for kind, out in (("task@1", tasks), ("resolution@1", resolutions)):
+    elsewhere: dict[str, set[str]] = {}  # receipt -> the other packets whose resolution names it
+    for kind in ("task@1", "resolution@1"):
         for k in sorted(objects.of(kind)):
             with suppress(StoreError, ValueError, RecursionError):
                 found = objects.json(kind, k)
-                if isinstance(found, dict) and found.get("packet") == packet:
-                    out.append((kind, k))
+                if not isinstance(found, dict) or not isinstance(found.get("packet"), str):
+                    continue
+                if found["packet"] != packet:
                     if kind == "resolution@1" and isinstance(found.get("slots"), list):
-                        receipts.update(
-                            s["receipt"]
-                            for s in found["slots"]
-                            if isinstance(s, dict) and isinstance(s.get("receipt"), str)
-                        )
-    receipts.discard(obj["receipt"])
-    people: set[str] = set()  # the candidates of the correction answers, as canonical JSON
-    digests: set[str] = set()
-    logs, _ = objects.store.log_names()
-    for log in logs:
-        if log[0] != "answers" or log[1] != packet:
-            continue
-        with suppress(StoreError):
-            for r in objects.store.read(log):
-                c = r.get("candidate")
-                if isinstance(c, dict):
-                    with suppress(ValueError, TypeError, RecursionError):
-                        people.add(jcs(c))
-                        digests.add(digest("candidate", c))
+                        for slot in found["slots"]:
+                            r = slot.get("receipt") if isinstance(slot, dict) else None
+                            if isinstance(r, str):
+                                elsewhere.setdefault(r, set()).add(found["packet"])
+                elif kind == "task@1":
+                    tasks[k] = found
+                else:
+                    resolutions.append((kind, k))
+    wanted = _correction_inputs(objects, packet, obj, tasks)
     plan: list[tuple[str, str]] = []
     corrections: set[str] = set()
-    for k in sorted(objects.of("packet@1")):
+    shared: dict[str, int] = {}
+    for k in sorted(objects.of("packet@1")) if wanted else []:
         if k == packet:
             continue
         try:
             other = _packet(objects, k)
             if other["run"] is not None or any(other[m] != obj[m] for m in _SAME_INPUTS):
                 continue
-            if not (people or receipts):
-                continue
             named = _named(other)
-        except (StoreError, ValueError, RecursionError):
-            continue
-        if not (other["receipt"] in receipts or _holds(objects, other, people, digests)):
+            if not _is_correction(objects, other, wanted):
+                continue
+        except (StoreError, ValueError, TypeError, RecursionError):
             continue
         corrections.add(k)
         own = [(kind, n) for kind, n in named if kind in ("candidates@1", "judgments@1")]
-        plan += own + [("receipt@1", n) for n in _keys(other["receipt"])] + [("packet@1", k)]
-    return plan + tasks + resolutions, frozenset(corrections)
+        receipts = [(kind, n) for kind, n in named if kind == "receipt@1"]
+        plan += own + receipts + [("packet@1", k)]
+        users = set().union(*(elsewhere.get(n, set()) for _, n in receipts)) - {packet}
+        if users:  # the same correction of another packet: it is shared
+            for _, n in [*own, *receipts, ("packet@1", k)]:
+                shared[n] = shared.get(n, 0) + len(users)
+    return plan + [("task@1", k) for k in tasks] + resolutions, frozenset(corrections), shared
 
 
-def _holds(
-    objects: _Objects, packet: Mapping[str, Any], people: set[str], digests: set[str]
+def _correction_inputs(
+    objects: _Objects, packet: str, obj: Mapping[str, Any], tasks: Mapping[str, Any]
+) -> list[tuple[Counter[str], str, str | None]]:
+    """For each correction answer of the packet, the inputs that ``review resolve`` gives to
+    ``admit`` (review.md §6.2): the digests of the kept candidates, the person's candidate as
+    canonical JSON, and the key of the kept judgments. The kept candidates come from the
+    candidate digests of the receipt, so the candidates of the packet need not be in the store.
+    A record, a task or a receipt that does not have the expected form gives nothing."""
+    try:
+        receipt = objects.json("receipt@1", obj["receipt"])
+        decisions = receipt["decisions"]
+        judgments = None
+        if obj["judgments"] is not None:
+            judgments = objects.json("judgments@1", obj["judgments"])
+        if not isinstance(decisions, list) or not isinstance(judgments, (list, type(None))):
+            return []
+        every = [d["candidate_sha256"] for d in decisions]
+    except (StoreError, ValueError, TypeError, KeyError, RecursionError):
+        return []
+    out: list[tuple[Counter[str], str, str | None]] = []
+    logs, _ = objects.store.log_names()
+    for log in logs:
+        if log[0] != "answers" or log[1] != packet:
+            continue
+        try:
+            records = objects.store.read(log)
+        except StoreError:
+            continue
+        for r in records:
+            with suppress(ValueError, TypeError, KeyError, IndexError, RecursionError):
+                tk = r.get("task")
+                task = tasks.get(tk) if isinstance(tk, str) else None
+                c = r.get("candidate")
+                if r.get("verdict") not in _CORRECTIONS or not isinstance(c, dict) or not task:
+                    continue
+                slot = task["slot"]["decisions"]
+                if not isinstance(slot, list) or not all(type(i) is int and i >= 0 for i in slot):
+                    continue
+                removed = {decisions[i]["candidate_sha256"] for i in slot}
+                gone = {
+                    d["candidate_id"] for d in decisions
+                    if d["candidate_sha256"] in removed and type(d["candidate_id"]) in (str, int)
+                }  # fmt: skip
+                left = None
+                if judgments is not None:
+                    left = _json_key("judgments@1", [
+                        j for j in judgments
+                        if not (isinstance(j, dict) and type(j.get("candidate_id")) in (str, int)
+                                and j["candidate_id"] in gone)
+                    ])  # fmt: skip
+                out.append((Counter(h for h in every if h not in removed), jcs(c), left))
+    return out
+
+
+def _is_correction(
+    objects: _Objects,
+    other: Mapping[str, Any],
+    wanted: list[tuple[Counter[str], str, str | None]],
 ) -> bool:
-    """True if the candidates or the receipt of ``packet`` hold one of the candidates of the
-    correction answers. The receipt names each candidate by its digest."""
-    for k in _keys(packet["candidates"]):
-        with suppress(StoreError, ValueError, TypeError, RecursionError):
-            found = objects.json("candidates@1", k)
-            if isinstance(found, list) and any(jcs(c) in people for c in found):
-                return True
-    for k in _keys(packet["receipt"]):
-        with suppress(StoreError, ValueError, RecursionError):
-            found = objects.json("receipt@1", k)
-            decisions = found.get("decisions") if isinstance(found, dict) else None
-            if isinstance(decisions, list) and any(
-                isinstance(d, dict) and d.get("candidate_sha256") in digests for d in decisions
-            ):
-                return True
-    return False
+    """True if the candidates and the judgments of ``other`` are the exact inputs of one
+    correction in ``wanted``: the kept candidates, then the person's candidate last."""
+    if not wanted or not isinstance(other["candidates"], str):
+        return False
+    found = objects.json("candidates@1", other["candidates"])
+    if not isinstance(found, list) or not found:
+        return False
+    last = jcs(found[-1])
+    kept = Counter(digest("candidate", c) for c in found[:-1])
+    return any(
+        last == person and kept == digests and other["judgments"] == judged
+        for digests, person, judged in wanted
+    )
+
+
+def _json_key(kind: str, value: Any) -> str:
+    return key(kind, jcs(value).encode("utf-8"))
 
 
 def forget_packet(
@@ -833,12 +891,15 @@ def forget_packet(
             except StoreError:
                 unchecked.append(("reading@1", k))
     corrections: frozenset[str] = frozenset()
+    shared_corrections: dict[str, int] = {}
     if everything:
-        review, corrections = _review_plan(objects, packet, obj)
+        review, corrections, shared_corrections = _review_plan(objects, packet, obj)
         plan += [(kind, k, False) for kind, k in review]
     else:
         plan = [(kind, k, always) for kind, k, always in plan if kind in REMOVED or always]
     others = _others(objects, packet, corrections)
+    for ck, cn in shared_corrections.items():
+        others[ck] = others.get(ck, 0) + cn
     done: list[tuple[str, str, str, int]] = [
         (kind, k, "unchecked", others.get(k, 0)) for kind, k in dict.fromkeys(unchecked)
     ]

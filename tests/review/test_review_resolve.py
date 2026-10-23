@@ -527,3 +527,61 @@ def test_forget_all_removes_the_review_objects_of_the_packet(tmp_path: Path) -> 
         assert all(store.read(("answers", other, reviewer_key("ana"))))
     assert outside.read_text("utf-8") == "{}"
     assert sorted(p.name for p in tmp_path.iterdir()) == ["outside.json", "s"]
+
+
+def test_forget_all_keeps_a_packet_that_only_holds_the_candidate_of_a_correction(
+    tmp_path: Path,
+) -> None:
+    # Another packet of the same inputs holds the original candidate and the candidate of a
+    # correction answer. review resolve never gives these candidates to admit, because it
+    # removes the candidates of the slot. A packet with a receipt list is also not a
+    # correction, and it does not stop forget.
+    store, k, tk, data = one_choice(tmp_path)
+    packet = data["packet"]
+    with store:
+        store.append(
+            ("answers", k, reviewer_key("ana")),
+            record(tk, "ana", "correct", candidate=correction("4200000")),
+        )
+        both, _ = admit_packet(
+            store, packet["text"], packet["schema"],
+            [*packet["candidates"], correction("4200000")], packet["policy"], None,
+            packet["judgments"],
+        )  # fmt: skip
+        odd = {**json.loads(store.get("packet@1", k)), "receipt": []}
+        odd_key = store.put("packet@1", jcs(odd).encode("utf-8"))
+    with FolderStore(tmp_path / "s") as store:
+        done = forget_packet(store, k, "all", everything=True)
+        left, _ = store.object_keys()
+    assert {both, odd_key} <= set(left)
+    assert ("packet@1", k, "deleted", 0) in done
+
+
+def test_forget_all_keeps_a_correction_that_another_packet_shares(tmp_path: Path) -> None:
+    # Two packets differ only in the candidate of the slot. The same correction of each gives
+    # one correction packet, and the resolution of the other packet names its receipt.
+    store, k, tk, data = one_choice(tmp_path)
+    packet = data["packet"]
+    changed = [{**packet["candidates"][0], "value": "4200001"}]
+    with store:
+        other, _ = admit_packet(
+            store, packet["text"], packet["schema"], changed, packet["policy"], None,
+            packet["judgments"],
+        )  # fmt: skip
+        (otk,) = [t for t, _ in write_tasks(store, other, EVERY).tasks]
+        for pk, t in ((k, tk), (other, otk)):
+            store.append(
+                ("answers", pk, reviewer_key("ana")),
+                record(t, "ana", "correct", candidate=correction("4200000")),
+            )
+        first = write_resolution(store, k, policy(), ["ana"])
+        second = write_resolution(store, other, policy(), ["ana"])
+        assert first.resolution is not None and second.resolution is not None
+        (receipt,) = {s["receipt"] for s in second.resolution["slots"]}
+        assert {s["receipt"] for s in first.resolution["slots"]} == {receipt}
+    with FolderStore(tmp_path / "s") as store:
+        done = forget_packet(store, k, "all", everything=True)
+        left, _ = store.object_keys()
+    assert ("receipt@1", receipt, "kept", 1) in done
+    assert {receipt, other, second.key} <= set(left)
+    assert _naming(FolderStore(tmp_path / "s"), "resolution@1", k) == []
