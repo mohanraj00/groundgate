@@ -7,6 +7,7 @@ import os
 import stat
 import subprocess
 import sys
+import tempfile
 from collections.abc import Callable, Iterator
 from datetime import datetime, timezone
 from pathlib import Path
@@ -483,3 +484,87 @@ def test_close_keeps_a_lock_that_another_writer_made(root: Path) -> None:
         FolderStore(root).append(ANA, {"answer": "maybe"})
     second.close()
     assert not lock.exists()
+
+
+# The review of #415 (#417)
+
+
+def test_forget_removes_the_temporary_files_of_its_object_only(root: Path, tmp_path: Path) -> None:
+    store = FolderStore(root)
+    k = store.put("text@1", TEXT)
+    other = store.put("text@1", b"The deposit is 600 dollars.")
+    folder = _object(root, k).parent
+    mine = folder / f".tmp-{k[9:]}-abc123"
+    mine.write_bytes(b"half")
+    # The same first two hex digits: a temporary file of another object in the same folder.
+    near = folder / f".tmp-{k[9:-1]}{'0' if k[-1] != '0' else '1'}-abc123"
+    near.write_bytes(b"other")
+    old = folder / ".tmp-1"  # an earlier version: no key in the name
+    old.write_bytes(b"old")
+    outside = tmp_path / "outside"
+    outside.write_bytes(b"keep")
+    link = folder / f".tmp-{k[9:]}-link"
+    link.symlink_to(outside)
+    sub = folder / f".tmp-{k[9:]}-folder"
+    sub.mkdir()
+    other_folder = _object(root, other).parent
+    theirs = other_folder / f".tmp-{k[9:]}-xyz"  # the name of this object in another folder
+    if other_folder != folder:
+        theirs.write_bytes(b"theirs")
+    store.forget(k, "the tenant asked")
+    assert not _object(root, k).exists()
+    assert not mine.exists()
+    assert near.read_bytes() == b"other"
+    assert old.read_bytes() == b"old"
+    assert link.is_symlink() and outside.read_bytes() == b"keep"
+    assert sub.is_dir()
+    assert _object(root, other).exists()
+    if other_folder != folder:
+        assert theirs.read_bytes() == b"theirs"
+    assert store.object_keys() == ([other], [])
+
+
+def test_a_put_names_its_object_in_the_temporary_file(
+    root: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    names: list[str] = []
+    real = tempfile.mkstemp
+
+    def keep(**kwargs: str) -> tuple[int, str]:
+        fd, name = real(**kwargs)
+        names.append(name)
+        return fd, name
+
+    monkeypatch.setattr(tempfile, "mkstemp", keep)
+    k = FolderStore(root).put("text@1", TEXT)
+    assert Path(names[0]).name.startswith(f".tmp-{k[9:]}-")
+
+
+@pytest.mark.parametrize("make", ["file", "dangling"])
+def test_a_root_that_is_not_a_folder_raises_a_store_error(tmp_path: Path, make: str) -> None:
+    root = tmp_path / "store"
+    if make == "file":
+        root.write_text("x")
+    else:
+        root.symlink_to(tmp_path / "absent")
+    store = FolderStore(root)
+    with pytest.raises(StoreError, match="cannot be used"):
+        store.put("text@1", TEXT)
+    with pytest.raises(StoreError, match="cannot be used"):
+        store.append(ANA, {"answer": "yes"})
+    if make == "file":
+        with pytest.raises(StoreError, match="cannot be used"):
+            store.read(ANA)
+    else:
+        assert store.read(ANA) == []
+
+
+@pytest.mark.parametrize("text", ["1_0", " 10", "+10", "\u0661\u0660"])
+def test_a_lock_with_a_pid_that_is_not_only_digits(root: Path, text: str) -> None:
+    with FolderStore(root) as store:
+        store.append(ANA, {"answer": "yes"})
+    lock = root / "logs" / "answers" / PACKET[7:] / (ANA[2][7:] + ".lock")
+    lock.write_bytes(f"{text}\n".encode())
+    with pytest.raises(Locked, match="another writer has this log") as info:
+        FolderStore(root).append(ANA, {"answer": "no"})
+    assert "process 10" not in str(info.value)
