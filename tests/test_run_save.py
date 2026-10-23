@@ -283,11 +283,18 @@ def test_load_refuses_a_packet_of_other_inputs(tmp_path: Path) -> None:
             {"policy": store.put("policy@1", jcs({"unit_window": 8}).encode())},
             {"schema": store.put("schema@1", jcs({"fields": {}}).encode())},
             {"references": [store.put("reference@1", jcs({"id": "r", "text": "x"}).encode())]},
+            # Judgments [{}] make verify on the packet raise PacketError (#520).
+            {"judgments": store.put("judgments@1", jcs([{}]).encode())},
         ]
         for change in changes:
             other = store.put("packet@1", jcs({**packet, **change}).encode())
             with pytest.raises(ValueError, match="other inputs than its run record"):
                 RunResult.load(store, other)
+        judged = load_packet(store, other)
+        with pytest.raises(PacketError):
+            gg.verify(
+                judged.receipt, judged.text, judged.schema, judged.candidates, **judged.inputs()
+            )
 
 
 def test_load_refuses_a_packet_of_another_receipt(tmp_path: Path) -> None:

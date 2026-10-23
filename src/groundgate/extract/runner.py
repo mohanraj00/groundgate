@@ -333,11 +333,12 @@ class RunResult:
         ``load`` gets the packet, its run record and each object that the record names by its
         store key, and replays the run as ``read`` does, with the packs that the packet names.
         The run header must name the inputs of the packet: the document id, source and text,
-        the schema, the policy and the references. Each object must also have the run key of
-        the record. The replayed receipt and candidates must be those of the packet. A packet
-        with no run, a record that is not ``groundgate-run/5``, a packet of other inputs, a
-        changed object or a replay that differs raises ``ValueError``. An object that is not in
-        the store raises ``InputGone``, with the deletion if ``forget`` removed it.
+        the schema, the policy and the references. The packet must have no judgments, because a
+        run has none. Each object must also have the run key of the record. The replayed
+        receipt and candidates must be those of the packet. A packet with no run, a record that
+        is not ``groundgate-run/5``, a packet of other inputs, a changed object or a replay that
+        differs raises ``ValueError``. An object that is not in the store raises ``InputGone``,
+        with the deletion if ``forget`` removed it.
 
         The store bounds each read: ``FolderStore`` reads no object above its ``max_bytes``. The
         record and its objects are held in memory together, so open the store with a smaller
@@ -458,7 +459,10 @@ def _stored(record: Sequence[Mapping[str, Any]]) -> list[tuple[str, str, str]]:
 
 
 def _same_inputs(record: Sequence[Mapping[str, Any]], packet: Any) -> None:
-    """Raise ``ValueError`` if the run header does not name the inputs of the ``Packet``."""
+    """Raise ``ValueError`` if the run header does not name the inputs of the ``Packet``: the
+    document id, source and text, the schema, the policy and the references. A packet with
+    judgments fails too, because a run has none. The replay takes the packs of the packet, and
+    ``load`` compares the receipt and the candidates after the replay."""
     _stored(record)  # the header has each key, in the format of a store key
     inputs = record[0]["inputs"]
     document = inputs["document"]
@@ -473,6 +477,8 @@ def _same_inputs(record: Sequence[Mapping[str, Any]], packet: Any) -> None:
             [_key("reference", jcs(r)) for r in references] == inputs["reference_keys"],
             isinstance(receipt, dict) and receipt.get("id") == document["id"],
             packet.document_source == document["source"],
+            # A run record holds no judgments, so the replay cannot give them.
+            packet.judgments is None or packet.judgments == [],
         ]
     except (TypeError, ValueError, RecursionError, UnicodeError) as exc:
         raise ValueError("the packet inputs have no canonical form") from exc

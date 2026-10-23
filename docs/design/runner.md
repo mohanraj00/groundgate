@@ -525,11 +525,11 @@ raises if the record names another store key than the key of an object.
 (#429). It gets the packet, the `run@5` record that the packet names and each object by the store
 key in the record, and each object must also have the run key of the record. The run header
 must name the inputs of the packet: the document id, source and text, the schema, the policy and
-the references. It takes the packs that the packet names, replays the run as `read` does and
-compares the receipt and the candidates with the packet. The store bounds each read, so open a
-`FolderStore` with a smaller `max_bytes` to use less memory. An
-object that `forget` removed raises `InputGone` with the deletion. A record of
-`groundgate-run/4` or earlier has no store keys and does not load.
+the references. The packet must have no judgments, because a run has none. It takes the packs
+that the packet names, replays the run as `read` does and compares the receipt and the
+candidates with the packet. The store bounds each read, so open a `FolderStore` with a smaller
+`max_bytes` to use less memory. An object that `forget` removed raises `InputGone` with the
+deletion. A record of `groundgate-run/4` or earlier has no store keys and does not load.
 
 Two fields are reserved for the document model (#285), so that a later reader output needs no
 new log format. An input of `kind: "document"` will name an extracted document and its reader
