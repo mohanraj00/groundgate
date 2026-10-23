@@ -447,10 +447,17 @@ def test_a_bad_reading_cache_is_a_miss(tmp_path: Path, monkeypatch: pytest.Monke
             again, doc = put_reading(store, source)
             assert again == k and "Fee: $500" in doc.text
         assert len(calls) == 4
+        deep = "[" * 1100 + "]" * 1100
+        nested = jcs(cache).replace(json.dumps(cache["readings"][0]["source"]), deep, 1)
+        for bad in (b"[" * 100000, nested.encode()):
+            view.write_bytes(bad)
+            again, doc = put_reading(store, source)
+            assert again == k and "Fee: $500" in doc.text
+        calls.clear()
         view.write_bytes(jcs(cache).encode())
         store.forget(json.loads(store.get("reading@1", k))["text"], "test")
         again, doc = put_reading(store, source)
-        assert again == k and "Fee: $500" in doc.text and len(calls) == 5
+        assert again == k and "Fee: $500" in doc.text and len(calls) == 1
 
 
 def test_layout_needs_a_pdf_before_the_store_is_written(

@@ -256,8 +256,8 @@ def _cached_reading(store: Store, path: Path, want: dict[str, Any]) -> tuple[str
             if not isinstance(found, list) or len(found) != 1 or not isinstance(found[0], str):
                 return None
             return _stored_reading(store, found[0], name)
-    except (StoreError, ValueError, TypeError, KeyError, AttributeError):
-        return None
+    except (StoreError, ValueError, TypeError, KeyError, AttributeError, RecursionError):
+        return None  # a deep nest in the view or an object is a miss too
     return None
 
 
