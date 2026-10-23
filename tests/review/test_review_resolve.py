@@ -791,3 +791,53 @@ def test_forget_all_keeps_the_review_when_the_receipt_of_the_packet_is_gone(
     assert ("packet@1", fixed, "unchecked", 0) in done
     assert {k, tk, rk, fixed, receipt} <= set(left)
     assert (root / "logs" / "answers" / k[7:]).exists()
+
+
+def test_forget_all_finishes_after_a_stop_at_the_correction_packet(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    # The first forget --all stops at the correction packet, after its candidates. Its receipt
+    # goes after it, so the retry finds the receipt that no packet names and removes it.
+    root, k, tk, rk, receipt, fixed = _one_correction(tmp_path)
+    with FolderStore(root) as store:
+        candidates = json.loads(store.get("packet@1", fixed))["candidates"]
+    real = FolderStore.forget
+    calls: list[str] = []
+
+    def stop(self: FolderStore, k: str, reason: str, **more: Any) -> None:
+        calls.append(k)
+        real(self, k, reason, **more)
+        if k == fixed:
+            raise RuntimeError("stopped")
+
+    monkeypatch.setattr(FolderStore, "forget", stop)
+    with FolderStore(root) as store, pytest.raises(RuntimeError):
+        forget_packet(store, k, "all", everything=True)
+    assert calls.index(candidates) < calls.index(fixed) and receipt not in calls
+    with FolderStore(root) as store:
+        left, _ = store.object_keys()
+    assert receipt in left and fixed not in left
+    monkeypatch.setattr(FolderStore, "forget", real)
+    with FolderStore(root) as store:
+        done = forget_packet(store, k, "all", everything=True)
+        left, _ = store.object_keys()
+    assert not any(state == "unchecked" for _, _, state, _ in done)
+    assert ("receipt@1", receipt, "deleted", 0) in done
+    assert not {k, tk, rk, receipt} & set(left)
+
+
+@pytest.mark.parametrize("verdict", [[], {}])
+def test_forget_all_takes_a_verdict_that_is_not_a_string(tmp_path: Path, verdict: Any) -> None:
+    # A record whose verdict is not a string is no correction, and it does not stop forget.
+    root, k, tk, rk, receipt, fixed = _one_correction(tmp_path)
+    with FolderStore(root) as store:
+        store.append(
+            ("answers", k, reviewer_key("ben")),
+            {**record(tk, "ben", "correct", candidate=correction("4300000", "ben-1")),
+             "verdict": verdict},
+        )  # fmt: skip
+    with FolderStore(root) as store:
+        done = forget_packet(store, k, "all", everything=True)
+        left, _ = store.object_keys()
+    assert not any(state == "unchecked" for _, _, state, _ in done)
+    assert not {k, tk, rk, receipt, fixed} & set(left)

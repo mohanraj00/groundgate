@@ -267,7 +267,9 @@ their issues (#432).
    correction, but whose candidates and receipt cannot be read, is "unchecked" too. So is such
    a packet when a correction answer stays, but the receipt or the judgments of the packet are
    gone. The corrections go first, and the receipt, the judgments, the tasks and the
-   resolutions of the packet after them, so a `forget --all` that stops can finish later. Then it
+   resolutions of the packet after them, so a `forget --all` that stops can finish later. The
+   receipt of a correction goes after its packet. A retry finds a receipt that no packet names
+   by its document and its candidate digests. Then it
    removes only what `forget` removes and the corrections that it finds. The packet, its kept
    objects, its tasks, its resolutions and its logs stay. Run `store check --repair` on a torn log, then `forget --all` again.
    One object can serve two packets, because the same text has one key. `forget` of that text

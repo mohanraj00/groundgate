@@ -715,13 +715,52 @@ def _review_plan(
             if kind in ("candidates@1", "judgments@1") and n not in protected
         ]  # fmt: skip
         receipts = [(kind, n) for kind, n in named if kind == "receipt@1" and n not in protected]
-        plan += own + receipts + [("packet@1", k)]
+        # The receipt goes last, after the correction packet: a forget that stops before it
+        # finds the receipt again as a receipt that no packet names (``_orphans``).
+        plan += [*own, ("packet@1", k), *receipts]
         users = set().union(*(elsewhere.get(n, set()) for _, n in receipts)) - {packet}
         if users:  # the same correction of another packet: it is shared
             for _, n in [*own, *receipts, ("packet@1", k)]:
                 shared[n] = shared.get(n, 0) + len(users)
+    if wanted:
+        plan += [("receipt@1", n) for n in _orphans(objects, obj, wanted) if n not in elsewhere]
     review = plan + [("task@1", k) for k in tasks] + resolutions
     return review, frozenset(corrections), shared, unread
+
+
+def _orphans(
+    objects: _Objects,
+    obj: Mapping[str, Any],
+    wanted: list[tuple[Counter[str], str, str | None, str]],
+) -> list[str]:
+    """Each receipt of a correction whose packet is gone: a ``forget`` that stopped removed the
+    correction packet before its receipt. Such a receipt is named by no packet, has the
+    document of the packet, and names the candidates of one correction in ``wanted`` by their
+    digests. If a packet cannot be read, it can name any receipt, so there is none."""
+    named: set[str] = set()
+    for k in objects.of("packet@1"):
+        try:
+            named.update(_keys(_packet(objects, k)["receipt"]))
+        except (StoreError, ValueError, TypeError, RecursionError):
+            return []
+    if any(kind is None for kind in objects.kinds.values()):
+        return []  # an object that cannot be read can be a packet
+    try:
+        document = objects.json("receipt@1", obj["receipt"])["document"]
+    except (StoreError, ValueError, TypeError, KeyError, RecursionError):
+        return []
+    out = []
+    for k in sorted(objects.of("receipt@1")):
+        if k in named:
+            continue
+        with suppress(StoreError, ValueError, TypeError, KeyError, RecursionError):
+            receipt = objects.json("receipt@1", k)
+            if receipt["document"] != document:
+                continue
+            hashes = Counter(d["candidate_sha256"] for d in receipt["decisions"])
+            if any(hashes == digests + Counter([mine]) for digests, _, _, mine in wanted):
+                out.append(k)
+    return out
 
 
 def _correction_inputs(
@@ -755,7 +794,10 @@ def _correction_inputs(
                 continue
             tk = r.get("task")
             task = tasks.get(tk) if isinstance(tk, str) else None
-            if r.get("verdict") in _CORRECTIONS and isinstance(r.get("candidate"), dict) and task:
+            verdict = r.get("verdict")  # a verdict that is not a string is no correction
+            if isinstance(verdict, str) and verdict in _CORRECTIONS and task:
+                if not isinstance(r.get("candidate"), dict):
+                    continue
                 answers.append((r, task))
     if not answers:
         return []
@@ -768,6 +810,8 @@ def _correction_inputs(
         if not isinstance(decisions, list) or not isinstance(judgments, (list, type(None))):
             return None
         every = [d["candidate_sha256"] for d in decisions]
+        if not all(isinstance(h, str) for h in every):
+            return None
     except (StoreError, ValueError, TypeError, KeyError, RecursionError):
         return None
     out: list[tuple[Counter[str], str, str | None, str]] = []
@@ -851,7 +895,8 @@ def forget_packet(
     only what a plain ``forget`` removes and the corrections that it finds, and keeps the
     packet, its tasks, its resolutions and its logs, so a second call after a repair of the
     log can finish. The corrections go first, and the receipt, the judgments and the review
-    records of the packet after them, so a call that stops can finish later. An object of the
+    records of the packet after them, and the receipt of a correction goes after its packet, so
+    a call that stops can finish later. An object of the
     "Kept" column that another packet names stays, but a correction packet of this packet does
     not count. A packet that cannot be read counts as a packet that names nothing, so run
     ``check`` first. If
