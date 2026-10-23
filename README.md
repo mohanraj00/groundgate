@@ -276,8 +276,8 @@ split, so I do not claim a difference between the arms. No document stopped at a
 absences. The cause: #382 cuts a region longer than 6,000 characters, a cut marks the search
 truncated, and the bench writes an absence only for a search that is not truncated. The queries
 of each field include words such as "the" and "and", so the regions cover most of the document.
-So its miss rate is not comparable with the 0.10 `groundgate.extract` on `bench/requested3`. Both
-problems are open for 0.12 (#464, #466).
+So its miss rate is not comparable with the 0.10 `groundgate.extract` on `bench/requested3`. 0.12
+takes these words out of the queries (#466, #493). The absence problem is open for 0.13 (#464).
 Every arm misses more than 60% of the stated values, so 0.11 does not meet the goal on this set.
 [bench/requested4/RESULTS.md](bench/requested4/RESULTS.md) has every number.
 

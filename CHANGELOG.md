@@ -44,6 +44,8 @@ Calibration:
 - `groundgate calibrate sample`, `label`, `ask` and `report` take `--store DIR`. `label` and `ask`
   also take `--reviewer NAME`. With a store, each label is an answer on the review page, and `ask`
   and `report` read the labels from the answer logs (#406, #413).
+- `calibrate/` and its release workflow are gone (#385). groundgate-calibrate 0.4.0 on PyPI is its
+  last release. Use `groundgate calibrate`.
 
 The CLI:
 
