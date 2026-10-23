@@ -702,6 +702,28 @@ def test_brackets_make_a_sign_only_with_a_unit(
     assert [a["part"] for a in check["ask"]] == asked
 
 
+def test_a_cited_loss_word_is_a_sign(tmp_path: Path) -> None:
+    """#496: with the finance pack, a cited loss word makes the number negative, as admit reads
+    a sign item. The value -100 then agrees, and +100 gets the sign question."""
+    text = "Net loss was 100 EUR in 2025.\n"
+    schema = {"packs": [{"id": "finance", "version": "1.0.0"}],
+              "fields": {"result": {"type": "number", "unit": "EUR"}}}  # fmt: skip
+    at = text.index("100")
+    candidates = [{"id": "c1", "field": "result", "value": "5", "unit": "EUR",
+                   "evidence": {"start": 0, "end": 3}}]  # fmt: skip
+    store = FolderStore(tmp_path / "store")
+    k, _ = admit_packet(store, text, schema, candidates, None, None, None)
+    ((tk, _),) = write_tasks(store, k, EVERY).tasks
+    review = Review(store, "ana")
+    loss = text.index("loss")
+    body = {"task": tk, "verdict": "correct", "start": at, "end": at + 3,
+            "parts": [{"role": "sign", "start": loss, "end": loss + 4}]}  # fmt: skip
+    assert review.check({**body, "value": "-100"})["ask"] == []
+    asked = review.check({**body, "value": "100"})["ask"]
+    assert asked == [{"part": "sign", "text": (
+        "The value is positive, but the text writes the number 100 as negative.")}]  # fmt: skip
+
+
 def test_a_field_with_no_definition_gives_none(served: Served) -> None:
     _, _, tasks, call, _ = served
     view = json.loads(call("GET", f"/api/task/{tasks['revenue']}")[2])

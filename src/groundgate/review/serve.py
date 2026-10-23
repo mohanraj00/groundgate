@@ -52,15 +52,20 @@ from ..read.markup import html_text
 from ..text import (
     Token,
     bracket_sign,
+    brackets_around,
     canonical,
+    gain_word,
     item_scale,
+    loss_sign,
     normalize_ws,
     parse_value,
     quote_pattern,
     scale_powers,
     scaled_value,
+    sentence,
     token_scale,
     tokens,
+    using,
 )
 from .labels import QUESTIONS, label_tasks
 from .resolve import (
@@ -579,6 +584,33 @@ class Review:
                     return power
         return None
 
+    def _part_sign(
+        self, doc: _Doc, body: Mapping[str, Any], tok: Token, prefixes: list[str]
+    ) -> bool:
+        """Whether a sign part of a request makes the number negative, as admit reads a sign
+        item (SPEC §4.6): brackets around the number inside the part, or a loss word before it
+        in the same sentence. Call it with the vocabulary of the packet."""
+        text = doc.units.text
+        parts = body.get("parts")
+        for p in parts[:MAX_PARTS] if isinstance(parts, list) else []:
+            if not isinstance(p, Mapping) or p.get("role") != "sign":
+                continue
+            a, b, _, _ = self._span(doc, p.get("start"), p.get("end"))
+            br = brackets_around(text, tok, prefixes)
+            if br is not None and a <= br[0] and br[1] <= b:
+                return True
+            if b <= tok.start and loss_sign(text, a, b, tok.start):
+                between = text[a : tok.start]
+                if (
+                    a >= sentence(text, tok.start)[0]
+                    and not tokens(text, a, tok.start)
+                    and "\n" not in between
+                    and "\t" not in between
+                    and not gain_word(text, a, tok.start)
+                ):
+                    return True
+        return False
+
     def _candidate(
         self, doc: _Doc, slot: Slot, task: Mapping[str, Any], body: Mapping[str, Any]
     ) -> dict[str, Any]:
@@ -647,6 +679,17 @@ class Review:
         task that differs only in its sign is also a question."""
         if task["item"] != "number":
             return []
+        with using(doc.schema.vocabulary):  # the scale and loss words of the packet's packs
+            return self._ask_number(doc, slot, task, body, candidate)
+
+    def _ask_number(
+        self,
+        doc: _Doc,
+        slot: Slot,
+        task: Mapping[str, Any],
+        body: Mapping[str, Any],
+        candidate: Mapping[str, Any],
+    ) -> list[dict[str, str]]:
         a, b, _, _ = self._span(doc, body.get("start"), body.get("end"))
         text = doc.units.text
         found = [t for t in tokens(text, a, b) if t.value is not None]
@@ -670,9 +713,14 @@ class Review:
                 f'scale: "{line}". If the scale applies, select the scale words, or type the '
                 f'value in full: {canonical(full)}, with "-" for a negative value.'
             )})  # fmt: skip
-        # as admit reads it: brackets make a sign only on a field with a unit
+        # as admit reads it: brackets make a sign only on a field with a unit, or a cited sign part
         signs = doc.schema.units.get(spec.unit, ([], []))[0] if spec.unit is not None else None
-        negative = tok.value < 0 or bracket_sign(text, tok, signs)
+        prefixes = signs if signs is not None else []
+        negative = (
+            tok.value < 0
+            or bracket_sign(text, tok, signs)
+            or self._part_sign(doc, body, tok, prefixes)
+        )
         if (value < 0) != negative and value.copy_abs() in _scaled(tok.value.copy_abs()):
             out.append({"part": "sign", "text": (
                 f"The value is {_sign(value)}, but the text writes the number {written} as "
