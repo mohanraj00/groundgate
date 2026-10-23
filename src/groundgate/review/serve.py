@@ -703,28 +703,28 @@ class Review:
         if not found or value == 0:
             return []
         # each number that the value matches at some scale. admit takes one of them by its unit,
-        # so the sign question reads each one. The scale question reads the first.
+        # so the scale and sign questions read each one.
         abs_value = value.copy_abs()
         matched = [
             t for t in found if t.value is not None and abs_value in _scaled(t.value.copy_abs())
         ]
-        tok = matched[0] if matched else found[0]
-        assert tok.value is not None
-        written = text[tok.start : tok.end]
         spec = doc.schema.fields[slot.field]
         out = []
-        near = None
         cited = self._part_scale(doc, body) is not None  # a part with no scale asks too
-        if token_scale(text[:b], tok) is None and not cited and spec.unit != "%":
-            near = _near_scale(text, tok)
-        if near is not None and value.copy_abs() == tok.value.copy_abs():
-            power, line = near
-            full = tok.value.copy_abs().scaleb(power, _EXACT)
-            out.append({"part": "scale", "text": (
-                f"The value is the number as written, {written}, but the text above it gives a "
-                f'scale: "{line}". If the scale applies, select the scale words, or type the '
-                f'value in full: {canonical(full)}, with "-" for a negative value.'
-            )})  # fmt: skip
+        for m in (matched or found[:1]) if not cited and spec.unit != "%" else []:
+            # the first number as written with a scale above it gets the question
+            assert m.value is not None
+            near = _near_scale(text, m) if token_scale(text[:b], m) is None else None
+            if near is not None and abs_value == m.value.copy_abs():
+                power, line = near
+                full = abs_value.scaleb(power, _EXACT)
+                out.append({"part": "scale", "text": (
+                    f"The value is the number as written, {text[m.start : m.end]}, but the text "
+                    f'above it gives a scale: "{line}". If the scale applies, select the scale '
+                    f'words, or type the value in full: {canonical(full)}, with "-" for a '
+                    "negative value."
+                )})  # fmt: skip
+                break
         # as admit reads it: brackets make a sign only on a field with a unit, or a cited sign part
         signs = doc.schema.units.get(spec.unit, ([], []))[0] if spec.unit is not None else None
         prefixes = signs if signs is not None else []

@@ -705,6 +705,21 @@ def test_brackets_make_a_sign_only_with_a_unit(
     assert [a["part"] for a in check["ask"]] == asked
 
 
+def test_the_scale_question_reads_each_matched_number(tmp_path: Path) -> None:
+    """#496: admit can take a later number by its unit. The first matched number has its own
+    scale, so the question is about the scale above the later number."""
+    text = "Prior 100 million padding padding padding padding\nEUR thousands\nresult \u20ac100\n"
+    schema = {"fields": {"f": {"type": "number", "unit": "EUR"}}}
+    candidates = [{"id": "c1", "field": "f", "value": "5", "unit": "EUR",
+                   "evidence": {"start": 0, "end": 3}}]  # fmt: skip
+    store = FolderStore(tmp_path / "store")
+    k, _ = admit_packet(store, text, schema, candidates, None, None, None)
+    ((tk, _),) = write_tasks(store, k, EVERY).tasks
+    check = Review(store, "ana").check({"task": tk, "verdict": "correct", "start": 0,
+                                        "end": len(text) - 1, "value": "100"})  # fmt: skip
+    assert [a["part"] for a in check["ask"]] == ["scale"]
+
+
 def test_a_cited_scale_reads_the_scale_words_of_the_packs(tmp_path: Path) -> None:
     """#496: a pack gives the scale word "lac" (10^5). A cited "in lac" gives the value in
     full, as admit reads it, and the answer saves."""
