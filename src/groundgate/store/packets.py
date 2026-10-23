@@ -29,6 +29,7 @@ __all__ = [
     "InputGone",
     "Packet",
     "admit_packet",
+    "check_packet",
     "load_packet",
     "load_reading",
     "put_reading",
@@ -297,8 +298,7 @@ def load_reading(store: Store, k: str) -> dict[str, Any]:
 # Packets
 
 
-def admit_packet(
-    store: Store,
+def check_packet(
     text: str,
     schema: Mapping[str, Any],
     candidates: Sequence[object],
@@ -309,17 +309,35 @@ def admit_packet(
     references: Sequence[object] | None = None,
     document_source: str | None = None,
     packs: Sequence[object] = (),
-    reading: str | None = None,
-) -> tuple[str, Receipt]:
-    """Run ``admit``, then write the text, the schema, the policy, each reference, each pack,
-    the candidates, the judgments, the receipt and a ``packet@1`` object. Return the packet key
-    and the receipt. The same inputs give the same packet key.
+) -> Receipt:
+    """Do the checks of ``admit_packet`` and return the receipt, but write nothing. If
+    ``check_packet`` raises no error, ``admit_packet`` with the same inputs gives the same
+    receipt. Batch admit checks each document with it before it writes a packet."""
+    return _checked(
+        text,
+        schema,
+        candidates,
+        policy,
+        document_id,
+        judgments,
+        references=references,
+        document_source=document_source,
+        packs=packs,
+    )[0]
 
-    The arguments are the arguments of ``admit``, with ``schema`` and ``policy`` as dicts and
-    ``packs`` as the packs of the app. ``reading`` is the key of a reading of the same text.
-    The store keeps canonical JSON, where the number 5.0 is 5. If that change gives another
-    receipt, ``admit_packet`` raises ``PacketError`` and writes nothing, because ``verify``
-    from the store would then fail."""
+
+def _checked(
+    text: str,
+    schema: Mapping[str, Any],
+    candidates: Sequence[object],
+    policy: Mapping[str, Any] | None,
+    document_id: str | None,
+    judgments: Sequence[object] | None,
+    *,
+    references: Sequence[object] | None,
+    document_source: str | None,
+    packs: Sequence[object],
+) -> tuple[Receipt, dict[str, Any]]:
     for value, what in ((schema, "schema"), (policy, "policy")):
         if value is not None and not isinstance(value, Mapping):
             raise PacketError(f"give the {what} as a dict to store it")
@@ -361,6 +379,43 @@ def admit_packet(
                 "the store keeps canonical JSON, and in canonical JSON the inputs give another "
                 "receipt. Write each whole number with no fraction (5, not 5.0)."
             )
+    return receipt, given
+
+
+def admit_packet(
+    store: Store,
+    text: str,
+    schema: Mapping[str, Any],
+    candidates: Sequence[object],
+    policy: Mapping[str, Any] | None = None,
+    document_id: str | None = None,
+    judgments: Sequence[object] | None = None,
+    *,
+    references: Sequence[object] | None = None,
+    document_source: str | None = None,
+    packs: Sequence[object] = (),
+    reading: str | None = None,
+) -> tuple[str, Receipt]:
+    """Run ``admit``, then write the text, the schema, the policy, each reference, each pack,
+    the candidates, the judgments, the receipt and a ``packet@1`` object. Return the packet key
+    and the receipt. The same inputs give the same packet key.
+
+    The arguments are the arguments of ``admit``, with ``schema`` and ``policy`` as dicts and
+    ``packs`` as the packs of the app. ``reading`` is the key of a reading of the same text.
+    The store keeps canonical JSON, where the number 5.0 is 5. If that change gives another
+    receipt, ``admit_packet`` raises ``PacketError`` and writes nothing, because ``verify``
+    from the store would then fail."""
+    receipt, given = _checked(
+        text,
+        schema,
+        candidates,
+        policy,
+        document_id,
+        judgments,
+        references=references,
+        document_source=document_source,
+        packs=packs,
+    )
     if reading is not None:
         if not isinstance(reading, str) or not KEY.fullmatch(reading):
             raise PacketError(f"{_printable(reading)} is not a store key")

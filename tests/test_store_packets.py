@@ -487,7 +487,7 @@ def test_store_options_need_their_mode(tmp_path: Path, capsys: pytest.CaptureFix
         ["verify", "r.json", str(doc), given["schema"]],
         ["admit", str(doc), given["schema"], given["cands"], "--reading", "sha256:x"],
         ["admit", "--docs", ".", "--candidates", ".", "--schema", "s", "--out", "o",
-         "--store", store],
+         "--store", store, "--reading", "sha256:x"],
     ]  # fmt: skip
     for argv in bad:
         with pytest.raises(SystemExit) as stop:
@@ -495,4 +495,4 @@ def test_store_options_need_their_mode(tmp_path: Path, capsys: pytest.CaptureFix
         assert stop.value.code == 2, argv
     err = capsys.readouterr().err
     assert "remove DOC SCHEMA CANDIDATES" in err and "remove --policy" in err
-    assert "--reading needs --store" in err and "batch admit cannot use --store" in err
+    assert "--reading needs --store" in err and "batch admit cannot use --reading" in err
