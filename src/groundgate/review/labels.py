@@ -102,7 +102,8 @@ def label_task(
         "parts": parts,
         "codes": [],
         "choices": choices,
-        "places": _places([d], layout),
+        # the value span only: a role item, such as the key evidence, would show the candidate
+        "places": _places([{"evidence": d.get("evidence"), "ref": d.get("ref")}], layout),
     }
 
 

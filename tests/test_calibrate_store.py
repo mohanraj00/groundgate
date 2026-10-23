@@ -767,3 +767,24 @@ def test_calibrate_runs_with_no_fcntl(tmp_path: Path, monkeypatch: pytest.Monkey
     cli.main(["sample", "--work", str(tmp_path / "w"), "--docs", str(d), "--candidates", str(c),
               "--schema", str(s), "--question", "field"])  # fmt: skip
     assert (tmp_path / "w" / "items.json").exists()
+
+
+def test_a_calibrate_task_marks_only_the_value(tmp_path: Path) -> None:
+    import groundgate as gg
+    from groundgate.model import Schema
+    from groundgate.review.labels import label_tasks
+
+    value = evidence("Revenue was 4,100.")
+    key_text = "fiscal 2025"
+    cand = {"field": "revenue", "value": "4100", "key": key_text,
+            "evidence": [value, {"role": "key", "text": key_text}]}  # fmt: skip
+    receipt = gg.admit(TEXT, SCHEMA, [cand], None).to_dict()
+    (d,) = receipt["decisions"]
+    assert [p["role"] for p in d["parts"]] == ["key"]  # the receipt has the key evidence
+    # the predicate takes no part in the places, so both questions can use this decision
+    d["outcome"], d["codes"] = "admitted", ["KEY_NOT_AT_VALUE"]
+    tasks = label_tasks("sha256:" + "0" * 64, receipt, TEXT, Schema.from_dict(SCHEMA),
+                        raw_schema=SCHEMA)  # fmt: skip
+    assert len(tasks) == 2
+    for _, task in tasks.values():
+        assert task["places"] == [{**value, "page": None, "box": None}]
