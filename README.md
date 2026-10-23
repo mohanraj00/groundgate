@@ -1,10 +1,28 @@
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/brand/groundgate-mark-dark.svg">
+  <img src="docs/brand/groundgate-mark-light.svg" alt="The groundgate mark: a gate on a ground line, with one highlighted fact inside it." width="64" height="64">
+</picture>
+
 # groundgate
 
 **LLMs propose facts. groundgate decides which ones you can trust.**
 
-groundgate is a deterministic admission layer for LLM document extraction. You give it a
-document, a schema, and the facts an extractor proposed. Every fact comes back with one of three
-outcomes:
+## The problem
+
+LLMs extract most values from a document correctly, but not all. In the benchmark below, 4,233 of
+4,350 extractions were correct. Each of the other 117, about 1 in 37, cited a real place in the
+document. So nothing on the page tells you which values are wrong.
+
+Grounded extraction tools check that the quoted text exists in the source. They do not check the
+value that you store: a scale word that the model dropped, a sign it missed, or the limit from the
+next line.
+
+## The solution
+
+groundgate is a deterministic admission layer for LLM document extraction. It checks each
+proposed value against the text that the value cites, with fixed rules and no model in the
+decision. You give it a document, a schema, and the facts an extractor proposed. Every fact comes
+back with one of three outcomes:
 
 - **admitted**: every check passed;
 - **needs_verification**: nothing failed, but a person should look, and the decision says where;
@@ -20,10 +38,6 @@ a person confirms by hand.
 ![The groundgate review page for IRS Publication 590-A. Left: a Roth IRA limit flagged QUALIFIED_VALUE because the model cited the spousal-deduction sentence ("more than $236,000"). Right: the source text, with that citation outlined in amber and the correct Roth sentence, admitted, highlighted in green below it.](docs/report.png)
 
 ## Why this exists
-
-Current models get most extracted values right. In the benchmark below, 4,233 of 4,350
-extractions were correct. The other 117, about 1 in 37, each cited a real place in the document,
-so nothing on the page tells you which ones are wrong.
 
 Grounded extraction tools check that the quoted **text** exists in the source. They don't check
 the **value** you store. LangExtract is the clearest example, and a good tool. It aligns each

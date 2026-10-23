@@ -22,7 +22,7 @@ import pytest
 from groundgate.cli import main
 from groundgate.review import serve
 from groundgate.review.resolve import write_resolution
-from groundgate.review.serve import CSP, MAX_BODY, TOKEN_HEADER, Review, _Units, frame_csp
+from groundgate.review.serve import CSP, MAX_BODY, TOKEN_HEADER, Refused, Review, _Units, frame_csp
 from groundgate.review.tasks import write_tasks
 from groundgate.store import FolderStore, reviewer_key
 from groundgate.store.packets import admit_packet, put_reading
@@ -327,6 +327,7 @@ def test_a_correction_runs_admit_and_shows_the_outcome_at_once(served: Served) -
         "keep": [],
         "missing": [],
         "shown": "4,200,000 with no unit (written 4,200, in thousands, positive)",
+        "ask": [],
     }
     # the selection "4,200" leaves the scale word out: it gives 4200, and the gate flags it
     number = {"task": revenue, "verdict": "correct", "start": 12, "end": 17}
@@ -337,6 +338,7 @@ def test_a_correction_runs_admit_and_shows_the_outcome_at_once(served: Served) -
         "keep": ["SCALE_WORD"],
         "missing": [],
         "shown": "4,200 with no unit (written 4,200, not scaled, positive)",
+        "ask": [],
     }
     # the person types the value in full instead
     status, _, body = call("POST", "/api/check", {**number, "value": "4,200,000"})
@@ -560,6 +562,207 @@ def test_a_scale_suffix_in_the_selection_gives_the_value_in_full(tmp_path: Path)
     # without the suffix, the selection gives the number as written, and the gate flags it
     check = review.check({"task": tk, "verdict": "correct", "start": 13, "end": 16})
     assert check["outcome"] != "admitted" and check["shown"].startswith("4.2 USD")
+
+
+def test_a_correction_whose_parts_do_not_agree_asks_again(tmp_path: Path) -> None:
+    """#496: the selection "-3,266.2" under "EUR million" as the value -3266.2. The scale is
+    above the table, and the task gives a positive value. The page shows the parts and asks
+    again before it saves."""
+    text = (
+        "Statement of income\nEUR million Note 2025 2024\nNet sales\t1\t3,960.2\t4,126.3\n"
+        "Cost of sales\t\t-3,266.2\t-3,344.7\n"
+    )
+    schema = {"fields": {"cost_of_sales": {"type": "number", "unit": "EUR"}}}
+    at = text.index("-3,266.2")
+    scale = text.index("EUR million")
+    candidates = [{"id": "c1", "field": "cost_of_sales", "value": "3266200000", "unit": "EUR",
+                   "evidence": [{"start": at + 1, "end": at + 8},
+                                {"role": "scale", "start": scale, "end": scale + 11}]}]  # fmt: skip
+    store = FolderStore(tmp_path / "store")
+    k, _ = admit_packet(store, text, schema, candidates, None, None, None)
+    tasks = write_tasks(store, k, EVERY).tasks
+    assert len(tasks) == 1
+    ((tk, _),) = tasks
+    review = Review(store, "ana")
+    selection = {"task": tk, "verdict": "correct", "start": at, "end": at + 8}
+    check = review.check(selection)
+    assert [a["part"] for a in check["ask"]] == ["scale", "sign"]
+    scale_text, sign_text = (a["text"] for a in check["ask"])
+    assert 'scale: "EUR million Note 2025 2024"' in scale_text and "3266200000" in scale_text
+    assert "value 1 of the task is positive" in sign_text
+    plain = {"decision": None, "reason_seen": False, "keys": 2, "ms": 900}
+    with pytest.raises(Refused) as refused:
+        review.answer({**plain, **selection, "codes_kept": check["keep"]})
+    assert refused.value.code == 409 and "do not agree" in str(refused.value)
+    assert log(store, k) == []
+    # the person cites the scale: the page reads the value in full, and the sign still differs
+    part = {"role": "scale", "start": scale, "end": scale + 11}
+    check = review.check({**selection, "parts": [part]})
+    assert check["shown"].startswith("-3,266,200,000 EUR")
+    assert [a["part"] for a in check["ask"]] == ["sign"]
+    # a positive value under a negative written number is a question too
+    check = review.check({**selection, "parts": [part], "value": "3266200000"})
+    sign = "The value is positive, but the text writes the number -3,266.2 as negative."
+    assert check["ask"] == [{"part": "sign", "text": sign}]
+    # the number without its sign, with the scale: the parts agree, and the answer saves
+    unsigned = {**selection, "start": at + 1, "parts": [part]}
+    check = review.check(unsigned)
+    assert check["ask"] == [] and check["shown"].startswith("3,266,200,000 EUR")
+    review.answer({**plain, **unsigned, "codes_kept": check["keep"]})
+    (record,) = log(store, k)
+    assert record["candidate"]["value"] == "3266200000" and "parts_seen" not in record
+    # a person who saw the parts can save a value that does not agree
+    review.answer({**plain, **selection, "codes_kept": review.check(selection)["keep"],
+                   "parts_seen": True})  # fmt: skip
+    assert log(store, k)[-1]["candidate"]["value"] == "-3266.2"
+
+
+def test_a_cited_scale_gives_the_value_in_full_with_no_rounding(tmp_path: Path) -> None:
+    """#496: a number of 29 digits times a thousand keeps each digit."""
+    number = "12345678901234567890123456789"
+    text = f"Revenue in thousands\nRevenue was {number} in 2025.\n"
+    schema = {"fields": {"revenue": {"type": "number"}}}
+    at = text.index(number)
+    candidates = [{"id": "c1", "field": "revenue", "value": "5",
+                   "evidence": {"start": 0, "end": 7}}]  # fmt: skip
+    store = FolderStore(tmp_path / "store")
+    k, _ = admit_packet(store, text, schema, candidates, None, None, None)
+    ((tk, _),) = write_tasks(store, k, EVERY).tasks
+    review = Review(store, "ana")
+    scale = text.index("in thousands")
+    part = {"role": "scale", "start": scale, "end": scale + 12}
+    body = {"task": tk, "verdict": "correct", "start": at, "end": at + len(number)}
+    check = review.check({**body, "parts": [part]})
+    assert check["shown"].startswith("12,345,678,901,234,567,890,123,456,789,000 ")
+    # without the part, the scale question gives the value in full with each digit
+    (asked,) = review.check(body)["ask"]
+    assert asked["part"] == "scale" and f"{number}000," in asked["text"]
+
+
+def test_a_crore_value_with_the_other_sign_asks_again(tmp_path: Path) -> None:
+    """#496: the sign question knows each scale of the reader, also a crore (10^7)."""
+    text = "Revenue was -1 crore in 2025.\n"
+    schema = {"fields": {"revenue": {"type": "number"}}}
+    at = text.index("-1")
+    candidates = [{"id": "c1", "field": "revenue", "value": "10000000",
+                   "evidence": {"start": at + 1, "end": at + 8}}]  # fmt: skip
+    store = FolderStore(tmp_path / "store")
+    k, _ = admit_packet(store, text, schema, candidates, None, None, None)
+    ((tk, _),) = write_tasks(store, k, EVERY).tasks
+    review = Review(store, "ana")
+    asked = review.check({"task": tk, "verdict": "correct", "start": at, "end": at + 2})["ask"]
+    assert [a["part"] for a in asked] == ["sign"]
+    assert "value 1 of the task is positive" in asked[0]["text"]
+
+
+def test_a_part_with_no_scale_keeps_the_scale_question(tmp_path: Path) -> None:
+    """#496: a scale part that holds no scale, such as "EUR" of "EUR million", does not stop
+    the question about the scale above the number."""
+    text = "EUR million Note 2025\nCost of sales\t\t3,266.2\n"
+    schema = {"fields": {"cost_of_sales": {"type": "number"}}}
+    at = text.index("3,266.2")
+    candidates = [{"id": "c1", "field": "cost_of_sales", "value": "5",
+                   "evidence": {"start": 0, "end": 3}}]  # fmt: skip
+    store = FolderStore(tmp_path / "store")
+    k, _ = admit_packet(store, text, schema, candidates, None, None, None)
+    ((tk, _),) = write_tasks(store, k, EVERY).tasks
+    review = Review(store, "ana")
+    body = {"task": tk, "verdict": "correct", "start": at, "end": at + 7}
+    eur = {"role": "scale", "start": 0, "end": 3}
+    asked = review.check({**body, "parts": [eur]})["ask"]
+    assert [a["part"] for a in asked] == ["scale"]
+    # a part with the scale words gives the value in full, and the question goes
+    million = {"role": "scale", "start": 0, "end": 11}
+    assert review.check({**body, "parts": [million]})["ask"] == []
+
+
+@pytest.mark.parametrize(
+    ("text", "unit", "asked"),
+    [
+        ("Employees (100) in 2025.\n", None, []),  # no unit: brackets make no sign
+        ("Result ($100) in 2025.\n", "USD", ["sign"]),  # a unit: brackets make it negative
+        ("Year 2024 Result ($100).\n", "USD", ["sign"]),  # the matched number, not 2024
+        ("Prior 100; result ($100).\n", "USD", ["sign"]),  # each matched number
+    ],
+)
+def test_brackets_make_a_sign_only_with_a_unit(
+    tmp_path: Path, text: str, unit: str | None, asked: list[str]
+) -> None:
+    """#496: the sign question reads brackets as admit does, at each number that the value
+    matches."""
+    field: dict[str, Any] = {"type": "number"}
+    if unit is not None:
+        field["unit"] = unit
+    candidates = [{"id": "c1", "field": "f", "value": "5", "evidence": {"start": 0, "end": 3}}]
+    if unit is not None:
+        candidates[0]["unit"] = unit
+    store = FolderStore(tmp_path / "store")
+    k, _ = admit_packet(store, text, {"fields": {"f": field}}, candidates, None, None, None)
+    ((tk, _),) = write_tasks(store, k, EVERY).tasks
+    # the selection is the line, with each number of it, and the value is typed
+    check = Review(store, "ana").check({"task": tk, "verdict": "correct", "start": 0,
+                                        "end": len(text) - 1, "value": "100"})  # fmt: skip
+    assert [a["part"] for a in check["ask"]] == asked
+
+
+def test_the_scale_question_reads_each_matched_number(tmp_path: Path) -> None:
+    """#496: admit can take a later number by its unit. The first matched number has its own
+    scale, so the question is about the scale above the later number."""
+    text = "Prior 100 million padding padding padding padding\nEUR thousands\nresult \u20ac100\n"
+    schema = {"fields": {"f": {"type": "number", "unit": "EUR"}}}
+    candidates = [{"id": "c1", "field": "f", "value": "5", "unit": "EUR",
+                   "evidence": {"start": 0, "end": 3}}]  # fmt: skip
+    store = FolderStore(tmp_path / "store")
+    k, _ = admit_packet(store, text, schema, candidates, None, None, None)
+    ((tk, _),) = write_tasks(store, k, EVERY).tasks
+    check = Review(store, "ana").check({"task": tk, "verdict": "correct", "start": 0,
+                                        "end": len(text) - 1, "value": "100"})  # fmt: skip
+    assert [a["part"] for a in check["ask"]] == ["scale"]
+
+
+def test_a_cited_scale_reads_the_scale_words_of_the_packs(tmp_path: Path) -> None:
+    """#496: a pack gives the scale word "lac" (10^5). A cited "in lac" gives the value in
+    full, as admit reads it, and the answer saves."""
+    lac = {"groundgate_pack": 1, "type": "vocabulary", "id": "lac-x-test", "version": "1.0.0",
+           "scale": {"words": {"lac": 5}}}  # fmt: skip
+    text = "Revenue in lac\nRevenue was 5 in 2025.\n"
+    schema = {"packs": [{"id": "lac-x-test", "version": "1.0.0"}],
+              "fields": {"revenue": {"type": "number"}}}  # fmt: skip
+    candidates = [{"id": "c1", "field": "revenue", "value": "7",
+                   "evidence": {"start": 0, "end": 7}}]  # fmt: skip
+    store = FolderStore(tmp_path / "store")
+    k, _ = admit_packet(store, text, schema, candidates, None, None, None, packs=[lac])
+    ((tk, _),) = write_tasks(store, k, EVERY).tasks
+    review = Review(store, "ana")
+    at = text.index("5 in")
+    scale = text.index("in lac")
+    body = {"task": tk, "verdict": "correct", "start": at, "end": at + 1,
+            "parts": [{"role": "scale", "start": scale, "end": scale + 6}]}  # fmt: skip
+    check = review.check(body)
+    assert check["outcome"] == "admitted" and check["shown"].startswith("500,000")
+    assert check["ask"] == []
+
+
+def test_a_cited_loss_word_is_a_sign(tmp_path: Path) -> None:
+    """#496: with the finance pack, a cited loss word makes the number negative, as admit reads
+    a sign item. The value -100 then agrees, and +100 gets the sign question."""
+    text = "Net loss was 100 EUR in 2025.\n"
+    schema = {"packs": [{"id": "finance", "version": "1.0.0"}],
+              "fields": {"result": {"type": "number", "unit": "EUR"}}}  # fmt: skip
+    at = text.index("100")
+    candidates = [{"id": "c1", "field": "result", "value": "5", "unit": "EUR",
+                   "evidence": {"start": 0, "end": 3}}]  # fmt: skip
+    store = FolderStore(tmp_path / "store")
+    k, _ = admit_packet(store, text, schema, candidates, None, None, None)
+    ((tk, _),) = write_tasks(store, k, EVERY).tasks
+    review = Review(store, "ana")
+    loss = text.index("loss")
+    body = {"task": tk, "verdict": "correct", "start": at, "end": at + 3,
+            "parts": [{"role": "sign", "start": loss, "end": loss + 4}]}  # fmt: skip
+    assert review.check({**body, "value": "-100"})["ask"] == []
+    asked = review.check({**body, "value": "100"})["ask"]
+    assert asked == [{"part": "sign", "text": (
+        "The value is positive, but the text writes the number 100 as negative.")}]  # fmt: skip
 
 
 def test_a_field_with_no_definition_gives_none(served: Served) -> None:

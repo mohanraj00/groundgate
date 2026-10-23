@@ -381,9 +381,22 @@ answer, the next task opens.
 A correction always needs a selection. The gate needs the value in full (SPEC §2.5). If the
 selection holds a scale word or suffix, for example "4,200 thousand" or "$4.2m", the page reads
 the value in full. If the scale is in another place, for example "in millions" in a heading, type
-the value in full: for 9,776 in millions, type 9776000000. A typed value only replaces the number
-that the page reads from the selection. After `n`, if the right value is at more than one place,
-select one of them. Each place gives the same answer.
+the value in full: for 9,776 in millions, type 9776000000. If you select the scale words as a
+part, the page also reads the value in full. A typed value only replaces the number that the page
+reads from the selection. After `n`, if the right value is at more than one place, select one of
+them. Each place gives the same answer.
+
+Before the page saves a number correction, it compares the value with the parts of the text
+near the selection. It asks again in three cases:
+
+- The value is the number as written, and a scale word is on one of the 10 lines above the
+  number, on the same page. For example, -3,266.2 under "EUR million".
+- The value has a sign that differs from the number as the text writes it.
+- A value of the task is the same number with the other sign.
+
+The page shows each part that does not agree. Select the scale words, select the number again or
+type the value in full. If the value is right as it is, press the save key two times. In a
+script, send `"parts_seen": true` with the answer. The answer log does not record it.
 
 The page calls the methods of `Review`, so a script can give the same answers. Offsets count
 UTF-16 code units in the text, as a browser selection does:

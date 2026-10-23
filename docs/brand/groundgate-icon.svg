@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="groundgate">
+  <rect x="0" y="0" width="64" height="64" fill="#1f2328"/>
+  <rect x="15.5" y="15.5" width="4.5" height="31.5" fill="#ffffff"/>
+  <rect x="44" y="15.5" width="4.5" height="31.5" fill="#ffffff"/>
+  <rect x="15.5" y="15.5" width="33" height="4.5" fill="#ffffff"/>
+  <rect x="26" y="30.5" width="12" height="12" fill="#ffe066"/>
+  <rect x="11" y="47" width="42" height="3" fill="#ffffff"/>
+</svg>

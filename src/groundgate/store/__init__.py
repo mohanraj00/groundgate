@@ -17,7 +17,7 @@ import secrets
 import stat
 import tempfile
 import unicodedata
-from collections.abc import Callable, Iterator
+from collections.abc import Callable, Iterator, Sequence
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Protocol
@@ -336,13 +336,22 @@ class FolderStore:
             raise StoreError(f"{rel} does not match its key as {kind}")
         return data
 
-    def forget(self, key: str, reason: str) -> None:
+    def forget(self, key: str, reason: str, *, run_keys: Sequence[str] = ()) -> None:
         """Remove an object, and record the key, the time and the reason in the deleted log.
-        The record comes first. After a crash between the two steps, the object is still there,
-        and a second ``forget`` adds a second record for the key."""
+        ``run_keys`` names the keys of a prompt, reply or admission in the run records of the
+        store, and the record holds them sorted (§7.1). ``forget`` does not find them itself:
+        ``groundgate store forget`` (``maintain.forget_packet``) gives them. With no run keys,
+        the record has no ``run_keys`` member. The record comes first. After a crash between
+        the two steps, the object is still there, and a second ``forget`` adds a second record
+        for the key."""
         hexes = _check_key(key)
         if not isinstance(reason, str) or not reason:
             raise ValueError("forget needs a reason")
+        if isinstance(run_keys, str):
+            raise ValueError("run_keys must be a sequence of keys, not one string")
+        for r in run_keys:
+            _check_key(r)
+        runs = sorted(set(run_keys))
         rel = f"objects/{hexes[:2]}/{hexes[2:]}"
         try:
             folder = self._folder(["objects", hexes[:2]], make=False)
@@ -355,7 +364,10 @@ class FolderStore:
         if not os.access(folder, os.W_OK | os.X_OK):
             raise StoreError(f"objects/{hexes[:2]} is not writable, so forget cannot remove {rel}")
         time = self._clock().astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-        self._append(("deleted",), {"key": key, "reason": reason, "time": time})
+        record: Record = {"key": key, "reason": reason, "time": time}
+        if runs:
+            record["run_keys"] = runs
+        self._append(("deleted",), record)
         try:
             os.unlink(folder / hexes[2:])
         except OSError as exc:
