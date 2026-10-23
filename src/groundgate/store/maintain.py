@@ -196,13 +196,20 @@ class _Objects:
 
     def deleted_runs(self) -> dict[str, str]:
         """The store key of each prompt, reply and admission that ``forget`` removed, by its
-        run keys in the deleted log (§7.1). The log is untrusted: an entry whose ``key`` or
-        ``run_keys`` does not have the format is skipped."""
+        run keys in the deleted log (§7.1). Each entry counts, not only the last entry of a key:
+        a later deletion of the same object with no run keys does not hide the run keys of an
+        earlier one. The log is untrusted: an entry whose ``key`` or ``run_keys`` does not have
+        the format is skipped."""
         if self._deleted_runs is None:
             self._deleted_runs = {}
-            for k, entry in self.deleted().items():
+            try:
+                entries = self.store.read(("deleted",))
+            except StoreError:
+                entries = []  # check reports the log itself
+            for entry in entries:
+                k = entry.get("key")
                 runs = entry.get("run_keys")
-                if not KEY.fullmatch(k) or not isinstance(runs, list):
+                if not isinstance(k, str) or not KEY.fullmatch(k) or not isinstance(runs, list):
                     continue
                 for run in runs:
                     if isinstance(run, str) and KEY.fullmatch(run):

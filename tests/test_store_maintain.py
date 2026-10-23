@@ -763,6 +763,28 @@ def test_forget_after_an_old_deletion_with_no_run_keys(
     assert f"unchecked object {bad}" in capsys.readouterr().out
 
 
+def test_forget_keeps_the_run_keys_of_an_earlier_deletion(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """The reply goes with its run keys, comes back, and goes again with no run keys. The
+    first entry still counts, so a forget of the other packet exits 0."""
+    root = tmp_path / "s"
+    with FolderStore(root) as store:
+        one, two, reply = _shared_reply(store, root)
+        data = store.get("reply@1", reply)
+    assert main(["store", "forget", "--store", str(root), one, "--reason", "asked"]) == 0
+    with FolderStore(root) as store:
+        assert store.put("reply@1", data) == reply
+        store.forget(reply, "again")  # the two-argument form: no run keys
+        assert "run_keys" not in store.read(("deleted",))[-1]
+    bad = _changed_object(root)
+    capsys.readouterr()
+    assert main(["store", "forget", "--store", str(root), two, "--reason", "asked"]) == 0
+    out = capsys.readouterr().out
+    assert f"absent reply@1 {reply}" in out
+    assert "unchecked" not in out and bad not in out
+
+
 def _deletion(root: Path, entry: dict[str, Any]) -> None:
     """Append a record to the deleted log by hand, as a person with write access can."""
     with FolderStore(root) as store:
