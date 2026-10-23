@@ -4,7 +4,7 @@
   groundgate read     --store DIR FILE -o doc.txt       > reading-key
   groundgate admit    DOC SCHEMA CANDIDATES             > receipt.json
   groundgate admit    --store DIR DOC SCHEMA CANDIDATES > packet-key
-  groundgate admit    --docs D --candidates C --schema S --out R
+  groundgate admit    --docs D --candidates C --schema S --out R [--store DIR]
   groundgate verify   RECEIPT DOC SCHEMA CANDIDATES [--pack-dir DIR]
   groundgate verify   --store DIR PACKET
   groundgate report   RECEIPT DOC SCHEMA CANDIDATES [--pack-dir DIR] -o report.html
@@ -167,7 +167,11 @@ def _parser() -> argparse.ArgumentParser:
     a.add_argument("--schema", dest="batch_schema", help="schema JSON for batch mode")
     a.add_argument("--candidates", dest="batch_candidates", help="folder of <doc>.json files")
     a.add_argument("--out", help="folder for batch receipts and summary.json")
-    store_option(a, "write the inputs, the receipt and a packet; print the packet key")
+    store_option(
+        a,
+        "write the inputs, the receipt and a packet; print the packet key "
+        "(in batch mode, summary.json names the packet key of each document)",
+    )
     a.add_argument(
         "--reading", metavar="KEY", help="with --store: the key of the reading of DOC from read"
     )
@@ -472,10 +476,10 @@ def _admit_inputs(parser: argparse.ArgumentParser, args: argparse.Namespace) -> 
     if any(value is not None for value in batch):
         if not all(batch):
             parser.error("batch admit requires --docs, --candidates, --schema and --out")
-        if args.store is not None:
-            parser.error("batch admit cannot use --store")
         if any(value is not None for value in (*single, args.output, args.document_id)):
             parser.error("batch admit cannot use positional inputs, --output or --document-id")
+        if args.reading is not None:
+            parser.error("batch admit cannot use --reading")
     elif not all(value is not None for value in single):
         parser.error("admit requires DOC SCHEMA CANDIDATES, or the batch options")
 
@@ -658,6 +662,8 @@ def _batch_admit(args: argparse.Namespace) -> int:
     ):
         if folder is not None and resolved_output == Path(folder).resolve():
             raise ValueError(f"--out must not be the same folder as {option}: {resolved_output}")
+    if args.store is not None and resolved_output == Path(args.store).resolve():
+        raise ValueError(f"--out must not be the same folder as --store: {resolved_output}")
     paths = sorted(path for path in Path(args.docs).glob("*.txt") if path.is_file())
     if not paths:
         raise ValueError(f"{args.docs}: no .txt documents")
@@ -689,6 +695,7 @@ def _batch_admit(args: argparse.Namespace) -> int:
     references = _json(args.references) if args.references else None
     packs = [load_pack(f) for f in args.pack]
     receipts: dict[str, Any] = {}
+    inputs: dict[str, tuple[str, Any, Any]] = {}
     documents: dict[str, Any] = {}
     outcomes = Counter({"admitted": 0, "needs_verification": 0, "rejected": 0})
     codes: Counter[str] = Counter()
@@ -697,8 +704,9 @@ def _batch_admit(args: argparse.Namespace) -> int:
         try:
             candidates = _json(str(Path(args.batch_candidates) / f"{doc}.json"))
             judgments = _json(str(Path(args.judgments) / f"{doc}.json")) if args.judgments else None
+            text = _text(str(path))
             receipt = admit(
-                _text(str(path)),
+                text,
                 schema,
                 candidates,
                 policy,
@@ -714,10 +722,33 @@ def _batch_admit(args: argparse.Namespace) -> int:
         doc_codes.update(code for _, code in receipt.coverage)
         body = receipt.to_dict()
         receipts[doc] = body
+        inputs[doc] = (text, candidates, judgments)
         documents[doc] = {"outcomes": body["summary"], "codes": dict(sorted(doc_codes.items()))}
         outcomes.update(body["summary"])
         codes.update(doc_codes)
 
+    if args.store is not None:
+        # Each input is valid now, so the store gets packets only after the whole batch passed.
+        from .store.packets import admit_packet
+
+        with _store(args.store, make=True) as store:
+            for doc, (text, candidates, judgments) in inputs.items():
+                try:
+                    packet, _ = admit_packet(
+                        store,
+                        text,
+                        schema,
+                        candidates,
+                        policy,
+                        doc,
+                        judgments,
+                        references=references,
+                        document_source=args.document_source,
+                        packs=packs,
+                    )
+                except ValueError as e:  # PacketError is a ValueError
+                    raise ValueError(f"{doc}.txt: {e}") from e
+                documents[doc]["packet"] = packet
     totals = {"outcomes": dict(outcomes), "codes": dict(sorted(codes.items()))}
     output = Path(args.out)
     output.mkdir(parents=True, exist_ok=True)

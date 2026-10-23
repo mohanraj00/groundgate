@@ -314,3 +314,50 @@ def test_single_admit_still_requires_three_inputs(args: list[str]) -> None:
     with pytest.raises(SystemExit) as exc:
         main(["admit", *args])
     assert exc.value.code == 2
+
+
+def test_batch_store_writes_a_packet_for_each_document(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    store = tmp_path / "store"
+    args = _batch(tmp_path, {"a": [CANDIDATE], "z": []})
+    (tmp_path / "plain").mkdir()
+    plain = _batch(tmp_path / "plain", {"a": [CANDIDATE], "z": []})
+    assert main(plain) == 0
+    assert main([*args, "--store", str(store)]) == 0
+    capsys.readouterr()
+    output = tmp_path / "out"
+    summary = json.loads((output / "summary.json").read_bytes())
+    without = json.loads((tmp_path / "plain" / "out" / "summary.json").read_bytes())
+    keys = {doc: entry.pop("packet") for doc, entry in summary["documents"].items()}
+    assert summary == without  # --store adds only the packet member
+    assert list(keys) == ["a", "z"] and len(set(keys.values())) == 2
+    for doc, k in keys.items():
+        assert k.startswith("sha256:")
+        assert main(["verify", "--store", str(store), k]) == 0
+        assert capsys.readouterr().out == "receipt verified\n"
+        assert (output / f"{doc}.json").read_bytes() == (
+            tmp_path / "plain" / "out" / f"{doc}.json"
+        ).read_bytes()
+    assert main([*args, "--store", str(store)]) == 0  # the same inputs give the same keys
+    again = json.loads((output / "summary.json").read_bytes())
+    assert {doc: entry["packet"] for doc, entry in again["documents"].items()} == keys
+
+
+def test_batch_store_input_error_writes_no_packet(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    store = tmp_path / "store"
+    args = _batch(tmp_path, {"a": [CANDIDATE], "z": []})
+    (tmp_path / "candidates" / "z.json").write_text("{}", encoding="utf-8")
+    assert main([*args, "--store", str(store)]) == 2
+    assert "z.txt:" in capsys.readouterr().err
+    assert not store.exists() and not (tmp_path / "out").exists()
+
+
+def test_batch_store_must_not_be_the_output_folder(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    args = _batch(tmp_path, {"a": [CANDIDATE]})
+    assert main([*args, "--store", str(tmp_path / "out")]) == 2
+    assert "--out must not be the same folder as --store" in capsys.readouterr().err
