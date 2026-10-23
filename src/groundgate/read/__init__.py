@@ -44,19 +44,25 @@ def _decode(data: bytes, path: Path) -> str:
     return text.replace("\r\n", "\n").replace("\r", "\n")
 
 
-def read(path: str | Path, pages: Iterable[int] | None = None) -> Extracted:
-    """Extract ``path``. ``pages`` (1-based) selects PDF pages; other formats ignore it."""
+def read(
+    path: str | Path, pages: Iterable[int] | None = None, *, data: bytes | None = None
+) -> Extracted:
+    """Extract ``path``. ``pages`` (1-based) selects PDF pages; other formats ignore it.
+
+    If ``data`` is given, ``read`` extracts those bytes and does not open ``path``. The suffix
+    of ``path`` still selects the format, and errors still name ``path``."""
     path = Path(path)
     suffix = path.suffix.lower()
     if suffix == ".pdf":
         from .pdf import read_pdf
 
-        text, page_list, words, warnings = read_pdf(path, pages)
+        text, page_list, words, warnings = read_pdf(path, pages, data=data)
         if not is_nfc(text):  # pragma: no cover - words are normalised one by one
             raise ReadError(f"{path}: extracted text is not NFC")
         layout = Layout(digest("document", {"text": text}), tuple(page_list), tuple(words))
         return Extracted(text, layout, tuple(warnings))
-    data = path.read_bytes()
+    if data is None:
+        data = path.read_bytes()
     if suffix == ".xml":
         import xml.etree.ElementTree as ET
 

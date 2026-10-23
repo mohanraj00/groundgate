@@ -196,9 +196,8 @@ def put_reading(
 ) -> tuple[str, Any]:
     """Read the file at ``path`` as ``groundgate read`` does, and write the source, the text,
     the layout (PDF only) and a ``reading@1`` object. Return the reading key and the result of
-    ``read``. The file must be a regular file. ``put_reading`` reads its bytes before and after
-    ``read``, and refuses the file if they differ. A file that changes during ``read`` and then
-    changes back is not detected, so do not write the file while ``put_reading`` runs."""
+    ``read``. The file must be a regular file. ``put_reading`` reads its bytes one time and
+    gives them to ``read``, so ``source@1`` and ``text@1`` come from the same bytes."""
     from .. import __version__
     from ..read import ReadError, read
 
@@ -206,9 +205,7 @@ def put_reading(
     if not path.is_file():
         raise ReadError(f"{path} is not a regular file")
     source = path.read_bytes()
-    doc = read(path, pages=pages)
-    if path.read_bytes() != source:
-        raise ReadError(f"{path} changed while it was read")
+    doc = read(path, pages=pages, data=source)
     layout = None
     if doc.layout is not None:
         layout = store.put("layout@1", _json(doc.layout.to_dict(), "layout"))
