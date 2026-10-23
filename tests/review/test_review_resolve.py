@@ -21,7 +21,7 @@ from groundgate.review import format_schema
 from groundgate.review.resolve import AnswerError, lines, resolve, write_resolution
 from groundgate.review.tasks import checked_packet, write_tasks
 from groundgate.store import FolderStore, NotFound, key, reviewer_key
-from groundgate.store.maintain import forget_packet
+from groundgate.store.maintain import check, forget_packet
 from groundgate.store.packets import admit_packet, load_packet
 
 HERE = Path(__file__).parent
@@ -585,3 +585,33 @@ def test_forget_all_keeps_a_correction_that_another_packet_shares(tmp_path: Path
     assert ("receipt@1", receipt, "kept", 1) in done
     assert {receipt, other, second.key} <= set(left)
     assert _naming(FolderStore(tmp_path / "s"), "resolution@1", k) == []
+
+
+def test_forget_all_keeps_the_packet_when_an_answer_log_cannot_be_read(tmp_path: Path) -> None:
+    # A torn answer log can name a correction. forget --all keeps the packet and its review
+    # objects, and after the repair a second forget --all finishes.
+    store, k, tk, data = one_choice(tmp_path)
+    root = tmp_path / "s"
+    log = ("answers", k, reviewer_key("ana"))
+    with store:
+        store.append(log, record(tk, "ana", "correct", candidate=correction("4200000")))
+        got = write_resolution(store, k, policy(), ["ana"])
+    receipt = correction_receipt(data["packet"], correction("4200000"))
+    path = root / "logs" / "answers" / k[7:] / f"{reviewer_key('ana')[7:]}.jsonl"
+    with path.open("ab") as f:
+        f.write(b"{")
+    with FolderStore(root) as store:
+        done = forget_packet(store, k, "all", everything=True)
+        left, _ = store.object_keys()
+    rel = f"logs/answers/{k[7:]}/{reviewer_key('ana')[7:]}.jsonl"
+    assert ("log", rel, "unchecked", 0) in done
+    assert ("packet@1", k, "kept", 0) in done
+    assert {k, got.key, tk, receipt} <= set(left)
+    with FolderStore(root) as store:
+        assert check(store, repair=True).cut
+    with FolderStore(root) as store:
+        done = forget_packet(store, k, "all", everything=True)
+        left, _ = store.object_keys()
+    assert not {k, got.key, tk, receipt} & set(left)
+    assert not any(state == "unchecked" for _, _, state, _ in done)
+    assert not path.exists()

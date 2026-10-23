@@ -647,13 +647,14 @@ _CORRECTIONS = frozenset({"correct", "adjust_span"})
 
 def _review_plan(
     objects: _Objects, packet: str, obj: Mapping[str, Any]
-) -> tuple[list[tuple[str, str]], frozenset[str], dict[str, int]]:
+) -> tuple[list[tuple[str, str]], frozenset[str], dict[str, int], list[tuple[str, ...]]]:
     """The review objects of a packet for ``forget`` with ``everything`` (#516): each
     correction packet of ``review resolve`` with its candidates, judgments and receipt, then
     each ``task@1`` and ``resolution@1`` that names the packet. Also return the keys of the
     correction packets, and for each object of a correction packet whose receipt a resolution
     of another packet names, the number of those packets: that correction is shared, so its
-    kept objects stay. A ``review-policy@1`` object holds no document data and stays.
+    kept objects stay. Last, return each answer log of the packet that the store cannot read.
+    A ``review-policy@1`` object holds no document data and stays.
 
     A correction packet is a packet with the inputs of the packet, no run record, and the exact
     candidates and judgments that ``review resolve`` gives to ``admit`` for a correction answer
@@ -664,6 +665,7 @@ def _review_plan(
     log, so no path comes from untrusted data. An object that cannot be read names nothing."""
     tasks: dict[str, Any] = {}
     resolutions: list[tuple[str, str]] = []
+    unread: list[tuple[str, ...]] = []
     elsewhere: dict[str, set[str]] = {}  # receipt -> the other packets whose resolution names it
     for kind in ("task@1", "resolution@1"):
         for k in sorted(objects.of(kind)):
@@ -681,7 +683,7 @@ def _review_plan(
                     tasks[k] = found
                 else:
                     resolutions.append((kind, k))
-    wanted = _correction_inputs(objects, packet, obj, tasks)
+    wanted = _correction_inputs(objects, packet, obj, tasks, unread)
     plan: list[tuple[str, str]] = []
     corrections: set[str] = set()
     shared: dict[str, int] = {}
@@ -705,17 +707,23 @@ def _review_plan(
         if users:  # the same correction of another packet: it is shared
             for _, n in [*own, *receipts, ("packet@1", k)]:
                 shared[n] = shared.get(n, 0) + len(users)
-    return plan + [("task@1", k) for k in tasks] + resolutions, frozenset(corrections), shared
+    review = plan + [("task@1", k) for k in tasks] + resolutions
+    return review, frozenset(corrections), shared, unread
 
 
 def _correction_inputs(
-    objects: _Objects, packet: str, obj: Mapping[str, Any], tasks: Mapping[str, Any]
+    objects: _Objects,
+    packet: str,
+    obj: Mapping[str, Any],
+    tasks: Mapping[str, Any],
+    unread: list[tuple[str, ...]],
 ) -> list[tuple[Counter[str], str, str | None]]:
     """For each correction answer of the packet, the inputs that ``review resolve`` gives to
     ``admit`` (review.md §6.2): the digests of the kept candidates, the person's candidate as
     canonical JSON, and the key of the kept judgments. The kept candidates come from the
     candidate digests of the receipt, so the candidates of the packet need not be in the store.
-    A record, a task or a receipt that does not have the expected form gives nothing."""
+    A record, a task or a receipt that does not have the expected form gives nothing. Each
+    answer log of the packet that the store cannot read goes into ``unread``."""
     try:
         receipt = objects.json("receipt@1", obj["receipt"])
         decisions = receipt["decisions"]
@@ -735,6 +743,7 @@ def _correction_inputs(
         try:
             records = objects.store.read(log)
         except StoreError:
+            unread.append(log)
             continue
         for r in records:
             with suppress(ValueError, TypeError, KeyError, IndexError, RecursionError):
@@ -801,7 +810,11 @@ def forget_packet(
     With ``everything``, remove each object and each answer log of the packet, and the packet
     last. It also removes each ``task@1`` and ``resolution@1`` that names the packet, and
     each correction packet that ``review resolve`` wrote for it, with its candidates, judgments
-    and receipt (#516). A ``review-policy@1`` object stays. An object of the "Kept" column that
+    and receipt (#516). A ``review-policy@1`` object stays. If an answer log of the packet
+    cannot be read, it is ``unchecked``: it can name a correction. Then ``everything`` removes
+    only what a plain ``forget`` removes and the corrections that it finds, and keeps the
+    packet, its tasks, its resolutions and its logs, so a second call after a repair of the
+    log can finish. An object of the "Kept" column that
     another packet names stays, but a correction packet of this packet does not count. A
     packet that cannot be read counts as a packet that names nothing, so run ``check`` first. If
     an answer log is locked, ``everything`` stops before it removes the packet, so a second
@@ -892,8 +905,16 @@ def forget_packet(
                 unchecked.append(("reading@1", k))
     corrections: frozenset[str] = frozenset()
     shared_corrections: dict[str, int] = {}
+    unread_logs: list[tuple[str, ...]] = []
     if everything:
-        review, corrections, shared_corrections = _review_plan(objects, packet, obj)
+        review, corrections, shared_corrections, unread_logs = _review_plan(objects, packet, obj)
+        if unread_logs:
+            # An answer log that cannot be read can name a correction. Keep what finds it
+            # again: the packet, its kept objects, its tasks, its resolutions and its logs. A
+            # later forget with everything can then finish (#516).
+            plan = [(kind, k, always) for kind, k, always in plan if kind in REMOVED or always]
+            review = [(kind, k) for kind, k in review if kind not in ("task@1", "resolution@1")]
+            unchecked += [("log", _log_rel(log)) for log in unread_logs]
         plan += [(kind, k, False) for kind, k in review]
     else:
         plan = [(kind, k, always) for kind, k, always in plan if kind in REMOVED or always]
@@ -921,6 +942,9 @@ def forget_packet(
                 done.append((kind, k, "absent", shared))
                 continue
             done.append((kind, k, "deleted", shared))
+    if everything and unread_logs:
+        done.append(("packet@1", packet, "kept", 0))
+        return done
     if everything:
         logs, _ = store.log_names()
         for log in logs:

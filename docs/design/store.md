@@ -261,7 +261,10 @@ their issues (#432).
    other resolutions can name it. An object of the "Kept" column that another packet names
    stays. A correction packet of the packet does not count as another packet. But if a
    resolution of another packet names its receipt, the correction is shared, and its packet
-   and receipt stay.
+   and receipt stay. If an answer log of the packet cannot be read, `forget --all` prints it as
+   "unchecked" and exits 1, because the log can name a correction. Then it removes only what
+   `forget` removes and the corrections that it finds. The packet, its tasks, its resolutions
+   and its logs stay. Run `store check --repair` on a torn log, then `forget --all` again.
    One object can serve two packets, because the same text has one key. `forget` of that text
    removes it for both packets, which is correct for one document.
    After `forget`, `verify` reports "input deleted", with the key, the time and the reason from
