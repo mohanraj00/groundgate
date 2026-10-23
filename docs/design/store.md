@@ -206,7 +206,13 @@ objects and logs. Format 1 has five views: the reading cache, the review queue, 
 resolution of each packet, the labels for calibrate and the measures.
 
 `store rebuild` builds the reading cache now, as `views/readings.json`. It maps each source,
-reader and options to its readings, and it leaves out a reading whose text is deleted. It also
+reader and options to its readings, and it leaves out a reading whose text is deleted.
+`read --store` of a PDF looks in this cache. If one reading has the same source, reader
+version and options, and its text and layout are in the store, `read --store` uses it and does
+not run the reader again. A reading of a text, HTML or XML file does not name its format, so
+`read --store` always reads those files. A new reader version misses the cache. A cache hit
+cannot give the warning about words outside a PDF page, because the reading does not keep it
+(#483). `store rebuild` also
 builds the calibrate labels, as `views/calibrate-labels.json` (`calibrate-labels@1`, #406). For
 each calibrate task (review.md §11) and each reviewer, it gives the label of the last answer.
 It leaves out a task that its packet does not give with the same bytes. It also leaves out a
