@@ -177,6 +177,7 @@ class _Objects:
                 report.find(f"{_rel(k)} is not a valid {found} object: {exc}")
         self._deleted: dict[str, Mapping[str, Any]] | None = None
         self._deleted_runs: dict[str, str] | None = None
+        self._run_keys: dict[str, list[str]] | None = None
         self._by_run: dict[str, dict[str, tuple[str, str]]] = {}
 
     def of(self, kind: str) -> Iterator[str]:
@@ -210,12 +211,11 @@ class _Objects:
 
     def run_keys(self, k: str) -> list[str]:
         """The run keys of the prompt, reply or admission ``k``: one for each runner version
-        of a run record in the store, sorted."""
-        runners = {f"groundgate-run/{v[4:]}" for v in self.kinds.values() if v and v[:4] == "run@"}
-        found: set[str] = set()
-        for runner in runners:
-            found.update(r for r, (_, n) in self.by_run_key(runner).items() if n == k)
-        return sorted(found)
+        of a run record in the store, sorted. The first call builds the index for all the
+        objects, so a ``forget`` of many objects does the work one time."""
+        if self._run_keys is None:
+            self._run_keys = _run_keys_index(self)
+        return self._run_keys.get(k, [])
 
     def by_run_key(self, runner: str) -> dict[str, tuple[str, str]]:
         """The store kind and key of each prompt, reply and admission object, by its key in a
@@ -246,6 +246,17 @@ class _Objects:
             return _canonical(data.decode("utf-8"), f"the {kind} object {k}")
         except (UnicodeDecodeError, ValueError) as exc:
             raise StoreError(str(exc)) from exc
+
+
+def _run_keys_index(objects: _Objects) -> dict[str, list[str]]:
+    """The sorted run keys of each prompt, reply and admission, by its store key, for each
+    runner version of a run record in the store."""
+    runners = {f"groundgate-run/{v[4:]}" for v in objects.kinds.values() if v and v[:4] == "run@"}
+    index: dict[str, set[str]] = {}
+    for runner in sorted(runners):
+        for r, (_, n) in objects.by_run_key(runner).items():
+            index.setdefault(n, set()).add(r)
+    return {n: sorted(rs) for n, rs in index.items()}
 
 
 # The objects that a packet names

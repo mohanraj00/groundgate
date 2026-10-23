@@ -170,9 +170,11 @@ Each path part is a 64-digit hex digest or a fixed word.
 
 A record of `logs/deleted.jsonl` names one deletion. An object deletion is
 `{"key": "sha256:...", "reason": "...", "time": "2026-10-20T09:30:00Z"}`, and a log deletion has
-`"log"` in place of `"key"`. For a `prompt@1`, `reply@1` or `admission@1` object, `forget` adds
-`"run_keys": ["sha256:..."]`: the key of the object in a run record, for each runner version of
-a run record in the store (section 8). Each record also has `sequence`, `previous` and
+`"log"` in place of `"key"`. For a `prompt@1`, `reply@1` or `admission@1` object,
+`groundgate store forget` adds `"run_keys": ["sha256:..."]`: the key of the object in a run
+record, for each runner version of a run record in the store (section 8). The `forget(key,
+reason)` operation of section 6 does not add them, because it does not read the run records.
+`FolderStore.forget` takes them as an option. Each record also has `sequence`, `previous` and
 `entry_sha256`.
 
 ### 7.2 Write and read
@@ -244,11 +246,11 @@ their issues (#432).
    call `FolderStore.forget` on the key of the record. Its prompts, replies and admissions
    then stay with no record that names them, and a second `forget --all` removes the packet.
    A run record names its prompts, replies and admissions by run keys, and the deleted log
-   keeps the run keys of each one that `forget` removes. If a run record names a run key of the
+   keeps the run keys of each one that `groundgate store forget` removes. If a run record names a run key of the
    deleted log, the object was removed before, and `forget` prints it as "absent". If a run
    record names a run key that matches no object and no deletion, each object of the store
-   that `forget` cannot read is "unchecked". A deletion from 0.12 or earlier has no run keys,
-   so the second rule applies to it.
+   that `forget` cannot read is "unchecked". A deletion from 0.12 or earlier, or from a call of
+   `forget(key, reason)` with no run keys, has no run keys, so the second rule applies to it.
    A value is still document data. If an app must also remove the values,
    `groundgate store forget --all PACKET` removes each object and log of the packet. An object
    of the "Kept" column that another packet names stays.

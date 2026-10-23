@@ -721,6 +721,34 @@ def test_forget_of_a_reply_records_a_run_key_for_each_runner_version(tmp_path: P
     )
 
 
+def test_forget_builds_the_run_key_index_one_time(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """A forget of many prompts, replies and admissions builds the run-key index one time,
+    so its work grows with the number of objects, not with its square."""
+    from groundgate.store import maintain
+
+    root = tmp_path / "s"
+    with FolderStore(root) as store:
+        packet = save_run(store)
+    calls: list[int] = []
+    real = maintain._run_keys_index
+
+    def counted(objects: _Objects) -> dict[str, list[str]]:
+        calls.append(1)
+        return real(objects)
+
+    monkeypatch.setattr(maintain, "_run_keys_index", counted)
+    with FolderStore(root) as store:
+        done = forget_packet(store, packet, "asked")
+        entries = store.read(("deleted",))
+    removed = [
+        k for kind, k, state, _ in done if state == "deleted" and kind in maintain._RUN_KINDS
+    ]
+    assert len(removed) >= 3 and calls == [1]
+    assert all(e.get("run_keys") for e in entries if e["key"] in removed)
+
+
 def test_forget_after_an_old_deletion_with_no_run_keys(
     tmp_path: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:
