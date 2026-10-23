@@ -200,7 +200,16 @@ def put_reading(
     """Read the file at ``path`` as ``groundgate read`` does, and write the source, the text,
     the layout (PDF only) and a ``reading@1`` object. Return the reading key and the result of
     ``read``. The file must be a regular file. ``put_reading`` reads its bytes one time and
-    gives them to ``read``, so ``source@1`` and ``text@1`` come from the same bytes."""
+    gives them to ``read``, so ``source@1`` and ``text@1`` come from the same bytes.
+
+    If the file is a PDF and the store has a reading cache (``views/readings.json``, from
+    ``store rebuild``) with one reading of the same source, reader version and options,
+    ``put_reading`` uses that reading and does not run ``read``. Only a PDF reading has a
+    layout, so the reading shows its format. A reading of other files does not name the format
+    (text, HTML or XML), so ``put_reading`` always reads those files. A new reader version
+    misses the cache. On a cache hit, the warnings come from the stored text and layout, so a
+    warning about words drawn outside a PDF page shows only on the read that wrote the
+    reading."""
     from .. import __version__
     from ..read import ReadError, read
 
@@ -208,20 +217,74 @@ def put_reading(
     if not path.is_file():
         raise ReadError(f"{path} is not a regular file")
     source = path.read_bytes()
+    want = {
+        "source": key("source@1", source),
+        "reader": {"name": READER, "version": __version__},
+        "options": {"pages": None if pages is None else list(pages)},
+    }
+    hit = _cached_reading(store, path, want)
+    if hit is not None:
+        store.put("source@1", source)
+        return hit
     doc = read(path, pages=pages, data=source)
+    store.put("source@1", source)
     layout = None
     if doc.layout is not None:
         layout = store.put("layout@1", _json(doc.layout.to_dict(), "layout"))
     reading = {
         "format": "reading@1",
-        "source": store.put("source@1", source),
-        "reader": {"name": READER, "version": __version__},
-        "options": {"pages": None if pages is None else list(pages)},
+        **want,
         "text": store.put("text@1", doc.text.encode("utf-8")),
         "layout": layout,
         "document": None,
     }
     return store.put("reading@1", _json(reading, "reading")), doc
+
+
+def _cached_reading(store: Store, path: Path, want: dict[str, Any]) -> tuple[str, Any] | None:
+    """The reading key and the result of ``read`` from the reading cache, or ``None`` on a miss.
+    The cache and the objects are untrusted. Each value that does not agree with ``want`` is a
+    miss, and so is a row with more than one reading. Only a PDF can hit."""
+    view = getattr(store, "read_view", None)
+    if view is None or path.suffix.lower() != ".pdf":
+        return None
+    try:
+        cache = json.loads(view("readings.json"))
+        rows = cache["readings"] if cache.get("format") == "reading-cache@1" else []
+        name = jcs(want)
+        for row in rows:
+            if jcs({m: row.get(m) for m in want}) != name:
+                continue
+            found = row.get("readings")
+            if not isinstance(found, list) or len(found) != 1 or not isinstance(found[0], str):
+                return None
+            return _stored_reading(store, found[0], name)
+    except (StoreError, ValueError, TypeError, KeyError, AttributeError, RecursionError):
+        return None  # a deep nest in the view or an object is a miss too
+    return None
+
+
+def _stored_reading(store: Store, k: str, name: str) -> tuple[str, Any] | None:
+    """The reading of key ``k`` as the result of ``read``, if its members give ``name``."""
+    from ..canonical import digest, is_nfc
+    from ..read import Extracted, Layout
+
+    obj = load_reading(store, k)
+    if jcs({m: obj[m] for m in ("source", "reader", "options")}) != name:
+        return None
+    if obj["document"] is not None:
+        return None
+    text = store.get("text@1", obj["text"]).decode("utf-8")
+    if not is_nfc(text):
+        return None
+    if obj["layout"] is None:  # a reading of text, HTML or XML
+        return None
+    layout = Layout.from_dict(_get_json(store, "layout@1", obj["layout"]))
+    if layout.document_sha256 != digest("document", {"text": text}):
+        return None
+    from ..read.pdf import layout_warnings
+
+    return k, Extracted(text, layout, tuple(layout_warnings(layout.pages, obj["options"]["pages"])))
 
 
 def load_reading(store: Store, k: str) -> dict[str, Any]:
