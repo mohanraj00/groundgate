@@ -273,7 +273,9 @@ their issues (#432).
    schema digest, policy digest and candidate digests match, the packet has no judgments, and
    the receipt lists none. A receipt lists only the judgments that applied, so with judgments
    it cannot prove the match. Then the receipt stays, and `forget` prints it as "unchecked".
-   If a log or a packet is "unchecked", `forget --all` removes only what `forget` removes. The
+   The search for such receipts cannot run if an object of the store cannot be read: it can be
+   a packet that names the receipt. Then that object is "unchecked" too.
+   If a log, a packet or such an object is "unchecked", `forget --all` removes only what `forget` removes. The
    packet, its kept objects, its corrections, its tasks, its resolutions and its logs stay. Run
    `store check --repair` on a torn log, then `forget --all` again.
    Last, `forget --all` applies one filter to all of these together. An object stays if a

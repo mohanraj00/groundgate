@@ -758,7 +758,8 @@ def _review_plan(
                 shared[n] = shared.get(n, 0) + len(users)
     unproven: list[tuple[str, str]] = []
     if wanted:
-        proven, maybe = _orphans(objects, obj, wanted)
+        proven, maybe, stops = _orphans(objects, obj, wanted)
+        unread += stops  # the search cannot run: keep the review provenance
         plan += [("receipt@1", n) for n in proven if n not in elsewhere]
         unproven = [("receipt@1", n) for n in maybe if n not in elsewhere]
     review = plan + [("task@1", k) for k in tasks] + resolutions
@@ -769,7 +770,7 @@ def _orphans(
     objects: _Objects,
     obj: Mapping[str, Any],
     wanted: list[tuple[Counter[str], str, str | None, str]],
-) -> tuple[list[str], list[str]]:
+) -> tuple[list[str], list[str], list[tuple[str, str]]]:
     """The receipts of the corrections whose packets are gone: a ``forget`` that stopped
     removed the correction packet before its receipt. Such a receipt is named by no packet. Its
     spec version, document, references, packs, schema digest and policy digest are those of
@@ -779,26 +780,32 @@ def _orphans(
     A receipt lists only the judgments that applied, not the judgments that ``admit`` got. So
     it proves a correction only when the packet has no judgments, and the receipt lists none:
     each other input of ``admit`` is then in the receipt. Return the proven receipts, which
-    ``forget`` removes, and the receipts that match all the rest, which stay. If a packet or
-    another object cannot be read, it can name any receipt, so there is none."""
+    ``forget`` removes, and the receipts that match all the rest, which stay.
+
+    Last, return each object that stops the search: a packet that cannot be read can name any
+    receipt, an object that cannot be read can be a packet or a receipt, and a receipt that no
+    packet names and that cannot be read can be a correction. Then ``forget`` reports them as
+    ``unchecked`` and keeps the review provenance, so a second call after a repair can finish.
+    Then there are no proven receipts."""
+    stops = [(kind or "object", k) for k, kind in objects.unread()]
     named: set[str] = set()
     for k in objects.of("packet@1"):
         try:
             named.update(_keys(_packet(objects, k)["receipt"]))
         except (StoreError, ValueError, TypeError, RecursionError):
-            return [], []
-    if any(kind is None for kind in objects.kinds.values()):
-        return [], []  # an object that cannot be read can be a packet
+            stops.append(("packet@1", k))
     try:
         mine = objects.json("receipt@1", obj["receipt"])
         inputs = [mine[m] for m in _RECEIPT_INPUTS]
     except (StoreError, ValueError, TypeError, KeyError, RecursionError):
-        return [], []
+        stops.append(("receipt@1", str(obj["receipt"])))
+    if stops:
+        return [], [], stops
     proven, maybe = [], []
     for k in sorted(objects.of("receipt@1")):
         if k in named:
             continue
-        with suppress(StoreError, ValueError, TypeError, KeyError, RecursionError):
+        try:
             receipt = objects.json("receipt@1", k)
             if [receipt[m] for m in _RECEIPT_INPUTS] != inputs:
                 continue
@@ -809,7 +816,11 @@ def _orphans(
                 proven.append(k)
             else:
                 maybe.append(k)
-    return proven, maybe
+        except (StoreError, ValueError, TypeError, KeyError, RecursionError):
+            stops.append(("receipt@1", k))
+    if stops:
+        return [], [], stops
+    return proven, maybe, []
 
 
 def _correction_inputs(
@@ -942,7 +953,9 @@ def forget_packet(
     and receipt (#516). A ``review-policy@1`` object stays. If an answer log of the packet
     cannot be read, it is ``unchecked``: it can name a correction. Then ``everything`` removes
     only what a plain ``forget`` removes, and keeps the packet, its corrections, its tasks, its
-    resolutions and its logs, so a second call after a repair of the log can finish. Last, one
+    resolutions and its logs, so a second call after a repair of the log can finish. The same
+    applies when the search for the receipt of a correction whose packet is gone cannot run,
+    because an object of the store cannot be read (``_orphans``). Last, one
     filter applies to all the plans: an object that a packet, receipt, task or resolution
     which stays names also stays (``_named_by_rest``). The "Removed" objects of the packet
     itself and a run record that holds text go for all packets, so they are not in it.

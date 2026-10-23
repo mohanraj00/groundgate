@@ -976,3 +976,44 @@ def test_forget_all_keeps_each_object_that_stays_whole(tmp_path: Path) -> None:
         forget_packet(store, packets["b"][0], "all", everything=True)
         left = _held(store)
     assert not {shared, packets["a"][1], packets["b"][0]} & left
+
+
+def test_forget_all_keeps_the_review_when_the_receipt_search_cannot_run(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    # The first forget --all stops at the correction packet, so its receipt stays with no
+    # packet. Then an object that cannot be read can be a packet that names that receipt, so
+    # the retry cannot search. It reports the object as unchecked and keeps the packet, its
+    # receipt, its task, its resolution and its log. After the repair, a retry finishes.
+    root, k, tk, rk, receipt, fixed = _one_correction(tmp_path, judged=False)
+    real = FolderStore.forget
+
+    def stop(self: FolderStore, n: str, reason: str, **more: Any) -> None:
+        real(self, n, reason, **more)
+        if n == fixed:
+            raise RuntimeError("stopped")
+
+    monkeypatch.setattr(FolderStore, "forget", stop)
+    with FolderStore(root) as store, pytest.raises(RuntimeError):
+        forget_packet(store, k, "all", everything=True)
+    monkeypatch.setattr(FolderStore, "forget", real)
+    bad = "sha256:" + "ab" * 32
+    path = root / "objects" / bad[7:9] / bad[9:]
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(b"{")
+    log = root / "logs" / "answers" / k[7:] / f"{reviewer_key('ana')[7:]}.jsonl"
+    with FolderStore(root) as store:
+        own = json.loads(store.get("packet@1", k))["receipt"]
+        done = forget_packet(store, k, "all", everything=True)
+        left, _ = store.object_keys()
+    assert ("object", bad, "unchecked", 0) in done
+    assert ("packet@1", k, "kept", 0) in done
+    assert {k, own, tk, rk, receipt} <= set(left)
+    assert log.exists()
+    path.unlink()
+    with FolderStore(root) as store:
+        done = forget_packet(store, k, "all", everything=True)
+        left, _ = store.object_keys()
+    assert not any(state == "unchecked" for _, _, state, _ in done)
+    assert not {k, own, tk, rk, receipt} & set(left)
+    assert not log.exists()
