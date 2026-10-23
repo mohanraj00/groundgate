@@ -355,9 +355,9 @@ The page must read the output of the current code, so I ran the three arms again
 development documents on 2026-10-22, on origin/main 3273c30 (`development/runs/`,
 `development/results.json`, `development/RESULTS.md`). This code has the stop words of #466
 (`groundgate-run/4`) and the review page of #460. The model, transport and run limits are the
-same as in loop 04, with the installed Codex account. The baseline made 150 calls and the runner
-made 243. `runner_drop_rounded` replayed the runner calls. No document was incomplete, had a
-transport error or stopped at `search_limit`.
+same as in loop 04. The baseline made 150 calls and the runner made 243. `runner_drop_rounded`
+replayed the runner calls. No document was incomplete, had a transport error or stopped at
+`search_limit`.
 
 This run is not a loop record. The code freeze names `loop/04.json` as the last record, and
 `loop.py check` refuses a new one. `development/COMPARE.md` puts the run beside loop 04
@@ -403,21 +403,29 @@ Run each command from the root of the repository. Do not open `labels.json`, `lo
    ```
 
 3. Give `review/development/checks-needed.json` to an independent checker, as in step 5 of the
-   held-out steps. Then score again with `--checks bench/requested4/review/development/checks.json`
-   and write `review/development/RESULTS.md`:
+   held-out steps. The checker writes `review/development/checks.json`.
+4. Score again with the checks, then write `review/development/RESULTS.md` from
+   `review/development/results.json`:
 
    ```bash
+   PYTHONPATH=bench uv run python -m requested.review_items score --set bench/requested4 \
+       --split development --store ../groundgate-cache-463/review/store-development \
+       --reviewer maintainer --checks bench/requested4/review/development/checks.json
    PYTHONPATH=bench uv run python -m requested.review_items report --set bench/requested4 \
        --split development
    ```
 
-4. Print the measures of the page:
+5. Print the measures of the page:
 
    ```bash
    uv run groundgate review measures --set requested4 --split development \
        --store ../groundgate-cache-463/review/store-development \
        --policy bench/requested4/review/development/policy.json
    ```
+
+   With one reviewer, `review measures` gives no agreement pair, because a pair needs a blind
+   label of another reviewer. The agreement with the sealed labels comes from
+   `review/development/results.json`.
 
 ## What comes next
 
