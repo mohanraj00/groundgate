@@ -263,13 +263,35 @@ def test_load_refuses_a_packet_with_no_run_or_another_run(tmp_path: Path) -> Non
         other = store.put("packet@1", jcs({**packet, "run": store.put("run@4", old)}).encode())
         with pytest.raises(ValueError, match="is not a groundgate-run/5 record"):
             RunResult.load(store, other)
-        for limit in (len(lines) - 1, len(lines)):
-            with pytest.raises(ValueError, match="larger than max_bytes"):
-                RunResult.load(store, k, max_bytes=limit)
+    # The store bounds each read, the run record too.
+    reply = next(e for e in result.record if e["kind"] == "call")["reply_sha256"]
+    size = max(len(lines), len(result.artifacts[reply].encode("utf-8")))
+    small = FolderStore(tmp_path, max_bytes=size - 1)
+    with small as store, pytest.raises(ValueError, match="larger than max_bytes"):
+        RunResult.load(store, k)
+
+
+def test_load_refuses_a_packet_of_other_inputs(tmp_path: Path) -> None:
+    result = run("Amount 5.", "5", document_id="doc-1")
+    with FolderStore(tmp_path) as store:
+        k = result.save(store)
+        packet = json.loads(store.get("packet@1", k))
+        nine = store.put("text@1", b"Amount 9.")
+        changes = [
+            {"document": {**packet["document"], "text": nine}},
+            {"document": {**packet["document"], "source": "https://example.org/other"}},
+            {"policy": store.put("policy@1", jcs({"unit_window": 8}).encode())},
+            {"schema": store.put("schema@1", jcs({"fields": {}}).encode())},
+            {"references": [store.put("reference@1", jcs({"id": "r", "text": "x"}).encode())]},
+        ]
+        for change in changes:
+            other = store.put("packet@1", jcs({**packet, **change}).encode())
+            with pytest.raises(ValueError, match="other inputs than its run record"):
+                RunResult.load(store, other)
 
 
 def test_load_refuses_a_packet_of_another_receipt(tmp_path: Path) -> None:
-    five = run("Amount 5.", "5")
+    five = run("Amount 5. Amount 6.", "5")
     with FolderStore(tmp_path) as store:
         packet = json.loads(store.get("packet@1", five.save(store)))
         other = run("Amount 5. Amount 6.", "6")

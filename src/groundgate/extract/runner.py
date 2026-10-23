@@ -327,23 +327,27 @@ class RunResult:
         return _put_packet(store, text, back, self.receipt, document_source, None, run)
 
     @classmethod
-    def load(cls, store: Store, packet: str, max_bytes: int = 2**30) -> RunResult:
+    def load(cls, store: Store, packet: str) -> RunResult:
         """Replay the run of the packet key ``packet`` from ``store``, with no model call (#429).
 
         ``load`` gets the packet, its run record and each object that the record names by its
         store key, and replays the run as ``read`` does, with the packs that the packet names.
-        Each object must also have the run key of the record. The record and the objects
-        together are at most ``max_bytes``. The replayed receipt and candidates must be those of
-        the packet. A packet with no run, a record that is not ``groundgate-run/5``, a changed
-        object or a replay that differs raises ``ValueError``. An object that is not in the
-        store raises ``InputGone``, with the deletion if ``forget`` removed it."""
+        The run header must name the inputs of the packet: the document id, source and text,
+        the schema, the policy and the references. Each object must also have the run key of
+        the record. The replayed receipt and candidates must be those of the packet. A packet
+        with no run, a record that is not ``groundgate-run/5``, a packet of other inputs, a
+        changed object or a replay that differs raises ``ValueError``. An object that is not in
+        the store raises ``InputGone``, with the deletion if ``forget`` removed it.
+
+        The store bounds each read: ``FolderStore`` reads no object above its ``max_bytes``. The
+        record and its objects are held in memory together, so open the store with a smaller
+        ``max_bytes`` if the memory is small."""
         from ..store import StoreError
         from ..store.packets import InputGone, _get, load_packet
 
         found = load_packet(store, packet)
         if found.run is None:
             raise ValueError(f"the packet {packet} names no run record")
-        room = [max_bytes]
 
         def get(kind: str, k: str, what: str | None = None) -> str:
             try:
@@ -351,10 +355,7 @@ class RunResult:
             except InputGone:
                 raise
             except StoreError as exc:
-                raise ValueError(what or str(exc)) from exc
-            room[0] -= len(data)
-            if room[0] < 0:
-                raise ValueError("the run record and its objects are larger than max_bytes")
+                raise ValueError(f"{what}: {exc}" if what else str(exc)) from exc
             try:
                 return data.decode("utf-8")
             except UnicodeDecodeError as exc:
@@ -366,6 +367,7 @@ class RunResult:
             record = [_strict_json(line) for line in _lines(data.encode("utf-8"))]
         except RecursionError as exc:
             raise ValueError("a log line nests too deep") from exc
+        _same_inputs(record, found)
         inputs, _ = _named(record)
         artifacts: dict[str, str] = {}
         seen: dict[str, str] = {}
@@ -453,6 +455,29 @@ def _stored(record: Sequence[Mapping[str, Any]]) -> list[tuple[str, str, str]]:
     if not all(isinstance(k, str) and _KEY.fullmatch(k) for _, *ks in named for k in ks):
         raise ValueError("the log names an object with a bad key")
     return named
+
+
+def _same_inputs(record: Sequence[Mapping[str, Any]], packet: Any) -> None:
+    """Raise ``ValueError`` if the run header does not name the inputs of the ``Packet``."""
+    _stored(record)  # the header has each key, in the format of a store key
+    inputs = record[0]["inputs"]
+    document = inputs["document"]
+    receipt = packet.receipt.get("document")
+    policy = Policy.from_dict({}).to_dict() if packet.policy is None else packet.policy
+    references = packet.references or []
+    try:
+        named = [
+            _key("text", packet.text) == document["key"],
+            _key("schema", jcs(packet.schema)) == inputs["schema_key"],
+            _key("policy", jcs(policy)) == inputs["policy_key"],
+            [_key("reference", jcs(r)) for r in references] == inputs["reference_keys"],
+            isinstance(receipt, dict) and receipt.get("id") == document["id"],
+            packet.document_source == document["source"],
+        ]
+    except (TypeError, ValueError, RecursionError, UnicodeError) as exc:
+        raise ValueError("the packet inputs have no canonical form") from exc
+    if not all(named):
+        raise ValueError("the packet names other inputs than its run record")
 
 
 def _key(kind: str, data: str) -> str:
