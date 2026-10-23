@@ -391,9 +391,14 @@ class RunResult:
         result = _replay(record, artifacts, text, schema, policy, refs, found.packs)
         if isinstance(result, str):
             raise ValueError(result)
-        if result.receipt.to_dict() != found.receipt or jcs(result.candidates) != jcs(
-            found.candidates
-        ):
+        # Canonical JSON compares the JSON types too: 1 and true are not equal (#520).
+        try:
+            same = jcs(result.receipt.to_dict()) == jcs(found.receipt) and jcs(
+                result.candidates
+            ) == jcs(found.candidates)
+        except (TypeError, ValueError, RecursionError) as exc:
+            raise ValueError("the packet has no canonical form") from exc
+        if not same:
             raise ValueError("the packet names another receipt or other candidates than its run")
         return result
 
@@ -470,15 +475,16 @@ def _same_inputs(record: Sequence[Mapping[str, Any]], packet: Any) -> None:
     policy = Policy.from_dict({}).to_dict() if packet.policy is None else packet.policy
     references = packet.references or []
     try:
+        # Canonical JSON compares the JSON types too: 1 and true are not equal (#520).
         named = [
-            _key("text", packet.text) == document["key"],
-            _key("schema", jcs(packet.schema)) == inputs["schema_key"],
-            _key("policy", jcs(policy)) == inputs["policy_key"],
-            [_key("reference", jcs(r)) for r in references] == inputs["reference_keys"],
-            isinstance(receipt, dict) and receipt.get("id") == document["id"],
-            packet.document_source == document["source"],
+            jcs(_key("text", packet.text)) == jcs(document["key"]),
+            jcs(_key("schema", jcs(packet.schema))) == jcs(inputs["schema_key"]),
+            jcs(_key("policy", jcs(policy))) == jcs(inputs["policy_key"]),
+            jcs([_key("reference", jcs(r)) for r in references]) == jcs(inputs["reference_keys"]),
+            isinstance(receipt, dict) and jcs(receipt.get("id")) == jcs(document["id"]),
+            jcs(packet.document_source) == jcs(document["source"]),
             # A run record holds no judgments, so the replay cannot give them.
-            packet.judgments is None or packet.judgments == [],
+            jcs(packet.judgments) in ("null", "[]"),
         ]
     except (TypeError, ValueError, RecursionError, UnicodeError) as exc:
         raise ValueError("the packet inputs have no canonical form") from exc

@@ -308,6 +308,19 @@ def test_load_refuses_a_packet_of_another_receipt(tmp_path: Path) -> None:
             RunResult.load(store, mixed)
 
 
+def test_load_compares_the_json_types_of_the_receipt(tmp_path: Path) -> None:
+    result = run("Amount 5.", "5")
+    with FolderStore(tmp_path) as store:
+        packet = json.loads(store.get("packet@1", result.save(store)))
+        receipt = json.loads(store.get("receipt@1", packet["receipt"]))
+        assert receipt["summary"]["admitted"] == 1
+        # In Python, True == 1. In JSON, true is not 1.
+        changed = {**receipt, "summary": {**receipt["summary"], "admitted": True}}
+        other = {**packet, "receipt": store.put("receipt@1", jcs(changed).encode())}
+        with pytest.raises(ValueError, match="another receipt"):
+            RunResult.load(store, store.put("packet@1", jcs(other).encode()))
+
+
 def test_save_refuses_a_record_with_another_store_key(tmp_path: Path) -> None:
     result = run("Amount 5.", "5")
     record = [dict(line) for line in result.record]
