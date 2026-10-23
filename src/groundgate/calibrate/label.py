@@ -10,7 +10,6 @@ Content-Security-Policy lets the page run only its own script and style."""
 from __future__ import annotations
 
 import contextlib
-import fcntl
 import hmac
 import html
 import json
@@ -42,12 +41,26 @@ def labels_lock(folder: Path) -> Iterator[None]:
     """Hold the labels lock of the work folder, ``W/.labels.lock``, for one short step. A label
     write holds it across the freeze check and the write, and ``ask`` holds it across its
     partial file and the label snapshot, so no label write falls between the two. The lock is
-    ``flock`` on an open file: the kernel releases it when the process ends, so a stopped
-    process leaves no stale lock. The file stays in the folder."""
+    on an open file (``flock``, or ``msvcrt.locking`` where there is no ``fcntl``): the system
+    releases it when the process ends, so a stopped process leaves no stale lock. Both forms
+    wait for the lock. The file stays in the folder."""
     fd = os.open(folder / LOCK, os.O_RDWR | os.O_CREAT | getattr(os, "O_NOFOLLOW", 0), 0o600)
     try:
-        fcntl.flock(fd, fcntl.LOCK_EX)
-        yield
+        try:
+            import fcntl
+        except ImportError:  # Windows: no fcntl
+            import msvcrt
+
+            while True:
+                try:
+                    msvcrt.locking(fd, msvcrt.LK_LOCK, 1)  # type: ignore[attr-defined]
+                    break
+                except OSError:  # LK_LOCK gives up after 10 tries: wait again
+                    continue
+            yield
+        else:
+            fcntl.flock(fd, fcntl.LOCK_EX)
+            yield
     finally:
         os.close(fd)  # closing the file releases the lock
 

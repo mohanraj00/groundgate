@@ -48,7 +48,8 @@ def put_items(
     out: dict[str, dict[str, str]] = {}
     for it in items:
         n = int(it["id"].rsplit(":", 1)[1])
-        task = label_task(pk, decided, text, parsed, index[digest("candidate", cands[n])], question)
+        task = label_task(pk, decided, text, parsed, index[digest("candidate", cands[n])],
+                          question, raw_schema=schema)  # fmt: skip
         data = jcs(task).encode("utf-8")
         check_bytes("task@1", data)
         out[it["id"]] = {"packet": pk, "task": store.put("task@1", data)}
@@ -91,7 +92,8 @@ def labels(
                 packet, schema, layout, problems = checked_packet(store, pk)
                 if problems or schema is None:
                     raise SystemExit(f"the packet {pk} does not match its receipt")
-                own = label_tasks(pk, packet.receipt, packet.text, schema, layout=layout)
+                own = label_tasks(pk, packet.receipt, packet.text, schema, layout=layout,
+                                  raw_schema=packet.schema)  # fmt: skip
                 if heads is None:
                     records = store.read(("answers", pk, reviewer_key(reviewer)))
                 else:

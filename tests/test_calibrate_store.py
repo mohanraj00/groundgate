@@ -333,9 +333,25 @@ def test_a_label_task_needs_a_value_in_the_document() -> None:
 
     receipt = {"decisions": [{"field": "revenue", "value": None, "evidence": None}]}
     with pytest.raises(PacketError, match="no value"):
-        label_task("sha256:" + "0" * 64, receipt, TEXT, Schema.from_dict(SCHEMA), 0, "field")
+        label_task(
+            "sha256:" + "0" * 64,
+            receipt,
+            TEXT,
+            Schema.from_dict(SCHEMA),
+            0,
+            "field",
+            raw_schema=SCHEMA,
+        )
     with pytest.raises(ValueError, match="not a calibrate question"):
-        label_task("sha256:" + "0" * 64, receipt, TEXT, Schema.from_dict(SCHEMA), 0, "other")
+        label_task(
+            "sha256:" + "0" * 64,
+            receipt,
+            TEXT,
+            Schema.from_dict(SCHEMA),
+            0,
+            "other",
+            raw_schema=SCHEMA,
+        )
 
 
 def test_a_label_task_is_only_for_a_decision_that_the_sample_takes(tmp_path: Path) -> None:
@@ -353,9 +369,9 @@ def test_a_label_task_is_only_for_a_decision_that_the_sample_takes(tmp_path: Pat
     ]  # fmt: skip
     schema, pk = Schema.from_dict(SCHEMA), "sha256:" + "0" * 64
     with pytest.raises(PacketError, match="not a key item"):
-        label_task(pk, receipt, TEXT, schema, 1, "key")
+        label_task(pk, receipt, TEXT, schema, 1, "key", raw_schema=SCHEMA)
     with pytest.raises(PacketError, match="not a field item"):
-        label_task(pk, receipt, TEXT, schema, 0, "field")
+        label_task(pk, receipt, TEXT, schema, 0, "field", raw_schema=SCHEMA)
     with FolderStore(tmp_path / "store") as s:
         k, _ = admit_packet(s, TEXT, SCHEMA, cands, None, "doc0")
         given = gg.admit(TEXT, SCHEMA, cands, None).to_dict()
@@ -364,15 +380,15 @@ def test_a_label_task_is_only_for_a_decision_that_the_sample_takes(tmp_path: Pat
         loose = json.loads(json.dumps(given))
         for d in loose["decisions"]:
             d["outcome"], d["codes"] = "admitted", ["KEY_NOT_AT_VALUE"]
-        made = {(q, i): label_task(k, loose, TEXT, schema, i, q) for q in QUESTIONS.values()
-                for i in (0, 1)}  # fmt: skip
+        made = {(q, i): label_task(k, loose, TEXT, schema, i, q, raw_schema=SCHEMA)
+                for q in QUESTIONS.values() for i in (0, 1)}  # fmt: skip
         from groundgate.canonical import jcs
         from groundgate.store import key as store_key
 
         handmade = {store_key("task@1", jcs(made[q]).encode()) for q in (("key", 1), ("field", 0))}
         for t in made.values():
             s.put("task@1", jcs(t).encode())
-        assert set(label_tasks(k, given, TEXT, schema)) == {
+        assert set(label_tasks(k, given, TEXT, schema, raw_schema=SCHEMA)) == {
             store_key("task@1", jcs(made[q]).encode()) for q in (("key", 0), ("field", 1))
         }
         review = Review(s, "ana")
@@ -719,3 +735,35 @@ def test_a_reviewer_name_with_no_utf8_is_left_out(tmp_path: Path) -> None:
         with pytest.raises(SystemExit, match="valid Unicode"):
             cli.main([cmd, "--work", str(work), *more, "--store", str(store),
                       "--reviewer", "\ud800"])  # fmt: skip
+
+
+def test_a_blank_description_override_wins_in_the_stored_question(tmp_path: Path) -> None:
+    d, c, s = inputs(tmp_path / "in", 1)
+    described = {"fields": {"revenue": {**SCHEMA["fields"]["revenue"],
+                                        "description": "the total sales of the year"}}}  # fmt: skip
+    s.write_text(json.dumps(described))
+    over = tmp_path / "over.json"
+    over.write_text(json.dumps({"revenue": ""}))
+    store, work = tmp_path / "store", tmp_path / "work"
+    cli.main(["sample", "--work", str(work), "--docs", str(d), "--candidates", str(c),
+              "--schema", str(s), "--question", "field", "--store", str(store),
+              "--descriptions", str(over)])  # fmt: skip
+    (item,) = json.loads((work / "tasks.json").read_text()).values()
+    with FolderStore(store) as st:
+        question = json.loads(st.get("task@1", item["task"]))["question"]
+    assert "means" not in question and "total sales" not in question
+
+
+def test_calibrate_runs_with_no_fcntl(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    import importlib
+    import sys
+
+    # a platform with no fcntl, such as Windows: the import of the module must not need it
+    monkeypatch.setitem(sys.modules, "fcntl", None)
+    fresh = importlib.reload(label)
+    assert hasattr(fresh, "labels_lock")
+    # a command that takes no lock still runs
+    d, c, s = inputs(tmp_path / "in", 1)
+    cli.main(["sample", "--work", str(tmp_path / "w"), "--docs", str(d), "--candidates", str(c),
+              "--schema", str(s), "--question", "field"])  # fmt: skip
+    assert (tmp_path / "w" / "items.json").exists()

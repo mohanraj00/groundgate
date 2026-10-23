@@ -108,9 +108,10 @@ def sample(w: Work, docs: Path, cands: Path, schema_path: Path, args: argparse.N
         raise SystemExit(f"no {args.question} items in these documents; there is nothing to label")
     if args.store is not None:
         # the packet schema holds each description, so a stored task asks what the page asks
+        # key membership, not truth: an explicit "" override wins and gives no description
+        given = config["descriptions"]
         described = {**schema, "fields": {
-            name: {**f, "description": config["descriptions"][name]}
-            if config["descriptions"].get(name) else f
+            name: _described(f, given[name]) if name in given else f
             for name, f in schema["fields"].items()
         }}  # fmt: skip
         w.write("tasks.json", put_tasks(args.store, described, found_by_doc, args.question))
@@ -121,6 +122,14 @@ def sample(w: Work, docs: Path, cands: Path, schema_path: Path, args: argparse.N
     for c in CEILINGS:
         print(f"  {c}: {needed(c)}")
     print("A split by document puts about half of the items in the calibration part.")
+
+
+def _described(field: dict[str, Any], description: Any) -> dict[str, Any]:
+    """The field with ``description`` as its own description. A blank one removes it."""
+    out = {k: v for k, v in field.items() if k != "description"}
+    if isinstance(description, str) and description.strip():
+        out["description"] = description
+    return out
 
 
 def put_tasks(

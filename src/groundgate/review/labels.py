@@ -44,9 +44,12 @@ def label_task(
     *,
     references: Sequence[Any] | None = None,
     layout: Layout | None = None,
+    raw_schema: Mapping[str, Any],
 ) -> dict[str, Any]:
     """The blind ``task@1`` of the calibrate item for decision ``decision`` of the receipt.
-    Raise ``PacketError`` when the decision cannot be an item of ``question``."""
+    Raise ``PacketError`` when the decision cannot be an item of ``question``. The question
+    shows the description that the field of ``raw_schema`` (the packet schema as stored) gives
+    itself, not one from a template, so a blank ``--descriptions`` override shows none."""
     if question not in TEMPLATES:
         raise ValueError(f"{question!r} is not a calibrate question: use field or key")
     d = receipt["decisions"][decision]
@@ -74,7 +77,9 @@ def label_task(
     key = d.get("key") if isinstance(d.get("key"), str) and field.keys is not None else None
     words = normalize_ws(name.replace("_", " "))
     # the description in the packet schema, as the label page and the judge prompt show it
-    means = f" The field means: {field.description}" if field.description else ""
+    raw = raw_schema.get("fields", {}).get(name) if isinstance(raw_schema, Mapping) else None
+    own = raw.get("description") if isinstance(raw, Mapping) else None
+    means = f" The field means: {own}" if isinstance(own, str) and own.strip() else ""
     if question == "field":
         asked = f"Is {shown} the {words}?{means}"
         parts = [*_PARTS[item], "field"]
@@ -109,6 +114,7 @@ def label_tasks(
     *,
     references: Sequence[Any] | None = None,
     layout: Layout | None = None,
+    raw_schema: Mapping[str, Any],
 ) -> dict[str, tuple[Slot, dict[str, Any]]]:
     """Each calibrate task that the packet can have, by store key, with its slot."""
     from ..store import key
@@ -118,7 +124,8 @@ def label_tasks(
         for question in TEMPLATES:
             try:
                 task = label_task(packet_key, receipt, text, schema, i, question,
-                                  references=references, layout=layout)  # fmt: skip
+                                  references=references, layout=layout,
+                                  raw_schema=raw_schema)  # fmt: skip
             except PacketError:
                 continue
             s = task["slot"]
@@ -235,7 +242,8 @@ def _from_packets(
             try:
                 packet, schema, layout, problems = checked_packet(store, pk)
                 if not problems and schema is not None:
-                    own = label_tasks(pk, packet.receipt, packet.text, schema, layout=layout)
+                    own = label_tasks(pk, packet.receipt, packet.text, schema, layout=layout,
+                                      raw_schema=packet.schema)  # fmt: skip
                     ids = [c.get("id") for c in packet.candidates if isinstance(c, Mapping)]
                     packets[pk] = (schema, ids, own)
             except (StoreError, PacketError, ValueError, KeyError, TypeError):

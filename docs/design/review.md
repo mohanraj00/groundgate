@@ -463,7 +463,8 @@ extra measure:
      decision of the item. A key task is only for a decision with `KEY_NOT_AT_VALUE`, and a
      field task is only for an admitted decision, as in the sample. The packet schema holds the
      description of each field, from the schema or from `--descriptions`, and the question of
-     the task shows it. A field task has the value as its one choice. A key task has no
+     the task shows it. A blank `--descriptions` value removes the description, so the
+     question shows none. A field task has the value as its one choice. A key task has no
      choice, so the page does not show the key of the candidate. `tasks.json` in the work
      folder maps each item id to its packet and its task.
   3. A label is an `answer@2`. For the field question, `confirm` is true, `wrong` is false, and

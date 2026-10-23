@@ -277,7 +277,8 @@ class Review:
         labels: dict[str, tuple[Slot, dict[str, Any]]] = {}
         if set(stored) - set(by_key):  # a calibrate task must come from this packet too
             labels = label_tasks(pk, packet.receipt, packet.text, schema,
-                                 references=packet.references, layout=layout)  # fmt: skip
+                                 references=packet.references, layout=layout,
+                                 raw_schema=packet.schema)  # fmt: skip
         document = packet.receipt.get("document", {}).get("id")
         doc = _Doc(
             key=pk,

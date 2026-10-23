@@ -200,7 +200,8 @@ def resolve(
             isinstance(r, Mapping) and not (isinstance(r.get("task"), str) and r["task"] in by_key)
             for r in records
         ):
-            labels = label_tasks(packet_key, receipt, packet.text, schema, **texts)
+            labels = label_tasks(packet_key, receipt, packet.text, schema, **texts,
+                                  raw_schema=packet.schema)  # fmt: skip
         checked += [(r, _check(name, r, by_key, schema, ids, labels=labels)) for r in records]
         if records:
             heads.append({"reviewer": name, "head": records[-1]["entry_sha256"]})
