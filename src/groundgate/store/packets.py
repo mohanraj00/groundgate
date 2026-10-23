@@ -199,11 +199,14 @@ def put_reading(
     ``read``. The file must be a regular file. ``put_reading`` reads its bytes one time and
     gives them to ``read``, so ``source@1`` and ``text@1`` come from the same bytes.
 
-    If the store has a reading cache (``views/readings.json``, from ``store rebuild``) with one
-    reading of the same source, reader version and options, ``put_reading`` uses that reading
-    and does not run ``read``. A new reader version misses the cache. On a cache hit, the
-    warnings come from the stored text and layout, so a warning about words drawn outside a
-    PDF page shows only on the read that wrote the reading."""
+    If the file is a PDF and the store has a reading cache (``views/readings.json``, from
+    ``store rebuild``) with one reading of the same source, reader version and options,
+    ``put_reading`` uses that reading and does not run ``read``. Only a PDF reading has a
+    layout, so the reading shows its format. A reading of other files does not name the format
+    (text, HTML or XML), so ``put_reading`` always reads those files. A new reader version
+    misses the cache. On a cache hit, the warnings come from the stored text and layout, so a
+    warning about words drawn outside a PDF page shows only on the read that wrote the
+    reading."""
     from .. import __version__
     from ..read import ReadError, read
 
@@ -238,9 +241,9 @@ def put_reading(
 def _cached_reading(store: Store, path: Path, want: dict[str, Any]) -> tuple[str, Any] | None:
     """The reading key and the result of ``read`` from the reading cache, or ``None`` on a miss.
     The cache and the objects are untrusted. Each value that does not agree with ``want`` is a
-    miss, and so is a row with more than one reading."""
+    miss, and so is a row with more than one reading. Only a PDF can hit."""
     view = getattr(store, "read_view", None)
-    if view is None:
+    if view is None or path.suffix.lower() != ".pdf":
         return None
     try:
         cache = json.loads(view("readings.json"))
@@ -252,13 +255,13 @@ def _cached_reading(store: Store, path: Path, want: dict[str, Any]) -> tuple[str
             found = row.get("readings")
             if not isinstance(found, list) or len(found) != 1 or not isinstance(found[0], str):
                 return None
-            return _stored_reading(store, path, found[0], name)
+            return _stored_reading(store, found[0], name)
     except (StoreError, ValueError, TypeError, KeyError, AttributeError):
         return None
     return None
 
 
-def _stored_reading(store: Store, path: Path, k: str, name: str) -> tuple[str, Any] | None:
+def _stored_reading(store: Store, k: str, name: str) -> tuple[str, Any] | None:
     """The reading of key ``k`` as the result of ``read``, if its members give ``name``."""
     from ..canonical import digest, is_nfc
     from ..read import Extracted, Layout
@@ -271,12 +274,8 @@ def _stored_reading(store: Store, path: Path, k: str, name: str) -> tuple[str, A
     text = store.get("text@1", obj["text"]).decode("utf-8")
     if not is_nfc(text):
         return None
-    pdf = path.suffix.lower() == ".pdf"
-    if pdf != (obj["layout"] is not None):
+    if obj["layout"] is None:  # a reading of text, HTML or XML
         return None
-    if not pdf:
-        empty = () if text.strip() else (f"{path.name}: no text was extracted",)
-        return k, Extracted(text, warnings=empty)
     layout = Layout.from_dict(_get_json(store, "layout@1", obj["layout"]))
     if layout.document_sha256 != digest("document", {"text": text}):
         return None
