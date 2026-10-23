@@ -30,6 +30,8 @@ The store:
   it, so a second writer stops before it appends another split for one document.
   `FolderStore.take(log)` takes the lock of a log before the first append (#457).
 - `groundgate store rebuild` also writes `views/calibrate-labels.json` (#406).
+- `Layout.from_dict` rejects a page size or a word box that is not a finite number, such as
+  `nan` or `inf`, with the message `malformed layout` (#446, thanks @rahul05ranjan).
 
 The review step:
 
