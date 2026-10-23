@@ -347,7 +347,8 @@ class FolderStore:
 
         ``forget`` also removes the ``.tmp-<key>-`` files that a killed ``put`` of this object
         left in its folder, also when the object is absent and ``forget`` raises ``NotFound``.
-        Then ``forget`` writes no record in the deleted log. It
+        Then ``forget`` writes no record in the deleted log. If the clean-up fails, for example
+        on a folder that this process cannot list, ``forget`` raises ``StoreError``. It
         removes no file of another object, and no file outside that folder. A ``put`` of the
         same object at the same time can fail with ``StoreError``.
         A ``.tmp-`` file of an earlier version has no key in its name, so it stays. Where
@@ -368,7 +369,7 @@ class FolderStore:
         try:
             info = os.lstat(folder / hexes[2:])
         except FileNotFoundError as exc:
-            self._unlink_parts(folder, hexes[2:])  # a first put that was killed
+            self._unlink_parts(folder, hexes[2:], rel)  # a first put that was killed
             raise NotFound(f"object {key} is not in the store") from exc
         # Check that the unlink can work before the record says that it did.
         if not (stat.S_ISREG(info.st_mode) or stat.S_ISLNK(info.st_mode)):
@@ -384,26 +385,36 @@ class FolderStore:
             os.unlink(folder / hexes[2:])
         except OSError as exc:
             raise StoreError(f"{rel} is in the deleted log, but the unlink failed: {exc}") from exc
-        self._unlink_parts(folder, hexes[2:])
+        self._unlink_parts(folder, hexes[2:], rel)
 
-    def _unlink_parts(self, folder: Path, rest: str) -> None:
+    def _unlink_parts(self, folder: Path, rest: str, rel: str) -> None:
         """Remove each regular file ``.tmp-<rest>-*`` in ``folder``. The names come from a
         listing of the open folder, and each unlink is relative to it, so a folder that becomes
-        a symlink cannot send an unlink outside the store."""
+        a symlink cannot send an unlink outside the store. A file that is gone already is not
+        a problem. Each other failure raises ``StoreError``, so no caller thinks that the bytes
+        are gone when they are not."""
         if not (os.unlink in os.supports_dir_fd and os.listdir in os.supports_fd):
             return  # pragma: no cover - Windows
         prefix = f".tmp-{rest}-"
         try:
             fd = os.open(folder, os.O_RDONLY | _NOFOLLOW | getattr(os, "O_DIRECTORY", 0))
-        except OSError:
-            return
+        except OSError as exc:
+            raise StoreError(
+                f"the temporary files of {rel} cannot be removed: {exc.strerror}"
+            ) from exc
         try:
             for name in os.listdir(fd):
                 if not name.startswith(prefix):
                     continue
-                with contextlib.suppress(OSError):  # a put that ends now removes its own file
+                try:  # a put that ends now removes its own file
                     if stat.S_ISREG(os.stat(name, dir_fd=fd, follow_symlinks=False).st_mode):
                         os.unlink(name, dir_fd=fd)
+                except FileNotFoundError:
+                    continue
+        except OSError as exc:
+            raise StoreError(
+                f"the temporary files of {rel} cannot be removed: {exc.strerror}"
+            ) from exc
         finally:
             os.close(fd)
 

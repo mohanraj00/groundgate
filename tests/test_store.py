@@ -585,3 +585,21 @@ def test_forget_removes_the_temporary_file_of_a_first_put_that_was_killed(root: 
     assert not mine.exists()
     assert near.read_bytes() == b"other"
     assert store.read(("deleted",)) == []
+
+
+@pytest.mark.skipif(not hasattr(os, "geteuid") or os.geteuid() == 0, reason="root reads all")
+def test_forget_raises_when_it_cannot_remove_the_temporary_files(root: Path) -> None:
+    store = FolderStore(root)
+    k = store.put("text@1", TEXT)
+    folder = _object(root, k).parent
+    mine = folder / f".tmp-{k[9:]}-abc123"
+    mine.write_bytes(TEXT)
+    folder.chmod(0o300)  # write and search, but no list
+    try:
+        with pytest.raises(StoreError, match=r"temporary files of .* cannot be removed"):
+            store.forget(k, "the tenant asked")
+    finally:
+        folder.chmod(0o700)
+    assert not _object(root, k).exists()
+    assert mine.exists()
+    assert [r["key"] for r in store.read(("deleted",))] == [k]
