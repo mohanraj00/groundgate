@@ -38,7 +38,7 @@ import unicodedata
 from collections.abc import Callable, Collection, Mapping
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
-from decimal import Decimal, InvalidOperation
+from decimal import MAX_PREC, Context, Decimal, Inexact, InvalidOperation
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from importlib.resources import files
 from typing import Any
@@ -107,6 +107,7 @@ CONTEXT_LINES = 5  # the lines before and after a value in the text view
 SPAN_LINES = 12  # a place with more lines than this shows its two ends, and the middle is closed
 SCALE_LINES = 10  # the lines above a selected number where the page looks for a scale (#496)
 MAX_TICKETS = 32
+_EXACT = Context(prec=MAX_PREC, traps=[Inexact])  # a power of ten with no rounding, as in admit
 MAX_PARTS = 8
 ROLES = ("sign", "scale", "unit", "field", "key")
 _SETTLED = frozenset({"admitted", "confirmed", "chosen", "corrected", "not_in_document"})
@@ -603,7 +604,7 @@ class Review:
                 scaled = scaled_value(doc.units.text[:b], found[0])
                 power = self._part_scale(doc, body) if scaled is None else None
                 if power is not None:
-                    scaled = found[0].value.scaleb(power)
+                    scaled = found[0].value.scaleb(power, _EXACT)
                 number = found[0].value if scaled is None else scaled
             candidate["value"] = canonical(number)
             units = [c["unit"] for c in task["choices"] if isinstance(c["unit"], str)]
@@ -660,9 +661,9 @@ class Review:
         near = None
         if token_scale(text[:b], tok) is None and not _cited(body, "scale") and spec.unit != "%":
             near = _near_scale(text, tok)
-        if near is not None and abs(value) == abs(tok.value):
+        if near is not None and value.copy_abs() == tok.value.copy_abs():
             power, line = near
-            full = abs(tok.value).scaleb(power)
+            full = tok.value.copy_abs().scaleb(power, _EXACT)
             out.append({"part": "scale", "text": (
                 f"The value is the number as written, {written}, but the text above it gives a "
                 f'scale: "{line}". If the scale applies, select the scale words, or type the '
@@ -670,7 +671,7 @@ class Review:
             )})  # fmt: skip
         prefixes = doc.schema.units.get(spec.unit, ([], []))[0] if spec.unit else []
         negative = tok.value < 0 or brackets_around(text, tok, prefixes) is not None
-        if (value < 0) != negative and abs(value) in _scaled(abs(tok.value)):
+        if (value < 0) != negative and value.copy_abs() in _scaled(tok.value.copy_abs()):
             out.append({"part": "sign", "text": (
                 f"The value is {_sign(value)}, but the text writes the number {written} as "
                 f"{'negative' if negative else 'positive'}."
@@ -682,7 +683,9 @@ class Review:
                 continue
             if not other.is_finite() or other == 0 or (other < 0) == (value < 0):
                 continue
-            if abs(other) in _scaled(abs(value)) or abs(value) in _scaled(abs(other)):
+            if other.copy_abs() in _scaled(value.copy_abs()) or value.copy_abs() in _scaled(
+                other.copy_abs()
+            ):
                 out.append({"part": "sign", "text": (
                     f"The value is {_sign(value)}, but value {n} of the task is "
                     f"{_sign(other)}: {c['shown']}. Read the sign that the field description "
@@ -824,7 +827,7 @@ def _cited(body: Mapping[str, Any], role: str) -> bool:
 
 def _scaled(amount: Decimal) -> set[Decimal]:
     """``amount`` at each scale of a question, from not scaled to trillions."""
-    return {amount.scaleb(p) for p in _SCALES}
+    return {amount.scaleb(p, _EXACT) for p in _SCALES}
 
 
 def _sign(value: Decimal) -> str:

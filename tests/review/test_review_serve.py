@@ -617,6 +617,28 @@ def test_a_correction_whose_parts_do_not_agree_asks_again(tmp_path: Path) -> Non
     assert log(store, k)[-1]["candidate"]["value"] == "-3266.2"
 
 
+def test_a_cited_scale_gives_the_value_in_full_with_no_rounding(tmp_path: Path) -> None:
+    """#496: a number of 29 digits times a thousand keeps each digit."""
+    number = "12345678901234567890123456789"
+    text = f"Revenue in thousands\nRevenue was {number} in 2025.\n"
+    schema = {"fields": {"revenue": {"type": "number"}}}
+    at = text.index(number)
+    candidates = [{"id": "c1", "field": "revenue", "value": "5",
+                   "evidence": {"start": 0, "end": 7}}]  # fmt: skip
+    store = FolderStore(tmp_path / "store")
+    k, _ = admit_packet(store, text, schema, candidates, None, None, None)
+    ((tk, _),) = write_tasks(store, k, EVERY).tasks
+    review = Review(store, "ana")
+    scale = text.index("in thousands")
+    part = {"role": "scale", "start": scale, "end": scale + 12}
+    body = {"task": tk, "verdict": "correct", "start": at, "end": at + len(number)}
+    check = review.check({**body, "parts": [part]})
+    assert check["shown"].startswith("12,345,678,901,234,567,890,123,456,789,000 ")
+    # without the part, the scale question gives the value in full with each digit
+    (asked,) = review.check(body)["ask"]
+    assert asked["part"] == "scale" and f"{number}000," in asked["text"]
+
+
 def test_a_field_with_no_definition_gives_none(served: Served) -> None:
     _, _, tasks, call, _ = served
     view = json.loads(call("GET", f"/api/task/{tasks['revenue']}")[2])
