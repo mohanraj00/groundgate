@@ -37,7 +37,7 @@ let busy = false; // a task loads or an answer goes to the server: keys wait
 
 function fresh() {
   return { keys: 0, start: performance.now(), reasonSeen: false, mode: null, sel: null,
-    parts: [], need: null, check: null, picked: [] };
+    parts: [], need: null, check: null, typed: null, again: false, picked: [] };
 }
 
 function status(text) { $("status").textContent = text || ""; }
@@ -359,6 +359,8 @@ async function check() {
     return;
   }
   st.check = r;
+  st.typed = body.value;
+  st.again = false;
   const out = $("outcome");
   out.replaceChildren();
   const words = { admitted: "The gate admits ", needs_verification: "The gate flags ",
@@ -366,6 +368,17 @@ async function check() {
   out.append(el("div", r.outcome === "admitted" ? "good" : "bad",
     (words[r.outcome] || r.outcome + ": ") + (r.shown === null ? "the value" : r.shown) + "."));
   for (const c of r.codes) out.append(el("div", "", c.code + ": " + c.text));
+  // #496: the parts of the value do not agree with the text near the selection
+  for (const a of r.ask) out.append(el("div", "bad", a.text));
+  if (r.ask.length && r.outcome !== "rejected") {
+    if (!r.missing.length && r.ask.some((a) => a.part === "scale")) {
+      st.need = "scale";
+      window.getSelection().removeAllRanges(); // Enter with no selection saves, not a part
+      out.append(el("div", "", "Select the scale words in the text, then press Enter. " +
+        PART_HELP.scale));
+    }
+    out.append(el("div", "", "If the value is right as it is, press the save key two times."));
+  }
   if (r.outcome === "rejected") {
     out.append(el("div", "", "Select the value again."));
     st.sel = null;
@@ -394,8 +407,15 @@ async function save(verdict, more) {
     reason_seen: st.reasonSeen, keys: st.keys, ms: Math.round(performance.now() - st.start),
     codes_kept: [] }, more);
   if (verdict === "correct" || verdict === "adjust_span") {
+    if (!st.check || st.typed !== ($("typed").value || null)) return check();
+    if (st.check.ask.length && !st.again) {
+      st.again = true;
+      status("The parts of the value do not agree. Press the key again to save the value " +
+        "as it is.");
+      return;
+    }
     Object.assign(body, { start: st.sel.start, end: st.sel.end,
-      value: $("typed").value || null, parts: st.parts });
+      value: $("typed").value || null, parts: st.parts, parts_seen: st.check.ask.length > 0 });
   }
   busy = true;
   try {

@@ -400,6 +400,12 @@ def scale_word(text: str, tok: Token) -> bool:
     return token_scale(text, tok) is not None
 
 
+def scale_powers() -> frozenset[int]:
+    """The power of ten of each scale word and scale suffix that the reader knows, and 0."""
+    voc = _VOCAB.get()
+    return frozenset({0, *voc._SCALE_EXP.values(), *voc._SUFFIX_EXP.values()})
+
+
 def scaled_value(text: str, tok: Token) -> Decimal | None:
     """The token's value times its scale, or None (SPEC §4.1)."""
     k = token_scale(text, tok)
@@ -817,6 +823,12 @@ def brackets_around(text: str, tok: Token, prefixes: list[str]) -> tuple[int, in
     if k == len(text) or text[k] != ")":
         return None
     return i - 1, k + 1
+
+
+def bracket_sign(text: str, tok: Token, prefixes: list[str] | None) -> bool:
+    """Whether brackets make the token negative (SPEC §4.6). ``prefixes`` is None on a field
+    without a unit, where brackets alone do not make a sign."""
+    return prefixes is not None and brackets_around(text, tok, prefixes) is not None
 
 
 def loss_sign(text: str, start: int, end: int, at: int) -> bool:
