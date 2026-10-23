@@ -1,0 +1,6 @@
+{"checks": [
+ {"task": "sha256:2468d2aa587fbc897c34e83f994c7dcc78975b518624dc050e2b548121890172", "status": "present", "values": [{"value": "3266200000", "unit": "EUR"}]},
+ {"task": "sha256:c1d9914a0a3ff7ba1a32ee041dcb0eaa01b44dcce2c55c8d7b9307c743ddb3b5", "status": "present", "values": [{"value": "3960200000", "unit": "EUR"}]},
+ {"task": "sha256:21ccf8ec487587e43a24ae42ef5e4d4d08dae3f90e893d2a995c5bcd6e91fc14", "status": "present", "values": [{"value": "1.2", "unit": "mA"}]},
+ {"task": "sha256:e40cee25b27bf2ccefec319ae54d32142ed28dc78ff8488921af1b524c74afdc", "status": "present", "values": [{"value": "2.1", "unit": "mA"}]}
+]}

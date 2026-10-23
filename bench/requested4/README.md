@@ -348,6 +348,92 @@ Do not run `build` on another store or with another groundgate version, because 
 packets and tasks change. A second `build` on the same store stops if it gives other items than
 `review/items.json`.
 
+## The development measure of the review page (#463)
+
+#463 asks for a first measure of the review page on the development split, with blind labels.
+The page must read the output of the current code, so I ran the three arms again on the 32
+development documents on 2026-10-22, on origin/main 3273c30 (`development/runs/`,
+`development/results.json`, `development/RESULTS.md`). This code has the stop words of #466
+(`groundgate-run/4`) and the review page of #460. The model, transport and run limits are the
+same as in loop 04. The baseline made 150 calls and the runner made 243. `runner_drop_rounded`
+replayed the runner calls. No document was incomplete, had a transport error or stopped at
+`search_limit`.
+
+This run is not a loop record. The code freeze names `loop/04.json` as the last record, and
+`loop.py check` refuses a new one. `development/COMPARE.md` puts the run beside loop 04
+(`bench/report.py --compare`).
+
+| Arm | Miss rate, loop 04 | Miss rate, 3273c30 | Escapes, loop 04 | Escapes, 3273c30 | Absence hits, 3273c30 |
+|---|---:|---:|---:|---:|---:|
+| baseline | 62.30% (76 of 122) | 61.48% (75 of 122) | 0 | 0 | 0 |
+| runner | 61.48% (75 of 122) | 62.30% (76 of 122) | 2 | 1 | 1 |
+| runner_drop_rounded | 60.66% (74 of 122) | 61.48% (75 of 122) | 2 | 1 | 1 |
+
+The miss rates move by 1 value in each arm, which is inside the run noise of loop 04. The runner
+has 1 absence hit and 29 unreported absences. #466 alone does not give the absence hits that
+#464 waits for.
+
+`bench/requested/review_items.py --split development` builds the review items from this runner
+run. It writes `review/development/items.json` and `review/development/policy.json`, with the
+audit seed `requested4-463-audit`. The store has 32 packets, 77 review tasks and 30 audit tasks.
+The store is not in the old cache: it is in `groundgate-cache-463/review/store-development`,
+in the folder that holds the main checkout. An audit answer with no reason seen is a blind
+label of the word-box view. The two blind passes labeled from renders of the original PDF pages
+and gave the same label on 470 of 480 slots (section Labels). The result compares the agreement
+of the review answers on the word-box view with that number.
+
+The result is in `review/development/RESULTS.md`. Of 107 items, 92 are scored: 88 agree with
+the label and 4 are wrong. The upper bound of the rate of wrong answers is 0.0967, so the result
+does not pass the bar of #234. 30 of 30 blind audit answers agree with the label, so the audit
+gives no sign that the word-box view gives less agreement. 10 answers are `unsure`.
+
+### The steps for the maintainer
+
+Run each command from the root of the main checkout, so that `../groundgate-cache-463` is the
+store folder. From a worktree, give the store path in full. Do not open `labels.json`, `loop/`,
+`development/` or `review/development/results.json` before the last answer.
+
+1. Start the page, open the URL that the command prints, and answer each item:
+
+   ```bash
+   uv run groundgate review serve --reviewer maintainer \
+       --store ../groundgate-cache-463/review/store-development
+   ```
+
+2. After the last answer, score the answers against the sealed labels:
+
+   ```bash
+   PYTHONPATH=bench uv run python -m requested.review_items score --set bench/requested4 \
+       --split development --store ../groundgate-cache-463/review/store-development \
+       --reviewer maintainer
+   ```
+
+3. Give `review/development/checks-needed.json` to an independent checker, as in step 5 of the
+   held-out steps. The checker writes `review/development/checks.json`.
+4. Score again with the checks, then write `review/development/RESULTS.md` from
+   `review/development/results.json`. `report` writes the table again and keeps the sections
+   from the line "`report` does not write the sections below." to the end of the file:
+
+   ```bash
+   PYTHONPATH=bench uv run python -m requested.review_items score --set bench/requested4 \
+       --split development --store ../groundgate-cache-463/review/store-development \
+       --reviewer maintainer --checks bench/requested4/review/development/checks.json
+   PYTHONPATH=bench uv run python -m requested.review_items report --set bench/requested4 \
+       --split development
+   ```
+
+5. Print the measures of the page:
+
+   ```bash
+   uv run groundgate review measures --set requested4 --split development \
+       --store ../groundgate-cache-463/review/store-development \
+       --policy bench/requested4/review/development/policy.json
+   ```
+
+   With one reviewer, `review measures` gives no agreement pair, because a pair needs a blind
+   label of another reviewer. The agreement with the sealed labels comes from
+   `review/development/results.json`.
+
 ## What comes next
 
 The learning loop runs on the development split only (`bench/requested/loop.py`). It writes one

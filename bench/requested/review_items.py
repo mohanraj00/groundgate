@@ -1,4 +1,4 @@
-"""Review items of the held-out runner arm, and their score against the sealed labels (#234).
+"""Review items of the runner arm, and their score against the sealed labels (#234, #463).
 
 #234 asks: if a person sees an item for the first time, together with groundgate's reading, are
 the answers as good as blind labels? This module makes the items and scores the answers. The
@@ -10,8 +10,13 @@ person answers in ``groundgate review serve``. No model runs here, and the core 
         --store bench/requested4/.cache/review/store --reviewer maintainer [--checks FILE]
     PYTHONPATH=bench uv run python -m requested.review_items report --set bench/requested4
 
-``build`` reads the frozen held-out run of the ``runner`` arm and its sources. It never reads
-``labels.json``. For each held-out document it writes a reading of the PDF and a packet to the
+Each command takes ``--split heldout`` (the default, #234) or ``--split development`` (#463).
+The held-out split reads ``runs/runner.json`` and writes to ``review/``. The development split
+reads ``development/runs/runner.json`` and writes to ``review/development/``, with its own audit
+seed. The splits log of the store records the split of each document.
+
+``build`` reads the cached run of the ``runner`` arm on the split and its sources. It never reads
+``labels.json``. For each document of the split it writes a reading of the PDF and a packet to the
 store, and it stops if the packet receipt is not the recorded receipt of the run. Then it writes
 a ``splits`` record for each document and the tasks of the review policy ``review/policy.json``:
 a task for each review slot, and an audit task for a sample of the admitted slots. The sample
@@ -65,8 +70,16 @@ RESULTS = "requested-review-results/1"
 ARM = "runner"
 SPLIT = "heldout"
 SEED = "requested4-234-audit"
+# The audit seed and the issue of each split. A new seed for the development split gives a
+# sample that no held-out choice made.
+SPLITS = {
+    "heldout": {"seed": SEED, "issue": "#234"},
+    "development": {"seed": "requested4-463-audit", "issue": "#463"},
+}
 AUDIT = 30
 BAR = 0.05
+# ``report`` keeps the lines of RESULTS.md from this marker on: the sections written by hand.
+MARKER = "`report` does not write the sections below."
 OUTCOMES = ("agree", "wrong", "label_wrong", "pending", "unsure", "unclear")
 
 
@@ -83,25 +96,46 @@ def _dump(path: Path, value: Any) -> None:
     path.write_text(json.dumps(value, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
-# The held-out run
+# The run of the split
 
 
-def heldout(set_dir: Path, cache: Path) -> Iterator[tuple[Json, Json, Json]]:
-    """Each held-out document of the runner arm in id order: the manifest entry, the cached
+def _split(split: str) -> Json:
+    if split not in SPLITS:
+        raise ValueError(f"unknown split: {split}")
+    return SPLITS[split]
+
+
+def run_path(set_dir: Path, split: str) -> Path:
+    """The projection of the runner arm on ``split``."""
+    _split(split)
+    folder = set_dir if split == "heldout" else set_dir / split
+    return folder / "runs" / f"{ARM}.json"
+
+
+def out_dir(set_dir: Path, split: str) -> Path:
+    """The folder of the items, the policy, the results and the report of ``split``."""
+    _split(split)
+    return set_dir / "review" if split == "heldout" else set_dir / "review" / split
+
+
+def run_documents(
+    set_dir: Path, cache: Path, split: str = SPLIT
+) -> Iterator[tuple[Json, Json, Json]]:
+    """Each document of the runner arm on ``split`` in id order: the manifest entry, the cached
     result and the schema of the run. The cached result must give the published projection."""
     manifest = _load(set_dir / "manifest.json")
-    run = _load(set_dir / "runs" / f"{ARM}.json")
-    if run.get("arm") != ARM or run.get("split") != SPLIT:
-        raise ValueError(f"runs/{ARM}.json is not the {SPLIT} run of the {ARM} arm")
+    run = _load(run_path(set_dir, split))
+    if run.get("arm") != ARM or run.get("split") != split:
+        raise ValueError(f"{run_path(set_dir, split).name} is not the {split} run of {ARM}")
     binding = run["binding_sha256"]
     config = run["provenance"]["configuration"]
     frozen = SimpleNamespace(manifest=manifest, settings=_settings(config["run_policy"]))
     docs = {d["id"]: d for d in manifest["documents"]}
-    folder = cache / binding.removeprefix("sha256:") / ARM / SPLIT
+    folder = cache / binding.removeprefix("sha256:") / ARM / split
     for out in sorted(run["documents"], key=lambda d: str(d["id"])):
         doc = docs[out["id"]]
-        if doc["split"] != SPLIT:
-            raise ValueError(f"{out['id']} is not a {SPLIT} document")
+        if doc["split"] != split:
+            raise ValueError(f"{out['id']} is not a {split} document")
         result = _load(folder / out["id"] / "result.json")
         if result["binding_sha256"] != binding:
             raise ValueError(f"the cached result of {out['id']} has another binding")
@@ -113,8 +147,8 @@ def heldout(set_dir: Path, cache: Path) -> Iterator[tuple[Json, Json, Json]]:
         yield doc, result, schema
 
 
-def _policy(set_dir: Path) -> Json:
-    config = _load(set_dir / "runs" / f"{ARM}.json")["provenance"]["configuration"]
+def _policy(set_dir: Path, split: str) -> Json:
+    config = _load(run_path(set_dir, split))["provenance"]["configuration"]
     return gg.Policy.from_dict(config["policy"]).to_dict()
 
 
@@ -141,15 +175,22 @@ def audit_rate(hashes: list[int], n: int) -> str:
 
 
 def build(
-    set_dir: Path, sources: Path, cache: Path, store_dir: Path, *, audit: int = AUDIT
+    set_dir: Path,
+    sources: Path,
+    cache: Path,
+    store_dir: Path,
+    *,
+    audit: int = AUDIT,
+    split: str = SPLIT,
 ) -> Json:
     """Write the packets, the splits records and the tasks, and give the items."""
     name = set_dir.name
-    policy = _policy(set_dir)
+    seed = _split(split)["seed"]
+    policy = _policy(set_dir, split)
     packets: list[tuple[str, str]] = []
     with FolderStore(store_dir) as store:
         splits = {r["document"]: r["split"] for r in store.read(("splits", set_key(name)))}
-        for doc, result, schema in heldout(set_dir, cache):
+        for doc, result, schema in run_documents(set_dir, cache, split):
             ident = doc["id"]
             pdf, txt = sources / f"{ident}.pdf", sources / f"{ident}.txt"
             if _sha(pdf.read_bytes()) != doc["source_sha256"]:
@@ -173,17 +214,17 @@ def build(
             if receipt.to_dict() != result["receipt"]:
                 raise ValueError(f"the packet of {ident} does not give the recorded receipt")
             source = load_reading(store, reading)["source"]
-            if splits.get(source) not in (None, SPLIT):
+            if splits.get(source) not in (None, split):
                 raise ValueError(f"the splits log gives {ident} another split")
             if source not in splits:
                 store.append(
-                    ("splits", set_key(name)), {"set": name, "document": source, "split": SPLIT}
+                    ("splits", set_key(name)), {"set": name, "document": source, "split": split}
                 )
-                splits[source] = SPLIT
+                splits[source] = split
             packets.append((ident, pk))
         every = {
             "format": "review-policy@1",
-            "audit": {"rate": "1", "seed": SEED},
+            "audit": {"rate": "1", "seed": seed},
             "agree": 1,
             "leads": [],
             "rejected": False,
@@ -206,8 +247,8 @@ def build(
                     s = t["slot"]
                     multiple = schema_.fields[s["field"]].multiple
                     first = s["decisions"][0] if multiple else None
-                    hashes.append(audit_hash(SEED, pk, s["field"], s["key"], first))
-        review = {**every, "audit": {"rate": audit_rate(hashes, audit), "seed": SEED}}
+                    hashes.append(audit_hash(seed, pk, s["field"], s["key"], first))
+        review = {**every, "audit": {"rate": audit_rate(hashes, audit), "seed": seed}}
         check_policy(review)
         documents = []
         counts = {"review": 0, "audit": 0}
@@ -223,12 +264,12 @@ def build(
     if counts["audit"] != min(audit, len(hashes)):
         raise ValueError("the audit rate does not give the audit sample")
     manifest_sha = _sha((set_dir / "manifest.json").read_bytes())
-    runner_sha = _sha((set_dir / "runs" / f"{ARM}.json").read_bytes())
+    runner_sha = _sha(run_path(set_dir, split).read_bytes())
     items = {
         "format": ITEMS,
         "set": name,
         "arm": ARM,
-        "split": SPLIT,
+        "split": split,
         "manifest_sha256": manifest_sha,
         "run_sha256": runner_sha,
         "groundgate": gg.__version__,
@@ -236,10 +277,10 @@ def build(
         "counts": counts,
         "documents": documents,
     }
-    out = set_dir / "review"
+    out = out_dir(set_dir, split)
     if (out / "items.json").exists():
         if _load(out / "items.json") != items or _load(out / "policy.json") != review:
-            raise ValueError("this build gives other items than review/items.json and policy.json")
+            raise ValueError("this build gives other items than its items.json and policy.json")
     else:
         _dump(out / "items.json", items)
         _dump(out / "policy.json", review)
@@ -317,10 +358,18 @@ def _checks(raw: Any) -> dict[str, Json]:
     return out
 
 
-def score(set_dir: Path, store_dir: Path, reviewer: str, checks: Path | None = None) -> Json:
+def score(
+    set_dir: Path,
+    store_dir: Path,
+    reviewer: str,
+    checks: Path | None = None,
+    split: str = SPLIT,
+) -> Json:
     """Score the latest answer of ``reviewer`` to each item against the sealed labels."""
-    out = set_dir / "review"
+    out = out_dir(set_dir, split)
     items = _load(out / "items.json")
+    if items.get("split") != split:
+        raise ValueError(f"the items of {out} are not of the {split} split")
     if _sha((set_dir / "manifest.json").read_bytes()) != items["manifest_sha256"]:
         raise ValueError("the manifest changed after the items were built")
     policy = check_policy(items["policy"])
@@ -432,9 +481,13 @@ def score(set_dir: Path, store_dir: Path, reviewer: str, checks: Path | None = N
 # The report
 
 
-def report(set_dir: Path) -> str:
-    """``review/RESULTS.md`` from ``review/results.json``: each number comes from the file."""
-    results = _load(set_dir / "review" / "results.json")
+def report(set_dir: Path, split: str = SPLIT) -> str:
+    """``RESULTS.md`` from ``results.json`` in the folder of ``split``: each number comes from
+    the file. A line that starts with ``MARKER`` in the old file, and each line after it, stay
+    as they are."""
+    out_folder = out_dir(set_dir, split)
+    results = _load(out_folder / "results.json")
+    issue = _split(split)["issue"]
 
     def line(name: str, s: Json) -> str:
         bound = "pending" if s["wrong_upper95"] is None else f"{s['wrong_upper95']:.4f}"
@@ -448,10 +501,11 @@ def report(set_dir: Path) -> str:
     total = results["total"]
     verdict = {True: "passes", False: "does not pass", None: "waits for the checks"}
     out = [
-        "# Review answers against blind labels (#234)",
+        f"# Review answers against blind labels ({issue})",
         "",
         "`bench/requested/review_items.py report` wrote this file from `results.json`, for the",
-        f"reviewer `{results['reviewer']}`.",
+        f"reviewer `{results['reviewer']}`."
+        + ("" if split == SPLIT else f" The items are of the {split} split."),
         f"The bar is a 95% upper bound below {results['bar']['wrong_upper95_below']} for the "
         f"rate of wrong answers. The result {verdict[total['passes']]}.",
         "",
@@ -463,7 +517,16 @@ def report(set_dir: Path) -> str:
         "",
     ]
     text = "\n".join(out)
-    (set_dir / "review" / "RESULTS.md").write_text(text, encoding="utf-8")
+    target = out_folder / "RESULTS.md"
+    if target.exists():
+        # Keep the hand-written sections: each line from the marker to the end of the file.
+        # The blank lines before the marker stay too. The table ends with one newline.
+        old = target.read_text(encoding="utf-8")
+        at = old.find("\n" + MARKER)
+        if at >= 0:
+            start = len(old[: at + 1].rstrip("\n")) + 1
+            text += old[start:]
+    target.write_text(text, encoding="utf-8")
     return text
 
 
@@ -472,27 +535,33 @@ def main(argv: list[str] | None = None) -> None:
     sub = ap.add_subparsers(dest="command", required=True)
     b = sub.add_parser("build", help="write the packets and tasks to a store")
     s = sub.add_parser("score", help="score the answers against the sealed labels")
-    r = sub.add_parser("report", help="write review/RESULTS.md from review/results.json")
+    r = sub.add_parser("report", help="write RESULTS.md from results.json")
     for p in (b, s, r):
         p.add_argument("--set", type=Path, required=True, help="the set folder")
+        p.add_argument(
+            "--split", choices=sorted(SPLITS), default=SPLIT, help="the split (default heldout)"
+        )
     for p in (b, s):
         p.add_argument("--store", type=Path, required=True, help="the store folder")
     b.add_argument("--sources", type=Path, help="the PDF and text files (.cache/run_sources)")
-    b.add_argument("--cache", type=Path, help="the run cache (.cache/runs/heldout)")
+    b.add_argument("--cache", type=Path, help="the run cache (default .cache/runs/heldout)")
     s.add_argument("--reviewer", required=True, help="the name of the reviewer")
     s.add_argument("--checks", type=Path, help="the blind checks of the disagreements")
     args = ap.parse_args(argv)
     if args.command == "build":
         sources = args.sources or args.set / ".cache" / "run_sources"
+        if args.cache is None and args.split != SPLIT:
+            ap.error("a development build needs --cache")
         cache = args.cache or args.set / ".cache" / "runs" / SPLIT
-        items = build(args.set, sources, cache, args.store)
+        items = build(args.set, sources, cache, args.store, split=args.split)
         print(f"{len(items['documents'])} packets; tasks: {items['counts']}")
     elif args.command == "score":
-        results = score(args.set, args.store, args.reviewer, args.checks)
+        results = score(args.set, args.store, args.reviewer, args.checks, args.split)
         pending = results["total"]["pending"]
-        print(f"wrote review/results.json; {pending} disagreements wait for a blind check")
+        where = out_dir(args.set, args.split) / "results.json"
+        print(f"wrote {where}; {pending} disagreements wait for a blind check")
     else:
-        sys.stdout.write(report(args.set))
+        sys.stdout.write(report(args.set, args.split))
 
 
 if __name__ == "__main__":

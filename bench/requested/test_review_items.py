@@ -99,7 +99,7 @@ def sha(raw: bytes) -> str:
     return "sha256:" + hashlib.sha256(raw).hexdigest()
 
 
-def make_set(root: Path) -> tuple[Path, Path, Path]:
+def make_set(root: Path, split: str = "heldout") -> tuple[Path, Path, Path]:
     set_dir, sources = root / "requested9", root / "sources"
     cache = root / "cache"
     sources.mkdir()
@@ -113,7 +113,7 @@ def make_set(root: Path) -> tuple[Path, Path, Path]:
         doc = {
             "id": ident,
             "kind": "part",
-            "split": "heldout",
+            "split": split,
             "source": f"https://x.test/{ident}",
             "source_sha256": sha(pdf.read_bytes()),
             "text_sha256": sha(text.encode()),
@@ -130,21 +130,22 @@ def make_set(root: Path) -> tuple[Path, Path, Path]:
             "output": {"decisions": decisions},
             "schema_sha256": sha(jcs(gg.Schema.from_dict(SCHEMA).to_dict()).encode()),
         }
-        folder = cache / BINDING.removeprefix("sha256:") / "runner" / "heldout" / ident
+        folder = cache / BINDING.removeprefix("sha256:") / "runner" / split / ident
         folder.mkdir(parents=True)
         (folder / "result.json").write_text(json.dumps(result), encoding="utf-8")
         outputs.append({"id": ident, "decisions": decisions})
-    (set_dir / "runs").mkdir(parents=True)
+    runs = set_dir / "runs" if split == "heldout" else set_dir / split / "runs"
+    runs.mkdir(parents=True)
     manifest = {"schemas": {"part": SCHEMA}, "documents": documents}
     (set_dir / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
     run = {
         "arm": "runner",
-        "split": "heldout",
+        "split": split,
         "binding_sha256": BINDING,
         "documents": outputs,
         "provenance": {"configuration": {"policy": {}, "run_policy": RUN_POLICY}},
     }
-    (set_dir / "runs" / "runner.json").write_text(json.dumps(run), encoding="utf-8")
+    (runs / "runner.json").write_text(json.dumps(run), encoding="utf-8")
     return set_dir, sources, cache
 
 
@@ -255,6 +256,51 @@ def test_build_score_and_report(tmp_path: Path) -> None:
     assert (total["wrong"], total["label_wrong"]) == (0, 1)
     text = review_items.report(set_dir)
     assert "| total | 4 |" in text and (set_dir / "review" / "RESULTS.md").exists()
+    notes = review_items.MARKER + " I wrote them.\n\n## The result\n\nBy hand.\n"
+    results_md = set_dir / "review" / "RESULTS.md"
+    results_md.write_text(text + notes, encoding="utf-8")
+    assert review_items.report(set_dir) == text + notes  # the hand-written sections stay
+    assert results_md.read_text(encoding="utf-8") == text + notes
+
+
+def test_development_split(tmp_path: Path) -> None:
+    set_dir, sources, cache = make_set(tmp_path, "development")
+    store_dir = tmp_path / "store"
+    with pytest.raises(FileNotFoundError):  # the held-out run is not there
+        review_items.build(set_dir, sources, cache, store_dir, audit=3)
+    items = review_items.build(set_dir, sources, cache, store_dir, audit=3, split="development")
+    assert items["split"] == "development" and items["counts"] == {"review": 1, "audit": 3}
+    seed = review_items.SPLITS["development"]["seed"]
+    assert items["policy"]["audit"]["seed"] == seed != review_items.SEED
+    out = set_dir / "review" / "development"
+    assert (out / "items.json").exists() and not (set_dir / "review" / "items.json").exists()
+    with FolderStore(store_dir) as store:
+        splits = store.read(("splits", set_key("requested9")))
+    assert sorted(r["split"] for r in splits) == ["development", "development"]
+    with pytest.raises(FileNotFoundError):  # no held-out items
+        review_items.score(set_dir, store_dir, "ana")
+    with FolderStore(store_dir) as store:
+        review = Review(store, "ana")
+        for entry in review.queue()["tasks"]:
+            view = review.view(entry["task"])
+            body = {
+                "task": entry["task"],
+                "verdict": "unsure",
+                "decision": None,
+                "codes_kept": [],
+                "reason_seen": False,
+                "keys": 1,
+                "ms": 1000,
+            }
+            if len(view["choices"]) == 1:  # max_v of doc-a has two choices: unsure
+                body["verdict"] = "confirm"
+            review.answer(body)
+    labels(set_dir, "5.5")
+    total = review_items.score(set_dir, store_dir, "ana", split="development")["total"]
+    assert (total["items"], total["unsure"]) == (4, 1)
+    text = review_items.report(set_dir, "development")
+    assert text.startswith("# Review answers against blind labels (#463)")
+    assert "of the development split" in text and (out / "RESULTS.md").exists()
 
 
 def test_build_refuses_another_receipt(tmp_path: Path) -> None:
