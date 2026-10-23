@@ -21,6 +21,7 @@ from groundgate.review import format_schema
 from groundgate.review.resolve import AnswerError, lines, resolve, write_resolution
 from groundgate.review.tasks import checked_packet, write_tasks
 from groundgate.store import FolderStore, NotFound, key, reviewer_key
+from groundgate.store.maintain import forget_packet
 from groundgate.store.packets import admit_packet, load_packet
 
 HERE = Path(__file__).parent
@@ -436,3 +437,93 @@ def test_a_broken_answer_runs_no_correction_and_writes_nothing(tmp_path: Path) -
         rkey = correction_receipt(data["packet"], correction("4200000"))
         with pytest.raises(NotFound):
             store.get("receipt@1", rkey)
+
+
+# store forget --all (#516)
+
+
+def _naming(store: FolderStore, kind: str, packet: str) -> list[str]:
+    keys, _ = store.object_keys()
+    out = []
+    for k in keys:
+        data = store.object_bytes(k)
+        if key(kind, data) == k and json.loads(data).get("packet") == packet:
+            out.append(k)
+    return out
+
+
+def test_forget_all_removes_the_review_objects_of_the_packet(tmp_path: Path) -> None:
+    store, k, tk, data = one_choice(tmp_path)
+    root = tmp_path / "s"
+    outside = tmp_path / "outside.json"
+    outside.write_text("{}", "utf-8")
+    packet = data["packet"]
+    with store:
+        # The other packet: the same inputs, another document id, and its own review.
+        other, _ = admit_packet(
+            store, packet["text"], packet["schema"], packet["candidates"], packet["policy"],
+            "other", packet["judgments"],
+        )  # fmt: skip
+        (otk,) = [t for t, _ in write_tasks(store, other, EVERY).tasks]
+        store.append(
+            ("answers", other, reviewer_key("ana")),
+            record(otk, "ana", "correct", candidate=correction("4200000")),
+        )
+        kept = write_resolution(store, other, policy(), ["ana"])
+        # Ana's correction counts. Ben's correction is rejected, and no resolution names its
+        # receipt. A record of Cy names a path outside the store.
+        store.append(
+            ("answers", k, reviewer_key("ana")),
+            record(tk, "ana", "correct", candidate=correction("4200000")),
+        )
+        first = write_resolution(store, k, policy(), ["ana"])
+        assert first.resolution is not None
+        assert first.resolution["slots"][0]["status"] == "corrected"
+        bad = {**record(tk, "cy", "correct", candidate={"id": "../../outside.json"}),
+               "task": "../../outside.json"}  # fmt: skip
+        store.append(("answers", k, reviewer_key("cy")), bad)
+        store.append(
+            ("answers", k, reviewer_key("ben")),
+            record(tk, "ben", "correct", candidate=correction("4300000", "ben-1")),
+        )
+        second = write_resolution(store, k, policy(), ["ana", "ben"])
+        assert second.resolution is not None
+        receipts = [
+            correction_receipt(packet, correction("4200000")),
+            correction_receipt(packet, correction("4300000", "ben-1")),
+        ]
+        assert [s["receipt"] for s in second.resolution["slots"]] == receipts[:1]
+        keys, _ = store.object_keys()
+        corrections = [
+            p for p in keys
+            if key("packet@1", store.object_bytes(p)) == p
+            and json.loads(store.object_bytes(p))["receipt"] in receipts
+        ]  # fmt: skip
+        assert len(corrections) == 2
+        policies = [p for p in keys if key("review-policy@1", store.object_bytes(p)) == p]
+        other_review = [*_naming(store, "task@1", other), *_naming(store, "resolution@1", other)]
+        assert len(other_review) == 2
+        # The other packet and its correction packet, with the objects that they name. Their
+        # candidates are the same bytes as the candidates of this packet, so they go for both.
+        mine = []
+        for p in keys:
+            data = store.object_bytes(p)
+            if key("packet@1", data) == p and json.loads(data)["document"]["id"] == "other":
+                obj = json.loads(data)
+                mine += [p, obj["schema"], obj["policy"], obj["receipt"]]
+        assert len(mine) == 8
+    with FolderStore(root) as store:
+        done = forget_packet(store, k, "all", everything=True)
+        assert {(kind, state) for kind, _, state, _ in done if kind == "task@1"} == {
+            ("task@1", "deleted")
+        }
+        assert _naming(store, "task@1", k) == [] and _naming(store, "resolution@1", k) == []
+        left, _ = store.object_keys()
+        assert not set(corrections) & set(left)
+        assert not set(receipts) & set(left)
+        # The policies, the other packet and its review objects stay.
+        assert set(policies) <= set(left)
+        assert {kept.key, *other_review, *mine} <= set(left)
+        assert all(store.read(("answers", other, reviewer_key("ana"))))
+    assert outside.read_text("utf-8") == "{}"
+    assert sorted(p.name for p in tmp_path.iterdir()) == ["outside.json", "s"]

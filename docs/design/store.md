@@ -252,8 +252,14 @@ their issues (#432).
    that `forget` cannot read is "unchecked". A deletion from 0.12 or earlier, or from a call of
    `forget(key, reason)` with no run keys, has no run keys, so the second rule applies to it.
    A value is still document data. If an app must also remove the values,
-   `groundgate store forget --all PACKET` removes each object and log of the packet. An object
-   of the "Kept" column that another packet names stays.
+   `groundgate store forget --all PACKET` removes each object and log of the packet. It also
+   removes each `task@1` and `resolution@1` that names the packet, and each correction packet
+   that `review resolve` wrote for it, with its candidates, judgments and receipt (#516). A
+   correction packet has the inputs of the packet, no run record, and the candidate of a
+   correction answer of the packet. A `review-policy@1` object stays, because it holds no
+   document data and other resolutions can name it. An object of the "Kept" column that
+   another packet names stays. A correction packet of the packet does not count as another
+   packet.
    One object can serve two packets, because the same text has one key. `forget` of that text
    removes it for both packets, which is correct for one document.
    After `forget`, `verify` reports "input deleted", with the key, the time and the reason from

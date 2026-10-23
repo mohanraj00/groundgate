@@ -20,7 +20,7 @@ from contextlib import suppress
 from dataclasses import dataclass, field
 from typing import Any
 
-from ..canonical import jcs
+from ..canonical import digest, jcs
 from . import KEY, FolderStore, NotFound, StoreError, Torn, _canonical, check_bytes, key
 from .packets import _PACKET, _READING, printable
 
@@ -608,14 +608,14 @@ def rebuild(store: FolderStore) -> list[str]:
 # forget
 
 
-def _others(objects: _Objects, packet: str) -> dict[str, int]:
+def _others(objects: _Objects, packet: str, skip: frozenset[str] = frozenset()) -> dict[str, int]:
     """For each key, how many other packets name it, with their readings, their run records
-    and the objects of the run records. A packet that cannot be read names nothing: ``check``
-    reports it. A reading or a run record that cannot be read names nothing, but the rest of
-    its packet still counts."""
+    and the objects of the run records. A packet in ``skip`` does not count. A packet that
+    cannot be read names nothing: ``check`` reports it. A reading or a run record that cannot be
+    read names nothing, but the rest of its packet still counts."""
     counts: dict[str, int] = {}
     for k in objects.of("packet@1"):
-        if k == packet:
+        if k == packet or k in skip:
             continue
         try:
             obj = _packet(objects, k)
@@ -639,6 +639,95 @@ def _others(objects: _Objects, packet: str) -> dict[str, int]:
     return counts
 
 
+# The members that a correction packet of ``review resolve`` shares with its packet (#516).
+_SAME_INPUTS = ("document", "reading", "schema", "policy", "references", "packs")
+
+
+def _review_plan(
+    objects: _Objects, packet: str, obj: Mapping[str, Any]
+) -> tuple[list[tuple[str, str]], frozenset[str]]:
+    """The review objects of a packet for ``forget`` with ``everything`` (#516): each
+    correction packet of ``review resolve`` with its candidates, judgments and receipt, then
+    each ``task@1`` and ``resolution@1`` that names the packet. Also return the keys of the
+    correction packets. A ``review-policy@1`` object holds no document data and stays.
+
+    A correction packet has the inputs of the packet, no run record, and the candidate of a
+    correction answer in an answer log of the packet. Its candidates or its receipt hold that
+    candidate, or a resolution of the packet names its receipt. Each key comes from the list of
+    store objects, never from an object or a log, so no path comes from untrusted data. An
+    object that cannot be read names nothing."""
+    tasks: list[tuple[str, str]] = []
+    resolutions: list[tuple[str, str]] = []
+    receipts: set[str] = set()
+    for kind, out in (("task@1", tasks), ("resolution@1", resolutions)):
+        for k in sorted(objects.of(kind)):
+            with suppress(StoreError, ValueError, RecursionError):
+                found = objects.json(kind, k)
+                if isinstance(found, dict) and found.get("packet") == packet:
+                    out.append((kind, k))
+                    if kind == "resolution@1" and isinstance(found.get("slots"), list):
+                        receipts.update(
+                            s["receipt"]
+                            for s in found["slots"]
+                            if isinstance(s, dict) and isinstance(s.get("receipt"), str)
+                        )
+    receipts.discard(obj["receipt"])
+    people: set[str] = set()  # the candidates of the correction answers, as canonical JSON
+    digests: set[str] = set()
+    logs, _ = objects.store.log_names()
+    for log in logs:
+        if log[0] != "answers" or log[1] != packet:
+            continue
+        with suppress(StoreError):
+            for r in objects.store.read(log):
+                c = r.get("candidate")
+                if isinstance(c, dict):
+                    with suppress(ValueError, TypeError, RecursionError):
+                        people.add(jcs(c))
+                        digests.add(digest("candidate", c))
+    plan: list[tuple[str, str]] = []
+    corrections: set[str] = set()
+    for k in sorted(objects.of("packet@1")):
+        if k == packet:
+            continue
+        try:
+            other = _packet(objects, k)
+            if other["run"] is not None or any(other[m] != obj[m] for m in _SAME_INPUTS):
+                continue
+            if not (people or receipts):
+                continue
+            named = _named(other)
+        except (StoreError, ValueError, RecursionError):
+            continue
+        if not (other["receipt"] in receipts or _holds(objects, other, people, digests)):
+            continue
+        corrections.add(k)
+        own = [(kind, n) for kind, n in named if kind in ("candidates@1", "judgments@1")]
+        plan += own + [("receipt@1", n) for n in _keys(other["receipt"])] + [("packet@1", k)]
+    return plan + tasks + resolutions, frozenset(corrections)
+
+
+def _holds(
+    objects: _Objects, packet: Mapping[str, Any], people: set[str], digests: set[str]
+) -> bool:
+    """True if the candidates or the receipt of ``packet`` hold one of the candidates of the
+    correction answers. The receipt names each candidate by its digest."""
+    for k in _keys(packet["candidates"]):
+        with suppress(StoreError, ValueError, TypeError, RecursionError):
+            found = objects.json("candidates@1", k)
+            if isinstance(found, list) and any(jcs(c) in people for c in found):
+                return True
+    for k in _keys(packet["receipt"]):
+        with suppress(StoreError, ValueError, RecursionError):
+            found = objects.json("receipt@1", k)
+            decisions = found.get("decisions") if isinstance(found, dict) else None
+            if isinstance(decisions, list) and any(
+                isinstance(d, dict) and d.get("candidate_sha256") in digests for d in decisions
+            ):
+                return True
+    return False
+
+
 def forget_packet(
     store: FolderStore, packet: str, reason: str, *, everything: bool = False
 ) -> list[tuple[str, str, str, int]]:
@@ -652,8 +741,10 @@ def forget_packet(
     is not a proof.
 
     With ``everything``, remove each object and each answer log of the packet, and the packet
-    last. An object of the "Kept" column that another packet names stays. Tasks and
-    resolutions are not in the store yet, so ``everything`` does not look for them (#432). A
+    last. It also removes each ``task@1`` and ``resolution@1`` that names the packet, and
+    each correction packet that ``review resolve`` wrote for it, with its candidates, judgments
+    and receipt (#516). A ``review-policy@1`` object stays. An object of the "Kept" column that
+    another packet names stays, but a correction packet of this packet does not count. A
     packet that cannot be read counts as a packet that names nothing, so run ``check`` first. If
     an answer log is locked, ``everything`` stops before it removes the packet, so a second
     call can finish the work. This is also the result when another ``forget`` of the same
@@ -741,9 +832,13 @@ def forget_packet(
                 plan += [(kind, n, False) for kind, n in _reading_named(objects, k)]
             except StoreError:
                 unchecked.append(("reading@1", k))
-    if not everything:
+    corrections: frozenset[str] = frozenset()
+    if everything:
+        review, corrections = _review_plan(objects, packet, obj)
+        plan += [(kind, k, False) for kind, k in review]
+    else:
         plan = [(kind, k, always) for kind, k, always in plan if kind in REMOVED or always]
-    others = _others(objects, packet)
+    others = _others(objects, packet, corrections)
     done: list[tuple[str, str, str, int]] = [
         (kind, k, "unchecked", others.get(k, 0)) for kind, k in dict.fromkeys(unchecked)
     ]
