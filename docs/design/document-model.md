@@ -1,9 +1,9 @@
 # The document model: one structure from the reader for every step
 
-Status: design for approval, issue #285. Nothing in this file is built. The note changes no
-decision. Sections 8 and 9 describe a decision change, and that change waits for its own spec
-version with vectors written by hand. The maintainer approves this note before any code. The
-last section lists the code issues.
+Status: approved by the maintainer on 2026-10-23, with the recommendation of each open question
+(section 15). Nothing in this file is built yet. The note changes no decision. Sections 8 and 9
+describe a decision change, and that change waits for spec 0.12 (milestone 0.14), with vectors
+written by hand. The last section lists the code issues.
 
 ## 1. The answers in short
 
@@ -323,6 +323,8 @@ set or set 2.
 
 ## 15. Open questions
 
+The maintainer chose the recommendation for each question on 2026-10-23.
+
 1. **Node ids.** An integer position in the list, or a path such as `t3/r4/c2`? I recommend the
    integer. It is short in a prompt, and the key already makes it stable for one reader version.
 2. **Location.** Derive the boxes from the layout, or store them in each node? I recommend the
@@ -361,5 +363,5 @@ I open these after the maintainer approves this note.
 7. **The readers of #7.** DOCX and XLSX nodes, and OCR nodes with `doubt`.
 8. **The measure.** Section 13.
 
-Issues 1, 2, 3, 6 and 7 fit 0.13. Issues 4 and 5 change decisions, and the maintainer chooses
-their spec version.
+Issues 1, 2, 3, 6 and 7 are in 0.13. Issues 4 and 5 change decisions: they are in spec 0.12,
+milestone 0.14. Issue 8 needs issue 5, so it is in 0.14 too.
