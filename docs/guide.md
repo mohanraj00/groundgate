@@ -41,6 +41,15 @@ plain text and returns an `Extracted` with `text` (NFC), `layout` (PDFs only) an
 drops text a reader can't see, and for PDFs records the page and box of every word so the report
 can show page numbers.
 
+`groundgate.read.document.read_document(path, pages=None)` gives the same `Extracted` and also a
+`Document`: the `document@1` model of docs/design/document-model.md. It is the same text plus a flat
+list of nodes, each a UTF-8 byte span into the text: `heading`, `paragraph`, `list`, `item`,
+`table`, `row` and `cell`. Each node has a `basis`: `markup` for HTML and XML, `layout` for PDF
+blocks, PDF tables and the paragraphs of a text file, and `rules` for a PDF table with drawn rules.
+The lookups are `node`, `at`, `of_kind`, `find`, `children`, `section` and `cell`. A node is
+information only: `admit` never reads one. `groundgate read FILE --document doc.json` writes the
+object as canonical JSON, and `Document.from_dict(obj, text)` checks one that you load again.
+
 `read` writes a table one row on each line, with a tab between two cells. For HTML, the cells are
 the table's `td` and `th` elements. A PDF has no cells, so `read` finds them: a row is the text at
 the same height, and it is a table row when it has two or more separate parts side by side, and one
@@ -797,7 +806,7 @@ With `schema` (and `policy`, `judgments`, `references`, `document_source`, `pack
 ## Command line
 
 ```bash
-groundgate read FILE [--pages 1-3,7] [-o doc.txt] [--layout layout.json]
+groundgate read FILE [--pages 1-3,7] [-o doc.txt] [--layout layout.json] [--document doc.json]
 groundgate admit   DOC SCHEMA CANDIDATES [--policy P] [--judgments J] [--document-id ID] [-o receipt.json]
 groundgate admit   --docs D --candidates C --schema S --out R [--policy P] [--judgments J]
 groundgate verify  RECEIPT DOC SCHEMA CANDIDATES [--policy P] [--judgments J] [--pack-dir DIR]
