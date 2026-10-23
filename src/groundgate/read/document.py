@@ -376,9 +376,7 @@ def read_document(
         from ..canonical import digest, is_nfc
         from .pdf import read_pdf
 
-        text, page_list, words, warnings = read_pdf(path, options["pages"], raws)
-        if path.read_bytes() != source:
-            raise ReadError(f"{path} changed while it was read")
+        text, page_list, words, warnings = read_pdf(path, options["pages"], raws, data=source)
         if not is_nfc(text):  # pragma: no cover - words are normalised one by one
             raise ReadError(f"{path}: extracted text is not NFC")
         layout = Layout(digest("document", {"text": text}), tuple(page_list), tuple(words))

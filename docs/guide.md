@@ -849,6 +849,13 @@ total outcome and code counts as tables. `summary.txt`, in any letter case, is r
 its receipt could overwrite `summary.json`. An empty document folder is an error. Input errors
 stop the run before it writes any output.
 
+With `--store DIR`, batch admit also writes one packet for each document to the store, as
+`admit --store` does for one document. Each document entry in `R/summary.json` then has a
+`packet` member with the packet key, and `groundgate verify --store DIR KEY` checks it. The
+receipts in `R` stay the same. The packets are written after all the inputs are valid, so an
+input error writes no packet. `--out` cannot be the store folder, and `--reading` cannot be used
+in batch mode.
+
 In Python, a loop over `gg.admit` does the same, and the API has no batch function.
 
 ## Receipts
