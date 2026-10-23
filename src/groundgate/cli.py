@@ -121,6 +121,11 @@ def _parser() -> argparse.ArgumentParser:
     x.add_argument("-o", "--output", help="write the text here instead of stdout")
     x.add_argument("--layout", help="also write page and word boxes (PDF only) as JSON")
     x.add_argument("--pages", type=_pages, help="PDF pages to read, e.g. 1-12,15")
+    x.add_argument(
+        "--document",
+        metavar="FILE",
+        help="also write document@1: the text key and the nodes (headings, tables...) as JSON",
+    )
     store_option(x, "write the source, the text, the layout and a reading; print the reading key")
 
     s = sub.add_parser(
@@ -918,7 +923,15 @@ def _check(args: argparse.Namespace) -> int:
 def _read(args: argparse.Namespace) -> int:
     from .read import read
 
-    if args.store is not None:
+    if args.document and args.store is not None:
+        print("groundgate: --document does not work with --store yet (#407)", file=sys.stderr)
+        return 2
+    if args.document:
+        from .read.document import read_document
+
+        doc, document = read_document(args.file, pages=args.pages)
+        Path(args.document).write_bytes(document.to_json())
+    elif args.store is not None:
         if args.layout and Path(args.file).suffix.lower() != ".pdf":  # before a store write
             print("groundgate: --layout needs a PDF", file=sys.stderr)
             return 2

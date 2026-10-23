@@ -9,6 +9,9 @@ the same on every Python version.
 - HTML elements hidden with the ``hidden`` attribute or an inline ``display:none`` or
   ``visibility:hidden`` style are dropped: text a reader cannot see is not evidence. Stylesheets
   are not evaluated.
+
+``html_nodes`` and ``xml_nodes`` also give the nodes of the document model (``document.py``).
+They use the same writer, so the text is the text of ``html_text`` and ``xml_text``.
 """
 
 from __future__ import annotations
@@ -16,6 +19,8 @@ from __future__ import annotations
 import re
 import xml.etree.ElementTree as ET
 from html.parser import HTMLParser
+
+from .nodes import Kept, Raw, Tracker, nfc_map, span_number
 
 SKIP = {"script", "style", "noscript", "template"}
 HEAD = {"head", "title", "meta", "link", "style", "script", "base", "noscript", "template"}
@@ -38,6 +43,7 @@ class _Writer:
 
     def __init__(self) -> None:
         self.out: list[str] = []
+        self.size = 0  # the length of the text in ``out``, for the nodes of a document
         self.pending = 0  # newlines owed before the next text
         self.cell_gap = False
         self.after_script = False
@@ -49,6 +55,7 @@ class _Writer:
             self.block(1)
         elif tag in CELL and self.cell_gap:
             self.out.append("\t")
+            self.size += 1
             self.cell_gap = False
         elif tag in SCRIPTS:
             self.text(SCRIPTS[tag], raw=True)
@@ -83,8 +90,10 @@ class _Writer:
         self.after_script = False
         if self.pending:
             self.out.append("\n" * self.pending)
+            self.size += self.pending
             self.pending = 0
         self.out.append(data)
+        self.size += len(data)
 
     def result(self) -> str:
         lines = "".join(self.out).split("\n")
@@ -99,9 +108,10 @@ def _hidden(attrs: list[tuple[str, str | None]]) -> bool:
 
 
 class _HTML(HTMLParser):
-    def __init__(self) -> None:
+    def __init__(self, nodes: bool = False) -> None:
         super().__init__(convert_charrefs=True)
         self.w = _Writer()
+        self.nodes = Tracker(lambda: self.w.size) if nodes else None
         self.skip = 0
         self.pre = 0
         self.in_head = False
@@ -122,7 +132,11 @@ class _HTML(HTMLParser):
         elif tag == "pre":
             self.pre += 1
         if not self.in_head:
+            if self.nodes is not None:
+                _close_implied(self.nodes, tag)
             self.w.start(tag)
+            if self.nodes is not None and tag in HTML_ROLES:
+                _open_html(self.nodes, tag, attrs)
 
     def handle_startendtag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         if not (self.hide or self.in_head or _hidden(attrs)) and tag in PARAGRAPH | LINE:
@@ -141,6 +155,8 @@ class _HTML(HTMLParser):
         elif tag == "pre":
             self.pre = max(0, self.pre - 1)
         if not self.in_head:
+            if self.nodes is not None and tag in HTML_ROLES:
+                self.nodes.close(tag)
             self.w.end(tag)
 
     def handle_data(self, data: str) -> None:
@@ -155,26 +171,141 @@ def html_text(source: str) -> str:
     return p.w.result()
 
 
+def html_nodes(source: str) -> tuple[str, list[Raw]]:
+    """The NFC text of ``html_text`` and its nodes, with code point offsets into that text."""
+    p = _HTML(nodes=True)
+    p.feed(source)
+    p.close()
+    assert p.nodes is not None
+    return _final(p.w, p.nodes.done())
+
+
 def _local(tag: object) -> str:
     return tag.rsplit("}", 1)[-1].lower() if isinstance(tag, str) else ""
 
 
 def xml_text(data: bytes) -> str:
     """Text of an XML document. Raises ``xml.etree.ElementTree.ParseError``."""
-    w = _Writer()
+    return _xml(data, None).result()
 
-    def walk(e: ET.Element) -> None:
+
+def xml_nodes(data: bytes) -> tuple[str, list[Raw]]:
+    """The NFC text of ``xml_text`` and its nodes, with code point offsets into that text. An SPL
+    document (HL7 v3) gives headings from its section titles, and lists. Other XML gives
+    paragraphs and the tables of the HTML names."""
+    w = _Writer()
+    nodes = Tracker(lambda: w.size)
+    _xml(data, nodes, w)
+    return _final(w, nodes.done())
+
+
+def _xml(data: bytes, nodes: Tracker | None, w: _Writer | None = None) -> _Writer:
+    w = w or _Writer()
+    root = ET.fromstring(data)
+    spl = isinstance(root.tag, str) and root.tag.startswith("{" + SPL_NAMESPACE + "}")
+
+    def walk(e: ET.Element, sections: int) -> None:
         tag = _local(e.tag)
         if tag in SKIP:
             return
         w.start(tag)
+        role = (SPL_ROLES if spl else XML_ROLES).get(tag) if nodes is not None else None
+        if nodes is not None and role is not None:
+            members: dict[str, object] = {}
+            if role == "heading":
+                members["level"] = min(max(sections, 1), 6)
+            elif role == "cell":
+                members = _cell_members(tag, e.attrib.get("rowspan"), e.attrib.get("colspan"))
+            nodes.open(tag, role, "markup", members)
+        if tag == "section":
+            sections += 1
         if e.text:
             w.text(e.text)
         for child in e:
-            walk(child)
+            walk(child, sections)
             if child.tail:
                 w.text(child.tail)
+        if nodes is not None and role is not None:
+            nodes.close(tag)
         w.end(tag)
 
-    walk(ET.fromstring(data))
-    return w.result()
+    walk(root, 0)
+    return w
+
+
+SPL_NAMESPACE = "urn:hl7-org:v3"
+TABLE_ROLES = {"table": "table", "tr": "row", "td": "cell", "th": "cell"}
+HTML_BLOCKS = {
+    "p", "pre", "blockquote", "div", "dl", "dt", "dd", "figcaption", "address", "section",
+    "article", "header", "footer", "nav", "aside", "main", "figure", "caption",
+}  # fmt: skip
+HTML_ROLES = {
+    **{f"h{n}": "heading" for n in range(1, 7)},
+    **dict.fromkeys(HTML_BLOCKS, "block"),
+    "ul": "list", "ol": "list", "li": "item",
+    **TABLE_ROLES,
+}  # fmt: skip
+SPL_ROLES = {"title": "heading", "paragraph": "block", "list": "list", "item": "item",
+             **TABLE_ROLES}  # fmt: skip
+XML_ROLES = {
+    **dict.fromkeys((PARAGRAPH | LINE) - {"table", "tr", "thead", "tbody", "br", "hr"}, "block"),
+    **TABLE_ROLES,
+}
+# An HTML start tag of these closes an open ``p`` (the HTML parsing rules, in button scope).
+CLOSES_P = HTML_BLOCKS - {"caption"} | {
+    "h1", "h2", "h3", "h4", "h5", "h6", "ul", "ol", "li", "table", "hr", "form", "fieldset",
+    "details", "dialog", "hgroup", "menu",
+}  # fmt: skip
+P_SCOPE = {"table", "td", "th", "caption", "html", "button", "object", "template"}
+HEADINGS = {f"h{n}" for n in range(1, 7)}
+
+
+def _cell_members(tag: str, rowspan: str | None, colspan: str | None) -> dict[str, object]:
+    return {"rows": span_number(rowspan), "columns": span_number(colspan), "header": tag == "th"}
+
+
+def _close_implied(nodes: Tracker, tag: str) -> None:
+    """Close the elements that an HTML start tag ends without an end tag, such as an open
+    ``li`` before the next ``li``."""
+    if tag in CLOSES_P:
+        nodes.close_any({"p"}, P_SCOPE)
+    if tag in HEADINGS and nodes.stack and nodes.stack[-1][0] in HEADINGS:
+        nodes.close(nodes.stack[-1][0])
+    if tag == "li":
+        nodes.close_any({"li"}, {"ul", "ol", "table"})
+    elif tag in ("td", "th"):
+        nodes.close_any({"td", "th"}, {"tr", "table"})
+    elif tag in ("tr", "thead", "tbody", "tfoot"):
+        nodes.close_any({"tr"}, {"table"})
+
+
+def _open_html(nodes: Tracker, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+    role = HTML_ROLES[tag]
+    members: dict[str, object] = {}
+    if role == "heading":
+        members["level"] = int(tag[1])
+    elif role == "cell":
+        values = dict(attrs)
+        members = _cell_members(tag, values.get("rowspan"), values.get("colspan"))
+    nodes.open(tag, role, "markup", members)
+
+
+def _final(w: _Writer, raws: list[Raw]) -> tuple[str, list[Raw]]:
+    """Move the raw offsets of ``raws`` into the NFC text of ``w``. If a composition crosses an
+    offset, the document gets no nodes; the text stays the same."""
+    import unicodedata
+
+    raw = "".join(w.out)
+    kept = Kept(raw)
+    text = w.result()
+    final = unicodedata.normalize("NFC", text)
+    if kept.text != text:  # pragma: no cover - Kept follows _Writer.result
+        return final, []
+    closed = [r for r in raws if r.end >= 0]
+    moved = nfc_map(text, [kept(p) for r in closed for p in (r.start, r.end)])
+    if moved is None:
+        return final, []
+    for r in raws:
+        if r.end >= 0:
+            r.start, r.end = moved[kept(r.start)], moved[kept(r.end)]
+    return final, raws

@@ -30,6 +30,7 @@ from typing import Any, BinaryIO
 
 from .grid import RULE_WIDTH, Grid, Rule, grids
 from .layout import Box, Page, Word, _same_line
+from .nodes import PageNodes, Raw
 
 LIGATURES = str.maketrans(
     {"ﬀ": "ff", "ﬁ": "fi", "ﬂ": "fl", "ﬃ": "ffi", "ﬄ": "ffl",
@@ -176,8 +177,11 @@ def _visible(page: Any) -> Rect:
     return min(cx0, cx1), min(cy0, cy1), max(cx0, cx1), max(cy0, cy1)
 
 
-def read_pdf(path: str | Path, pages: Iterable[int] | None = None) -> Result:
-    """Text, pages, words and warnings for a PDF. ``pages`` are 1-based page numbers."""
+def read_pdf(
+    path: str | Path, pages: Iterable[int] | None = None, nodes: list[Raw] | None = None
+) -> Result:
+    """Text, pages, words and warnings for a PDF. ``pages`` are 1-based page numbers. If
+    ``nodes`` is a list, it gets the nodes of the document model, with byte offsets."""
     try:
         from pdfminer.pdftypes import PDFException
         from pdfminer.psexceptions import PSException
@@ -192,7 +196,7 @@ def read_pdf(path: str | Path, pages: Iterable[int] | None = None) -> Result:
             raise ReadError("pages must be 1-based page numbers")
     try:
         with open(path, "rb") as fp:
-            return _read(fp, wanted)
+            return _read(fp, wanted, nodes)
     except (PDFException, PSException) as e:
         raise ReadError(f"{path}: not a readable PDF ({type(e).__name__}: {e})") from e
 
@@ -227,12 +231,12 @@ def _stable_ids() -> Iterator[None]:
             delattr(layout, "id")
 
 
-def _read(fp: BinaryIO, wanted: list[int] | None) -> Result:
+def _read(fp: BinaryIO, wanted: list[int] | None, nodes: list[Raw] | None = None) -> Result:
     with _stable_ids():
-        return _read_pages(fp, wanted)
+        return _read_pages(fp, wanted, nodes)
 
 
-def _read_pages(fp: BinaryIO, wanted: list[int] | None) -> Result:
+def _read_pages(fp: BinaryIO, wanted: list[int] | None, nodes: list[Raw] | None = None) -> Result:
     from pdfminer.converter import PDFPageAggregator
     from pdfminer.layout import LAParams
     from pdfminer.pdfinterp import PDFPageInterpreter, PDFResourceManager
@@ -246,6 +250,7 @@ def _read_pages(fp: BinaryIO, wanted: list[int] | None) -> Result:
     page_list: list[Page] = []
     words: list[Word] = []
     warnings: list[str] = []
+    marks = None if nodes is None else PageNodes(nodes)
     for i, pdf_page in enumerate(PDFPage.get_pages(fp, index)):
         number = wanted[i] if wanted is not None else i + 1  # get_pages keeps document order
         interpreter.process_page(pdf_page)
@@ -276,20 +281,33 @@ def _read_pages(fp: BinaryIO, wanted: list[int] | None) -> Result:
                 continue  # a rule a reader cannot see (or with no position) draws no cell
             x0, y0, x1, y1 = max(x0, vx0), max(y0, vy0), min(x1, vx1), min(y1, vy1)
             rules.append((x0 - vx0, vy1 - y1, x1 - vx0, vy1 - y0))
-        for bi, rows in enumerate(_tables(blocks, grids(rules))):
+        kinds: list[str | None] = []
+        for bi, rows in enumerate(_tables(blocks, grids(rules), kinds)):
             if bi:
                 out.add(BLOCK_BREAK)
+            if marks:
+                marks.block(kinds[bi], out.size)
             for ri, cells in enumerate(rows):
                 if ri:
                     out.add(LINE_BREAK)
+                if marks:
+                    marks.start_row(out.size)
                 for ci, cell in enumerate(cells):
                     if ci:
                         out.add(CELL_BREAK)
+                    if marks:
+                        marks.start_cell(out.size)
                     for wi, (t, box) in enumerate(cell):
                         if wi:
                             out.add(" ")
                         ws, we = out.add(t)
                         words.append(Word(ws, we, box))
+                    if marks:
+                        marks.end_cell(out.size)
+                if marks:
+                    marks.end_row(out.size)
+            if marks:
+                marks.end_block(out.size)
         page_list.append(Page(number, round(vx1 - vx0, 2), round(vy1 - vy0, 2), start, out.size))
         if hidden:
             warnings.append(f"page {number}: dropped {hidden} words drawn outside the visible page")
@@ -326,7 +344,9 @@ def _number_cell(line: Line) -> bool:
     return chars <= NUMBER_CHARS and any(c.isdigit() or c in DASHES for c in chars)
 
 
-def _tables(blocks: list[list[Line]], ruled: Sequence[Grid] = ()) -> list[list[Row]]:
+def _tables(
+    blocks: list[list[Line]], ruled: Sequence[Grid] = (), kinds: list[str | None] | None = None
+) -> list[list[Row]]:
     """The page's output blocks. pdfminer gives a table as one text box for each column, so its
     rows are rebuilt here: the text lines at the same height become one row, with a tab between
     two cells. Other text keeps pdfminer's boxes and lines.
@@ -474,6 +494,7 @@ def _tables(blocks: list[list[Line]], ruled: Sequence[Grid] = ()) -> list[list[R
             else:
                 tables[n].append(lines)
             region.update((key, n) for key in row)
+    found_by_layout = len(tables)
     for grid in ruled:  # a table with numbers keeps its rows (#332)
         found = _ruled_rows(blocks, grid, region.keys())
         if found is not None:
@@ -494,8 +515,13 @@ def _tables(blocks: list[list[Line]], ruled: Sequence[Grid] = ()) -> list[list[R
             if table not in done:
                 done.add(table)
                 out.append(tables[table])
+                if kinds is not None:
+                    kinds.extend([None] * (len(out) - 1 - len(kinds)))
+                    kinds.append("layout" if table < found_by_layout else "rules")
         if prose:
             out.append(prose)
+    if kinds is not None:
+        kinds.extend([None] * (len(out) - len(kinds)))
     return out
 
 
