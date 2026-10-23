@@ -153,7 +153,9 @@ value was found. Targeted searches for individual missing keys are outside #271.
 
 The runner assigns candidate ids from call number and reply position. A model cannot set an
 id, `search_region`, confidence, a judgment, a policy or a reference. For document evidence the
-runner sets `search_region` to the chunk's global byte span. Initial-pass candidates keep
+runner sets `search_region` to the chunk's global byte span. If the prompt also has context
+regions (#508), it is the span of the first region that holds the value quote. Initial-pass
+candidates keep
 their quotes without adapter-added offsets. The core resolves them under SPEC §4.6, including
 repeated quotes, and applies re-anchoring under SPEC §3.1 when it is applicable. Admission
 always uses the full original document and references, never text formed by concatenating
@@ -363,8 +365,10 @@ On a document with nodes, a cut moves each end of its kept span to the nearest r
 inside the merged region, or to the nearest cell boundary when no row boundary is inside it
 (#508). An end that is not inside a row stays. The kept span can then be longer than
 `max_region_chars` by part of a row at each end. If the kept span starts in a table after its
-header rows, the header rows go into the pool as one more region, with the rank of the cut
-region. Two cuts in one table add the header rows one time. `cut_regions` records the kept span
+header rows, the header rows go into the pool as one more region, but only into the room that
+the match regions leave under `max_target_regions`. A context region never takes the place of a
+match region, and the prompt-size trim removes a context region first. Two cuts in one table add
+the header rows one time. `cut_regions` records the kept span
 after the move.
 
 The match-record cap does not cap the number of hits scanned. Each of at most 64 retained
@@ -452,9 +456,10 @@ rules of SPEC §4.6 and gives the item the offsets of that one match, with no `t
 alone gives the span of the cell. An id that is not an integer of the document, a quote that is
 not exactly once in the node, a blank quote, `node` alone on a node that is not a cell or on an
 empty cell, and `node` on a reference item or on a run on text make the reply invalid. A cited
-value must be inside a document region of its prompt: the runner sets `search_region` to the
-first such region, and a value outside them is a protocol failure, as a quote outside the
-targeted regions is. The prompt does not list node ids yet, so a model reply cites a node only
+node of any role must be inside a document region of its prompt, and a node outside them is a
+protocol failure, as a quote outside the targeted regions is. For a cited value, the runner sets
+`search_region` to the first such region. A role quote with `text` and no `node` keeps the rule
+above. The prompt does not list node ids yet, so a model reply cites a node only
 when its client gives the ids. The runner
 refuses the entire envelope on a structural error; it never salvages a candidate from an
 invalid reply. The runner never executes code, invokes a tool, opens a path or follows a URL
@@ -524,6 +529,10 @@ tag (`text`, `document`, `schema`, `policy`, `reference`, `prompt`, `reply`, `ad
 cover exact UTF-8 bytes, including whitespace. Prompt digests cover the exact string given to
 `client`, encoded as UTF-8. Document, schema, policy, reference and admission objects are canonical JSON.
 Client errors have no reply digest.
+Each line that names an object by its run key also names it by its store key of
+[store.md](store.md) §4 (#429): `key` beside the text `sha256`, `schema_key`, `policy_key`,
+`reference_keys`, `prompt_key`, `reply_key` and `admission_key`. Replay calculates the store
+keys again from the bytes, so a record with another store key does not replay.
 
 Runner digests use their own prefix, `groundgate-run/5:<kind>` followed by a zero byte and the
 object bytes. They do not reuse the core `digest()`, whose prefix names the spec version, so the
@@ -551,9 +560,17 @@ object with the bytes of `run.jsonl`, then the final inputs, the receipt and a `
 whose `run` names the record. It writes only the objects that the record names, and it saves a
 run that is not complete too. Before the first write, it checks each object against its key and
 runs `admit` again on the stored inputs. If that gives another receipt, it raises before it
-writes. A store error during the writes can leave objects that no packet names. The record
-keeps its runner keys, so a store cannot replay the run yet: the store keys come with
-`groundgate-run/5` too (#429), in 0.13. `RunResult.read(folder)` stays the replay path.
+writes. A store error during the writes can leave objects that no packet names. It also
+raises if the record names another store key than the key of an object.
+`RunResult.load(store, packet)` replays a run from its packet key alone, with no model call
+(#429). It gets the packet, the `run@5` record that the packet names and each object by the store
+key in the record, and each object must also have the run key of the record. The run header
+must name the inputs of the packet: the document id, source and text, the schema, the policy and
+the references. The packet must have no judgments, because a run has none. It takes the packs
+that the packet names, replays the run as `read` does and compares the receipt and the
+candidates with the packet. The store bounds each read, so open a `FolderStore` with a smaller
+`max_bytes` to use less memory. An object that `forget` removed raises `InputGone` with the
+deletion. A record of `groundgate-run/4` or earlier has no store keys and does not load.
 
 The document model (#285) adds no new log format. An input of `kind: "document"` names a
 document and its reader, and a `node` key in a reply names a node, which the runner resolves to

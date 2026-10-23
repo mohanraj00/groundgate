@@ -1145,7 +1145,15 @@ def test_record_is_a_hash_chained_log_and_inputs_are_objects():
     # Keys use the stable runner prefix, not the core digest that names the spec version.
     inputs = lines[0]["inputs"]
     text_key = "sha256:" + hashlib.sha256(b"groundgate-run/5:text\0Amount 5.").hexdigest()
-    assert inputs["document"] == {"kind": "text", "id": None, "source": None, "sha256": text_key}
+    # The store key of each object is in the record too (#429).
+    store_text = "sha256:" + hashlib.sha256(b"groundgate-object/1:text@1\0Amount 5.").hexdigest()
+    assert inputs["document"] == {
+        "kind": "text",
+        "id": None,
+        "source": None,
+        "sha256": text_key,
+        "key": store_text,
+    }
     assert result.artifacts[text_key] == "Amount 5."
     assert result.receipt.document_sha256 != text_key
     assert (

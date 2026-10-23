@@ -243,6 +243,10 @@ def test_the_record_names_the_document_and_the_store_keeps_it(tmp_path: Path) ->
         packet = result.save(store)
         assert store.get("document@1", named["document_key"]) == doc.to_json()
         assert not check(store).findings
+        # The store replays the run from its packet key, with its document (#429).
+        loaded = RunResult.load(store, packet)
+        assert loaded.run_sha256 == result.run_sha256
+        assert loaded.candidates == result.candidates
         done = forget_packet(store, packet, "the owner asked")
         assert ("document@1", named["document_key"], "deleted", 0) in done
 
@@ -252,3 +256,70 @@ def test_the_runner_checks_the_document() -> None:
     doc.text = "Amount 7."  # the text key no longer names the text
     with pytest.raises(ExtractInputError, match="not valid"):
         run(doc, Client())
+
+
+def test_a_first_pass_quote_in_a_context_region_is_found_there(tmp_path: Path) -> None:
+    # The reproduction of the review of #527: the value is only in the heading region.
+    doc = document(tmp_path, "<h1>Amount 5</h1><p>nothing here</p><p>nothing there</p>")
+    replies = [envelope_missing(), cited({"source": "document", "role": "value", "text": "5"})]
+    client = Client(*replies)
+    result = run(doc, client, chunk_chars=16, overlap_chars=1)
+    texts = [s["text"] for s in body(client.prompts[1])["sources"]]
+    assert texts[1] == "Amount 5" and "5" not in texts[0]
+    heading = doc.of_kind("heading")[0]
+    region = result.candidates[0]["search_region"]
+    assert (region["start"], region["end"]) == (heading.start, heading.end)
+    assert result.receipt.decisions[0].outcome == "admitted"
+    assert replay(result.record, result.artifacts, doc, SCHEMA).ok
+
+
+def envelope_missing() -> dict[str, Any]:
+    return {"candidates": [], "not_found": ["amount"]}
+
+
+def test_header_rows_never_take_the_place_of_a_match_region(tmp_path: Path) -> None:
+    # The reproduction of the review of #527: one region, and it must hold the matches.
+    rows = "".join(f"<tr><td>Cost {i}</td><td>{i}</td></tr>" for i in range(10))
+    rows += "".join(f"<tr><td>Revenue line {i}</td><td>{i}</td></tr>" for i in range(20))
+    doc = document(tmp_path, f"<table><tr><th>Item</th><th>2024</th></tr>{rows}</table>")
+    schema = {"fields": {"revenue": {"type": "integer"}}}
+    client = Client()
+    settings = {"search_context_chars": 40, "max_region_chars": 100, "max_target_regions": 1}
+    result = run(doc, client, schema, **settings)
+    (sent,) = body(client.prompts[-1])["sources"]
+    assert "Revenue line 0" in sent["text"]
+    search = next(e for e in result.record if e["kind"] == "search")
+    assert search["omitted_regions"] == 0
+    assert replay(result.record, result.artifacts, doc, schema).ok
+
+
+def test_a_node_of_any_role_outside_the_prompt_is_a_protocol_failure(tmp_path: Path) -> None:
+    # The reproduction of the security review of #527: an unsent scale node must not
+    # make 5 into 5000.
+    filler = "".join(f"<p>Filler line {i}.</p>" for i in range(6))
+    doc = document(tmp_path, f"<p>(in thousands)</p>{filler}<p>Revenue 5</p>")
+    scale = doc.of_kind("paragraph")[0]
+    reply = cited(
+        {"source": "document", "role": "value", "text": "5"},
+        node(scale.id, "in thousands", role="scale"),
+        value="5000",
+    )
+    prompts: list[str] = []
+
+    def client(prompt: str) -> str:
+        prompts.append(prompt)
+        texts = [s["text"] for s in body(prompt)["sources"]]
+        if body(prompt)["fields"] == ["amount"] and any("Revenue 5" in t for t in texts):
+            assert not any("(in thousands)" in t for t in texts)
+            return json.dumps(reply)
+        return json.dumps({"candidates": [], "not_found": body(prompt)["fields"]})
+
+    result = extract(
+        doc,
+        SCHEMA,
+        client=client,
+        model_id="fixed-1",
+        run_policy=RunPolicy(chunk_chars=30, overlap_chars=1),
+    )
+    assert any(e["kind"] == "protocol_failure" for e in result.record)
+    assert all(d.outcome != "admitted" for d in result.receipt.decisions)
