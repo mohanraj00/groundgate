@@ -272,9 +272,15 @@ their issues (#432).
    names only if it proves the correction: its spec version, document, references, packs,
    schema digest, policy digest and candidate digests match, the packet has no judgments, and
    the receipt lists none. A receipt lists only the judgments that applied, so with judgments
-   it cannot prove the match. Then the receipt stays, and `forget` prints it as "unchecked". Then it
-   removes only what `forget` removes and the corrections that it finds. The packet, its kept
-   objects, its tasks, its resolutions and its logs stay. Run `store check --repair` on a torn log, then `forget --all` again.
+   it cannot prove the match. Then the receipt stays, and `forget` prints it as "unchecked".
+   If a log or a packet is "unchecked", `forget --all` removes only what `forget` removes. The
+   packet, its kept objects, its corrections, its tasks, its resolutions and its logs stay. Run
+   `store check --repair` on a torn log, then `forget --all` again.
+   Last, `forget --all` applies one filter to all of these together. An object stays if a
+   packet, a receipt, a task or a resolution that stays names it. A packet names its objects,
+   its readings, its run records and the objects of the records. Repeat until no object
+   changes. The "Removed" objects of the packet itself and a run record that holds text are
+   not in this filter.
    One object can serve two packets, because the same text has one key. `forget` of that text
    removes it for both packets, which is correct for one document.
    After `forget`, `verify` reports "input deleted", with the key, the time and the reason from

@@ -881,3 +881,98 @@ def test_forget_all_takes_a_verdict_that_is_not_a_string(tmp_path: Path, verdict
         left, _ = store.object_keys()
     assert not any(state == "unchecked" for _, _, state, _ in done)
     assert not {k, tk, rk, receipt, fixed} & set(left)
+
+
+def _held(store: FolderStore) -> set[str]:
+    # Each packet that stays still has each object that it names. The text is the same for all
+    # the packets of these tests, and its forget removes it for each of them (§8 rule 3).
+    left, _ = store.object_keys()
+    for p in left:
+        if key("packet@1", store.object_bytes(p)) != p:
+            continue
+        obj = json.loads(store.object_bytes(p))
+        for name in ("schema", "policy", "candidates", "judgments", "receipt"):
+            assert obj[name] is None or obj[name] in left, (p, name)
+    return set(left)
+
+
+def _corrected(store: FolderStore, value: str, judgments: list[Any] | None) -> tuple[str, str]:
+    # A packet like one-choice with another value of c1, its task, and a correction of ana.
+    packet = FILES["one-choice"]["packet"]
+    changed = [{**packet["candidates"][0], "value": value}]
+    k, _ = admit_packet(
+        store, packet["text"], packet["schema"], changed, packet["policy"], None,
+        packet["judgments"] if judgments is None else judgments,
+    )  # fmt: skip
+    (tk,) = [t for t, _ in write_tasks(store, k, EVERY).tasks]
+    return k, tk
+
+
+def test_forget_all_keeps_the_judgments_of_a_shared_correction(tmp_path: Path) -> None:
+    # One packet has no judgments, and one-choice has a judgment of c1. The same correction
+    # of each gives one correction packet, with no judgments. forget --all of the first keeps
+    # that packet, and also its candidates, its judgments and its receipt.
+    store, k, tk, _ = one_choice(tmp_path)
+    with store:
+        bare, btk = _corrected(store, "4200001", [])
+        for pk, t in ((bare, btk), (k, tk)):
+            store.append(
+                ("answers", pk, reviewer_key("ana")),
+                record(t, "ana", "correct", candidate=correction("4200000")),
+            )
+        first = write_resolution(store, bare, policy(), ["ana"])
+        second = write_resolution(store, k, policy(), ["ana"])
+        assert first.resolution is not None and second.resolution is not None
+        (receipt,) = {s["receipt"] for s in first.resolution["slots"]}
+        assert {s["receipt"] for s in second.resolution["slots"]} == {receipt}
+        fixed = _correction_packet(store, receipt)
+    with FolderStore(tmp_path / "s") as store:
+        done = forget_packet(store, bare, "all", everything=True)
+        left = _held(store)
+    assert {fixed, receipt, k, second.key} <= left
+    assert bare not in left
+    assert ("packet@1", fixed, "kept", 1) in done
+
+
+def test_forget_all_keeps_each_object_that_stays_whole(tmp_path: Path) -> None:
+    # Four packets of one document. Three get the same correction, so they share one correction
+    # packet, and the fourth gets its own. After each forget --all, each packet that stays still
+    # has its candidates, its judgments and its receipt.
+    root = tmp_path / "s"
+    packets: dict[str, tuple[str, Any]] = {}
+    with FolderStore(root) as store:
+        for name, value, judgments, fix in (
+            ("a", "4200000", None, "4200000"),
+            ("b", "4200001", None, "4200000"),
+            ("c", "4200002", [], "4200000"),
+            ("d", "4200003", [], "4100000"),
+        ):
+            k, tk = _corrected(store, value, judgments)
+            store.append(
+                ("answers", k, reviewer_key("ana")),
+                record(tk, "ana", "correct", candidate=correction(fix)),
+            )
+            got = write_resolution(store, k, policy(), ["ana"])
+            assert got.resolution is not None
+            (receipt,) = {s["receipt"] for s in got.resolution["slots"]}
+            packets[name] = (k, receipt)
+        shared = _correction_packet(store, packets["a"][1])
+        own = _correction_packet(store, packets["d"][1])
+        assert packets["a"][1] == packets["b"][1] == packets["c"][1] != packets["d"][1]
+        _held(store)
+    for gone, stays in (
+        ("a", {"b", "c", "d"}),
+        ("c", {"b", "d"}),
+        ("d", {"b"}),
+    ):
+        with FolderStore(root) as store:
+            forget_packet(store, packets[gone][0], "all", everything=True)
+            left = _held(store)
+        assert packets[gone][0] not in left
+        assert {packets[s][0] for s in stays} <= left
+        assert {shared, packets["a"][1]} <= left  # b still names this correction
+    assert own not in left and packets["d"][1] not in left
+    with FolderStore(root) as store:
+        forget_packet(store, packets["b"][0], "all", everything=True)
+        left = _held(store)
+    assert not {shared, packets["a"][1], packets["b"][0]} & left
