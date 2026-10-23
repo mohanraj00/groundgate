@@ -41,3 +41,4 @@ kbd { border: 1px solid var(--line); border-radius: 3px; padding: 0 4px; font-si
   .wrap { grid-template-columns: 1fr; height: auto; }
   main { border-right: 0; border-bottom: 1px solid var(--line); }
 }
+.choices li.picked { font-weight: bold; }

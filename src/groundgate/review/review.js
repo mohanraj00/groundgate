@@ -5,7 +5,7 @@
 const TOKEN = location.hash.slice(1);
 const $ = (id) => document.getElementById(id);
 const PX = 1.4; // screen pixels for one PDF point
-const KEYS = /^([1-9yxunsrk]|Enter|Escape|ArrowLeft|ArrowRight)$/;
+const KEYS = /^([1-9yxunsrkw]|Enter|Escape|ArrowLeft|ArrowRight)$/;
 
 function el(tag, cls, text) {
   const e = document.createElement(tag);
@@ -37,7 +37,7 @@ let busy = false; // a task loads or an answer goes to the server: keys wait
 
 function fresh() {
   return { keys: 0, start: performance.now(), reasonSeen: false, mode: null, sel: null,
-    parts: [], need: null, check: null };
+    parts: [], need: null, check: null, picked: [] };
 }
 
 function status(text) { $("status").textContent = text || ""; }
@@ -105,6 +105,7 @@ async function open(k) {
     if (c.quote !== null) li.append(el("span", "quote", "In the text: " + c.quote));
     list.append(li);
   }
+  if (task.label) drawLabel();
   $("correct").hidden = true;
   $("reason").hidden = true;
   $("reason").replaceChildren();
@@ -112,6 +113,58 @@ async function open(k) {
   $("selected").textContent = "";
   $("outcome").replaceChildren();
   draw(task.view);
+}
+
+// A calibrate label (review.md section 11): a blind question with no correction
+
+function drawLabel(focus) {
+  const help = task.label.question === "field"
+    ? "Press y if it is, w if it is not, u if you are not sure."
+    : "Click a key, or press its number, to mark each key that the value gives, then Enter. " +
+      "Tab to a key and press Space to mark it. " +
+      "Enter with no key marked says that it gives none. Press u if you are not sure.";
+  $("parts").textContent += " " + help;
+  if (task.label.question !== "key") return;
+  const list = $("choices");
+  task.label.keys.forEach((k, i) => {
+    const li = el("li", st.picked.includes(k) ? "picked" : "", k);
+    if (i < 9) li.prepend(el("kbd", "", String(i + 1)));
+    li.tabIndex = 0;
+    li.setAttribute("role", "checkbox");
+    li.setAttribute("aria-checked", String(st.picked.includes(k)));
+    li.addEventListener("click", () => pickKey(i));
+    li.addEventListener("keydown", (e) => {
+      if (e.key !== " ") return;
+      e.preventDefault();
+      e.stopPropagation();
+      if (!st || busy) return;
+      st.keys += 1; // a Space press counts as a key, the same as the other keys
+      pickKey(i);
+    });
+    list.append(li);
+  });
+  if (focus !== undefined) list.children[focus].focus();
+}
+
+function pickKey(i) {
+  const key = task.label.keys[i];
+  st.picked = st.picked.includes(key) ? st.picked.filter((x) => x !== key) : [...st.picked, key];
+  $("choices").replaceChildren();
+  $("parts").textContent = "Check each part: " + task.parts.join(", ") + ".";
+  drawLabel(i);
+}
+
+function labelKey(k) {
+  const keys = task.label.keys;
+  if (k === "u") save("unsure", {});
+  else if (task.label.question === "field") {
+    if (k === "y") save("confirm", {});
+    else if (k === "w") save("wrong", {});
+  } else if (/^[1-9]$/.test(k) && Number(k) <= keys.length) {
+    pickKey(Number(k) - 1);
+  } else if (k === "Enter") {
+    save("confirm", { field_keys: keys.filter((x) => st.picked.includes(x)) });
+  }
 }
 
 // The source
@@ -395,7 +448,8 @@ document.addEventListener("keydown", (ev) => {
   if (!KEYS.test(k)) return;
   ev.preventDefault();
   st.keys += 1; // before the answer, so that the answer counts its own key
-  if (k === "y" && n === 1) save("confirm", {});
+  if (task.label && !/^(r|ArrowLeft|ArrowRight)$/.test(k)) labelKey(k);
+  else if (k === "y" && n === 1) save("confirm", {});
   else if (/^[1-9]$/.test(k) && Number(k) <= n) {
     const c = task.choices[Number(k) - 1];
     if (n === 1) save("confirm", {});

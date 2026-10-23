@@ -279,8 +279,12 @@ def test_the_id_of_a_correction_differs_from_each_candidate_id(tmp_path: Path) -
     ("change", "message"),
     [
         ({"task": "sha256:" + "0" * 64}, "not a task of a slot of this packet"),
+        ({"task": ["a list"]}, "not a task of a slot of this packet"),
         ({"reviewer": "ben"}, "another reviewer than its log"),
-        ({"format": "answer@2"}, "not answer@1"),
+        ({"format": "answer@3"}, "not answer@1 or answer@2"),
+        ({"format": "answer@2"}, "members of answer@2"),
+        ({"verdict": "wrong"}, "wrong needs answer@2"),
+        ({"format": "answer@2", "field_keys": []}, "only a calibrate key task"),
         ({"verdict": "maybe"}, "not an answer@1 verdict"),
         ({"decision": 0}, "a confirm answer has no decision"),
         ({"codes_kept": ["SCALE_WORD"]}, "only a correction keeps codes"),

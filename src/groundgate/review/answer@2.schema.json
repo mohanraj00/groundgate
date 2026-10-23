@@ -1,0 +1,263 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/mohanraj00/groundgate/blob/main/src/groundgate/review/answer@2.schema.json",
+  "title": "groundgate review answer, format answer@2",
+  "description": "What one reviewer gives for one task: one record of the answer log of a packet and a reviewer (docs/design/review.md section 5.3). answer@2 is answer@1 with the verdict wrong and the member field_keys, for calibrate labels (section 11). The store adds sequence, previous and entry_sha256. This schema does not check the answer against its task: that a calibrate field task takes only confirm, wrong and unsure, that a calibrate key task takes only confirm and unsure, or that field_keys names keys of the field.",
+  "type": "object",
+  "required": [
+    "format",
+    "task",
+    "reviewer",
+    "verdict",
+    "decision",
+    "candidate",
+    "codes_kept",
+    "statements",
+    "nodes",
+    "reason_seen",
+    "keys",
+    "ms",
+    "time",
+    "field_keys"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "format": {
+      "const": "answer@2"
+    },
+    "task": {
+      "$ref": "#/$defs/key"
+    },
+    "reviewer": {
+      "type": "string",
+      "pattern": "\\S"
+    },
+    "verdict": {
+      "description": "confirm: the only choice is right. choose: the choice in decision is right. correct: no choice is right, and candidate gives the right value. adjust_span: the value is right, and candidate gives its span. not_in_document: the document does not give the field. unsure: the person cannot tell. wrong: the shown value is not this field, and the person gives no other value.",
+      "enum": [
+        "confirm",
+        "choose",
+        "correct",
+        "adjust_span",
+        "not_in_document",
+        "unsure",
+        "wrong"
+      ]
+    },
+    "decision": {
+      "description": "For choose, the index in the receipt of the chosen decision. Otherwise null.",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "candidate": {
+      "description": "For correct and adjust_span, a candidate (SPEC.md section 2.5, candidate.schema.json) with the person as proposer. Otherwise null.",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "required": [
+            "field",
+            "value",
+            "proposer"
+          ],
+          "properties": {
+            "proposer": {
+              "type": "string",
+              "pattern": "^person:\\S"
+            }
+          }
+        }
+      ]
+    },
+    "codes_kept": {
+      "description": "Each code of a correction that the person saw and kept.",
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Z][A-Z0-9_]*$"
+      }
+    },
+    "statements": {
+      "description": "Reserved for the model_text kind (section 7): a verdict for each statement of the task. null in format 1.",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "statement",
+              "verdict"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "statement": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "verdict": {
+                "enum": [
+                  "supported",
+                  "unsupported",
+                  "unsure"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "nodes": {
+      "description": "Reserved for the structure kind (section 7): each node that the person accepted or corrected. The correction of a node comes with the document model (#285), so a node item can have other members. null in format 1.",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "node",
+              "verdict"
+            ],
+            "properties": {
+              "node": {
+                "type": "string",
+                "pattern": "\\S"
+              },
+              "verdict": {
+                "enum": [
+                  "accepted",
+                  "corrected"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "field_keys": {
+      "description": "For confirm on a calibrate key task, the keys of the field that the value gives, each one time. The list can be empty. Otherwise null.",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "reason_seen": {
+      "description": "true when the person opened the reason before the answer. For the measures only.",
+      "type": "boolean"
+    },
+    "keys": {
+      "description": "The keys that the person pressed for this answer. For the measures only.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "ms": {
+      "description": "The time on the task in milliseconds. For the measures only.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "time": {
+      "description": "The UTC time of the answer. For the measures only: the resolution never reads it.",
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]{1,9})?Z$"
+    },
+    "sequence": {
+      "description": "Set by the store.",
+      "type": "integer",
+      "minimum": 1
+    },
+    "previous": {
+      "description": "Set by the store.",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/key"
+        }
+      ]
+    },
+    "entry_sha256": {
+      "description": "Set by the store.",
+      "$ref": "#/$defs/key"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "verdict": {
+            "const": "choose"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "decision": {
+            "type": "integer"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "decision": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "verdict": {
+            "enum": [
+              "correct",
+              "adjust_span"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "candidate": {
+            "type": "object"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "candidate": {
+            "type": "null"
+          },
+          "codes_kept": {
+            "maxItems": 0
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "key": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    }
+  }
+}
