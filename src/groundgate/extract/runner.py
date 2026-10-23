@@ -24,6 +24,7 @@ from ..canonical import SPEC_VERSION, jcs
 from ..codes import INFO
 from ..feedback import feedback_message
 from ..model import Decision, PacketError, Policy, Receipt, Schema, extractor_schema
+from ..store import key as store_key
 from ..text import canonical, quote_pattern, tokens
 
 if TYPE_CHECKING:
@@ -31,7 +32,8 @@ if TYPE_CHECKING:
 
 Json = dict[str, Any]
 # groundgate-run/5 (#494): the search leaves out common words, and a cut that keeps every match
-# does not truncate the search.
+# does not truncate the search. run/5 also names each object by its store key beside its run
+# key (#429), so a store can replay the run from its packet.
 # groundgate-run/4 (#466): the search leaves English function words out of the word queries.
 # groundgate-run/3 (#382): the search cuts large regions, and a second sweep can follow
 # `search_limit`. groundgate-run/2 (#318, #319) had a new prompt, field item causes and rounding
@@ -251,8 +253,8 @@ class RunResult:
         ``policy@1``, ``reference@1``, ``prompt@1``, ``reply@1``, ``admission@1``), then the
         record as one ``run@5`` object, then the final inputs, the receipt and a ``packet@1``
         object that names the record. The record bytes are the bytes of ``run.jsonl`` from
-        ``write``. The record keeps its ``groundgate-run/5`` keys, so the store cannot replay
-        the run yet (#429): ``RunResult.read(folder)`` stays the replay path.
+        ``write``. The record names each object by its run key and its store key, so ``load``
+        replays the run from the packet key (#429).
 
         ``packs`` are the packs that the saved schema names, as for ``read``. ``save`` writes only
         the objects that the record names, as ``read`` reads only those. A run that is not
@@ -262,7 +264,8 @@ class RunResult:
         ``PacketError`` before it writes, because ``verify`` from the packet would then fail. A
         bad object or a record that does not name its inputs raises ``ValueError``. A store error
         during the writes, for example an object above the store limit, can leave objects that
-        no packet names. They do no harm, and ``save`` can run again."""
+        no packet names. They do no harm, and ``save`` can run again. A record that names another
+        store key than the key of the object bytes raises ``ValueError`` too."""
         from ..store import check_bytes
         from ..store.packets import _put_packet
 
@@ -276,6 +279,9 @@ class RunResult:
             if kind is None:
                 raise ValueError(f"the artifact {k} does not match its key")
             kinds[k] = _STORE_KINDS[kind]
+        for word, k, stored in _stored(self.record):
+            if kinds[k] != _STORE_KINDS[word] or _key(word, self.artifacts[k]) != stored:
+                raise ValueError(f"the log names another store key for the object {k}")
         try:
             text = self.artifacts[inputs["document"]["sha256"]]
             document_id = inputs["document"]["id"]
@@ -320,6 +326,82 @@ class RunResult:
         run = store.put(run_kind, lines)
         return _put_packet(store, text, back, self.receipt, document_source, None, run)
 
+    @classmethod
+    def load(cls, store: Store, packet: str) -> RunResult:
+        """Replay the run of the packet key ``packet`` from ``store``, with no model call (#429).
+
+        ``load`` gets the packet, its run record and each object that the record names by its
+        store key, and replays the run as ``read`` does, with the packs that the packet names.
+        The run header must name the inputs of the packet: the document id, source and text,
+        the schema, the policy and the references. The packet must have no judgments, because a
+        run has none. Each object must also have the run key of the record. The replayed
+        receipt and candidates must be those of the packet. A packet with no run, a record that
+        is not ``groundgate-run/5``, a packet of other inputs, a changed object or a replay that
+        differs raises ``ValueError``. An object that is not in the store raises ``InputGone``,
+        with the deletion if ``forget`` removed it.
+
+        The store bounds each read: ``FolderStore`` reads no object above its ``max_bytes``. The
+        record and its objects are held in memory together, so open the store with a smaller
+        ``max_bytes`` if the memory is small."""
+        from ..store import StoreError
+        from ..store.packets import InputGone, _get, load_packet
+
+        found = load_packet(store, packet)
+        if found.run is None:
+            raise ValueError(f"the packet {packet} names no run record")
+
+        def get(kind: str, k: str, what: str | None = None) -> str:
+            try:
+                data = _get(store, kind, k)
+            except InputGone:
+                raise
+            except StoreError as exc:
+                raise ValueError(f"{what}: {exc}" if what else str(exc)) from exc
+            try:
+                return data.decode("utf-8")
+            except UnicodeDecodeError as exc:
+                raise ValueError(f"the {kind} object {k} is not UTF-8") from exc
+
+        what = f"the run record {found.run} is not a {_VERSION} record"
+        data = get("run@" + _VERSION.rsplit("/", 1)[1], found.run, what)
+        try:
+            record = [_strict_json(line) for line in _lines(data.encode("utf-8"))]
+        except RecursionError as exc:
+            raise ValueError("a log line nests too deep") from exc
+        _same_inputs(record, found)
+        inputs, _ = _named(record)
+        artifacts: dict[str, str] = {}
+        seen: dict[str, str] = {}
+        for word, k, stored in _stored(record):
+            if seen.setdefault(k, stored) != stored:
+                raise ValueError(f"the log names two store keys for the object {k}")
+            if k in artifacts:
+                continue
+            body = get(_STORE_KINDS[word], stored)
+            if _hash(word, body) != k:
+                raise ValueError(f"the store object {stored} does not have the run key {k}")
+            artifacts[k] = body
+        try:
+            text = artifacts[inputs["document"]["sha256"]]
+            schema = _strict_json(artifacts[inputs["schema_sha256"]])
+            policy = _strict_json(artifacts[inputs["policy_sha256"]])
+            refs = [_strict_json(artifacts[h]) for h in inputs["reference_sha256"]]
+        except (KeyError, TypeError, IndexError, RecursionError) as exc:
+            raise ValueError("the log does not name its inputs") from exc
+        result = _replay(record, artifacts, text, schema, policy, refs, found.packs)
+        if isinstance(result, str):
+            raise ValueError(result)
+        # Canonical JSON compares the JSON types too: 1 and true are not equal (#520).
+        try:
+            same = jcs(result.receipt.to_dict()) == jcs(found.receipt) and jcs(
+                result.candidates
+            ) == jcs(found.candidates)
+        except (TypeError, ValueError, RecursionError) as exc:
+            raise ValueError("the packet has no canonical form") from exc
+        if not same:
+            raise ValueError("the packet names another receipt or other candidates than its run")
+        return result
+
 
 _KEY = re.compile(r"sha256:[0-9a-f]{64}")
 _OBJECT_KEYS = ("prompt_sha256", "reply_sha256", "admission_sha256")
@@ -351,6 +433,68 @@ def _named(record: Sequence[Mapping[str, Any]]) -> tuple[Json, list[str]]:
     if not all(isinstance(k, str) and _KEY.fullmatch(k) for k in keys):
         raise ValueError("the log names an object with a bad key")
     return cast(Json, inputs), keys
+
+
+def _stored(record: Sequence[Mapping[str, Any]]) -> list[tuple[str, str, str]]:
+    """The runner kind, the run key and the store key of each object that the record names
+    (#429). A ``groundgate-run/5`` record names each object by both keys."""
+    try:
+        inputs = record[0]["inputs"]
+        document = inputs["document"]
+        named = [
+            ("text", document["sha256"], document["key"]),
+            ("schema", inputs["schema_sha256"], inputs["schema_key"]),
+            ("policy", inputs["policy_sha256"], inputs["policy_key"]),
+            *(
+                ("reference", r, k)
+                for r, k in zip(inputs["reference_sha256"], inputs["reference_keys"], strict=True)
+            ),
+            *(
+                (word, line[f"{word}_sha256"], line[f"{word}_key"])
+                for line in record
+                for word in ("prompt", "reply", "admission")
+                if f"{word}_sha256" in line
+            ),
+        ]
+    except (KeyError, TypeError, IndexError, ValueError) as exc:
+        raise ValueError("the log does not name the store key of each object") from exc
+    if not all(isinstance(k, str) and _KEY.fullmatch(k) for _, *ks in named for k in ks):
+        raise ValueError("the log names an object with a bad key")
+    return named
+
+
+def _same_inputs(record: Sequence[Mapping[str, Any]], packet: Any) -> None:
+    """Raise ``ValueError`` if the run header does not name the inputs of the ``Packet``: the
+    document id, source and text, the schema, the policy and the references. A packet with
+    judgments fails too, because a run has none. The replay takes the packs of the packet, and
+    ``load`` compares the receipt and the candidates after the replay."""
+    _stored(record)  # the header has each key, in the format of a store key
+    inputs = record[0]["inputs"]
+    document = inputs["document"]
+    receipt = packet.receipt.get("document")
+    policy = Policy.from_dict({}).to_dict() if packet.policy is None else packet.policy
+    references = packet.references or []
+    try:
+        # Canonical JSON compares the JSON types too: 1 and true are not equal (#520).
+        named = [
+            jcs(_key("text", packet.text)) == jcs(document["key"]),
+            jcs(_key("schema", jcs(packet.schema))) == jcs(inputs["schema_key"]),
+            jcs(_key("policy", jcs(policy))) == jcs(inputs["policy_key"]),
+            jcs([_key("reference", jcs(r)) for r in references]) == jcs(inputs["reference_keys"]),
+            isinstance(receipt, dict) and jcs(receipt.get("id")) == jcs(document["id"]),
+            jcs(packet.document_source) == jcs(document["source"]),
+            # A run record holds no judgments, so the replay cannot give them.
+            jcs(packet.judgments) in ("null", "[]"),
+        ]
+    except (TypeError, ValueError, RecursionError, UnicodeError) as exc:
+        raise ValueError("the packet inputs have no canonical form") from exc
+    if not all(named):
+        raise ValueError("the packet names other inputs than its run record")
+
+
+def _key(kind: str, data: str) -> str:
+    """The store key of a runner object: its store kind over its UTF-8 bytes."""
+    return store_key(_STORE_KINDS[kind], data.encode("utf-8"))
 
 
 def _file(path: Path, limit: int) -> bytes:
@@ -638,10 +782,12 @@ class _Engine:
                     "id": document_id,
                     "source": document_source,
                     "sha256": self.put("text", text),
+                    "key": _key("text", text),
                 },
-                "schema_sha256": self.put("schema", jcs(schema.to_dict())),
-                "policy_sha256": self.put("policy", jcs(policy.to_dict())),
+                **self.named("schema", jcs(schema.to_dict())),
+                **self.named("policy", jcs(policy.to_dict())),
                 "reference_sha256": [self.put("reference", jcs(r)) for r in references],
+                "reference_keys": [_key("reference", jcs(r)) for r in references],
             },
         )
         self.tips: dict[str, Json] = {}
@@ -670,6 +816,11 @@ class _Engine:
         key = _hash(kind, data)
         self.artifacts[key] = data
         return key
+
+    def named(self, kind: str, data: str) -> Json:
+        """Keep ``data`` as an object, and give the members ``<kind>_sha256`` (the run key) and
+        ``<kind>_key`` (the store key) of the line that names it (#429)."""
+        return {f"{kind}_sha256": self.put(kind, data), f"{kind}_key": _key(kind, data)}
 
     def event(self, **body: Any) -> None:
         entries = self.record
@@ -725,14 +876,13 @@ class _Engine:
             self.event(kind="limit", phase=phase, fields=fields, status=status, **metadata)
             return None
         self.calls += 1
-        prompt_sha = self.put("prompt", prompt)
         body = {
             "kind": "call",
             "call": self.calls,
             "phase": phase,
             "fields": fields,
             "model_id": self.model_id,
-            "prompt_sha256": prompt_sha,
+            **self.named("prompt", prompt),
             **metadata,
         }
         try:
@@ -751,8 +901,7 @@ class _Engine:
             self.complete = False
             self.event(**body, status="reply_encoding")
             return None
-        reply_sha = self.put("reply", raw)
-        body.update(reply_sha256=reply_sha, reply_bytes=len(encoded))
+        body.update(**self.named("reply", raw), reply_bytes=len(encoded))
         if len(encoded) > self.settings.max_reply_bytes:
             self.complete = False
             self.event(**body, status="reply_limit")
@@ -815,7 +964,7 @@ class _Engine:
             causes = {d.candidate_id: self.field_causes(d) for d in receipt.decisions}
             self.event(
                 kind="final_admission",
-                admission_sha256=self.put("admission", jcs(body)),
+                **self.named("admission", jcs(body)),
                 receipt_sha256=receipt.receipt_sha256,
                 **(
                     {"field_causes": {k: v for k, v in causes.items() if v}}
@@ -850,9 +999,7 @@ class _Engine:
                     reverted_candidate_ids=reverted,
                 )
                 return False
-            self.event(
-                kind="admission", phase=phase, admission_sha256=self.put("admission", jcs(body))
-            )
+            self.event(kind="admission", phase=phase, **self.named("admission", jcs(body)))
             self.admission_bytes += size
         self.receipt = receipt
         self.last_candidates = candidates
@@ -1532,7 +1679,7 @@ class _Engine:
         body = {"candidates": candidates, "receipt": self.receipt.to_dict()}
         self.event(
             kind="rounding",
-            admission_sha256=self.put("admission", jcs(body)),
+            **self.named("admission", jcs(body)),
             dropped=[
                 {
                     "candidate_id": cid,

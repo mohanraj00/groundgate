@@ -488,6 +488,10 @@ tag (`text`, `schema`, `policy`, `reference`, `prompt`, `reply`, `admission`). R
 cover exact UTF-8 bytes, including whitespace. Prompt digests cover the exact string given to
 `client`, encoded as UTF-8. Schema, policy, reference and admission objects are canonical JSON.
 Client errors have no reply digest.
+Each line that names an object by its run key also names it by its store key of
+[store.md](store.md) §4 (#429): `key` beside the text `sha256`, `schema_key`, `policy_key`,
+`reference_keys`, `prompt_key`, `reply_key` and `admission_key`. Replay calculates the store
+keys again from the bytes, so a record with another store key does not replay.
 
 Runner digests use their own prefix, `groundgate-run/5:<kind>` followed by a zero byte and the
 object bytes. They do not reuse the core `digest()`, whose prefix names the spec version, so the
@@ -515,9 +519,17 @@ object with the bytes of `run.jsonl`, then the final inputs, the receipt and a `
 whose `run` names the record. It writes only the objects that the record names, and it saves a
 run that is not complete too. Before the first write, it checks each object against its key and
 runs `admit` again on the stored inputs. If that gives another receipt, it raises before it
-writes. A store error during the writes can leave objects that no packet names. The record
-keeps its runner keys, so a store cannot replay the run yet: the store keys come with
-`groundgate-run/5` too (#429), in 0.13. `RunResult.read(folder)` stays the replay path.
+writes. A store error during the writes can leave objects that no packet names. It also
+raises if the record names another store key than the key of an object.
+`RunResult.load(store, packet)` replays a run from its packet key alone, with no model call
+(#429). It gets the packet, the `run@5` record that the packet names and each object by the store
+key in the record, and each object must also have the run key of the record. The run header
+must name the inputs of the packet: the document id, source and text, the schema, the policy and
+the references. The packet must have no judgments, because a run has none. It takes the packs
+that the packet names, replays the run as `read` does and compares the receipt and the
+candidates with the packet. The store bounds each read, so open a `FolderStore` with a smaller
+`max_bytes` to use less memory. An object that `forget` removed raises `InputGone` with the
+deletion. A record of `groundgate-run/4` or earlier has no store keys and does not load.
 
 Two fields are reserved for the document model (#285), so that a later reader output needs no
 new log format. An input of `kind: "document"` will name an extracted document and its reader
