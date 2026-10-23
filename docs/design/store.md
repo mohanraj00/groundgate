@@ -170,8 +170,8 @@ Each path part is a 64-digit hex digest or a fixed word.
 
 A record of `logs/deleted.jsonl` names one deletion. An object deletion is
 `{"key": "sha256:...", "reason": "...", "time": "2026-10-20T09:30:00Z"}`, and a log deletion has
-`"log"` in place of `"key"`. For a `prompt@1`, `reply@1` or `admission@1` object,
-`groundgate store forget` adds `"run_keys": ["sha256:..."]`: the key of the object in a run
+`"log"` in place of `"key"`. For a `document@1` (#508), `prompt@1`, `reply@1` or `admission@1`
+object, `groundgate store forget` adds `"run_keys": ["sha256:..."]`: the key of the object in a run
 record, for each runner version of a run record in the store (section 8). The `forget(key,
 reason)` operation of section 6 does not add them, because it does not read the run records.
 `FolderStore.forget` takes them as an option. Each record also has `sequence`, `previous` and

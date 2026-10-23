@@ -338,8 +338,8 @@ class FolderStore:
 
     def forget(self, key: str, reason: str, *, run_keys: Sequence[str] = ()) -> None:
         """Remove an object, and record the key, the time and the reason in the deleted log.
-        ``run_keys`` names the keys of a prompt, reply or admission in the run records of the
-        store, and the record holds them sorted (§7.1). ``forget`` does not find them itself:
+        ``run_keys`` names the keys of a document, prompt, reply or admission in the run records
+        of the store, and the record holds them sorted (§7.1). ``forget`` does not find them itself:
         ``groundgate store forget`` (``maintain.forget_packet``) gives them. With no run keys,
         the record has no ``run_keys`` member. The record comes first. After a crash between
         the two steps, the object is still there, and a second ``forget`` adds a second record

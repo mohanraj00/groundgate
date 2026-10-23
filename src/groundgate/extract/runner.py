@@ -15,7 +15,7 @@ from collections.abc import Callable, Iterator, Mapping, Sequence
 from dataclasses import asdict, dataclass, replace
 from decimal import Decimal, InvalidOperation
 from fractions import Fraction
-from itertools import chain
+from itertools import chain, islice
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, cast
 
@@ -24,6 +24,7 @@ from ..canonical import SPEC_VERSION, jcs
 from ..codes import INFO
 from ..feedback import feedback_message
 from ..model import Decision, PacketError, Policy, Receipt, Schema, extractor_schema
+from ..read.document import Document, DocumentError, Node
 from ..text import canonical, quote_pattern, tokens
 
 if TYPE_CHECKING:
@@ -31,7 +32,8 @@ if TYPE_CHECKING:
 
 Json = dict[str, Any]
 # groundgate-run/5 (#494): the search leaves out common words, and a cut that keeps every match
-# does not truncate the search.
+# does not truncate the search. run/5 also takes a document (#508): the header names it in an
+# input of kind "document", the chunks hold whole nodes, and a reply can cite a node.
 # groundgate-run/4 (#466): the search leaves English function words out of the word queries.
 # groundgate-run/3 (#382): the search cuts large regions, and a second sweep can follow
 # `search_limit`. groundgate-run/2 (#318, #319) had a new prompt, field item causes and rounding
@@ -237,9 +239,10 @@ class RunResult:
             schema = _strict_json(artifacts[inputs["schema_sha256"]])
             policy = _strict_json(artifacts[inputs["policy_sha256"]])
             refs = [_strict_json(artifacts[h]) for h in inputs["reference_sha256"]]
+            document = _saved_document(inputs["document"], artifacts, text)
         except (KeyError, TypeError, IndexError, RecursionError) as exc:
             raise ValueError("the log does not name its inputs") from exc
-        result = _replay(record, artifacts, text, schema, policy, refs, packs)
+        result = _replay(record, artifacts, document or text, schema, policy, refs, packs)
         if isinstance(result, str):
             raise ValueError(result)
         return result
@@ -247,8 +250,9 @@ class RunResult:
     def save(self, store: Store, packs: Sequence[object] = ()) -> str:
         """Write the run into ``store`` (docs/design/store.md §9), and return the packet key.
 
-        ``save`` writes each object of the run as its store kind (``text@1``, ``schema@1``,
-        ``policy@1``, ``reference@1``, ``prompt@1``, ``reply@1``, ``admission@1``), then the
+        ``save`` writes each object of the run as its store kind (``text@1``, ``document@1``,
+        ``schema@1``, ``policy@1``, ``reference@1``, ``prompt@1``, ``reply@1``, ``admission@1``),
+        then the
         record as one ``run@5`` object, then the final inputs, the receipt and a ``packet@1``
         object that names the record. The record bytes are the bytes of ``run.jsonl`` from
         ``write``. The record keeps its ``groundgate-run/5`` keys, so the store cannot replay
@@ -277,6 +281,11 @@ class RunResult:
                 raise ValueError(f"the artifact {k} does not match its key")
             kinds[k] = _STORE_KINDS[kind]
         try:
+            if inputs["document"]["kind"] == "document":
+                # The header names the store key of the document too (#508).
+                body = self.artifacts[inputs["document"]["document_sha256"]]
+                if _document_key(body) != inputs["document"]["document_key"]:
+                    raise ValueError("the log names another store key for the document")
             text = self.artifacts[inputs["document"]["sha256"]]
             document_id = inputs["document"]["id"]
             document_source = inputs["document"]["source"]
@@ -326,6 +335,7 @@ _OBJECT_KEYS = ("prompt_sha256", "reply_sha256", "admission_sha256")
 # The store kind of each runner kind (docs/design/store.md §4).
 _STORE_KINDS = {
     "text": "text@1",
+    "document": "document@1",
     "schema": "schema@1",
     "policy": "policy@1",
     "reference": "reference@1",
@@ -339,8 +349,10 @@ def _named(record: Sequence[Mapping[str, Any]]) -> tuple[Json, list[str]]:
     """The header inputs of a record and the key of each object that the record names."""
     try:
         inputs = record[0]["inputs"]
+        document = inputs["document"]
         keys = [
-            inputs["document"]["sha256"],
+            document["sha256"],
+            *([document["document_sha256"]] if document["kind"] == "document" else []),
             inputs["schema_sha256"],
             inputs["policy_sha256"],
             *inputs["reference_sha256"],
@@ -351,6 +363,30 @@ def _named(record: Sequence[Mapping[str, Any]]) -> tuple[Json, list[str]]:
     if not all(isinstance(k, str) and _KEY.fullmatch(k) for k in keys):
         raise ValueError("the log names an object with a bad key")
     return cast(Json, inputs), keys
+
+
+def _document_key(body: str) -> str:
+    """The store key of a ``document@1`` object (docs/design/store.md §4)."""
+    from ..store import key
+
+    return key("document@1", body.encode("utf-8"))
+
+
+def _saved_document(named: Json, artifacts: Mapping[str, str], text: str) -> Document | None:
+    """The document of a header input of kind ``document``, or None for the kind ``text``. The
+    object is untrusted, so the loader checks it against the text."""
+    if named["kind"] != "document":
+        return None
+    return Document.from_dict(_strict_json(artifacts[named["document_sha256"]]), text)
+
+
+def _checked(document: Document) -> Document:
+    """A copy of ``document`` that the run owns, checked as the loader checks an untrusted object,
+    with its text against the text key (docs/design/document-model.md §10, §12)."""
+    try:
+        return Document.from_dict(document.to_dict(), document.text)
+    except (DocumentError, KeyError, TypeError) as exc:
+        raise ExtractInputError(f"the document is not valid: {exc}") from None
 
 
 def _file(path: Path, limit: int) -> bytes:
@@ -402,22 +438,139 @@ def _hash(kind: str, obj: Any) -> str:
     return "sha256:" + hashlib.sha256(f"{_VERSION}:{kind}\0".encode() + data.encode()).hexdigest()
 
 
-def _chunks(text: str, settings: RunPolicy) -> list[tuple[int, int]]:
-    chunks = []
-    start = 0
-    while start < len(text):
-        end = min(len(text), start + settings.chunk_chars)
-        if end < len(text):
+def _windows(text: str, lo: int, hi: int, settings: RunPolicy) -> Iterator[tuple[int, int]]:
+    """The character windows of [lo, hi): at most ``chunk_chars`` code points each, with
+    ``overlap_chars`` of overlap. A window ends at the last line break in its second half."""
+    start = lo
+    while start < hi:
+        end = min(hi, start + settings.chunk_chars)
+        if end < hi:
             newline = text.rfind("\n", start + (end - start) // 2, end)
             if newline >= 0:
                 end = newline + 1
-        chunks.append((start, end))
+        yield start, end
+        if end == hi:
+            return
+        start = max(start + 1, end - settings.overlap_chars)
+
+
+def _chunks(text: str, settings: RunPolicy) -> list[tuple[int, int]]:
+    chunks = []
+    for chunk in _windows(text, 0, len(text), settings):
+        chunks.append(chunk)
         if len(chunks) > settings.max_calls:
             raise ExtractInputError("initial chunks exceed max_calls")
-        if end == len(text):
-            break
-        start = max(start + 1, end - settings.overlap_chars)
     return chunks
+
+
+# One initial chunk: its span and the spans of its context regions, in code points.
+_Chunk = tuple[tuple[int, int], list[tuple[int, int]]]
+
+
+def _plan(text: str, document: Document | None, settings: RunPolicy) -> list[_Chunk]:
+    """The initial chunks. A document with nodes gives node chunks; text, or a document with no
+    nodes, gives the character windows."""
+    if document is None or not document.nodes:
+        return [(chunk, []) for chunk in _chunks(text, settings)]
+    return _NodePlan(text, document, settings).chunks
+
+
+def _header_rows(document: Document, table: Node) -> tuple[int, int] | None:
+    """The UTF-8 byte span of the header rows of a table: the rows at its start in which each
+    cell is a header cell. None when the first row is not such a row."""
+    rows = document.children(table.id)
+    count = 0
+    for row in rows:
+        cells = document.children(row.id)
+        if not cells or not all(c.header is True for c in cells):
+            break
+        count += 1
+    return (rows[0].start, rows[count - 1].end) if count else None
+
+
+class _NodePlan:
+    """The node chunks of the first pass (docs/design/document-model.md §10). The plan packs
+    whole top-level nodes into chunks of at most ``chunk_chars`` code points, in text order. A
+    node that is too large splits at its children, and a table splits between its rows. A row
+    or a node with no children that is too large falls back to the character window. A part of
+    a table also sends the header rows of the table as a context region, and each chunk sends
+    each heading above it as a context region. The text between two nodes goes with the node
+    before it, and the text before the first node goes with the first node."""
+
+    def __init__(self, text: str, document: Document, settings: RunPolicy) -> None:
+        self.text, self.document, self.settings = text, document, settings
+        self.chars = _ByteOffsets(text).to_chars
+        top = [n for n in document.nodes if n.parent is None]
+        self.headings = [
+            (self.chars(n.start), self.chars(n.end), cast(int, n.level))
+            for n in top
+            if n.kind == "heading"
+        ]
+        self.heading_starts = [h[0] for h in self.headings]
+        self.chunks: list[_Chunk] = []
+        self.pack(0, len(text), top, None)
+
+    def pack(self, lo: int, hi: int, nodes: list[Node], header: tuple[int, int] | None) -> None:
+        if not nodes:
+            self.window(lo, hi, header)
+            return
+        cuts = [lo, *(self.chars(n.start) for n in nodes[1:]), hi]
+        group: tuple[int, int] | None = None
+        for node, a, b in zip(nodes, cuts, cuts[1:], strict=False):
+            if b - a > self.settings.chunk_chars:
+                if group is not None:
+                    self.emit(*group, header)
+                    group = None
+                self.split(node, a, b, header)
+            elif group is not None and b - group[0] <= self.settings.chunk_chars:
+                group = (group[0], b)
+            else:
+                if group is not None:
+                    self.emit(*group, header)
+                group = (a, b)
+        if group is not None:
+            self.emit(*group, header)
+
+    def split(self, node: Node, a: int, b: int, header: tuple[int, int] | None) -> None:
+        children = self.document.children(node.id)
+        if node.kind == "table":
+            rows = _header_rows(self.document, node)
+            span = None if rows is None else (self.chars(rows[0]), self.chars(rows[1]))
+            self.pack(a, b, children, span)
+        elif node.kind == "row" or not children:
+            self.window(a, b, header)
+        else:
+            self.pack(a, b, children, None)
+
+    def window(self, lo: int, hi: int, header: tuple[int, int] | None) -> None:
+        for a, b in _windows(self.text, lo, hi, self.settings):
+            self.emit(a, b, header)
+
+    def emit(self, a: int, b: int, header: tuple[int, int] | None) -> None:
+        context = self.above(a)
+        if header is not None and a >= header[1]:
+            context.append(header)
+        self.chunks.append(((a, b), context))
+        if len(self.chunks) > self.settings.max_calls:
+            raise ExtractInputError("initial chunks exceed max_calls")
+
+    def above(self, at: int) -> list[tuple[int, int]]:
+        """The spans of the top-level headings whose sections hold the position ``at``, in text
+        order. A heading at ``at`` is in the chunk, so only headings of a lower level number
+        than it are above it."""
+        i = bisect_left(self.heading_starts, at)
+        level = 7
+        if i < len(self.headings) and self.headings[i][0] == at:
+            level = self.headings[i][2]
+        out = []
+        while i > 0 and level > 1:
+            i -= 1
+            start, end, own = self.headings[i]
+            if own < level:
+                level = own
+                if end <= at:
+                    out.append((start, end))
+        return out[::-1]
 
 
 def _word(word: str) -> bool:
@@ -461,6 +614,7 @@ class _ByteOffsets:
     def __init__(self, text: str) -> None:
         self.positions: array[int] = array("Q")
         self.extras: array[int] = array("Q")
+        self.starts: array[int] | None = None  # the byte start of each multibyte character
         extra = 0
         if not text.isascii():
             for index, char in enumerate(text):
@@ -472,6 +626,15 @@ class _ByteOffsets:
     def to_bytes(self, offset: int) -> int:
         count = bisect_left(self.positions, offset)
         return offset + (self.extras[count - 1] if count else 0)
+
+    def to_chars(self, offset: int) -> int:
+        """The code-point offset of a UTF-8 byte offset on a character boundary."""
+        if self.starts is None:
+            self.starts = array(
+                "Q", (p + (self.extras[i - 1] if i else 0) for i, p in enumerate(self.positions))
+            )
+        count = bisect_left(self.starts, offset)
+        return offset - (self.extras[count - 1] if count else 0)
 
 
 @dataclass(frozen=True)
@@ -549,7 +712,43 @@ def _by_role(evidence: list[Json]) -> dict[str, list[Json]]:
     return roles
 
 
-def _shape(candidate: Any, fields: set[str], refs: set[str]) -> None:
+class _Citations:
+    """The node citations of a run on a document (docs/design/document-model.md §10)."""
+
+    def __init__(self, document: Document) -> None:
+        self.nodes = document.nodes
+        self.data = document.text.encode("utf-8")
+
+    def span(self, item: Json) -> tuple[int, int]:
+        """The UTF-8 byte span that an evidence item with ``node`` names. With ``text``, the one
+        place of the quote in the node, with the quote rules of SPEC §4.6. Without it, the span
+        of the node, which must be a cell with text. Raises ``ValueError`` for an unknown id, a
+        quote that is not exactly once in the node, or ``node`` alone on another node."""
+        number = item["node"]
+        if isinstance(number, bool) or not isinstance(number, int):
+            raise ValueError("a node id is an integer")
+        if not 0 <= number < len(self.nodes):
+            raise ValueError("unknown node")
+        node = self.nodes[number]
+        if "text" not in item:
+            if node.kind != "cell" or node.start == node.end:
+                raise ValueError("a node with no quote must be a cell with text")
+            return node.start, node.end
+        quote = item["text"]
+        if not isinstance(quote, str) or not quote.strip():
+            raise ValueError("evidence text")
+        body = self.data[node.start : node.end].decode("utf-8")
+        found = list(islice(quote_pattern(quote).finditer(body), 2))
+        if len(found) != 1:
+            raise ValueError("the quote is not exactly once in the node")
+        match = found[0]
+        start = node.start + len(body[: match.start()].encode("utf-8"))
+        return start, start + len(match[0].encode("utf-8"))
+
+
+def _shape(
+    candidate: Any, fields: set[str], refs: set[str], citations: _Citations | None = None
+) -> None:
     if not isinstance(candidate, dict) or set(candidate) != {
         "field",
         "value",
@@ -571,12 +770,18 @@ def _shape(candidate: Any, fields: set[str], refs: set[str]) -> None:
             raise ValueError("evidence item")
         source = item.get("source")
         keys = {"source", "role", "text", *(["ref"] if source == "reference" else [])}
+        if citations is not None and source == "document" and "node" in item:
+            # A node citation: `node` with `text`, or `node` alone for a cell (#508).
+            keys = {"source", "role", "node", *(["text"] if "text" in item else [])}
         if set(item) != keys or source not in {"document", "reference"}:
             raise ValueError("evidence members or source")
         if not isinstance(item["role"], str) or item["role"] not in _ROLES:
             raise ValueError("evidence role")
-        if not isinstance(item["text"], str):
+        if "text" in item and not isinstance(item["text"], str):
             raise ValueError("evidence text")
+        if "node" in item:
+            assert citations is not None
+            citations.span(item)
         if source == "reference" and (not isinstance(item["ref"], str) or item["ref"] not in refs):
             raise ValueError("unknown reference")
 
@@ -616,8 +821,11 @@ class _Engine:
         document_source: str | None,
         references: list[Json],
         empty: Receipt,
+        document: Document | None = None,
     ) -> None:
         self.text, self.schema, self.policy = text, schema, policy
+        self.document = document
+        self.citations = None if document is None else _Citations(document)
         self.settings, self.client, self.model_id = settings, client, model_id
         self.document_id, self.document_source = document_id, document_source
         self.references = references
@@ -625,6 +833,21 @@ class _Engine:
         self.offsets = {name: _ByteOffsets(body) for name, body in self.sources.items()}
         self.record: list[Json] = []
         self.artifacts: dict[str, str] = {}
+        named: Json = {
+            "kind": "text",
+            "id": document_id,
+            "source": document_source,
+            "sha256": self.put("text", text),
+        }
+        if document is not None:
+            # A document input names the document object and its reader (#508).
+            body = document.to_json().decode("utf-8")
+            named.update(
+                kind="document",
+                document_sha256=self.put("document", body),
+                document_key=_document_key(body),
+                reader=document.reader,
+            )
         self.event(
             kind="header",
             runner=_VERSION,
@@ -632,13 +855,7 @@ class _Engine:
             model_id=model_id,
             settings=asdict(settings),
             inputs={
-                # "text" today; the document model (#285) adds the kind "document"
-                "document": {
-                    "kind": "text",
-                    "id": document_id,
-                    "source": document_source,
-                    "sha256": self.put("text", text),
-                },
+                "document": named,
                 "schema_sha256": self.put("schema", jcs(schema.to_dict())),
                 "policy_sha256": self.put("policy", jcs(policy.to_dict())),
                 "reference_sha256": [self.put("reference", jcs(r)) for r in references],
@@ -761,7 +978,8 @@ class _Engine:
             parsed = _strict_json(raw)
             if phase == "repair":
                 if not _repair_not_found(parsed):
-                    _shape(parsed, set(fields), {r["id"] for r in self.references})
+                    refs = {r["id"] for r in self.references}
+                    _shape(parsed, set(fields), refs, self.citations)
             else:
                 self.envelope(parsed, fields)
         except (ValueError, TypeError, OverflowError, RecursionError, UnicodeError):
@@ -784,7 +1002,7 @@ class _Engine:
         ):
             raise ValueError("reply envelope")
         for candidate in candidates:
-            _shape(candidate, set(fields), {r["id"] for r in self.references})
+            _shape(candidate, set(fields), {r["id"] for r in self.references}, self.citations)
         proposed = {c["field"] for c in candidates}
         if proposed & set(missing) or proposed | set(missing) != set(fields):
             raise ValueError("incomplete field accounting")
@@ -865,7 +1083,19 @@ class _Engine:
 
     def adapt(self, candidate: Json, regions: list[Json], targeted: bool) -> Json:
         candidate = copy.deepcopy(candidate)
-        value = next((e for e in candidate["evidence"] if e["role"] == "value"), None)
+        evidence = candidate["evidence"]
+        for i, item in enumerate(evidence):
+            if "node" in item:
+                # A node citation becomes a span: admit sees only offsets (#508).
+                assert self.citations is not None
+                start, end = self.citations.span(item)
+                evidence[i] = {
+                    "source": "document",
+                    "role": item["role"],
+                    "start": start,
+                    "end": end,
+                }
+        value = next((e for e in evidence if e["role"] == "value"), None)
         if value is None:
             doc = next((r for r in regions if r["source"] == "document"), None)
             if doc:
@@ -875,6 +1105,16 @@ class _Engine:
         permitted = [r for r in regions if r["source"] == source]
         if not permitted:
             raise ValueError("source outside prompt")
+        if "start" in value:
+            # A cited node: the first region of the prompt that holds its span.
+            held = (
+                r for r in permitted if r["start"] <= value["start"] and value["end"] <= r["end"]
+            )
+            region = next(held, None)
+            if region is None:
+                raise ValueError("node outside prompt")
+            candidate["search_region"] = {"start": region["start"], "end": region["end"]}
+            return candidate
         selected = permitted[0]
         match: re.Match[str] | None = None
         if targeted:
@@ -1004,6 +1244,7 @@ class _Engine:
         cut_regions: list[Json] = []
         cut_matches = 0
         size = self.settings.max_region_chars
+        headers: set[tuple[int, int]] = set()
         for source_order, (source, spans) in enumerate(windows.items()):
             # Each merged region keeps its best match: the best rank, then the first position.
             # A merged region also keeps the spans of all its matches, for the cut (#494).
@@ -1023,8 +1264,12 @@ class _Engine:
                     # A large region is cut to a window around its best match, not dropped.
                     middle = (match_start + match_end) // 2
                     left = min(max(start, middle - size // 2), end - size)
+                    right = left + size
+                    header = None
+                    if self.document is not None and source == "document":
+                        left, right, header = self.snap(left, right, start, end)
                     # A cut that keeps every match keeps less context, but loses no match.
-                    lost = sum(1 for a, b in found if a < left or b > left + size)
+                    lost = sum(1 for a, b in found if a < left or b > right)
                     cut_matches += lost
                     cut_regions.append(
                         {
@@ -1032,11 +1277,15 @@ class _Engine:
                             "start": self.offsets[source].to_bytes(start),
                             "end": self.offsets[source].to_bytes(end),
                             "kept_start": self.offsets[source].to_bytes(left),
-                            "kept_end": self.offsets[source].to_bytes(left + size),
+                            "kept_end": self.offsets[source].to_bytes(right),
                             "cut_matches": lost,
                         }
                     )
-                    start, end = left, left + size
+                    start, end = left, right
+                    if header is not None and header not in headers:
+                        # The header rows of the table go as a region of the same rank (#508).
+                        headers.add(header)
+                        ranked.append((rank, source_order, *header, source))
                 ranked.append((rank, source_order, start, end, source))
         ranked.sort()
         selected = ranked[: self.settings.max_target_regions]
@@ -1084,6 +1333,45 @@ class _Engine:
             self.states[name].append(status)
             self.event(kind="not_found", phase="targeted", field=name, status=status)
         return retained, [] if retained else ranked
+
+    def snap(
+        self, left: int, right: int, lo: int, hi: int
+    ) -> tuple[int, int, tuple[int, int] | None]:
+        """Move the ends of a cut region to the nearest row boundary inside the merged region
+        [lo, hi), or to the nearest cell boundary when no row boundary is inside it. Also give
+        the span of the header rows of the table at its start when the cut region does not hold
+        them (docs/design/document-model.md §10). The offsets are code points."""
+        document = self.document
+        assert document is not None
+        offsets = self.offsets["document"]
+
+        def holder(at: int, kind: str) -> Node | None:
+            byte = offsets.to_bytes(at)
+            node = document.at(byte, byte)
+            while node is not None and node.kind != kind:
+                node = None if node.parent is None else document.nodes[node.parent]
+            return node
+
+        def boundary(at: int) -> int:
+            row = holder(at, "row")
+            if row is None or not row.start < offsets.to_bytes(at) < row.end:
+                return at
+            # A row boundary keeps whole rows. A cell boundary is the second choice.
+            cells = [x for c in document.children(row.id) for x in (c.start, c.end)]
+            for marks in ((row.start, row.end), cells):
+                places = [c for c in map(offsets.to_chars, marks) if lo <= c <= hi]
+                if places:
+                    return min(places, key=lambda c: (abs(c - at), c))
+            return at
+
+        new_left, new_right = boundary(left), boundary(right)
+        if new_left < new_right:
+            left, right = new_left, new_right
+        table = holder(left, "table")
+        rows = None if table is None else _header_rows(document, table)
+        if rows is None or offsets.to_bytes(left) < rows[1]:
+            return left, right, None
+        return left, right, (offsets.to_chars(rows[0]), offsets.to_chars(rows[1]))
 
     def sweep(self, name: str, pool: list[tuple[int, int, int, int, str]]) -> bool | None:
         """The second sweep (#382): no region of the first sweep fit the prompt. Send the ranked
@@ -1348,13 +1636,21 @@ class _Engine:
 
     def execute(self) -> RunResult:
         fields = sorted(self.schema.fields)
-        chunks = _chunks(self.text, self.settings)
+        chunks = _plan(self.text, self.document, self.settings)
         refs = [
             self.region(name, 0, len(text))
             for name, text in self.sources.items()
             if name != "document"
         ]
-        contexts = [[self.region("document", start, end), *refs] for start, end in chunks]
+        # The chunk comes first, then its context regions (#508), then the references.
+        contexts = [
+            [
+                self.region("document", start, end),
+                *(self.region("document", a, b) for a, b in context),
+                *refs,
+            ]
+            for (start, end), context in chunks
+        ]
         if not contexts and refs:
             contexts = [refs]
         # Validate every initial request before the first call, retaining one prompt at a time.
@@ -1575,7 +1871,7 @@ class _Engine:
 
 
 def _run(
-    text: str,
+    text: str | Document,
     schema: Schema | Mapping[str, Any],
     *,
     client: Callable[[str], str],
@@ -1589,6 +1885,10 @@ def _run(
     packs: Sequence[object] = (),
 ) -> RunResult:
     """Validate inputs, with an optional replay-only allocation ceiling."""
+    document = None
+    if isinstance(text, Document):
+        document = _checked(text)
+        text = document.text
     if not callable(client) or not isinstance(model_id, str) or not model_id.strip():
         raise ExtractInputError("client must be callable and model_id non-blank")
     settings = RunPolicy() if run_policy is None else run_policy
@@ -1626,7 +1926,17 @@ def _run(
     if not s.fields:
         raise ExtractInputError("schema must request at least one field")
     engine = _Engine(
-        text, s, p, settings, client, model_id, document_id, document_source, valid_refs, empty
+        text,
+        s,
+        p,
+        settings,
+        client,
+        model_id,
+        document_id,
+        document_source,
+        valid_refs,
+        empty,
+        document,
     )
     if replay_ceiling is not None:
         engine.candidate_limit = min(engine.candidate_limit, replay_ceiling)
@@ -1641,7 +1951,7 @@ def _run(
 
 
 def extract(
-    text: str,
+    text: str | Document,
     schema: Schema | Mapping[str, Any],
     *,
     client: Callable[[str], str],
@@ -1654,7 +1964,11 @@ def extract(
     packs: Sequence[object] = (),
 ) -> RunResult:
     """Extract and constrain repairs; return final admission and the complete replay record.
-    ``packs`` take the same form as in ``admit`` (SPEC §4.8, §4.9)."""
+    ``packs`` take the same form as in ``admit`` (SPEC §4.8, §4.9).
+
+    ``text`` is the NFC text, or a ``Document`` of ``groundgate.read.document``. The runner
+    checks a document as the loader does, and uses its text. The chunks then hold whole nodes,
+    and a reply can cite a node (docs/design/document-model.md §10)."""
     return _run(
         text,
         schema,
@@ -1672,14 +1986,15 @@ def extract(
 def replay(
     record: Sequence[Mapping[str, Any]],
     artifacts: Mapping[str, str],
-    text: str,
+    text: str | Document,
     schema: Schema | Mapping[str, Any],
     policy: Policy | Mapping[str, Any] | None = None,
     references: Sequence[object] | None = None,
     packs: Sequence[object] = (),
 ) -> Verification:
     """Rebuild a saved run with recorded replies and compare every entry, without a model.
-    ``packs`` are the packs that the run read."""
+    ``packs`` are the packs that the run read. ``text`` is the ``Document`` of a run on a
+    document."""
     result = _replay(record, artifacts, text, schema, policy, references, packs)
     return Verification(False, (result,)) if isinstance(result, str) else Verification(True, ())
 
@@ -1687,7 +2002,7 @@ def replay(
 def _replay(
     record: Sequence[Mapping[str, Any]],
     artifacts: Mapping[str, str],
-    text: str,
+    text: str | Document,
     schema: Schema | Mapping[str, Any],
     policy: Policy | Mapping[str, Any] | None,
     references: Sequence[object] | None,
@@ -1733,13 +2048,16 @@ def _replay(
             for c in chunks
         ):
             raise ValueError("invalid recorded chunk plan")
-        planned = _chunks(
-            text, replace(settings, max_calls=min(settings.max_calls, evidence_bound))
-        )
-        offsets = _ByteOffsets(text)
+        document = _checked(text) if isinstance(text, Document) else None
+        if (document is None) != (header["inputs"]["document"]["kind"] == "text"):
+            raise ValueError("a run on a document replays with its document")
+        body = document.text if document is not None else cast(str, text)
+        bound = replace(settings, max_calls=min(settings.max_calls, evidence_bound))
+        planned = _plan(body, document, bound)
+        offsets = _ByteOffsets(body)
         expected = [
             {"source": "document", "start": offsets.to_bytes(a), "end": offsets.to_bytes(b)}
-            for a, b in planned
+            for (a, b), _ in planned
         ]
         if chunks != expected:
             raise ValueError("recorded chunk plan differs")
@@ -1769,7 +2087,7 @@ def _replay(
             return artifacts[call["reply_sha256"]]
 
         result = _run(
-            text,
+            text if document is None else document,
             schema,
             client=client,
             model_id=header["model_id"],
