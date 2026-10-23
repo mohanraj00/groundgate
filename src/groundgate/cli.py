@@ -651,6 +651,13 @@ def _review_resolve(args: argparse.Namespace) -> int:
     return 0
 
 
+def _check_packet() -> Any:
+    """``check_packet``, imported only when batch admit takes ``--store``."""
+    from .store.packets import check_packet
+
+    return check_packet
+
+
 def _batch_admit(args: argparse.Namespace) -> int:
     for folder in (args.docs, args.batch_candidates, args.judgments):
         if folder is not None and not Path(folder).is_dir():
@@ -699,13 +706,14 @@ def _batch_admit(args: argparse.Namespace) -> int:
     documents: dict[str, Any] = {}
     outcomes = Counter({"admitted": 0, "needs_verification": 0, "rejected": 0})
     codes: Counter[str] = Counter()
+    decide = admit if args.store is None else _check_packet()  # with --store, the store checks too
     for path in paths:
         doc = path.stem
         try:
             candidates = _json(str(Path(args.batch_candidates) / f"{doc}.json"))
             judgments = _json(str(Path(args.judgments) / f"{doc}.json")) if args.judgments else None
             text = _text(str(path))
-            receipt = admit(
+            receipt = decide(
                 text,
                 schema,
                 candidates,
@@ -728,7 +736,7 @@ def _batch_admit(args: argparse.Namespace) -> int:
         codes.update(doc_codes)
 
     if args.store is not None:
-        # Each input is valid now, so the store gets packets only after the whole batch passed.
+        # check_packet passed for each document, so no packet is written before an input error.
         from .store.packets import admit_packet
 
         with _store(args.store, make=True) as store:

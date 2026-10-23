@@ -361,3 +361,17 @@ def test_batch_store_must_not_be_the_output_folder(
     args = _batch(tmp_path, {"a": [CANDIDATE]})
     assert main([*args, "--store", str(tmp_path / "out")]) == 2
     assert "--out must not be the same folder as --store" in capsys.readouterr().err
+
+
+def test_batch_store_canonical_change_writes_no_packet(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    store = tmp_path / "store"
+    args = _batch(tmp_path, {"a": [CANDIDATE], "z": [{**CANDIDATE, "value": 10.0}]})
+    assert main(args) == 0  # without the store, 10.0 is a valid input
+    capsys.readouterr()
+    (tmp_path / "out").rename(tmp_path / "plain")
+    assert main([*args, "--store", str(store)]) == 2
+    err = capsys.readouterr().err
+    assert "z.txt:" in err and "canonical JSON" in err
+    assert not store.exists() and not (tmp_path / "out").exists()
