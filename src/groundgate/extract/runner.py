@@ -1504,7 +1504,8 @@ class _Engine:
     ) -> tuple[int, int, tuple[int, int] | None]:
         """Move the ends of a cut region to the nearest row boundary inside the merged region
         [lo, hi), or to the nearest cell boundary when no row boundary is inside it. An end moves
-        only to a boundary that keeps the best match [match_start, match_end) inside the region;
+        only to a boundary that keeps the best match [match_start, match_end) inside the region
+        and the region within ``max_region_chars``;
         if no boundary keeps it, that end does not move. Also give
         the span of the header rows of the table at its start when the cut region does not hold
         them (docs/design/document-model.md §10). The offsets are code points."""
@@ -1531,8 +1532,10 @@ class _Engine:
                     return min(places, key=lambda c: (abs(c - at), c))
             return at
 
-        new_left = boundary(left, lambda c: c <= match_start)
-        new_right = boundary(right, lambda c: c >= match_end)
+        # The kept span never grows past max_region_chars (#527).
+        size = self.settings.max_region_chars
+        new_left = boundary(left, lambda c: c <= match_start and right - c <= size)
+        new_right = boundary(right, lambda c: c >= match_end and c - new_left <= size)
         if new_left < new_right:
             left, right = new_left, new_right
         table = holder(left, "table")

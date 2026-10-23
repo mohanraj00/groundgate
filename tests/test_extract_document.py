@@ -354,3 +354,26 @@ def test_the_left_end_of_a_cut_does_not_move_past_its_match(tmp_path: Path) -> N
 def test_the_right_end_of_a_cut_does_not_move_past_its_match(tmp_path: Path) -> None:
     _, sent = kept_match(tmp_path, ["other " * 50, "Revenue 5 " + "filler " * 50])
     assert "Revenue 5" in sent
+
+
+def test_a_snapped_cut_stays_within_max_region_chars(tmp_path: Path) -> None:
+    # The reproduction of the review of #527: snapping to the ends of one long row must not
+    # grow a 100-character window into the whole row.
+    cell = "filler " * 700 + "Revenue 5 " + "other " * 700
+    doc = document(tmp_path, f"<table><tr><th>Item</th></tr><tr><td>{cell}</td></tr></table>")
+    schema = {"fields": {"revenue": {"type": "integer"}}}
+    settings = {
+        "chunk_chars": 500,
+        "overlap_chars": 10,
+        "search_context_chars": 10000,
+        "max_region_chars": 100,
+        "max_prompt_chars": 6000,
+    }
+    client = Client()
+    result = run(doc, client, schema, **settings)
+    search = next(e for e in result.record if e["kind"] == "search")
+    (cut,) = search["cut_regions"]
+    assert cut["kept_end"] - cut["kept_start"] <= 100
+    assert search["status"] != "search_limit"
+    assert "Revenue 5" in " ".join(s["text"] for s in body(client.prompts[-1])["sources"])
+    assert replay(result.record, result.artifacts, doc, schema).ok

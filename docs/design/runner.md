@@ -363,14 +363,13 @@ regions are sent in document, reference-id and byte-start order for stable quote
 
 On a document with nodes, a cut moves each end of its kept span to the nearest row boundary
 inside the merged region, or to the nearest cell boundary when no row boundary is inside it
-(#508). An end moves only to a boundary that keeps the best match inside the kept span. If no
-boundary keeps it, that end stays where the window put it. An end that is not inside a row stays. The kept span can then be longer than
-`max_region_chars` by part of a row at each end. If the kept span starts in a table after its
-header rows, the header rows go into the pool as one more region, but only into the room that
-the match regions leave under `max_target_regions`. A context region never takes the place of a
-match region, and the prompt-size trim removes a context region first. Two cuts in one table add
-the header rows one time. `cut_regions` records the kept span
-after the move.
+(#508). An end moves only to a boundary that keeps the best match inside the kept span and keeps
+the kept span within `max_region_chars`. If no boundary does both, that end stays where the
+window put it. An end that is not inside a row stays. If the kept span starts in a table after
+its header rows, the header rows go into the pool as one more region, but only into the room
+that the match regions leave under `max_target_regions`. A context region never takes the place
+of a match region, and the prompt-size trim removes a context region first. Two cuts in one
+table add the header rows one time. `cut_regions` records the kept span after the move.
 
 The match-record cap does not cap the number of hits scanned. Each of at most 64 retained
 queries per missing field scans every supplied source to count all hits, including omitted
