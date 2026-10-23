@@ -12,11 +12,11 @@ import bisect
 import itertools
 import unicodedata
 from collections.abc import Iterable
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Any
 
-MAX_NODES = 2**20  # the loader refuses more; a reader stops at this number
-MAX_DEPTH = 256  # open elements; a reader stops to record nodes deeper than this
+MAX_NODES = 2**17  # the loader refuses more; a reader stops at this number (#521)
+MAX_DEPTH = 256  # open elements, and the depth of a node; a reader stops deeper than this
 MAX_SPAN = 1000  # a larger rowspan or colspan counts as this number
 GRID_BUDGET = 4_000_000  # grid steps for the table cells of one document
 MAX_COLUMNS = 2**14  # a table wider than this stops the reader
@@ -33,7 +33,7 @@ PARENTS: dict[str, frozenset[str | None]] = {
 }
 
 
-@dataclass
+@dataclass(slots=True)
 class Raw:
     """A node while a reader builds it. ``end`` is -1 until the node closes."""
 
@@ -43,7 +43,7 @@ class Raw:
     parent: int | None = None
     end: int = -1
     keep: bool = True
-    members: dict[str, Any] = field(default_factory=dict)
+    members: dict[str, Any] | None = None  # the level of a heading, the grid place of a cell
 
 
 class Tracker:
@@ -66,13 +66,13 @@ class Tracker:
     def open(self, tag: str, role: str, basis: str, members: dict[str, Any] | None = None) -> None:
         if self.stopped:
             return
-        if len(self.stack) >= MAX_DEPTH or len(self.nodes) >= 2 * MAX_NODES:
+        if len(self.stack) >= MAX_DEPTH or len(self.nodes) >= MAX_NODES:
             self.stopped = True  # the open nodes never close, so ``finish`` drops them
             return
         parent = self.stack[-1][1] if self.stack else None
         if parent is not None and self.nodes[parent].kind == "block":
             self.inner.add(parent)
-        node = Raw(role, basis, self.position(), parent, members=dict(members or {}))
+        node = Raw(role, basis, self.position(), parent, members=dict(members) if members else None)
         n = len(self.nodes)
         if role == "table":
             self.tables[n] = _Grid()
@@ -94,7 +94,8 @@ class Tracker:
         return None
 
     def _place(self, node: Raw) -> None:
-        rows, columns = node.members.pop("rows", 1), node.members.pop("columns", 1)
+        members = node.members = node.members or {}
+        rows, columns = members.pop("rows", 1), members.pop("columns", 1)
         table = self._nearest("table") if self._nearest("row") is not None else None
         if table is None:
             node.keep = False
@@ -106,7 +107,7 @@ class Tracker:
             self.stopped = True
             node.keep = False
             return
-        node.members.update(row=row, column=column, rows=rows, columns=columns)
+        members.update(row=row, column=column, rows=rows, columns=columns)
 
     def close(self, tag: str) -> None:
         """Close the innermost open ``tag`` and each element above it. An end tag with no open
@@ -173,7 +174,8 @@ def span_number(value: str | None) -> int:
     text = (value or "").strip()
     if not text.isascii() or not text.isdigit():
         return 1
-    return max(1, min(int(text[:5]), MAX_SPAN))
+    digits = text.lstrip("0")  # "0002" is 2; the cap applies to the value, not to the string
+    return max(1, min(int(digits[:5] or "0"), MAX_SPAN))
 
 
 class PageNodes:
@@ -264,36 +266,52 @@ def nfc_map(pre: str, positions: Iterable[int]) -> dict[int, int] | None:
 
 class Kept:
     """The parts of a writer's raw text that ``_Writer.result`` keeps, and the offset in the
-    result of each raw offset."""
+    result of each raw offset. ``result`` takes the spaces and tabs at the end of each line, and
+    the line breaks at the two ends of the text. Adjacent kept parts are one run."""
 
     def __init__(self, raw: str) -> None:
-        runs: list[tuple[int, int]] = []
-        pos = 0
-        for i, line in enumerate(raw.split("\n")):
-            if i:
-                runs.append((pos - 1, pos))  # the line break before this line
-            keep = len(line.rstrip(" \t"))
-            if keep:
-                runs.append((pos, pos + keep))
-            pos += len(line) + 1
-        while runs and raw[runs[0][0]] == "\n":
-            runs.pop(0)
-        while runs and raw[runs[-1][0]] == "\n":
-            runs.pop()
-        self.starts = [a for a, _ in runs]
-        self.runs = runs
+        starts: list[int] = []
+        ends: list[int] = []
+
+        def keep(a: int, b: int) -> None:
+            if a == b:
+                return
+            if ends and ends[-1] == a:
+                ends[-1] = b
+            else:
+                starts.append(a)
+                ends.append(b)
+
+        first = len(raw) - len(raw.lstrip(" \t\n"))  # blank lines at the start go
+        first = raw.rfind("\n", 0, first) + 1 if first else 0
+        pos = first
+        while pos <= len(raw):
+            stop = raw.find("\n", pos)
+            stop = len(raw) if stop < 0 else stop
+            line_end = pos + len(raw[pos:stop].rstrip(" \t"))
+            keep(pos, line_end)
+            if stop < len(raw):
+                keep(stop, stop + 1)  # the line break
+            pos = stop + 1
+        # the line breaks (and the blank lines) at the end go
+        while ends and raw[ends[-1] - 1] == "\n":
+            ends[-1] -= 1
+            if ends[-1] == starts[-1]:
+                starts.pop()
+                ends.pop()
+        self.starts, self.ends = starts, ends
         self.before: list[int] = []
         size = 0
-        for a, b in runs:
+        for a, b in zip(starts, ends, strict=True):
             self.before.append(size)
             size += b - a
-        self.text = "".join(raw[a:b] for a, b in runs)
+        self.size = size
 
     def __call__(self, p: int) -> int:
         i = bisect.bisect_right(self.starts, p) - 1
         if i < 0:
             return 0
-        a, b = self.runs[i]
+        a, b = self.starts[i], self.ends[i]
         return self.before[i] + min(p - a, b - a)
 
 
@@ -305,24 +323,23 @@ def finish(text: str, raws: list[Raw]) -> list[dict[str, Any]]:
     the order, the nesting or the parent kinds of §4.2. The children of a dropped node get the
     nearest node above it as parent. The first MAX_NODES nodes stay.
     """
-    spans: list[tuple[int, int] | None] = []
-    for raw in raws:
+    for raw in raws:  # trim each span in place; a node that did not close goes
         s, e = raw.start, raw.end
         if not raw.keep or e < s:
-            spans.append(None)
+            raw.keep = False
             continue
         while s < e and text[s].isspace():
             s += 1
         while e > s and text[e - 1].isspace():
             e -= 1
-        spans.append((s, e))
+        raw.start, raw.end = s, e
     ids: dict[int, int] = {}  # raw index -> node id
-    kept: list[tuple[int, int, int | None, Raw]] = []  # start, end, parent id, raw
+    kept: list[Raw] = []
+    parents: list[int | None] = []  # the parent id of each kept node
     last_end: dict[int | None, int] = {}  # the end of the last child of each parent id
     last_start = 0
     for n, raw in enumerate(raws):
-        span = spans[n]
-        if span is None or len(kept) >= MAX_NODES:
+        if not raw.keep or len(kept) >= MAX_NODES:
             continue
         up = raw.parent
         while up is not None and up not in ids:
@@ -331,36 +348,40 @@ def finish(text: str, raws: list[Raw]) -> list[dict[str, Any]]:
         if parent is None:
             parent_kind, lo, hi = None, 0, len(text)
         else:
-            lo, hi, _, praw = kept[parent]
-            parent_kind = praw.kind
+            above = kept[parent]
+            parent_kind, lo, hi = above.kind, above.start, above.end
         if parent_kind not in PARENTS[raw.kind]:
             continue
-        s, e = span
+        s, e = raw.start, raw.end
         if s == e:
             if raw.kind != "cell":
                 continue
             s = e = min(max(s, lo), hi)
         if not (lo <= s and e <= hi and s >= last_start and s >= last_end.get(parent, 0)):
             continue
+        raw.start, raw.end = s, e
         ids[n] = len(kept)
-        kept.append((s, e, parent, raw))
+        kept.append(raw)
+        parents.append(parent)
         last_end[parent] = e
         last_start = s
-    offsets = bytes_of_chars(text, [p for s, e, _, _ in kept for p in (s, e)])
+    del ids, last_end
+    offsets = bytes_of_chars(text, [p for raw in kept for p in (raw.start, raw.end)])
     out = []
-    for i, (s, e, parent, raw) in enumerate(kept):
+    for i, raw in enumerate(kept):
         node: dict[str, Any] = {
             "id": i,
             "kind": raw.kind,
             "basis": raw.basis,
-            "parent": parent,
-            "start": offsets[s],
-            "end": offsets[e],
+            "parent": parents[i],
+            "start": offsets[raw.start],
+            "end": offsets[raw.end],
         }
+        members = raw.members or {}
         if raw.kind == "heading":
-            node["level"] = raw.members["level"]
+            node["level"] = members["level"]
         elif raw.kind == "cell":
-            node.update({k: raw.members[k] for k in ("row", "column", "rows", "columns")})
-            node["header"] = raw.members.get("header")
+            node.update({k: members[k] for k in ("row", "column", "rows", "columns")})
+            node["header"] = members.get("header")
         out.append(node)
     return out

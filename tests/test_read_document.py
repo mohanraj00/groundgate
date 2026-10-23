@@ -16,7 +16,7 @@ from test_read_grid import QUESTIONS, _rules
 from groundgate.cli import main
 from groundgate.read import read
 from groundgate.read.document import Document, DocumentError, read_document
-from groundgate.read.nodes import MAX_NODES
+from groundgate.read.nodes import MAX_DEPTH, MAX_NODES
 from groundgate.store import key
 
 from pdfgen import make_pdf
@@ -179,6 +179,25 @@ def test_html_colspan_and_rowspan_give_grid_positions(tmp_path: Path) -> None:
         return None if cell is None else data[cell.start : cell.end].decode()
 
     assert [at(0, 1), at(2, 2), at(1, 3), at(2, 3), at(9, 0)] == ["a", "b", "f", None, None]
+
+
+def test_xhtml_empty_cells_and_spans_with_leading_zeros(tmp_path: Path) -> None:
+    source = (
+        "<table><tr><td/><td>x</td></tr>"
+        '<tr><td colspan="000002">A</td><td>B</td></tr></table>'
+    )  # review of #521
+    path = tmp_path / "x.xhtml"
+    path.write_text(source, encoding="utf-8")
+    extracted, doc = read_document(path)
+    assert extracted == read(path)
+    data = doc.text.encode()
+    cells = [
+        (data[c.start : c.end].decode(), c.row, c.column, c.columns) for c in doc.of_kind("cell")
+    ]
+    assert cells == [("", 0, 0, 1), ("x", 0, 1, 1), ("A", 1, 0, 2), ("B", 1, 2, 1)]
+    table = doc.of_kind("table")[0].id
+    b = doc.cell(table, 1, 2)
+    assert b is not None and data[b.start : b.end] == b"B"
 
 
 def test_spl_headings_take_the_depth_of_their_section(tmp_path: Path) -> None:
@@ -417,6 +436,40 @@ def test_the_loader_refuses_more_faults() -> None:
     bad["nodes"] = [{**node, "id": i, "kind": "paragraph"} for i in range(MAX_NODES + 1)]
     with pytest.raises(DocumentError, match="more than"):
         Document.from_dict(bad, text)
+
+
+def test_the_loader_refuses_a_deep_chain_of_nodes() -> None:
+    """A lookup by span walks the parents of a node, so the loader limits their number (#521)."""
+    text = "x"
+    chain: list[dict[str, Any]] = []
+    for i in range(MAX_DEPTH + 1):
+        kind = ("table", "row", "cell")[i % 3]
+        node: dict[str, Any] = {"id": i, "kind": kind, "basis": "markup", "start": 0, "end": 1}
+        node["parent"] = i - 1 if i else None
+        if kind == "cell":
+            node.update(row=0, column=0, rows=1, columns=1, header=None)
+        chain.append(node)
+    obj = {
+        "format": "document@1",
+        "source": "sha256:" + "0" * 64,
+        "reader": {"name": "groundgate.read", "version": "0.13.0"},
+        "options": {"pages": None},
+        "text": key("text@1", text.encode()),
+        "nodes": chain[:MAX_DEPTH],
+        "doubt": [],
+    }
+    assert len(Document.from_dict(obj, text).nodes) == MAX_DEPTH
+    obj["nodes"] = chain
+    with pytest.raises(DocumentError, match="nodes above it"):
+        Document.from_dict(obj, text)
+
+
+def test_a_reader_stops_at_the_node_limit(tmp_path: Path) -> None:
+    path = tmp_path / "many.html"
+    path.write_text("<p>x" * (MAX_NODES + 10), encoding="utf-8")
+    extracted, doc = read_document(path)
+    assert extracted == read(path)
+    assert len(doc.nodes) == MAX_NODES  # a next <p> closes each paragraph before the stop
 
 
 def test_a_reader_stops_at_its_limits_and_the_text_stays(tmp_path: Path) -> None:

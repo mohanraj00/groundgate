@@ -26,7 +26,7 @@ from typing import Any
 from ..canonical import jcs
 from . import HTML_SUFFIXES, TEXT_SUFFIXES, Extracted, ReadError, _decode
 from .layout import Layout
-from .nodes import MAX_NODES, PARENTS, Raw, chars_of_bytes, finish
+from .nodes import MAX_DEPTH, MAX_NODES, PARENTS, Raw, chars_of_bytes, finish
 
 __all__ = ["FORMAT", "Document", "DocumentError", "Match", "Node", "read_document"]
 
@@ -43,7 +43,7 @@ class DocumentError(ValueError):
     """A ``document@1`` object breaks a rule of the format."""
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True)
 class Node:
     """One node. ``start`` and ``end`` are UTF-8 byte offsets into the text, half-open."""
 
@@ -284,6 +284,7 @@ def _check_doubt(doubt: object, data: bytes) -> None:
 
 def _check_nodes(raw: list[object], data: bytes) -> Iterable[Node]:
     nodes: list[Node] = []
+    depth: list[int] = []  # the number of nodes above each node
     last_end: dict[int | None, int] = {}
     last_start = 0
     for i, obj in enumerate(raw):
@@ -317,6 +318,9 @@ def _check_nodes(raw: list[object], data: bytes) -> Iterable[Node]:
             raise DocumentError(f"{what}: a {kind} must have as parent: {', '.join(allowed)}")
         if up is not None and not (up.start <= start and end <= up.end):
             raise DocumentError(f"{what} span is not inside the span of its parent")
+        depth.append(0 if parent is None else depth[parent] + 1)
+        if depth[-1] >= MAX_DEPTH:  # a lookup by span walks the parents, so the walk stays short
+            raise DocumentError(f"{what} has {MAX_DEPTH} or more nodes above it")
         if start < last_start:
             raise DocumentError(f"{what} is not in text order")
         if start < last_end.get(parent, 0):

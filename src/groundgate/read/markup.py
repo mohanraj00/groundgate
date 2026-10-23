@@ -139,8 +139,15 @@ class _HTML(HTMLParser):
                 _open_html(self.nodes, tag, attrs)
 
     def handle_startendtag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
-        if not (self.hide or self.in_head or _hidden(attrs)) and tag in PARAGRAPH | LINE:
+        if self.hide or self.in_head or _hidden(attrs):
+            return
+        if self.nodes is not None and tag in HTML_ROLES:
+            _close_implied(self.nodes, tag)
+        if tag in PARAGRAPH | LINE:
             self.w.start(tag)
+        if self.nodes is not None and tag in HTML_ROLES:  # an XHTML <td/> is an empty cell
+            _open_html(self.nodes, tag, attrs)
+            self.nodes.close(tag)
 
     def handle_endtag(self, tag: str) -> None:
         if tag == "head":
@@ -299,7 +306,7 @@ def _final(w: _Writer, raws: list[Raw]) -> tuple[str, list[Raw]]:
     kept = Kept(raw)
     text = w.result()
     final = unicodedata.normalize("NFC", text)
-    if kept.text != text:  # pragma: no cover - Kept follows _Writer.result
+    if kept.size != len(text):  # pragma: no cover - Kept follows _Writer.result
         return final, []
     closed = [r for r in raws if r.end >= 0]
     moved = nfc_map(text, [kept(p) for r in closed for p in (r.start, r.end)])
