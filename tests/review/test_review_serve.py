@@ -702,6 +702,29 @@ def test_brackets_make_a_sign_only_with_a_unit(
     assert [a["part"] for a in check["ask"]] == asked
 
 
+def test_a_cited_scale_reads_the_scale_words_of_the_packs(tmp_path: Path) -> None:
+    """#496: a pack gives the scale word "lac" (10^5). A cited "in lac" gives the value in
+    full, as admit reads it, and the answer saves."""
+    lac = {"groundgate_pack": 1, "type": "vocabulary", "id": "lac-x-test", "version": "1.0.0",
+           "scale": {"words": {"lac": 5}}}  # fmt: skip
+    text = "Revenue in lac\nRevenue was 5 in 2025.\n"
+    schema = {"packs": [{"id": "lac-x-test", "version": "1.0.0"}],
+              "fields": {"revenue": {"type": "number"}}}  # fmt: skip
+    candidates = [{"id": "c1", "field": "revenue", "value": "7",
+                   "evidence": {"start": 0, "end": 7}}]  # fmt: skip
+    store = FolderStore(tmp_path / "store")
+    k, _ = admit_packet(store, text, schema, candidates, None, None, None, packs=[lac])
+    ((tk, _),) = write_tasks(store, k, EVERY).tasks
+    review = Review(store, "ana")
+    at = text.index("5 in")
+    scale = text.index("in lac")
+    body = {"task": tk, "verdict": "correct", "start": at, "end": at + 1,
+            "parts": [{"role": "scale", "start": scale, "end": scale + 6}]}  # fmt: skip
+    check = review.check(body)
+    assert check["outcome"] == "admitted" and check["shown"].startswith("500,000")
+    assert check["ask"] == []
+
+
 def test_a_cited_loss_word_is_a_sign(tmp_path: Path) -> None:
     """#496: with the finance pack, a cited loss word makes the number negative, as admit reads
     a sign item. The value -100 then agrees, and +100 gets the sign question."""

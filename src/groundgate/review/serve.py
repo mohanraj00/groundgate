@@ -615,6 +615,12 @@ class Review:
         self, doc: _Doc, slot: Slot, task: Mapping[str, Any], body: Mapping[str, Any]
     ) -> dict[str, Any]:
         """The person's candidate from a selection (§8, A correction is a selection)."""
+        with using(doc.schema.vocabulary):  # the scale words of the packet's packs
+            return self._read_candidate(doc, slot, task, body)
+
+    def _read_candidate(
+        self, doc: _Doc, slot: Slot, task: Mapping[str, Any], body: Mapping[str, Any]
+    ) -> dict[str, Any]:
         a, b, start, end = self._span(doc, body.get("start"), body.get("end"))
         spec = doc.schema.fields[slot.field]
         typed = body.get("value")
