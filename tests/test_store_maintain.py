@@ -14,6 +14,7 @@ import pytest
 from groundgate.canonical import jcs
 from groundgate.cli import main
 from groundgate.extract import extract
+from groundgate.extract.runner import _VERSION as RUNNER
 from groundgate.store import (
     FolderStore,
     Locked,
@@ -37,6 +38,9 @@ from groundgate.store.maintain import (
 )
 from groundgate.store.packets import admit_packet, put_reading
 
+# The current runner version and its store kind, such as "run@5".
+RUN_NUMBER = int(RUNNER.rsplit("/", 1)[1])
+RUN_KIND = f"run@{RUN_NUMBER}"
 TEXT = "Invoice\n\nThe amount is 5 dollars. Pay it by Friday.\n"
 SCHEMA: dict[str, Any] = {"fields": {"amount": {"type": "integer"}}}
 
@@ -696,7 +700,7 @@ def test_forget_finds_a_shared_reply_that_an_earlier_forget_removed(
     with FolderStore(root) as store:
         entries = store.read(("deleted",))
     by_key = {e["key"]: e for e in entries}
-    assert by_key[reply]["run_keys"] == [run_hash("groundgate-run/4", "reply", data)]
+    assert by_key[reply]["run_keys"] == [run_hash(RUNNER, "reply", data)]
     text = json.loads(path_of(root, one).read_bytes())["document"]["text"]
     assert "run_keys" not in by_key[text]
     bad = _changed_object(root)
@@ -712,13 +716,13 @@ def test_forget_of_a_reply_records_a_run_key_for_each_runner_version(tmp_path: P
     with FolderStore(root) as store:
         _, two, reply = _shared_reply(store, root)
         data = store.get("reply@1", reply)
-        run = store.get("run@4", json.loads(store.get("packet@1", two))["run"])
-        store.put("run@3", run.replace(b"groundgate-run/4", b"groundgate-run/3", 1))
+        run = store.get(RUN_KIND, json.loads(store.get("packet@1", two))["run"])
+        # The same record as the earlier runner version: the store holds two versions.
+        older = f"groundgate-run/{RUN_NUMBER - 1}"
+        store.put(f"run@{RUN_NUMBER - 1}", run.replace(RUNNER.encode(), older.encode(), 1))
         store.forget(reply, "asked", run_keys=_Objects(store).run_keys(reply))
         entry = store.read(("deleted",))[-1]
-    assert entry["run_keys"] == sorted(
-        run_hash(f"groundgate-run/{n}", "reply", data) for n in (3, 4)
-    )
+    assert entry["run_keys"] == sorted(run_hash(v, "reply", data) for v in (older, RUNNER))
 
 
 def test_forget_builds_the_run_key_index_one_time(
