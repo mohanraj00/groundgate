@@ -702,12 +702,13 @@ class Review:
         value = Decimal(candidate["value"])  # canonical() of a parsed number: finite
         if not found or value == 0:
             return []
-        # the number that the value matches at some scale, as admit matches it, else the first
+        # each number that the value matches at some scale. admit takes one of them by its unit,
+        # so the sign question reads each one. The scale question reads the first.
         abs_value = value.copy_abs()
-        tok = next(
-            (t for t in found if t.value is not None and abs_value in _scaled(t.value.copy_abs())),
-            found[0],
-        )
+        matched = [
+            t for t in found if t.value is not None and abs_value in _scaled(t.value.copy_abs())
+        ]
+        tok = matched[0] if matched else found[0]
         assert tok.value is not None
         written = text[tok.start : tok.end]
         spec = doc.schema.fields[slot.field]
@@ -727,16 +728,19 @@ class Review:
         # as admit reads it: brackets make a sign only on a field with a unit, or a cited sign part
         signs = doc.schema.units.get(spec.unit, ([], []))[0] if spec.unit is not None else None
         prefixes = signs if signs is not None else []
-        negative = (
-            tok.value < 0
-            or bracket_sign(text, tok, signs)
-            or self._part_sign(doc, body, tok, prefixes)
-        )
-        if (value < 0) != negative and value.copy_abs() in _scaled(tok.value.copy_abs()):
-            out.append({"part": "sign", "text": (
-                f"The value is {_sign(value)}, but the text writes the number {written} as "
-                f"{'negative' if negative else 'positive'}."
-            )})  # fmt: skip
+        for m in matched:  # the first number with the other sign gets the question
+            assert m.value is not None
+            negative = (
+                m.value < 0
+                or bracket_sign(text, m, signs)
+                or self._part_sign(doc, body, m, prefixes)
+            )
+            if (value < 0) != negative:
+                out.append({"part": "sign", "text": (
+                    f"The value is {_sign(value)}, but the text writes the number "
+                    f"{text[m.start : m.end]} as {'negative' if negative else 'positive'}."
+                )})  # fmt: skip
+                break
         for n, c in enumerate(task["choices"], 1):
             try:
                 other = Decimal(c["value"])
