@@ -317,6 +317,34 @@ def test_a_reading_of_another_text_is_refused(tmp_path: Path) -> None:
         assert store.get("source@1", layoutless["source"]) == b"Another text."
 
 
+@pytest.mark.parametrize("name", ["a.txt", "a.pdf"])
+def test_one_read_gives_the_source_and_the_text(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, name: str
+) -> None:
+    """The file changes after put_reading reads it. The text still comes from the source."""
+    source = tmp_path / name
+    if name.endswith(".pdf"):
+        first, second = make_pdf([[(72, 700, "Fee: $500")]]), make_pdf([[(72, 700, "Fee: $9")]])
+    else:
+        first, second = b"Fee: $500", b"Fee: $9"
+    source.write_bytes(first)
+    import groundgate.read as reader
+
+    real = reader.read
+
+    def change_then_read(*args: Any, **kwargs: Any) -> Any:
+        source.write_bytes(second)
+        return real(*args, **kwargs)
+
+    monkeypatch.setattr(reader, "read", change_then_read)
+    with FolderStore(tmp_path / "s") as store:
+        reading, doc = put_reading(store, source)
+        obj = json.loads(store.get("reading@1", reading))
+        assert store.get("source@1", obj["source"]) == first
+        assert store.get("text@1", obj["text"]).decode() == doc.text
+        assert doc.text.strip() == "Fee: $500"
+
+
 def test_layout_needs_a_pdf_before_the_store_is_written(
     tmp_path: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:
@@ -344,7 +372,7 @@ def test_store_options_need_their_mode(tmp_path: Path, capsys: pytest.CaptureFix
         ["verify", "r.json", str(doc), given["schema"]],
         ["admit", str(doc), given["schema"], given["cands"], "--reading", "sha256:x"],
         ["admit", "--docs", ".", "--candidates", ".", "--schema", "s", "--out", "o",
-         "--store", store],
+         "--store", store, "--reading", "sha256:x"],
     ]  # fmt: skip
     for argv in bad:
         with pytest.raises(SystemExit) as stop:
@@ -352,4 +380,4 @@ def test_store_options_need_their_mode(tmp_path: Path, capsys: pytest.CaptureFix
         assert stop.value.code == 2, argv
     err = capsys.readouterr().err
     assert "remove DOC SCHEMA CANDIDATES" in err and "remove --policy" in err
-    assert "--reading needs --store" in err and "batch admit cannot use --store" in err
+    assert "--reading needs --store" in err and "batch admit cannot use --reading" in err

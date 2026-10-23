@@ -400,7 +400,8 @@ settings that make a check fail every time, or pass for the wrong key or field
 
 For a batch, `--docs` holds `<doc>.txt` files and `--candidates` holds matching `<doc>.json`
 candidate arrays. `--out` receives one receipt per document and `summary.json` with outcome and
-code counts per document and in total, and the CLI prints the totals. The
+code counts per document and in total, and the CLI prints the totals. With `--store DIR`, each
+document also gets a packet, and `summary.json` names its key. The
 [guide](docs/guide.md#command-line) describes missing and empty candidate files, shared policy
 and references, per-document judgments, and the batch options and summary format.
 

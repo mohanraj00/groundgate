@@ -316,7 +316,7 @@ class FolderStore:
         except (StoreError, FileNotFoundError):
             pass  # absent, other bytes or another mode: write the object again
         try:
-            self._replace(folder, path, data)
+            self._replace(folder, path, data, prefix=f".tmp-{hexes[2:]}-")
         except OSError as exc:  # for example a folder in the place of the object
             raise StoreError(f"objects/{hexes[:2]}/{hexes[2:]} cannot be written: {exc}") from exc
         return k
@@ -343,7 +343,16 @@ class FolderStore:
         ``groundgate store forget`` (``maintain.forget_packet``) gives them. With no run keys,
         the record has no ``run_keys`` member. The record comes first. After a crash between
         the two steps, the object is still there, and a second ``forget`` adds a second record
-        for the key."""
+        for the key.
+
+        ``forget`` also removes the ``.tmp-<key>-`` files that a killed ``put`` of this object
+        left in its folder, also when the object is absent and ``forget`` raises ``NotFound``.
+        Then ``forget`` writes no record in the deleted log. If the clean-up fails, for example
+        on a folder that this process cannot list, ``forget`` raises ``StoreError``. It
+        removes no file of another object, and no file outside that folder. A ``put`` of the
+        same object at the same time can fail with ``StoreError``.
+        A ``.tmp-`` file of an earlier version has no key in its name, so it stays. Where
+        ``os.unlink`` takes no ``dir_fd``, for example on Windows, all ``.tmp-`` files stay."""
         hexes = _check_key(key)
         if not isinstance(reason, str) or not reason:
             raise ValueError("forget needs a reason")
@@ -355,8 +364,12 @@ class FolderStore:
         rel = f"objects/{hexes[:2]}/{hexes[2:]}"
         try:
             folder = self._folder(["objects", hexes[:2]], make=False)
+        except NotFound as exc:
+            raise NotFound(f"object {key} is not in the store") from exc
+        try:
             info = os.lstat(folder / hexes[2:])
-        except (NotFound, FileNotFoundError) as exc:
+        except FileNotFoundError as exc:
+            self._unlink_parts(folder, hexes[2:], rel)  # a first put that was killed
             raise NotFound(f"object {key} is not in the store") from exc
         # Check that the unlink can work before the record says that it did.
         if not (stat.S_ISREG(info.st_mode) or stat.S_ISLNK(info.st_mode)):
@@ -372,6 +385,38 @@ class FolderStore:
             os.unlink(folder / hexes[2:])
         except OSError as exc:
             raise StoreError(f"{rel} is in the deleted log, but the unlink failed: {exc}") from exc
+        self._unlink_parts(folder, hexes[2:], rel)
+
+    def _unlink_parts(self, folder: Path, rest: str, rel: str) -> None:
+        """Remove each regular file ``.tmp-<rest>-*`` in ``folder``. The names come from a
+        listing of the open folder, and each unlink is relative to it, so a folder that becomes
+        a symlink cannot send an unlink outside the store. A file that is gone already is not
+        a problem. Each other failure raises ``StoreError``, so no caller thinks that the bytes
+        are gone when they are not."""
+        if not (os.unlink in os.supports_dir_fd and os.listdir in os.supports_fd):
+            return  # pragma: no cover - Windows
+        prefix = f".tmp-{rest}-"
+        try:
+            fd = os.open(folder, os.O_RDONLY | _NOFOLLOW | getattr(os, "O_DIRECTORY", 0))
+        except OSError as exc:
+            raise StoreError(
+                f"the temporary files of {rel} cannot be removed: {exc.strerror}"
+            ) from exc
+        try:
+            for name in os.listdir(fd):
+                if not name.startswith(prefix):
+                    continue
+                try:  # a put that ends now removes its own file
+                    if stat.S_ISREG(os.stat(name, dir_fd=fd, follow_symlinks=False).st_mode):
+                        os.unlink(name, dir_fd=fd)
+                except FileNotFoundError:
+                    continue
+        except OSError as exc:
+            raise StoreError(
+                f"the temporary files of {rel} cannot be removed: {exc.strerror}"
+            ) from exc
+        finally:
+            os.close(fd)
 
     # Logs
 
@@ -691,7 +736,11 @@ class FolderStore:
             os.close(fd)
 
     def _unlink_own(self, lock: Path, mark: bytes) -> None:
-        """Remove a lock only if it still holds the bytes that this writer wrote."""
+        """Remove a lock only if it still holds the bytes that this writer wrote. The compare
+        and the unlink are two steps, so they are not atomic. A lock of another writer can go
+        only if a person removes this lock and that writer makes its lock between the two
+        steps. A lock that is not a regular file, for example a symlink in the place of the
+        lock, stays, and the next writer stops with ``Locked``. A person removes it."""
         try:
             if os.lstat(lock).st_size != len(mark) or self._file(lock, lock.name) != mark:
                 return
@@ -706,7 +755,10 @@ class FolderStore:
         try:
             if os.lstat(lock).st_size > 64:  # a pid, a token and two line breaks are short
                 raise ValueError("the lock is too large")
-            pid = int(self._file(lock, lock.name).decode("ascii").split("\n")[0])
+            line = self._file(lock, lock.name).decode("ascii").split("\n")[0]
+            if not (line.isascii() and line.isdigit()):  # int() takes "1_0" and " 10"
+                raise ValueError("not a process id")
+            pid = int(line)
             if pid <= 0:
                 raise ValueError("not a process id")
         except (OSError, StoreError, ValueError):
@@ -734,7 +786,17 @@ class FolderStore:
 
     def _folder(self, parts: list[str], *, make: bool) -> Path:
         """The folder ``root/parts``. Each part must be a folder, not a symlink. With ``make``,
-        absent folders are made with the folder mode, else ``NotFound`` is raised."""
+        absent folders are made with the folder mode, else ``NotFound`` is raised. A root that
+        is a file or a dangling symlink, or another failed folder call, raises ``StoreError``."""
+        try:
+            return self._walk(parts, make=make)
+        except StoreError:
+            raise
+        except OSError as exc:
+            where = "/".join(parts) or "the root"
+            raise StoreError(f"{where} in {self.root} cannot be used: {exc.strerror}") from exc
+
+    def _walk(self, parts: list[str], *, make: bool) -> Path:
         path = self.root
         if make and not path.exists():
             absent = [path, *(p for p in path.parents if not p.exists())]
@@ -803,10 +865,10 @@ class FolderStore:
             raise StoreError(f"{rel} is larger than max_bytes")
         return data
 
-    def _replace(self, folder: Path, path: Path, data: bytes) -> None:
+    def _replace(self, folder: Path, path: Path, data: bytes, *, prefix: str = ".tmp-") -> None:
         """Write ``data`` to a temporary file in ``folder``, then rename it to ``path``. A crash
         never leaves half an object."""
-        fd, name = tempfile.mkstemp(dir=folder, prefix=".tmp-")
+        fd, name = tempfile.mkstemp(dir=folder, prefix=prefix)
         try:
             with os.fdopen(fd, "wb") as out:
                 out.write(data)

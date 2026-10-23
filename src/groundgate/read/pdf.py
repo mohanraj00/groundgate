@@ -21,6 +21,7 @@ While groundgate reads a PDF, pdfminer's layout code gets a stable ``id()`` inst
 from __future__ import annotations
 
 import contextlib
+import io
 import itertools
 import threading
 import unicodedata
@@ -176,8 +177,11 @@ def _visible(page: Any) -> Rect:
     return min(cx0, cx1), min(cy0, cy1), max(cx0, cx1), max(cy0, cy1)
 
 
-def read_pdf(path: str | Path, pages: Iterable[int] | None = None) -> Result:
-    """Text, pages, words and warnings for a PDF. ``pages`` are 1-based page numbers."""
+def read_pdf(
+    path: str | Path, pages: Iterable[int] | None = None, *, data: bytes | None = None
+) -> Result:
+    """Text, pages, words and warnings for a PDF. ``pages`` are 1-based page numbers. If
+    ``data`` is given, ``read_pdf`` reads those bytes and does not open ``path``."""
     try:
         from pdfminer.pdftypes import PDFException
         from pdfminer.psexceptions import PSException
@@ -191,6 +195,8 @@ def read_pdf(path: str | Path, pages: Iterable[int] | None = None) -> Result:
         if not wanted or wanted[0] < 1:
             raise ReadError("pages must be 1-based page numbers")
     try:
+        if data is not None:
+            return _read(io.BytesIO(data), wanted)
         with open(path, "rb") as fp:
             return _read(fp, wanted)
     except (PDFException, PSException) as e:
