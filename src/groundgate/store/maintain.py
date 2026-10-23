@@ -71,7 +71,7 @@ _RUN_OBJECTS = {
 # A string of a run record line with this many characters or more, that is also in the
 # document text, is document text.
 MIN_TEXT = 8
-VIEWS = ("readings.json",)
+VIEWS = ("readings.json", "calibrate-labels.json")
 _BYTES = frozenset({"source@1", "text@1", "prompt@1", "reply@1"})
 
 
@@ -550,8 +550,13 @@ def _reading_cache(objects: _Objects) -> bytes:
 def rebuild(store: FolderStore) -> list[str]:
     """Build each view again from the objects and logs, and return the path of each view
     file. The same objects and logs give the same bytes."""
+    from ..review.labels import labels_view
+
     objects = _Objects(store)
-    return [store.write_view("readings.json", _reading_cache(objects))]
+    return [
+        store.write_view("readings.json", _reading_cache(objects)),
+        store.write_view("calibrate-labels.json", labels_view(store)),
+    ]
 
 
 # forget

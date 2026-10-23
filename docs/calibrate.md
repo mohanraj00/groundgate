@@ -19,11 +19,11 @@ with a test judge. This page is the reference.
 
 ```bash
 groundgate calibrate sample --work W --docs D --candidates C --schema S --question key \
-    --context "The text is from a 10-K filing."
+    --context "The text is from a 10-K filing." [--store DIR]
 groundgate calibrate split  --work W [--store DIR --set NAME]  # before any model run
-groundgate calibrate label  --work W        # label in the browser, blind, before ask
-groundgate calibrate ask    --work W --judge NAME   # NAME: a judge (see Judges)
-groundgate calibrate report --work W        # REPORT.md, report.json
+groundgate calibrate label  --work W [--store DIR --reviewer NAME]  # blind, before ask
+groundgate calibrate ask    --work W --judge NAME [--store DIR --reviewer NAME]
+groundgate calibrate report --work W [--store DIR]  # REPORT.md, report.json
 ```
 
 - `D` holds one `<doc>.txt` for each document.
@@ -40,6 +40,25 @@ groundgate calibrate report --work W        # REPORT.md, report.json
   token with each request, and the server refuses a request without it. Each click saves a label
   in `W/labels.json`: `true`, `false` or `null` (not sure) for the field question, and the list
   of the field's keys (empty for none) for the key question.
+- **Labels in a store.** With `--store DIR`, `sample` also writes a packet for each document and
+  a blind task for each item to the store, and `W/tasks.json` maps each item to its task
+  ([review.md §11](design/review.md#11-fit-with-other-work)). Then `label --store DIR --reviewer
+  NAME` opens the review page of `groundgate review serve` on these tasks, and each label is an
+  `answer@2` in the answer log of the reviewer. Press `y` (yes), `w` (wrong) or `u` (not sure)
+  for the field question. For the key question, click each key that the value gives, or press
+  its number, then press `Enter`. You can also go to a key with `Tab` and press `Space`. Press
+  `u` if you are not sure. Each question shows the description of the field. `ask --store DIR
+  --reviewer NAME` reads the labels from the answer logs and keeps the head of each log. `report
+  --store DIR` reads the logs only up to those heads, so a later answer does not change the
+  report. After a judge run starts, `label --store` refuses to open and refuses each answer, as
+  the label page does. Each label write, on the label page or through `label --store`, holds the
+  lock `W/.labels.lock` across the freeze check and the write. `ask` holds the same lock while
+  it writes its partial file and reads the labels, so no label write falls between the two. The
+  lock is `flock` on POSIX and `msvcrt.locking` on Windows. Both wait for the lock, and the
+  system releases it when the process ends, so a stopped process does not leave it held. One
+  work folder never mixes label sources: `ask` refuses when an earlier judge run has its labels
+  from another source, or from other log heads. Without `--store`, `W/labels.json` holds the
+  labels, as in 0.10.
 - `report --check` writes nothing. It fails when `REPORT.md` or `report.json` differs from what
   `W` gives, so a CI job can check a committed report.
 
@@ -88,7 +107,8 @@ documents for the ceiling that you need before you start.
   ([store.md §10](design/store.md#10-fit-with-other-work)). The calibration part is
   `development`, because it chooses the thresholds, and the test part is `held-out`. The
   document is the store key of its text. The log comes before any label, so `split` refuses
-  to write it when `labels.json` has a label. If the log already puts a document in another
+  to write it when `labels.json` has a label, or when the store has an answer to an item of
+  `W/tasks.json`. If the log already puts a document in another
   split, `split` stops and writes nothing. `split` writes the log before `split.json`, so if
   it stops between the two, run it again: the log keeps one record for each document. A work
   folder with no store works as before.

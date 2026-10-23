@@ -3,7 +3,7 @@
 Status: approved on 2026-10-20, issue #288. Code issue 1 is built: `groundgate.store` (#402).
 Code issue 2 is built: packets and readings (#403).
 Code issue 3 is built: `store check`, `store rebuild` and `store forget` (#404).
-The `splits` log of code issue 5 is built (#406). The calibrate labels of issue 5 are not.
+The `splits` log and the calibrate labels of code issue 5 are built (#456, #406).
 The rest is not built. The note changes no decision and no receipt.
 [review.md](review.md) (#287) keeps its data here. The last section lists the code issues.
 
@@ -196,9 +196,15 @@ objects and logs. Format 1 has five views: the reading cache, the review queue, 
 resolution of each packet, the labels for calibrate and the measures.
 
 `store rebuild` builds the reading cache now, as `views/readings.json`. It maps each source,
-reader and options to its readings, and it leaves out a reading whose text is deleted. The other
-four views need the review formats (review.md §13) and the calibrate labels (issue 5), and each
-comes with its issue (#432).
+reader and options to its readings, and it leaves out a reading whose text is deleted. It also
+builds the calibrate labels, as `views/calibrate-labels.json` (`calibrate-labels@1`, #406). For
+each calibrate task (review.md §11) and each reviewer, it gives the label of the last answer.
+It leaves out a task that its packet does not give with the same bytes. It also leaves out a
+record that names another reviewer than its log, that fails the check of `review resolve`, or
+that gives no label.
+`groundgate calibrate` does not read this file: it reads the answer logs, checks each record
+against its packet, and stops at the log heads of a judge run. The other three views come with
+their issues (#432).
 
 ## 8. Rules
 
