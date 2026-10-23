@@ -600,6 +600,13 @@ def main(argv: list[str] | None = None, prog: str = "groundgate calibrate") -> N
     p.add_argument("--calibration", type=Path, nargs="+", required=True, help="work directories")
     p.add_argument("--out", type=Path, required=True, help="a directory for <doc>.json")
     args = ap.parse_args(argv)
+    reviewer = getattr(args, "reviewer", None)
+    if reviewer is not None:
+        # the answer log is filed under sha256 of the UTF-8 name, so the name must encode
+        try:
+            reviewer.encode("utf-8")
+        except UnicodeEncodeError:
+            raise SystemExit("a reviewer name must be valid Unicode text") from None
     if args.cmd == "judge":
         judge_packets(args)
         return

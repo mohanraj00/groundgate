@@ -198,7 +198,10 @@ def _record_label(record: Any, log_reviewer: str, packet: _Packet) -> object:
     name, tk = record.get("reviewer"), record.get("task")
     if not isinstance(name, str) or not isinstance(tk, str) or tk not in own:
         return NO_LABEL  # a review answer, or a task that the packet does not give
-    if reviewer_key(name) != log_reviewer:
+    try:
+        if reviewer_key(name) != log_reviewer:
+            return NO_LABEL
+    except UnicodeEncodeError:  # a lone surrogate has no UTF-8, so it names no log
         return NO_LABEL
     try:
         c = _check(name, record, {}, schema, ids, labels=own)

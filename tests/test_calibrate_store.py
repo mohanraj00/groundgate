@@ -698,3 +698,24 @@ def test_ask_waits_for_a_label_write_that_holds_the_lock(
     # after the run, a label write is refused
     with FolderStore(store) as s, pytest.raises(Exception, match="frozen"):
         cli.label_review(w, s, "ana").answer(answer(first["task"], "confirm"))
+
+
+def test_a_reviewer_name_with_no_utf8_is_left_out(tmp_path: Path) -> None:
+    store = tmp_path / "store"
+    work = sampled(tmp_path, "field", store)
+    item = next(iter(json.loads((work / "tasks.json").read_text()).values()))
+    log = ("answers", item["packet"], reviewer_key("ana"))
+    with FolderStore(store) as s:
+        Review(s, "ana").answer(answer(item["task"], "confirm"))
+        (record,) = s.read(log)
+        own = {m: v for m, v in record.items() if m not in {"sequence", "previous", "entry_sha256"}}
+        s.append(log, own | {"reviewer": "\ud800", "verdict": "wrong"})
+        assert rebuild(s)[1] == "views/calibrate-labels.json"
+    view = json.loads((store / "views" / "calibrate-labels.json").read_text())
+    assert view["labels"] == [{"task": item["task"], "reviewer": "ana", "label": True}]
+    # the command line refuses such a name before it reads a log
+    for cmd in ("label", "ask"):
+        more = ["--judge", "fake"] if cmd == "ask" else []
+        with pytest.raises(SystemExit, match="valid Unicode"):
+            cli.main([cmd, "--work", str(work), *more, "--store", str(store),
+                      "--reviewer", "\ud800"])  # fmt: skip
