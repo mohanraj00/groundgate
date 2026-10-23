@@ -1095,9 +1095,8 @@ def test_targeted_query_count_is_hard_capped_before_source_scans(monkeypatch):
         run_policy=RunPolicy(max_prompt_chars=200000),
     )
     search = next(e for e in result.record if e["kind"] == "search")
-    # The common word check (#494) scans each word once more. The title and aliases are names.
-    names = {"annual total", "preferred", "secondary"}
-    assert scans == [q for q in queries for _ in range(1 if q.casefold() in names else 2)]
+    # Each query scans each source once, also with the common word check (#494).
+    assert scans == queries
     assert search["queries"] == queries and search["omitted_queries"] == omitted
     assert search["query_limit"] == 64 and search["status"] == "search_truncated"
     assert_replays(result, "Nothing here.", schema)

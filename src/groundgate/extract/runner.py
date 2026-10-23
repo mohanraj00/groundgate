@@ -934,29 +934,6 @@ class _Engine:
             )
         return self.decide(phase)
 
-    def common(self, query: str) -> int:
-        """The number of matches of a common word, or 0 if the word is not common (#494).
-
-        A word is common when the merged windows of all its matches cover more than half of
-        the source characters and more than ``max_region_chars``. Such a word occurs all
-        through the sources, so its windows merge into one region that the search must cut.
-        The second limit keeps each word of a short document. The count streams the matches
-        and keeps no match."""
-        context = self.settings.search_context_chars
-        total = covered = count = 0
-        for source, text in self.sources.items():
-            total += len(text)
-            low = high = 0
-            for start, end in _matches(self.folded_sources[source], query):
-                count += 1
-                window = (max(0, start - context), min(len(text), end + context))
-                if window[0] > high:
-                    covered += high - low
-                    low = window[0]
-                high = max(high, window[1])
-            covered += high - low
-        return count if 2 * covered > total and covered > self.settings.max_region_chars else 0
-
     def search(self, name: str) -> tuple[list[Json], list[tuple[int, int, int, int, str]]]:
         """The regions of the first sweep in location order. If no region fits the prompt, also
         every ranked region in rank order, for the second sweep (#382)."""
@@ -970,37 +947,59 @@ class _Engine:
         for source, text in self.sources.items():
             if source not in self.folded_sources:
                 self.folded_sources[source] = _Folded.build(text)
+        context = self.settings.search_context_chars
+        total = sum(len(text) for text in self.sources.values())
         # Query order is priority: title, aliases, title words, then description words.
-        # Stream all hits, but retain only a fixed-size pool before allocating windows.
+        # Stream all hits, but retain only a fixed-size pool before allocating windows. Each
+        # query scans each source once: the same pass counts the cover of its windows (#494).
         for rank, query in enumerate(queries):
-            # A word whose windows cover most of the sources identifies no place (#494).
-            common = 0 if query.casefold() in names else self.common(query)
-            if common:
-                common_queries.append({"query": query, "matches": common})
-                continue
+            hits: list[tuple[str, int, int]] = []
+            overflow = count = covered = 0
             for source, text in self.sources.items():
+                low = high = 0
                 for start, end in _matches(self.folded_sources[source], query):
-                    if len(matches) >= _SEARCH_MATCH_LIMIT:
-                        omitted_matches += 1
-                        continue
-                    matches.append(
-                        {
-                            "source": source,
-                            "query": query,
-                            "rank": rank,
-                            "start": self.offsets[source].to_bytes(start),
-                            "end": self.offsets[source].to_bytes(end),
-                        }
+                    count += 1
+                    window = (max(0, start - context), min(len(text), end + context))
+                    if window[0] > high:
+                        covered += high - low
+                        low = window[0]
+                    high = max(high, window[1])
+                    if len(matches) + len(hits) >= _SEARCH_MATCH_LIMIT:
+                        overflow += 1
+                    else:
+                        hits.append((source, start, end))
+                covered += high - low
+            # A word is common when the merged windows of all its matches cover more than half
+            # of the source characters and more than max_region_chars (#494). It identifies no
+            # place. The second limit keeps each word of a short document. A name is never
+            # common.
+            if (
+                query.casefold() not in names
+                and 2 * covered > total
+                and covered > self.settings.max_region_chars
+            ):
+                common_queries.append({"query": query, "matches": count})
+                continue
+            omitted_matches += overflow
+            for source, start, end in hits:
+                matches.append(
+                    {
+                        "source": source,
+                        "query": query,
+                        "rank": rank,
+                        "start": self.offsets[source].to_bytes(start),
+                        "end": self.offsets[source].to_bytes(end),
+                    }
+                )
+                windows[source].append(
+                    (
+                        max(0, start - context),
+                        min(len(self.sources[source]), end + context),
+                        rank,
+                        start,
+                        end,
                     )
-                    windows[source].append(
-                        (
-                            max(0, start - self.settings.search_context_chars),
-                            min(len(text), end + self.settings.search_context_chars),
-                            rank,
-                            start,
-                            end,
-                        )
-                    )
+                )
         ranked: list[tuple[int, int, int, int, str]] = []
         cut_regions: list[Json] = []
         cut_matches = 0
