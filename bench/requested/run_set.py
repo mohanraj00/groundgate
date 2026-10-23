@@ -294,11 +294,11 @@ def _archive_transport_error(document: Path, binding: str) -> bool:
 
 
 def _limits(record: Any) -> int:
-    """The search_limit fields of a groundgate-run/4 record; an older record stops the run."""
+    """The search_limit fields of a groundgate-run/5 record; an older record stops the run."""
     try:
         return search_limit_fields(record)
     except ValueError as exc:
-        raise CacheError("a projection needs groundgate-run/4 records: " + str(exc)) from exc
+        raise CacheError("a projection needs groundgate-run/5 records: " + str(exc)) from exc
 
 
 def _settings(raw: Any) -> Json:

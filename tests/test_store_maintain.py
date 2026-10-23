@@ -14,6 +14,7 @@ import pytest
 from groundgate.canonical import jcs
 from groundgate.cli import main
 from groundgate.extract import extract
+from groundgate.extract.runner import _VERSION as RUNNER
 from groundgate.store import (
     FolderStore,
     Locked,
@@ -37,6 +38,9 @@ from groundgate.store.maintain import (
 )
 from groundgate.store.packets import admit_packet, put_reading
 
+# The current runner version and its store kind, such as "run@5".
+RUN_NUMBER = int(RUNNER.rsplit("/", 1)[1])
+RUN_KIND = f"run@{RUN_NUMBER}"
 TEXT = "Invoice\n\nThe amount is 5 dollars. Pay it by Friday.\n"
 SCHEMA: dict[str, Any] = {"fields": {"amount": {"type": "integer"}}}
 
@@ -185,8 +189,8 @@ def test_check_finds_a_broken_run_chain(tmp_path: Path) -> None:
     with FolderStore(root) as store:
         packet = save_run(store)
         obj = json.loads(store.get("packet@1", packet))
-        run = store.get("run@4", obj["run"]).replace(b'"fixed-1"', b'"fixed-2"')
-        obj["run"] = store.put("run@4", run)
+        run = store.get("run@5", obj["run"]).replace(b'"fixed-1"', b'"fixed-2"')
+        obj["run"] = store.put("run@5", run)
         broken = store.put("packet@1", jcs(obj).encode("utf-8"))
     with FolderStore(root) as store:
         assert check(store).findings == [
@@ -272,7 +276,7 @@ def test_forget_removes_the_document_data(
     assert not [k for k, kind in after.items() if kind in REMOVED]
     gone = {k for k in before if k not in after}
     assert sorted({before[k] for k in gone}) == sorted(
-        ["text@1", "candidates@1", "source@1", "prompt@1", "reply@1", "admission@1", "run@4"]
+        ["text@1", "candidates@1", "source@1", "prompt@1", "reply@1", "admission@1", "run@5"]
     )
     assert {kind for kind in after.values()} == {
         "packet@1",
@@ -327,7 +331,7 @@ def test_forget_removes_a_run_record_with_document_text(tmp_path: Path) -> None:
         assert f"the run record {run}: line 1 holds document text" in findings
         assert all(f.endswith("holds document text") for f in findings)
         done = forget_packet(store, packet, "text in the record")
-    assert ("run@4", run, "deleted", 0) in done
+    assert ("run@5", run, "deleted", 0) in done
     assert not path_of(root, run).exists()
 
     root = tmp_path / "plain"
@@ -435,7 +439,7 @@ def test_forget_removes_a_run_record_whose_text_is_gone(tmp_path: Path) -> None:
         report = check(store)
         assert report.findings == [] and report.unchecked == [obj["run"]]
         done = forget_packet(store, packet, "again")
-    assert ("run@4", obj["run"], "deleted", 0) in done
+    assert ("run@5", obj["run"], "deleted", 0) in done
     assert not path_of(root, obj["run"]).exists()
 
 
@@ -497,8 +501,8 @@ def test_forget_removes_the_run_record_after_its_objects(tmp_path: Path) -> None
         run = json.loads(store.get("packet@1", packet))["run"]
         done = forget_packet(store, packet, "asked")
     kinds = [kind for kind, _, state, _ in done if state == "deleted"]
-    assert kinds.index("run@4") > max(kinds.index(k) for k in ("prompt@1", "reply@1"))
-    assert ("run@4", run, "deleted", 0) in done
+    assert kinds.index("run@5") > max(kinds.index(k) for k in ("prompt@1", "reply@1"))
+    assert ("run@5", run, "deleted", 0) in done
 
 
 def _bad_run_packet(
@@ -509,9 +513,9 @@ def _bad_run_packet(
     prompts and replies of the run, which only this packet names now."""
     packet = save_run(store)
     obj = json.loads(store.get("packet@1", packet))
-    run = store.get("run@4", obj["run"])
+    run = store.get("run@5", obj["run"])
     bad_run = b"[1]\n" + run if header else run + b"[1]\n"
-    obj["run"] = key("run@4", bad_run)
+    obj["run"] = key("run@5", bad_run)
     path = path_of(root, obj["run"])
     path.parent.mkdir(exist_ok=True)
     path.write_bytes(bad_run)
@@ -534,7 +538,7 @@ def test_forget_keeps_a_run_record_with_a_bad_line(
     args = ["store", "forget", "--store", str(root), other, "--reason", "asked"]
     assert main(args + ["--all"] * everything) == 1
     out = capsys.readouterr().out
-    kind = "run@N" if header else "run@4"  # with no header, the version is not known
+    kind = "run@N" if header else "run@5"  # with no header, the version is not known
     assert out.startswith(f"unchecked {kind} {obj['run']}\n")
     assert "deleted run@" not in out
     assert path.read_bytes() == bad_run  # kept, not removed
@@ -582,7 +586,7 @@ def test_kind_of_hashes_an_object_at_most_once_for_each_kind(
     assert calls.count("source@1") == 1 and not any(c.startswith("run@") for c in calls)
     calls.clear()
     bad_run = b"[1]\n" + b"{}\n" * 1000  # a run record with a header that cannot be read
-    assert kind_of(key("run@4", bad_run), bad_run) is None
+    assert kind_of(key("run@5", bad_run), bad_run) is None
     assert len(calls) == len(set(calls)) and not any(c.startswith("run@") for c in calls)
 
 
@@ -696,7 +700,7 @@ def test_forget_finds_a_shared_reply_that_an_earlier_forget_removed(
     with FolderStore(root) as store:
         entries = store.read(("deleted",))
     by_key = {e["key"]: e for e in entries}
-    assert by_key[reply]["run_keys"] == [run_hash("groundgate-run/4", "reply", data)]
+    assert by_key[reply]["run_keys"] == [run_hash(RUNNER, "reply", data)]
     text = json.loads(path_of(root, one).read_bytes())["document"]["text"]
     assert "run_keys" not in by_key[text]
     bad = _changed_object(root)
@@ -712,13 +716,13 @@ def test_forget_of_a_reply_records_a_run_key_for_each_runner_version(tmp_path: P
     with FolderStore(root) as store:
         _, two, reply = _shared_reply(store, root)
         data = store.get("reply@1", reply)
-        run = store.get("run@4", json.loads(store.get("packet@1", two))["run"])
-        store.put("run@3", run.replace(b"groundgate-run/4", b"groundgate-run/3", 1))
+        run = store.get(RUN_KIND, json.loads(store.get("packet@1", two))["run"])
+        # The same record as the earlier runner version: the store holds two versions.
+        older = f"groundgate-run/{RUN_NUMBER - 1}"
+        store.put(f"run@{RUN_NUMBER - 1}", run.replace(RUNNER.encode(), older.encode(), 1))
         store.forget(reply, "asked", run_keys=_Objects(store).run_keys(reply))
         entry = store.read(("deleted",))[-1]
-    assert entry["run_keys"] == sorted(
-        run_hash(f"groundgate-run/{n}", "reply", data) for n in (3, 4)
-    )
+    assert entry["run_keys"] == sorted(run_hash(v, "reply", data) for v in (older, RUNNER))
 
 
 def test_forget_builds_the_run_key_index_one_time(
@@ -839,8 +843,8 @@ def test_forget_all_keeps_a_schema_of_a_packet_with_a_bad_run_line(tmp_path: Pat
     with FolderStore(root) as store:
         packet = save_run(store)
         obj = json.loads(store.get("packet@1", packet))
-        bad_run = store.get("run@4", obj["run"]) + b"[1]\n"
-        obj["run"] = key("run@4", bad_run)
+        bad_run = store.get("run@5", obj["run"]) + b"[1]\n"
+        obj["run"] = key("run@5", bad_run)
         path = path_of(root, obj["run"])
         path.parent.mkdir(exist_ok=True)
         path.write_bytes(bad_run)
@@ -877,10 +881,10 @@ def test_forget_and_check_go_on_past_a_deep_run_line(
     with FolderStore(root) as store:
         packet = save_run(store)
         obj = json.loads(store.get("packet@1", packet))
-        header = store.get("run@4", obj["run"]).split(b"\n")[0]
+        header = store.get("run@5", obj["run"]).split(b"\n")[0]
         deep = b'{"a":' + b"[" * depth + b'"x"' + b"]" * depth + b"}"
         run = header + b"\n" + deep + b"\n"
-        obj["run"] = key("run@4", run)
+        obj["run"] = key("run@5", run)
         path_of(root, obj["run"]).parent.mkdir(exist_ok=True)
         path_of(root, obj["run"]).write_bytes(run)
         other = store.put("packet@1", jcs(obj).encode("utf-8"))
@@ -889,8 +893,8 @@ def test_forget_and_check_go_on_past_a_deep_run_line(
     assert ("text@1", obj["document"]["text"], "deleted", 1) in done
     # A line that parses and holds no text keeps the record. A line that cannot be read keeps
     # it too, and makes it "unchecked".
-    assert (("run@4", obj["run"], "unchecked", 0) in done) is unread
-    assert ("run@4", obj["run"], "deleted", 0) not in done
+    assert (("run@5", obj["run"], "unchecked", 0) in done) is unread
+    assert ("run@5", obj["run"], "deleted", 0) not in done
     assert path_of(root, obj["run"]).exists()
 
 

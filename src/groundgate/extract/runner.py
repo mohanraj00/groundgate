@@ -30,12 +30,14 @@ if TYPE_CHECKING:
     from ..store import Store
 
 Json = dict[str, Any]
+# groundgate-run/5 (#494): the search leaves out common words, and a cut that keeps every match
+# does not truncate the search.
 # groundgate-run/4 (#466): the search leaves English function words out of the word queries.
 # groundgate-run/3 (#382): the search cuts large regions, and a second sweep can follow
 # `search_limit`. groundgate-run/2 (#318, #319) had a new prompt, field item causes and rounding
 # lines. An older record fails replay with a version message. The run/3 prompt asks for the
 # whole scale heading (#428); the run/3 records from before #428 were never released.
-_VERSION = "groundgate-run/4"
+_VERSION = "groundgate-run/5"
 _ROLES = {"value", "sign", "scale", "unit", "field", "key"}
 _SEARCH_MATCH_LIMIT = 1024
 # The rounding check (#319) reads only numbers with at most this many digits and this exponent.
@@ -247,9 +249,9 @@ class RunResult:
 
         ``save`` writes each object of the run as its store kind (``text@1``, ``schema@1``,
         ``policy@1``, ``reference@1``, ``prompt@1``, ``reply@1``, ``admission@1``), then the
-        record as one ``run@4`` object, then the final inputs, the receipt and a ``packet@1``
+        record as one ``run@5`` object, then the final inputs, the receipt and a ``packet@1``
         object that names the record. The record bytes are the bytes of ``run.jsonl`` from
-        ``write``. The record keeps its ``groundgate-run/4`` keys, so the store cannot replay
+        ``write``. The record keeps its ``groundgate-run/5`` keys, so the store cannot replay
         the run yet (#429): ``RunResult.read(folder)`` stays the replay path.
 
         ``packs`` are the packs that the saved schema names, as for ``read``. ``save`` writes only
@@ -445,6 +447,12 @@ def _queries(name: str, field: Json) -> tuple[list[str], int]:
             else:
                 omitted += 1
     return retained, omitted
+
+
+def _names(name: str, field: Json) -> set[str]:
+    """The case-folded full title and aliases. The common word rule (#494) never drops them."""
+    raw = [name.replace("_", " "), *(field.get("aliases") or [])]
+    return {" ".join(query.split()).casefold() for query in raw}
 
 
 class _ByteOffsets:
@@ -929,56 +937,95 @@ class _Engine:
     def search(self, name: str) -> tuple[list[Json], list[tuple[int, int, int, int, str]]]:
         """The regions of the first sweep in location order. If no region fits the prompt, also
         every ranked region in rank order, for the second sweep (#382)."""
-        queries, omitted_queries = _queries(name, self.schema.to_dict()["fields"][name])
+        field = self.schema.to_dict()["fields"][name]
+        queries, omitted_queries = _queries(name, field)
+        names = _names(name, field)
         matches: list[Json] = []
         windows: dict[str, list[tuple[int, int, int, int, int]]] = {s: [] for s in self.sources}
         omitted_matches = 0
+        common_queries: list[Json] = []
+        for source, text in self.sources.items():
+            if source not in self.folded_sources:
+                self.folded_sources[source] = _Folded.build(text)
+        context = self.settings.search_context_chars
+        total = sum(len(text) for text in self.sources.values())
         # Query order is priority: title, aliases, title words, then description words.
-        # Stream all hits, but retain only a fixed-size pool before allocating windows.
+        # Stream all hits, but retain only a fixed-size pool before allocating windows. Each
+        # query scans each source once: the same pass counts the cover of its windows (#494).
         for rank, query in enumerate(queries):
+            hits: list[tuple[str, int, int]] = []
+            overflow = count = covered = 0
             for source, text in self.sources.items():
-                if source not in self.folded_sources:
-                    self.folded_sources[source] = _Folded.build(text)
+                low = high = 0
                 for start, end in _matches(self.folded_sources[source], query):
-                    if len(matches) >= _SEARCH_MATCH_LIMIT:
-                        omitted_matches += 1
-                        continue
-                    matches.append(
-                        {
-                            "source": source,
-                            "query": query,
-                            "rank": rank,
-                            "start": self.offsets[source].to_bytes(start),
-                            "end": self.offsets[source].to_bytes(end),
-                        }
+                    count += 1
+                    window = (max(0, start - context), min(len(text), end + context))
+                    if window[0] > high:
+                        covered += high - low
+                        low = window[0]
+                    high = max(high, window[1])
+                    if len(matches) + len(hits) >= _SEARCH_MATCH_LIMIT:
+                        overflow += 1
+                    else:
+                        hits.append((source, start, end))
+                covered += high - low
+            # A word is common when the merged windows of all its matches cover more than half
+            # of the source characters and more than max_region_chars (#494). It identifies no
+            # place. The second limit keeps each word of a short document. A name is never
+            # common.
+            if (
+                query.casefold() not in names
+                and 2 * covered > total
+                and covered > self.settings.max_region_chars
+            ):
+                common_queries.append({"query": query, "matches": count})
+                continue
+            omitted_matches += overflow
+            for source, start, end in hits:
+                matches.append(
+                    {
+                        "source": source,
+                        "query": query,
+                        "rank": rank,
+                        "start": self.offsets[source].to_bytes(start),
+                        "end": self.offsets[source].to_bytes(end),
+                    }
+                )
+                windows[source].append(
+                    (
+                        max(0, start - context),
+                        min(len(self.sources[source]), end + context),
+                        rank,
+                        start,
+                        end,
                     )
-                    windows[source].append(
-                        (
-                            max(0, start - self.settings.search_context_chars),
-                            min(len(text), end + self.settings.search_context_chars),
-                            rank,
-                            start,
-                            end,
-                        )
-                    )
+                )
         ranked: list[tuple[int, int, int, int, str]] = []
         cut_regions: list[Json] = []
+        cut_matches = 0
         size = self.settings.max_region_chars
         for source_order, (source, spans) in enumerate(windows.items()):
             # Each merged region keeps its best match: the best rank, then the first position.
-            merged: list[tuple[int, int, int, int, int]] = []
+            # A merged region also keeps the spans of all its matches, for the cut (#494).
+            merged: list[tuple[int, int, int, int, int, list[tuple[int, int]]]] = []
             for start, end, rank, match_start, match_end in sorted(spans):
                 if merged and start <= merged[-1][1]:
                     previous = merged[-1]
-                    best = previous[2:] if previous[2] <= rank else (rank, match_start, match_end)
-                    merged[-1] = (previous[0], max(end, previous[1]), *best)
+                    best = previous[2:5] if previous[2] <= rank else (rank, match_start, match_end)
+                    previous[5].append((match_start, match_end))
+                    merged[-1] = (previous[0], max(end, previous[1]), *best, previous[5])
                 else:
-                    merged.append((start, end, rank, match_start, match_end))
-            for start, end, rank, match_start, match_end in merged:
+                    merged.append(
+                        (start, end, rank, match_start, match_end, [(match_start, match_end)])
+                    )
+            for start, end, rank, match_start, match_end, found in merged:
                 if end - start > size:
                     # A large region is cut to a window around its best match, not dropped.
                     middle = (match_start + match_end) // 2
                     left = min(max(start, middle - size // 2), end - size)
+                    # A cut that keeps every match keeps less context, but loses no match.
+                    lost = sum(1 for a, b in found if a < left or b > left + size)
+                    cut_matches += lost
                     cut_regions.append(
                         {
                             "source": source,
@@ -986,6 +1033,7 @@ class _Engine:
                             "end": self.offsets[source].to_bytes(end),
                             "kept_start": self.offsets[source].to_bytes(left),
                             "kept_end": self.offsets[source].to_bytes(left + size),
+                            "cut_matches": lost,
                         }
                     )
                     start, end = left, left + size
@@ -1012,6 +1060,7 @@ class _Engine:
             queries=queries,
             query_limit=_SEARCH_QUERY_LIMIT,
             omitted_queries=omitted_queries,
+            common_queries=common_queries,
             matches=matches,
             match_limit=_SEARCH_MATCH_LIMIT,
             omitted_matches=omitted_matches,
@@ -1026,7 +1075,7 @@ class _Engine:
                 or omitted_matches
                 or omitted_queries
                 or trimmed_regions
-                or cut_regions
+                or cut_matches
                 else "searched"
             ),
         )

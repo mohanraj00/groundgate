@@ -115,6 +115,8 @@ For a field with no first-pass candidate, the runner searches the supplied texts
 field name, aliases and description. One targeted call gets only the selected regions and
 asks for that field. Title and alias matches take priority over individual description words.
 English function words such as "the" and "and" are not individual word queries (#466).
+A word whose matches cover most of the document, such as "year" in an annual report, is left
+out of the search and listed in `common_queries` (#494).
 The search uses at most the first 64 distinct queries in that priority order and records
 `omitted_queries`. It retains at most 1024 match records; omitted counts and truncation stay in
 the record. Each retained query still scans every supplied source to count all its hits,
