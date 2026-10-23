@@ -4,6 +4,7 @@ Status: approved on 2026-10-20, issue #288. Code issue 1 is built: `groundgate.s
 Code issue 2 is built: packets and readings (#403).
 Code issue 3 is built: `store check`, `store rebuild` and `store forget` (#404).
 The `splits` log and the calibrate labels of code issue 5 are built (#456, #406).
+Code issue 4 is built: `RunResult.save(store)` (#405) and `RunResult.load(store, packet)` (#429).
 The rest is not built. The note changes no decision and no receipt.
 [review.md](review.md) (#287) keeps its data here. The last section lists the code issues.
 
@@ -281,9 +282,12 @@ their issues (#432).
   break, not two. If #382 keeps run/2, the key change waits for the next record change.
   0.11.0 released run/3 without the store keys, and 0.12 made `groundgate-run/4` for the search
   queries (#466). 0.13 makes `groundgate-run/5` for the common words of #494. The store keys
-  come with the same `groundgate-run/5` (#429), so 0.13 has one break.
+  come with the same `groundgate-run/5` (#429), so 0.13 has one break. Each line that names an
+  object by its run key also names its store key, and the run keys stay. Thus the `run_keys` of
+  the deleted log (§7.1) keep their meaning.
 - `RunResult.write(folder)` stays for run folders. A new `RunResult.save(store)` writes the
   objects, the record and the packet into the store, and returns the packet key.
+  `RunResult.load(store, packet)` replays the run from that key alone, with no model call.
 - A run/2 folder cannot move into the store with new keys, because its record names the old keys.
   It stays a folder, and `RunResult.read` replays it as today.
 

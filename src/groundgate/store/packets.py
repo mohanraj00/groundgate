@@ -76,7 +76,8 @@ class InputGone(StoreError):
 class Packet:
     """The inputs of one ``admit`` call, from the store. The members are the arguments of
     ``verify`` and ``render``. ``layout`` is the layout of the reading as a dict, if the packet
-    names a reading of a PDF and ``load_packet`` got it."""
+    names a reading of a PDF and ``load_packet`` got it. ``run`` is the key of the run record,
+    or ``None``."""
 
     key: str
     receipt: dict[str, Any]
@@ -90,6 +91,7 @@ class Packet:
     packs: list[Any]
     reading: str | None
     layout: dict[str, Any] | None = None
+    run: str | None = None
 
     def inputs(self) -> dict[str, Any]:
         """The keyword arguments of ``verify`` and ``render`` after the first four."""
@@ -523,4 +525,5 @@ def load_packet(store: Store, k: str, *, layout: bool = False) -> Packet:
         packs=[_get_json(store, "pack@1", p) for p in packs],
         reading=obj["reading"],
         layout=layout_dict,
+        run=obj["run"],
     )
