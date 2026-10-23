@@ -480,7 +480,7 @@ extra measure:
      report. Without `--store`, a 0.10 work folder works as before, with `labels.json`.
 - **#383, the development split.** Section 10, point 3.
 - **#285, the document model.** The `structure` kind, and a node id as a place in a task, come
-  with the document model in 0.12.
+  with the document model in 0.13.
 - **#66.** A model that answers review tasks is a judge. It stays outside `admit`, and this note
   adds none.
 
@@ -512,5 +512,5 @@ issues 1 and 2. No issue changes a decision.
    the word-box view, so that I can compare it with the pdf.js pages of the bench.
 6. **Calibrate labels through the review server.** After #385. Calibrate items become blind
    tasks, and `labels.json` becomes a view. Needs a security review.
-7. **Later kinds.** `structure` with #285 in 0.12. `closed_set` after a spec issue for the
+7. **Later kinds.** `structure` with #285 in 0.13. `closed_set` after a spec issue for the
    options. `model_text` after an issue for its input. The OCR crop with #7.

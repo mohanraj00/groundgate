@@ -276,8 +276,8 @@ split, so I do not claim a difference between the arms. No document stopped at a
 absences. The cause: #382 cuts a region longer than 6,000 characters, a cut marks the search
 truncated, and the bench writes an absence only for a search that is not truncated. The queries
 of each field include words such as "the" and "and", so the regions cover most of the document.
-So its miss rate is not comparable with the 0.10 `groundgate.extract` on `bench/requested3`. Both
-problems are open for 0.12 (#464, #466).
+So its miss rate is not comparable with the 0.10 `groundgate.extract` on `bench/requested3`. 0.12
+takes these words out of the queries (#466, #493). The absence problem is open for 0.13 (#464).
 Every arm misses more than 60% of the stated values, so 0.11 does not meet the goal on this set.
 [bench/requested4/RESULTS.md](bench/requested4/RESULTS.md) has every number.
 
@@ -487,7 +487,7 @@ a changed document, schema, policy, candidate or outcome.
 
 ## Status
 
-Alpha. groundgate 0.11.0 implements spec v0.11. [CHANGELOG.md](CHANGELOG.md) lists what each version
+Alpha. groundgate 0.12.0 implements spec v0.11. [CHANGELOG.md](CHANGELOG.md) lists what each version
 changes, with its measure. 0.11 adds the store (#288, #402 to #405), the review step and its local
 page (#287, #408 to #412), and `groundgate calibrate` inside groundgate (#385). It reads currency
 headings and currency names (#367, #368, #423), refuses a bad field name (#359), and cuts large
