@@ -632,6 +632,14 @@ class FolderStore:
         self._replace(folder, folder / name, data)
         return f"views/{name}"
 
+    def read_view(self, name: str) -> bytes:
+        """The bytes of the view file ``views/<name>``. A view that is not there raises
+        ``NotFound``. A view is untrusted: the caller checks each value that it uses."""
+        if not _VIEW.fullmatch(name):
+            raise ValueError(f"{_short(name)} is not a view name")
+        folder = self._folder(["views"], make=False)
+        return self._file(folder / name, f"views/{name}")
+
     def _append(self, log: LogName, record: Record) -> str:
         word, _ = _check_log(log)
         body = _check_record(record)
