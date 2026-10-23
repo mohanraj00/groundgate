@@ -102,9 +102,20 @@ def label_task(
         "parts": parts,
         "codes": [],
         "choices": choices,
-        # the value span only: a role item, such as the key evidence, would show the candidate
-        "places": _places([{"evidence": d.get("evidence"), "ref": d.get("ref")}], layout),
+        # the value only: a role item, such as the key evidence, would show the candidate
+        "places": _places([{"evidence": _value_span(text, span, d["value"]), "ref": None}], layout),
     }
+
+
+def _value_span(text: str, span: tuple[int, int], value: object) -> dict[str, int]:
+    """The byte span of the value in the evidence, as the label page marks it
+    (``questions.mark``): the first number token that equals the value, or the whole evidence
+    when there is none."""
+    from ..calibrate.questions import mark
+
+    a, b = mark(text, span[0], span[1], value)
+    start = len(text[:a].encode("utf-8"))
+    return {"start": start, "end": start + len(text[a:b].encode("utf-8"))}
 
 
 def label_tasks(

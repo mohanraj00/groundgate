@@ -786,5 +786,28 @@ def test_a_calibrate_task_marks_only_the_value(tmp_path: Path) -> None:
     tasks = label_tasks("sha256:" + "0" * 64, receipt, TEXT, Schema.from_dict(SCHEMA),
                         raw_schema=SCHEMA)  # fmt: skip
     assert len(tasks) == 2
+    # the span "Revenue was 4,100." holds more text than the value: the place is "4,100" only
+    number = evidence("4,100")
     for _, task in tasks.values():
-        assert task["places"] == [{**value, "page": None, "box": None}]
+        assert task["places"] == [{**number, "page": None, "box": None}]
+        start, end = task["places"][0]["start"], task["places"][0]["end"]
+        assert TEXT.encode()[start:end] == b"4,100"
+
+
+@pytest.mark.parametrize("question", ["field", "key"])
+def test_the_label_page_and_the_stored_task_mark_the_same_value(
+    tmp_path: Path, question: str
+) -> None:
+    store = tmp_path / "store"
+    old, new = sampled(tmp_path, question, None), sampled(tmp_path, question, store)
+    items = json.loads((old / "items.json").read_text())
+    tasks = json.loads((new / "tasks.json").read_text())
+    text = (old / "docs" / "doc0.txt").read_text()
+    with FolderStore(store) as s:
+        for it in items:
+            task = json.loads(s.get("task@1", tasks[it["id"]]["task"]))
+            (place,) = task["places"]
+            a, b = it["mark"]  # code points, as the label page marks them
+            start = len(text[:a].encode())
+            assert (place["start"], place["end"]) == (start, start + len(text[a:b].encode()))
+            assert text[a:b] in ("4,100", "5,200")
