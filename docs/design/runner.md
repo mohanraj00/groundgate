@@ -516,8 +516,8 @@ whose `run` names the record. It writes only the objects that the record names, 
 run that is not complete too. Before the first write, it checks each object against its key and
 runs `admit` again on the stored inputs. If that gives another receipt, it raises before it
 writes. A store error during the writes can leave objects that no packet names. The record
-keeps its `groundgate-run/5` keys, so a store cannot replay the run yet: the store keys come with
-the next record version (#429). `RunResult.read(folder)` stays the replay path.
+keeps its runner keys, so a store cannot replay the run yet: the store keys come with
+`groundgate-run/5` too (#429), in 0.13. `RunResult.read(folder)` stays the replay path.
 
 Two fields are reserved for the document model (#285), so that a later reader output needs no
 new log format. An input of `kind: "document"` will name an extracted document and its reader
