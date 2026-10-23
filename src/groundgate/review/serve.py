@@ -38,6 +38,7 @@ import unicodedata
 from collections.abc import Callable, Collection, Mapping
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
+from decimal import MAX_PREC, Context, Decimal, Inexact, InvalidOperation
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from importlib.resources import files
 from typing import Any
@@ -48,7 +49,24 @@ from ..escape import escape
 from ..model import PacketError, Schema
 from ..read.layout import Layout
 from ..read.markup import html_text
-from ..text import canonical, normalize_ws, parse_value, quote_pattern, scaled_value, tokens
+from ..text import (
+    Token,
+    bracket_sign,
+    brackets_around,
+    canonical,
+    gain_word,
+    item_scale,
+    loss_sign,
+    normalize_ws,
+    parse_value,
+    quote_pattern,
+    scale_powers,
+    scaled_value,
+    sentence,
+    token_scale,
+    tokens,
+    using,
+)
 from .labels import QUESTIONS, label_tasks
 from .resolve import (
     CORRECTIONS,
@@ -92,7 +110,9 @@ _API = re.compile(r"/api/(task|reason)/(.*)")
 _TICKET = re.compile(r"/frame/([A-Za-z0-9_-]{22})")
 CONTEXT_LINES = 5  # the lines before and after a value in the text view
 SPAN_LINES = 12  # a place with more lines than this shows its two ends, and the middle is closed
+SCALE_LINES = 10  # the lines above a selected number where the page looks for a scale (#496)
 MAX_TICKETS = 32
+_EXACT = Context(prec=MAX_PREC, traps=[Inexact])  # a power of ten with no rounding, as in admit
 MAX_PARTS = 8
 ROLES = ("sign", "scale", "unit", "field", "key")
 _SETTLED = frozenset({"admitted", "confirmed", "chosen", "corrected", "not_in_document"})
@@ -553,10 +573,54 @@ class Review:
             raise Refused(400, "the selection is not a span inside the text")
         return a, b, doc.units.to_bytes(a), doc.units.to_bytes(b)
 
+    def _part_scale(self, doc: _Doc, body: Mapping[str, Any]) -> int | None:
+        """The power of ten of the first scale part of a request that gives one, or None."""
+        parts = body.get("parts")
+        for p in parts[:MAX_PARTS] if isinstance(parts, list) else []:
+            if isinstance(p, Mapping) and p.get("role") == "scale":
+                a, b, _, _ = self._span(doc, p.get("start"), p.get("end"))
+                power = item_scale(doc.units.text, a, b)
+                if power is not None:
+                    return power
+        return None
+
+    def _part_sign(
+        self, doc: _Doc, body: Mapping[str, Any], tok: Token, prefixes: list[str]
+    ) -> bool:
+        """Whether a sign part of a request makes the number negative, as admit reads a sign
+        item (SPEC §4.6): brackets around the number inside the part, or a loss word before it
+        in the same sentence. Call it with the vocabulary of the packet."""
+        text = doc.units.text
+        parts = body.get("parts")
+        for p in parts[:MAX_PARTS] if isinstance(parts, list) else []:
+            if not isinstance(p, Mapping) or p.get("role") != "sign":
+                continue
+            a, b, _, _ = self._span(doc, p.get("start"), p.get("end"))
+            br = brackets_around(text, tok, prefixes)
+            if br is not None and a <= br[0] and br[1] <= b:
+                return True
+            if b <= tok.start and loss_sign(text, a, b, tok.start):
+                between = text[a : tok.start]
+                if (
+                    a >= sentence(text, tok.start)[0]
+                    and not tokens(text, a, tok.start)
+                    and "\n" not in between
+                    and "\t" not in between
+                    and not gain_word(text, a, tok.start)
+                ):
+                    return True
+        return False
+
     def _candidate(
         self, doc: _Doc, slot: Slot, task: Mapping[str, Any], body: Mapping[str, Any]
     ) -> dict[str, Any]:
         """The person's candidate from a selection (§8, A correction is a selection)."""
+        with using(doc.schema.vocabulary):  # the scale words of the packet's packs
+            return self._read_candidate(doc, slot, task, body)
+
+    def _read_candidate(
+        self, doc: _Doc, slot: Slot, task: Mapping[str, Any], body: Mapping[str, Any]
+    ) -> dict[str, Any]:
         a, b, start, end = self._span(doc, body.get("start"), body.get("end"))
         spec = doc.schema.fields[slot.field]
         typed = body.get("value")
@@ -573,8 +637,12 @@ class Review:
                 found = [t for t in tokens(doc.units.text, a, b) if t.value is not None]
                 if not found or found[0].value is None:
                     raise Refused(400, "the selection has no number: select it, or type it")
-                # The value in full (§8): a scale word or suffix inside the selection scales it.
+                # The value in full (§8): a scale word or suffix inside the selection scales it,
+                # else a cited scale part (#496).
                 scaled = scaled_value(doc.units.text[:b], found[0])
+                power = self._part_scale(doc, body) if scaled is None else None
+                if power is not None:
+                    scaled = found[0].value.scaleb(power, _EXACT)
                 number = found[0].value if scaled is None else scaled
             candidate["value"] = canonical(number)
             units = [c["unit"] for c in task["choices"] if isinstance(c["unit"], str)]
@@ -601,6 +669,94 @@ class Review:
         candidate["proposer"] = f"person:{self.reviewer}"
         candidate["evidence"] = evidence
         return candidate
+
+    def _ask(
+        self,
+        doc: _Doc,
+        slot: Slot,
+        task: Mapping[str, Any],
+        body: Mapping[str, Any],
+        candidate: Mapping[str, Any],
+    ) -> list[dict[str, str]]:
+        """The parts of a number correction that do not agree, each with its part and the words
+        that the page shows (#496). The page asks again before it saves. The value must be the
+        selected number with the scale and the sign of the text near it: a scale in the
+        selection, a cited scale part, or a scale word on the lines above it. A choice of the
+        task that differs only in its sign is also a question."""
+        if task["item"] != "number":
+            return []
+        with using(doc.schema.vocabulary):  # the scale and loss words of the packet's packs
+            return self._ask_number(doc, slot, task, body, candidate)
+
+    def _ask_number(
+        self,
+        doc: _Doc,
+        slot: Slot,
+        task: Mapping[str, Any],
+        body: Mapping[str, Any],
+        candidate: Mapping[str, Any],
+    ) -> list[dict[str, str]]:
+        a, b, _, _ = self._span(doc, body.get("start"), body.get("end"))
+        text = doc.units.text
+        found = [t for t in tokens(text, a, b) if t.value is not None]
+        value = Decimal(candidate["value"])  # canonical() of a parsed number: finite
+        if not found or value == 0:
+            return []
+        # each number that the value matches at some scale. admit takes one of them by its unit,
+        # so the scale and sign questions read each one.
+        abs_value = value.copy_abs()
+        matched = [
+            t for t in found if t.value is not None and abs_value in _scaled(t.value.copy_abs())
+        ]
+        spec = doc.schema.fields[slot.field]
+        out = []
+        cited = self._part_scale(doc, body) is not None  # a part with no scale asks too
+        for m in (matched or found[:1]) if not cited and spec.unit != "%" else []:
+            # the first number as written with a scale above it gets the question
+            assert m.value is not None
+            near = _near_scale(text, m) if token_scale(text[:b], m) is None else None
+            if near is not None and abs_value == m.value.copy_abs():
+                power, line = near
+                full = abs_value.scaleb(power, _EXACT)
+                out.append({"part": "scale", "text": (
+                    f"The value is the number as written, {text[m.start : m.end]}, but the text "
+                    f'above it gives a scale: "{line}". If the scale applies, select the scale '
+                    f'words, or type the value in full: {canonical(full)}, with "-" for a '
+                    "negative value."
+                )})  # fmt: skip
+                break
+        # as admit reads it: brackets make a sign only on a field with a unit, or a cited sign part
+        signs = doc.schema.units.get(spec.unit, ([], []))[0] if spec.unit is not None else None
+        prefixes = signs if signs is not None else []
+        for m in matched:  # the first number with the other sign gets the question
+            assert m.value is not None
+            negative = (
+                m.value < 0
+                or bracket_sign(text, m, signs)
+                or self._part_sign(doc, body, m, prefixes)
+            )
+            if (value < 0) != negative:
+                out.append({"part": "sign", "text": (
+                    f"The value is {_sign(value)}, but the text writes the number "
+                    f"{text[m.start : m.end]} as {'negative' if negative else 'positive'}."
+                )})  # fmt: skip
+                break
+        for n, c in enumerate(task["choices"], 1):
+            try:
+                other = Decimal(c["value"])
+            except (InvalidOperation, TypeError):
+                continue
+            if not other.is_finite() or other == 0 or (other < 0) == (value < 0):
+                continue
+            if other.copy_abs() in _scaled(value.copy_abs()) or value.copy_abs() in _scaled(
+                other.copy_abs()
+            ):
+                out.append({"part": "sign", "text": (
+                    f"The value is {_sign(value)}, but value {n} of the task is "
+                    f"{_sign(other)}: {c['shown']}. Read the sign that the field description "
+                    "asks for. For a positive amount, select the number without its sign."
+                )})  # fmt: skip
+        return out
 
     def check(self, body: Mapping[str, Any]) -> dict[str, Any]:
         """Run the ``admit`` call of ``review resolve`` for a correction, and give the outcome
@@ -634,6 +790,7 @@ class Review:
             "keep": [c for c in d["codes"] if c not in INFO],
             "missing": list(d.get("missing") or []),
             "shown": shown,
+            "ask": self._ask(doc, slot, task, body, candidate),
         }
 
     def answer(self, body: Mapping[str, Any]) -> dict[str, Any]:
@@ -692,6 +849,11 @@ class Review:
                     raise Refused(409, "keep each code of the correction: " + ", ".join(left))
         except AnswerError as exc:
             raise Refused(400, f"the answer breaks its task: {exc.reason}") from exc
+        if candidate is not None and body.get("parts_seen") is not True:
+            ask = self._ask(doc, slot, task, body, candidate)
+            if ask:
+                words = " ".join(x["text"] for x in ask)
+                raise Refused(409, "the parts of the correction do not agree: " + words)
         try:
             self.store.append(("answers", doc.key, reviewer_key(self.reviewer)), record)
         except (StoreError, ValueError) as exc:  # ValueError: a number out of the JSON range
@@ -700,6 +862,34 @@ class Review:
             ) from exc
         self._refresh(doc.key)
         return self.queue()
+
+
+def _near_scale(text: str, tok: Token) -> tuple[int, str] | None:
+    """The nearest scale word or currency scale above a number on its page (#496): on its line
+    before it, or on one of the ``SCALE_LINES`` lines above it. Its power of ten, and the words
+    of its line. This is a question for the person, not a decision of the gate."""
+    end = tok.start
+    for _ in range(SCALE_LINES + 1):
+        start = text.rfind("\n", 0, end) + 1
+        page = text.rfind("\f", start, end)
+        start = max(start, page + 1)
+        power = item_scale(text, start, end)
+        if power is not None:
+            line = normalize_ws(text[start:end]).strip()
+            return power, line if len(line) <= 80 else line[:77] + "..."
+        if page >= 0 or start == 0:
+            return None
+        end = start - 1
+    return None
+
+
+def _scaled(amount: Decimal) -> set[Decimal]:
+    """``amount`` at each scale that the reader knows, and not scaled."""
+    return {amount.scaleb(p, _EXACT) for p in scale_powers()}
+
+
+def _sign(value: Decimal) -> str:
+    return "negative" if value < 0 else "positive"
 
 
 def _inert(source: str) -> str:
