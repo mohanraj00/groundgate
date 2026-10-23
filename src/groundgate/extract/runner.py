@@ -1421,7 +1421,9 @@ class _Engine:
                     right = left + size
                     header = None
                     if self.document is not None and source == "document":
-                        left, right, header = self.snap(left, right, start, end)
+                        left, right, header = self.snap(
+                            left, right, start, end, match_start, match_end
+                        )
                     # A cut that keeps every match keeps less context, but loses no match.
                     lost = sum(1 for a, b in found if a < left or b > right)
                     cut_matches += lost
@@ -1498,10 +1500,12 @@ class _Engine:
         return retained, [] if retained else ranked
 
     def snap(
-        self, left: int, right: int, lo: int, hi: int
+        self, left: int, right: int, lo: int, hi: int, match_start: int, match_end: int
     ) -> tuple[int, int, tuple[int, int] | None]:
         """Move the ends of a cut region to the nearest row boundary inside the merged region
-        [lo, hi), or to the nearest cell boundary when no row boundary is inside it. Also give
+        [lo, hi), or to the nearest cell boundary when no row boundary is inside it. An end moves
+        only to a boundary that keeps the best match [match_start, match_end) inside the region;
+        if no boundary keeps it, that end does not move. Also give
         the span of the header rows of the table at its start when the cut region does not hold
         them (docs/design/document-model.md §10). The offsets are code points."""
         document = self.document
@@ -1515,19 +1519,20 @@ class _Engine:
                 node = None if node.parent is None else document.nodes[node.parent]
             return node
 
-        def boundary(at: int) -> int:
+        def boundary(at: int, keeps: Callable[[int], bool]) -> int:
             row = holder(at, "row")
             if row is None or not row.start < offsets.to_bytes(at) < row.end:
                 return at
             # A row boundary keeps whole rows. A cell boundary is the second choice.
             cells = [x for c in document.children(row.id) for x in (c.start, c.end)]
             for marks in ((row.start, row.end), cells):
-                places = [c for c in map(offsets.to_chars, marks) if lo <= c <= hi]
+                places = [c for c in map(offsets.to_chars, marks) if lo <= c <= hi and keeps(c)]
                 if places:
                     return min(places, key=lambda c: (abs(c - at), c))
             return at
 
-        new_left, new_right = boundary(left), boundary(right)
+        new_left = boundary(left, lambda c: c <= match_start)
+        new_right = boundary(right, lambda c: c >= match_end)
         if new_left < new_right:
             left, right = new_left, new_right
         table = holder(left, "table")

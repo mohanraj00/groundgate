@@ -323,3 +323,34 @@ def test_a_node_of_any_role_outside_the_prompt_is_a_protocol_failure(tmp_path: P
     )
     assert any(e["kind"] == "protocol_failure" for e in result.record)
     assert all(d.outcome != "admitted" for d in result.receipt.decisions)
+
+
+def kept_match(tmp_path: Path, rows: list[str]) -> tuple[dict[str, Any], str]:
+    """The cut region and the text of the last prompt, for a search of "revenue" in a table."""
+    cells = "".join(f"<tr><td>{r}</td></tr>" for r in rows)
+    doc = document(tmp_path, f"<table><tr><th>Item</th><th>Year</th></tr>{cells}</table>")
+    schema = {"fields": {"revenue": {"type": "integer"}}}
+    client = Client()
+    result = run(doc, client, schema, search_context_chars=100, max_region_chars=100)
+    search = next(e for e in result.record if e["kind"] == "search")
+    match = min(search["matches"], key=lambda m: m["rank"])
+    (cut,) = search["cut_regions"]
+    assert cut["kept_start"] <= match["start"] and match["end"] <= cut["kept_end"]
+    assert replay(result.record, result.artifacts, doc, schema).ok
+    return cut, " ".join(s["text"] for s in body(client.prompts[-1])["sources"])
+
+
+def test_a_snapped_cut_keeps_its_match(tmp_path: Path) -> None:
+    # The reproduction of the review of #527: both ends snapped past the match.
+    _, sent = kept_match(tmp_path, ["filler " * 50 + "Revenue 5", "other " * 20])
+    assert "Revenue 5" in sent
+
+
+def test_the_left_end_of_a_cut_does_not_move_past_its_match(tmp_path: Path) -> None:
+    _, sent = kept_match(tmp_path, ["filler " * 50 + "Revenue 5", "other " * 50])
+    assert "Revenue 5" in sent
+
+
+def test_the_right_end_of_a_cut_does_not_move_past_its_match(tmp_path: Path) -> None:
+    _, sent = kept_match(tmp_path, ["other " * 50, "Revenue 5 " + "filler " * 50])
+    assert "Revenue 5" in sent
