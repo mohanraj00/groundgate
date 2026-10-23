@@ -51,7 +51,7 @@ from ..read.layout import Layout
 from ..read.markup import html_text
 from ..text import (
     Token,
-    brackets_around,
+    bracket_sign,
     canonical,
     item_scale,
     normalize_ws,
@@ -670,8 +670,9 @@ class Review:
                 f'scale: "{line}". If the scale applies, select the scale words, or type the '
                 f'value in full: {canonical(full)}, with "-" for a negative value.'
             )})  # fmt: skip
-        prefixes = doc.schema.units.get(spec.unit, ([], []))[0] if spec.unit else []
-        negative = tok.value < 0 or brackets_around(text, tok, prefixes) is not None
+        # as admit reads it: brackets make a sign only on a field with a unit
+        signs = doc.schema.units.get(spec.unit, ([], []))[0] if spec.unit is not None else None
+        negative = tok.value < 0 or bracket_sign(text, tok, signs)
         if (value < 0) != negative and value.copy_abs() in _scaled(tok.value.copy_abs()):
             out.append({"part": "sign", "text": (
                 f"The value is {_sign(value)}, but the text writes the number {written} as "

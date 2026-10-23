@@ -676,6 +676,32 @@ def test_a_part_with_no_scale_keeps_the_scale_question(tmp_path: Path) -> None:
     assert review.check({**body, "parts": [million]})["ask"] == []
 
 
+@pytest.mark.parametrize(
+    ("text", "unit", "asked"),
+    [
+        ("Employees (100) in 2025.\n", None, []),  # no unit: brackets make no sign
+        ("Result ($100) in 2025.\n", "USD", ["sign"]),  # a unit: brackets make it negative
+    ],
+)
+def test_brackets_make_a_sign_only_with_a_unit(
+    tmp_path: Path, text: str, unit: str | None, asked: list[str]
+) -> None:
+    """#496: the sign question reads brackets as admit does."""
+    field: dict[str, Any] = {"type": "number"}
+    if unit is not None:
+        field["unit"] = unit
+    at = text.index("100")
+    candidates = [{"id": "c1", "field": "f", "value": "5", "evidence": {"start": 0, "end": 3}}]
+    if unit is not None:
+        candidates[0]["unit"] = unit
+    store = FolderStore(tmp_path / "store")
+    k, _ = admit_packet(store, text, {"fields": {"f": field}}, candidates, None, None, None)
+    ((tk, _),) = write_tasks(store, k, EVERY).tasks
+    check = Review(store, "ana").check({"task": tk, "verdict": "correct", "start": at,
+                                        "end": at + 3})  # fmt: skip
+    assert [a["part"] for a in check["ask"]] == asked
+
+
 def test_a_field_with_no_definition_gives_none(served: Served) -> None:
     _, _, tasks, call, _ = served
     view = json.loads(call("GET", f"/api/task/{tasks['revenue']}")[2])

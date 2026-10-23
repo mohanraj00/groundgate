@@ -825,6 +825,12 @@ def brackets_around(text: str, tok: Token, prefixes: list[str]) -> tuple[int, in
     return i - 1, k + 1
 
 
+def bracket_sign(text: str, tok: Token, prefixes: list[str] | None) -> bool:
+    """Whether brackets make the token negative (SPEC §4.6). ``prefixes`` is None on a field
+    without a unit, where brackets alone do not make a sign."""
+    return prefixes is not None and brackets_around(text, tok, prefixes) is not None
+
+
 def loss_sign(text: str, start: int, end: int, at: int) -> bool:
     """Whether text[start:end] holds a loss word with no negation directly before it and at most
     four words between it and ``at`` (SPEC §4.6)."""

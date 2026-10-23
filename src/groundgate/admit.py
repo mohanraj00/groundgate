@@ -37,6 +37,7 @@ from .text import (
     HeadingIndex,
     Token,
     UnitPlaces,
+    bracket_sign,
     brackets_around,
     canonical,
     cells,
@@ -378,7 +379,7 @@ def _values(
         out = {tok.value.scaleb(scale)}
     else:
         out = {tok.value}
-    neg = neg_item or (prefixes is not None and brackets_around(t.text, tok, prefixes) is not None)
+    neg = neg_item or bracket_sign(t.text, tok, prefixes)
     if neg:
         out |= {-abs(v) for v in out}
     return out, neg
