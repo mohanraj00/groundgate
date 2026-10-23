@@ -5,7 +5,7 @@ and, as each 0.6 rule lands, under that rule alone. The plan is on #170 and #172
         python bench/sec3/measure.py decide             # spec 0.5, on the released wheel
     uv run --isolated --no-project --no-sources --python 3.12 --with groundgate==0.6.1 \
         python bench/sec3/measure.py decide             # each 0.6 rule, on the released wheel
-    uv run python bench/sec3/measure.py web             # blind labels, http://127.0.0.1:8774
+    uv run python bench/sec3/measure.py web             # blind labels, port 8774
     uv run python bench/sec3/measure.py results [--check]
 
 A person labels every value that a decision admits, and every value whose outcome differs
@@ -22,11 +22,13 @@ import hashlib
 import json
 import sys
 import threading
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
 
 HERE = Path(__file__).parent
+sys.path.append(str(HERE.parent))  # bench/, for localweb
+import localweb  # noqa: E402  (bench/localweb.py)
+
 RUNS = ("claude-haiku-5-5", "gpt-6-luna")
 # each 0.6 rule adds its spec here, decided alone
 SPECS = ("0.5", "0.6 #145 unit", "0.6 #145 scale", "0.6 #159", "0.6 #162")
@@ -190,7 +192,7 @@ def serve(port: int, items: list[dict[str, Any]] | None = None) -> None:
     page = (HERE.parent / "evidence" / "web.html").read_bytes()
     lock = threading.Lock()
 
-    class Handler(BaseHTTPRequestHandler):
+    class Handler(localweb.LocalHandler):
         def log_message(self, *args: Any) -> None:
             pass
 
@@ -229,9 +231,7 @@ def serve(port: int, items: list[dict[str, Any]] | None = None) -> None:
                 tmp.replace(path)  # a reader never sees half a file
             self.send(200, b"{}", "application/json")
 
-    server = ThreadingHTTPServer(("127.0.0.1", port), Handler)
-    print(f"{len(items)} items; open http://127.0.0.1:{port} (Ctrl-C to stop)")
-    server.serve_forever()
+    localweb.serve(Handler, port, f"{len(items)} items")
 
 
 # ------------------------------------------------------------------------------------ results

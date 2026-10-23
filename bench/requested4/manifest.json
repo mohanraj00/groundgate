@@ -3708,5 +3708,14 @@
    },
    "text_sha256": "sha256:3e1a70f37d823a7bca62cb24376e3b551c4186e57c0d6f4826115e48a7ce0909"
   }
- ]
+ ],
+ "code_freeze": {
+  "applies_to": "heldout",
+  "commit": "b27d3d20d6e4c646bac2147936719de68b67d6fc",
+  "frozen_on": "2026-10-21",
+  "last_loop": "loop/04.json",
+  "code_sha256": "sha256:ff84dc72fa2fc720cf3727df89feaf3d2587fc6fd65c26f64ac1fccab1471907",
+  "code_digest_method": "bench/requested/run_set.py source_code_digest(): the imported groundgate package (.py and .json) with run_set.py, metrics.py and loop.py",
+  "note": "Frozen before any held-out model output on this set (#395). loop/04.json has this code digest. #449 reverted #441, so the extraction code is the same as in loop 02. A code change after this freeze voids it."
+ }
 }

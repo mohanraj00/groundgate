@@ -1,16 +1,37 @@
 name: CI
 
 on:
+  # A push to any branch runs CI in a fork, so that an outside contributor can link a green run.
+  # In this repository, which is not a fork, only a push to main runs it. The scope job decides.
   push:
-    branches: [main]
+    branches: ["**"]
   pull_request:
 
+# One group for each PR, and one for each commit on a push. A new PR run cancels the old one. Each
+# push has its own group, so no push run waits or is cancelled, and each commit on main gets a result.
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
-  lint:
+  # The other jobs need this job. If it is skipped, they are skipped too. A skipped check passes a
+  # required check of the same name, so the name of each job is an expression. It gives the
+  # required name only after this job passed. On a skipped job, GitHub shows the expression text.
+  scope:
+    if: >-
+      github.event_name == 'pull_request'
+      || github.ref == 'refs/heads/main' || github.event.repository.fork
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v6
+      - run: echo "Full CI run for the $GITHUB_EVENT_NAME event"
+
+  lint:
+    name: ${{ needs.scope.result == 'success' && 'lint' || 'lint-skipped' }}
+    needs: scope
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
       - run: uv sync --python 3.12
       - run: uv run ruff check .
       - run: uv run ruff format --check .
@@ -21,6 +42,10 @@ jobs:
         run: uv run python examples/irs-590a/build.py && git diff --exit-code examples/
 
   test:
+    name: >-
+      ${{ needs.scope.result == 'success' && 'test' || 'test-skipped' }}
+      (${{ matrix.os }}, ${{ matrix.python }})
+    needs: scope
     strategy:
       fail-fast: false
       matrix:
@@ -28,30 +53,27 @@ jobs:
         python: ["3.10", "3.11", "3.12", "3.13"]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v6
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
       - run: uv sync --python ${{ matrix.python }}
       - run: uv run pytest --cov --cov-report=term-missing
 
   package:
+    name: ${{ needs.scope.result == 'success' && 'package' || 'package-skipped' }} (${{ matrix.os }})
+    needs: scope
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v6
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
         with:
           python-version: "3.10"
       - run: uv build
       - run: uvx twine check --strict dist/*
-      - name: The calibration tool builds as its own package, outside the core wheel
-        run: |
-          uv build --package groundgate-calibrate -o dist-calibrate
-          uvx twine check --strict dist-calibrate/*
-          ! unzip -l dist/*.whl | grep -q groundgate_calibrate
       - name: The wheel installs into a clean venv, and the quickstart and vectors pass against it
         run: |
           python -m venv /tmp/clean
@@ -61,10 +83,12 @@ jobs:
             tests/test_package.py tests/test_readme.py tests/test_conformance.py
 
   langextract:
+    name: ${{ needs.scope.result == 'success' && 'langextract' || 'langextract-skipped' }}
+    needs: scope
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v6
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
       - run: uv sync --python 3.12 --group langextract
       - run: uv run --group langextract pytest tests/test_langextract.py tests/test_bench.py
       - name: v0.1 benchmark results rescore byte for byte on the released 0.1.0 wheel
@@ -118,7 +142,7 @@ jobs:
         run: uv run python bench/pdfrows/pdfrows.py results --check
       - name: String set (#140) results match the recorded decisions and labels
         run: uv run python bench/strings/measure.py results --check
-      - name: Changed-value test (#322) results match the fixed changes, spec 0.10 in process
+      - name: Changed-value test (#322) results match the fixed changes, spec 0.11 in process
         run: uv run python bench/changed/changed.py results --check
       - name: Status-set key calibration report matches its recorded answers, on the 0.6.1 wheel and calibrate 0.2.0
         run: |

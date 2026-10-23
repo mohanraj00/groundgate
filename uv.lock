@@ -17,12 +17,6 @@ resolution-markers = [
     "python_full_version < '3.11'",
 ]
 
-[manifest]
-members = [
-    "groundgate",
-    "groundgate-calibrate",
-]
-
 [[package]]
 name = "absl-py"
 version = "2.5.0"
@@ -1081,7 +1075,6 @@ pdf = [
 
 [package.dev-dependencies]
 dev = [
-    { name = "groundgate-calibrate" },
     { name = "hypothesis" },
     { name = "jsonschema" },
     { name = "mypy" },
@@ -1104,7 +1097,6 @@ provides-extras = ["langextract", "pdf"]
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "groundgate-calibrate", editable = "calibrate" },
     { name = "hypothesis", specifier = ">=6.100" },
     { name = "jsonschema", specifier = ">=4.18" },
     { name = "mypy", specifier = ">=1.10" },
@@ -1115,16 +1107,6 @@ dev = [
     { name = "ruff", specifier = ">=0.6" },
 ]
 langextract = [{ name = "langextract", specifier = ">=1.0" }]
-
-[[package]]
-name = "groundgate-calibrate"
-source = { editable = "calibrate" }
-dependencies = [
-    { name = "groundgate" },
-]
-
-[package.metadata]
-requires-dist = [{ name = "groundgate", editable = "." }]
 
 [[package]]
 name = "h11"

@@ -1,9 +1,11 @@
 # Review: the step that collects a person's answers
 
-Status: approved on 2026-10-20, issue #287. The formats of section 5 (#408) and `review tasks`
-(#409) are built. It changes no decision. The review step keeps its data in the store of
-[store.md](store.md) (#288), so the two notes go together. The last section lists the code
-issues.
+Status: approved on 2026-10-20, issue #287. The formats of section 5 (#408), `review tasks`
+(#409), `review resolve` (#410), `review serve` (#411) and the command `review measures` (#412)
+are built. Calibrate labels through the review server (issue 6, #413) and `answer@2` are built.
+The first measure of section 13, issue 5, waits for answers. This note changes no
+decision. The review step keeps its data in the store of [store.md](store.md) (#288), so the two
+notes go together. The last section lists the code issues.
 
 ## 1. The answers in short
 
@@ -12,7 +14,7 @@ issues.
 | Where the step goes | After `admit`: `read -> extract -> admit -> review -> app`. `report` stays the read-only page. | 3 |
 | How an answer reaches the app | Outside `admit`. An answer never changes the receipt and never enters `admit` as a judgment. A resolution with no model reads the receipt and the answers. | 2, 6 |
 | How a correction is checked | It is a new candidate with a person as proposer. It goes through `admit` with the other candidates of the packet. | 6.2 |
-| The formats | Four store kinds: `review-policy@1`, `task@1`, `answer@1` and `resolution@1`. | 5 |
+| The formats | Four store kinds: `review-policy@1`, `task@1`, `answer@1` (and `answer@2`) and `resolution@1`. | 5 |
 | `unsure` | It never settles a task. The task stays open for another reviewer. | 6.1 |
 | Two reviewers who disagree | The slot is `disputed`, and the app gets no value. Only a reviewer that the review policy names as a lead settles it. | 6.1 |
 | The six item kinds | One question template and one view for each. Format 1 builds number, text and long span. Closed set, model text and structure wait for their inputs. | 7 |
@@ -48,11 +50,15 @@ The module is `groundgate.review`. It is outside `admit`, as `groundgate.extract
 ```bash
 groundgate review tasks    --store DIR PACKET            # write the tasks of one packet
 groundgate review serve    --store DIR --reviewer ana    # answer them in the browser
-groundgate review resolve  --store DIR PACKET            # write and print the resolution
+groundgate review resolve  --store DIR PACKET --reviewer ana --reviewer ben
+                                                         # write and print the resolution
 groundgate review measures --store DIR                   # the measures of section 10
 ```
 
-`PACKET` is the store key of one `admit` call (store.md §5). A user sees this:
+`PACKET` is the store key of one `admit` call (store.md §5). `review resolve` reads the answer
+log of each `--reviewer`. The store interface cannot list logs, and a log file has the digest of
+the name, not the name (store.md §6). The resolution names each log that it read. A user sees
+this:
 
 1. `review serve` prints `http://127.0.0.1:<port>/#<token>`. The user opens it.
 2. The page shows one item. The source page with the value in a box is on the left. The
@@ -167,6 +173,7 @@ each packet.
 | `adjust_span` | The value is right, but its span starts or ends at another place. | `candidate` |
 | `not_in_document` | The document does not give this field. | nothing |
 | `unsure` | The person cannot tell. | nothing |
+| `wrong` | The shown value is not this field, and the person gives no other value. `answer@2` only. | nothing |
 
 - `candidate` is a normal candidate (SPEC §2.5). The checks ignore `proposer`, but the candidate
   digest covers it.
@@ -174,6 +181,13 @@ each packet.
 - `statements` and `nodes` are for model text and structure (section 7). They are null in
   format 1.
 - `reason_seen`, `keys`, `ms` and `time` are for the measures. The resolution never reads them.
+
+`answer@2` is `answer@1` with the verdict `wrong` and the member `field_keys` (#406). A calibrate
+label uses it (section 11). `field_keys` is the list of the keys of the field that the value
+gives, each one time, for `confirm` on a calibrate key task. The list can be empty. In each other
+answer, `field_keys` is null. The name is not `keys`, because `keys` already counts the keys
+that the person pressed. A reader takes both formats, and `review serve` writes `answer@1` for
+each answer that `answer@1` can hold.
 
 ### 5.4 The resolution
 
@@ -222,6 +236,10 @@ logs. It reads no clock and calls no model. The same inputs give the same bytes.
    (section 6.3, point 4). With no lead, the slot stays `disputed`.
 7. An audit answer that confirms the value keeps the slot `admitted`. Each other answer, except
    `unsure`, removes the admitted value. Rules 1 to 6 then apply to the answers of the slot.
+8. `wrong` has no target, so it settles nothing. The slot stays `open` until another answer
+   settles it. Under rule 7, `wrong` removes an admitted value.
+9. An answer to a calibrate task is a label, not a review answer. The resolution checks it
+   against its task, and it settles no slot. The measures leave it out.
 
 Under rule 7, the gate is wrong when one person says so. That is safe for the app, because it
 gets no value until the answers settle. The measure counts an escape only when the slot then
@@ -237,6 +255,12 @@ each such answer, with:
   candidate;
 - the judgments of the packet, without the judgments of the removed candidates. A judgment for
   a candidate that is not in the packet makes the packet invalid (SPEC §2.6).
+
+The writer of the answer chooses the id of the person's candidate. It must differ from each
+candidate id of the packet: if not, a judgment can apply to the wrong candidate, and the
+decision of the person's candidate is not clear. A writer can take the first of `review-1`,
+`review-2` and so on that no candidate of the packet has. The resolution stops on an id of the
+packet, as section 6.3, point 5, says.
 
 The other candidates stay, so a relation (SPEC §3.4) checks the person's value against the
 other fields. The resolution takes from this correction receipt only the decision of the
@@ -365,22 +389,32 @@ The review page needs a script, so it is a separate local server. Its rules:
    This stops DNS rebinding.
 2. Make a random token at start with `secrets`. Put it in the start URL after `#`, so that it
    does not go into a server log. Each API request sends it in a header. Refuse a request
-   without it, so that another site cannot write an answer.
+   without it, so that another site cannot write an answer. A frame cannot send a header, so
+   the frame URL of rule 6 holds a random ticket instead. A ticket works one time and gives
+   only the source of its task.
 3. Accept a POST only with `Content-Type: application/json` and a body of at most 64 KiB.
 4. Send a CSP header with each response: `default-src 'none'; script-src 'self'; style-src
    'self'; connect-src 'self'; frame-src 'self'; img-src 'self'; form-action 'none'; base-uri
-   'none'; frame-ancestors 'none'`. The script and the style are files in the package.
+   'none'; frame-ancestors 'none'`. The script and the style are files in the package. The
+   frame response of rule 6 gets the CSP of rule 6 in place of this CSP.
 5. Put document text into the page only with `textContent`, never with `innerHTML`.
 6. Serve an HTML source in a frame with `sandbox=""` and its own CSP, `default-src 'none';
-   style-src 'unsafe-inline'`. It runs no script and loads no image, so it cannot call an
-   outside host.
+   style-src 'unsafe-inline'; form-action 'none'; base-uri 'none'; frame-ancestors
+   http://127.0.0.1:<port>; sandbox`. It runs no script and loads no image. The CSP does not
+   stop a meta refresh or a link that the person clicks, so the server changes each
+   `http-equiv` and `href` attribute name to `data-equiv` and `data-href`. Thus the frame
+   cannot go to another host. Only the review page can hold the frame.
 7. Read objects only by a store key that matches `sha256:[0-9a-f]{64}`. Take no path or URL from
    a document, a reply, a task or a request.
 8. Check each answer against its task before the write: a verdict that the kind permits, a
    decision in the choices, and a span inside the text.
 
-A PR for the server needs a security review. The calibrate label page follows the same rules
-when it moves into this server (issue 6).
+The server is for one local user. `--reviewer` is a name that the user gives, and the server
+does not authenticate it. Any holder of the token can answer as that name, also when the review
+policy names it as a lead. Thus a lead answer is not an authenticated act.
+
+A PR for the server needs a security review. `groundgate calibrate label --store` uses this
+server, so the calibrate label page follows the same rules (issue 6, section 11).
 
 ## 10. Answers as labels, and the measures
 
@@ -420,7 +454,30 @@ extra measure:
   Answers are logs. The queue and the measures are views.
 - **#385, calibrate in groundgate.** A calibrate item is a blind task, and a calibrate label is
   an answer. Issue 6 moves `groundgate calibrate label` onto this server. Calibrate keeps its
-  work folder in 0.11, and its labels come from a view of the answer logs.
+  work folder, and its labels come from a view of the answer logs. The mapping:
+  1. `calibrate sample --store DIR` writes one `packet@1` for each document. Its text is the
+     document, `source`, `reading`, `judgments` and `run` are null, and its receipt decides the
+     same candidates as the sample. Thus each item is one decision of the receipt.
+  2. Each item becomes one `task@1` with the template `calibrate_field@1` or
+     `calibrate_key@1`. The mode is `audit`, and the task has no code. The slot holds the one
+     decision of the item. A key task is only for a decision with `KEY_NOT_AT_VALUE`, and a
+     field task is only for an admitted decision, as in the sample. The packet schema holds the
+     description of each field, from the schema or from `--descriptions`, and the question of
+     the task shows it. A blank `--descriptions` value removes the description, so the
+     question shows none. A field task has the value as its one choice. A key task has no
+     choice, so the page does not show the key of the candidate. `tasks.json` in the work
+     folder maps each item id to its packet and its task.
+  3. A label is an `answer@2`. For the field question, `confirm` is true, `wrong` is false, and
+     `unsure` is null. For the key question, `confirm` with `field_keys` gives the list of keys,
+     and `unsure` is null.
+  4. The server and the resolution accept a calibrate task only when the packet gives the same
+     task bytes. A calibrate task takes no correction, `/api/reason` gives no code and no
+     outcome, and `/api/check` refuses it.
+  5. `calibrate label --store DIR --reviewer NAME` opens this server on the tasks of the work
+     folder. `calibrate ask --store DIR --reviewer NAME` reads the labels from the answer logs,
+     and keeps the head of each log in the meta of the judge answers. `calibrate report --store
+     DIR` reads the logs only up to those heads, so a later answer cannot change a scored
+     report. Without `--store`, a 0.10 work folder works as before, with `labels.json`.
 - **#383, the development split.** Section 10, point 3.
 - **#285, the document model.** The `structure` kind, and a node id as a place in a task, come
   with the document model in 0.12.

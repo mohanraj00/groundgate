@@ -1,11 +1,11 @@
 """Check, rebuild and forget in a folder store (docs/design/store.md §7.4, §8, §12 issue 3).
 
 ``check`` reads each object and each log of a ``FolderStore``. It finds the kind of each object
-from its key, checks each object that a packet, a reading or a run names, checks each chain,
-compares the inputs of a packet with the inputs that its run header names, and looks for
-document text in each run record. ``rebuild`` builds the views again from the objects and logs.
-``forget_packet`` removes the objects of a packet that §8 rule 3 lists as "Removed", or with
-``everything`` each object and log of the packet.
+from its key, checks each object that a packet, a reading or a run names, checks each chain and
+the view of each splits log (§10), compares the inputs of a packet with the inputs that its run
+header names, and looks for document text in each run record. ``rebuild`` builds the views
+again from the objects and logs. ``forget_packet`` removes the objects of a packet that §8 rule
+3 lists as "Removed", or with ``everything`` each object and log of the packet.
 
 The store data is untrusted. These functions build no path from it: each path comes from a key
 that matches ``sha256:[0-9a-f]{64}`` or from a fixed word.
@@ -71,7 +71,7 @@ _RUN_OBJECTS = {
 # A string of a run record line with this many characters or more, that is also in the
 # document text, is document text.
 MIN_TEXT = 8
-VIEWS = ("readings.json",)
+VIEWS = ("readings.json", "calibrate-labels.json")
 _BYTES = frozenset({"source@1", "text@1", "prompt@1", "reply@1"})
 
 
@@ -290,7 +290,8 @@ def _run(objects: _Objects, k: str) -> _Run:
         raise StoreError(f"the run record {k} is not a run@N object")
     data = objects.store.get(kind, k)
     found = _run_kind(data)
-    assert found is not None  # kind_of found the kind from the header
+    if found is None or found[0] != kind:
+        raise StoreError(f"the header of the run record {k} cannot be read")
     lines = []
     for line in data.decode("utf-8")[:-1].split("\n"):
         value = _canonical(line, f"a line of the run record {k}")
@@ -490,7 +491,7 @@ def check(store: FolderStore, *, repair: bool = False) -> Report:
     report.logs = len(logs)
     for log in logs:
         try:
-            store.read(log)
+            _split_view(report, log, store.read(log))
             continue
         except StoreError as exc:
             if not (repair and isinstance(exc, Torn)):
@@ -500,10 +501,23 @@ def check(store: FolderStore, *, repair: bool = False) -> Report:
             cut = store.repair(log)
             if cut is not None:
                 report.cut.append((_log_rel(log), cut))
-            store.read(log)
+            _split_view(report, log, store.read(log))
         except StoreError as exc:
             report.find(str(exc))
     return report
+
+
+def _split_view(report: Report, log: tuple[str, ...], records: list[dict[str, Any]]) -> None:
+    """A finding for a splits log whose view fails: a bad record, or a second split for one
+    document (§10)."""
+    from .splits import split_view
+
+    if log[0] != "splits":
+        return
+    try:
+        split_view(records, log[1])
+    except ValueError as exc:
+        report.find(f"{_log_rel(log)}: {exc}")
 
 
 # rebuild
@@ -536,8 +550,13 @@ def _reading_cache(objects: _Objects) -> bytes:
 def rebuild(store: FolderStore) -> list[str]:
     """Build each view again from the objects and logs, and return the path of each view
     file. The same objects and logs give the same bytes."""
+    from ..review.labels import labels_view
+
     objects = _Objects(store)
-    return [store.write_view("readings.json", _reading_cache(objects))]
+    return [
+        store.write_view("readings.json", _reading_cache(objects)),
+        store.write_view("calibrate-labels.json", labels_view(store)),
+    ]
 
 
 # forget
@@ -574,6 +593,15 @@ def _others(objects: _Objects, packet: str) -> dict[str, int]:
     return counts
 
 
+def _no_header(store: FolderStore, k: str) -> bool:
+    """True if the object ``k`` can be read but has no run header that ``forget`` can read.
+    This reads the bytes one time and hashes nothing."""
+    try:
+        return _run_kind(store.object_bytes(k)) is None
+    except StoreError:  # it cannot be read, or it went after the walk
+        return False
+
+
 def forget_packet(
     store: FolderStore, packet: str, reason: str, *, everything: bool = False
 ) -> list[tuple[str, str, str, int]]:
@@ -596,11 +624,17 @@ def forget_packet(
     is ``absent``.
 
     An object of the packet that ``forget`` cannot read is ``unchecked``, and the rest is still
-    removed. If the run record names an object that is not found, each object of the store
-    that cannot be read is ``unchecked``, because it can be that object. ``unchecked`` means
-    "could not check", so the same key can also be ``deleted``: a run record whose lines
-    cannot be read is removed, but the prompts, replies and admissions that it names cannot
-    be found.
+    removed. A run record whose lines cannot be read, the header too, is ``unchecked`` and
+    stays, because only the record names its prompts, replies and admissions. With
+    ``everything``, the packet then stays too, so ``check`` and ``forget`` still name the
+    record. An edit gives the record another key, so it cannot repair the record. Put back a
+    copy of the original record, or call ``FolderStore.forget`` on its key: then the objects
+    that it names stay with no record that names them, and a second ``forget`` with
+    ``everything`` removes the packet. If the run record names an object that is not found,
+    each object of the store that cannot be read is ``unchecked``, because it can be that
+    object. ``unchecked`` means "could not check", so
+    the same key can also be ``deleted``: a run record with a header that matches its key as
+    no kind is removed (#486).
 
     Return the kind, the key, the state (``deleted``, ``absent``, ``kept`` or ``unchecked``)
     and the number of other packets that name the key, for each object. A log has the kind
@@ -614,18 +648,29 @@ def forget_packet(
     named = _named(obj)  # a packet with bad members raises: then nothing is known
     plan: list[tuple[str, str, bool]] = []  # the kind, the key, and "remove in any mode"
     unchecked: list[tuple[str, str]] = []
+    unread_runs: list[str] = []  # the run records that cannot be read, which stay
     for k in _keys(obj["run"]):
         kind = objects.kinds.get(k, "absent")
+        if kind is None and _no_header(store, k):
+            # The packet names it as its run record, but the header cannot be read, so the
+            # kind is not known. Keep it, as a record whose lines cannot be read.
+            unchecked.append(("run@N", k))
+            unread_runs.append(k)
+            continue
         if kind is None or kind == "absent" or not kind.startswith("run@"):
-            plan.append(("run@N", k, kind is None))  # a changed record cannot be checked
+            # A record with a header that matches its key as no kind changed, and it goes
+            # (#486).
+            plan.append(("run@N", k, kind is None))
             if kind is None:
                 unchecked.append(("run@N", k))
             continue
         try:
             run = _run(objects, k)
-        except (StoreError, ValueError, RecursionError):  # remove a record that it cannot read
+        except (StoreError, ValueError, RecursionError):
+            # Keep a record whose lines cannot be read: it is the only thing that names its
+            # prompts, replies and admissions.
             unchecked.append((kind, k))
-            plan.append((kind, k, True))
+            unread_runs.append(k)
             continue
         try:
             lines = _holds_text(objects, obj, run)
@@ -681,6 +726,9 @@ def forget_packet(
                     done.append(("log", _log_rel(log), "absent", 0))
                     continue
                 done.append(("log", _log_rel(log), "deleted", 0))
+        if unread_runs:  # the packet stays, so check and forget still name the kept record
+            done.append(("packet@1", packet, "kept", 0))
+            return done
         try:
             store.forget(packet, reason)
         except NotFound:  # another forget removed it after the walk

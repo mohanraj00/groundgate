@@ -10,6 +10,9 @@
   groundgate report   RECEIPT DOC SCHEMA CANDIDATES [--pack-dir DIR] -o report.html
   groundgate report   --store DIR PACKET -o report.html
   groundgate review   tasks --store DIR PACKET          > task keys
+  groundgate review   resolve --store DIR PACKET --reviewer NAME
+  groundgate review   serve --store DIR --reviewer NAME  (the review page on 127.0.0.1)
+  groundgate review   measures --store DIR [--json]     (the measures of the answers)
   groundgate schema   SCHEMA                            > extractor.schema.json
   groundgate schema check SCHEMA
   groundgate store    check   --store DIR [--repair]
@@ -208,6 +211,73 @@ def _parser() -> argparse.ArgumentParser:
         metavar="FILE",
         help="a review-policy@1 JSON file; without it, no audit and no task for a rejected slot",
     )
+    rs = steps.add_parser(
+        "resolve",
+        help="resolve the answers to the tasks of one packet; print one line for each field",
+        description="Decide the packet again, read the answer log of each reviewer, and run "
+        "admit for each correction (docs/design/review.md section 6). Write each correction "
+        "packet and a resolution@1 object to the store. Print the resolution key, then one "
+        "line for each slot: the final value, or the reason that there is none. Exit codes: 0 "
+        "success, 1 the receipt does not match its inputs, 2 invalid input, an answer that "
+        "breaks its task, or an input that is not in the store.",
+    )
+    rs.add_argument("packet", metavar="PACKET", help="the packet key from admit --store")
+    rs.add_argument("--store", metavar="DIR", required=True, help="the store folder")
+    rs.add_argument(
+        "--policy",
+        metavar="FILE",
+        help="a review-policy@1 JSON file; without it, agree 1, no lead and no audit",
+    )
+    rs.add_argument(
+        "--reviewer",
+        action="append",
+        default=[],
+        metavar="NAME",
+        help="read the answer log of this reviewer; repeat for each reviewer",
+    )
+    sv = steps.add_parser(
+        "serve",
+        help="answer the review tasks of a store in the browser, on 127.0.0.1",
+        description="Serve the review page of docs/design/review.md section 8 on 127.0.0.1, and "
+        "print its start URL. The page shows each task@1 object of the store whose packet "
+        "matches its receipt, and writes each answer to the answer log of the reviewer. The "
+        "server is for one local user: a holder of the URL can answer as the reviewer, and a "
+        "lead answer is not an authenticated act. Press Ctrl-C to stop. Exit codes: 0 stopped, "
+        "2 invalid input.",
+    )
+    sv.add_argument("--store", metavar="DIR", required=True, help="the store folder")
+    sv.add_argument("--reviewer", metavar="NAME", required=True, help="the name of the reviewer")
+    sv.add_argument(
+        "--policy",
+        metavar="FILE",
+        help="a review-policy@1 JSON file for agree and leads; without it, agree 1 and no lead",
+    )
+    sv.add_argument(
+        "--port", type=int, default=0, help="the port; 0 (the default) takes a free one"
+    )
+    ms = steps.add_parser(
+        "measures",
+        help="print the measures of the answers in a store, for each item kind and field",
+        description="Read each answer log of the store, resolve each packet, and print the "
+        "measures of docs/design/review.md section 10 for each item kind and for each field: "
+        "the median time, the answers given with one key, the agreement with blind labels and "
+        "the escapes that the audit finds. Write nothing to the store. A packet whose receipt "
+        "does not match its inputs, or whose answers break their tasks, is left out and named "
+        "on stderr. Exit codes: 0 success, 1 a packet is left out, 2 invalid input.",
+    )
+    ms.add_argument("--store", metavar="DIR", required=True, help="the store folder")
+    ms.add_argument(
+        "--policy",
+        metavar="FILE",
+        help="a review-policy@1 JSON file for agree and leads; without it, agree 1 and no lead",
+    )
+    ms.add_argument("--set", metavar="NAME", help="the set of the splits log; needs --split")
+    ms.add_argument(
+        "--split",
+        metavar="NAME",
+        help="measure only the documents in this split of --set, for example development",
+    )
+    ms.add_argument("--json", action="store_true", help="print the measures as JSON")
     # main() sends `store` to its own parser before this parser runs; the entry is here so that
     # --help names the command
     sub.add_parser(
@@ -345,6 +415,12 @@ def main(argv: list[str] | None = None) -> int:
             return _read(args)
         if args.command == "schema":
             return _schema(args)
+        if args.command == "review" and args.step == "resolve":
+            return _review_resolve(args)
+        if args.command == "review" and args.step == "serve":
+            return _review_serve(args)
+        if args.command == "review" and args.step == "measures":
+            return _review_measures(args)
         if args.command == "review":
             return _review_tasks(args)
         if args.command == "admit" and args.docs is not None:
@@ -498,19 +574,76 @@ def _from_store(args: argparse.Namespace) -> int:
 
 
 def _review_tasks(args: argparse.Namespace) -> int:
+    from .escape import escape
     from .review.tasks import write_tasks
 
     policy = _json(args.policy) if args.policy else None
     with _store(args.store, make=False) as store:
         written = write_tasks(store, args.packet, policy)
     for problem in written.problems:  # a problem can quote store data: escape each control
-        shown = "".join(c if c.isprintable() else f"\\u{ord(c):04x}" for c in problem)
+        shown = escape(problem)
         print(f"mismatch: {shown}", file=sys.stderr)
     if written.problems:
         print("groundgate: no task for a receipt that does not match", file=sys.stderr)
         return 1
     for k, _ in written.tasks:
         print(k)
+    return 0
+
+
+def _review_serve(args: argparse.Namespace) -> int:
+    from .review.serve import Review, server
+
+    policy = _json(args.policy) if args.policy else None
+    if not 0 <= args.port <= 65535:
+        raise ValueError("the port must be from 0 to 65535")
+    with _store(args.store, make=False) as store:
+        review = Review(store, args.reviewer, policy)
+        for line in review.skipped:
+            print(f"skipped: {line}", file=sys.stderr)
+        httpd, url = server(review, args.port)
+        print(f"Open {url} and press Ctrl-C here when you finish.", flush=True)
+        try:
+            httpd.serve_forever()
+        except KeyboardInterrupt:
+            pass
+        finally:
+            httpd.server_close()
+    return 0
+
+
+def _review_measures(args: argparse.Namespace) -> int:
+    from .review.measures import lines, measures
+
+    policy = _json(args.policy) if args.policy else None
+    with _store(args.store, make=False) as store:
+        measured = measures(store, policy, set_name=args.set, split=args.split)
+    for line in measured.skipped:  # each line escapes the control characters of store data
+        print(f"skipped: {line}", file=sys.stderr)
+    if args.json:
+        print(json.dumps(measured.to_dict(), indent=2, sort_keys=True, ensure_ascii=True))
+    else:
+        for line in lines(measured):
+            print(line)
+    return 1 if measured.skipped else 0
+
+
+def _review_resolve(args: argparse.Namespace) -> int:
+    from .escape import escape
+    from .review.resolve import lines, write_resolution
+
+    policy = _json(args.policy) if args.policy else None
+    with _store(args.store, make=False) as store:
+        resolved = write_resolution(store, args.packet, policy, args.reviewer)
+    for problem in resolved.problems:  # a problem can quote store data: escape each control
+        shown = escape(problem)
+        print(f"mismatch: {shown}", file=sys.stderr)
+    if resolved.resolution is None:
+        print("groundgate: no resolution for a receipt that does not match", file=sys.stderr)
+        return 1
+    print(resolved.key)
+    for line in lines(resolved.resolution):
+        print(line)
     return 0
 
 

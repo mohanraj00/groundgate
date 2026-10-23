@@ -217,10 +217,10 @@ the changed input, compare the digest of each stored input with the receipt. For
 ## 6. Pin the groundgate version
 
 A receipt names the spec version that decided it, in its `groundgate` member. `verify` accepts
-only the spec version that it implements. The released groundgate 0.10.0 implements spec 0.10,
-groundgate 0.9.0 implements spec 0.9, groundgate 0.8.0 implements spec 0.8, groundgate 0.7.0
-implements spec 0.7, groundgate 0.6.0 and 0.6.1 implement spec 0.6, and groundgate 0.5.0, 0.5.1
-and 0.5.2 implement spec 0.5.
+only the spec version that it implements. The released groundgate 0.11.0 implements spec 0.11,
+groundgate 0.10.0 implements spec 0.10, groundgate 0.9.0 implements spec 0.9, groundgate 0.8.0
+implements spec 0.8, groundgate 0.7.0 implements spec 0.7, groundgate 0.6.0 and 0.6.1 implement
+spec 0.6, and groundgate 0.5.0, 0.5.1 and 0.5.2 implement spec 0.5.
 This is a receipt from another spec version:
 
 ```python
@@ -236,10 +236,10 @@ False
 ```
 
 `verify` checks nothing more. So pin the groundgate release that decided the receipts in the
-environment that keeps them. For spec 0.10, that is:
+environment that keeps them. For spec 0.11, that is:
 
 ```bash
-pip install "groundgate==0.10.0"
+pip install "groundgate==0.11.0"
 ```
 
 To verify an old receipt, install the release for its spec version in a separate environment.
@@ -321,3 +321,138 @@ input deleted: the text@1 object
 
 The command line prints the same message with the key, the time and the reason, and exits 2.
 An object that is not in the store and has no deletion record gives "input missing".
+
+## 9. Answer the tasks on the review page
+
+The report page of section 2 shows the flagged facts, but it takes no answer. The review page
+takes an answer for each flagged fact and keeps it in the store (see the
+[review note](../design/review.md)). First, `write_tasks` writes a task for each flagged fact of
+the packet. The `admit_packet` call puts the text back after the `forget` of section 8:
+
+```python
+from groundgate.review.resolve import lines, write_resolution
+from groundgate.review.serve import Review
+from groundgate.review.tasks import write_tasks
+
+store = FolderStore(work / "store")
+packet, receipt = admit_packet(store, text, schema, candidates, document_id="lease-0417")
+for task_key, task in write_tasks(store, packet).tasks:
+    print(task["question"])
+```
+
+```text
+Is late fee 75 USD (written form not found, positive)?
+Is security deposit 4,900 USD (written 4,900, not scaled, positive)?
+```
+
+The question names each part that the person checks: the amount in full, the number as written,
+the scale and the sign. On the command line, `review tasks` writes the same tasks, and
+`review serve` starts the page:
+
+```bash
+groundgate review tasks --store work/store sha256:3e0c27fa...
+groundgate review serve --store work/store --reviewer ana
+```
+
+`review serve` prints a start URL, `http://127.0.0.1:<port>/#<token>`. Open it in a browser. The
+page shows one task at a time, in page order. The source is on the left, with the value in a
+box. The question and the values are on the right. If the schema gives a `description` for the
+field, the page shows it below the question. One key gives each answer:
+
+| Key | Answer |
+|---|---|
+| `y` | The value is right (`confirm`). |
+| `1` to `9` | This value is right, when the task has two or more values (`choose`). |
+| `n` | No value is right. Select the right value in the text, then press `Enter` (`correct`). |
+| `s` | The value is right, but its span is not. Select the span again, then press `Enter` (`adjust_span`). |
+| `x` | The document does not give this field (`not_in_document`). |
+| `u` | I cannot tell (`unsure`). Another reviewer gets the task. |
+| `r` | Show the codes and the outcome of each value. |
+| `k` | Keep the codes of a flagged correction, and save it. |
+| `Esc`, the arrow keys | Stop a selection, and go back and forward. |
+
+The page does not show a code or an outcome until you press `r`. A correction goes through the
+same `admit` call as `review resolve`, and the page shows the outcome at once. If the gate
+rejects the selection, select again. If the gate flags it, press `k` to keep its codes. If a
+part is missing, select the part, for example the scale line, and press `Enter`. Select all of
+the scale words, for example "in millions" or "$m": the "m" alone is not a scale. After each
+answer, the next task opens.
+
+A correction always needs a selection. The gate needs the value in full (SPEC §2.5). If the
+selection holds a scale word or suffix, for example "4,200 thousand" or "$4.2m", the page reads
+the value in full. If the scale is in another place, for example "in millions" in a heading, type
+the value in full: for 9,776 in millions, type 9776000000. A typed value only replaces the number
+that the page reads from the selection. After `n`, if the right value is at more than one place,
+select one of them. Each place gives the same answer.
+
+The page calls the methods of `Review`, so a script can give the same answers. Offsets count
+UTF-16 code units in the text, as a browser selection does:
+
+```python
+review = Review(store, "ana")
+deposit, fee = (t["task"] for t in review.queue()["tasks"])
+answer = {"decision": None, "codes_kept": [], "reason_seen": False, "keys": 1, "ms": 2100}
+review.answer({**answer, "task": deposit, "verdict": "confirm"})
+at = text.index("$75")
+check = review.check({"task": fee, "verdict": "correct", "start": at, "end": at + 3})
+print(check["outcome"], check["shown"])
+left = review.answer({**answer, "task": fee, "verdict": "correct", "start": at, "end": at + 3})
+print(len(left["tasks"]))
+```
+
+```text
+admitted 75 USD (written 75, not scaled, positive)
+0
+```
+
+Each answer is a record of the answer log of `ana` for this packet. `review resolve` reads the
+logs again, runs `admit` again for each correction, and gives the final value of each field:
+
+```python
+resolved = write_resolution(store, packet, reviewers=["ana"])
+for line in lines(resolved.resolution):
+    print(line)
+```
+
+```text
+late_fee: 75 USD (corrected)
+monthly_rent: 2450 USD (admitted)
+security_deposit: 4900 USD (confirmed)
+```
+
+`review measures` reads each answer log of the store and gives the measures of the review for
+each item kind and each field: the median time, the answers given with one key, the agreement
+with blind labels and the escapes that the audit finds. A blind label is an answer to an audit
+task with `reason_seen` false. These tasks have no audit, so the last two measures are 0 of 0:
+
+```python
+from groundgate.review import measures
+
+for line in measures.lines(measures.measures(store)):
+    print(line)
+store.close()
+```
+
+```text
+packets: 1
+number: answers 2, median time 2100 ms, one key 2 of 2, agreement with blind labels 0 of 0, escapes 0 of 0 audit slots
+  number late_fee: answers 1, median time 2100 ms, one key 1 of 1, agreement with blind labels 0 of 0, escapes 0 of 0 audit slots
+  number security_deposit: answers 1, median time 2100 ms, one key 1 of 1, agreement with blind labels 0 of 0, escapes 0 of 0 audit slots
+```
+
+On the command line, `groundgate review measures --store work/store` prints the same lines, and
+`--json` prints them as JSON. With `--set NAME --split development`, it measures only the
+documents that the `splits` log of the set puts in that split, and it counts the packets that it
+leaves out.
+
+The page is for one person on one computer. The server binds to `127.0.0.1` and refuses another
+`Host`. Each API request must send the token of the start URL, so keep the URL private. Any
+holder of the URL can answer as the name that `--reviewer` gives. The server does not
+authenticate that name. Thus a lead answer of the review policy is not an authenticated act.
+
+The server reads the answer logs when it starts and after each answer of its own reviewer. If
+another reviewer answers while the page is open, the page does not show it. To see the answers
+of the other reviewers, restart `review serve`.
+
+The frame shows the original page with one change. Each `http-equiv` and `href` name becomes
+`data-equiv` and `data-href`, also in the text, so that the page cannot go to another host.

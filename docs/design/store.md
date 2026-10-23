@@ -3,6 +3,7 @@
 Status: approved on 2026-10-20, issue #288. Code issue 1 is built: `groundgate.store` (#402).
 Code issue 2 is built: packets and readings (#403).
 Code issue 3 is built: `store check`, `store rebuild` and `store forget` (#404).
+The `splits` log and the calibrate labels of code issue 5 are built (#456, #406).
 The rest is not built. The note changes no decision and no receipt.
 [review.md](review.md) (#287) keeps its data here. The last section lists the code issues.
 
@@ -184,7 +185,8 @@ Each path part is a 64-digit hex digest or a fixed word.
 
 Each log has one writer. Before its first append, a writer makes `<log>.lock` with an exclusive
 create, and it removes the lock at the end. A second writer on the same log stops with a message
-that names the lock. Two reviewers write two logs, so they can answer at the same time. Objects
+that names the lock. A writer that reads a log and then appends to it makes the lock before
+the read: the splits writer does this, so a second writer stops before its append. Two reviewers write two logs, so they can answer at the same time. Objects
 need no lock, because two writers of one key write the same bytes.
 
 ### 7.4 Views
@@ -194,9 +196,15 @@ objects and logs. Format 1 has five views: the reading cache, the review queue, 
 resolution of each packet, the labels for calibrate and the measures.
 
 `store rebuild` builds the reading cache now, as `views/readings.json`. It maps each source,
-reader and options to its readings, and it leaves out a reading whose text is deleted. The other
-four views need the review formats (review.md §13) and the calibrate labels (issue 5), and each
-comes with its issue (#432).
+reader and options to its readings, and it leaves out a reading whose text is deleted. It also
+builds the calibrate labels, as `views/calibrate-labels.json` (`calibrate-labels@1`, #406). For
+each calibrate task (review.md §11) and each reviewer, it gives the label of the last answer.
+It leaves out a task that its packet does not give with the same bytes. It also leaves out a
+record that names another reviewer than its log, that fails the check of `review resolve`, or
+that gives no label.
+`groundgate calibrate` does not read this file: it reads the answer logs, checks each record
+against its packet, and stops at the log heads of a judge run. The other three views come with
+their issues (#432).
 
 ## 8. Rules
 
@@ -220,7 +228,15 @@ comes with its issue (#432).
    the document source do not count, because the kept objects hold them. This check is not a
    proof. If the text is already gone, `check` cannot check the lines and prints "not
    checked", and `forget` removes the record. If `forget` cannot read an object, it prints
-   "unchecked", removes the rest and exits 1. A run record whose lines cannot be read goes.
+   "unchecked", removes the rest and exits 1. A run record whose lines cannot be read, the
+   header too, stays, because only the record names its prompts, replies and admissions. With
+   `--all`, its packet stays too, so `check` and `forget` still name the record. An edit of
+   the record gives other bytes, and other bytes have another key, so an edit cannot repair
+   it. If a copy of the original record exists, put it back and run `forget` again. If not,
+   call `FolderStore.forget` on the key of the record. Its prompts, replies and admissions
+   then stay with no record that names them, and a second `forget --all` removes the packet.
+   A run record with a header that matches its key as no kind changed, and `forget` removes
+   it.
    If a run record names an object that `forget` cannot find, each object of the store that it
    cannot read is "unchecked".
    A value is still document data. If an app must also remove the values,
@@ -245,6 +261,8 @@ comes with its issue (#432).
   record format must change, and with it the runner version. 0.11 already changes the runner
   (#382). If #382 makes `groundgate-run/3`, run/3 also takes the store keys, so there is one
   break, not two. If #382 keeps run/2, the key change waits for the next record change.
+  0.11.0 released run/3 without the store keys, and 0.12 made `groundgate-run/4` for the search
+  queries (#466). The store keys come with `groundgate-run/5` (#429).
 - `RunResult.write(folder)` stays for run folders. A new `RunResult.save(store)` writes the
   objects, the record and the packet into the store, and returns the packet key.
 - A run/2 folder cannot move into the store with new keys, because its record names the old keys.

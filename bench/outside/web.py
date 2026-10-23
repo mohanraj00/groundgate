@@ -4,7 +4,7 @@ the value, the extractor's quote and the text around the cited span that groundg
 label is XML, so its item shows only the text and a link. The page never shows which model
 proposed the value, a spec, a decision or a code. Labels go to labels.json.
 
-    uv run --group langextract python bench/outside/outside.py web   # http://127.0.0.1:8768
+    uv run --group langextract python bench/outside/outside.py web   # labels, port 8768
 
 Since #230, groundgate writes a PDF table as rows with tabs, so its PDF text differs from the
 committed text. A PDF item checks the text against the pinned PDF, so run the page on the 0.7.0
@@ -21,7 +21,6 @@ import json
 import re
 import sys
 import threading
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
 
@@ -31,6 +30,7 @@ HERE = Path(__file__).parent
 AROUND = 600  # code points of text on each side of the cited span
 BASES = ("document", "outside")
 sys.path[:0] = [str(outside.BENCH), str(outside.BENCH / "sec")]
+import localweb  # noqa: E402  (bench/localweb.py)
 
 
 def _pinned(path: Path, sha256: str) -> Path:
@@ -197,7 +197,7 @@ def serve(port: int, every: bool = False, relabel: bool = False) -> None:
     page = (HERE / "web.html").read_bytes()
     lock = threading.Lock()
 
-    class Handler(BaseHTTPRequestHandler):
+    class Handler(localweb.LocalHandler):
         def log_message(self, *args: Any) -> None:
             pass
 
@@ -253,6 +253,4 @@ def serve(port: int, every: bool = False, relabel: bool = False) -> None:
                 tmp.replace(path)  # a reader never sees half a file
             self.send(200, b"{}", "application/json")
 
-    server = ThreadingHTTPServer(("127.0.0.1", port), Handler)
-    print(f"{len(items)} items; open http://127.0.0.1:{port} (Ctrl-C to stop)")
-    server.serve_forever()
+    localweb.serve(Handler, port, f"{len(items)} items")

@@ -8,13 +8,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v6
-      - run: uv build
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
+        with:
+          version: "0.10.8"
+      - run: uv build --build-constraints .github/release-build-constraints.txt --require-hashes
       - name: The tag matches the package version
         run: test -f "dist/groundgate-${GITHUB_REF_NAME#v}-py3-none-any.whl"
-      - run: uvx twine check --strict dist/*
-      - uses: actions/upload-artifact@v4
+      - name: twine checks the files, installed from hashed requirements
+        run: |
+          uv venv -q "$RUNNER_TEMP/twine"
+          uv pip install -q --python "$RUNNER_TEMP/twine" --require-hashes -r .github/release-twine.txt
+          "$RUNNER_TEMP/twine/bin/twine" check --strict dist/*
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: dist
           path: dist/
@@ -28,18 +34,19 @@ jobs:
         python: ["3.10", "3.13"]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
         with:
           python-version: ${{ matrix.python }}
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           name: dist
           path: dist/
       - name: The wheel that will be published passes the quickstart and the vectors
         run: |
           python -m venv /tmp/clean
-          /tmp/clean/bin/pip install -q dist/*.whl pytest
+          /tmp/clean/bin/pip install -q --require-hashes -r .github/release-smoke.txt
+          /tmp/clean/bin/pip install -q --no-deps --no-index dist/*.whl
           /tmp/clean/bin/python -m pytest -p no:cacheprovider \
             tests/test_package.py tests/test_readme.py tests/test_conformance.py
 
@@ -50,11 +57,11 @@ jobs:
     permissions:
       id-token: write  # PyPI trusted publishing: no token is stored anywhere
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           name: dist
           path: dist/
-      - uses: pypa/gh-action-pypi-publish@release/v1
+      - uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086 # v1.14.3
 
   github-release:
     needs: publish
@@ -62,8 +69,8 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           name: dist
           path: dist/

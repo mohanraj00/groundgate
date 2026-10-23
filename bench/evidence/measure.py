@@ -5,7 +5,7 @@ new 10-K set (bench/sec2) and the status set (bench/status). The plan is on #141
         python bench/evidence/measure.py decide04           # spec 0.4, on the released wheel
     uv run --isolated --no-project --no-sources --python 3.12 --with groundgate==0.5.1 \
         python bench/evidence/measure.py decide             # spec 0.5, and one role removed
-    uv run python bench/evidence/measure.py web             # blind labels, http://127.0.0.1:8770
+    uv run python bench/evidence/measure.py web             # blind labels, port 8770
     uv run python bench/evidence/measure.py results [--check]
 
 Each run is decided in several ways: spec 0.4, spec 0.5 with every evidence item, and spec 0.5
@@ -22,11 +22,13 @@ import json
 import sys
 import threading
 from decimal import Decimal
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
 
 HERE = Path(__file__).parent
+sys.path.append(str(HERE.parent))  # bench/, for localweb
+import localweb  # noqa: E402  (bench/localweb.py)
+
 BENCH = HERE.parent
 RUN = "Claude_Haiku_4.5_roles/4000"
 SETS = {"sec2": BENCH / "sec2", "status": BENCH / "status"}
@@ -277,7 +279,7 @@ def serve(port: int) -> None:
     page = (HERE / "web.html").read_bytes()
     lock = threading.Lock()
 
-    class Handler(BaseHTTPRequestHandler):
+    class Handler(localweb.LocalHandler):
         def log_message(self, *args: Any) -> None:
             pass
 
@@ -316,9 +318,7 @@ def serve(port: int) -> None:
                 tmp.replace(path)  # a reader never sees half a file
             self.send(200, b"{}", "application/json")
 
-    server = ThreadingHTTPServer(("127.0.0.1", port), Handler)
-    print(f"{len(items)} items; open http://127.0.0.1:{port} (Ctrl-C to stop)")
-    server.serve_forever()
+    localweb.serve(Handler, port, f"{len(items)} items")
 
 
 # ------------------------------------------------------------------------------------ results

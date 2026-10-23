@@ -1409,8 +1409,8 @@ def test_frozen_run_policy_may_name_the_sweep_settings(settings, valid):
 
 
 def test_projection_of_an_older_runner_record_is_a_cache_error():
-    record = [{"kind": "header", "runner": "groundgate-run/2"}, {"kind": "final", "fields": {}}]
-    with pytest.raises(harness.CacheError, match="groundgate-run/3"):
+    record = [{"kind": "header", "runner": "groundgate-run/3"}, {"kind": "final", "fields": {}}]
+    with pytest.raises(harness.CacheError, match="groundgate-run/4"):
         harness._limits(record)
 
 

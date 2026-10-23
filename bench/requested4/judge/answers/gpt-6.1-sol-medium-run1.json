@@ -1,0 +1,805 @@
+{
+ "answers": {
+  "annual-c02/cost_of_sales": {
+   "call": "dc6eb0463c6783cb4232371e2bd72f489d92139cc5e88b63cd69625029df18eb",
+   "choice": {
+    "scale": null,
+    "unit": "EUR",
+    "value": "4166000000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:1fee160845ea954c3e7e463fe95ccd4715ac08ab4bbd814fc9f07cc90a22bc47"
+  },
+  "annual-c02/gross_profit": {
+   "call": "cd24bb6ae7e6b966d8046635471d77ca34bfa18c31a73f134aca2c331b49f80a",
+   "choice": {
+    "scale": null,
+    "unit": "EUR",
+    "value": "5686000000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c2",
+   "prompt_sha256": "sha256:3a2d3975169341748810a70f3c89d4cf371172ee691c7052859ade0a61a3745b"
+  },
+  "annual-c02/revenue": {
+   "call": "a3dfec07293015471f924843184bedb04460693af2ea5caf42aaaafd126c73e3",
+   "choice": {
+    "scale": null,
+    "unit": "EUR",
+    "value": "9852000000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:b0d2b024cbd0122a3d94a42087b764b11094a3362e78ff7fe275fb82322bdaae"
+  },
+  "annual-c02/total_assets": {
+   "call": "149c3e75562e755b7ee018b6a95976ea5a79b0b386f385369c75918c1a1c9c8d",
+   "choice": {
+    "scale": null,
+    "unit": "EUR",
+    "value": "12758000000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:ec856f0de413917a5ec8c996685cecc2a9fbcea0a8b504c1022f107414556f2e"
+  },
+  "annual-c02/total_equity": {
+   "call": "c26237a6fafbe95fc22d55e68e5795f4e0667cce5ee0db552e3f3c21ca157230",
+   "choice": {
+    "scale": null,
+    "unit": "EUR",
+    "value": "8618000000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:96fcffc3322916ecd7389ab50e3627af0904a72e951e574854126a8d7b092de9"
+  },
+  "annual-c02/total_liabilities": {
+   "call": "dbf3c4e707a3237a0f2903f6ae1a4cf00e2165f16daea7cee5db53a21074ba18",
+   "choice": {
+    "scale": null,
+    "unit": "EUR",
+    "value": "4140000000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:326a16132f94785fc31481fc58937999ce602a292bf99e1a4ae25665a5ac9840"
+  },
+  "annual-c07/total_equity": {
+   "call": "804f5208f0dabd880afb8ca856884a20145e4ffdbded964d15ad20783f74f4e7",
+   "choice": {
+    "scale": null,
+    "unit": "CAD",
+    "value": "5000000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:abd879860d81dd11cf79fcb997c88a9b1fbe938c405c8f1ac05f4f2588d2be69"
+  },
+  "annual-c10/total_equity": {
+   "call": "8409f788297e6dde32dbc790f8954e15e82665ba590de93d71c3aa23ce6cc0a6",
+   "choice": {
+    "scale": null,
+    "unit": "NZD",
+    "value": "1957000000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.98,
+   "option": "c1",
+   "prompt_sha256": "sha256:06ddfc1a7bd043d4a3fc21acfed90a4ef952d62c34d46b6837e820220604038d"
+  },
+  "annual-c22/revenue": {
+   "call": "3b7bfcf8d974f74fe57852ce4d29857aae34c2c71884b97ec5899bf331535635",
+   "choice": {
+    "scale": null,
+    "unit": "SEK",
+    "value": "138000000000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.98,
+   "option": "c1",
+   "prompt_sha256": "sha256:ff727de6ef633755aaef4cd3b4764a1472dcbeccbef734ea259bc0a30cc3ebaa"
+  },
+  "annual-c22/total_equity": {
+   "call": "9ed3dee0a3528bbc0404239cc533ffaead8707672dceed8aa3ee042e6835b47a",
+   "choice": {
+    "scale": null,
+    "unit": "SEK",
+    "value": "86040000000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:40dbf3af4a58459fc0ed539e6d4eee7fb1518a7837beba9b6cfb3e92027e44bf"
+  },
+  "annual-c26/revenue": {
+   "call": "caf613c9277d17e66a2f023f3e34ea1a4ae653b8386d3410a9b3c6e8567fb9ff",
+   "choice": {
+    "scale": null,
+    "unit": "SEK",
+    "value": "46613000000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:374a9489afec9c7ecc1f7deabf616e856df240e239a7e29acaece12d3918ec02"
+  },
+  "annual-c28/gross_profit": {
+   "call": "168cf8905fb0dd76a88f1b59f507065afd69f56c6186790dc940eaea66dd5443",
+   "choice": {
+    "scale": null,
+    "unit": "EUR",
+    "value": "693900000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:b56700de25983862ec7a7f6bb7270d568406b96ec2cae55aad0800c7d9bcc4cd"
+  },
+  "annual-c28/revenue": {
+   "call": "14a1fd42d4ffc1bc675b875f1cb5bbfb1489bcaeeaf0478957ed86a919ce1925",
+   "choice": {
+    "scale": null,
+    "unit": "EUR",
+    "value": "3960200000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:8014f4913a2ec0323eaf5f0c6bf99be08217d2c2aaf117d2344d0648c20087ee"
+  },
+  "annual-c28/total_equity": {
+   "call": "5411c041359e92082d964e128c6b8290e56c78c51cbcc298bc6d4ddba21c368e",
+   "choice": {
+    "scale": null,
+    "unit": "EUR",
+    "value": "1930200000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:8f5465e56d86ad5442b10b69d6607c3c489a275d8605997f594c129ce91b86a8"
+  },
+  "annual-c28/total_liabilities": {
+   "call": "da8c638df3c068f5c45f42af872505b654336ed068cb24188defa676849b6d9f",
+   "choice": {
+    "scale": null,
+    "unit": "EUR",
+    "value": "2635800000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:aa6264427baac2994d16acb6e83af4cff45564320e672c8e5847d83a80dc9eb1"
+  },
+  "component-c01/operating_temperature_max": {
+   "call": "398a9f25b90547c8883ec3a12fa911fc505db6a3483194e0d530052456a2f647",
+   "choice": {
+    "scale": null,
+    "unit": "C",
+    "value": "85"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:aae89555ae0c1327b7a7f77688f486359108a1ad2f3049f04180d2bd3c3c0c5f"
+  },
+  "component-c01/operating_temperature_min": {
+   "call": "b7bddc0163110b4aacc91e43f1745ac25c266b8b981faad26f362a960554f219",
+   "choice": {
+    "scale": null,
+    "unit": "C",
+    "value": "-40"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:e2c524004447ec41292a489f5672ca999897e30c84143958904245845ae6c697"
+  },
+  "component-c01/supply_current_typ": {
+   "call": "3dbe4ce2f14044c7c11dfe8ce07f799840d09577da758ba1a7e4ea38e7b860c1",
+   "choice": null,
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.88,
+   "option": "none",
+   "prompt_sha256": "sha256:cca9e65fea1650e8cc1c2283f2de0093f8df39082b4506befd5153fc19f5aed6"
+  },
+  "component-c01/supply_voltage_min": {
+   "call": "dffe211ff09f17e6df9e9fb1259889740e0fb43ea08d96920b357b1a84f0892b",
+   "choice": {
+    "scale": null,
+    "unit": "V",
+    "value": "6"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:ee6a6b3b96a52bc042d1488a98e14561f21f0505caca400ab1f0e0c83e07faa4"
+  },
+  "component-c02/operating_temperature_max": {
+   "call": "0f2221da409dc2ba5bc57c41a16b23cf4f6d7488a9eb44a3b85d4b5cd8aa62e7",
+   "choice": {
+    "scale": null,
+    "unit": "C",
+    "value": "85"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:017815c94d7761be759a50a024a7ca487d2793c16ee759ad458d504a96355381"
+  },
+  "component-c02/operating_temperature_min": {
+   "call": "c83fd44e6834ac352dc6cae9d0c7380065869b2d6c14c2b4fc6971f56fed95de",
+   "choice": {
+    "scale": null,
+    "unit": "C",
+    "value": "-40"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:542b79bf9dd4edd1416f55e7a5581627fde0f66718cc3a7f5678bc5e7ec0b734"
+  },
+  "component-c02/supply_current_typ": {
+   "call": "93c6ae8c09c6d99fa46871660508ad46d28b268c82de030918d73b168e162519",
+   "choice": {
+    "scale": null,
+    "unit": "mA",
+    "value": "1.5"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.83,
+   "option": "c1",
+   "prompt_sha256": "sha256:568a56ee02f01014a8b1f3733de9e140aa0f152737d9f49ad61414de6987c521"
+  },
+  "component-c02/supply_voltage_max": {
+   "call": "f2998d8e3f6e4012406708ec82a779a12ca2a2f91d1ec150a17501dd089b368f",
+   "choice": {
+    "scale": null,
+    "unit": "V",
+    "value": "35"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:84fca45f7658901a7cc0badc53277d037b2817bb6c73f15780914b720131b83b"
+  },
+  "component-c02/supply_voltage_min": {
+   "call": "21ef9a0ebce4f1735e0f6f3cc80c92acef0a38ddb7294c67ab9ec724c2054318",
+   "choice": {
+    "scale": null,
+    "unit": "V",
+    "value": "6"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:d48106f5d91f3683b09cac7131807512936e16cf1c77a9d3588ea875e69c2101"
+  },
+  "component-c09/operating_temperature_max": {
+   "call": "8d3742cacf9de93173d79e203ef20aabda32c8d5c1054207257084cedd23d83d",
+   "choice": {
+    "scale": null,
+    "unit": "C",
+    "value": "125"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:83ac23b1c241b9544dc7657623967fb7670c7400def9edccf17b48676ce48df1"
+  },
+  "component-c09/operating_temperature_min": {
+   "call": "437e2a4604fbf09c5776f8ef38ae04ce26242c1797dc35c60e5247fde6e5cb24",
+   "choice": {
+    "scale": null,
+    "unit": "C",
+    "value": "-40"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:282589e6d954762c713aa5bf6116e53265c792e0b88b7683d051fde8b3c10b80"
+  },
+  "component-c09/supply_current_typ": {
+   "call": "b2619a179312ce689b3a3e60237986176251d028fd8ff7385a773c3f764166a6",
+   "choice": {
+    "scale": null,
+    "unit": "mA",
+    "value": "1.2"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.98,
+   "option": "c1",
+   "prompt_sha256": "sha256:eb4dafbbee755ea0a890e5c4b9338c66eb8dc9697fbe069ec86f34a1b0b1b513"
+  },
+  "component-c10/operating_temperature_min": {
+   "call": "a4456b5e42e2784da43616e2dc6f0d92b6dad090461169f57aa20fe337a95174",
+   "choice": {
+    "scale": null,
+    "unit": "C",
+    "value": "-40"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:552d6121d5e7012158551be4f0b741983e71d2c3128f9164de44c25432a95228"
+  },
+  "component-c12/operating_temperature_max": {
+   "call": "cd36ce4e30bc9ba2c7c58943c923f5fc7154510b35c283d8e9f6e6e3d3c450ea",
+   "choice": {
+    "scale": null,
+    "unit": "C",
+    "value": "85"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:2968abb24e316a15d1c35074f754b353bb5c169bf1867d410e028723b8c01137"
+  },
+  "component-c12/operating_temperature_min": {
+   "call": "36d3877bf2bc0c62ecbf6748ebbe873e90a18ddc4a05017eaae9fa76253d4b5d",
+   "choice": {
+    "scale": null,
+    "unit": "C",
+    "value": "-40"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:b9f82172145f83b1d45c80a6b18ecbd45d395087afb31933aa90ccf360c349be"
+  },
+  "component-c12/supply_current_typ": {
+   "call": "8aa4e677ae62d1f6e209e3617d7689a1409de45ba99e1bed586ca935dd3684c0",
+   "choice": {
+    "scale": null,
+    "unit": "mA",
+    "value": "2.1"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:3ed5c940680923c6df72f6bf3a7046930cc8aed2b23876ac2d6d88589162949f"
+  },
+  "component-c17/supply_voltage_max": {
+   "call": "b8bc84720f5d4ef043754c216a960f7707b847e52db8287d7ef490f88e05d087",
+   "choice": {
+    "scale": null,
+    "unit": "V",
+    "value": "3.3"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.98,
+   "option": "c1",
+   "prompt_sha256": "sha256:4671e1707b1e83c5bc2c9f0e8edec297e3def2586ad62e306efdc038115af021"
+  },
+  "component-c17/supply_voltage_min": {
+   "call": "1504d8e34cdaf4e2edcd32265ff6123429bebe2403ce3426aa72a9d3d092b905",
+   "choice": {
+    "scale": null,
+    "unit": "V",
+    "value": "1.8"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.97,
+   "option": "c1",
+   "prompt_sha256": "sha256:f38822fb7dbe1abd3a4388d864add7798c59690d2e700e1ab443e8fbf4fbdc76"
+  },
+  "component-c19/supply_voltage_max": {
+   "call": "3beaba2ecd09c6e848d2eeb6858332e65acbc9ec0aff6226f6fbf7fb11b1c30f",
+   "choice": {
+    "scale": null,
+    "unit": "V",
+    "value": "3.3"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.98,
+   "option": "c1",
+   "prompt_sha256": "sha256:46bbfed391175df5bbf7d4d49270ef38dd6f51a55da7b99f290f33264266bf8c"
+  },
+  "component-c19/supply_voltage_min": {
+   "call": "95fc77873871b1657ae02c4c9e56207115531a938f405232a67c7277f3ae9ad5",
+   "choice": {
+    "scale": null,
+    "unit": "V",
+    "value": "1.8"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.98,
+   "option": "c1",
+   "prompt_sha256": "sha256:63646b39f8e734688bce0f138cccdda60f0ed54d6e21e8b8545bf4eecd08ce8a"
+  },
+  "sbc-c17/deductible_family": {
+   "call": "dddc279b0bf05d06ab5ab0190ac1fe1dd55ab2540f4e7a161d35b2f5226ea79b",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "3000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:2b09e41b76a52c8a2e78d3975affafcc15f3d43a097b80de9bc591466064ad87"
+  },
+  "sbc-c17/out_of_pocket_family": {
+   "call": "e149a2feb032b5e6a02bdc47f5ab89d0c201704d8ab76982e091d80b0ebf69f3",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "9000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:702c6edaa2964581ff389333bec3216baeea8d10bc76f0f84a1c0c075a02166a"
+  },
+  "sbc-c18/deductible_family": {
+   "call": "0c25acce7d2229e5f77cf8ef19b362a2bd178d4f231bdd8d485c6e8ba4b04279",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "0"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:bf750b6774f61a74297414d9f9508d0296defc1b5aabf5fcda0aeba74af4f739"
+  },
+  "sbc-c18/deductible_individual": {
+   "call": "55a88d547a7d03b06f17349a26b7077c0d48346f105dcaf3d8addb4307d9f841",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "0"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 1.0,
+   "option": "c1",
+   "prompt_sha256": "sha256:36344ce19e0de1fdeb7d65db0aa8353b8ffab6669f38d4e62fe36fcb08f76a18"
+  },
+  "sbc-c18/out_of_pocket_family": {
+   "call": "20ac4f3cff3deefcd41311e845e24062b888ddd5bac2f5ba3aed30843fbd4e4d",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "9000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:82335d6746f1a1c513c897e8fedcd24edfb4551514cf41fa52f334fdef0fff94"
+  },
+  "sbc-c19/deductible_family": {
+   "call": "44753d273c6f55163b24274cf3078224f0b4b23dcfea09276408e13f5bb5ac92",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "800"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:d32c9e5f6f11d9d583b00bfd5432425fe4b1ef4612086369774fc9d9959d50c4"
+  },
+  "sbc-c19/out_of_pocket_family": {
+   "call": "ab686198872d6f2ecf804fd9bd5bb11c9fc5827301227df1207c28980f5bf341",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "4000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:9607a9890085bcf78f15acb3e63e01ad503184d6a8f22f874d5824e33dbf0f0e"
+  },
+  "sbc-c20/deductible_family": {
+   "call": "0872d4304ff6c75c6c565e9c3e80f7f6605c6cca1959ae382f43361f21a1a75a",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "500"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:b94d96ae01a5e73f3797026d496a82c3a7f4b50d7c9111a59aadadcd1b1115f6"
+  },
+  "sbc-c20/out_of_pocket_family": {
+   "call": "4803401cbff2379861144e9a5ba2d41aaa1b25624f5eb6cd477e876471948b09",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "3000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:eeb9312197a6c40adbe1689bf6b5132ae83c9f32f189dbd5ca00bf62fd8c1bb0"
+  },
+  "sbc-c25/deductible_family": {
+   "call": "9c6d32557cd8ca96ddd7ac7a48cb595ce1e4d58da3de7ef72e5d9850ad89d3d0",
+   "choice": null,
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.97,
+   "option": "none",
+   "prompt_sha256": "sha256:826482eff0e7badd2f8543e494c2e1e0d77d3aa0ea4097b07daaa7b19e7e0e17"
+  },
+  "sbc-c25/deductible_individual": {
+   "call": "c16534aef902b8205047a061dcaedd15d8143c567f19e10e51913b5e1feea91d",
+   "choice": null,
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.98,
+   "option": "none",
+   "prompt_sha256": "sha256:cca1fa31597c756d97dbb21cbb5a82261b50f452bc741b2b4f31fba90eb5b109"
+  },
+  "sbc-c25/out_of_pocket_family": {
+   "call": "66ec53200ab9e9f50c1d8743cb0b57d65b2a9772ae9999d2958bf686d06843f9",
+   "choice": null,
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "none",
+   "prompt_sha256": "sha256:d61e03ae07c5b9242594f20cb6ba97fe107252b6e5bb1f305952eee965eae964"
+  },
+  "sbc-c25/out_of_pocket_individual": {
+   "call": "047a44f8a6c31d9a68419d91aead9a6f107819b6862d8876801c4f24abce9868",
+   "choice": null,
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.92,
+   "option": "none",
+   "prompt_sha256": "sha256:5bf0d3817fc84874ab1eabb3b036c72d1664f72d4ff24a34b692c65937c1b161"
+  },
+  "sbc-c25/specialist_copay": {
+   "call": "a9a97365ea99b996331275e951151a2c68321532b1b8e4d89ed706150aa535c3",
+   "choice": null,
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "none",
+   "prompt_sha256": "sha256:5235f1dd3adc2621f78551394b6935c72c4a30eb571281eb5048684e518b3f9a"
+  },
+  "sbc-c26/deductible_family": {
+   "call": "789a62e8c87472607fff8855eabe267b76c7cb70101549a2817ed550a68ba621",
+   "choice": null,
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.94,
+   "option": "none",
+   "prompt_sha256": "sha256:db8fb809483e941d21a21fc3db6bdd6d67662881003025aedfc97606fff41dbf"
+  },
+  "sbc-c26/deductible_individual": {
+   "call": "1ef7756031544bcccf77bdbd44ec9227952a0c1aaacb52798e0002fe6a14b311",
+   "choice": null,
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.95,
+   "option": "none",
+   "prompt_sha256": "sha256:10acacccaa40eb9b185c15a099aae3a3fb12c697c787e80cfca1cc38d339d0ef"
+  },
+  "sbc-c26/out_of_pocket_family": {
+   "call": "743b649829cf06b35f1b2f37f6c1a2aff13d84da32f9c90a931e9c92a707ecb8",
+   "choice": null,
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.98,
+   "option": "none",
+   "prompt_sha256": "sha256:b24e33ca619ccb3f299f259b355d2d18278c07e01e51f9135ecccc5766a4b236"
+  },
+  "sbc-c26/out_of_pocket_individual": {
+   "call": "96896a89b042f5031d410d161d666ee998e1196c836c8a19ad15d7ad19915fd3",
+   "choice": null,
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.98,
+   "option": "none",
+   "prompt_sha256": "sha256:0abc26e6b91df917d2435f669c0361f8f30196cedccc7f852def7d63a65700e4"
+  },
+  "sbc-c27/deductible_family": {
+   "call": "a89a0cb770422005eda57e70eabc279d25ba929f123f4f14ab45f1f4f5f280ea",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "1000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:b9ed8ddcef0b9ea4cbe56f1de644ec5a5b0ad0f2cfd38cef8380d4683394a89b"
+  },
+  "sbc-c27/out_of_pocket_family": {
+   "call": "ec83803e8b88bba939230b5275c8c142235c0425d905b07fc06f1a06c9743ecd",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "6000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:cfcb71f8c87bbbd66cca4cdb9b0dd727b16e4b30250db17966dd193d2322248e"
+  },
+  "sbc-c27/specialist_copay": {
+   "call": "9db559a59d5bdd89d8415857418877ae6f6e7e6306ed3393818caf913433acab",
+   "choice": null,
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "none",
+   "prompt_sha256": "sha256:3442e5dc0f98cea5de6f07cff6f1aa8334770214f0b3dc5467884fc1b7a48309"
+  },
+  "sbc-c28/deductible_family": {
+   "call": "471e640238d1836d3840f2bec163cbfe0d906fa39c3347a1440fe4b344eedec0",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "4000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:c0381a6d6748e1efa04163e69ab97f1930f8f30573fdd8e29107dbbcd96ad8ce"
+  },
+  "sbc-c28/out_of_pocket_family": {
+   "call": "df62da2dc5063c91f40e094ed36719ebb933bdf8ec5dcf7cb75e560b88ae64f9",
+   "choice": {
+    "scale": null,
+    "unit": "USD",
+    "value": "8000"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:e8520b5c86591918fd2cbea680f243f9060ff395d01118c2c675654f558cf2b0"
+  },
+  "sds-c06/flash_point": {
+   "call": "d97dede68f0719c04bb613ef438e184e2d1ff3bc6b5420549aa40c9e6a6e32a8",
+   "choice": {
+    "scale": null,
+    "unit": "C",
+    "value": "-103.4"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:7130804168a7b0becd5f6e2208b3969993012a61e842e70e84ebbbab77eddecc"
+  },
+  "sds-c06/initial_boiling_point": {
+   "call": "a5f941fbff997aaeb49e46e2a64bf8922ff85f7a1f432a3330910b391977cbe4",
+   "choice": {
+    "scale": null,
+    "unit": "C",
+    "value": "-42.2"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:bedc492f284cc83ff80771bb6b5f0bd002e92a417bb53fe90deeafbcf3ab9938"
+  },
+  "sds-c06/relative_density": {
+   "call": "b6585dd9ec12e2794e2a3fd9e445c813836392a2520bfb9c86e175922299abc4",
+   "choice": {
+    "scale": null,
+    "unit": null,
+    "value": "0.51"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.999,
+   "option": "c1",
+   "prompt_sha256": "sha256:dcd3db51c55f7798d93c07f04cccb26fae8b2f4535ee818e005dd6842370aaea"
+  },
+  "sds-c06/un_number": {
+   "call": "2579ba3918d2c5b4d8db55c784dc2e63898d922a9e4908fd92077e61ec01435f",
+   "choice": {
+    "scale": null,
+    "unit": null,
+    "value": "UN1075"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:fe8c2158d8bddd13bad49f90a889706bddf829a89bbf1f9b379bb044105c9f0b"
+  },
+  "sds-c07/initial_boiling_point": {
+   "call": "76994185f8667e2ff33e168e8e65e3ab04a8f72aab01d1b2e72195e1c77d6d24",
+   "choice": {
+    "scale": null,
+    "unit": "C",
+    "value": "-0.5"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:5319fe47520d16bb09d25aae91304bced133f7a5041b67f31b77c6c1f9ae346c"
+  },
+  "sds-c24/initial_boiling_point": {
+   "call": "f069cbc17805218f8dc37f5d387e906860dada48f370b418dcf611fbb1b49526",
+   "choice": {
+    "scale": null,
+    "unit": "C",
+    "value": "64.72"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:8c0937f2cacecd9d87c605b29430b708cf1085007725462a9c66d450959d244c"
+  },
+  "sds-c25/flash_point": {
+   "call": "6df8680e3e8ce6afca0b2fdfe903a79ebd5c4bbc73d03a73c7e4607920f8bf8f",
+   "choice": null,
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "none",
+   "prompt_sha256": "sha256:38d9d815f0c5f0ceac318c263639bc57b5aa1bbbf243d6fabc9f22d3d3978bbc"
+  },
+  "sds-c25/initial_boiling_point": {
+   "call": "d27e46e06390d5fe534c1fe18e656212b82bd20a6d8dbf39e9e5661dbb564a1c",
+   "choice": {
+    "scale": null,
+    "unit": "C",
+    "value": "-33.4"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:8f0b44dbe48ad5930b29639dd575fe1e8df60afa4424034ab44a31131509b2cd"
+  },
+  "sds-c25/ph": {
+   "call": "78dca93b1de20315ef0d932bb04e71adea153272fb199ed1e7d3fbb1df379a95",
+   "choice": {
+    "scale": null,
+    "unit": null,
+    "value": "11.7"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.91,
+   "option": "c1",
+   "prompt_sha256": "sha256:125cb4d37272fb8199ff40f9c528e340205abfa11930c4055dbde6e6badebd9d"
+  },
+  "sds-c25/relative_density": {
+   "call": "a6f9d12bdd4b05a7622cb44ab768bb5b0d1792f91548612acfbbd797d07e81e7",
+   "choice": {
+    "scale": null,
+    "unit": null,
+    "value": "0.633"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.96,
+   "option": "c1",
+   "prompt_sha256": "sha256:9f3451724320c6a09af861981f765531928957013a2e71bb06ecce5485d0c114"
+  },
+  "sds-c32/relative_density": {
+   "call": "cbea96c9e29ba6b086afff77f7907d98daeb9e97ac4a9fea2e760b94eb07651f",
+   "choice": {
+    "scale": null,
+    "unit": null,
+    "value": "0.85"
+   },
+   "codex_version": "codex-cli 0.162.1",
+   "confidence": 0.99,
+   "option": "c1",
+   "prompt_sha256": "sha256:e019fa7f6615ed47c7bd76a11b80dacf12acf5a69a628a8649fa8f153327124c"
+  }
+ },
+ "calls": 70,
+ "failures": [
+  "component-c01/operating_temperature_max: codex failed (exit 1): Selected model is at capacity. Please try a different model."
+ ],
+ "format": "codex-judge-answers/1",
+ "meta": {
+  "codex_versions": [
+   "codex-cli 0.162.1"
+  ],
+  "effort": "medium",
+  "items": 69,
+  "manifest_sha256": "sha256:ead6e6942e9204f82f8bd0d32f88e6f4fc588fff532cf06d70448339694fc77e",
+  "model": "gpt-6.1-sol",
+  "prompts_sha256": "sha256:5037110e13bae3ddabc37136b54d14869fbdb9530720f047434b617819fc4e38",
+  "run": 1,
+  "splits": [
+   "development"
+  ],
+  "template": "codex-choice/1",
+  "template_sha256": "sha256:17dd1f4412d737934c8913415bb402c183030ac0bed9050c8e965a21b5b695ab"
+ }
+}

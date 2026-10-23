@@ -327,7 +327,7 @@ def test_bad_targeted_quote_fails_only_its_field():
 def test_targeted_trim_drops_the_worst_ranked_region_first():
     schema = {"fields": {"net_income": {"type": "integer", "description": "the yearly profit"}}}
     text = "".join(f"profit line {i} y\n" for i in range(6)) + "Net income 42."
-    for limit in (3207, 3507, 3807):
+    for limit in (3058, 3358, 3658):
         client = Client(envelope(missing=("net_income",)), envelope(missing=("net_income",)))
         settings = RunPolicy(search_context_chars=1, max_prompt_chars=limit)
         result = execute(text, client, schema, run_policy=settings)
@@ -747,7 +747,7 @@ def test_targeted_title_beats_earlier_common_description_words():
             "revenue": {"type": "integer", "description": "Total revenue for the fiscal year"}
         }
     }
-    text = ("the " + "x" * 20 + "\n") * 1100 + "Revenue 5."
+    text = ("fiscal " + "x" * 17 + "\n") * 1100 + "Revenue 5."
     client = Client(envelope(missing=("revenue",)), envelope(candidate(field="revenue")))
     result = execute(
         text,
@@ -1138,7 +1138,7 @@ def test_record_is_a_hash_chained_log_and_inputs_are_objects():
     assert result.run_sha256 == lines[-1]["entry_sha256"]
     # Keys use the stable runner prefix, not the core digest that names the spec version.
     inputs = lines[0]["inputs"]
-    text_key = "sha256:" + hashlib.sha256(b"groundgate-run/3:text\0Amount 5.").hexdigest()
+    text_key = "sha256:" + hashlib.sha256(b"groundgate-run/4:text\0Amount 5.").hexdigest()
     assert inputs["document"] == {"kind": "text", "id": None, "source": None, "sha256": text_key}
     assert result.artifacts[text_key] == "Amount 5."
     assert result.receipt.document_sha256 != text_key
@@ -1285,8 +1285,6 @@ CAUSE_SCHEMA = {"fields": {"amount": {"type": "integer", "aliases": ["Amount"]}}
         ("Amount 5, Amount.", "Amount.", "after_value"),
         # The value quote holds more than the token: the token decides the cause.
         ("Amount 5 total.", "total", "after_value"),
-        # The item is before the value but names no alias of the field (#395).
-        ("Sum: Amount 5.", "Sum", "no_alias"),
     ],
 )
 def test_repair_names_the_cause_of_a_field_item_that_cannot_pass(text, field, cause):
@@ -1301,36 +1299,14 @@ def test_repair_names_the_cause_of_a_field_item_that_cannot_pass(text, field, ca
     result = execute(text, client, CAUSE_SCHEMA)
     assert "It must not hold the value." in client.prompts[0]
     repair = json.loads(client.prompts[1].split("\n", 1)[1])
-    expected = {
-        "holds_value": "holds the value",
-        "after_value": "comes after the value",
-        "no_alias": "names no alias of the field. Quote a label before the value that holds one "
-        'of these aliases, word for word: "Amount".',
-    }
+    expected = {"holds_value": "holds the value", "after_value": "comes after the value"}
     assert expected[cause] in repair["feedback"]
     assert "label before the value" in repair["feedback"]
-    assert "It holds one of the field's aliases, word for word." in client.prompts[0]
     call = next(e for e in result.record if e["kind"] == "call" and e["phase"] == "repair")
     assert call["field_causes"] == [cause]
     assert result.receipt.decisions[0].outcome == "admitted"
     assert "field_causes" not in result.record[-2]
     assert_replays(result, text, CAUSE_SCHEMA)
-
-
-def test_repair_lists_every_alias_for_a_field_item_in_a_reference():
-    # The no_alias cause reads the reference that the decision cites (#395).
-    schema = {"fields": {"amount": {"type": "integer", "aliases": ["Amount", "Total"]}}}
-    references = [{"id": "r", "text": "Sum: Amount 5."}]
-    first = candidate(evidence=[item("5", ref="r"), item("Sum", "field", ref="r")])
-    new = candidate(evidence=[item("5", ref="r"), item("Amount", "field", ref="r")])
-    client = Client(envelope(first), new)
-    result = execute("Nothing.", client, schema, references=references)
-    repair = json.loads(client.prompts[1].split("\n", 1)[1])
-    assert 'word for word: "Amount", "Total".' in repair["feedback"]
-    call = next(e for e in result.record if e["kind"] == "call" and e["phase"] == "repair")
-    assert call["field_causes"] == ["no_alias"]
-    assert result.receipt.decisions[0].outcome == "admitted"
-    assert_replays(result, "Nothing.", schema, references=references)
 
 
 def test_final_admission_keeps_the_field_cause_after_the_last_repair():
@@ -1481,21 +1457,23 @@ def test_a_relation_checks_the_re_admit_after_rounding():
     assert_replays(result, text, RELATION_SCHEMA)
 
 
-@pytest.mark.parametrize("old_version", ["groundgate-run/1", "groundgate-run/2"])
+@pytest.mark.parametrize(
+    "old_version", ["groundgate-run/1", "groundgate-run/2", "groundgate-run/3"]
+)
 def test_an_older_record_fails_replay_with_a_version_message(tmp_path, old_version):
-    # 0.9.0 wrote groundgate-run/1 records and 0.10.0 wrote groundgate-run/2. This runner writes
-    # groundgate-run/3 (#382).
+    # 0.9.0 wrote groundgate-run/1 records, 0.10.0 wrote groundgate-run/2 and 0.11.0 wrote
+    # groundgate-run/3. This runner writes groundgate-run/4 (#466).
     result = execute("Amount 5.", Client(envelope(candidate())))
-    assert result.record[0]["runner"] == "groundgate-run/3"
+    assert result.record[0]["runner"] == "groundgate-run/4"
     old = copy.deepcopy(result.record)
     old[0]["runner"] = old_version
     verification = replay(old, result.artifacts, "Amount 5.", SCHEMA)
     message = f"runner version differs: the record is {old_version!r}, this runner is "
     assert not verification.ok
-    assert verification.problems == (message + "'groundgate-run/3'",)
+    assert verification.problems == (message + "'groundgate-run/4'",)
     result.write(tmp_path)
     log = tmp_path / "run.jsonl"
-    log.write_text(log.read_text().replace("groundgate-run/3", old_version, 1))
+    log.write_text(log.read_text().replace("groundgate-run/4", old_version, 1))
     with pytest.raises(ValueError, match=f"the record is '{old_version}'"):
         RunResult.read(tmp_path)
 
@@ -1663,6 +1641,31 @@ def test_a_cut_stays_inside_its_region_at_the_edge():
     search = next(e for e in result.record if e["kind"] == "search")
     assert (search["cut_regions"][0]["kept_start"], search["cut_regions"][0]["kept_end"]) == (0, 30)
     assert_replays(result, text, SWEEP_SCHEMA)
+
+
+def test_queries_leave_out_english_function_words():
+    # The full title and each alias stay. Individual words leave out "the", "and" and "for"
+    # (#466), in any case.
+    field = {"aliases": ["The Fees"], "description": "The fee FOR the charges and the costs"}
+    assert _queries("the_fee", field)[0] == ["the fee", "The Fees", "fee", "charges", "costs"]
+
+
+def test_function_words_of_a_description_do_not_cover_the_whole_document():
+    # Before #466 each "the" and "and" was a query, and their windows merged into one region
+    # of the whole text, which the runner then cut.
+    filler = "the cat and the dog " * 40
+    text = filler + "Fee 5 " + filler
+    schema = {"fields": {"amount": {"type": "integer", "description": "The fee and the cost"}}}
+    client = Client(envelope(missing=("amount",)), envelope(candidate()))
+    settings = RunPolicy(search_context_chars=10, max_region_chars=40)
+    result = execute(text, client, schema, run_policy=settings)
+    search = next(e for e in result.record if e["kind"] == "search")
+    assert search["queries"] == ["amount", "fee", "cost"]
+    start = text.index("Fee")
+    assert [(r["start"], r["end"]) for r in search["regions"]] == [(start - 10, start + 13)]
+    assert search["cut_regions"] == [] and search["status"] == "searched"
+    assert result.complete and result.receipt.decisions[0].outcome == "admitted"
+    assert_replays(result, text, schema)
 
 
 # One run of "Amount" merges to one region that is cut to 400 characters. Each "total" is a

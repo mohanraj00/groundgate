@@ -1,0 +1,16 @@
+{
+ "approved": "2026-10-21, by the maintainer, before any held-out judge call",
+ "calibration_results_sha256": "sha256:3f1125145f06c56f25e02aeacfc9c1d11a81f44dc4e75ab335d357d7d55668f7",
+ "ceiling": 0.1,
+ "code_digest_method": "sha256 over items.py, judge.py and score.py of bench/judges/codex, lines \"name NUL sha256(file) LF\"",
+ "code_sha256": "sha256:143ee1f3460168728eb49783237800734a26c8cc7ca4d59b04a5c52b2ef995f2",
+ "effort": "medium",
+ "format": "codex-judge-freeze/1",
+ "heldout_call_limit": 800,
+ "heldout_runs": 2,
+ "model": "gpt-6.1-sol",
+ "template": "codex-choice/1",
+ "template_sha256": "sha256:17dd1f4412d737934c8913415bb402c183030ac0bed9050c8e965a21b5b695ab",
+ "threshold": 0.9,
+ "threshold_from": "gpt-6.1-sol medium run 1 at ceiling 0.1 in bench/requested4/judge/results.json"
+}

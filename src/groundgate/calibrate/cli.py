@@ -1,16 +1,21 @@
 """groundgate calibrate (experimental): measure a judge's thresholds on your own documents (§9).
 
-    groundgate calibrate sample --work W --docs D --candidates C --schema S --question key
-    groundgate calibrate split  --work W        # before any model run
-    groundgate calibrate label  --work W        # label in the browser, blind, before ask
-    groundgate calibrate ask    --work W --judge jev
-    groundgate calibrate report --work W        # REPORT.md, report.json
+    groundgate calibrate sample --work W --docs D --candidates C --schema S --question key \
+        [--store DIR]                           # with a store: a packet and a task for each item
+    groundgate calibrate split  --work W [--store DIR --set NAME]  # before any model run
+    groundgate calibrate label  --work W [--store DIR --reviewer NAME]  # blind, before ask
+    groundgate calibrate ask    --work W --judge jev [--store DIR --reviewer NAME]
+    groundgate calibrate report --work W [--store DIR]  # REPORT.md, report.json
     groundgate calibrate judge  --docs D --candidates C --schema S --policy P \
         --calibration W [W2] --out J            # recorded judgments (spec 0.4 and later)
 
 D holds <doc>.txt files, C holds <doc>.json files with each document's candidates in the
 candidate format of the installed groundgate's spec, and S is a schema of that spec. W keeps
 everything that a later step needs, so a step never asks for an earlier input again.
+
+Without --store, the labels are in W/labels.json, as in 0.10. With --store, label opens the
+review page on the tasks of W, each label is an answer in the answer log of the reviewer, and
+ask and report read the labels from those logs (docs/design/review.md §11).
 """
 
 from __future__ import annotations
@@ -27,7 +32,7 @@ from typing import Any
 
 from groundgate.canonical import SPEC_VERSION
 
-from . import judges
+from . import judges, label
 from . import questions as q
 from .stats import CEILINGS, needed
 
@@ -66,6 +71,7 @@ class Work:
 def sample(w: Work, docs: Path, cands: Path, schema_path: Path, args: argparse.Namespace) -> None:
     if (w.path / "items.json").exists():
         raise SystemExit(f"{w.path} has items already; use a new work directory")
+    found_by_doc: list[tuple[str, str, list[Any], list[dict[str, Any]]]] = []
     schema = json.loads(schema_path.read_text(encoding="utf-8"))
     descriptions = (
         json.loads(args.descriptions.read_text(encoding="utf-8")) if args.descriptions else {}
@@ -85,12 +91,12 @@ def sample(w: Work, docs: Path, cands: Path, schema_path: Path, args: argparse.N
             # a document without its candidates would leave the sample quietly; an empty list
             # says that the extractor found nothing
             raise SystemExit(f"{cpath} is not there; write [] for a document with no candidates")
-        found = q.sample(
-            args.question, doc, text, schema, json.loads(cpath.read_text(encoding="utf-8"))
-        )
+        given = json.loads(cpath.read_text(encoding="utf-8"))
+        found = q.sample(args.question, doc, text, schema, given)
         if found:
             (w.path / "docs" / f"{doc}.txt").write_text(text, encoding="utf-8")
             items += found
+            found_by_doc.append((doc, text, given, found))
     config = {
         "spec": SPEC_VERSION,
         "question": args.question,
@@ -100,6 +106,15 @@ def sample(w: Work, docs: Path, cands: Path, schema_path: Path, args: argparse.N
     }
     if not items:
         raise SystemExit(f"no {args.question} items in these documents; there is nothing to label")
+    if args.store is not None:
+        # the packet schema holds each description, so a stored task asks what the page asks
+        # key membership, not truth: an explicit "" override wins and gives no description
+        given = config["descriptions"]
+        described = {**schema, "fields": {
+            name: _described(f, given[name]) if name in given else f
+            for name, f in schema["fields"].items()
+        }}  # fmt: skip
+        w.write("tasks.json", put_tasks(args.store, described, found_by_doc, args.question))
     w.write("config.json", config)
     w.write("items.json", items)
     print(f"{len(items)} items in {len({it['doc'] for it in items})} documents")
@@ -109,23 +124,120 @@ def sample(w: Work, docs: Path, cands: Path, schema_path: Path, args: argparse.N
     print("A split by document puts about half of the items in the calibration part.")
 
 
+def _described(field: dict[str, Any], description: Any) -> dict[str, Any]:
+    """The field with ``description`` as its own description. A blank one removes it."""
+    out = {k: v for k, v in field.items() if k != "description"}
+    if isinstance(description, str) and description.strip():
+        out["description"] = description
+    return out
+
+
+def put_tasks(
+    store: Path,
+    schema: dict[str, Any],
+    found: list[tuple[str, str, list[Any], list[dict[str, Any]]]],
+    question: str,
+) -> dict[str, dict[str, str]]:
+    """Write a packet for each document and a blind task for each item to ``store``, and give
+    the map of tasks.json: item id to packet and task."""
+    from groundgate.model import PacketError
+    from groundgate.store import FolderStore, StoreError
+
+    from .stored import put_items
+
+    out: dict[str, dict[str, str]] = {}
+    try:
+        with FolderStore(store) as s:
+            for doc, text, cands, items in found:
+                out |= put_items(s, doc, text, schema, cands, items, question)
+    except (StoreError, PacketError, ValueError, OSError) as exc:
+        raise SystemExit(f"{store}: {exc}") from exc
+    return out
+
+
+def stored_labels(
+    w: Work, store: Path, reviewer: str, heads: dict[str, str | None] | None = None
+) -> tuple[dict[str, Any], dict[str, str | None]]:
+    """The labels of ``reviewer`` from the answer logs in ``store``, and the head of each log."""
+    from .stored import labels
+
+    return labels(store, w.read("tasks.json"), w.read("items.json"), reviewer, heads)
+
+
 def part(doc: str) -> str:
     """The calibration part holds a document whose sha256 starts with 0 to 7, the test part the
     rest, so one document is never on both sides."""
     return "calibration" if hashlib.sha256(doc.encode()).hexdigest()[0] in "01234567" else "test"
 
 
-def split(w: Work) -> None:
+def split(w: Work, store: Path | None = None, set_name: str | None = None) -> None:
+    """Write split.json. With a store and a set name, also write the part of each document to
+    the splits log of that set (store.md §10), before split.json."""
+    if (store is None) != (set_name is None):
+        raise SystemExit("give --store and --set together")
     if (w.path / "split.json").exists():
         raise SystemExit("split.json is there already; a split is written once")
     if list(w.path.glob("answers-*.json")):
         raise SystemExit("a model has answered already; a split comes before any model run")
-    out = {it["id"]: part(it["doc"]) for it in w.read("items.json")}
+    items = w.read("items.json")
+    out = {it["id"]: part(it["doc"]) for it in items}
+    if store is not None and set_name is not None:
+        log_split(w, items, store, set_name)
     w.write("split.json", out)
     # the prompts that the split is for: ask asks only these, and report scores only their answers
     w.write("prompts.json", {"prompts_sha256": prompts_sha256(w)})
     n = sum(v == "calibration" for v in out.values())
     print(f"wrote split.json: {n} calibration, {len(out) - n} test")
+
+
+# The split name in the splits log for each part (store.md §10): the calibration part chooses
+# the thresholds, as the development split of #383 does, and the test part only measures.
+LOG_SPLIT = {"calibration": "development", "test": "held-out"}
+
+
+def log_split(w: Work, items: list[dict[str, Any]], store: Path, set_name: str) -> None:
+    """Write the split of each document to the splits log of ``set_name`` in ``store``: the
+    calibration part is ``development`` and the test part is ``held-out``. The document key is
+    the text key, because calibrate has no source. The log comes before any label, and a
+    document that the log puts in another split stops the split."""
+    from groundgate.store import FolderStore, StoreError, key
+    from groundgate.store.splits import write_split
+
+    if w.read("labels.json", {}):
+        raise SystemExit("labels.json has labels; the splits log comes before any label")
+    if (w.path / "tasks.json").exists():
+        tasks = w.read("tasks.json").values()
+        packets, task_keys = {t["packet"] for t in tasks}, {t["task"] for t in tasks}
+        try:
+            with FolderStore(store) as s:
+                logs, _ = s.log_names()
+                # only an answer to a task of tasks.json is a label; a review answer is not
+                labeled = any(
+                    r.get("task") in task_keys
+                    for log in logs
+                    if log[0] == "answers" and log[1] in packets
+                    for r in s.read(log)
+                    if isinstance(r.get("task"), str)
+                )
+        except (StoreError, OSError) as exc:
+            raise SystemExit(f"{store}: {exc}") from exc
+        if labeled:
+            raise SystemExit("the store has answers to these items; the splits log comes first")
+    parts: dict[str, str] = {}
+    names: dict[str, str] = {}
+    for doc in sorted({it["doc"] for it in items}):
+        k = key("text@1", w.text(doc).encode("utf-8"))
+        if parts.setdefault(k, LOG_SPLIT[part(doc)]) != LOG_SPLIT[part(doc)]:
+            raise SystemExit(f"{names[k]} and {doc} have the same text but not the same part")
+        names.setdefault(k, doc)
+    try:
+        with FolderStore(store) as s:
+            added = write_split(s, set_name, parts)
+    except (StoreError, ValueError, OSError) as exc:
+        raise SystemExit(f"{store}: {exc}") from exc
+    print(
+        f"the splits log of {set_name}: {added} new documents, {len(parts) - added} there already"
+    )
 
 
 def prompts(w: Work) -> list[tuple[str, str, dict[str, Any]]]:
@@ -154,9 +266,12 @@ def prompts_sha256(w: Work) -> str:
     return hashlib.sha256(json.dumps(prompts(w)).encode()).hexdigest()
 
 
-def ask(w: Work, judge: str) -> None:
+def ask(w: Work, judge: str, store: Path | None = None, reviewer: str | None = None) -> None:
     """Ask every prompt once. A stopped run goes on where it stopped, but only with the same
-    judge, model and prompts: a resume never mixes the answers of two runs."""
+    judge, model and prompts: a resume never mixes the answers of two runs. With ``store``, the
+    labels come from the answer logs of ``reviewer``, and the meta keeps the head of each log."""
+    if (store is None) != (reviewer is None):
+        raise SystemExit("give --store and --reviewer together")
     w.read("split.json")
     target = w.path / f"answers-{judge}.json"
     if target.exists():
@@ -165,26 +280,19 @@ def ask(w: Work, judge: str) -> None:
     digest = hashlib.sha256(json.dumps(ps).encode()).hexdigest()
     if digest != w.read("prompts.json")["prompts_sha256"]:
         raise SystemExit("the documents, items or config changed after the split")
-    # every item is labeled before any judge answers, and those labels are the ones scored
-    labels = w.read("labels.json", {})
-    missing = [iid for iid, _, _ in ps if iid not in labels]
-    if missing:
-        raise SystemExit(f"{len(missing)} items are not labeled yet; label before a judge answers")
-    jd = judges.load(judge)
-    record = {
-        "judge": jd.id,
-        "model": jd.digest,
-        "prompts_sha256": digest,
-        "labels_sha256": labels_sha256(labels),
-        "scoring_sha256": scoring_sha256(w),
-    }
+    # the partial file freezes the labels (label and label --store refuse each write while it is
+    # there), so it is written before the label snapshot and stays until the run ends
     partial = w.path / f".answers-{judge}.partial.json"
-    answers: dict[str, Any] = {}
-    if partial.exists():
-        saved = json.loads(partial.read_text(encoding="utf-8"))
-        if saved["meta"] != record:
-            raise SystemExit(f"{partial.name} is from another run; delete it")
-        answers = saved["answers"]
+    with label.labels_lock(w.path):
+        fresh = not partial.exists()
+        if fresh:
+            partial.write_text(json.dumps({"meta": {"pending": True}, "answers": {}}), "utf-8")
+        try:
+            jd, record, answers = _ask_start(w, judge, ps, digest, partial, fresh, store, reviewer)
+        except BaseException:
+            if fresh:
+                partial.unlink(missing_ok=True)  # no judge was asked: the labels are open again
+            raise
     question = w.config["question"]
     for n, (iid, st, qs) in enumerate(ps, 1):
         if iid in answers:
@@ -196,6 +304,57 @@ def ask(w: Work, judge: str) -> None:
                           "answers": answers})  # fmt: skip
     partial.unlink(missing_ok=True)
     print(f"\nwrote {target.name}")
+
+
+def _ask_start(
+    w: Work,
+    judge: str,
+    ps: list[tuple[str, str, dict[str, Any]]],
+    digest: str,
+    partial: Path,
+    fresh: bool,
+    store: Path | None,
+    reviewer: str | None,
+) -> tuple[judges.Judge, dict[str, Any], dict[str, Any]]:
+    """Take the label snapshot while the partial file freezes the labels, check it, and write
+    the meta of the run to the partial file before the first judge call."""
+    # every item is labeled before any judge answers, and those labels are the ones scored
+    labels = w.read("labels.json", {})
+    source: dict[str, Any] = {}
+    if store is not None and reviewer is not None:
+        labels, heads = stored_labels(w, store, reviewer)
+        source = {"labels_from": {"reviewer": reviewer, "heads": heads}}
+    # every judge of the folder scores the same labels from the same source: a run without a
+    # store has no labels_from, and a run with a store keeps the reviewer and the log heads
+    for path in sorted([*w.path.glob("answers-*.json"), *w.path.glob(".answers-*.partial.json")]):
+        if fresh and path == partial:
+            continue
+        given = json.loads(path.read_text(encoding="utf-8"))["meta"].get("labels_from")
+        if given != source.get("labels_from"):
+            raise SystemExit(
+                f"{path.name} has its labels from another source, or the answer logs changed "
+                "after it; the labels are frozen once a judge has answered"
+            )
+    missing = [iid for iid, _, _ in ps if iid not in labels]
+    if missing:
+        raise SystemExit(f"{len(missing)} items are not labeled yet; label before a judge answers")
+    jd = judges.load(judge)
+    record = {
+        "judge": jd.id,
+        "model": jd.digest,
+        "prompts_sha256": digest,
+        "labels_sha256": labels_sha256(labels),
+        "scoring_sha256": scoring_sha256(w),
+        **source,
+    }
+    answers: dict[str, Any] = {}
+    if not fresh:
+        saved = json.loads(partial.read_text(encoding="utf-8"))
+        if saved["meta"] != record:
+            raise SystemExit(f"{partial.name} is from another run; delete it")
+        answers = saved["answers"]
+    partial.write_text(json.dumps({"meta": record, "answers": answers}), encoding="utf-8")
+    return jd, record, answers
 
 
 def call(jd: judges.Judge, st: str, qs: dict[str, Any], what: str) -> dict[str, Any]:
@@ -292,15 +451,26 @@ def judge_packets(args: argparse.Namespace) -> None:
         print(f"{doc}: {len(out)} judgments")
 
 
-def report(w: Work, check: bool) -> None:
+def report(w: Work, check: bool, store: Path | None = None) -> None:
     cfg, items = w.config, w.read("items.json")
     labels, parts = w.read("labels.json", {}), w.read("split.json")
-    missing = [it["id"] for it in items if it["id"] not in labels]
-    if missing:
-        raise SystemExit(f"{len(missing)} items are not labeled yet")
+    if store is None and not labels and (w.path / "tasks.json").exists():
+        raise SystemExit("the labels of this work folder are answers in a store; give --store")
+    if store is None:
+        missing = [it["id"] for it in items if it["id"] not in labels]
+        if missing:
+            raise SystemExit(f"{len(missing)} items are not labeled yet")
     results: dict[str, Any] = {"question": cfg["question"], "judges": {}}
     for path in sorted(w.path.glob("answers-*.json")):
         rec = json.loads(path.read_text(encoding="utf-8"))
+        given = rec["meta"].get("labels_from")
+        if given is not None:
+            # the labels as they were when the judge answered, from the answer logs
+            if store is None:
+                raise SystemExit(f"{path.name} took its labels from a store; give --store")
+            labels, _ = stored_labels(w, store, given["reviewer"], given["heads"])
+        else:
+            labels = w.read("labels.json", {})
         if rec["meta"]["prompts_sha256"] != w.read("prompts.json")["prompts_sha256"]:
             raise SystemExit(f"{path.name} answers other prompts than the split's")
         if rec["meta"]["scoring_sha256"] != scoring_sha256(w):
@@ -405,15 +575,30 @@ def main(argv: list[str] | None = None, prog: str = "groundgate calibrate") -> N
         help="JSON: field name to a meaning; overrides schema descriptions",
     )
     p.add_argument("--context", default="", help='for example "The text is from a 10-K filing."')
+    p.add_argument(
+        "--store", type=Path, metavar="DIR", help="also write a packet and a task for each item"
+    )
     p = sub.add_parser("label", help="label the items in the browser")
     p.add_argument("--port", type=int, default=8780)
-    sub.add_parser("split", help="split the items, before any model run")
+    p.add_argument("--store", type=Path, metavar="DIR", help="answer on the review page")
+    p.add_argument("--reviewer", metavar="NAME", help="the reviewer name of the answer log")
+    p = sub.add_parser("split", help="split the items, before any model run")
+    p.add_argument(
+        "--store",
+        type=Path,
+        metavar="DIR",
+        help="also write the part of each document to the splits log of --set in this store",
+    )
+    p.add_argument("--set", dest="set_name", metavar="NAME", help="the set of the splits log")
     p = sub.add_parser("ask", help="ask a judge every question")
     p.add_argument(
         "--judge", required=True, help="a judge name: chat, jev, or an installed plug-in"
     )
+    p.add_argument("--store", type=Path, metavar="DIR", help="read the labels from this store")
+    p.add_argument("--reviewer", metavar="NAME", help="the reviewer whose answers are labels")
     p = sub.add_parser("report", help="write REPORT.md and report.json")
     p.add_argument("--check", action="store_true", help="fail if the written files differ")
+    p.add_argument("--store", type=Path, metavar="DIR", help="the store of the labels")
     for s in sub.choices.values():
         s.add_argument("--work", type=Path, required=True, help="the work directory")
     p = sub.add_parser("judge", help="write recorded judgments for your documents")
@@ -424,6 +609,13 @@ def main(argv: list[str] | None = None, prog: str = "groundgate calibrate") -> N
     p.add_argument("--calibration", type=Path, nargs="+", required=True, help="work directories")
     p.add_argument("--out", type=Path, required=True, help="a directory for <doc>.json")
     args = ap.parse_args(argv)
+    reviewer = getattr(args, "reviewer", None)
+    if reviewer is not None:
+        # the answer log is filed under sha256 of the UTF-8 name, so the name must encode
+        try:
+            reviewer.encode("utf-8")
+        except UnicodeEncodeError:
+            raise SystemExit("a reviewer name must be valid Unicode text") from None
     if args.cmd == "judge":
         judge_packets(args)
         return
@@ -431,12 +623,63 @@ def main(argv: list[str] | None = None, prog: str = "groundgate calibrate") -> N
     if args.cmd == "sample":
         sample(w, args.docs, args.candidates, args.schema, args)
     elif args.cmd == "label":
-        from .label import serve
+        if args.store is not None or args.reviewer is not None:
+            review_serve(w, args.store, args.reviewer, args.port)
+        else:
+            from .label import serve
 
-        serve(w, args.port)
+            serve(w, args.port)
     elif args.cmd == "split":
-        split(w)
+        split(w, args.store, args.set_name)
     elif args.cmd == "ask":
-        ask(w, args.judge)
+        ask(w, args.judge, args.store, args.reviewer)
     else:
-        report(w, args.check)
+        report(w, args.check, args.store)
+
+
+def judged(w: Work) -> bool:
+    """True once a judge run starts in the work folder: the labels are frozen then."""
+    return label.judged(w.path)
+
+
+def label_review(w: Work, store: Any, reviewer: str) -> Any:
+    """The review of the tasks of the work folder. Like the label page, it refuses each answer
+    once a judge run starts, also while the server runs."""
+    from collections.abc import Mapping
+
+    from groundgate.review.serve import Refused, Review
+
+    class Frozen(Review):
+        def answer(self, body: Mapping[str, Any]) -> dict[str, Any]:
+            with label.labels_lock(w.path):
+                if judged(w):
+                    raise Refused(409, "the labels are frozen once a judge has answered")
+                return super().answer(body)
+
+    return Frozen(store, reviewer, only={t["task"] for t in w.read("tasks.json").values()})
+
+
+def review_serve(w: Work, store: Path | None, reviewer: str | None, port: int) -> None:
+    """Open the review page on the tasks of the work folder (docs/design/review.md §9, §11)."""
+    from groundgate.review.serve import server
+    from groundgate.store import FolderStore, StoreError
+
+    if store is None or reviewer is None:
+        raise SystemExit("give --store and --reviewer together")
+    if judged(w):
+        raise SystemExit("a judge has answered already; the labels are frozen")
+    try:
+        with FolderStore(store) as s:
+            review = label_review(w, s, reviewer)
+            for line in review.skipped:
+                print(f"skipped: {line}")
+            httpd, url = server(review, port)
+            print(f"Open {url} and press Ctrl-C here when you finish.")
+            try:
+                httpd.serve_forever()
+            except KeyboardInterrupt:
+                pass
+            finally:
+                httpd.server_close()
+    except (StoreError, ValueError, OSError) as exc:
+        raise SystemExit(f"{store}: {exc}") from exc

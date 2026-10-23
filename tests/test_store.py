@@ -243,6 +243,19 @@ def test_a_second_writer_stops_on_the_lock(root: Path) -> None:
     second.close()
 
 
+def test_take_holds_the_lock_before_the_first_append(root: Path) -> None:
+    first = FolderStore(root)
+    first.take(ANA)
+    first.take(ANA)  # a second take of a held log does nothing
+    with pytest.raises(Locked), FolderStore(root) as second:
+        second.append(ANA, {"answer": "no"})
+    first.append(ANA, {"answer": "yes"})
+    first.close()
+    assert [r["answer"] for r in FolderStore(root).read(ANA)] == ["yes"]
+    with pytest.raises(ValueError, match="only forget writes the deleted log"):
+        FolderStore(root).take(("deleted",))
+
+
 def test_forget_records_the_time(root: Path) -> None:
     moment = datetime(2026, 10, 20, 9, 30, tzinfo=timezone.utc)
     with FolderStore(root, clock=lambda: moment) as store:

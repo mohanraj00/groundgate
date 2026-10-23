@@ -8,7 +8,6 @@ import json
 import sys
 import threading
 from collections.abc import Iterator
-from http.server import ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
 
@@ -18,6 +17,7 @@ BENCH = Path(__file__).parent.parent / "bench"
 sys.path[:0] = [str(BENCH), str(BENCH / "label"), str(BENCH / "patterns")]  # not a package
 
 import app  # noqa: E402  (bench/label/app.py)
+import localweb  # noqa: E402  (bench/localweb.py)
 import pairs  # noqa: E402  (bench/patterns/pairs.py)
 import score  # noqa: E402  (bench/score.py)
 import triage  # noqa: E402  (bench/patterns/triage.py)
@@ -192,18 +192,31 @@ def served(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Iterator[tuple[in
     (tmp_path / "gold" / "d.json").write_text(json.dumps(g))
     monkeypatch.setattr(app, "GOLD", tmp_path / "gold")
     monkeypatch.setattr(app, "DOCS", tmp_path / "docs")
-    server = ThreadingHTTPServer(("127.0.0.1", 0), app.Handler)
+    server = localweb.LocalServer(0, app.Handler)
     threading.Thread(target=server.serve_forever, daemon=True).start()
     yield server.server_address[1], g
     server.shutdown()
+    server.server_close()
 
 
 def call(port: int, method: str, path: str, body: Any = None, token: str | None = None) -> tuple:
     conn = http.client.HTTPConnection("127.0.0.1", port)
     headers = {"X-Label-Token": token} if token else {}
+    if body is not None:
+        headers["Content-Type"] = "application/json"
     conn.request(method, path, json.dumps(body) if body is not None else None, headers)
     r = conn.getresponse()
-    return r.status, json.loads(r.read() or b"null")
+    raw = r.read()
+    if r.getheader("Content-Type", "").startswith("text/plain"):
+        return r.status, raw.decode()
+    return r.status, json.loads(raw or b"null")
+
+
+def test_label_app_refuses_another_host(served: tuple[int, dict]) -> None:
+    port, _ = served
+    conn = http.client.HTTPConnection("127.0.0.1", port)
+    conn.request("GET", "/api/docs", headers={"Host": "evil.test", "X-Label-Token": app.TOKEN})
+    assert conn.getresponse().status == 421
 
 
 def test_api_needs_the_page_token(served: tuple[int, dict]) -> None:

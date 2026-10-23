@@ -371,6 +371,17 @@ class FolderStore:
             raise ValueError("only forget writes the deleted log")
         return self._append(log, record)
 
+    def take(self, log: LogName) -> None:
+        """Take the lock of a log now, as the first append does, and keep it until ``close``. A
+        writer that must read a log and then append to it takes the lock first, so no other
+        writer can append between the read and the append. A second writer stops with
+        ``Locked``. If this writer holds the log already, ``take`` does nothing."""
+        word, _ = _check_log(log)
+        if word == "deleted":
+            raise ValueError("only forget writes the deleted log")
+        if log not in self._heads:
+            self._take(log)
+
     def read(self, log: LogName) -> list[Record]:
         """The records of a log in order, with each link checked. An absent log has none. A
         torn last line raises ``StoreError`` with the name of the log. A read takes no lock, so

@@ -2,7 +2,7 @@
 the 5 filing statuses. It writes the same labels.json as ``status.py label``, and like it, never
 shows which keys a spec puts at an amount.
 
-    uv run python bench/status/web.py              # then open http://127.0.0.1:8767
+    uv run python bench/status/web.py              # then open the start URL it prints (port 8767)
     uv run python bench/status/web.py --work bench/status/calibrate/work
 
 Since #230, groundgate writes a PDF table as rows with tabs, so its PDF text differs from the
@@ -24,13 +24,13 @@ import hashlib
 import json
 import sys
 import threading
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
 
 HERE = Path(__file__).parent
 sys.path[:0] = [str(HERE), str(HERE.parent)]
 
+import localweb  # noqa: E402  (bench/localweb.py)
 import status  # noqa: E402  (bench/status/status.py)
 from fetch import download  # noqa: E402  (bench/fetch.py)
 
@@ -106,7 +106,7 @@ def serve(port: int, work: Path | None = None) -> None:
     page = (HERE / "web.html").read_bytes()
     lock = threading.Lock()
 
-    class Handler(BaseHTTPRequestHandler):
+    class Handler(localweb.LocalHandler):
         def log_message(self, *args: Any) -> None:
             pass
 
@@ -161,9 +161,7 @@ def serve(port: int, work: Path | None = None) -> None:
                 tmp.replace(path)  # a reader never sees half a file
             self.send(200, b"{}", "application/json")
 
-    server = ThreadingHTTPServer(("127.0.0.1", port), Handler)
-    print(f"{len(items)} amounts; open http://127.0.0.1:{port} (Ctrl-C to stop)")
-    server.serve_forever()
+    localweb.serve(Handler, port, f"{len(items)} amounts")
 
 
 if __name__ == "__main__":

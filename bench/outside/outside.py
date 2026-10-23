@@ -6,7 +6,7 @@ groundgate reject a value that the document does not state, and how often is tha
         --with-requirements /tmp/lx.txt python bench/outside/outside.py items   # items.json
     uv run --isolated --no-project --no-sources --python 3.12 --with groundgate==0.6.1 \
         --with-requirements /tmp/lx.txt python bench/outside/outside.py still   # still.json
-    uv run --group langextract python bench/outside/outside.py web     # label at 127.0.0.1:8768
+    uv run --group langextract python bench/outside/outside.py web     # label at port 8768
     uv run --group langextract python bench/outside/outside.py web --relabel  # a second look
     uv run python bench/outside/outside.py results [--check]           # results.json, RESULTS.md
 
