@@ -681,6 +681,7 @@ def test_a_part_with_no_scale_keeps_the_scale_question(tmp_path: Path) -> None:
     [
         ("Employees (100) in 2025.\n", None, []),  # no unit: brackets make no sign
         ("Result ($100) in 2025.\n", "USD", ["sign"]),  # a unit: brackets make it negative
+        ("Year 2024 Result ($100).\n", "USD", ["sign"]),  # the matched number, not 2024
     ],
 )
 def test_brackets_make_a_sign_only_with_a_unit(
@@ -691,14 +692,15 @@ def test_brackets_make_a_sign_only_with_a_unit(
     if unit is not None:
         field["unit"] = unit
     at = text.index("100")
+    first = text.find("2024") if "2024" in text else at  # the selection holds each number
     candidates = [{"id": "c1", "field": "f", "value": "5", "evidence": {"start": 0, "end": 3}}]
     if unit is not None:
         candidates[0]["unit"] = unit
     store = FolderStore(tmp_path / "store")
     k, _ = admit_packet(store, text, {"fields": {"f": field}}, candidates, None, None, None)
     ((tk, _),) = write_tasks(store, k, EVERY).tasks
-    check = Review(store, "ana").check({"task": tk, "verdict": "correct", "start": at,
-                                        "end": at + 3})  # fmt: skip
+    check = Review(store, "ana").check({"task": tk, "verdict": "correct", "start": first,
+                                        "end": at + 3, "value": "100"})  # fmt: skip
     assert [a["part"] for a in check["ask"]] == asked
 
 

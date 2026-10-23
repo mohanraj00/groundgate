@@ -702,7 +702,12 @@ class Review:
         value = Decimal(candidate["value"])  # canonical() of a parsed number: finite
         if not found or value == 0:
             return []
-        tok = found[0]
+        # the number that the value matches at some scale, as admit matches it, else the first
+        abs_value = value.copy_abs()
+        tok = next(
+            (t for t in found if t.value is not None and abs_value in _scaled(t.value.copy_abs())),
+            found[0],
+        )
         assert tok.value is not None
         written = text[tok.start : tok.end]
         spec = doc.schema.fields[slot.field]
