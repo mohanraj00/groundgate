@@ -257,14 +257,16 @@ their issues (#432).
    that `review resolve` wrote for it, with its candidates, judgments and receipt (#516). A
    correction packet has the inputs of the packet, no run record, and the exact candidates
    and judgments that `review resolve` gives to `admit` for a correction answer of the packet
-   (review.md §6.2). A `review-policy@1` object stays, because it holds no document data and
+   (review.md §6.2). If a plain `forget` removed its candidates, its receipt tells, because it
+   names each candidate by its digest. A `review-policy@1` object stays, because it holds no document data and
    other resolutions can name it. An object of the "Kept" column that another packet names
    stays. A correction packet of the packet does not count as another packet. But if a
    resolution of another packet names its receipt, the correction is shared, and its packet
    and receipt stay. If an answer log of the packet cannot be read, `forget --all` prints it as
-   "unchecked" and exits 1, because the log can name a correction. Then it removes only what
-   `forget` removes and the corrections that it finds. The packet, its tasks, its resolutions
-   and its logs stay. Run `store check --repair` on a torn log, then `forget --all` again.
+   "unchecked" and exits 1, because the log can name a correction. A packet that can be a
+   correction, but whose candidates and receipt cannot be read, is "unchecked" too. Then it
+   removes only what `forget` removes and the corrections that it finds. The packet, its kept
+   objects, its tasks, its resolutions and its logs stay. Run `store check --repair` on a torn log, then `forget --all` again.
    One object can serve two packets, because the same text has one key. `forget` of that text
    removes it for both packets, which is correct for one document.
    After `forget`, `verify` reports "input deleted", with the key, the time and the reason from
