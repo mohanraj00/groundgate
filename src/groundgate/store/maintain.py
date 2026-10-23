@@ -959,9 +959,9 @@ def forget_packet(
     filter applies to all the plans: an object that a packet, receipt, task or resolution
     which stays names also stays (``_named_by_rest``). The "Removed" objects of the packet
     itself and a run record that holds text go for all packets, so they are not in it.
-    The corrections go first, and the receipt, the judgments and the review
-    records of the packet after them, and the receipt of a correction goes after its packet, so
-    a call that stops can finish later. An object of the
+    The corrections go first, then the review records and the answer logs of the packet, then
+    its receipt and its judgments, and the packet last. The receipt of a correction goes after
+    its packet. So a call that stops can finish later. An object of the
     "Kept" column that another packet names stays, but a correction packet of this packet does
     not count. A packet that cannot be read counts as a packet that names nothing, so run
     ``check`` first. If
@@ -1054,6 +1054,7 @@ def forget_packet(
     corrections: frozenset[str] = frozenset()
     shared_corrections: dict[str, int] = {}
     unread_review: list[tuple[str, str]] = []
+    late: list[tuple[str, str, bool]] = []  # the receipt and the judgments of the packet
     if everything:
         walked = _review_plan(objects, packet, obj)
         review, corrections, shared_corrections, unread_review, unproven = walked
@@ -1066,9 +1067,14 @@ def forget_packet(
             plan = [(kind, k, always) for kind, k, always in plan if kind in REMOVED or always]
             review = []
             unchecked += unread_review
-        # The corrections go first, and the receipt, the judgments and the tasks of the packet
-        # after them: a forget that stops can find the rest of the corrections again (#516).
+        # The corrections go first, and the tasks, the resolutions and the logs of the packet
+        # after them. The receipt and the judgments of the packet go last, before the packet:
+        # with them, a forget that stops finds the rest of the corrections again, and tells
+        # that a packet of the same inputs is not a correction (#516).
         first = [(kind, k, False) for kind, k in review if kind not in _RECORDS]
+        recovery = set(_keys(obj["receipt"])) | set(_keys(obj["judgments"]))
+        late = [(kind, k, a) for kind, k, a in plan if k in recovery]
+        plan = [(kind, k, a) for kind, k, a in plan if k not in recovery]
         plan = first + plan + [(kind, k, False) for kind, k in review if kind in _RECORDS]
     else:
         plan = [(kind, k, always) for kind, k, always in plan if kind in REMOVED or always]
@@ -1081,12 +1087,13 @@ def forget_packet(
     # packets (§8 rule 3), so they do not count here. Keep an object, and the objects that it
     # names stay too: repeat until nothing changes.
     keep: set[str] = set()
+    every = plan + late if everything else plan
     if everything:
-        removed = {k for kind, k, always in plan if (kind in REMOVED or always)}
+        removed = {k for kind, k, always in every if (kind in REMOVED or always)}
         removed -= {k for _, k, _ in first}
-        guarded = {k for _, k, _ in plan} - removed
+        guarded = {k for _, k, _ in every} - removed
         stays = bool(unread_review or unread_runs)
-        gone = {k for _, k, _ in plan} | (set() if stays else {packet})
+        gone = {k for _, k, _ in every} | (set() if stays else {packet})
         guarded |= set() if stays else {packet}
         keep = set(shared_corrections) & guarded  # the correction of another packet too
         gone -= keep
@@ -1097,24 +1104,29 @@ def forget_packet(
         (kind, k, "unchecked", others.get(k, 0)) for kind, k in dict.fromkeys(unchecked)
     ]
     seen: set[str] = set()
-    for kind, k, _ in plan:
-        if k in seen:
-            continue
-        seen.add(k)
-        shared = others.get(k, 0)
-        if k not in objects.kinds:
-            done.append((kind, k, "absent", shared))
-        elif k in keep:
-            done.append((kind, k, "kept", shared))
-        else:
-            runs = objects.run_keys(k) if kind in _RUN_KINDS else []
-            try:
-                store.forget(k, reason, run_keys=runs)
-            except NotFound:  # another forget removed it after the walk
-                done.append((kind, k, "absent", shared))
+
+    def drop(entries: list[tuple[str, str, bool]]) -> None:
+        for kind, k, _ in entries:
+            if k in seen:
                 continue
-            done.append((kind, k, "deleted", shared))
+            seen.add(k)
+            shared = others.get(k, 0)
+            if k not in objects.kinds:
+                done.append((kind, k, "absent", shared))
+            elif k in keep:
+                done.append((kind, k, "kept", shared))
+            else:
+                runs = objects.run_keys(k) if kind in _RUN_KINDS else []
+                try:
+                    store.forget(k, reason, run_keys=runs)
+                except NotFound:  # another forget removed it after the walk
+                    done.append((kind, k, "absent", shared))
+                    continue
+                done.append((kind, k, "deleted", shared))
+
+    drop(plan)
     if everything and (unread_review or packet in keep):
+        drop(late)
         done.append(("packet@1", packet, "kept", 0))
         return done
     if everything:
@@ -1127,6 +1139,7 @@ def forget_packet(
                     done.append(("log", _log_rel(log), "absent", 0))
                     continue
                 done.append(("log", _log_rel(log), "deleted", 0))
+        drop(late)
         if unread_runs:  # the packet stays, so check and forget still name the kept record
             done.append(("packet@1", packet, "kept", 0))
             return done

@@ -1017,3 +1017,37 @@ def test_forget_all_keeps_the_review_when_the_receipt_search_cannot_run(
     assert not any(state == "unchecked" for _, _, state, _ in done)
     assert not {k, own, tk, rk, receipt} & set(left)
     assert not log.exists()
+
+
+def test_forget_all_finishes_after_a_stop_at_a_task(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    # Another packet has the same inputs, other candidates and no run record. The first
+    # forget --all stops at the task, after the corrections. The receipt and the judgments of
+    # the packet go after the tasks, so the retry still tells that the other packet is not a
+    # correction, and it finishes.
+    root, k, tk, rk, receipt, fixed = _one_correction(tmp_path)
+    with FolderStore(root) as store:
+        other, _ = _corrected(store, "4200009", [])
+        own = json.loads(store.get("packet@1", k))
+    real = FolderStore.forget
+
+    def stop(self: FolderStore, n: str, reason: str, **more: Any) -> None:
+        real(self, n, reason, **more)
+        if n == tk:
+            raise RuntimeError("stopped")
+
+    monkeypatch.setattr(FolderStore, "forget", stop)
+    with FolderStore(root) as store, pytest.raises(RuntimeError):
+        forget_packet(store, k, "all", everything=True)
+    monkeypatch.setattr(FolderStore, "forget", real)
+    with FolderStore(root) as store:
+        left, _ = store.object_keys()
+    assert not {fixed, receipt, tk} & set(left)
+    assert {own["receipt"], own["judgments"], k} <= set(left)
+    with FolderStore(root) as store:
+        done = forget_packet(store, k, "all", everything=True)
+        left = _held(store)
+    assert not any(state == "unchecked" for _, _, state, _ in done)
+    assert not {k, rk, own["receipt"], own["judgments"]} & left
+    assert other in left
