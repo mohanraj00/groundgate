@@ -644,11 +644,20 @@ def _others(objects: _Objects, packet: str, skip: frozenset[str] = frozenset()) 
 _SAME_INPUTS = ("spec", "document", "reading", "schema", "policy", "references", "packs")
 _CORRECTIONS = frozenset({"correct", "adjust_span"})
 _RECORDS = frozenset({"task@1", "resolution@1"})  # the review records of a packet
+# The members of a receipt that record the inputs of ``admit`` other than the candidates.
+_RECEIPT_INPUTS = ("groundgate", "document", "references", "packs", "schema_sha256",
+                   "policy_sha256")  # fmt: skip
 
 
 def _review_plan(
     objects: _Objects, packet: str, obj: Mapping[str, Any]
-) -> tuple[list[tuple[str, str]], frozenset[str], dict[str, int], list[tuple[str, str]]]:
+) -> tuple[
+    list[tuple[str, str]],
+    frozenset[str],
+    dict[str, int],
+    list[tuple[str, str]],
+    list[tuple[str, str]],
+]:
     """The review objects of a packet for ``forget`` with ``everything`` (#516): each
     correction packet of ``review resolve`` with its candidates, judgments and receipt, then
     each ``task@1`` and ``resolution@1`` that names the packet. Also return the keys of the
@@ -656,7 +665,9 @@ def _review_plan(
     of another packet names, the number of those packets: that correction is shared, so its
     kept objects stay. Last, return each answer log of the packet that the store cannot read,
     and each packet that can be a correction when neither its candidates nor its receipt can
-    tell: then ``forget`` keeps the review provenance and reports them as ``unchecked``.
+    tell: then ``forget`` keeps the review provenance and reports them as ``unchecked``. Also
+    return each receipt that no packet names and that can be the receipt of a correction, but
+    that does not record enough to prove it (``_orphans``): it stays, and ``forget`` reports it.
     A ``review-policy@1`` object holds no document data and stays.
 
     A correction packet is a packet with the inputs of the packet, no run record, and the exact
@@ -722,45 +733,60 @@ def _review_plan(
         if users:  # the same correction of another packet: it is shared
             for _, n in [*own, *receipts, ("packet@1", k)]:
                 shared[n] = shared.get(n, 0) + len(users)
+    unproven: list[tuple[str, str]] = []
     if wanted:
-        plan += [("receipt@1", n) for n in _orphans(objects, obj, wanted) if n not in elsewhere]
+        proven, maybe = _orphans(objects, obj, wanted)
+        plan += [("receipt@1", n) for n in proven if n not in elsewhere]
+        unproven = [("receipt@1", n) for n in maybe if n not in elsewhere]
     review = plan + [("task@1", k) for k in tasks] + resolutions
-    return review, frozenset(corrections), shared, unread
+    return review, frozenset(corrections), shared, unread, unproven
 
 
 def _orphans(
     objects: _Objects,
     obj: Mapping[str, Any],
     wanted: list[tuple[Counter[str], str, str | None, str]],
-) -> list[str]:
-    """Each receipt of a correction whose packet is gone: a ``forget`` that stopped removed the
-    correction packet before its receipt. Such a receipt is named by no packet, has the
-    document of the packet, and names the candidates of one correction in ``wanted`` by their
-    digests. If a packet cannot be read, it can name any receipt, so there is none."""
+) -> tuple[list[str], list[str]]:
+    """The receipts of the corrections whose packets are gone: a ``forget`` that stopped
+    removed the correction packet before its receipt. Such a receipt is named by no packet. Its
+    spec version, document, references, packs, schema digest and policy digest are those of
+    the receipt of the packet, and its decisions name the candidates of one correction in
+    ``wanted`` by their digests.
+
+    A receipt lists only the judgments that applied, not the judgments that ``admit`` got. So
+    it proves a correction only when the packet has no judgments, and the receipt lists none:
+    each other input of ``admit`` is then in the receipt. Return the proven receipts, which
+    ``forget`` removes, and the receipts that match all the rest, which stay. If a packet or
+    another object cannot be read, it can name any receipt, so there is none."""
     named: set[str] = set()
     for k in objects.of("packet@1"):
         try:
             named.update(_keys(_packet(objects, k)["receipt"]))
         except (StoreError, ValueError, TypeError, RecursionError):
-            return []
+            return [], []
     if any(kind is None for kind in objects.kinds.values()):
-        return []  # an object that cannot be read can be a packet
+        return [], []  # an object that cannot be read can be a packet
     try:
-        document = objects.json("receipt@1", obj["receipt"])["document"]
+        mine = objects.json("receipt@1", obj["receipt"])
+        inputs = [mine[m] for m in _RECEIPT_INPUTS]
     except (StoreError, ValueError, TypeError, KeyError, RecursionError):
-        return []
-    out = []
+        return [], []
+    proven, maybe = [], []
     for k in sorted(objects.of("receipt@1")):
         if k in named:
             continue
         with suppress(StoreError, ValueError, TypeError, KeyError, RecursionError):
             receipt = objects.json("receipt@1", k)
-            if receipt["document"] != document:
+            if [receipt[m] for m in _RECEIPT_INPUTS] != inputs:
                 continue
             hashes = Counter(d["candidate_sha256"] for d in receipt["decisions"])
-            if any(hashes == digests + Counter([mine]) for digests, _, _, mine in wanted):
-                out.append(k)
-    return out
+            if not any(hashes == digests + Counter([c]) for digests, _, _, c in wanted):
+                continue
+            if obj["judgments"] is None and receipt["judgments"] == []:
+                proven.append(k)
+            else:
+                maybe.append(k)
+    return proven, maybe
 
 
 def _correction_inputs(
@@ -990,7 +1016,9 @@ def forget_packet(
     shared_corrections: dict[str, int] = {}
     unread_review: list[tuple[str, str]] = []
     if everything:
-        review, corrections, shared_corrections, unread_review = _review_plan(objects, packet, obj)
+        walked = _review_plan(objects, packet, obj)
+        review, corrections, shared_corrections, unread_review, unproven = walked
+        unchecked += unproven  # they stay, and they do not stop the rest
         if unread_review:
             # An answer log that cannot be read can name a correction, and a packet that
             # cannot be told can be one. Keep what finds them again: the packet, its kept

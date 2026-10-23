@@ -731,10 +731,17 @@ def test_forget_all_keeps_the_review_when_a_correction_cannot_be_told(tmp_path: 
     assert (root / "logs" / "answers" / k[7:]).exists()
 
 
-def _one_correction(tmp_path: Path) -> tuple[Path, str, str, str, str, str]:
+def _one_correction(tmp_path: Path, *, judged: bool = True) -> tuple[Path, str, str, str, str, str]:
     """A packet with one correction: the root, the packet, the task, the resolution, the
-    correction receipt and the correction packet."""
-    store, k, tk, data = one_choice(tmp_path)
+    correction receipt and the correction packet. With ``judged`` false, the packet has no
+    judgments."""
+    if judged:
+        store, k, tk, data = one_choice(tmp_path)
+    else:
+        store = FolderStore(tmp_path / "s")
+        data = {"packet": {**FILES["one-choice"]["packet"], "judgments": None}}
+        k = stored(store, data["packet"])
+        tk, _ = task_keys(store, k)["revenue", None]
     with store:
         store.append(
             ("answers", k, reviewer_key("ana")),
@@ -797,8 +804,10 @@ def test_forget_all_finishes_after_a_stop_at_the_correction_packet(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     # The first forget --all stops at the correction packet, after its candidates. Its receipt
-    # goes after it, so the retry finds the receipt that no packet names and removes it.
-    root, k, tk, rk, receipt, fixed = _one_correction(tmp_path)
+    # goes after it, so the retry finds the receipt that no packet names and removes it. The
+    # packet has no judgments, so the receipt proves each input of the correction. A receipt
+    # of other inputs that no packet names stays: here, a policy with min_confidence 0.1.
+    root, k, tk, rk, receipt, fixed = _one_correction(tmp_path, judged=False)
     with FolderStore(root) as store:
         candidates = json.loads(store.get("packet@1", fixed))["candidates"]
     real = FolderStore.forget
@@ -818,12 +827,43 @@ def test_forget_all_finishes_after_a_stop_at_the_correction_packet(
         left, _ = store.object_keys()
     assert receipt in left and fixed not in left
     monkeypatch.setattr(FolderStore, "forget", real)
+    packet = FILES["one-choice"]["packet"]
+    other = admit(
+        packet["text"], packet["schema"], [correction("4200000")], {"min_confidence": 0.1}
+    ).to_dict()
     with FolderStore(root) as store:
+        unrelated = store.put("receipt@1", jcs(other).encode("utf-8"))
         done = forget_packet(store, k, "all", everything=True)
         left, _ = store.object_keys()
+    assert unrelated != receipt and unrelated in left
     assert not any(state == "unchecked" for _, _, state, _ in done)
     assert ("receipt@1", receipt, "deleted", 0) in done
     assert not {k, tk, rk, receipt} & set(left)
+
+
+def test_forget_all_keeps_a_receipt_with_no_packet_that_it_cannot_prove(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    # The packet has judgments, and a receipt lists only the judgments that applied. So a
+    # receipt that no packet names cannot prove that it is a correction: it stays, and forget
+    # reports it. The rest of the packet goes.
+    root, k, tk, rk, receipt, fixed = _one_correction(tmp_path)
+    real = FolderStore.forget
+
+    def stop(self: FolderStore, k: str, reason: str, **more: Any) -> None:
+        real(self, k, reason, **more)
+        if k == fixed:
+            raise RuntimeError("stopped")
+
+    monkeypatch.setattr(FolderStore, "forget", stop)
+    with FolderStore(root) as store, pytest.raises(RuntimeError):
+        forget_packet(store, k, "all", everything=True)
+    monkeypatch.setattr(FolderStore, "forget", real)
+    with FolderStore(root) as store:
+        done = forget_packet(store, k, "all", everything=True)
+        left, _ = store.object_keys()
+    assert ("receipt@1", receipt, "unchecked", 0) in done
+    assert receipt in left and not {k, tk, rk} & set(left)
 
 
 @pytest.mark.parametrize("verdict", [[], {}])
