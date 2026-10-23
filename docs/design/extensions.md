@@ -334,7 +334,7 @@ Readers, strategies and the router stay experimental after 1.0.
 | 0.9 | as planned in #274. The set of #269 includes two or three kinds unlike the current sets. |
 | 0.10 | the pack format, versioned and hashed into the receipt; the move of section 9; relation checks (5.3) |
 | 0.11 | the tools of section 7: label kit, measure, operating point, audit sample, review answers to labels |
-| 0.12 | readers: OCR with confidence as evidence, word-processor and spreadsheet files (DOCX, XLSX) (#7); the router |
+| 0.13 | readers: OCR with confidence as evidence, word-processor and spreadsheet files (DOCX, XLSX) (#7); the router |
 | 1.0 | a stable pack format, a measured general core, a published bound for each kind |
 
 ## 13. Open questions

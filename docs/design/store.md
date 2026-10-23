@@ -79,7 +79,7 @@ new key. The store prefix changes only when the key scheme changes.
 | `run@N` | the run record, one canonical JSON line for each entry. `N` is the record version. | `extract` |
 | `packet@1` | section 5.2 | `extract`, `admit` |
 | `review-policy@1`, `task@1`, `resolution@1` | review.md §5 | `review` |
-| `document@1` | the document model of #285, in 0.12 | `read` |
+| `document@1` | the document model of #285, in 0.13 | `read` |
 
 - `put` refuses JSON bytes that are not canonical, so one object has one key.
 - The version of a kind is the version of its store format, not the spec version. A receipt
@@ -283,7 +283,7 @@ their issues (#432).
 - **The bench.** The published sets keep their files, and their numbers never change. A new set
   uses the store only when its issue says so.
 - **#287, the review step.** Tasks, policies and resolutions are objects, and answers are logs.
-- **#285, the document model.** `document@1` and the reading cache come in 0.12.
+- **#285, the document model.** `document@1` and the reading cache come in 0.13.
 
 ## 11. Changes to other design notes
 
@@ -309,4 +309,4 @@ format.
    record version: with #382 if it changes the record.
 5. **Splits and calibrate labels.** The `splits` log for #383, and calibrate labels from the
    answer logs after #385.
-6. **Later.** `document@1` and the reading cache with #285 in 0.12, and the crop view with #7.
+6. **Later.** `document@1` and the reading cache with #285 in 0.13, and the crop view with #7.
