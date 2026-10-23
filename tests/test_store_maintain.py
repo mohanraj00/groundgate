@@ -27,11 +27,13 @@ from groundgate.store import (
 from groundgate.store.maintain import (
     REMOVED,
     _log_rel,
+    _Objects,
     _rel,
     check,
     forget_packet,
     kind_of,
     rebuild,
+    run_hash,
 )
 from groundgate.store.packets import admit_packet, put_reading
 
@@ -584,18 +586,202 @@ def test_kind_of_hashes_an_object_at_most_once_for_each_kind(
     assert len(calls) == len(set(calls)) and not any(c.startswith("run@") for c in calls)
 
 
-def test_forget_removes_a_run_record_that_matches_no_kind(tmp_path: Path) -> None:
-    """A record whose bytes changed, with a header that can be read, matches its key as no
-    kind. It goes, as before (#486)."""
+def _changed_run_packet(store: FolderStore, root: Path) -> tuple[str, str, Path, bytes]:
+    """A packet whose run record has one changed byte in its last line. The header can still
+    be read, but the bytes match their key as no kind. Return the packet key, the record key,
+    the record path and the original bytes."""
+    packet = save_run(store)
+    run = json.loads(store.get("packet@1", packet))["run"]
+    path = path_of(root, run)
+    original = path.read_bytes()
+    data = bytearray(original)
+    data[data.rindex(b'"sequence"') + 1] = ord("S")
+    path.write_bytes(bytes(data))
+    return packet, run, path, original
+
+
+@pytest.mark.parametrize("everything", [False, True])
+def test_forget_keeps_a_run_record_that_matches_no_kind(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str], everything: bool
+) -> None:
+    """A record whose bytes changed stays, with its prompts and replies (#486)."""
+    root = tmp_path / "s"
+    with FolderStore(root) as store:
+        packet, run, path, _ = _changed_run_packet(store, root)
+    changed = path.read_bytes()
+    named = [k for k, v in all_keys(root).items() if v in ("prompt@1", "reply@1")]
+    assert named
+    args = ["store", "forget", "--store", str(root), packet, "--reason", "asked"]
+    assert main(args + ["--all"] * everything) == 1
+    out = capsys.readouterr().out
+    assert out.startswith(f"unchecked run@N {run}\n")
+    assert "deleted run@" not in out
+    assert path.read_bytes() == changed
+    assert all(path_of(root, k).exists() for k in named)
+    assert path_of(root, packet).exists()
+    assert (f"kept packet@1 {packet}" in out) is everything
+
+
+@pytest.mark.parametrize("manual", [False, True])
+def test_forget_finishes_after_a_repair_of_a_changed_run_record(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str], manual: bool
+) -> None:
+    """Put back the original record, or remove it by its key: then a second forget works."""
+    root = tmp_path / "s"
+    with FolderStore(root) as store:
+        packet, run, path, original = _changed_run_packet(store, root)
+    named = [k for k, v in all_keys(root).items() if v in ("prompt@1", "reply@1")]
+    args = ["store", "forget", "--store", str(root), packet, "--reason", "asked", "--all"]
+    assert main(args) == 1
+    if manual:
+        with FolderStore(root) as store:
+            store.forget(run, "the record changed")
+    else:
+        path.write_bytes(original)
+    capsys.readouterr()
+    assert main(args) == 0
+    out = capsys.readouterr().out
+    assert f"deleted packet@1 {packet}" in out and not path_of(root, packet).exists()
+    assert not path.exists()
+    # Put back, the record names its prompts and replies again, and they go too.
+    assert all(path_of(root, k).exists() for k in named) is manual
+
+
+def test_forget_keeps_a_run_record_that_the_store_refuses(tmp_path: Path) -> None:
+    """A run record file that the store does not read, here a symlink, stays (#486)."""
     root = tmp_path / "s"
     with FolderStore(root) as store:
         packet = save_run(store)
         run = json.loads(store.get("packet@1", packet))["run"]
-        path = path_of(root, run)
-        path.write_bytes(path.read_bytes() + b"[1]\n")
-        done = forget_packet(store, packet, "asked")
-    assert ("run@N", run, "unchecked", 0) in done and ("run@N", run, "deleted", 0) in done
-    assert not path.exists()
+    path = path_of(root, run)
+    target = tmp_path / "elsewhere"
+    target.write_bytes(path.read_bytes())
+    path.unlink()
+    path.symlink_to(target)
+    with FolderStore(root) as store:
+        done = forget_packet(store, packet, "asked", everything=True)
+    assert ("run@N", run, "unchecked", 0) in done
+    assert ("packet@1", packet, "kept", 0) in done
+    assert path.is_symlink() and path_of(root, packet).exists()
+
+
+def _shared_reply(store: FolderStore, root: Path) -> tuple[str, str, str]:
+    """Two packets that share one reply. Return the two packet keys and the reply key."""
+    one = save_run(store)
+    two = save_run(store, "Other text. The amount is 5 dollars.", document_id="inv-2")
+    replies = [k for k, v in all_keys(root).items() if v == "reply@1"]
+    assert len(replies) == 1
+    return one, two, replies[0]
+
+
+def _changed_object(root: Path) -> str:
+    """An object file whose bytes do not match its key. No packet names it."""
+    bad = key("text@1", b"junk")
+    path = path_of(root, bad)
+    path.parent.mkdir(exist_ok=True)
+    path.write_bytes(b"changed")
+    return bad
+
+
+def test_forget_finds_a_shared_reply_that_an_earlier_forget_removed(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """A second packet names a reply that the forget of the first packet removed. The deleted
+    log names its run key, so it is "absent", not a reason for "unchecked" (#442)."""
+    root = tmp_path / "s"
+    with FolderStore(root) as store:
+        one, two, reply = _shared_reply(store, root)
+        data = store.get("reply@1", reply)
+    assert main(["store", "forget", "--store", str(root), one, "--reason", "asked"]) == 0
+    with FolderStore(root) as store:
+        entries = store.read(("deleted",))
+    by_key = {e["key"]: e for e in entries}
+    assert by_key[reply]["run_keys"] == [run_hash("groundgate-run/4", "reply", data)]
+    text = json.loads(path_of(root, one).read_bytes())["document"]["text"]
+    assert "run_keys" not in by_key[text]
+    bad = _changed_object(root)
+    capsys.readouterr()
+    assert main(["store", "forget", "--store", str(root), two, "--reason", "asked"]) == 0
+    out = capsys.readouterr().out
+    assert f"absent reply@1 {reply}" in out
+    assert "unchecked" not in out and bad not in out
+
+
+def test_forget_of_a_reply_records_a_run_key_for_each_runner_version(tmp_path: Path) -> None:
+    root = tmp_path / "s"
+    with FolderStore(root) as store:
+        _, two, reply = _shared_reply(store, root)
+        data = store.get("reply@1", reply)
+        run = store.get("run@4", json.loads(store.get("packet@1", two))["run"])
+        store.put("run@3", run.replace(b"groundgate-run/4", b"groundgate-run/3", 1))
+        store.forget(reply, "asked", run_keys=_Objects(store).run_keys(reply))
+        entry = store.read(("deleted",))[-1]
+    assert entry["run_keys"] == sorted(
+        run_hash(f"groundgate-run/{n}", "reply", data) for n in (3, 4)
+    )
+
+
+def test_forget_after_an_old_deletion_with_no_run_keys(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """A deletion from 0.12 has no run keys: an object that cannot be read is "unchecked"."""
+    root = tmp_path / "s"
+    with FolderStore(root) as store:
+        _, two, reply = _shared_reply(store, root)
+        store.forget(reply, "asked")  # as 0.12 forget wrote it
+        assert "run_keys" not in store.read(("deleted",))[-1]
+    bad = _changed_object(root)
+    assert main(["store", "forget", "--store", str(root), two, "--reason", "asked"]) == 1
+    assert f"unchecked object {bad}" in capsys.readouterr().out
+
+
+def _deletion(root: Path, entry: dict[str, Any]) -> None:
+    """Append a record to the deleted log by hand, as a person with write access can."""
+    with FolderStore(root) as store:
+        store._append(("deleted",), entry)
+
+
+@pytest.mark.parametrize("bad", ["one", [1], ["sha256:x"], None])
+def test_forget_ignores_bad_run_keys_in_the_deleted_log(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str], bad: Any
+) -> None:
+    root = tmp_path / "s"
+    with FolderStore(root) as store:
+        _, two, reply = _shared_reply(store, root)
+        store.forget(reply, "asked")
+    _deletion(root, {"key": reply, "reason": "x", "time": "t", "run_keys": bad})
+    bad_object = _changed_object(root)
+    assert main(["store", "forget", "--store", str(root), two, "--reason", "asked"]) == 1
+    assert f"unchecked object {bad_object}" in capsys.readouterr().out
+
+
+def test_forget_does_not_trust_a_deletion_of_an_object_that_is_there(tmp_path: Path) -> None:
+    """A deleted-log entry maps the run key of a missing reply to a schema of the store. The
+    schema is there, so forget keeps it and does not remove it in place of the reply."""
+    root = tmp_path / "s"
+    with FolderStore(root) as store:
+        _, two, reply = _shared_reply(store, root)
+        data = store.get("reply@1", reply)
+        store.forget(reply, "asked")
+        schema = json.loads(store.get("packet@1", two))["schema"]
+    run_key = run_hash("groundgate-run/4", "reply", data)
+    _deletion(root, {"key": schema, "reason": "x", "time": "t", "run_keys": [run_key]})
+    with FolderStore(root) as store:
+        done = forget_packet(store, two, "asked")
+    assert path_of(root, schema).exists()
+    assert not any(k == schema for _, k, _, _ in done)
+
+
+def test_folder_store_forget_checks_its_run_keys(tmp_path: Path) -> None:
+    with FolderStore(tmp_path / "s") as store:
+        k = store.put("text@1", b"x")
+        with pytest.raises(ValueError, match="not a store key"):
+            store.forget(k, "asked", run_keys=["sha256:x"])
+        with pytest.raises(ValueError, match="one string"):
+            store.forget(k, "asked", run_keys=k)
+        r = "sha256:" + "1" * 64
+        store.forget(k, "asked", run_keys=[r, r])
+        assert store.read(("deleted",))[-1]["run_keys"] == [r]
 
 
 def test_forget_all_keeps_a_schema_of_a_packet_with_a_bad_run_line(tmp_path: Path) -> None:
@@ -720,10 +906,10 @@ def test_forget_all_after_another_forget_of_the_packet(
         store.append(log, {"answer": "yes"})
     forget, forget_log = FolderStore.forget, FolderStore.forget_log
 
-    def race(self: FolderStore, k: str, reason: str) -> None:
-        forget(self, k, reason)
+    def race(self: FolderStore, k: str, reason: str, **kw: Any) -> None:
+        forget(self, k, reason, **kw)
         if k == packet:  # raises NotFound, as for the second of two forgets
-            forget(self, k, reason)
+            forget(self, k, reason, **kw)
 
     def race_log(self: FolderStore, name: tuple[str, ...], reason: str) -> None:
         forget_log(self, name, reason)

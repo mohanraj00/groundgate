@@ -68,6 +68,7 @@ _RUN_OBJECTS = {
     "reply_sha256": ("reply", "reply@1"),
     "admission_sha256": ("admission", "admission@1"),
 }
+_RUN_KINDS = frozenset(kind for _, kind in _RUN_OBJECTS.values())
 # A string of a run record line with this many characters or more, that is also in the
 # document text, is document text.
 MIN_TEXT = 8
@@ -175,6 +176,7 @@ class _Objects:
             except ValueError as exc:
                 report.find(f"{_rel(k)} is not a valid {found} object: {exc}")
         self._deleted: dict[str, Mapping[str, Any]] | None = None
+        self._deleted_runs: dict[str, str] | None = None
         self._by_run: dict[str, dict[str, tuple[str, str]]] = {}
 
     def of(self, kind: str) -> Iterator[str]:
@@ -190,6 +192,30 @@ class _Objects:
             except StoreError:
                 pass  # check reports the log itself
         return self._deleted
+
+    def deleted_runs(self) -> dict[str, str]:
+        """The store key of each prompt, reply and admission that ``forget`` removed, by its
+        run keys in the deleted log (§7.1). The log is untrusted: an entry whose ``key`` or
+        ``run_keys`` does not have the format is skipped."""
+        if self._deleted_runs is None:
+            self._deleted_runs = {}
+            for k, entry in self.deleted().items():
+                runs = entry.get("run_keys")
+                if not KEY.fullmatch(k) or not isinstance(runs, list):
+                    continue
+                for run in runs:
+                    if isinstance(run, str) and KEY.fullmatch(run):
+                        self._deleted_runs[run] = k
+        return self._deleted_runs
+
+    def run_keys(self, k: str) -> list[str]:
+        """The run keys of the prompt, reply or admission ``k``: one for each runner version
+        of a run record in the store, sorted."""
+        runners = {f"groundgate-run/{v[4:]}" for v in self.kinds.values() if v and v[:4] == "run@"}
+        found: set[str] = set()
+        for runner in runners:
+            found.update(r for r, (_, n) in self.by_run_key(runner).items() if n == k)
+        return sorted(found)
 
     def by_run_key(self, runner: str) -> dict[str, tuple[str, str]]:
         """The store kind and key of each prompt, reply and admission object, by its key in a
@@ -359,14 +385,16 @@ def _holds_text(objects: _Objects, packet: Mapping[str, Any], run: _Run) -> list
     return text_lines(run, text, kept)
 
 
-def _run_objects(objects: _Objects, run: _Run) -> tuple[list[tuple[str, str]], int]:
+def _run_objects(
+    objects: _Objects, run: _Run
+) -> tuple[list[tuple[str, str]], list[tuple[str, str]]]:
     """The store kind and key of each prompt, reply and admission that the run record names,
-    and the number of run keys that match no object. The record names them by run keys:
-    ``_Objects.by_run_key`` hashes each object of these kinds one time for each runner
-    version."""
+    and the store kind and run key of each one that matches no object. The record names them
+    by run keys: ``_Objects.by_run_key`` hashes each object of these kinds one time for each
+    runner version."""
     index = objects.by_run_key(run.runner)
     found = []
-    missing = 0
+    missing = []
     for line in run.lines:
         for member, (_, kind) in _RUN_OBJECTS.items():
             value = line.get(member)
@@ -375,7 +403,7 @@ def _run_objects(objects: _Objects, run: _Run) -> tuple[list[tuple[str, str]], i
             if value in index and index[value][0] == kind:
                 found.append(index[value])
             else:
-                missing += 1
+                missing.append((kind, value))
     return found, missing
 
 
@@ -593,23 +621,14 @@ def _others(objects: _Objects, packet: str) -> dict[str, int]:
     return counts
 
 
-def _no_header(store: FolderStore, k: str) -> bool:
-    """True if the object ``k`` can be read but has no run header that ``forget`` can read.
-    This reads the bytes one time and hashes nothing."""
-    try:
-        return _run_kind(store.object_bytes(k)) is None
-    except StoreError:  # it cannot be read, or it went after the walk
-        return False
-
-
 def forget_packet(
     store: FolderStore, packet: str, reason: str, *, everything: bool = False
 ) -> list[tuple[str, str, str, int]]:
     """Remove the objects of a packet that §8 rule 3 lists as "Removed", and record each
     deletion in ``logs/deleted.jsonl``. An object that two packets share goes for both.
 
-    ``forget`` also removes the run record if a line holds document text, if its text is not in
-    the store (then the lines cannot be checked), or if it does not match its key. The run
+    ``forget`` also removes the run record if a line holds document text, or if its text is not
+    in the store (then the lines cannot be checked). The run
     record goes after the objects that it names, so a ``forget`` that stops can run again. The
     text check finds only a string of ``MIN_TEXT`` or more characters that is in the text: it
     is not a proof.
@@ -624,17 +643,21 @@ def forget_packet(
     is ``absent``.
 
     An object of the packet that ``forget`` cannot read is ``unchecked``, and the rest is still
-    removed. A run record whose lines cannot be read, the header too, is ``unchecked`` and
-    stays, because only the record names its prompts, replies and admissions. With
+    removed. A run record is ``unchecked`` and stays if ``forget`` cannot read its lines, the
+    header too, if its bytes do not match its key, or if the store refuses its file. Only the
+    record names its prompts, replies and admissions, and ``forget`` does not trust the lines
+    of a changed record (#486). With
     ``everything``, the packet then stays too, so ``check`` and ``forget`` still name the
     record. An edit gives the record another key, so it cannot repair the record. Put back a
     copy of the original record, or call ``FolderStore.forget`` on its key: then the objects
     that it names stay with no record that names them, and a second ``forget`` with
-    ``everything`` removes the packet. If the run record names an object that is not found,
-    each object of the store that cannot be read is ``unchecked``, because it can be that
-    object. ``unchecked`` means "could not check", so
-    the same key can also be ``deleted``: a run record with a header that matches its key as
-    no kind is removed (#486).
+    ``everything`` removes the packet.
+
+    The deleted-log entry of a removed prompt, reply or admission holds its run keys (§7.1).
+    If the run record names a run key of the deleted log, that object was removed before, and
+    it is ``absent`` (#442). If the run record names a run key that matches no object and no
+    deletion, each object of the store that cannot be read is ``unchecked``, because it can be
+    that object. An entry from 0.12 or earlier has no run keys, so this rule applies to it.
 
     Return the kind, the key, the state (``deleted``, ``absent``, ``kept`` or ``unchecked``)
     and the number of other packets that name the key, for each object. A log has the kind
@@ -651,18 +674,15 @@ def forget_packet(
     unread_runs: list[str] = []  # the run records that cannot be read, which stay
     for k in _keys(obj["run"]):
         kind = objects.kinds.get(k, "absent")
-        if kind is None and _no_header(store, k):
-            # The packet names it as its run record, but the header cannot be read, so the
-            # kind is not known. Keep it, as a record whose lines cannot be read.
+        if kind is None:
+            # The packet names it as its run record, but forget cannot read it, or its bytes
+            # do not match its key. Keep it: only the record names its prompts, replies and
+            # admissions, and the lines of a changed record are not trusted (#444, #486).
             unchecked.append(("run@N", k))
             unread_runs.append(k)
             continue
-        if kind is None or kind == "absent" or not kind.startswith("run@"):
-            # A record with a header that matches its key as no kind changed, and it goes
-            # (#486).
-            plan.append(("run@N", k, kind is None))
-            if kind is None:
-                unchecked.append(("run@N", k))
+        if kind == "absent" or not kind.startswith("run@"):
+            plan.append(("run@N", k, False))
             continue
         try:
             run = _run(objects, k)
@@ -681,9 +701,19 @@ def forget_packet(
         found, missing = _run_objects(objects, run)
         plan += [(kind, n, False) for kind, n in found]
         plan.append((run.kind, k, lines is None or bool(lines)))
-        if missing:
-            # A run key that matches no object: forgotten before, or an object that cannot be
-            # read. The objects that cannot be read are "unchecked", so the user can see them.
+        # A run key that matches no object: forgotten before, or an object that cannot be read.
+        # The deleted log names the run keys of each object that forget removed (#442). A
+        # deletion that names an object of the store is not trusted: that object is there.
+        deleted = objects.deleted_runs()
+        unknown = False
+        for kind, r in missing:
+            n = deleted.get(r)
+            if n is not None and n not in objects.kinds:
+                plan.append((kind, n, False))
+            else:
+                unknown = True
+        if unknown:
+            # The objects that cannot be read are "unchecked", so the user can see them.
             unchecked += [(kind or "object", n) for n, kind in objects.unread()]
     plan += [(kind, k, False) for kind, k in named]
     for k in _keys(obj["reading"]):
@@ -710,8 +740,9 @@ def forget_packet(
         elif everything and shared and kind not in REMOVED and not always:
             done.append((kind, k, "kept", shared))
         else:
+            runs = objects.run_keys(k) if kind in _RUN_KINDS else []
             try:
-                store.forget(k, reason)
+                store.forget(k, reason, run_keys=runs)
             except NotFound:  # another forget removed it after the walk
                 done.append((kind, k, "absent", shared))
                 continue

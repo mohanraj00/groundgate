@@ -168,6 +168,13 @@ store/
 
 Each path part is a 64-digit hex digest or a fixed word.
 
+A record of `logs/deleted.jsonl` names one deletion. An object deletion is
+`{"key": "sha256:...", "reason": "...", "time": "2026-10-20T09:30:00Z"}`, and a log deletion has
+`"log"` in place of `"key"`. For a `prompt@1`, `reply@1` or `admission@1` object, `forget` adds
+`"run_keys": ["sha256:..."]`: the key of the object in a run record, for each runner version of
+a run record in the store (section 8). Each record also has `sequence`, `previous` and
+`entry_sha256`.
+
 ### 7.2 Write and read
 
 - Write each object to a temporary file in the same folder, then rename it. A crash never
@@ -228,17 +235,20 @@ their issues (#432).
    the document source do not count, because the kept objects hold them. This check is not a
    proof. If the text is already gone, `check` cannot check the lines and prints "not
    checked", and `forget` removes the record. If `forget` cannot read an object, it prints
-   "unchecked", removes the rest and exits 1. A run record whose lines cannot be read, the
-   header too, stays, because only the record names its prompts, replies and admissions. With
-   `--all`, its packet stays too, so `check` and `forget` still name the record. An edit of
-   the record gives other bytes, and other bytes have another key, so an edit cannot repair
+   "unchecked", removes the rest and exits 1. A run record stays if `forget` cannot read its
+   lines, the header too, or if its bytes do not match its key. Only the record names its
+   prompts, replies and admissions, and `forget` does not trust the lines of a changed record.
+   With `--all`, its packet stays too, so `check` and `forget` still name the record. An edit
+   of the record gives other bytes, and other bytes have another key, so an edit cannot repair
    it. If a copy of the original record exists, put it back and run `forget` again. If not,
    call `FolderStore.forget` on the key of the record. Its prompts, replies and admissions
    then stay with no record that names them, and a second `forget --all` removes the packet.
-   A run record with a header that matches its key as no kind changed, and `forget` removes
-   it.
-   If a run record names an object that `forget` cannot find, each object of the store that it
-   cannot read is "unchecked".
+   A run record names its prompts, replies and admissions by run keys, and the deleted log
+   keeps the run keys of each one that `forget` removes. If a run record names a run key of the
+   deleted log, the object was removed before, and `forget` prints it as "absent". If a run
+   record names a run key that matches no object and no deletion, each object of the store
+   that `forget` cannot read is "unchecked". A deletion from 0.12 or earlier has no run keys,
+   so the second rule applies to it.
    A value is still document data. If an app must also remove the values,
    `groundgate store forget --all PACKET` removes each object and log of the packet. An object
    of the "Kept" column that another packet names stays.
