@@ -16,6 +16,7 @@ from groundgate.canonical import jcs
 from groundgate.cli import main
 from groundgate.model import PacketError
 from groundgate.store import FolderStore, StoreError, key
+from groundgate.store.maintain import rebuild
 from groundgate.store.packets import InputGone, admit_packet, load_packet, put_reading
 
 from pdfgen import make_pdf
@@ -343,6 +344,110 @@ def test_one_read_gives_the_source_and_the_text(
         assert store.get("source@1", obj["source"]) == first
         assert store.get("text@1", obj["text"]).decode() == doc.text
         assert doc.text.strip() == "Fee: $500"
+
+
+def _no_read(*args: Any, **kwargs: Any) -> Any:
+    raise AssertionError("read ran on a cache hit")
+
+
+@pytest.mark.parametrize("name", ["a.txt", "a.pdf"])
+def test_read_store_uses_the_reading_cache(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+    name: str,
+) -> None:
+    source = tmp_path / name
+    if name.endswith(".pdf"):
+        source.write_bytes(make_pdf([[(72, 700, "Fee: $500")], []]))
+    else:
+        source.write_bytes(b"Fee: $500")
+    root = tmp_path / "s"
+    argv = ["read", "--store", str(root), str(source), "--pages", "1-3"]
+    if name.endswith(".txt"):
+        argv = argv[:4]
+    assert main(argv) == 0
+    first = capsys.readouterr()
+    assert main(["store", "rebuild", "--store", str(root)]) == 0
+    capsys.readouterr()
+    import groundgate.read as reader
+
+    monkeypatch.setattr(reader, "read", _no_read)
+    assert main(argv) == 0
+    again = capsys.readouterr()
+    assert (again.out, again.err) == (first.out, first.err)
+    if name.endswith(".pdf"):
+        assert "page 2 has no text layer" in again.err and "fewer pages" in again.err
+    with FolderStore(root) as store:
+        k = first.out.strip()
+        hit, doc = put_reading(store, source, [1, 2, 3] if name.endswith(".pdf") else None)
+        assert hit == k and "Fee: $500" in doc.text
+        if name.endswith(".pdf"):
+            stored = json.loads(store.get("reading@1", k))["layout"]
+            assert doc.layout.to_dict() == json.loads(store.get("layout@1", stored))
+        else:
+            assert doc.layout is None
+
+
+def test_a_new_reader_version_misses_the_reading_cache(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    source = tmp_path / "a.txt"
+    source.write_text("Fee: $500", encoding="utf-8")
+    with FolderStore(tmp_path / "s") as store:
+        k, _ = put_reading(store, source)
+        rebuild(store)
+        import groundgate.read as reader
+
+        real, calls = reader.read, []
+
+        def counted(*args: Any, **kwargs: Any) -> Any:
+            calls.append(args)
+            return real(*args, **kwargs)
+
+        monkeypatch.setattr(reader, "read", counted)
+        assert put_reading(store, source)[0] == k and not calls
+        assert put_reading(store, source, [1])[0] != k and len(calls) == 1
+        monkeypatch.setattr(gg, "__version__", "99.0.0")
+        newer, _ = put_reading(store, source)
+        assert newer != k and len(calls) == 2
+        assert json.loads(store.get("reading@1", newer))["reader"]["version"] == "99.0.0"
+
+
+def test_a_bad_reading_cache_is_a_miss(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    source = tmp_path / "a.txt"
+    source.write_text("Fee: $500", encoding="utf-8")
+    root = tmp_path / "s"
+    with FolderStore(root) as store:
+        k, _ = put_reading(store, source)
+        rebuild(store)
+        view = root / "views" / "readings.json"
+        cache = json.loads(view.read_bytes())
+        other = tmp_path / "b.txt"
+        other.write_text("Fee: $9", encoding="utf-8")
+        wrong, _ = put_reading(store, other)
+        import groundgate.read as reader
+
+        real, calls = reader.read, []
+
+        def counted(*args: Any, **kwargs: Any) -> Any:
+            calls.append(args)
+            return real(*args, **kwargs)
+
+        monkeypatch.setattr(reader, "read", counted)
+        two = json.loads(json.dumps(cache))
+        two["readings"][0]["readings"] = sorted([k, wrong])
+        swapped = json.loads(json.dumps(cache))
+        swapped["readings"][0]["readings"] = [wrong]
+        for bad in (b"not json", b"[]", jcs(two).encode(), jcs(swapped).encode()):
+            view.write_bytes(bad)
+            again, doc = put_reading(store, source)
+            assert again == k and doc.text == "Fee: $500"
+        assert len(calls) == 4
+        view.write_bytes(jcs(cache).encode())
+        store.forget(json.loads(store.get("reading@1", k))["text"], "test")
+        again, doc = put_reading(store, source)
+        assert again == k and doc.text == "Fee: $500" and len(calls) == 5
 
 
 def test_layout_needs_a_pdf_before_the_store_is_written(

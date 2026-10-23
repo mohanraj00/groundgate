@@ -25,7 +25,7 @@ import io
 import itertools
 import threading
 import unicodedata
-from collections.abc import Iterable, Iterator, Sequence
+from collections.abc import Iterable, Iterator, Mapping, Sequence
 from pathlib import Path
 from typing import Any, BinaryIO
 
@@ -251,7 +251,7 @@ def _read_pages(fp: BinaryIO, wanted: list[int] | None) -> Result:
     out = _Builder()
     page_list: list[Page] = []
     words: list[Word] = []
-    warnings: list[str] = []
+    dropped: dict[int, int] = {}
     for i, pdf_page in enumerate(PDFPage.get_pages(fp, index)):
         number = wanted[i] if wanted is not None else i + 1  # get_pages keeps document order
         interpreter.process_page(pdf_page)
@@ -297,17 +297,30 @@ def _read_pages(fp: BinaryIO, wanted: list[int] | None) -> Result:
                         ws, we = out.add(t)
                         words.append(Word(ws, we, box))
         page_list.append(Page(number, round(vx1 - vx0, 2), round(vy1 - vy0, 2), start, out.size))
+        dropped[number] = hidden
+    return out.text(), page_list, words, layout_warnings(page_list, wanted, dropped)
+
+
+def layout_warnings(
+    pages: Sequence[Page], wanted: Iterable[int] | None, dropped: Mapping[int, int] | None = None
+) -> list[str]:
+    """The warnings of a read that gave ``pages`` for the 1-based page numbers ``wanted``.
+    ``dropped`` gives the number of words outside the visible page for each page number. A
+    reading from the store has no such numbers, so it gives no such warning."""
+    warnings: list[str] = []
+    for page in pages:
+        number, hidden = page.number, (dropped or {}).get(page.number, 0)
         if hidden:
             warnings.append(f"page {number}: dropped {hidden} words drawn outside the visible page")
-        if out.size == start:
+        if page.start == page.end:
             warnings.append(
                 f"page {number} has no text layer; OCR the PDF first (for example with ocrmypdf)"
             )
-    if not page_list:
+    if not pages:
         warnings.append("no pages were extracted")
-    elif wanted is not None and len(page_list) < len(wanted):
-        warnings.append(f"the PDF has fewer pages than requested ({len(page_list)} extracted)")
-    return out.text(), page_list, words, warnings
+    elif wanted is not None and len(pages) < len(set(wanted)):
+        warnings.append(f"the PDF has fewer pages than requested ({len(pages)} extracted)")
+    return warnings
 
 
 def _span(line: Line) -> Box:
