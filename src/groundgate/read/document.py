@@ -284,7 +284,7 @@ def _check_doubt(doubt: object, data: bytes) -> None:
 
 def _check_nodes(raw: list[object], data: bytes) -> Iterable[Node]:
     nodes: list[Node] = []
-    depth: list[int] = []  # the number of nodes above each node
+    chain: list[int] = []  # the previous node and the nodes above it
     last_end: dict[int | None, int] = {}
     last_start = 0
     for i, obj in enumerate(raw):
@@ -318,9 +318,17 @@ def _check_nodes(raw: list[object], data: bytes) -> Iterable[Node]:
             raise DocumentError(f"{what}: a {kind} must have as parent: {', '.join(allowed)}")
         if up is not None and not (up.start <= start and end <= up.end):
             raise DocumentError(f"{what} span is not inside the span of its parent")
-        depth.append(0 if parent is None else depth[parent] + 1)
-        if depth[-1] >= MAX_DEPTH:  # a lookup by span walks the parents, so the walk stays short
+        # Tree order: the parent is the node before this one or a node above it. A lookup by span
+        # then finds each node that holds the span above the last node that starts before it.
+        while chain and chain[-1] != parent:
+            chain.pop()
+        if parent is not None and not chain:
+            raise DocumentError(
+                f"{what} is not in tree order: its parent is not above the node before it"
+            )
+        if len(chain) >= MAX_DEPTH:  # a lookup by span walks the parents, so the walk stays short
             raise DocumentError(f"{what} has {MAX_DEPTH} or more nodes above it")
+        chain.append(i)
         if start < last_start:
             raise DocumentError(f"{what} is not in text order")
         if start < last_end.get(parent, 0):

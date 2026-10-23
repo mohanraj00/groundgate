@@ -132,20 +132,22 @@ class _HTML(HTMLParser):
         elif tag == "pre":
             self.pre += 1
         if not self.in_head:
-            if self.nodes is not None:
+            if self.nodes is not None and not self.skip:
                 _close_implied(self.nodes, tag)
             self.w.start(tag)
-            if self.nodes is not None and tag in HTML_ROLES:
+            if self.nodes is not None and not self.skip and tag in HTML_ROLES:
                 _open_html(self.nodes, tag, attrs)
 
     def handle_startendtag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         if self.hide or self.in_head or _hidden(attrs):
             return
-        if self.nodes is not None and tag in HTML_ROLES:
+        if self.nodes is not None and not self.skip and tag in HTML_ROLES:
             _close_implied(self.nodes, tag)
         if tag in PARAGRAPH | LINE:
             self.w.start(tag)
-        if self.nodes is not None and tag in HTML_ROLES:  # an XHTML <td/> is an empty cell
+        if (
+            self.nodes is not None and not self.skip and tag in HTML_ROLES
+        ):  # an XHTML <td/> is an empty cell
             _open_html(self.nodes, tag, attrs)
             self.nodes.close(tag)
 
@@ -162,7 +164,7 @@ class _HTML(HTMLParser):
         elif tag == "pre":
             self.pre = max(0, self.pre - 1)
         if not self.in_head:
-            if self.nodes is not None and tag in HTML_ROLES:
+            if self.nodes is not None and not self.skip and tag in HTML_ROLES:
                 self.nodes.close(tag)
             self.w.end(tag)
 

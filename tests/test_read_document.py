@@ -200,6 +200,15 @@ def test_xhtml_empty_cells_and_spans_with_leading_zeros(tmp_path: Path) -> None:
     assert b is not None and data[b.start : b.end] == b"B"
 
 
+def test_tags_in_template_and_noscript_give_no_nodes(tmp_path: Path) -> None:
+    source = "<div>A<template><p>ignored</p></template>B</div><noscript><p>no</p></noscript>"
+    path = tmp_path / "t.html"
+    path.write_text(source, encoding="utf-8")
+    extracted, doc = read_document(path)
+    assert extracted == read(path)
+    assert _nodes(doc) == [("paragraph", "markup", None, "A\n\nB")]  # review of #521
+
+
 def test_spl_headings_take_the_depth_of_their_section(tmp_path: Path) -> None:
     doc = _doc(
         tmp_path,
@@ -462,6 +471,34 @@ def test_the_loader_refuses_a_deep_chain_of_nodes() -> None:
     obj["nodes"] = chain
     with pytest.raises(DocumentError, match="nodes above it"):
         Document.from_dict(obj, text)
+
+
+def test_the_loader_refuses_a_node_out_of_tree_order() -> None:
+    """A cell of the row after a later top-level node would hide that node from a lookup by
+    span, so the loader refuses the order (review of #521)."""
+    text = "ABC"
+    cell = {"row": 0, "column": 1, "rows": 1, "columns": 1, "header": None}
+    nodes: list[dict[str, Any]] = [
+        {"id": 0, "kind": "table", "basis": "markup", "parent": None, "start": 0, "end": 1},
+        {"id": 1, "kind": "row", "basis": "markup", "parent": 0, "start": 0, "end": 1},
+        {"id": 2, "kind": "paragraph", "basis": "markup", "parent": None, "start": 1, "end": 3},
+        {"id": 3, "kind": "cell", "basis": "markup", "parent": 1, "start": 1, "end": 1, **cell},
+    ]
+    obj = {
+        "format": "document@1",
+        "source": "sha256:" + "0" * 64,
+        "reader": {"name": "groundgate.read", "version": "0.13.0"},
+        "options": {"pages": None},
+        "text": key("text@1", text.encode()),
+        "nodes": nodes,
+        "doubt": [],
+    }
+    with pytest.raises(DocumentError, match="tree order"):
+        Document.from_dict(obj, text)
+    nodes[2], nodes[3] = {**nodes[3], "id": 2}, {**nodes[2], "id": 3}
+    doc = Document.from_dict(obj, text)
+    found = doc.at(1, 3)
+    assert found is not None and found.kind == "paragraph"
 
 
 def test_a_reader_stops_at_the_node_limit(tmp_path: Path) -> None:
