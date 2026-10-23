@@ -411,7 +411,8 @@ store folder. From a worktree, give the store path in full. Do not open `labels.
 3. Give `review/development/checks-needed.json` to an independent checker, as in step 5 of the
    held-out steps. The checker writes `review/development/checks.json`.
 4. Score again with the checks, then write `review/development/RESULTS.md` from
-   `review/development/results.json`:
+   `review/development/results.json`. `report` writes the table again and keeps the sections
+   from the line "`report` does not write the sections below." to the end of the file:
 
    ```bash
    PYTHONPATH=bench uv run python -m requested.review_items score --set bench/requested4 \

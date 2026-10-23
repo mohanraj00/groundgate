@@ -78,6 +78,8 @@ SPLITS = {
 }
 AUDIT = 30
 BAR = 0.05
+# ``report`` keeps the lines of RESULTS.md from this marker on: the sections written by hand.
+MARKER = "`report` does not write the sections below."
 OUTCOMES = ("agree", "wrong", "label_wrong", "pending", "unsure", "unclear")
 
 
@@ -481,7 +483,8 @@ def score(
 
 def report(set_dir: Path, split: str = SPLIT) -> str:
     """``RESULTS.md`` from ``results.json`` in the folder of ``split``: each number comes from
-    the file."""
+    the file. A line that starts with ``MARKER`` in the old file, and each line after it, stay
+    as they are."""
     out_folder = out_dir(set_dir, split)
     results = _load(out_folder / "results.json")
     issue = _split(split)["issue"]
@@ -514,7 +517,16 @@ def report(set_dir: Path, split: str = SPLIT) -> str:
         "",
     ]
     text = "\n".join(out)
-    (out_folder / "RESULTS.md").write_text(text, encoding="utf-8")
+    target = out_folder / "RESULTS.md"
+    if target.exists():
+        # Keep the hand-written sections: each line from the marker to the end of the file.
+        # The blank lines before the marker stay too. The table ends with one newline.
+        old = target.read_text(encoding="utf-8")
+        at = old.find("\n" + MARKER)
+        if at >= 0:
+            start = len(old[: at + 1].rstrip("\n")) + 1
+            text += old[start:]
+    target.write_text(text, encoding="utf-8")
     return text
 
 

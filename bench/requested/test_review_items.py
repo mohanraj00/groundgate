@@ -256,6 +256,11 @@ def test_build_score_and_report(tmp_path: Path) -> None:
     assert (total["wrong"], total["label_wrong"]) == (0, 1)
     text = review_items.report(set_dir)
     assert "| total | 4 |" in text and (set_dir / "review" / "RESULTS.md").exists()
+    notes = review_items.MARKER + " I wrote them.\n\n## The result\n\nBy hand.\n"
+    results_md = set_dir / "review" / "RESULTS.md"
+    results_md.write_text(text + notes, encoding="utf-8")
+    assert review_items.report(set_dir) == text + notes  # the hand-written sections stay
+    assert results_md.read_text(encoding="utf-8") == text + notes
 
 
 def test_development_split(tmp_path: Path) -> None:
