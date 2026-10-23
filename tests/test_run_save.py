@@ -1,19 +1,21 @@
-"""``RunResult.save`` writes a run into the store (docs/design/store.md §9, #405)."""
+"""``RunResult.save`` writes a run into the store, and ``RunResult.load`` replays it from there
+(docs/design/store.md §9, #405, #429)."""
 
 from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 import pytest
 
 import groundgate as gg
+from groundgate.canonical import jcs
 from groundgate.extract import RunResult, extract
 from groundgate.extract.runner import _STORE_KINDS, _hash
 from groundgate.model import PacketError
 from groundgate.store import FolderStore, key
-from groundgate.store.packets import load_packet
+from groundgate.store.packets import InputGone, admit_packet, load_packet
 
 SCHEMA = {"fields": {"amount": {"type": "integer"}}}
 LAC = {
@@ -85,8 +87,11 @@ def test_save_writes_the_objects_the_record_and_the_packet(tmp_path: Path) -> No
     result.write(tmp_path / "run")
     assert (tmp_path / "run" / "run.jsonl").read_bytes() == record
     assert RunResult.read(tmp_path / "run").receipt == result.receipt
-    # The record keeps the groundgate-run/5 keys (#429 moves them).
-    assert json.loads(record.splitlines()[0])["runner"] == "groundgate-run/5"
+    # The record names each object by its run key and its store key (#429).
+    header = json.loads(record.splitlines()[0])
+    assert header["runner"] == "groundgate-run/5"
+    text = result.artifacts[header["inputs"]["document"]["sha256"]]
+    assert header["inputs"]["document"]["key"] == key("text@1", text.encode("utf-8"))
 
 
 def test_save_writes_the_packs_and_the_references(tmp_path: Path) -> None:
@@ -184,3 +189,101 @@ def test_save_writes_only_the_objects_that_the_record_names(tmp_path: Path) -> N
     with FolderStore(tmp_path / "a") as a, FolderStore(tmp_path / "b") as b:
         assert extra.save(a) == result.save(b)
     assert files(tmp_path / "a") == files(tmp_path / "b")
+
+
+def same_run(a: RunResult, b: RunResult) -> None:
+    assert jcs(a.record) == jcs(b.record)
+    assert a.artifacts == b.artifacts and a.candidates == b.candidates
+    assert a.receipt == b.receipt and a.complete == b.complete
+
+
+def test_load_replays_a_saved_run_from_its_packet_key(tmp_path: Path) -> None:
+    result = run("Amount 5.", "5", document_id="doc-1", document_source="https://example.org/d")
+    with FolderStore(tmp_path) as store:
+        k = result.save(store)
+    # A new handle on the folder has only the store: no folder run, no client, no model.
+    with FolderStore(tmp_path) as store:
+        same_run(RunResult.load(store, k), result)
+
+
+def test_load_takes_the_packs_from_the_packet(tmp_path: Path) -> None:
+    packs = [AMOUNTS, LAC]
+    result = run("Amount 5 lac.", "5", PACKED, packs=packs)
+    with FolderStore(tmp_path) as store:
+        same_run(RunResult.load(store, result.save(store, packs=packs)), result)
+
+
+def test_load_replays_a_run_with_a_repair_and_a_client_error(tmp_path: Path) -> None:
+    reference = {"id": "r", "text": "Units are dollars."}
+    good = {
+        "field": "amount",
+        "value": "5",
+        "unit": None,
+        "key": None,
+        "evidence": [{"source": "document", "role": "value", "text": "5"}],
+    }
+    bad = {**good, "evidence": [{"source": "document", "role": "value", "text": "6"}]}
+    replies: list[Any] = [json.dumps({"candidates": [bad], "not_found": []}), RuntimeError()]
+
+    def client(prompt: str) -> str:
+        reply = replies.pop(0)
+        if isinstance(reply, Exception):
+            raise reply
+        return cast(str, reply)
+
+    result = extract("Amount 5.", SCHEMA, client=client, model_id="fixed-1", references=[reference])
+    calls = [e for e in result.record if e["kind"] == "call"]
+    assert [c["status"] for c in calls] == ["ok", "client_error"]
+    assert "reply_key" not in calls[1]
+    with FolderStore(tmp_path) as store:
+        same_run(RunResult.load(store, result.save(store)), result)
+
+
+def test_load_names_a_deleted_reply(tmp_path: Path) -> None:
+    result = run("Amount 5.", "5")
+    call = next(e for e in result.record if e["kind"] == "call")
+    with FolderStore(tmp_path) as store:
+        k = result.save(store)
+        store.forget(call["reply_key"], "the app deletes replies")
+        with pytest.raises(InputGone, match="input deleted") as gone:
+            RunResult.load(store, k)
+        assert gone.value.key == call["reply_key"]
+
+
+def test_load_refuses_a_packet_with_no_run_or_another_run(tmp_path: Path) -> None:
+    result = run("Amount 5.", "5")
+    with FolderStore(tmp_path) as store:
+        alone, _ = admit_packet(store, "Amount 5.", SCHEMA, result.candidates)
+        with pytest.raises(ValueError, match="names no run record"):
+            RunResult.load(store, alone)
+        k = result.save(store)
+        packet = json.loads(store.get("packet@1", k))
+        lines = store.get("run@5", packet["run"]).decode("utf-8")
+        old = lines.replace("groundgate-run/5", "groundgate-run/4").encode("utf-8")
+        other = store.put("packet@1", jcs({**packet, "run": store.put("run@4", old)}).encode())
+        with pytest.raises(ValueError, match="is not a groundgate-run/5 record"):
+            RunResult.load(store, other)
+        for limit in (len(lines) - 1, len(lines)):
+            with pytest.raises(ValueError, match="larger than max_bytes"):
+                RunResult.load(store, k, max_bytes=limit)
+
+
+def test_load_refuses_a_packet_of_another_receipt(tmp_path: Path) -> None:
+    five = run("Amount 5.", "5")
+    with FolderStore(tmp_path) as store:
+        packet = json.loads(store.get("packet@1", five.save(store)))
+        other = run("Amount 5. Amount 6.", "6")
+        run_key = json.loads(store.get("packet@1", other.save(store)))["run"]
+        mixed = store.put("packet@1", jcs({**packet, "run": run_key}).encode())
+        with pytest.raises(ValueError, match="another receipt"):
+            RunResult.load(store, mixed)
+
+
+def test_save_refuses_a_record_with_another_store_key(tmp_path: Path) -> None:
+    result = run("Amount 5.", "5")
+    record = [dict(line) for line in result.record]
+    call = next(e for e in record if e["kind"] == "call")
+    call["reply_key"] = call["prompt_key"]
+    changed = RunResult(result.receipt, result.candidates, record, result.artifacts, True)
+    with FolderStore(tmp_path) as store, pytest.raises(ValueError, match="another store key"):
+        changed.save(store)
