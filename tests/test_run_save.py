@@ -78,15 +78,15 @@ def test_save_writes_the_objects_the_record_and_the_packet(tmp_path: Path) -> No
         )
         assert check.ok, check.problems
         packet = json.loads(store.get("packet@1", k))
-        record = store.get("run@4", packet["run"])
+        record = store.get("run@5", packet["run"])
         # The same run gives the same packet key.
         assert result.save(store) == k
     # The record of `save` is the log of `write`, and `read` replays the folder.
     result.write(tmp_path / "run")
     assert (tmp_path / "run" / "run.jsonl").read_bytes() == record
     assert RunResult.read(tmp_path / "run").receipt == result.receipt
-    # The record keeps the groundgate-run/4 keys (#429 moves them).
-    assert json.loads(record.splitlines()[0])["runner"] == "groundgate-run/4"
+    # The record keeps the groundgate-run/5 keys (#429 moves them).
+    assert json.loads(record.splitlines()[0])["runner"] == "groundgate-run/5"
 
 
 def test_save_writes_the_packs_and_the_references(tmp_path: Path) -> None:

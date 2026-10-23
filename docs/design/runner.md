@@ -310,6 +310,17 @@ searched; `omitted_queries` counts later distinct queries without scanning the s
 This hard internal cap applies to live runs and replay and cannot be raised by a saved header.
 Query truncation records `search_truncated`. Match records are bounded as below.
 
+A word query can be a common word (#494). An individual word of the title or the description
+is common when the merged windows of all its matches cover more than half of the characters of
+the supplied sources and more than `max_region_chars`. The search leaves a common word out: it
+retains no match of it and makes no window for it. The search entry lists each common word in
+`common_queries`, with its number of matches. A common word does not make the search
+`search_truncated`. The full title and the aliases are names of the field and are never common.
+The second limit keeps every word of a short document. Before #494, words such as "year",
+"report" and "total" occurred on most pages of an annual report, and their windows merged into
+one region of the whole document. The limits come from the issue: "most" of a document is more
+than half of it, and a region larger than `max_region_chars` is cut. No benchmark set selected them.
+
 The script searches the full document and each supplied reference. Query order defines match
 priority: title, aliases, title words, then description words. Within one query, document hits
 come first, then references by id, then byte position. It visits each match and retains at
@@ -319,13 +330,18 @@ clamped to its source. It merges overlapping regions in the same source and give
 region its best query rank and its best match: the match with that rank that comes first. A
 merged region longer than `max_region_chars` is cut to a window of that size around its best
 match, clamped to the region (#382). The runner does not drop it. The search entry lists each
-cut in `cut_regions`, with the byte span of the merged region and the byte span that it keeps.
+cut in `cut_regions`, with the byte span of the merged region, the byte span that it keeps and
+`cut_matches`, the number of retained matches of the region that are not inside the kept span.
 The list covers the whole ranked pool, not only the sent regions, because the second sweep can
 send any region of the pool. The `regions` of the search entry and of each `sweep` entry tell
 which regions were sent.
 It selects at most `max_target_regions` by rank, then source and
 byte start. `omitted_regions` counts discarded regions from that bounded pool; it does not
-estimate regions from omitted matches. Either cap, or a cut, records `search_truncated`. The selected
+estimate regions from omitted matches. Either cap, or a cut with a `cut_matches` count above
+zero, records `search_truncated`. A cut that keeps every match of its region removes only
+context, so it does not truncate the search (#494). Before #494, each cut truncated the search,
+and with `search_context_chars` above half of `max_region_chars` the window of one match was
+always cut. The selected
 regions are sent in document, reference-id and byte-start order for stable quote anchoring.
 
 The match-record cap does not cap the number of hits scanned. Each of at most 64 retained
@@ -448,7 +464,7 @@ completed repair rounds can leave `repair_limit`. A targeted not-found response 
 
 ## 8. The run record and replay
 
-The core receipt format stays unchanged. The `groundgate-run/4` record is a log: one line of
+The core receipt format stays unchanged. The `groundgate-run/5` record is a log: one line of
 canonical JSON for each entry. Each line has a `sequence`, the `previous` line's digest and its
 own `entry_sha256`. The first line, `header`, is the run manifest. It holds the runner version,
 core spec version, model id and every `RunPolicy` setting, and it names every input by digest:
@@ -473,7 +489,7 @@ cover exact UTF-8 bytes, including whitespace. Prompt digests cover the exact st
 `client`, encoded as UTF-8. Schema, policy, reference and admission objects are canonical JSON.
 Client errors have no reply digest.
 
-Runner digests use their own prefix, `groundgate-run/4:<kind>` followed by a zero byte and the
+Runner digests use their own prefix, `groundgate-run/5:<kind>` followed by a zero byte and the
 object bytes. They do not reuse the core `digest()`, whose prefix names the spec version, so the
 same text keeps its key in each spec version. There are no wall-clock times, host paths,
 credentials or random ids in this deterministic content. An app may keep times separately. The
@@ -494,14 +510,14 @@ changed line, a changed, missing or oversized object, or a bad object key raises
 The replay cost grows with the document and the record.
 `RunResult.save(store)` writes the run into a store of [store.md](store.md) (#288, #405) and
 returns the packet key. It writes each object as its store kind (`text@1`, `schema@1`,
-`policy@1`, `reference@1`, `prompt@1`, `reply@1`, `admission@1`), then the record as one `run@4`
+`policy@1`, `reference@1`, `prompt@1`, `reply@1`, `admission@1`), then the record as one `run@5`
 object with the bytes of `run.jsonl`, then the final inputs, the receipt and a `packet@1` object
 whose `run` names the record. It writes only the objects that the record names, and it saves a
 run that is not complete too. Before the first write, it checks each object against its key and
 runs `admit` again on the stored inputs. If that gives another receipt, it raises before it
 writes. A store error during the writes can leave objects that no packet names. The record
-keeps its `groundgate-run/4` keys, so a store cannot replay the run yet: the store keys come with
-`groundgate-run/5` (#429). `RunResult.read(folder)` stays the replay path.
+keeps its `groundgate-run/5` keys, so a store cannot replay the run yet: the store keys come with
+the next record version (#429). `RunResult.read(folder)` stays the replay path.
 
 Two fields are reserved for the document model (#285), so that a later reader output needs no
 new log format. An input of `kind: "document"` will name an extracted document and its reader
@@ -525,6 +541,9 @@ allocation ceilings for candidates and admission history are further bounded by 
 canonical record and artifact byte counts, even when the header declares larger budgets.
 It checks not-found and search-only entries too. Missing artifacts, changed
 settings, unknown runner versions or a different core version fail replay.
+`groundgate-run/5` replaced `groundgate-run/4`, the version that 0.12.0 wrote, because the
+search leaves out common words and a cut that keeps every match does not truncate the search
+(#494). A run/4 record searches other regions in this runner, so its replay cannot match.
 `groundgate-run/4` replaced `groundgate-run/3`, the version that 0.11.0 wrote, because the
 search leaves English function words out of the word queries (#466). A run/3 record with such a
 query searches other regions in this runner, so its replay cannot match.

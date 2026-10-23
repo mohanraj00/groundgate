@@ -747,14 +747,19 @@ def test_targeted_title_beats_earlier_common_description_words():
             "revenue": {"type": "integer", "description": "Total revenue for the fiscal year"}
         }
     }
-    text = ("fiscal " + "x" * 17 + "\n") * 1100 + "Revenue 5."
+    # Each "fiscal" window covers 30 of 68 characters, so "fiscal" is not a common word (#494).
+    text = ("fiscal " + "x" * 60 + "\n") * 1100 + "Revenue 5."
     client = Client(envelope(missing=("revenue",)), envelope(candidate(field="revenue")))
     result = execute(
         text,
         client,
         schema,
         run_policy=RunPolicy(
-            chunk_chars=50000, overlap_chars=0, search_context_chars=12, max_target_regions=1
+            chunk_chars=80000,
+            overlap_chars=0,
+            search_context_chars=12,
+            max_target_regions=1,
+            max_prompt_chars=200000,
         ),
     )
     search = next(e for e in result.record if e["kind"] == "search")
@@ -1090,7 +1095,9 @@ def test_targeted_query_count_is_hard_capped_before_source_scans(monkeypatch):
         run_policy=RunPolicy(max_prompt_chars=200000),
     )
     search = next(e for e in result.record if e["kind"] == "search")
-    assert scans == queries
+    # The common word check (#494) scans each word once more. The title and aliases are names.
+    names = {"annual total", "preferred", "secondary"}
+    assert scans == [q for q in queries for _ in range(1 if q.casefold() in names else 2)]
     assert search["queries"] == queries and search["omitted_queries"] == omitted
     assert search["query_limit"] == 64 and search["status"] == "search_truncated"
     assert_replays(result, "Nothing here.", schema)
@@ -1138,7 +1145,7 @@ def test_record_is_a_hash_chained_log_and_inputs_are_objects():
     assert result.run_sha256 == lines[-1]["entry_sha256"]
     # Keys use the stable runner prefix, not the core digest that names the spec version.
     inputs = lines[0]["inputs"]
-    text_key = "sha256:" + hashlib.sha256(b"groundgate-run/4:text\0Amount 5.").hexdigest()
+    text_key = "sha256:" + hashlib.sha256(b"groundgate-run/5:text\0Amount 5.").hexdigest()
     assert inputs["document"] == {"kind": "text", "id": None, "source": None, "sha256": text_key}
     assert result.artifacts[text_key] == "Amount 5."
     assert result.receipt.document_sha256 != text_key
@@ -1458,22 +1465,24 @@ def test_a_relation_checks_the_re_admit_after_rounding():
 
 
 @pytest.mark.parametrize(
-    "old_version", ["groundgate-run/1", "groundgate-run/2", "groundgate-run/3"]
+    "old_version",
+    ["groundgate-run/1", "groundgate-run/2", "groundgate-run/3", "groundgate-run/4"],
 )
 def test_an_older_record_fails_replay_with_a_version_message(tmp_path, old_version):
-    # 0.9.0 wrote groundgate-run/1 records, 0.10.0 wrote groundgate-run/2 and 0.11.0 wrote
-    # groundgate-run/3. This runner writes groundgate-run/4 (#466).
+    # 0.9.0 wrote groundgate-run/1 records, 0.10.0 wrote groundgate-run/2, 0.11.0 wrote
+    # groundgate-run/3 and 0.12.0 wrote groundgate-run/4. This runner writes groundgate-run/5
+    # (#494).
     result = execute("Amount 5.", Client(envelope(candidate())))
-    assert result.record[0]["runner"] == "groundgate-run/4"
+    assert result.record[0]["runner"] == "groundgate-run/5"
     old = copy.deepcopy(result.record)
     old[0]["runner"] = old_version
     verification = replay(old, result.artifacts, "Amount 5.", SCHEMA)
     message = f"runner version differs: the record is {old_version!r}, this runner is "
     assert not verification.ok
-    assert verification.problems == (message + "'groundgate-run/4'",)
+    assert verification.problems == (message + "'groundgate-run/5'",)
     result.write(tmp_path)
     log = tmp_path / "run.jsonl"
-    log.write_text(log.read_text().replace("groundgate-run/4", old_version, 1))
+    log.write_text(log.read_text().replace("groundgate-run/5", old_version, 1))
     with pytest.raises(ValueError, match=f"the record is '{old_version}'"):
         RunResult.read(tmp_path)
 
@@ -1607,11 +1616,15 @@ def body(prompt):
     return json.loads(prompt.split("\n", 1)[1])
 
 
+# "total" is an alias here: a name is never a common word (#494), so its windows merge.
+CUT_SCHEMA = {"fields": {"amount": {"type": "integer", "aliases": ["total"]}}}
+
+
 def test_a_large_region_is_cut_around_its_best_match():
     text = "total " * 20 + "Amount 5 " + "total " * 20
     client = Client(envelope(missing=("amount",)), envelope(candidate()))
     settings = RunPolicy(search_context_chars=10, max_region_chars=40)
-    result = execute(text, client, SWEEP_SCHEMA, run_policy=settings)
+    result = execute(text, client, CUT_SCHEMA, run_policy=settings)
     sent = body(client.prompts[1])["sources"]
     # The "total" windows merge with the "Amount" window into one region of the whole text.
     assert len(sent) == 1 and len(sent[0]["text"]) == 40 and "Amount 5" in sent[0]["text"]
@@ -1624,23 +1637,24 @@ def test_a_large_region_is_cut_around_its_best_match():
             "end": len(text),
             "kept_start": middle - 20,
             "kept_end": middle + 20,
+            "cut_matches": 36,
         }
     ]
     assert search["status"] == "search_truncated"
     assert result.complete and result.receipt.decisions[0].outcome == "admitted"
     assert not any(e["kind"] in {"sweep", "sweep_stop"} for e in result.record)
-    assert_replays(result, text, SWEEP_SCHEMA)
+    assert_replays(result, text, CUT_SCHEMA)
 
 
 def test_a_cut_stays_inside_its_region_at_the_edge():
     text = "Amount 5 " + "total " * 20
     client = Client(envelope(missing=("amount",)), envelope(candidate()))
     settings = RunPolicy(search_context_chars=10, max_region_chars=30)
-    result = execute(text, client, SWEEP_SCHEMA, run_policy=settings)
+    result = execute(text, client, CUT_SCHEMA, run_policy=settings)
     assert body(client.prompts[1])["sources"][0]["text"] == text[:30]
     search = next(e for e in result.record if e["kind"] == "search")
     assert (search["cut_regions"][0]["kept_start"], search["cut_regions"][0]["kept_end"]) == (0, 30)
-    assert_replays(result, text, SWEEP_SCHEMA)
+    assert_replays(result, text, CUT_SCHEMA)
 
 
 def test_queries_leave_out_english_function_words():
@@ -1819,3 +1833,49 @@ def test_a_call_limit_in_the_second_sweep_is_not_unsearched():
     assert (stop["status"], stop["sweep"], stop["part"]) == ("call_limit", 2, 2)
     assert not any(e["kind"] == "sweep_stop" for e in result.record)
     assert_replays(result, SWEEP_TEXT, SWEEP_SCHEMA)
+
+
+def test_a_common_word_does_not_merge_the_regions_into_the_whole_document():
+    # "year" is on each line, so its windows cover the whole text (#494). It is left out, and
+    # the search keeps one small region around "Fee", with no cut.
+    text = "Results for the year 2025.\n" * 40 + "Fee 5.\n" + "Results for the year 2025.\n" * 40
+    schema = {"fields": {"amount": {"type": "integer", "description": "The fee of the year"}}}
+    client = Client(envelope(missing=("amount",)), envelope(candidate()))
+    settings = RunPolicy(search_context_chars=10, max_region_chars=200)
+    result = execute(text, client, schema, run_policy=settings)
+    search = next(e for e in result.record if e["kind"] == "search")
+    assert search["queries"] == ["amount", "fee", "year"]
+    assert search["common_queries"] == [{"query": "year", "matches": 80}]
+    assert {m["query"] for m in search["matches"]} == {"fee"}
+    start = text.index("Fee")
+    assert [(r["start"], r["end"]) for r in search["regions"]] == [(start - 10, start + 13)]
+    assert search["cut_regions"] == [] and search["status"] == "searched"
+    assert result.complete and result.receipt.decisions[0].outcome == "admitted"
+    assert_replays(result, text, schema)
+
+
+def test_a_word_of_a_short_document_is_not_common():
+    # The windows of "year" cover all of this text, but not more than max_region_chars.
+    text = "Fee 5 for the year."
+    schema = {"fields": {"amount": {"type": "integer", "description": "The fee of the year"}}}
+    client = Client(envelope(missing=("amount",)), envelope(candidate()))
+    result = execute(text, client, schema)
+    search = next(e for e in result.record if e["kind"] == "search")
+    assert search["common_queries"] == []
+    assert {m["query"] for m in search["matches"]} == {"fee", "year"}
+    assert search["status"] == "searched"
+
+
+def test_a_cut_that_keeps_every_match_does_not_truncate_the_search():
+    # The window of one match is larger than max_region_chars. The cut keeps the match and
+    # removes only context, so the search is complete (#494).
+    text = "x" * 100 + " Fee 5 " + "x" * 100
+    schema = {"fields": {"amount": {"type": "integer", "description": "The fee"}}}
+    client = Client(envelope(missing=("amount",)), envelope(missing=("amount",)))
+    settings = RunPolicy(search_context_chars=50, max_region_chars=40)
+    result = execute(text, client, schema, run_policy=settings)
+    search = next(e for e in result.record if e["kind"] == "search")
+    assert len(search["cut_regions"]) == 1 and search["cut_regions"][0]["cut_matches"] == 0
+    assert search["status"] == "searched"
+    assert "targeted_not_found" in result.record[-1]["fields"]["amount"]
+    assert_replays(result, text, schema)
