@@ -19,4 +19,3 @@ Rules:
 - Write the name in lowercase, also at the start of a sentence.
 - Do not recolor the yellow square. Do not add shadows, gradients or round corners.
 - Keep clear space of one post width (6/64 of the mark) on each side of the mark.
-- The type is IBM Plex Sans SemiBold for the name and IBM Plex Mono for values and codes.
