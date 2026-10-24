@@ -100,6 +100,13 @@ _INSTRUCTIONS = (
     "active, both are admitted together, and neither receives another repair. A value change "
     "never grants an evidence role or permits another locked member to change."
 )
+# The node ids of a run on a document (#526): a ⟦N⟧ marker before the text of each cell.
+_MARK = re.compile("\u27e6[0-9]+\u27e7")
+_NODE_INSTRUCTIONS = (
+    " A marker such as \u27e612\u27e7 before the text of a table cell gives the node id of "
+    'the cell. Cite the cell as {"source": "document", "role": ..., "node": 12}, or add "text" '
+    "to quote a part of it. A marker is not part of the text, so do not copy it into a quote."
+)
 
 
 # Why a field item cannot pass (SPEC §4.6): it must end at or before the value's token (#318).
@@ -648,8 +655,28 @@ class _NodePlan:
             if n.kind == "heading"
         ]
         self.heading_starts = [h[0] for h in self.headings]
+        # The packing counts the marked length (#526): the code points of each cell marker, by
+        # the start of the cell, and the places of the marker brackets in the text.
+        cells = sorted(
+            (self.chars(n.start), len(f"\u27e6{n.id}\u27e7"))
+            for n in document.nodes
+            if n.kind == "cell" and n.start < n.end
+        )
+        self.cell_starts = [c[0] for c in cells]
+        self.mark_sums = [0]
+        for _, length in cells:
+            self.mark_sums.append(self.mark_sums[-1] + length)
+        self.brackets = [i for i, c in enumerate(text) if c in "\u27e6\u27e7"]
         self.chunks: list[_Chunk] = []
         self.pack(0, len(text), top, None)
+
+    def size(self, a: int, b: int) -> int:
+        """The marked length of the text [a, b) between two node boundaries. Text with a marker
+        bracket of its own gets no markers."""
+        if bisect_left(self.brackets, a) != bisect_left(self.brackets, b):
+            return b - a
+        lo, hi = bisect_left(self.cell_starts, a), bisect_left(self.cell_starts, b)
+        return b - a + self.mark_sums[hi] - self.mark_sums[lo]
 
     def pack(self, lo: int, hi: int, nodes: list[Node], header: tuple[int, int] | None) -> None:
         if not nodes:
@@ -658,12 +685,12 @@ class _NodePlan:
         cuts = [lo, *(self.chars(n.start) for n in nodes[1:]), hi]
         group: tuple[int, int] | None = None
         for node, a, b in zip(nodes, cuts, cuts[1:], strict=False):
-            if b - a > self.settings.chunk_chars:
+            if self.size(a, b) > self.settings.chunk_chars:
                 if group is not None:
                     self.emit(*group, header)
                     group = None
                 self.split(node, a, b, header)
-            elif group is not None and b - group[0] <= self.settings.chunk_chars:
+            elif group is not None and self.size(group[0], b) <= self.settings.chunk_chars:
                 group = (group[0], b)
             else:
                 if group is not None:
@@ -853,32 +880,56 @@ def _by_role(evidence: list[Json]) -> dict[str, list[Json]]:
     return roles
 
 
+def _unmark(quote: str, body: str) -> str:
+    """The quote without the markers that the runner put in (#526). A quote that is in ``body``
+    as the model gave it keeps its text: a region with a marker bracket of its own gets no
+    markers, so its ``⟦12⟧`` is document text. Only if that search fails, each ``⟦digits⟧`` is
+    removed."""
+    if not _MARK.search(quote) or quote_pattern(quote).search(body):
+        return quote
+    return _MARK.sub("", quote)
+
+
 class _Citations:
     """The node citations of a run on a document (docs/design/document-model.md §10)."""
 
     def __init__(self, document: Document) -> None:
         self.nodes = document.nodes
         self.data = document.text.encode("utf-8")
+        # The cells with text, in text order: only these get an id in a prompt (#526).
+        cells = sorted((n.start, n.end, n.id) for n in document.nodes if n.kind == "cell")
+        self.cells = [c for c in cells if c[0] < c[1]]
+        self.cell_starts = [c[0] for c in self.cells]
 
-    def span(self, item: Json) -> tuple[int, int]:
-        """The UTF-8 byte span that an evidence item with ``node`` names. With ``text``, the one
-        place of the quote in the node, with the quote rules of SPEC §4.6. Without it, the span
-        of the node, which must be a cell with text. Raises ``ValueError`` for an unknown id, a
-        quote that is not exactly once in the node, or ``node`` alone on another node."""
+    def inside(self, start: int, end: int) -> list[tuple[int, int, int]]:
+        """The cells with text inside the byte span [start, end), in text order."""
+        lo = bisect_left(self.cell_starts, start)
+        hi = bisect_left(self.cell_starts, end)
+        return [c for c in self.cells[lo:hi] if c[1] <= end]
+
+    def span(self, item: Json, marked: frozenset[int]) -> tuple[int, int]:
+        """The UTF-8 byte span that an evidence item with ``node`` names. ``node`` must be an id
+        that the prompt marked (#526). With ``text``, the one place of the quote in the node,
+        with the quote rules of SPEC §4.6, after the markers are removed from the quote. Without
+        it, the span of the cell. Raises ``ValueError`` for an id that the prompt did not mark,
+        or a quote that is not exactly once in the node."""
         number = item["node"]
         if isinstance(number, bool) or not isinstance(number, int):
             raise ValueError("a node id is an integer")
-        if not 0 <= number < len(self.nodes):
-            raise ValueError("unknown node")
+        if number not in marked:
+            raise ValueError("the prompt did not mark this node")
         node = self.nodes[number]
         if "text" not in item:
             if node.kind != "cell" or node.start == node.end:
                 raise ValueError("a node with no quote must be a cell with text")
             return node.start, node.end
         quote = item["text"]
-        if not isinstance(quote, str) or not quote.strip():
+        if not isinstance(quote, str):
             raise ValueError("evidence text")
         body = self.data[node.start : node.end].decode("utf-8")
+        quote = _unmark(quote, body)
+        if not quote.strip():
+            raise ValueError("evidence text")
         found = list(islice(quote_pattern(quote).finditer(body), 2))
         if len(found) != 1:
             raise ValueError("the quote is not exactly once in the node")
@@ -888,7 +939,11 @@ class _Citations:
 
 
 def _shape(
-    candidate: Any, fields: set[str], refs: set[str], citations: _Citations | None = None
+    candidate: Any,
+    fields: set[str],
+    refs: set[str],
+    citations: _Citations | None = None,
+    marked: frozenset[int] = frozenset(),
 ) -> None:
     if not isinstance(candidate, dict) or set(candidate) != {
         "field",
@@ -922,12 +977,12 @@ def _shape(
             raise ValueError("evidence text")
         if "node" in item:
             assert citations is not None
-            citations.span(item)
+            citations.span(item, marked)
         if source == "reference" and (not isinstance(item["ref"], str) or item["ref"] not in refs):
             raise ValueError("unknown reference")
 
 
-def _output_schema(schema: Schema, fields: list[str], refs: list[str]) -> Json:
+def _output_schema(schema: Schema, fields: list[str], refs: list[str], nodes: bool = False) -> Json:
     full = schema.to_dict()
     # the output shape needs no relations, and a relation can name a field outside the subset
     # each field is resolved, so the output shape needs no template and no pack (SPEC §2.3)
@@ -944,6 +999,24 @@ def _output_schema(schema: Schema, fields: list[str], refs: list[str]) -> Json:
                 for item in defs[name]["items"]["anyOf"]
                 if item["$ref"].split("/")[-1] not in {"external", "knowledge"}
             ]
+    if nodes:
+        # A run on a document can also cite a marked cell by its id (#526).
+        quote = defs["document"]
+        defs["document_node"] = {
+            **quote,
+            "properties": {
+                **quote["properties"],
+                "node": {
+                    "type": "integer",
+                    "description": "The id in the marker before a cell, without the brackets.",
+                },
+            },
+            "required": ["source", "role", "node"],
+            "description": "A cited cell, or a quote inside it with text.",
+        }
+        for name in defs:
+            if name.startswith("evidence"):
+                defs[name]["items"]["anyOf"].append({"$ref": "#/$defs/document_node"})
     shape["properties"]["not_found"] = {"type": "array", "items": {"enum": fields}}
     shape["required"].append("not_found")
     return shape
@@ -1024,6 +1097,8 @@ class _Engine:
         self.calls = 0
         self.complete = True
         self.states: dict[str, list[str]] = {name: [] for name in schema.fields}
+        # The last prompt and the node ids that it marked (#526).
+        self.sent: tuple[str, frozenset[int]] = ("", frozenset())
 
     def put(self, kind: str, data: str) -> str:
         """Keep ``data`` as an object and give its key: the digest of its kind and exact bytes."""
@@ -1055,12 +1130,48 @@ class _Engine:
             "text": self.sources[source][start:end],
         }
 
+    def marks(self, region: Json) -> list[tuple[int, int]] | None:
+        """The cells that get a marker in a prompt entry of ``region``, as (code point offset in
+        the region text, node id). None if the region text already holds a marker bracket: then
+        the region gets no markers, so a document cannot forge an id (#526)."""
+        if self.citations is None or region["source"] != "document":
+            return []
+        if "\u27e6" in region["text"] or "\u27e7" in region["text"]:
+            return None
+        chars = self.offsets["document"].to_chars
+        base = chars(region["start"])
+        return [
+            (chars(start) - base, number)
+            for start, _, number in self.citations.inside(region["start"], region["end"])
+        ]
+
+    def marked(self, regions: list[Json]) -> frozenset[int]:
+        """The node ids that a prompt with ``regions`` marks."""
+        return frozenset(n for r in regions for _, n in self.marks(r) or [])
+
     def source_entry(self, region: Json) -> Json:
-        """The prompt entry of one region."""
+        """The prompt entry of one region. In a run on a document, the text of a document
+        region has a ``⟦N⟧`` marker before the text of each cell inside it (#526)."""
         name = region["source"]
         if name not in self.source_digests:
             self.source_digests[name] = _hash("source", self.sources[name])
-        return {**region, "length": len(region["text"]), "sha256": self.source_digests[name]}
+        marks = self.marks(region)
+        extra: Json = {}
+        if marks is None:
+            extra["node_ids"] = False
+        elif marks:
+            text = region["text"]
+            parts, at = [], 0
+            for offset, number in marks:
+                parts += [text[at:offset], f"\u27e6{number}\u27e7"]
+                at = offset
+            region = {**region, "text": "".join(parts) + text[at:]}
+        return {
+            **region,
+            "length": len(region["text"]),
+            "sha256": self.source_digests[name],
+            **extra,
+        }
 
     def prompt(self, phase: str, fields: list[str], regions: list[Json], **extra: Any) -> str:
         refs = [r["id"] for r in self.references]
@@ -1068,7 +1179,7 @@ class _Engine:
             "phase": phase,
             "fields": fields,
             "schema": self.schema.to_dict(),
-            "output_schema": _output_schema(self.schema, fields, refs),
+            "output_schema": _output_schema(self.schema, fields, refs, self.citations is not None),
             "sources": [self.source_entry(r) for r in regions],
             **extra,
         }
@@ -1076,7 +1187,10 @@ class _Engine:
             body["reply_shape"] = 'one replacement candidate, or {"not_found":true}'
             # The extraction envelope is not the repair response shape.
             body.pop("output_schema")
-        return _INSTRUCTIONS + "\n" + jcs(body)
+        instructions = _INSTRUCTIONS + (_NODE_INSTRUCTIONS if self.citations is not None else "")
+        prompt = instructions + "\n" + jcs(body)
+        self.sent = (prompt, self.marked(regions))
+        return prompt
 
     def call(self, phase: str, fields: list[str], prompt: str, **metadata: Any) -> Json | None:
         if self.calls >= self.settings.max_calls or len(prompt) > self.settings.max_prompt_chars:
@@ -1122,12 +1236,14 @@ class _Engine:
             return None
         try:
             parsed = _strict_json(raw)
+            # A cited node must be an id that this prompt marked (#526).
+            marked = self.sent[1] if self.sent[0] is prompt else frozenset()
             if phase == "repair":
                 if not _repair_not_found(parsed):
                     refs = {r["id"] for r in self.references}
-                    _shape(parsed, set(fields), refs, self.citations)
+                    _shape(parsed, set(fields), refs, self.citations, marked)
             else:
-                self.envelope(parsed, fields)
+                self.envelope(parsed, fields, marked)
         except (ValueError, TypeError, OverflowError, RecursionError, UnicodeError):
             self.complete = False
             self.event(**body, status="invalid_reply")
@@ -1135,7 +1251,7 @@ class _Engine:
         self.event(**body, status="ok")
         return parsed
 
-    def envelope(self, parsed: Json, fields: list[str]) -> None:
+    def envelope(self, parsed: Json, fields: list[str], marked: frozenset[int]) -> None:
         if set(parsed) != {"candidates", "not_found"}:
             raise ValueError("reply members")
         candidates, missing = parsed["candidates"], parsed["not_found"]
@@ -1148,7 +1264,8 @@ class _Engine:
         ):
             raise ValueError("reply envelope")
         for candidate in candidates:
-            _shape(candidate, set(fields), {r["id"] for r in self.references}, self.citations)
+            refs = {r["id"] for r in self.references}
+            _shape(candidate, set(fields), refs, self.citations, marked)
         proposed = {c["field"] for c in candidates}
         if proposed & set(missing) or proposed | set(missing) != set(fields):
             raise ValueError("incomplete field accounting")
@@ -1228,11 +1345,17 @@ class _Engine:
     def adapt(self, candidate: Json, regions: list[Json], targeted: bool) -> Json:
         candidate = copy.deepcopy(candidate)
         evidence = candidate["evidence"]
+        marked = self.marked(regions)
         for i, item in enumerate(evidence):
+            if self.citations is not None and item["source"] == "document" and "text" in item:
+                # A marker is not part of the text: remove a marker that the runner put in (#526).
+                item["text"] = _unmark(item["text"], self.text)
+                if not item["text"].strip():
+                    raise ValueError("a quote of only markers")
             if "node" in item:
                 # A node citation becomes a span: admit sees only offsets (#508).
                 assert self.citations is not None
-                start, end = self.citations.span(item)
+                start, end = self.citations.span(item, marked)
                 # Every cited node, of every role, is inside a document region of this prompt.
                 # A node the prompt did not send cannot give a scale or a label (#527).
                 if not any(
