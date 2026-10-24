@@ -489,3 +489,46 @@ def test_the_markers_count_against_the_chunk_and_the_prompt_size(tmp_path: Path)
     assert probe.complete
     with pytest.raises(ExtractInputError, match="max_prompt_chars"):
         run(doc, Client(), targeted=False, max_prompt_chars=limit)
+
+
+def test_a_quote_of_literal_marker_text_keeps_its_text(tmp_path: Path) -> None:
+    # The reproduction of the review of #528: the region holds ⟦12⟧ of its own.
+    doc = document(tmp_path, "<p>Code A⟦12⟧B.</p><p>Amount 5</p>")
+    schema = {"fields": {"code": {"type": "string"}}}
+    quote = "A⟦12⟧B"
+    reply = {
+        "candidates": [
+            {
+                "field": "code",
+                "value": quote,
+                "unit": None,
+                "key": None,
+                "evidence": [{"source": "document", "role": "value", "text": quote}],
+            }
+        ],
+        "not_found": [],
+    }
+    result = run(doc, Client(reply), schema)
+    assert result.receipt.decisions[0].outcome == "admitted"
+    assert result.candidates[0]["evidence"][0]["text"] == quote
+    # The decision span (UTF-8 bytes) is inside the one true place of the quote.
+    start = doc.text.encode().index(quote.encode())
+    span = result.receipt.decisions[0].evidence
+    assert span is not None
+    assert start <= span[0] < span[1] <= start + len(quote.encode())
+    assert replay(result.record, result.artifacts, doc, schema).ok
+
+
+def test_a_copied_marker_in_a_marked_region_gives_the_cell_span(tmp_path: Path) -> None:
+    doc = document(tmp_path, TABLE)
+    cell = doc.find("5")[0].node
+    assert cell is not None
+    marker = f"⟦{cell.id}⟧"
+    for evidence in (
+        {"source": "document", "role": "value", "text": f"{marker}5"},
+        node(cell.id, f"{marker}5"),
+    ):
+        result = run(doc, Client(cited(evidence)))
+        assert result.receipt.decisions[0].outcome == "admitted"
+        span = result.receipt.decisions[0].evidence
+        assert span is not None and cell.start <= span[0] < span[1] <= cell.end

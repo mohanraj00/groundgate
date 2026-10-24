@@ -880,6 +880,16 @@ def _by_role(evidence: list[Json]) -> dict[str, list[Json]]:
     return roles
 
 
+def _unmark(quote: str, body: str) -> str:
+    """The quote without the markers that the runner put in (#526). A quote that is in ``body``
+    as the model gave it keeps its text: a region with a marker bracket of its own gets no
+    markers, so its ``⟦12⟧`` is document text. Only if that search fails, each ``⟦digits⟧`` is
+    removed."""
+    if not _MARK.search(quote) or quote_pattern(quote).search(body):
+        return quote
+    return _MARK.sub("", quote)
+
+
 class _Citations:
     """The node citations of a run on a document (docs/design/document-model.md §10)."""
 
@@ -914,10 +924,12 @@ class _Citations:
                 raise ValueError("a node with no quote must be a cell with text")
             return node.start, node.end
         quote = item["text"]
-        if not isinstance(quote, str) or not _MARK.sub("", quote).strip():
+        if not isinstance(quote, str):
             raise ValueError("evidence text")
-        quote = _MARK.sub("", quote)
         body = self.data[node.start : node.end].decode("utf-8")
+        quote = _unmark(quote, body)
+        if not quote.strip():
+            raise ValueError("evidence text")
         found = list(islice(quote_pattern(quote).finditer(body), 2))
         if len(found) != 1:
             raise ValueError("the quote is not exactly once in the node")
@@ -1336,8 +1348,8 @@ class _Engine:
         marked = self.marked(regions)
         for i, item in enumerate(evidence):
             if self.citations is not None and item["source"] == "document" and "text" in item:
-                # A marker is not part of the text: remove it from the quote (#526).
-                item["text"] = _MARK.sub("", item["text"])
+                # A marker is not part of the text: remove a marker that the runner put in (#526).
+                item["text"] = _unmark(item["text"], self.text)
                 if not item["text"].strip():
                     raise ValueError("a quote of only markers")
             if "node" in item:

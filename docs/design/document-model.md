@@ -292,9 +292,11 @@ version. I write the vectors by hand in `conformance/build.py` before the code.
   3. If the text of a region already holds U+27E6 or U+27E7, that region gets no markers, and
      the region says `"node_ids": false`. A document cannot forge an id.
   4. The instructions of a run on a document get one more part: a marker gives the id of a cell,
-     and a marker is not part of the text, so do not copy it. Before the runner finds a quote of
-     the document, it removes each `⟦digits⟧` from it. Rule 3 makes this safe: a marked region
-     holds no such characters of its own. A quote of only markers is a protocol failure.
+     and a marker is not part of the text, so do not copy it. The runner removes only the markers
+     that it put in. It first searches for the quote as the model gave it (in the node for a
+     node citation, else in the document text). Only if that search fails, it removes each
+     `⟦digits⟧` and searches again. Thus `A⟦12⟧B` from a region with no markers keeps its text.
+     A quote of only markers is a protocol failure.
   5. In the output schema of a run on a document, a document evidence item can also be
      `{source, role, node}` or `{source, role, node, text}`, with `node` an integer. A text run
      keeps its schema and its instructions.

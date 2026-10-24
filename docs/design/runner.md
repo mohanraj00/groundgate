@@ -461,8 +461,9 @@ The prompt gives the ids (#526, document-model.md §10). The runner puts a `⟦N
 before the text of each cell with text inside a document region of the prompt. Only cells get
 ids. If a region already holds U+27E6 or U+27E7, it gets no markers and says
 `"node_ids": false`. `node` must be an id that this prompt marked; any other id makes the reply
-invalid. The runner removes each `⟦digits⟧` from a document quote before it finds the quote, and
-a quote of only markers is a protocol failure. The output schema of a run on a document names
+invalid. The runner first searches for a document quote as the model gave it. Only if that fails,
+it removes each `⟦digits⟧` from the quote, so it removes only the markers that it put in. A
+quote of only markers is a protocol failure. The output schema of a run on a document names
 `node`, and its instructions say that a marker is not part of the text. The markers count
 against `max_prompt_chars` and in the chunk packing. A cited node of any role must also be inside
 a document region of its prompt, and a node outside them is a protocol failure. For a cited
