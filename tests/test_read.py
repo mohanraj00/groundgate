@@ -45,7 +45,8 @@ def test_pdf_text_pages_and_words(pdf: Path) -> None:
     assert doc.layout is not None
     assert [p.number for p in doc.layout.pages] == [1, 2, 3]
     assert doc.warnings == (
-        "page 3 has no text layer; OCR the PDF first (for example with ocrmypdf)",
+        "page 3 has no text layer; OCR the PDF first (for example with ocrmypdf), "
+        "or read it with --ocr",
     )
     raw = doc.text.encode()
     for w in doc.layout.words:
