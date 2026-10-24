@@ -41,11 +41,30 @@ plain text and returns an `Extracted` with `text` (NFC), `layout` (PDFs only) an
 drops text a reader can't see, and for PDFs records the page and box of every word so the report
 can show page numbers.
 
+A PDF page with no text layer and an image is a scan. `read` OCRs it with the `tesseract`
+program, and pypdfium2 renders the page at 300 dpi. Install both:
+
+```bash
+pip install 'groundgate[ocr]'
+brew install tesseract          # or: apt install tesseract-ocr
+```
+
+If one of them is not installed, `read` stops with an error that names the fix. groundgate runs
+the program itself, with no shell and a timeout of 120 seconds for each page, in English
+(`-l eng`) and with one thread, so the same tesseract version gives the same text. A scanned page
+gives the words and boxes of the engine, one line of words on each line and a blank line between
+two paragraphs. It gives no tables. `Extracted.ocr` is the tesseract version. The reader of the
+reading is `groundgate.read+tesseract`, and its version holds both versions, for example
+`0.13.0+tesseract.5.5.2`, so a new tesseract version gives a new reading key. A page with no text
+layer and no image keeps the warning to OCR the PDF first.
+
 `groundgate.read.document.read_document(path, pages=None)` gives the same `Extracted` and also a
 `Document`: the `document@1` model of docs/design/document-model.md. It is the same text plus a flat
 list of nodes, each a UTF-8 byte span into the text: `heading`, `paragraph`, `list`, `item`,
 `table`, `row` and `cell`. Each node has a `basis`: `markup` for HTML and XML, `layout` for PDF
-blocks, PDF tables and the paragraphs of a text file, and `rules` for a PDF table with drawn rules.
+blocks, PDF tables, OCR paragraphs and the paragraphs of a text file, and `rules` for a PDF table
+with drawn rules. `doubt` lists the byte span of each OCR word with a confidence below 1, and the
+confidence from 0 to 1. A doubt is information only, as a node is.
 The lookups are `node`, `at`, `of_kind`, `find`, `children`, `section` and `cell`. A node is
 information only: `admit` never reads one. `groundgate read FILE --document doc.json` writes the
 object as canonical JSON, and `Document.from_dict(obj, text)` checks one that you load again.

@@ -1,4 +1,5 @@
-"""Packaging rules from CONTRIBUTING: no core dependencies, permissive extras, no subprocesses."""
+"""Packaging rules from CONTRIBUTING: no core dependencies, permissive extras, and one module
+that starts a process: the OCR reader, which runs the tesseract program (#7)."""
 
 from __future__ import annotations
 
@@ -12,6 +13,12 @@ import groundgate
 
 REQUIRES = requires("groundgate") or []  # from the installed metadata, so a built wheel is checked
 PERMISSIVE = re.compile(r"^(MIT|BSD-[23]-Clause|Apache-2\.0|MPL-2\.0|ISC)$")
+# A package whose metadata is not one license name: the metadata text, and the licenses I read.
+# A new text fails the test, so a change of license gets a new check.
+LICENSES = {
+    "pypdfium2": ("BSD-3-Clause, Apache-2.0, dependency licenses", ("BSD-3-Clause", "Apache-2.0"))
+}
+PROCESS = Path("read") / "ocr.py"
 
 
 def test_version_is_exposed() -> None:
@@ -29,10 +36,21 @@ def test_extras_are_permissively_licensed(requirement: str) -> None:
         meta = metadata(name)
     except PackageNotFoundError:
         pytest.skip(f"{name} is not installed here")
-    assert PERMISSIVE.match(meta.get("License-Expression") or meta.get("License") or "")
+    found = meta.get("License-Expression") or meta.get("License") or ""
+    if name in LICENSES:
+        text, licenses = LICENSES[name]
+        assert found == text
+        assert all(PERMISSIVE.match(lic) for lic in licenses)
+    else:
+        assert PERMISSIVE.match(found)
 
 
-def test_groundgate_never_starts_a_process() -> None:
-    for path in Path(groundgate.__file__).parent.rglob("*.py"):
+def test_groundgate_starts_a_process_only_in_the_ocr_reader() -> None:
+    root = Path(groundgate.__file__).parent
+    for path in root.rglob("*.py"):
         text = path.read_text(encoding="utf-8")
-        assert not re.search(r"\bsubprocess\b|os\.system|os\.popen|os\.exec", text), path
+        found = re.search(r"\bsubprocess\b|os\.system|os\.popen|os\.exec|os\.spawn", text)
+        assert path.relative_to(root) == PROCESS or not found, path
+    text = (root / PROCESS).read_text(encoding="utf-8")
+    assert not re.search(r"os\.system|os\.popen|os\.exec|os\.spawn|shell=True", text)
+    assert text.count("subprocess.run(") == 2  # tesseract --version, and one page

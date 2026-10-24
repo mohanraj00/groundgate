@@ -30,6 +30,7 @@ keywords = ["llm", "extraction", "grounding", "verification", "langextract"]
 [project.optional-dependencies]
 pdf = ["pdfminer.six>=20231228"]
 langextract = ["langextract>=1.0"]
+ocr = ["pdfminer.six>=20231228", "pypdfium2>=4.30"]
 
 [project.scripts]
 groundgate = "groundgate.cli:main"
@@ -51,6 +52,7 @@ dev = [
   "rfc8785>=0.1.4",
   "pdfminer.six>=20231228",
   "jsonschema>=4.18",
+  "pypdfium2>=4.30",
 ]
 langextract = ["langextract>=1.0"]
 

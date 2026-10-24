@@ -209,9 +209,9 @@ def put_reading(
     (text, HTML or XML), so ``put_reading`` always reads those files. A new reader version
     misses the cache. On a cache hit, the warnings come from the stored text and layout, so a
     warning about words drawn outside a PDF page shows only on the read that wrote the
-    reading."""
-    from .. import __version__
-    from ..read import ReadError, read
+    reading. A reading with OCR records the tesseract version in its reader, so it never hits:
+    each read runs OCR again, and a new tesseract version cannot use an old reading."""
+    from ..read import ReadError, read, reader
 
     path = Path(path)
     if not path.is_file():
@@ -219,7 +219,7 @@ def put_reading(
     source = path.read_bytes()
     want = {
         "source": key("source@1", source),
-        "reader": {"name": READER, "version": __version__},
+        "reader": reader(),
         "options": {"pages": None if pages is None else list(pages)},
     }
     hit = _cached_reading(store, path, want)
@@ -234,6 +234,7 @@ def put_reading(
     reading = {
         "format": "reading@1",
         **want,
+        "reader": reader(doc.ocr),
         "text": store.put("text@1", doc.text.encode("utf-8")),
         "layout": layout,
         "document": None,

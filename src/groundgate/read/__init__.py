@@ -5,7 +5,8 @@
 >>> doc.layout.locate(start, end)       # page boxes for a decision's evidence span
 
 Supported: PDF with a text layer (``groundgate[pdf]``), HTML, XML (including DailyMed SPL),
-and plain text. Scanned PDFs need OCR first.
+and plain text. A scanned PDF page gets OCR with the ``tesseract`` program and
+``groundgate[ocr]`` (``read/ocr.py``).
 """
 
 from __future__ import annotations
@@ -19,7 +20,9 @@ from ..canonical import digest, is_nfc
 from .layout import Box, Layout, Page, Word
 from .markup import html_text, xml_text
 
-__all__ = ["Box", "Extracted", "Layout", "Page", "ReadError", "Word", "read"]
+__all__ = ["READER", "Box", "Extracted", "Layout", "Page", "ReadError", "Word", "read", "reader"]
+
+READER = "groundgate.read"
 
 TEXT_SUFFIXES = {".txt", ".text", ".md", ".markdown"}
 HTML_SUFFIXES = {".html", ".htm", ".xhtml"}
@@ -34,6 +37,17 @@ class Extracted:
     text: str
     layout: Layout | None = None  # PDFs only
     warnings: tuple[str, ...] = ()
+    ocr: str | None = None  # the tesseract version, when OCR read a page
+
+
+def reader(ocr: str | None = None) -> dict[str, str]:
+    """The reader that a reading records. A read with OCR names the tesseract version too, so
+    a new tesseract version gives a new reading key."""
+    from .. import __version__
+
+    if ocr is None:
+        return {"name": READER, "version": __version__}
+    return {"name": f"{READER}+tesseract", "version": f"{__version__}+tesseract.{ocr}"}
 
 
 def _decode(data: bytes, path: Path) -> str:
@@ -54,13 +68,15 @@ def read(
     path = Path(path)
     suffix = path.suffix.lower()
     if suffix == ".pdf":
+        from .ocr import Scan
         from .pdf import read_pdf
 
-        text, page_list, words, warnings = read_pdf(path, pages, data=data)
+        scan = Scan()
+        text, page_list, words, warnings = read_pdf(path, pages, data=data, scan=scan)
         if not is_nfc(text):  # pragma: no cover - words are normalised one by one
             raise ReadError(f"{path}: extracted text is not NFC")
         layout = Layout(digest("document", {"text": text}), tuple(page_list), tuple(words))
-        return Extracted(text, layout, tuple(warnings))
+        return Extracted(text, layout, tuple(warnings), scan.version)
     if data is None:
         data = path.read_bytes()
     if suffix == ".xml":

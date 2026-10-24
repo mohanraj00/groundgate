@@ -347,7 +347,8 @@ rejected            ira_limit       70000  VALUE_NOT_IN_EVIDENCE
 True
 ```
 
-The core has no dependencies. `groundgate[pdf]` adds pdfminer.six for PDF text, and
+The core has no dependencies. `groundgate[pdf]` adds pdfminer.six for PDF text,
+`groundgate[ocr]` adds pypdfium2 to OCR scanned pages with the `tesseract` program, and
 `groundgate[langextract]` installs LangExtract. [docs/](docs/README.md) has a guide to writing a
 schema, a how-to guide for each task, and [the reference](docs/guide.md). An evidence item can also give UTF-8 byte offsets
 (`start`, `end`), and it can cite the sign, scale, unit, field or key of the value (spec 0.5).
@@ -492,7 +493,9 @@ a changed document, schema, policy, candidate or outcome.
   number words (`five`) have no value, so a fact that cites them is rejected. The
   [guide](docs/guide.md#how-values-are-read) lists what is read. Locale packs for other formats
   are a design ([docs/design/locale-packs.md](docs/design/locale-packs.md), #60).
-- **No OCR.** Scanned PDFs need a text layer first (for example `ocrmypdf`).
+- **OCR is information only.** groundgate OCRs a scanned PDF page with the `tesseract` program and
+  records the confidence of each word in the `document@1` doubt list, but a value on low-confidence text is not sent to review
+  yet. English only, and no tables from a scan.
 - **No model calls in the decision.** groundgate never asks an LLM whether an LLM was right.
   Since spec 0.4, it reads a judge's answers only as recorded inputs, so a receipt still re-derives
   byte for byte. This judge block is experimental: its one measure on real extractor output is the key
