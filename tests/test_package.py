@@ -53,4 +53,5 @@ def test_groundgate_starts_a_process_only_in_the_ocr_reader() -> None:
         assert path.relative_to(root) == PROCESS or not found, path
     text = (root / PROCESS).read_text(encoding="utf-8")
     assert not re.search(r"os\.system|os\.popen|os\.exec|os\.spawn|shell=True", text)
-    assert text.count("subprocess.run(") == 2  # tesseract --version, and one page
+    assert "subprocess.run(" not in text and "subprocess.call(" not in text
+    assert text.count("subprocess.Popen(") == 1  # in _run: tesseract --version, and one page

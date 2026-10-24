@@ -10,6 +10,7 @@ import os
 import shutil
 import stat
 import sys
+import unicodedata
 from pathlib import Path
 
 import pytest
@@ -57,6 +58,15 @@ def test_parse_tsv_groups_paragraphs_and_lines_and_cleans_words() -> None:
     _, box, conf = blocks[0][0][0]
     assert (box.page, box.x0, box.top, box.x1, box.bottom) == (3, 72.0, 72.0, 108.0, 84.0)
     assert conf == 0.965 and blocks[0][0][1][2] == 1.0
+
+
+def test_parse_tsv_gives_nfc_after_it_removes_format_characters() -> None:
+    # A zero width space between "e" and a combining acute accent: NFC before the filter
+    # keeps the accent apart, and the word is not NFC.
+    raw = HEADER + _row(5, 1, 1, 1, 1, "0\t0\t1\t1", "90", "Cafe\u200b\u0301 \ufb01")
+    ((line,),) = parse_tsv(raw.encode(), 1, 1.0)
+    assert [t for t, _, _ in line] == ["Caf\u00e9fi"]
+    assert unicodedata.is_normalized("NFC", line[0][0])
 
 
 @pytest.mark.parametrize(
@@ -172,6 +182,25 @@ def test_a_fake_program_that_fails_gives_a_read_error(
     pytest.importorskip("pypdfium2")
     _fake(tmp_path, version, tsv, code)
     monkeypatch.setenv("PATH", f"{tmp_path}{os.pathsep}{os.environ['PATH']}")
+    with pytest.raises(ReadError, match=message):
+        read(_scan(tmp_path, _gray()))
+
+
+@POSIX
+@pytest.mark.parametrize(
+    ("limit", "message"),
+    [
+        ("MAX_OUTPUT", "page 1: tesseract wrote more than 100 bytes to stdout"),
+        ("MAX_ERROR", "page 1: tesseract wrote more than 10 bytes to stderr"),
+    ],
+)
+def test_a_fake_program_that_writes_too_much_is_stopped(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, limit: str, message: str
+) -> None:
+    pytest.importorskip("pypdfium2")
+    _fake(tmp_path, "tesseract 5.3.0", TSV)  # TSV is more than 100 bytes; stderr is 15 bytes
+    monkeypatch.setenv("PATH", f"{tmp_path}{os.pathsep}{os.environ['PATH']}")
+    monkeypatch.setattr(ocr_module, limit, 100 if limit == "MAX_OUTPUT" else 10)
     with pytest.raises(ReadError, match=message):
         read(_scan(tmp_path, _gray()))
 

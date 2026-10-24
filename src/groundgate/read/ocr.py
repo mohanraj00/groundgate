@@ -3,25 +3,28 @@
 A page with no text layer and an image is a scan. pypdfium2 (Apache-2.0 or BSD-3-Clause) renders
 the page in gray at 300 dpi, and the ``tesseract`` program reads the image and gives a TSV table
 of words with boxes and a confidence. groundgate starts the program with a list of arguments, no
-shell and a timeout, and gives the image on its standard input. pytesseract is not used.
+shell and a timeout, and gives the image on its standard input. Threads read stdout and stderr
+with a limit while the program runs. pytesseract is not used.
 
-The text of the engine is untrusted input. Each word is NFC, with its ligatures written out, and
-a control, format or space character in a word is removed. The parser refuses a table that it
-does not know. The same image and the same tesseract version give the same words: the program
-runs with one thread (``OMP_THREAD_LIMIT=1``), the language is ``eng`` and the dpi is fixed.
-The reader then records the tesseract version (``read.reader``), so a new version is a new
-reading.
+The text of the engine is untrusted input. In each word, the ligatures are written out, a
+control, format or space character is removed, and then the word becomes NFC. The parser
+refuses a table that it does not know. The same image and the same tesseract version give the
+same words: the program runs with one thread (``OMP_THREAD_LIMIT=1``), the language is ``eng``
+and the dpi is fixed. The reader then records the tesseract version (``read.reader``), so a new
+version is a new reading.
 
 This is the only module of groundgate that starts a process.
 """
 
 from __future__ import annotations
 
+import contextlib
 import importlib
 import os
 import re
 import shutil
 import subprocess
+import threading
 import unicodedata
 from dataclasses import dataclass, field
 from typing import Any
@@ -35,6 +38,8 @@ LANGUAGE = "eng"
 TIMEOUT = 120.0  # seconds for one page
 VERSION_TIMEOUT = 10.0
 MAX_OUTPUT = 2**24  # bytes of TSV for one page
+MAX_ERROR = 2**16  # bytes of stderr for one call
+MAX_VERSION = 2**16  # bytes of stdout for ``tesseract --version``
 INSTALL = (
     "install the tesseract program (for example `brew install tesseract` or "
     "`apt install tesseract-ocr`), or OCR the PDF first (for example with ocrmypdf)"
@@ -69,6 +74,64 @@ def _env() -> dict[str, str]:
     return {**os.environ, "OMP_THREAD_LIMIT": "1"}
 
 
+class _Over(Exception):
+    """A stream of the program went above its limit."""
+
+
+def _run(argv: list[str], data: bytes, timeout: float, limit: int) -> tuple[int, bytes, bytes]:
+    """Run ``argv`` with ``data`` on stdin, with no shell. Give the exit code, stdout and
+    stderr. Threads read stdout (at most ``limit`` bytes) and stderr (at most ``MAX_ERROR``
+    bytes) while the program runs. If a stream goes above its limit, the program is killed and
+    ``_Over`` is raised. After ``timeout`` seconds, the program is killed and
+    ``subprocess.TimeoutExpired`` is raised."""
+    proc = subprocess.Popen(
+        argv, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=_env()
+    )
+    assert proc.stdin is not None and proc.stdout is not None and proc.stderr is not None
+    streams = {"stdout": (proc.stdout, limit), "stderr": (proc.stderr, MAX_ERROR)}
+    got: dict[str, list[bytes]] = {name: [] for name in streams}
+    over: list[str] = []
+
+    def drain(name: str) -> None:
+        stream, most = streams[name]
+        size = 0
+        while block := os.read(stream.fileno(), 65536):
+            size += len(block)
+            if size > most:
+                over.append(f"tesseract wrote more than {most} bytes to {name}")
+                proc.kill()
+                return
+            got[name].append(block)
+
+    def feed() -> None:
+        assert proc.stdin is not None
+        try:
+            proc.stdin.write(data)
+            proc.stdin.close()
+        except OSError:  # the program stopped before it read all of the image
+            pass
+
+    threads = [threading.Thread(target=drain, args=(name,), daemon=True) for name in streams]
+    threads.append(threading.Thread(target=feed, daemon=True))
+    for t in threads:
+        t.start()
+    try:
+        code = proc.wait(timeout)
+    except subprocess.TimeoutExpired:
+        proc.kill()
+        proc.wait()
+        raise
+    finally:
+        for t in threads:
+            t.join(1.0)  # a child of the program can keep a pipe open: do not wait for it
+        for stream in (proc.stdin, proc.stdout, proc.stderr):
+            with contextlib.suppress(OSError):
+                stream.close()
+    if over:
+        raise _Over(over[0])
+    return code, b"".join(got["stdout"]), b"".join(got["stderr"])
+
+
 def start(scan: Scan, number: int, data: bytes) -> None:
     """Find the program and its version, and open the PDF ``data`` for rendering. Raises
     ``ReadError`` or ``ImportError`` with the fix when a part is not installed."""
@@ -87,19 +150,13 @@ def start(scan: Scan, number: int, data: bytes) -> None:
             "pip install 'groundgate[ocr]'"
         ) from e
     try:
-        done = subprocess.run(
-            [program, "--version"],
-            capture_output=True,
-            timeout=VERSION_TIMEOUT,
-            env=_env(),
-            check=False,
-        )
-    except (OSError, subprocess.TimeoutExpired) as e:
+        code, stdout, stderr = _run([program, "--version"], b"", VERSION_TIMEOUT, MAX_VERSION)
+    except (OSError, _Over, subprocess.TimeoutExpired) as e:
         raise ReadError(f"tesseract --version failed ({e}): {INSTALL}") from e
     # Tesseract 3 wrote the version to stderr, later versions write it to stdout.
-    out = (done.stdout or done.stderr).decode("utf-8", "replace")
+    out = (stdout or stderr).decode("utf-8", "replace")
     found = _VERSION.match(out.strip())
-    if done.returncode != 0 or found is None:
+    if code != 0 or found is None:
         raise ReadError(f"tesseract --version gave no version: {INSTALL}")
     try:
         scan._pdf = pypdfium2.PdfDocument(data)
@@ -146,26 +203,26 @@ def recognize(scan: Scan, number: int, image: bytes, scale: float) -> list[list[
     argv = [scan._program, "stdin", "stdout", "--dpi", str(round(scale * 72)),
             "-l", LANGUAGE, "--psm", "3", "tsv"]  # fmt: skip
     try:
-        done = subprocess.run(
-            argv, input=image, capture_output=True, timeout=TIMEOUT, env=_env(), check=False
-        )
+        code, stdout, stderr = _run(argv, image, TIMEOUT, MAX_OUTPUT)
     except subprocess.TimeoutExpired as e:
         raise ReadError(f"page {number}: tesseract took more than {TIMEOUT:g} seconds") from e
+    except _Over as e:
+        raise ReadError(f"page {number}: {e}") from e
     except OSError as e:
         raise ReadError(f"page {number}: tesseract did not start ({e}): {INSTALL}") from e
-    if done.returncode != 0:
-        message = done.stderr.decode("utf-8", "replace").strip().splitlines()[-1:] or ["no error"]
+    if code != 0:
+        message = stderr.decode("utf-8", "replace").strip().splitlines()[-1:] or ["no error"]
         raise ReadError(f"page {number}: tesseract failed ({message[0][:200]})")
-    if len(done.stdout) > MAX_OUTPUT:
-        raise ReadError(f"page {number}: tesseract gave more than {MAX_OUTPUT} bytes")
-    return parse_tsv(done.stdout, number, scale)
+    return parse_tsv(stdout, number, scale)
 
 
 def _clean(text: str) -> str:
     from .pdf import LIGATURES
 
-    text = unicodedata.normalize("NFC", text.translate(LIGATURES))
-    return "".join(c for c in text if unicodedata.category(c)[0] not in "CZ")
+    # Remove the characters first, then normalize: a format character between a letter and a
+    # combining mark keeps them apart, so NFC before the filter can give a word that is not NFC.
+    text = "".join(c for c in text.translate(LIGATURES) if unicodedata.category(c)[0] not in "CZ")
+    return unicodedata.normalize("NFC", text)
 
 
 def parse_tsv(raw: bytes, number: int, scale: float) -> list[list[OcrLine]]:
