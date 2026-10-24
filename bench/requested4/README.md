@@ -434,6 +434,35 @@ store folder. From a worktree, give the store path in full. Do not open `labels.
    label of another reviewer. The agreement with the sealed labels comes from
    `review/development/results.json`.
 
+## The strict rule on the runner after #494 (#464)
+
+#464 asks why the runner arm gives almost no absence hits. The maintainer decided on 2026-10-23
+that the strict rule stays: a search with a cut that lost a match (`cut_matches` > 0) gives no
+absence. #494 changed the search: it leaves common words out, and a cut makes the search
+`search_truncated` only when it loses a match.
+
+I ran the runner arm again on the 32 development documents on 2026-10-24, on origin/main
+4e8582f (`groundgate-run/5`). The model, transport and run limits are the same as in #463. The
+runner made 249 calls. `runner_drop_rounded` replayed them. I did not run the baseline again.
+No document was incomplete, had a transport error or stopped at `search_limit`. The
+projections and the scores are in `development-464/`. `development-464/COMPARE.md` puts the run
+beside the #463 run (`bench/report.py --compare`). Its baseline column is n/a for the new run,
+because `score.py` scores only runs with one binding.
+
+| Arm | Miss rate, 3273c30 | Miss rate, 4e8582f | Escapes, 3273c30 | Escapes, 4e8582f | Absence hits, 3273c30 | Absence hits, 4e8582f | Unreported absences, 3273c30 | Unreported absences, 4e8582f |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| runner | 62.30% (76 of 122) | 59.02% (72 of 122) | 1 | 2 | 1 | 11 | 29 | 18 |
+| runner_drop_rounded | 61.48% (75 of 122) | 58.20% (71 of 122) | 1 | 2 | 1 | 11 | 29 | 18 |
+
+The runner has 37 targeted searches. 28 have a cut region, and 20 of those lose a match, so 20
+are `search_truncated`. In the #463 run, 34 of 35 were. The projection has 14 `not_found`
+entries: 11 on absent slots, 3 on unclear slots and 0 on a present slot. I counted the searches
+and the entries from the cached records with scripts outside the repository.
+
+The strict rule now gives 11 absence hits and no `not_found` entry on a present value. 18
+absences stay unreported, because 20 searches still lose a match. The miss rate drops by 4
+values in each arm. The new escape is on a component datasheet.
+
 ## What comes next
 
 The learning loop runs on the development split only (`bench/requested/loop.py`). It writes one
