@@ -267,15 +267,24 @@ def _read(
 
 
 def _ocr_blocks(fp: BinaryIO, scan: Scan, index: int, number: int) -> list[list[OcrLine]]:
-    """The OCR blocks of page ``number``, at ``index`` in the file."""
-    from . import ocr
+    """The OCR blocks of page ``number``, at ``index`` in the file. At most ``ocr.MAX_PAGES``
+    pages of one read get OCR."""
+    from pdfminer.pdfpage import PDFPage
 
+    from . import ReadError, ocr
+
+    if len(scan.pages) >= ocr.MAX_PAGES:
+        raise ReadError(
+            f"page {number}: OCR reads at most {ocr.MAX_PAGES} pages in one read; "
+            "read fewer pages with pages (--pages)"
+        )
     if scan.version is None:
         at = fp.tell()
         fp.seek(0)
         data = fp.read()
         fp.seek(at)
-        ocr.start(scan, number, data)
+        count = sum(1 for _ in PDFPage.get_pages(io.BytesIO(data)))
+        ocr.start(scan, number, data, count)
     image, scale = ocr.render(scan, index)
     scan.pages.append(number)
     return ocr.recognize(scan, number, image, scale)

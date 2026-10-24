@@ -62,6 +62,11 @@ reading is `groundgate.read+tesseract`, and its version holds both versions, for
 layer and no image keeps the warning to OCR the PDF first. `read --store --ocr` does not use the
 reading cache.
 
+These limits apply to OCR. groundgate finds `tesseract` only in the absolute folders of `PATH`,
+never in the current folder. One read sends at most 200 pages to OCR. For a longer scan, read
+fewer pages with `pages` (`--pages`). If pdfminer and pypdfium2 count a different number of pages
+in the PDF, OCR cannot match a page to its number, and `read` stops with an error.
+
 `groundgate.read.document.read_document(path, pages=None, ocr=False)` gives the same `Extracted` and also a
 `Document`: the `document@1` model of docs/design/document-model.md. It is the same text plus a flat
 list of nodes, each a UTF-8 byte span into the text: `heading`, `paragraph`, `list`, `item`,

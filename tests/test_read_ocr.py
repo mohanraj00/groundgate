@@ -19,7 +19,7 @@ from groundgate.cli import main
 from groundgate.read import ReadError, read, reader
 from groundgate.read import ocr as ocr_module
 from groundgate.read.document import read_document
-from groundgate.read.ocr import parse_tsv
+from groundgate.read.ocr import find_program, parse_tsv
 
 from pdfgen import make_pdf, make_scan
 
@@ -125,7 +125,7 @@ def test_ocr_is_off_by_default(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) 
 def test_the_cli_reads_a_scan_with_no_ocr_by_default(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
 ) -> None:
-    monkeypatch.setattr(ocr_module.shutil, "which", lambda name: None)
+    monkeypatch.setattr(ocr_module, "find_program", lambda name: None)
     path = _scan(tmp_path, _gray())
     assert main(["read", str(path)]) == 0
     assert OFF in capsys.readouterr().err
@@ -136,7 +136,7 @@ def test_the_cli_reads_a_scan_with_no_ocr_by_default(
 def test_no_tesseract_gives_an_error_with_the_fix(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    monkeypatch.setattr(ocr_module.shutil, "which", lambda name: None)
+    monkeypatch.setattr(ocr_module, "find_program", lambda name: None)
     with pytest.raises(ReadError, match=r"page 1 has no text layer, and OCR needs tesseract.*brew"):
         read(_scan(tmp_path, _gray()), ocr=True)
 
@@ -144,7 +144,7 @@ def test_no_tesseract_gives_an_error_with_the_fix(
 def test_no_pypdfium2_gives_an_error_with_the_fix(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    monkeypatch.setattr(ocr_module.shutil, "which", lambda name: "/bin/true")
+    monkeypatch.setattr(ocr_module, "find_program", lambda name: "/bin/true")
     monkeypatch.setitem(sys.modules, "pypdfium2", None)
     with pytest.raises(ImportError, match=r"groundgate\[ocr\]"):
         read(_scan(tmp_path, _gray()), ocr=True)
@@ -289,3 +289,48 @@ def test_tesseract_reading_in_the_store_names_the_engine(
     with FolderStore(root) as store:
         reading = json.loads(store.get("reading@1", k))
     assert reading["reader"]["name"] == "groundgate.read+tesseract"
+
+
+@POSIX
+def test_find_program_walks_only_the_absolute_path_entries(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    here, bin_ = tmp_path / "here", tmp_path / "bin"
+    here.mkdir()
+    bin_.mkdir()
+    for folder in (here, bin_):
+        program = folder / "tesseract"
+        program.write_text("#!/bin/sh\n", encoding="utf-8")
+        program.chmod(program.stat().st_mode | stat.S_IXUSR)
+    monkeypatch.chdir(here)
+    monkeypatch.setenv("PATH", os.pathsep.join(["", ".", "here", str(tmp_path / "none")]))
+    assert find_program("tesseract") is None  # only the current folder has it
+    monkeypatch.setenv("PATH", os.pathsep.join(["", ".", str(bin_)]))
+    assert find_program("tesseract") == str(bin_ / "tesseract")
+
+
+@POSIX
+def test_a_page_tree_that_pypdfium2_counts_another_way_stops_ocr(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    pytest.importorskip("pypdfium2")
+    _fake(tmp_path, "tesseract 5.3.0", TSV)
+    monkeypatch.setenv("PATH", f"{tmp_path}{os.pathsep}{os.environ['PATH']}")
+    path = tmp_path / "kids.pdf"
+    path.write_bytes(make_scan([_gray(), _gray()], kids=[0, 0, 1]))  # /Kids [P1 P1 P2]
+    with pytest.raises(ReadError, match="2 pages for pdfminer and 3 pages for pypdfium2"):
+        read(path, ocr=True)
+
+
+@POSIX
+def test_one_read_sends_at_most_max_pages_to_ocr(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    pytest.importorskip("pypdfium2")
+    _fake(tmp_path, "tesseract 5.3.0", TSV)
+    monkeypatch.setenv("PATH", f"{tmp_path}{os.pathsep}{os.environ['PATH']}")
+    monkeypatch.setattr(ocr_module, "MAX_PAGES", 1)
+    path = _scan(tmp_path, _gray(), _gray())
+    with pytest.raises(ReadError, match=r"page 2: OCR reads at most 1 pages.*--pages"):
+        read(path, ocr=True)
+    assert read(path, [2], ocr=True).text == "Fee: $500\nperyear\n\noffice"

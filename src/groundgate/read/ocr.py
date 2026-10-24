@@ -9,6 +9,11 @@ of words with boxes and a confidence. groundgate starts the program with a list 
 shell and a timeout, and gives the image on its standard input. Threads read stdout and stderr
 with a limit while the program runs. pytesseract is not used.
 
+The program is the first executable ``tesseract`` in an absolute PATH entry: the current folder
+is never searched. One read sends at most ``MAX_PAGES`` (200) pages to OCR. Before the first
+page, the reader compares the page count of pdfminer and of pypdfium2. If they are different,
+OCR cannot match a page to its number, and the read stops.
+
 The text of the engine is untrusted input. In each word, the ligatures are written out, a
 control, format or space character is removed, and then the word becomes NFC. The parser
 refuses a table that it does not know. The same image and the same tesseract version give the
@@ -25,8 +30,8 @@ import contextlib
 import importlib
 import os
 import re
-import shutil
 import subprocess
+import sys
 import threading
 import unicodedata
 from dataclasses import dataclass, field
@@ -37,6 +42,7 @@ from .layout import Box
 DPI = 300
 SCALE = DPI / 72  # pixels for each PDF point
 MAX_PIXELS = 2**26  # a larger page renders at a lower dpi, so one page cannot fill the memory
+MAX_PAGES = 200  # the most pages that one read sends to OCR
 LANGUAGE = "eng"
 TIMEOUT = 120.0  # seconds for one page
 VERSION_TIMEOUT = 10.0
@@ -135,14 +141,34 @@ def _run(argv: list[str], data: bytes, timeout: float, limit: int) -> tuple[int,
     return code, b"".join(got["stdout"]), b"".join(got["stderr"])
 
 
-def start(scan: Scan, number: int, data: bytes) -> None:
-    """Find the program and its version, and open the PDF ``data`` for rendering. Raises
-    ``ReadError`` or ``ImportError`` with the fix when a part is not installed."""
+def find_program(name: str) -> str | None:
+    """The first executable file ``name`` in the PATH entries, or None. An empty or relative
+    entry is skipped, so the current folder is never searched (``shutil.which`` can search it
+    first on Windows). On Windows, the names of PATHEXT are tried (default ``.EXE``)."""
+    suffixes = [""]
+    if sys.platform == "win32":
+        suffixes = [s for s in os.environ.get("PATHEXT", ".EXE").split(os.pathsep) if s]
+        suffixes = suffixes or [".EXE"]
+    for entry in os.environ.get("PATH", os.defpath).split(os.pathsep):
+        if not entry or not os.path.isabs(entry):
+            continue
+        for suffix in suffixes:
+            candidate = os.path.join(entry, name + suffix)
+            if os.path.isfile(candidate) and os.access(candidate, os.X_OK):
+                return candidate
+    return None
+
+
+def start(scan: Scan, number: int, data: bytes, pages: int) -> None:
+    """Find the program and its version, and open the PDF ``data`` for rendering. ``pages`` is
+    the number of pages that pdfminer gives. Raises ``ReadError`` or ``ImportError`` with the
+    fix when a part is not installed, and ``ReadError`` when pypdfium2 gives a different number
+    of pages, because then OCR cannot match a page to its number."""
     from . import ReadError
 
     if scan._program is not None:
         return
-    program = shutil.which("tesseract")
+    program = find_program("tesseract")
     if program is None:
         raise ReadError(f"page {number} has no text layer, and OCR needs tesseract: {INSTALL}")
     try:  # pypdfium2 has no type marker, so mypy does not read it
@@ -165,6 +191,13 @@ def start(scan: Scan, number: int, data: bytes) -> None:
         scan._pdf = pypdfium2.PdfDocument(data)
     except pypdfium2.PdfiumError as e:
         raise ReadError(f"pypdfium2 cannot open the PDF to render page {number} ({e})") from e
+    rendered = len(scan._pdf)
+    if rendered != pages:
+        scan.close()
+        raise ReadError(
+            f"the PDF has {pages} pages for pdfminer and {rendered} pages for pypdfium2, "
+            "so OCR cannot match the pages"
+        )
     scan._program, scan.version = program, found.group(1)
 
 

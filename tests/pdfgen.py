@@ -73,13 +73,17 @@ def make_pdf(
     return bytes(out)
 
 
-def make_scan(images: list[tuple[int, int, bytes] | None], dpi: float = 300) -> bytes:
+def make_scan(
+    images: list[tuple[int, int, bytes] | None], dpi: float = 300, kids: list[int] | None = None
+) -> bytes:
     """A PDF of scanned pages: each page draws one gray image (width, height, 8-bit pixels, one
-    byte for each pixel) and has no text layer. ``None`` gives a blank page with no image."""
+    byte for each pixel) and has no text layer. ``None`` gives a blank page with no image.
+    ``kids`` gives the page tree: the 0-based pages in the ``/Kids`` array, and a page can be
+    there two times. The default is each page one time."""
     import zlib
 
     objects: list[bytes] = [b"<< /Type /Catalog /Pages 2 0 R >>", b""]
-    kids = []
+    pages = []
     for image in images:
         resources, stream = b"", b""
         if image is not None:
@@ -103,10 +107,11 @@ def make_scan(images: list[tuple[int, int, bytes] | None], dpi: float = 300) -> 
             + resources
             + b"/Contents %d 0 R >>" % len(objects)
         )
-        kids.append(len(objects))
+        pages.append(len(objects))
+    tree = [pages[k] for k in kids] if kids is not None else pages
     objects[1] = b"<< /Type /Pages /Kids [%s] /Count %d >>" % (
-        b" ".join(b"%d 0 R" % k for k in kids),
-        len(kids),
+        b" ".join(b"%d 0 R" % k for k in tree),
+        len(tree),
     )
     out = bytearray(b"%PDF-1.4\n")
     offsets = []

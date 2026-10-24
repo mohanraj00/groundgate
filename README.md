@@ -496,7 +496,7 @@ a changed document, schema, policy, candidate or outcome.
 - **OCR is opt-in.** `groundgate read --ocr` OCRs a scanned PDF page with the `tesseract` program.
   It is off by default, because an OCR word can be wrong and `admit` does not read the confidence
   of each word in the `document@1` doubt list. Thus a value on low-confidence text is not sent to
-  review yet. English only, and no tables from a scan.
+  review yet. English only, no tables from a scan, and at most 200 OCR pages in one read.
 - **No model calls in the decision.** groundgate never asks an LLM whether an LLM was right.
   Since spec 0.4, it reads a judge's answers only as recorded inputs, so a receipt still re-derives
   byte for byte. This judge block is experimental: its one measure on real extractor output is the key
