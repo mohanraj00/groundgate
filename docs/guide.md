@@ -35,14 +35,17 @@ import unicodedata
 text = unicodedata.normalize("NFC", text)
 ```
 
-To get text from a file, use `groundgate.read.read(path, pages=None)` or
+To get text from a file, use `groundgate.read.read(path, pages=None, ocr=False)` or
 `groundgate read` on the command line. It reads PDF (with `groundgate[pdf]`), HTML, XML and
 plain text and returns an `Extracted` with `text` (NFC), `layout` (PDFs only) and `warnings`. It
 drops text a reader can't see, and for PDFs records the page and box of every word so the report
 can show page numbers.
 
-A PDF page with no text layer and an image is a scan. `read` OCRs it with the `tesseract`
-program, and pypdfium2 renders the page at 300 dpi. Install both:
+A PDF page with no text layer and an image is a scan. OCR is opt-in: use `ocr=True` in Python,
+or `groundgate read --ocr` on the command line. OCR is off by default, because an OCR word can be
+wrong and `admit` does not read `doubt`. With OCR off, a page with no text layer gives a warning
+and no text. With OCR on, `read` OCRs a scanned page with the `tesseract` program, and pypdfium2
+renders the page at 300 dpi. Install both:
 
 ```bash
 pip install 'groundgate[ocr]'
@@ -56,9 +59,10 @@ gives the words and boxes of the engine, one line of words on each line and a bl
 two paragraphs. It gives no tables. `Extracted.ocr` is the tesseract version. The reader of the
 reading is `groundgate.read+tesseract`, and its version holds both versions, for example
 `0.13.0+tesseract.5.5.2`, so a new tesseract version gives a new reading key. A page with no text
-layer and no image keeps the warning to OCR the PDF first.
+layer and no image keeps the warning to OCR the PDF first. `read --store --ocr` does not use the
+reading cache.
 
-`groundgate.read.document.read_document(path, pages=None)` gives the same `Extracted` and also a
+`groundgate.read.document.read_document(path, pages=None, ocr=False)` gives the same `Extracted` and also a
 `Document`: the `document@1` model of docs/design/document-model.md. It is the same text plus a flat
 list of nodes, each a UTF-8 byte span into the text: `heading`, `paragraph`, `list`, `item`,
 `table`, `row` and `cell`. Each node has a `basis`: `markup` for HTML and XML, `layout` for PDF

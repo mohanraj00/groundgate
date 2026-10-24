@@ -5,8 +5,9 @@
 >>> doc.layout.locate(start, end)       # page boxes for a decision's evidence span
 
 Supported: PDF with a text layer (``groundgate[pdf]``), HTML, XML (including DailyMed SPL),
-and plain text. A scanned PDF page gets OCR with the ``tesseract`` program and
-``groundgate[ocr]`` (``read/ocr.py``).
+and plain text. With ``ocr=True``, a scanned PDF page gets OCR with the ``tesseract`` program
+and ``groundgate[ocr]`` (``read/ocr.py``). OCR is off by default: an OCR word can be wrong, and
+``admit`` does not read ``doubt``.
 """
 
 from __future__ import annotations
@@ -59,12 +60,17 @@ def _decode(data: bytes, path: Path) -> str:
 
 
 def read(
-    path: str | Path, pages: Iterable[int] | None = None, *, data: bytes | None = None
+    path: str | Path,
+    pages: Iterable[int] | None = None,
+    *,
+    data: bytes | None = None,
+    ocr: bool = False,
 ) -> Extracted:
     """Extract ``path``. ``pages`` (1-based) selects PDF pages; other formats ignore it.
 
     If ``data`` is given, ``read`` extracts those bytes and does not open ``path``. The suffix
-    of ``path`` still selects the format, and errors still name ``path``."""
+    of ``path`` still selects the format, and errors still name ``path``. If ``ocr`` is True, a
+    PDF page with no text layer and an image gets OCR. Other formats ignore it."""
     path = Path(path)
     suffix = path.suffix.lower()
     if suffix == ".pdf":
@@ -72,7 +78,7 @@ def read(
         from .pdf import read_pdf
 
         scan = Scan()
-        text, page_list, words, warnings = read_pdf(path, pages, data=data, scan=scan)
+        text, page_list, words, warnings = read_pdf(path, pages, data=data, scan=scan, ocr=ocr)
         if not is_nfc(text):  # pragma: no cover - words are normalised one by one
             raise ReadError(f"{path}: extracted text is not NFC")
         layout = Layout(digest("document", {"text": text}), tuple(page_list), tuple(words))

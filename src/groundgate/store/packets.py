@@ -195,7 +195,7 @@ def _members(obj: object, names: tuple[str, ...], kind: str, k: str) -> Mapping[
 
 
 def put_reading(
-    store: Store, path: str | Path, pages: Sequence[int] | None = None
+    store: Store, path: str | Path, pages: Sequence[int] | None = None, *, ocr: bool = False
 ) -> tuple[str, Any]:
     """Read the file at ``path`` as ``groundgate read`` does, and write the source, the text,
     the layout (PDF only) and a ``reading@1`` object. Return the reading key and the result of
@@ -209,8 +209,9 @@ def put_reading(
     (text, HTML or XML), so ``put_reading`` always reads those files. A new reader version
     misses the cache. On a cache hit, the warnings come from the stored text and layout, so a
     warning about words drawn outside a PDF page shows only on the read that wrote the
-    reading. A reading with OCR records the tesseract version in its reader, so it never hits:
-    each read runs OCR again, and a new tesseract version cannot use an old reading."""
+    reading. ``ocr`` is the option of ``read``. With ``ocr=True``, ``put_reading`` does not use
+    the cache, because a cached reading can come from a read with no OCR. A reading with OCR
+    records the tesseract version in its reader, so a later read never uses it from the cache."""
     from ..read import ReadError, read, reader
 
     path = Path(path)
@@ -222,11 +223,11 @@ def put_reading(
         "reader": reader(),
         "options": {"pages": None if pages is None else list(pages)},
     }
-    hit = _cached_reading(store, path, want)
+    hit = None if ocr else _cached_reading(store, path, want)
     if hit is not None:
         store.put("source@1", source)
         return hit
-    doc = read(path, pages=pages, data=source)
+    doc = read(path, pages=pages, data=source, ocr=ocr)
     store.put("source@1", source)
     layout = None
     if doc.layout is not None:

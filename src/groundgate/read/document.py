@@ -356,16 +356,18 @@ def _check_nodes(raw: list[object], data: bytes) -> Iterable[Node]:
 
 
 def read_document(
-    path: str | Path, pages: Iterable[int] | None = None
+    path: str | Path, pages: Iterable[int] | None = None, *, ocr: bool = False
 ) -> tuple[Extracted, Document]:
     """Read ``path`` as ``read`` does, and also give its document model. The text and the
     layout are the same as the text and the layout of ``read``.
 
     HTML and XML give ``markup`` nodes. A PDF gives ``layout`` paragraphs and tables, and
     ``rules`` tables where the page draws the rules. A text or Markdown file gives ``layout``
-    paragraphs: the blocks between blank lines. A scanned PDF page gives a ``layout`` paragraph
-    for each paragraph of the OCR engine, and a ``doubt`` entry for each OCR word with a
-    confidence below 1. A read with OCR records the tesseract version in ``reader``.
+    paragraphs: the blocks between blank lines. With ``ocr=True``, a scanned PDF page gives a
+    ``layout`` paragraph for each paragraph of the OCR engine, and a ``doubt`` entry for each
+    OCR word with a confidence below 1. A read with OCR records the tesseract version in
+    ``reader``. OCR is off by default: an OCR word can be wrong, and ``admit`` does not read
+    ``doubt``.
     """
     path = Path(path)
     suffix = path.suffix.lower()
@@ -380,7 +382,7 @@ def read_document(
 
         scan = Scan()
         text, page_list, words, warnings = read_pdf(
-            path, options["pages"], raws, data=source, scan=scan
+            path, options["pages"], raws, data=source, scan=scan, ocr=ocr
         )
         if not is_nfc(text):  # pragma: no cover - words are normalised one by one
             raise ReadError(f"{path}: extracted text is not NFC")

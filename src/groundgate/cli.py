@@ -122,6 +122,11 @@ def _parser() -> argparse.ArgumentParser:
     x.add_argument("--layout", help="also write page and word boxes (PDF only) as JSON")
     x.add_argument("--pages", type=_pages, help="PDF pages to read, e.g. 1-12,15")
     x.add_argument(
+        "--ocr",
+        action="store_true",
+        help="OCR a PDF page with no text layer (needs groundgate[ocr] and tesseract)",
+    )
+    x.add_argument(
         "--document",
         metavar="FILE",
         help="also write document@1: the text key and the nodes (headings, tables...) as JSON",
@@ -969,7 +974,7 @@ def _read(args: argparse.Namespace) -> int:
     if args.document:
         from .read.document import read_document
 
-        doc, document = read_document(args.file, pages=args.pages)
+        doc, document = read_document(args.file, pages=args.pages, ocr=args.ocr)
         Path(args.document).write_bytes(document.to_json())
     elif args.store is not None:
         if args.layout and Path(args.file).suffix.lower() != ".pdf":  # before a store write
@@ -978,9 +983,9 @@ def _read(args: argparse.Namespace) -> int:
         from .store.packets import put_reading
 
         with _store(args.store, make=True) as store:
-            reading, doc = put_reading(store, args.file, args.pages)
+            reading, doc = put_reading(store, args.file, args.pages, ocr=args.ocr)
     else:
-        doc = read(args.file, pages=args.pages)
+        doc = read(args.file, pages=args.pages, ocr=args.ocr)
     for w in doc.warnings:
         print(f"groundgate: warning: {w}", file=sys.stderr)
     if args.layout:

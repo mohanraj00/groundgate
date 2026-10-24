@@ -98,11 +98,39 @@ def _gray(width: int = 40, height: int = 20) -> tuple[int, int, bytes]:
 
 
 def test_a_blank_page_with_no_image_keeps_the_warning(tmp_path: Path) -> None:
-    doc = read(_scan(tmp_path, None))
+    doc = read(_scan(tmp_path, None), ocr=True)
     assert doc.warnings == (
         "page 1 has no text layer; OCR the PDF first (for example with ocrmypdf)",
     )
     assert doc.ocr is None
+
+
+OFF = (
+    "page 1 has no text layer; OCR the PDF first (for example with ocrmypdf), or read it with --ocr"
+)
+
+
+def test_ocr_is_off_by_default(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    def no_ocr(*args: object) -> None:
+        raise AssertionError("OCR ran with the option off")
+
+    monkeypatch.setattr(ocr_module, "start", no_ocr)
+    path = _scan(tmp_path, _gray())
+    for doc in (read(path), read_document(path)[0]):
+        assert doc.text == "" and doc.warnings == (OFF,) and doc.ocr is None
+    _, document = read_document(path)
+    assert document.doubt == [] and document.reader == reader()
+
+
+def test_the_cli_reads_a_scan_with_no_ocr_by_default(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    monkeypatch.setattr(ocr_module.shutil, "which", lambda name: None)
+    path = _scan(tmp_path, _gray())
+    assert main(["read", str(path)]) == 0
+    assert OFF in capsys.readouterr().err
+    assert main(["read", "--ocr", str(path)]) == 2  # with the option, OCR runs: no tesseract
+    assert "OCR needs tesseract" in capsys.readouterr().err
 
 
 def test_no_tesseract_gives_an_error_with_the_fix(
@@ -110,7 +138,7 @@ def test_no_tesseract_gives_an_error_with_the_fix(
 ) -> None:
     monkeypatch.setattr(ocr_module.shutil, "which", lambda name: None)
     with pytest.raises(ReadError, match=r"page 1 has no text layer, and OCR needs tesseract.*brew"):
-        read(_scan(tmp_path, _gray()))
+        read(_scan(tmp_path, _gray()), ocr=True)
 
 
 def test_no_pypdfium2_gives_an_error_with_the_fix(
@@ -119,7 +147,7 @@ def test_no_pypdfium2_gives_an_error_with_the_fix(
     monkeypatch.setattr(ocr_module.shutil, "which", lambda name: "/bin/true")
     monkeypatch.setitem(sys.modules, "pypdfium2", None)
     with pytest.raises(ImportError, match=r"groundgate\[ocr\]"):
-        read(_scan(tmp_path, _gray()))
+        read(_scan(tmp_path, _gray()), ocr=True)
 
 
 def _fake(tmp_path: Path, version: str, tsv: str, code: int = 0) -> None:
@@ -144,7 +172,7 @@ def test_a_fake_program_gives_words_boxes_reader_and_doubt(
     _fake(tmp_path, "tesseract 5.3.0", TSV)
     monkeypatch.setenv("PATH", f"{tmp_path}{os.pathsep}{os.environ['PATH']}")
     path = _scan(tmp_path, None, _gray())
-    extracted, doc = read_document(path, [2])
+    extracted, doc = read_document(path, [2], ocr=True)
     assert extracted.text == "Fee: $500\nperyear\n\noffice"
     assert extracted.warnings == () and extracted.ocr == "5.3.0"
     assert (
@@ -183,7 +211,7 @@ def test_a_fake_program_that_fails_gives_a_read_error(
     _fake(tmp_path, version, tsv, code)
     monkeypatch.setenv("PATH", f"{tmp_path}{os.pathsep}{os.environ['PATH']}")
     with pytest.raises(ReadError, match=message):
-        read(_scan(tmp_path, _gray()))
+        read(_scan(tmp_path, _gray()), ocr=True)
 
 
 @POSIX
@@ -202,7 +230,7 @@ def test_a_fake_program_that_writes_too_much_is_stopped(
     monkeypatch.setenv("PATH", f"{tmp_path}{os.pathsep}{os.environ['PATH']}")
     monkeypatch.setattr(ocr_module, limit, 100 if limit == "MAX_OUTPUT" else 10)
     with pytest.raises(ReadError, match=message):
-        read(_scan(tmp_path, _gray()))
+        read(_scan(tmp_path, _gray()), ocr=True)
 
 
 def _rendered(lines: list[tuple[float, float, str]], dpi: int = 200) -> tuple[int, int, bytes]:
@@ -220,7 +248,7 @@ def test_tesseract_reads_a_scanned_page(tmp_path: Path) -> None:
     lines = [(72, 250, "Fee: $500 per year."), (72, 230, "Dosage is 2,000 mg per day.")]
     path = tmp_path / "mixed.pdf"
     path.write_bytes(make_scan([None, _rendered(lines, 200)], dpi=200))
-    extracted, doc = read_document(path)
+    extracted, doc = read_document(path, ocr=True)
     assert "Fee: $500 per year.\nDosage is 2,000 mg per day." in extracted.text
     assert extracted.warnings == (
         "page 1 has no text layer; OCR the PDF first (for example with ocrmypdf)",
@@ -232,15 +260,15 @@ def test_tesseract_reads_a_scanned_page(tmp_path: Path) -> None:
     (box,) = extracted.layout.locate(start, start + 4)
     assert box.page == 2 and 90 < box.x0 < box.x1 < 140 and 40 < box.top < box.bottom < 60
     assert doc.doubt and all(0 <= d["confidence"] < 1 for d in doc.doubt)
-    _, again = read_document(path)
+    _, again = read_document(path, ocr=True)
     assert again.to_json() == doc.to_json()  # the same tesseract gives the same bytes
-    assert read(path).text == extracted.text
+    assert read(path, ocr=True).text == extracted.text
 
 
 @NEEDS_TESSERACT
 def test_tesseract_on_a_white_page_warns_that_ocr_found_no_text(tmp_path: Path) -> None:
     pytest.importorskip("pypdfium2")
-    doc = read(_scan(tmp_path, _gray(400, 400)))
+    doc = read(_scan(tmp_path, _gray(400, 400)), ocr=True)
     assert doc.warnings == ("page 1: OCR found no text on the scanned page",)
     assert doc.ocr is not None
 
@@ -256,7 +284,7 @@ def test_tesseract_reading_in_the_store_names_the_engine(
     path = tmp_path / "a.pdf"
     path.write_bytes(make_scan([_rendered([(72, 250, "Fee: $500 per year.")], 200)], dpi=200))
     root = tmp_path / "s"
-    assert main(["read", "--store", str(root), str(path)]) == 0
+    assert main(["read", "--store", str(root), "--ocr", str(path)]) == 0
     k = capsys.readouterr().out.strip()
     with FolderStore(root) as store:
         reading = json.loads(store.get("reading@1", k))
