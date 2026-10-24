@@ -1199,7 +1199,7 @@ def test_read_rejects_a_changed_object_or_line(tmp_path):
 def test_old_record_shape_and_node_citation_are_refused():
     result = execute("Amount 5.", Client(envelope(candidate())))
     assert not replay({"header": result.record[0]}, result.artifacts, "Amount 5.", SCHEMA).ok
-    # `node` is reserved for node citations (#285). Today it makes the reply invalid.
+    # A node citation needs a document (#508). On a run on text, it makes the reply invalid.
     cited = candidate(evidence=[{**item("5"), "node": "n1"}])
     refused = execute("Amount 5.", Client(envelope(cited)))
     assert next(e for e in refused.record if e["kind"] == "call")["status"] == "invalid_reply"

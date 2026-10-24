@@ -112,6 +112,21 @@ clamped to move forward at least one character relative to the previous start. A
 document has no text chunks. Every chunk records its start and end as global UTF-8 byte offsets. The document is never normalised
 again after offsets are made.
 
+The runner can also take a `Document` of `groundgate.read.document` (#508,
+[document-model.md](document-model.md) §10). The runner checks it as the loader checks an
+untrusted object, and the text of the document is the text of the run. A document with no nodes
+gets the windows above, so its prompts are the prompts of its text. A document with nodes gets
+node chunks. The runner packs whole top-level nodes into chunks of at most `chunk_chars` code
+points, in text order, with no overlap. The text between two nodes goes with the node before it,
+and the text before the first node goes with the first node. A node that is too large splits at
+its children: a list at its items, a table between its rows. A row, or a node with no children,
+that is too large gets the windows above inside its span. Each part of a table that starts after
+its header rows sends them as a second region. The header rows are the rows at the start of the
+table in which each cell is a header cell. Each chunk also sends each top-level heading whose
+section holds its start, one region for each heading. The chunk is the first region of its
+prompt, and the context regions follow in text order. The plan records the chunk, not its
+context regions. The prompt digests cover them.
+
 Each initial prompt asks for every field in the schema. The instructions include the field
 name, description, type, unit, comparator, bounds, aliases and keys. The prompt includes the
 resolved schema, the response shape, the chunk's source id and global range, the chunk text,
@@ -138,7 +153,9 @@ value was found. Targeted searches for individual missing keys are outside #271.
 
 The runner assigns candidate ids from call number and reply position. A model cannot set an
 id, `search_region`, confidence, a judgment, a policy or a reference. For document evidence the
-runner sets `search_region` to the chunk's global byte span. Initial-pass candidates keep
+runner sets `search_region` to the chunk's global byte span. If the prompt also has context
+regions (#508), it is the span of the first region that holds the value quote. Initial-pass
+candidates keep
 their quotes without adapter-added offsets. The core resolves them under SPEC §4.6, including
 repeated quotes, and applies re-anchoring under SPEC §3.1 when it is applicable. Admission
 always uses the full original document and references, never text formed by concatenating
@@ -344,6 +361,16 @@ and with `search_context_chars` above half of `max_region_chars` the window of o
 always cut. The selected
 regions are sent in document, reference-id and byte-start order for stable quote anchoring.
 
+On a document with nodes, a cut moves each end of its kept span to the nearest row boundary
+inside the merged region, or to the nearest cell boundary when no row boundary is inside it
+(#508). An end moves only to a boundary that keeps the best match inside the kept span and keeps
+the kept span within `max_region_chars`. If no boundary does both, that end stays where the
+window put it. An end that is not inside a row stays. If the kept span starts in a table after
+its header rows, the header rows go into the pool as one more region, but only into the room
+that the match regions leave under `max_target_regions`. A context region never takes the place
+of a match region, and the prompt-size trim removes a context region first. Two cuts in one
+table add the header rows one time. `cut_regions` records the kept span after the move.
+
 The match-record cap does not cap the number of hits scanned. Each of at most 64 retained
 queries per missing field scans every supplied source to count all hits, including omitted
 matches. The runner builds and caches a casefold once per source across all fields and
@@ -421,7 +448,19 @@ Model replies are untrusted strings. The parser accepts exactly one JSON object,
 trailing text, duplicate object keys, non-finite numbers, integers outside the core's safe
 range, wrong top-level members, excessive candidate counts and unknown requested fields.
 It validates the envelope and candidate shapes without adding a runtime JSON Schema package.
-It rejects model ids, source ids or offsets that the runner did not permit. The runner
+It rejects model ids, source ids or offsets that the runner did not permit.
+
+On a document, a document evidence item can cite a node in place of a quote (#508): `node` with
+`text`, or `node` alone for a cell. The runner finds the quote inside the node with the quote
+rules of SPEC §4.6 and gives the item the offsets of that one match, with no `text`. `node`
+alone gives the span of the cell. An id that is not an integer of the document, a quote that is
+not exactly once in the node, a blank quote, `node` alone on a node that is not a cell or on an
+empty cell, and `node` on a reference item or on a run on text make the reply invalid. A cited
+node of any role must be inside a document region of its prompt, and a node outside them is a
+protocol failure, as a quote outside the targeted regions is. For a cited value, the runner sets
+`search_region` to the first such region. A role quote with `text` and no `node` keeps the rule
+above. The prompt does not list node ids yet, so a model reply cites a node only
+when its client gives the ids. The runner
 refuses the entire envelope on a structural error; it never salvages a candidate from an
 invalid reply. The runner never executes code, invokes a tool, opens a path or follows a URL
 from a reply.
@@ -469,7 +508,9 @@ canonical JSON for each entry. Each line has a `sequence`, the `previous` line's
 own `entry_sha256`. The first line, `header`, is the run manifest. It holds the runner version,
 core spec version, model id and every `RunPolicy` setting, and it names every input by digest:
 the text (with `kind: "text"`, the document id and source), the resolved schema, the resolved
-policy and each reference. The last line, `final`, holds `complete`, the terminal field states
+policy and each reference. A run on a document has `kind: "document"`, and the input also names
+the `document@1` object by its run key `document_sha256` and its store key `document_key`, and
+the reader of the document (#508). The last line, `final`, holds `complete`, the terminal field states
 and the final core receipt digest. Its `entry_sha256` is the run digest, `run_sha256`.
 
 For each call the log holds its sequence number, phase, field or candidate ids, repair round,
@@ -484,9 +525,9 @@ the same key, so that a bench can count each cause.
 
 The log names objects by digest, and the returned artifacts are those objects: the inputs,
 the prompts, the replies and the admission packets. An object's key is its digest with its kind
-tag (`text`, `schema`, `policy`, `reference`, `prompt`, `reply`, `admission`). Raw-reply digests
+tag (`text`, `document`, `schema`, `policy`, `reference`, `prompt`, `reply`, `admission`). Raw-reply digests
 cover exact UTF-8 bytes, including whitespace. Prompt digests cover the exact string given to
-`client`, encoded as UTF-8. Schema, policy, reference and admission objects are canonical JSON.
+`client`, encoded as UTF-8. Document, schema, policy, reference and admission objects are canonical JSON.
 Client errors have no reply digest.
 Each line that names an object by its run key also names it by its store key of
 [store.md](store.md) §4 (#429): `key` beside the text `sha256`, `schema_key`, `policy_key`,
@@ -513,8 +554,8 @@ memory. It gets the inputs from the objects that the header names and replays th
 changed line, a changed, missing or oversized object, or a bad object key raises `ValueError`.
 The replay cost grows with the document and the record.
 `RunResult.save(store)` writes the run into a store of [store.md](store.md) (#288, #405) and
-returns the packet key. It writes each object as its store kind (`text@1`, `schema@1`,
-`policy@1`, `reference@1`, `prompt@1`, `reply@1`, `admission@1`), then the record as one `run@5`
+returns the packet key. It writes each object as its store kind (`text@1`, `document@1`,
+`schema@1`, `policy@1`, `reference@1`, `prompt@1`, `reply@1`, `admission@1`), then the record as one `run@5`
 object with the bytes of `run.jsonl`, then the final inputs, the receipt and a `packet@1` object
 whose `run` names the record. It writes only the objects that the record names, and it saves a
 run that is not complete too. Before the first write, it checks each object against its key and
@@ -531,14 +572,14 @@ candidates with the packet. The store bounds each read, so open a `FolderStore` 
 `max_bytes` to use less memory. An object that `forget` removed raises `InputGone` with the
 deletion. A record of `groundgate-run/4` or earlier has no store keys and does not load.
 
-Two fields are reserved for the document model (#285), so that a later reader output needs no
-new log format. An input of `kind: "document"` will name an extracted document and its reader
-version. A `node` key in an evidence item or a chunk plan entry will name a node, and the runner
-will resolve it to a span before `admit`. Today a reply with `node` is an invalid reply, and a
-chunk plan entry with any other key fails replay.
+The document model (#285) adds no new log format. An input of `kind: "document"` names a
+document and its reader, and a `node` key in a reply names a node, which the runner resolves to
+a span before `admit` (#508). A chunk plan entry keeps the members `source`, `start` and `end`,
+and an entry with any other key fails replay. `store forget` removes the `document@1` object of
+a run with the prompts, the replies and the admissions of the run.
 
-`replay(record, artifacts, text, schema, policy, references)` makes no model call. It runs
-the runner again on the supplied inputs and gives it the recorded replies in call order. Each
+`replay(record, artifacts, text, schema, policy, references)` makes no model call. For a run on
+a document, `text` is the `Document`. It runs the runner again on the supplied inputs and gives it the recorded replies in call order. Each
 new prompt must have its recorded digest. The rerun re-parses replies, enforces the same diffs
 and budgets and calls `admit` again for each admission. Replay then compares the complete new
 log with the saved log and the new artifact map with the supplied artifacts. That

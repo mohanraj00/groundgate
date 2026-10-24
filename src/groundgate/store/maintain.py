@@ -64,7 +64,9 @@ REMOVED = frozenset(
     }
 )
 # The objects of a run record: the member of a line, and the kind in the record and the store.
+# The document of a run on a document is in the header input (#508).
 _RUN_OBJECTS = {
+    "document_sha256": ("document", "document@1"),
     "prompt_sha256": ("prompt", "prompt@1"),
     "reply_sha256": ("reply", "reply@1"),
     "admission_sha256": ("admission", "admission@1"),
@@ -196,10 +198,10 @@ class _Objects:
         return self._deleted
 
     def deleted_runs(self) -> dict[str, str]:
-        """The store key of each prompt, reply and admission that ``forget`` removed, by its
-        run keys in the deleted log (§7.1). Each entry counts, not only the last entry of a key:
-        a later deletion of the same object with no run keys does not hide the run keys of an
-        earlier one. The log is untrusted: an entry whose ``key`` or ``run_keys`` does not have
+        """The store key of each document, prompt, reply and admission that ``forget`` removed,
+        by its run keys in the deleted log (§7.1). Each entry counts, not only the last entry of
+        a key: a later deletion of the same object with no run keys does not hide the run keys of
+        an earlier one. The log is untrusted: an entry whose ``key`` or ``run_keys`` does not have
         the format is skipped."""
         if self._deleted_runs is None:
             self._deleted_runs = {}
@@ -218,17 +220,17 @@ class _Objects:
         return self._deleted_runs
 
     def run_keys(self, k: str) -> list[str]:
-        """The run keys of the prompt, reply or admission ``k``: one for each runner version
-        of a run record in the store, sorted. The first call builds the index for all the
+        """The run keys of the document, prompt, reply or admission ``k``: one for each runner
+        version of a run record in the store, sorted. The first call builds the index for all the
         objects, so a ``forget`` of many objects does the work one time."""
         if self._run_keys is None:
             self._run_keys = _run_keys_index(self)
         return self._run_keys.get(k, [])
 
     def by_run_key(self, runner: str) -> dict[str, tuple[str, str]]:
-        """The store kind and key of each prompt, reply and admission object, by its key in a
-        run record of ``runner``. The hash takes the bytes as they are, so an object that is
-        not UTF-8 needs no decode. An object that ``get`` refuses after the walk is skipped,
+        """The store kind and key of each document, prompt, reply and admission object, by its
+        key in a run record of ``runner``. The hash takes the bytes as they are, so an object that
+        is not UTF-8 needs no decode. An object that ``get`` refuses after the walk is skipped,
         and its kind in ``kinds`` becomes ``None``, so ``unread`` names it."""
         if runner not in self._by_run:
             index: dict[str, tuple[str, str]] = {}
@@ -257,8 +259,8 @@ class _Objects:
 
 
 def _run_keys_index(objects: _Objects) -> dict[str, list[str]]:
-    """The sorted run keys of each prompt, reply and admission, by its store key, for each
-    runner version of a run record in the store."""
+    """The sorted run keys of each document, prompt, reply and admission, by its store key, for
+    each runner version of a run record in the store."""
     runners = {f"groundgate-run/{v[4:]}" for v in objects.kinds.values() if v and v[:4] == "run@"}
     index: dict[str, set[str]] = {}
     for runner in sorted(runners):
@@ -407,14 +409,18 @@ def _holds_text(objects: _Objects, packet: Mapping[str, Any], run: _Run) -> list
 def _run_objects(
     objects: _Objects, run: _Run
 ) -> tuple[list[tuple[str, str]], list[tuple[str, str]]]:
-    """The store kind and key of each prompt, reply and admission that the run record names,
-    and the store kind and run key of each one that matches no object. The record names them
-    by run keys: ``_Objects.by_run_key`` hashes each object of these kinds one time for each
+    """The store kind and key of each document, prompt, reply and admission that the run record
+    names, and the store kind and run key of each one that matches no object. The record names
+    them by run keys: ``_Objects.by_run_key`` hashes each object of these kinds one time for each
     runner version."""
     index = objects.by_run_key(run.runner)
     found = []
     missing = []
-    for line in run.lines:
+    lines = list(run.lines)
+    inputs = lines[0].get("inputs") if lines else None
+    if isinstance(inputs, dict) and isinstance(inputs.get("document"), dict):
+        lines.append(inputs["document"])  # a document input names its document@1 (#508)
+    for line in lines:
         for member, (_, kind) in _RUN_OBJECTS.items():
             value = line.get(member)
             if not isinstance(value, str):
@@ -981,7 +987,8 @@ def forget_packet(
     that it names stay with no record that names them, and a second ``forget`` with
     ``everything`` removes the packet.
 
-    The deleted-log entry of a removed prompt, reply or admission holds its run keys (§7.1).
+    The deleted-log entry of a removed document, prompt, reply or admission holds its run keys
+    (§7.1).
     If the run record names a run key of the deleted log, that object was removed before, and
     it is ``absent`` (#442). If the run record names a run key that matches no object and no
     deletion, each object of the store that cannot be read is ``unchecked``, because it can be
