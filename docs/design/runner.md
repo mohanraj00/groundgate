@@ -455,12 +455,19 @@ On a document, a document evidence item can cite a node in place of a quote (#50
 rules of SPEC §4.6 and gives the item the offsets of that one match, with no `text`. `node`
 alone gives the span of the cell. An id that is not an integer of the document, a quote that is
 not exactly once in the node, a blank quote, `node` alone on a node that is not a cell or on an
-empty cell, and `node` on a reference item or on a run on text make the reply invalid. A cited
-node of any role must be inside a document region of its prompt, and a node outside them is a
-protocol failure, as a quote outside the targeted regions is. For a cited value, the runner sets
-`search_region` to the first such region. A role quote with `text` and no `node` keeps the rule
-above. The prompt does not list node ids yet, so a model reply cites a node only
-when its client gives the ids. The runner
+empty cell, and `node` on a reference item or on a run on text make the reply invalid.
+
+The prompt gives the ids (#526, document-model.md §10). The runner puts a `⟦N⟧` marker directly
+before the text of each cell with text inside a document region of the prompt. Only cells get
+ids. If a region already holds U+27E6 or U+27E7, it gets no markers and says
+`"node_ids": false`. `node` must be an id that this prompt marked; any other id makes the reply
+invalid. The runner removes each `⟦digits⟧` from a document quote before it finds the quote, and
+a quote of only markers is a protocol failure. The output schema of a run on a document names
+`node`, and its instructions say that a marker is not part of the text. The markers count
+against `max_prompt_chars` and in the chunk packing. A cited node of any role must also be inside
+a document region of its prompt, and a node outside them is a protocol failure. For a cited
+value, the runner sets `search_region` to the first such region. A role quote with `text` and no
+`node` keeps the rule above. The runner
 refuses the entire envelope on a structural error; it never salvages a candidate from an
 invalid reply. The runner never executes code, invokes a tool, opens a path or follows a URL
 from a reply.

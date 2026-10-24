@@ -279,7 +279,33 @@ version. I write the vectors by hand in `conformance/build.py` before the code.
 - **Node citations.** An evidence item can have `node` with `text`. The runner finds the quote
   inside the node and sets the offsets. If the quote occurs zero or two or more times in the
   node, the reply is invalid. An item with `node` and no `text` is valid only for a cell, and it
-  gets the span of the cell. An unknown id is an invalid reply. `admit` sees only offsets.
+  gets the span of the cell. `node` must be an id that the prompt marked (see the next item).
+  Any other id is an invalid reply. `admit` sees only offsets.
+- **Node ids in the prompt (#526).** The maintainer approved this format on 2026-10-23. It is
+  part of `groundgate-run/5`. The text that `admit` checks does not change.
+  1. Only a `cell` node with text, inside a document region of the prompt, gets an id. Other
+     kinds get no id. A model cites them with a quote.
+  2. The runner puts `⟦N⟧` (U+27E6, the id in decimal, U+27E7) directly before the text of each
+     such cell, in the region text that it sends. The prompt digest covers the marked text. The
+     document text and its offsets do not change. The `length` of the region is the length of
+     the marked text.
+  3. If the text of a region already holds U+27E6 or U+27E7, that region gets no markers, and
+     the region says `"node_ids": false`. A document cannot forge an id.
+  4. The instructions of a run on a document get one more part: a marker gives the id of a cell,
+     and a marker is not part of the text, so do not copy it. Before the runner finds a quote of
+     the document, it removes each `⟦digits⟧` from it. Rule 3 makes this safe: a marked region
+     holds no such characters of its own. A quote of only markers is a protocol failure.
+  5. In the output schema of a run on a document, a document evidence item can also be
+     `{source, role, node}` or `{source, role, node, text}`, with `node` an integer. A text run
+     keeps its schema and its instructions.
+  6. `node` must be an id that this prompt marked. Any other id makes the reply invalid, as an
+     unknown id did before.
+  7. The markers count against `max_prompt_chars`, and the chunk packing counts the marked
+     length. A row that falls back to the character window counts only its text, so a window can
+     be longer than `chunk_chars` by its markers.
+  8. The run record gets no new header member. The prompt digests and the instruction text
+     record the change. There is no SPEC change and no conformance vector: the core never reads a
+     node.
 
 Node text in a prompt is document data, and the prompt marks it as untrusted, as it does for all
 document text (runner.md §3).

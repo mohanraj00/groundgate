@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 from typing import Any
 
@@ -21,6 +22,11 @@ TABLE = (
     "<tr><td>Revenue</td><td>5</td></tr><tr><td>Cost</td><td>3</td></tr>"
     "<tr><td>Other</td><td></td></tr></table>"
 )
+
+
+def plain(text: str) -> str:
+    """The text of a prompt region without its node markers (#526)."""
+    return re.sub("\u27e6[0-9]+\u27e7", "", text)
 
 
 def document(tmp_path: Path, html: str) -> Document:
@@ -96,7 +102,7 @@ def test_a_large_table_splits_between_rows_and_sends_its_header_rows(tmp_path: P
         # Whole rows: the chunk starts at a row and ends after a row and its line break.
         assert chunk["start"] in starts
         assert len(data[: chunk["end"]].rstrip(b"\n")) in ends
-        texts = [s["text"] for s in sources[1:]]
+        texts = [plain(s["text"]) for s in sources[1:]]
         assert texts == ["Report", "Results", "Item\t2024"]
     assert replay(result.record, result.artifacts, doc, SCHEMA).ok
 
@@ -118,7 +124,8 @@ def test_a_large_row_falls_back_to_the_character_window(tmp_path: Path) -> None:
     assert len(plan) > 2
     assert all(e["end"] - e["start"] <= 50 for e in plan)
     # Each window after the header row also sends the header row.
-    assert all([s["text"] for s in body(p)["sources"][1:]] == ["Item"] for p in client.prompts[1:4])
+    heads = [[plain(s["text"]) for s in body(p)["sources"][1:]] for p in client.prompts[1:4]]
+    assert heads == [["Item"]] * 3
 
 
 def test_a_document_with_no_nodes_gives_the_prompts_of_its_text() -> None:
@@ -128,7 +135,10 @@ def test_a_document_with_no_nodes_gives_the_prompts_of_its_text() -> None:
     a = run(text, on_text, **settings)
     b = run(bare(text), on_document, **settings)
     assert len(on_text.prompts) > 3
-    assert on_text.prompts == on_document.prompts
+    # The same regions. The prompt of a run on a document also names node citations (#526).
+    assert [body(p)["sources"] for p in on_text.prompts] == [
+        body(p)["sources"] for p in on_document.prompts
+    ]
     named = b.record[0]["inputs"]["document"]
     assert a.record[0]["inputs"]["document"]["kind"] == "text"
     assert named["kind"] == "document"
@@ -144,7 +154,8 @@ def test_a_node_citation_becomes_a_span(tmp_path: Path) -> None:
     cell = doc.find("5")[0].node
     assert cell is not None and cell.kind == "cell"
     row = doc.nodes[cell.parent or 0]
-    for evidence in (node(cell.id), node(row.id, "5"), node(cell.id, " 5 ")):
+    assert row.kind == "row"
+    for evidence in (node(cell.id), node(cell.id, "5"), node(cell.id, " 5 ")):
         result = run(doc, Client(cited(evidence)))
         assert result.complete
         assert result.receipt.decisions[0].outcome == "admitted"
@@ -188,14 +199,15 @@ def test_a_node_citation_on_a_run_on_text_is_invalid() -> None:
     assert next(e for e in result.record if e["kind"] == "call")["status"] == "invalid_reply"
 
 
-def test_a_cited_value_outside_the_prompt_is_a_protocol_failure(tmp_path: Path) -> None:
+def test_a_cited_node_outside_the_prompt_makes_the_reply_invalid(tmp_path: Path) -> None:
     doc = document(tmp_path, "<p>Amount 5.</p><p>Other 7.</p>")
     seven = doc.find("7")[0].node
     assert seven is not None
     result = run(
         doc, Client(cited(node(seven.id, "7"), value="7")), chunk_chars=14, overlap_chars=1
     )
-    assert any(e["kind"] == "protocol_failure" for e in result.record)
+    # The prompt marked no node, so no id is valid (#526).
+    assert any(e.get("status") == "invalid_reply" for e in result.record)
     assert not result.complete and not result.candidates
 
 
@@ -215,7 +227,7 @@ def test_a_cut_region_ends_at_row_boundaries_and_keeps_the_header_rows(tmp_path:
     assert cut["kept_start"] in bounds and cut["kept_end"] in bounds
     assert cut["kept_start"] != cut["start"] or cut["kept_end"] != cut["end"]
     sources = body(client.prompts[-1])["sources"]
-    assert sources[0]["text"] == "Item\t2024"
+    assert plain(sources[0]["text"]) == "Item\t2024"
     assert sources[1]["start"] == cut["kept_start"] and sources[1]["end"] == cut["kept_end"]
     assert replay(result.record, result.artifacts, doc, schema).ok
 
@@ -293,7 +305,7 @@ def test_header_rows_never_take_the_place_of_a_match_region(tmp_path: Path) -> N
     assert replay(result.record, result.artifacts, doc, schema).ok
 
 
-def test_a_node_of_any_role_outside_the_prompt_is_a_protocol_failure(tmp_path: Path) -> None:
+def test_a_node_of_any_role_outside_the_prompt_is_refused(tmp_path: Path) -> None:
     # The reproduction of the security review of #527: an unsent scale node must not
     # make 5 into 5000.
     filler = "".join(f"<p>Filler line {i}.</p>" for i in range(6))
@@ -321,7 +333,8 @@ def test_a_node_of_any_role_outside_the_prompt_is_a_protocol_failure(tmp_path: P
         model_id="fixed-1",
         run_policy=RunPolicy(chunk_chars=30, overlap_chars=1),
     )
-    assert any(e["kind"] == "protocol_failure" for e in result.record)
+    # The prompt did not mark the node, so the reply is invalid (#526).
+    assert any(e.get("status") == "invalid_reply" for e in result.record)
     assert all(d.outcome != "admitted" for d in result.receipt.decisions)
 
 
@@ -377,3 +390,102 @@ def test_a_snapped_cut_stays_within_max_region_chars(tmp_path: Path) -> None:
     assert search["status"] != "search_limit"
     assert "Revenue 5" in " ".join(s["text"] for s in body(client.prompts[-1])["sources"])
     assert replay(result.record, result.artifacts, doc, schema).ok
+
+
+MARK = re.compile("⟦([0-9]+)⟧")
+
+
+def test_only_a_cell_with_text_gets_a_marker_before_its_text(tmp_path: Path) -> None:
+    doc = document(tmp_path, TABLE)
+    client = Client()
+    result = run(doc, client)
+    (entry,) = body(client.prompts[0])["sources"]
+    text = entry["text"]
+    cells = {n.id for n in doc.of_kind("cell") if n.start < n.end}
+    assert {int(m) for m in MARK.findall(text)} == cells
+    assert len(MARK.findall(text)) == len(cells)
+    data = doc.text.encode()
+    for found in MARK.finditer(text):
+        cell = doc.nodes[int(found[1])]
+        assert text[found.end() :].startswith(data[cell.start : cell.end].decode())
+    # The region keeps its document offsets, and its length is the length of the marked text.
+    assert plain(text) == doc.text and entry["length"] == len(text)
+    assert "node_ids" not in entry
+    assert replay(result.record, result.artifacts, doc, SCHEMA).ok
+
+
+def test_a_region_with_a_marker_bracket_of_its_own_gets_no_markers(tmp_path: Path) -> None:
+    doc = document(tmp_path, f"<p>Note ⟦3⟧ here.</p>{TABLE}")
+    cell = doc.find("5")[0].node
+    assert cell is not None
+    client = Client(cited(node(cell.id)))
+    result = run(doc, client)
+    (entry,) = body(client.prompts[0])["sources"]
+    assert entry["node_ids"] is False and entry["text"] == doc.text
+    # The prompt marked no node: the forged id and the real cell id are both invalid.
+    assert next(e for e in result.record if e["kind"] == "call")["status"] == "invalid_reply"
+    forged = run(doc, Client(cited(node(3, "5"))))
+    assert next(e for e in forged.record if e["kind"] == "call")["status"] == "invalid_reply"
+
+
+def test_a_marker_in_a_quote_is_removed(tmp_path: Path) -> None:
+    doc = document(tmp_path, TABLE)
+    cell = doc.find("5")[0].node
+    assert cell is not None
+    marker = f"⟦{cell.id}⟧"
+    for evidence in (
+        {"source": "document", "role": "value", "text": f"{marker}5"},
+        node(cell.id, f"{marker}5"),
+    ):
+        result = run(doc, Client(cited(evidence)))
+        assert result.receipt.decisions[0].outcome == "admitted"
+        assert "⟦" not in json.dumps(result.candidates)
+        assert replay(result.record, result.artifacts, doc, SCHEMA).ok
+    # A quote of only a marker quotes nothing.
+    only = run(doc, Client(cited({"source": "document", "role": "value", "text": marker})))
+    assert not only.candidates
+
+
+def test_the_output_schema_of_a_run_on_a_document_names_node(tmp_path: Path) -> None:
+    on_document, on_text = Client(), Client()
+    run(document(tmp_path, TABLE), on_document)
+    run("Amount 5.", on_text)
+    defs = body(on_document.prompts[0])["output_schema"]["$defs"]
+    assert defs["document_node"]["properties"]["node"] == {
+        "type": "integer",
+        "description": "The id in the marker before a cell, without the brackets.",
+    }
+    assert {"$ref": "#/$defs/document_node"} in defs["evidence"]["items"]["anyOf"]
+    assert "document_node" not in body(on_text.prompts[0])["output_schema"]["$defs"]
+    assert "⟦" in on_document.prompts[0].split("\n", 1)[0]
+    assert "⟦" not in on_text.prompts[0].split("\n", 1)[0]
+
+
+def test_a_cell_that_the_prompt_did_not_mark_makes_the_reply_invalid(tmp_path: Path) -> None:
+    # Two tables in two chunks: the first prompt marks only the cells of the first table.
+    first = "<table><tr><td>Amount</td><td>5</td></tr></table>"
+    doc = document(tmp_path, f"{first}<p>{'filler ' * 10}</p><table><tr><td>7</td></tr></table>")
+    seven = doc.find("7")[0].node
+    assert seven is not None and seven.kind == "cell"
+    client = Client(cited(node(seven.id), value="7"))
+    result = run(doc, client, chunk_chars=40, overlap_chars=1)
+    assert str(seven.id) not in MARK.findall(body(client.prompts[0])["sources"][0]["text"])
+    call = next(e for e in result.record if e["kind"] == "call")
+    assert call["status"] == "invalid_reply" and not result.candidates
+
+
+def test_the_markers_count_against_the_chunk_and_the_prompt_size(tmp_path: Path) -> None:
+    rows = "".join(f"<tr><td>{i}</td></tr>" for i in range(8))
+    doc = document(tmp_path, f"<table>{rows}</table>")
+    assert len(doc.text) <= 40
+    result = run(doc, Client(), chunk_chars=40, overlap_chars=1, targeted=False)
+    # Without the markers the table fits one chunk. With them it does not.
+    chunks = next(e for e in result.record if e["kind"] == "plan")["chunks"]
+    assert len(chunks) > 1
+    client = Client()
+    probe = run(doc, client, targeted=False)
+    limit = len(client.prompts[0]) - 1
+    assert len(client.prompts[0]) - len(plain(client.prompts[0])) > 1
+    assert probe.complete
+    with pytest.raises(ExtractInputError, match="max_prompt_chars"):
+        run(doc, Client(), targeted=False, max_prompt_chars=limit)
