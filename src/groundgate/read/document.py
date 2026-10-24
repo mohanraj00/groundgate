@@ -24,7 +24,7 @@ from pathlib import Path
 from typing import Any
 
 from ..canonical import jcs
-from . import HTML_SUFFIXES, TEXT_SUFFIXES, Extracted, ReadError, _decode
+from . import HTML_SUFFIXES, TEXT_SUFFIXES, Extracted, ReadError, _decode, reader
 from .layout import Layout
 from .nodes import MAX_DEPTH, MAX_NODES, PARENTS, Raw, chars_of_bytes, finish
 
@@ -356,31 +356,39 @@ def _check_nodes(raw: list[object], data: bytes) -> Iterable[Node]:
 
 
 def read_document(
-    path: str | Path, pages: Iterable[int] | None = None
+    path: str | Path, pages: Iterable[int] | None = None, *, ocr: bool = False
 ) -> tuple[Extracted, Document]:
     """Read ``path`` as ``read`` does, and also give its document model. The text and the
     layout are the same as the text and the layout of ``read``.
 
     HTML and XML give ``markup`` nodes. A PDF gives ``layout`` paragraphs and tables, and
     ``rules`` tables where the page draws the rules. A text or Markdown file gives ``layout``
-    paragraphs: the blocks between blank lines.
+    paragraphs: the blocks between blank lines. With ``ocr=True``, a scanned PDF page gives a
+    ``layout`` paragraph for each paragraph of the OCR engine, and a ``doubt`` entry for each
+    OCR word with a confidence below 1. A read with OCR records the tesseract version in
+    ``reader``. OCR is off by default: an OCR word can be wrong, and ``admit`` does not read
+    ``doubt``.
     """
-    from .. import __version__
-
     path = Path(path)
     suffix = path.suffix.lower()
     options = {"pages": None if pages is None else list(pages)}
     source = path.read_bytes()
     raws: list[Raw] = []
+    doubt: list[dict[str, Any]] = []
     if suffix == ".pdf":
         from ..canonical import digest, is_nfc
+        from .ocr import Scan
         from .pdf import read_pdf
 
-        text, page_list, words, warnings = read_pdf(path, options["pages"], raws, data=source)
+        scan = Scan()
+        text, page_list, words, warnings = read_pdf(
+            path, options["pages"], raws, data=source, scan=scan, ocr=ocr
+        )
         if not is_nfc(text):  # pragma: no cover - words are normalised one by one
             raise ReadError(f"{path}: extracted text is not NFC")
         layout = Layout(digest("document", {"text": text}), tuple(page_list), tuple(words))
-        extracted = Extracted(text, layout, tuple(warnings))
+        extracted = Extracted(text, layout, tuple(warnings), scan.version)
+        doubt = scan.doubt
         data = text.encode("utf-8")
         chars = chars_of_bytes(data, [p for r in raws for p in (r.start, r.end) if p >= 0])
         for r in raws:
@@ -412,11 +420,11 @@ def read_document(
     obj = {
         "format": FORMAT,
         "source": key("source@1", source),
-        "reader": {"name": "groundgate.read", "version": __version__},
+        "reader": reader(extracted.ocr),
         "options": options,
         "text": key("text@1", extracted.text.encode("utf-8")),
         "nodes": finish(extracted.text, raws),
-        "doubt": [],
+        "doubt": doubt,
     }
     return extracted, Document.from_dict(obj, extracted.text)
 

@@ -32,6 +32,7 @@ from typing import Any, BinaryIO
 from .grid import RULE_WIDTH, Grid, Rule, grids
 from .layout import Box, Page, Word, _same_line
 from .nodes import PageNodes, Raw
+from .ocr import OcrLine, Scan
 
 LIGATURES = str.maketrans(
     {"ﬀ": "ff", "ﬁ": "fi", "ﬂ": "fl", "ﬃ": "ffi", "ﬄ": "ffl",
@@ -98,6 +99,16 @@ def _rules(obj: Any) -> Iterator[Rect]:
                 yield from ((x0, y0, x1, y0), (x0, y1, x1, y1), (x0, y0, x0, y1), (x1, y0, x1, y1))
         elif isinstance(child, LTLine):
             yield child.bbox
+
+
+def _has_image(obj: Any) -> bool:
+    """True when the page draws an image, also inside a figure."""
+    from pdfminer.layout import LTFigure, LTImage
+
+    for child in obj:
+        if isinstance(child, LTImage) or (isinstance(child, LTFigure) and _has_image(child)):
+            return True
+    return False
 
 
 def _text_boxes(obj: Any) -> Iterator[Any]:
@@ -184,10 +195,16 @@ def read_pdf(
     nodes: list[Raw] | None = None,
     *,
     data: bytes | None = None,
+    scan: Scan | None = None,
+    ocr: bool = False,
 ) -> Result:
     """Text, pages, words and warnings for a PDF. ``pages`` are 1-based page numbers. If
     ``nodes`` is a list, it gets the nodes of the document model, with byte offsets. If
-    ``data`` is given, ``read_pdf`` reads those bytes and does not open ``path``."""
+    ``data`` is given, ``read_pdf`` reads those bytes and does not open ``path``.
+
+    If ``ocr`` is True, a page with no text layer and an image gets OCR (``read/ocr.py``). OCR
+    is off by default: an OCR word can be wrong, and ``admit`` does not read ``doubt``. If
+    ``scan`` is given, it gets the tesseract version, the OCR pages and the doubt spans."""
     try:
         from pdfminer.pdftypes import PDFException
         from pdfminer.psexceptions import PSException
@@ -200,13 +217,16 @@ def read_pdf(
         wanted = sorted(set(pages))
         if not wanted or wanted[0] < 1:
             raise ReadError("pages must be 1-based page numbers")
+    scan = Scan() if scan is None else scan
     try:
         if data is not None:
-            return _read(io.BytesIO(data), wanted, nodes)
+            return _read(io.BytesIO(data), wanted, nodes, scan, ocr)
         with open(path, "rb") as fp:
-            return _read(fp, wanted, nodes)
+            return _read(fp, wanted, nodes, scan, ocr)
     except (PDFException, PSException) as e:
         raise ReadError(f"{path}: not a readable PDF ({type(e).__name__}: {e})") from e
+    finally:
+        scan.close()
 
 
 _LAYOUT_LOCK = threading.Lock()
@@ -239,12 +259,31 @@ def _stable_ids() -> Iterator[None]:
             delattr(layout, "id")
 
 
-def _read(fp: BinaryIO, wanted: list[int] | None, nodes: list[Raw] | None = None) -> Result:
+def _read(
+    fp: BinaryIO, wanted: list[int] | None, nodes: list[Raw] | None, scan: Scan, ocr: bool
+) -> Result:
     with _stable_ids():
-        return _read_pages(fp, wanted, nodes)
+        return _read_pages(fp, wanted, nodes, scan, ocr)
 
 
-def _read_pages(fp: BinaryIO, wanted: list[int] | None, nodes: list[Raw] | None = None) -> Result:
+def _ocr_blocks(fp: BinaryIO, scan: Scan, index: int, number: int) -> list[list[OcrLine]]:
+    """The OCR blocks of page ``number``, at ``index`` in the file."""
+    from . import ocr
+
+    if scan.version is None:
+        at = fp.tell()
+        fp.seek(0)
+        data = fp.read()
+        fp.seek(at)
+        ocr.start(scan, number, data)
+    image, scale = ocr.render(scan, index)
+    scan.pages.append(number)
+    return ocr.recognize(scan, number, image, scale)
+
+
+def _read_pages(
+    fp: BinaryIO, wanted: list[int] | None, nodes: list[Raw] | None, scan: Scan, ocr: bool
+) -> Result:
     from pdfminer.converter import PDFPageAggregator
     from pdfminer.layout import LAParams
     from pdfminer.pdfinterp import PDFPageInterpreter, PDFResourceManager
@@ -290,7 +329,16 @@ def _read_pages(fp: BinaryIO, wanted: list[int] | None, nodes: list[Raw] | None 
             x0, y0, x1, y1 = max(x0, vx0), max(y0, vy0), min(x1, vx1), min(y1, vy1)
             rules.append((x0 - vx0, vy1 - y1, x1 - vx0, vy1 - y0))
         kinds: list[str | None] = []
-        for bi, rows in enumerate(_tables(blocks, grids(rules), kinds)):
+        confidence: list[float] = []
+        if blocks or not ocr or not _has_image(device.get_result()):
+            table = _tables(blocks, grids(rules), kinds)
+        else:  # a scan: the engine's paragraphs, one line of words on each line (no tables)
+            scanned = _ocr_blocks(fp, scan, number - 1, number)
+            confidence = [c for b in scanned for line in b for _, _, c in line]
+            table = [[[[(t, box) for t, box, _ in line]] for line in b] for b in scanned]
+            kinds.extend(None for _ in table)
+        first = len(words)
+        for bi, rows in enumerate(table):
             if bi:
                 out.add(BLOCK_BREAK)
             if marks:
@@ -316,25 +364,41 @@ def _read_pages(fp: BinaryIO, wanted: list[int] | None, nodes: list[Raw] | None 
                     marks.end_row(out.size)
             if marks:
                 marks.end_block(out.size)
+        if confidence:  # each word of a scanned page has its confidence (doubt below 1)
+            for word, c in zip(words[first:], confidence, strict=True):
+                if c < 1:
+                    scan.doubt.append({"start": word.start, "end": word.end, "confidence": c})
         page_list.append(Page(number, round(vx1 - vx0, 2), round(vy1 - vy0, 2), start, out.size))
         dropped[number] = hidden
-    return out.text(), page_list, words, layout_warnings(page_list, wanted, dropped)
+    warnings = layout_warnings(page_list, wanted, dropped, scan.pages, ocr)
+    return out.text(), page_list, words, warnings
 
 
 def layout_warnings(
-    pages: Sequence[Page], wanted: Iterable[int] | None, dropped: Mapping[int, int] | None = None
+    pages: Sequence[Page],
+    wanted: Iterable[int] | None,
+    dropped: Mapping[int, int] | None = None,
+    scanned: Iterable[int] = (),
+    ocr: bool = False,
 ) -> list[str]:
     """The warnings of a read that gave ``pages`` for the 1-based page numbers ``wanted``.
     ``dropped`` gives the number of words outside the visible page for each page number. A
-    reading from the store has no such numbers, so it gives no such warning."""
+    reading from the store has no such numbers, so it gives no such warning. ``scanned`` are the
+    pages that OCR read. If ``ocr`` is False, the warning for a page with no text layer also
+    names the ``ocr`` option."""
     warnings: list[str] = []
+    read_by_ocr = set(scanned)
     for page in pages:
         number, hidden = page.number, (dropped or {}).get(page.number, 0)
         if hidden:
             warnings.append(f"page {number}: dropped {hidden} words drawn outside the visible page")
-        if page.start == page.end:
+        if page.start == page.end and page.number in read_by_ocr:
+            warnings.append(f"page {number}: OCR found no text on the scanned page")
+        elif page.start == page.end:
+            hint = "" if ocr else ", or read it with --ocr"
             warnings.append(
                 f"page {number} has no text layer; OCR the PDF first (for example with ocrmypdf)"
+                + hint
             )
     if not pages:
         warnings.append("no pages were extracted")
