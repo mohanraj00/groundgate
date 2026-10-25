@@ -3,6 +3,100 @@
 Versions follow [SemVer](https://semver.org). A change to how any candidate is decided is a new
 spec version, and receipts name the spec version they were decided under.
 
+## 0.13.0 (2026-10-24)
+
+Spec 0.11, unchanged: every decision and receipt is the same as in 0.12.0. 0.13 adds the
+document model (#285): `read --document` writes `document@1`, and `extract` takes a document,
+sends whole nodes and lets a reply cite a table cell by its id. `read --ocr` reads a scanned PDF
+page. The store keeps a reading cache, and a run replays from the store. The extract run record
+is `groundgate-run/5`, so a record from 0.12.0 does not replay.
+
+The document model and the readers:
+
+- groundgate read --document writes document@1: the text and a list of nodes for headings,
+  paragraphs, lists and tables. `groundgate.read.document.Document` looks up a node by id, span,
+  kind and exact text (#507).
+- `groundgate read --ocr` (`ocr=True` in Python) OCRs a scanned PDF page with the `tesseract`
+  program (#7). OCR is off by default: an OCR word can be wrong, and `admit` does not read
+  `doubt`. A page with no text layer and an image gets OCR. pypdfium2 renders the page at 300 dpi,
+  in English and with one thread, so the same tesseract version gives the same text. The new
+  extra `groundgate[ocr]` adds pypdfium2. The `tesseract` program is a system install. If one of
+  them is not installed, `read --ocr` stops with an error that names the fix.
+- With OCR, a scanned page gives the words and boxes of the engine, and `layout` paragraphs in
+  `document@1`. `doubt` lists each OCR word with a confidence below 1. A doubt is information
+  only and changes no decision.
+- A reading with OCR names the reader `groundgate.read+tesseract` with the tesseract version, for
+  example `0.13.0+tesseract.5.5.2`. A new tesseract version thus gives a new reading key.
+  `Extracted.ocr` gives the tesseract version. `read --store --ocr` does not use the reading
+  cache.
+- Without `--ocr`, the warning for a page with no text layer also says "or read it with --ocr". A
+  scanned page where OCR finds no words gives "OCR found no text on the scanned page".
+- OCR limits: groundgate finds `tesseract` only in the absolute PATH folders, never in the
+  current folder. One read sends at most 200 pages to OCR, so read fewer with `--pages`. If
+  pdfminer and pypdfium2 count a different number of pages, `read --ocr` stops with an error.
+
+The extraction loop:
+
+- Breaking: the extract run record is `groundgate-run/5` (#494). Replay of a `groundgate-run/4`
+  record from 0.12.0 fails with `runner version differs`.
+- `extract` and `replay` take a `Document` as an alternative to text. The chunks hold whole
+  nodes: a large table splits between rows and sends its header rows again, and each chunk sends
+  the headings above it. A targeted cut ends at a row boundary. A reply can cite a node with
+  `node`. The `groundgate-run/5` header names the document and its reader (#508).
+- `extract`: a prompt of a run on a document puts a ⟦N⟧ marker before the text of each table
+  cell, and its output schema names `node`. A reply can cite a marked cell by its id (#526).
+- `extract`: a cited node must be an id that the prompt marked. The runner removes the markers
+  from a quote, and a region that holds a marker bracket of its own gets no markers (#526).
+- The extract search leaves out a common word: a title or description word whose match windows
+  cover more than half of the sources (#494). Before, words such as "year" and "report" merged
+  each region into the whole document.
+- A cut region records `cut_matches`. A cut makes the search `search_truncated` only when it
+  loses a match (#494).
+- `RunResult.load(store, packet)` replays a run from the store with no model call. The
+  `groundgate-run/5` record names each object by its store key too, so the packet key is all
+  that a replay needs (#429).
+
+The store:
+
+- `read --store` of a PDF uses the reading cache that `store rebuild` writes. A reading of the
+  same source, reader version and options comes from the store, and the reader does not run
+  again. A new reader version misses the cache (#483).
+- `read --store --document FILE` writes `document@1` to the store, and the reading names it. This
+  read does not use the reading cache. `forget` removes the `document@1` object (#407).
+- `put_reading` reads the file one time, so the source and the text of a reading always come from
+  the same bytes. `read` takes the bytes as `data=` (#424).
+- Batch admit takes `--store DIR`: it writes one packet for each document, and `summary.json`
+  names the key of each packet in a new `packet` member (#421).
+- `store forget --all` also removes each `task@1` and `resolution@1` that names the packet, and
+  each correction packet that `review resolve` wrote for it, with its candidates, judgments and
+  receipt. A `review-policy@1` object stays (#516).
+- `groundgate store forget` keeps a run record whose bytes do not match its key, or whose file the
+  store refuses. It prints the record as "unchecked" and exits 1. With `--all`, the packet stays
+  too. Before, the record went, and its prompts and replies stayed with no record that named them
+  (#486).
+- `groundgate store forget` writes `run_keys` into the `logs/deleted.jsonl` entry of a removed
+  prompt, reply or admission. A second forget then prints an object that an earlier forget
+  removed as "absent". It does not exit 1 because of an unrelated object that it cannot read. An
+  entry from 0.12 has no run keys and gives the old result (#442).
+- `store forget` also removes the temporary files that a killed `put` of the object left, a store
+  root that is a file gives a store error, and a lock with a pid such as `1_0` no longer names
+  process 10 (#417).
+
+The review step:
+
+- `review serve` compares a number correction with the scale words above the number and with the
+  sign of the number and of each value of the task. If the parts do not agree, the page shows
+  them and asks again before it saves. A cited scale part gives the value in full (#496).
+
+The bench and the docs:
+
+- bench/requested4: the runner arm on the development split after #494, with the strict cut rule:
+  11 absence hits and 18 unreported absences (the #463 run had 1 and 29), and a miss rate of 72
+  of 122 (59.02%) with 2 escapes (#464).
+- A design note for the document model: one structure from the reader for every step (#285).
+- The README starts with the problem and the solution, and the project has a logo, an icon and a
+  social image (#504).
+
 ## 0.12.0 (2026-10-23)
 
 Spec 0.11, unchanged: every decision and receipt is the same as in 0.11.0. 0.12 removes English

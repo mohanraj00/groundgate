@@ -391,5 +391,6 @@ I open these after the maintainer approves this note.
 7. **The readers of #7.** DOCX and XLSX nodes, and OCR nodes with `doubt`.
 8. **The measure.** Section 13.
 
-Issues 1, 2, 3, 6 and 7 are in 0.13. Issues 4 and 5 change decisions: they are in spec 0.12,
-milestone 0.14. Issue 8 needs issue 5, so it is in 0.14 too.
+Issues 1, 2 and 3, and the OCR nodes of issue 7, are in 0.13. Issue 6 (#414), its crop view
+(#537) and the DOCX and XLSX nodes of issue 7 (#529) moved to 0.14. Issues 4 and 5 change
+decisions: they are in spec 0.12, milestone 0.14. Issue 8 needs issue 5, so it is in 0.14 too.

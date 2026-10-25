@@ -106,7 +106,7 @@ small objects. They name the same keys as the run header, so no data is copied.
 
 The reading cache maps the source key, the reader name and version, and the options to the
 reading. If the reader changes, the key changes, so a stale entry never applies (#285, §2).
-`document` stays null until the document model of #285.
+`document` stays null unless `read --store --document` writes `document@1` (#407).
 
 ### 5.2 The packet
 
@@ -361,4 +361,4 @@ format.
    record version: with #382 if it changes the record.
 5. **Splits and calibrate labels.** The `splits` log for #383, and calibrate labels from the
    answer logs after #385.
-6. **Later.** `document@1` and the reading cache with #285 in 0.13, and the crop view with #7.
+6. **Later.** `document@1` and the reading cache with #285 in 0.13, and the crop view in 0.14 (#537).
