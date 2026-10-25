@@ -187,7 +187,7 @@ reader changes, the key changes, and a stale entry never applies.
   rule is `document@2`, and the changelog marks it as a break. An old key never gets a new
   meaning (store.md §8, rule 2).
 
-`read --store` does not use the reading cache yet. #407 and its follow-up issue add that.
+`read --store` uses the reading cache for a PDF (#519). `read --store --document` writes `document@1` and does not use the cache (#407).
 
 ## 7. Lookup in groundgate, search outside
 
