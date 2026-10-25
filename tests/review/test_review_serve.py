@@ -132,7 +132,7 @@ Served = tuple[FolderStore, str, dict[str, str], Call, list[Response]]
 
 def test_the_server_refuses_each_request_of_section_9(served: Served) -> None:
     store, k, tasks, call, seen = served
-    good = answer(tasks["revenue"], "choose", decision=0)
+    good = answer(tasks["revenue"], "choose", decision=1)
     refused = [
         # rule 1: a bad Host, and no Host
         (call("GET", "/", host="localhost:80"), 421),
@@ -178,7 +178,7 @@ def test_the_server_refuses_each_request_of_section_9(served: Served) -> None:
         (call("POST", "/api/answer", {**good, "task": "../../logs"}), 400),
         # rule 8: an answer that its task does not permit
         (call("POST", "/api/answer", answer(tasks["revenue"], "confirm")), 400),
-        (call("POST", "/api/answer", answer(tasks["revenue"], "choose", decision=1)), 400),
+        (call("POST", "/api/answer", answer(tasks["revenue"], "choose", decision=0)), 400),
         (call("POST", "/api/answer", answer(tasks["revenue"], "choose", decision="0")), 400),
         (call("POST", "/api/answer", answer(tasks["revenue"], "accept")), 400),
         (call("POST", "/api/answer", answer(tasks["net_income"], "unsure", decision=1)), 400),
@@ -296,13 +296,13 @@ def test_an_answer_from_the_page_goes_into_the_answer_log(served: Served) -> Non
             {"task": tasks["net_income"], "document": "", "page": None},
         ],
     }
-    status, _, body = call("POST", "/api/answer", answer(tasks["revenue"], "choose", decision=0))
+    status, _, body = call("POST", "/api/answer", answer(tasks["revenue"], "choose", decision=1))
     assert status == 200, body
     assert [t["task"] for t in json.loads(body)["tasks"]] == [tasks["net_income"]]
     (record,) = log(store, k)
     assert record == {
         "format": "answer@1", "task": tasks["revenue"], "reviewer": "ana", "verdict": "choose",
-        "decision": 0, "candidate": None, "codes_kept": [], "statements": None, "nodes": None,
+        "decision": 1, "candidate": None, "codes_kept": [], "statements": None, "nodes": None,
         "reason_seen": False, "keys": 1, "ms": 900, "time": "2026-10-21T09:30:00Z",
         "sequence": 1, "previous": None, "entry_sha256": record["entry_sha256"],
     }  # fmt: skip

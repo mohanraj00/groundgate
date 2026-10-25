@@ -428,8 +428,8 @@ A fact that passes them all is checked for flags. Any flag makes it `needs_verif
 
 `NON_VERBATIM_EVIDENCE`, `QUALIFIED_VALUE`, `SCALE_WORD`, `PART_MISSING`, `SIGN_CITATION_INVALID`,
 `SCALE_CITATION_INVALID`, `UNIT_CITATION_INVALID`, `FIELD_CITATION_INVALID`, `KEY_NOT_AT_VALUE`,
-`KEY_CITATION_INVALID`, `EVIDENCE_QUOTED`, `EVIDENCE_STATED`, `LOW_CONFIDENCE`,
-`CONFLICTING_CANDIDATES`, `RELATION_FAILED`, and `MODEL_DOUBT` from a recorded judgment.
+`KEY_CITATION_INVALID`, `COLUMN_NOT_AT_VALUE`, `MARKER_OTHER_FIELD`, `EVIDENCE_QUOTED`,
+`EVIDENCE_STATED`, `LOW_CONFIDENCE`, `CONFLICTING_CANDIDATES`, `RELATION_FAILED`, and `MODEL_DOUBT` from a recorded judgment.
 `EVIDENCE_REANCHORED`, `VALUE_DERIVED`, `KEY_CITED`, `ADMITTED_BY_POLICY` and `MODEL_CLEARED`
 only inform.
 
@@ -560,6 +560,8 @@ Flags send the fact to a person:
 | `FIELD_CITATION_INVALID` | The item holds none of the field's `aliases`, or it is not on the value's row or in its sentence. | Give the field `aliases` in the document's words. |
 | `KEY_NOT_AT_VALUE` | The value is under a different condition in the text, or a label line or a table cell stands between the key and the value. | In a table, ask the extractor for a `field` item and a `key` item, and give the field `aliases`. Otherwise a person checks the fact. |
 | `KEY_CITATION_INVALID` | The key item does not hold a mention of the key, or is not in the value's text. | A person checks the fact. |
+| `COLUMN_NOT_AT_VALUE` | The field has `columns`, and no column item puts the value under a header cell of the field. A passing field item with a column word, as "Typical supply current", also puts it there. On a line with no tab, no column item passes. | In a table, ask the extractor for a `column` item. Otherwise a person checks the fact. |
+| `MARKER_OTHER_FIELD` | The field has `markers`, a marker word of another field is next to the value, as "family" in "$800 family", and no marker word of this field is. | A person checks the fact. Usually the value is of the other field. |
 | `EVIDENCE_QUOTED`, `EVIDENCE_STATED` | Only outside evidence supports the value. | Check the source. If you trust it, add the URL prefix to `sources.external.allow`, or set `sources.knowledge` to `admit`. |
 | `LOW_CONFIDENCE` | The extractor's `confidence` is below `min_confidence`. | A person checks the fact. |
 | `CONFLICTING_CANDIDATES` | Two proposers read different values. | A person picks one. groundgate never picks. |

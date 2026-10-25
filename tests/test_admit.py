@@ -36,7 +36,7 @@ CANDS = [
 
 def test_receipt_shape_and_summary() -> None:
     r = gg.admit(DOC, SCHEMA, CANDS, document_id="doc-1").to_dict()
-    assert r["groundgate"] == "0.11"
+    assert r["groundgate"] == "0.12"
     assert r["document"]["id"] == "doc-1"
     assert r["summary"] == {"admitted": 2, "needs_verification": 0, "rejected": 1}
     shas = [d["candidate_sha256"] for d in r["decisions"]]
@@ -87,7 +87,7 @@ def test_verify_names_a_receipt_from_another_spec_version() -> None:
     r["groundgate"] = "0.1"
     result = gg.verify(r, DOC, SCHEMA, CANDS)
     assert result.problems == (
-        "receipt was decided under spec 0.1; this groundgate implements 0.11",
+        "receipt was decided under spec 0.1; this groundgate implements 0.12",
     )
 
 
@@ -327,9 +327,9 @@ def test_flag_order_and_code_descriptions_are_pinned() -> None:
     assert FLAG_ORDER == (
         "NON_VERBATIM_EVIDENCE", "QUALIFIED_VALUE", "SCALE_WORD", "PART_MISSING",
         "SIGN_CITATION_INVALID", "SCALE_CITATION_INVALID", "UNIT_CITATION_INVALID",
-        "FIELD_CITATION_INVALID", "KEY_NOT_AT_VALUE", "KEY_CITATION_INVALID", "EVIDENCE_QUOTED",
-        "EVIDENCE_STATED", "LOW_CONFIDENCE", "CONFLICTING_CANDIDATES", "RELATION_FAILED",
-        "MODEL_DOUBT",
+        "FIELD_CITATION_INVALID", "KEY_NOT_AT_VALUE", "KEY_CITATION_INVALID",
+        "COLUMN_NOT_AT_VALUE", "MARKER_OTHER_FIELD", "EVIDENCE_QUOTED", "EVIDENCE_STATED",
+        "LOW_CONFIDENCE", "CONFLICTING_CANDIDATES", "RELATION_FAILED", "MODEL_DOUBT",
     )  # fmt: skip
     assert tuple(codes.FLAG) == FLAG_ORDER
     assert tuple(codes.INFO) == INFO_ORDER

@@ -16,7 +16,7 @@ from fractions import Fraction
 from typing import Any
 
 from .canonical import SPEC_VERSION, Offsets, digest, is_nfc
-from .fold import mark_fold
+from .fold import fold_text, mark_fold
 from .model import (
     Action,
     Decision,
@@ -86,6 +86,8 @@ FLAG_ORDER = (  # SPEC §3.3 table order; it is part of every receipt hash
     "FIELD_CITATION_INVALID",
     "KEY_NOT_AT_VALUE",
     "KEY_CITATION_INVALID",
+    "COLUMN_NOT_AT_VALUE",
+    "MARKER_OTHER_FIELD",
     "EVIDENCE_QUOTED",
     "EVIDENCE_STATED",
     "LOW_CONFIDENCE",
@@ -102,8 +104,8 @@ INFO_ORDER = (
 )
 QUESTIONS = ("key", "field_match")
 SOURCES = ("document", "reference", "external", "knowledge")
-ROLES = ("value", "sign", "scale", "unit", "key", "field")
-PART_ORDER = ("sign", "scale", "unit", "field", "key")  # SPEC §5 `parts`
+ROLES = ("value", "sign", "scale", "unit", "key", "field", "column", "marker")
+PART_ORDER = ("sign", "scale", "unit", "field", "column", "marker", "key")  # SPEC §5 `parts`
 MAX_FIELD_ITEMS = 8  # the field items that a candidate can cite (SPEC §3 step 1, #300)
 MISSING_ORDER = ("sign", "scale", "unit", "key")
 _SCALES = (3, 5, 6, 7, 9, 12)  # the powers of ten of the scale words (SPEC §4.1)
@@ -205,6 +207,28 @@ class _Text:
             for _, y in itertools.takewhile(lambda m: m[0] < b, itertools.islice(found, i, None))
         )
 
+    def within(self, words: tuple[str, ...], a: int, b: int) -> list[tuple[int, int]]:
+        """The key mentions of ``words`` that lie within text[a:b]."""
+        if words not in self.spans:
+            self.spans[words] = sorted((x, y) for x, y, _ in self.key_mentions(words))
+        found = self.spans[words]
+        i = bisect.bisect_left(found, (a, -1))
+        ahead = itertools.islice(found, i, None)
+        return [m for m in itertools.takewhile(lambda m: m[0] < b, ahead) if m[1] <= b]
+
+    def slots(self, pos: int) -> list[tuple[int, int]]:
+        """The slots of the line that holds ``pos``: the parts between its tabs (SPEC §4.6)."""
+        start, end = self.line(pos)
+        if self.tabs is None:
+            self.tabs = [m.start() for m in re.finditer("\t", self.text)]
+        i = bisect.bisect_left(self.tabs, start)
+        out = []
+        for tab in itertools.takewhile(lambda x: x < end, self.tabs[i:]):
+            out.append((start, tab))
+            start = tab + 1
+        out.append((start, end))
+        return out
+
     def letter_after(self, pos: int) -> int:
         """The first letter at or after ``pos``, or the end of the text."""
         if pos not in self.letters:
@@ -259,6 +283,9 @@ class _Ctx:
     suffixes: frozenset[str] = frozenset()  # of every unit in the table (SPEC §4.3)
     quoted: list[_Text] = field(default_factory=list)  # the text that holds quotes now
     aliases: tuple[str, ...] = ()  # of every field, for the label cell rule (SPEC §4.6)
+    columns: tuple[str, ...] = ()  # the column words of every field (spec 0.12)
+    markers: tuple[str, ...] = ()  # the marker words of every field
+    competing: dict[str, tuple[str, ...]] = field(default_factory=dict)  # by field name
 
     def any_unit_at(self, t: _Text, tok: Token) -> bool:
         """Whether a form of any unit in the table is next to the token (SPEC §3.1)."""
@@ -642,7 +669,7 @@ def _checked(
             strict, _ = _value_at(ctx, vitem, t, f, value, occ, roles, lenient=False)
             if by_field:
                 here, _ = _value_at(ctx, vitem, t, f, value, occ, roles, lenient=True)
-                if here is not None and _field_passes(ctx, t, f, here, fields, region):
+                if here is not None and _field_passes(ctx, t, f, here, fields, roles, region):
                     named = named or occ
                     if strict is not None:
                         at = strict
@@ -668,7 +695,7 @@ def _checked(
         at, failure = _value_at(ctx, vitem, t, f, value, span, roles, lenient=False)
         if at is None:  # the unit at a unit place where a field item passes (#249)
             near, _ = _value_at(ctx, vitem, t, f, value, span, roles, lenient=True)
-            if near is not None and _unit_relief(ctx, t, f, near, fields, region):
+            if near is not None and _unit_relief(ctx, t, f, near, fields, roles, region):
                 at = near
         if at is None:
             quote = vitem.text
@@ -763,35 +790,176 @@ _NOT_SPACE = re.compile(r"\S")
 
 
 def _field_ok(
-    t: _Text, f: Field, span: tuple[int, int], pos: int, names: tuple[str, ...]
+    ctx: _Ctx,
+    t: _Text,
+    f: Field,
+    span: tuple[int, int],
+    pos: int,
+    column: bool = False,
+    marker: bool = False,
 ) -> tuple[bool, bool]:
     """Whether a field item at ``span`` passes for a value at ``pos``, and whether it is at the
-    value's row (SPEC §4.6). ``names`` are the aliases of every field of the schema."""
+    value's row (SPEC §4.6). With ``column``, a column item passes, so the item can be a row
+    label. With ``marker``, a marker item passes, so a label cell can have numbers between."""
     a, b = span
     if f.aliases is None or b > pos or not t.named(f.aliases, a, b):
         return False, False
     if t.letter_after(b) >= pos:
         return True, True  # at the value's row
-    end = t.token_after(b)  # no number token between the item and the value
-    if end is not None and end <= pos:
-        return False, False
     text = t.text
     start, line_end = t.line(a)
     tab = t.tab_in(start, line_end)
+    if column and tab >= 0 and b <= tab and pos < line_end:
+        return True, False  # a row label: in slot 0 of the value's line (spec 0.12)
+    end = t.token_after(b)  # no number token between the item and the value
+    blocked = end is not None and end <= pos
     if tab < 0 or b > tab or pos <= tab:
-        return a >= sentence(text, pos)[0], False  # no label slot, or the value is in it
+        # no label slot, or the value is in it
+        return not blocked and a >= sentence(text, pos)[0], False
     # the item is in a label slot and the value after it: only a label cell passes (#316)
     slot = tab + 1
     slot_end = t.tab_in(slot, line_end)
     slot_end = line_end if slot_end < 0 else slot_end
     if pos >= slot_end:
         return False, False  # a later slot or a later line
+    if blocked and not (marker and _bounded(ctx, t, f, slot, pos)):
+        return False, False
     left = sentence(text, pos)[0]
+    names = ctx.aliases
     return (
         t.words_before(slot, slot_end, pos) <= LABEL_CELL_WORDS
         and (left <= slot or _NOT_SPACE.search(text, slot, left) is None)  # no sentence end
         and not (names and t.named(names, slot, pos))
     ), False
+
+
+def _bounded(ctx: _Ctx, t: _Text, f: Field, slot: int, pos: int) -> bool:
+    """Whether each run of letters after the first number token of the answer slot and before
+    the value lies in a mention of a marker word of the schema or in a form of the field's unit
+    (the boundary rule, SPEC §4.6, spec 0.12)."""
+    end = t.token_after(slot)
+    if end is None or end > pos:
+        return True
+    text = t.text
+    held = t.within(ctx.markers, end, pos) if ctx.markers else []
+    prefixes, suffixes = ctx.schema.units.get(f.unit, ([], [])) if f.unit else ([], [])
+    for form in {x for x in prefixes + suffixes if any(ch.isalpha() for ch in x)}:
+        i = text.find(form, end, pos)
+        while i >= 0:
+            held.append((i, i + len(form)))
+            i = text.find(form, i + 1, pos)
+    i = end
+    while i < pos:
+        if not text[i].isalpha():
+            i += 1
+            continue
+        j = i
+        while j < pos and text[j].isalpha():
+            j += 1
+        if not any(x <= i and j <= y for x, y in held):
+            return False
+        i = j
+    return True
+
+
+def _only(text: str, a: int, b: int, forms: Sequence[str]) -> bool:
+    """Whether text[a:b] holds only whitespace other than tabs and line breaks, and ``forms``."""
+    ordered = sorted(forms, key=len, reverse=True)
+    while a < b:
+        ch = text[a]
+        if ch in "\t\n":
+            return False
+        if ch.isspace():
+            a += 1
+            continue
+        form = next((x for x in ordered if x and text.startswith(x, a) and a + len(x) <= b), None)
+        if form is None:
+            return False
+        a += len(form)
+    return True
+
+
+def _column_ok(ctx: _Ctx, t: _Text, f: Field, span: tuple[int, int], tok: Token) -> bool:
+    """Whether a column item at ``span`` is a column item for the token: rules 1 to 5 of
+    SPEC §4.6 (spec 0.12)."""
+    if f.columns is None:
+        return False
+    a, b = span
+    text = t.text
+    head = t.slots(a)
+    n = next((i for i, (x, y) in enumerate(head) if x <= a and b <= y), 0)
+    if n == 0 or not t.within(f.columns, a, b):  # rule 1
+        return False
+    row = t.slots(tok.start)
+    if len(row) != len(head) or not (row[n][0] <= tok.start and tok.end <= row[n][1]):
+        return False  # rules 2 and 3: the same slot, and the same slot count
+    prefixes, suffixes = ctx.schema.units.get(f.unit, ([], [])) if f.unit else ([], [])
+    forms = prefixes + suffixes
+    if not (_only(text, row[n][0], tok.start, forms) and _only(text, tok.end, row[n][1], forms)):
+        return False  # rule 2: only the token, whitespace and unit forms in the slot
+    h_end, v_start = head[-1][1], row[0][0]
+    if h_end >= v_start or "\f" in text[h_end:v_start]:
+        return False  # rule 3: the header line comes first, with no page break between
+    if any(t.within(f.columns, x, y) for i, (x, y) in enumerate(head) if i != n):
+        return False  # rule 4
+    pos = h_end + 1
+    while pos < v_start:  # each line between
+        line = t.slots(pos)
+        x, y = line[0][0], line[-1][1]
+        if len(line) != len(head) or not text[x:y].strip():
+            return False  # rule 3
+        if ctx.columns and t.within(ctx.columns, x, y):
+            return False  # rule 5: a second header
+        cell = line[n]
+        if not tokens(text, *cell) and any(ch.isalpha() for ch in text[cell[0] : cell[1]]):
+            return False  # rule 5: a cell with letters and no number
+        pos = y + 1
+    return True
+
+
+def _next_to(
+    text: str, m: tuple[int, int], tok: Token, prefixes: list[str], suffixes: list[str]
+) -> bool:
+    """Whether the mention ``m`` is next to the token, before or after it (SPEC §4.6)."""
+    x, y = m
+    if y <= tok.start:
+        return _only(text, y, tok.start, [*prefixes, "(", ")"])
+    return tok.end <= x and _only(text, tok.end, x, suffixes)
+
+
+def _near(ctx: _Ctx, t: _Text, f: Field, words: tuple[str, ...], tok: Token) -> bool:
+    """Whether a mention of ``words`` is next to the token."""
+    if not words:
+        return False
+    prefixes, suffixes = ctx.schema.units.get(f.unit, ([], [])) if f.unit else ([], [])
+    slot = next(s for s in t.slots(tok.start) if s[0] <= tok.start <= s[1])
+    return any(_next_to(t.text, m, tok, prefixes, suffixes) for m in t.within(words, *slot))
+
+
+def _marker_ok(ctx: _Ctx, t: _Text, f: Field, span: tuple[int, int], tok: Token) -> bool:
+    """Whether a marker item at ``span`` is a marker item for the token (SPEC §4.6)."""
+    if f.markers is None:
+        return False
+    prefixes, suffixes = ctx.schema.units.get(f.unit, ([], [])) if f.unit else ([], [])
+    return any(
+        _next_to(t.text, m, tok, prefixes, suffixes) for m in t.within(f.markers, *span)
+    ) and not _near(ctx, t, f, ctx.competing.get(f.name, ()), tok)
+
+
+def _relief(
+    ctx: _Ctx, t: _Text, f: Field, at: _At, roles: Mapping[str, _Item], region: tuple[int, int]
+) -> tuple[bool, bool]:
+    """Whether the column item and the marker item pass at this place of the value."""
+    tok = at.token
+    out = []
+    for role, check in (("column", _column_ok), ("marker", _marker_ok)):
+        item = roles.get(role)
+        ok = False
+        if item is not None and tok is not None and _same(item, at.item):
+            span, located = _find(t, item, at, region)
+            ok = span is not None and located and check(ctx, t, f, span, tok)
+        out.append(ok)
+    return out[0], out[1]
 
 
 def _unit_at_place(places: UnitPlaces, tok: Token) -> bool:
@@ -800,30 +968,43 @@ def _unit_at_place(places: UnitPlaces, tok: Token) -> bool:
 
 
 def _unit_relief(
-    ctx: _Ctx, t: _Text, f: Field, at: _At, fields: list[_Item], region: tuple[int, int]
+    ctx: _Ctx,
+    t: _Text,
+    f: Field,
+    at: _At,
+    fields: list[_Item],
+    roles: Mapping[str, _Item],
+    region: tuple[int, int],
 ) -> bool:
     """Whether the unit is the only missing part at this place of the value, and is not missing
     there: a field item passes and a form of the unit is at a unit place (#249)."""
     tok = at.token
     if at.missing != {"unit"} or tok is None or f.unit is None:
         return False
-    if not _field_passes(ctx, t, f, at, fields, region):
+    if not _field_passes(ctx, t, f, at, fields, roles, region):
         return False
     prefixes, suffixes = ctx.schema.units.get(f.unit, ([], []))
     return _unit_at_place(UnitPlaces(t.text, tok, prefixes, suffixes), tok)
 
 
 def _field_passes(
-    ctx: _Ctx, t: _Text, f: Field, at: _At, fields: list[_Item], region: tuple[int, int]
+    ctx: _Ctx,
+    t: _Text,
+    f: Field,
+    at: _At,
+    fields: list[_Item],
+    roles: Mapping[str, _Item],
+    region: tuple[int, int],
 ) -> bool:
     """Whether one of the field items passes at this place of the value (#249, #300)."""
     if f.aliases is None:
         return False
+    column, marker = _relief(ctx, t, f, at, roles, region)
     for item in fields:
         if not _same(item, at.item):
             continue
         span, located = _find(t, item, at, region)
-        if span is not None and located and _field_ok(t, f, span, at.pos, ctx.aliases)[0]:
+        if span is not None and located and _field_ok(ctx, t, f, span, at.pos, column, marker)[0]:
             return True
     return False
 
@@ -845,7 +1026,10 @@ def _roles(
     found: dict[str, tuple[int, int]] = {}
     passed: dict[str, bool] = {}
     row = False  # a passing field item is at the value's row: found["field"] is the first one
-    checks = [("field", i) for i in fields] + [(r, roles[r]) for r in _CHECK_ORDER if r in roles]
+    column, marker = _relief(ctx, t, f, at, roles, region)  # before the field items read them
+    in_column = False  # a passing field item holds a column word of the field (spec 0.12)
+    checks: list[tuple[str, _Item]] = [(r, roles[r]) for r in ("column", "marker") if r in roles]
+    checks += [("field", i) for i in fields] + [(r, roles[r]) for r in _CHECK_ORDER if r in roles]
     for role, item in checks:
         place = places if role == "unit" else None
         span, located = _find(t, item, at, region, place) if _same(item, at.item) else (None, False)
@@ -859,10 +1043,16 @@ def _roles(
                     a <= x and y <= b and k == p.key for x, y, k in t.key_mentions(f.keys or ())
                 )
             elif role == "field":
-                ok, at_row = _field_ok(t, f, span, pos, ctx.aliases)
+                ok, at_row = _field_ok(ctx, t, f, span, pos, column, marker)
                 if ok and at_row and not row:
                     row = True
                     found["field"] = span
+                if ok and f.columns is not None and t.within(f.columns, a, b):
+                    in_column = True
+            elif role == "column":
+                ok = column
+            elif role == "marker":
+                ok = marker
             elif tok is None:
                 ok = False  # a sign, scale or unit item on a string field
             elif role == "sign":
@@ -923,12 +1113,18 @@ def _roles(
         passed[role] = ok or (role == "field" and passed.get("field", False))
         byte_span = None if span is None else _bytes(t, span)
         p.parts.append(Part(role, byte_span, ok))
-        if role == "field":
-            continue  # flagged once, below
+        if role in ("field", "column", "marker"):
+            continue  # flagged once, below, or not at all
         if not ok:
             p.flags.append(f"{role.upper()}_CITATION_INVALID")
     if fields and f.aliases is not None and not passed["field"]:
         p.flags.append("FIELD_CITATION_INVALID")  # no field item passes
+    if f.columns is not None and not column and not in_column:
+        p.flags.append("COLUMN_NOT_AT_VALUE")  # the value is not in a column of the field
+    competing = ctx.competing.get(f.name, ())
+    other = f.markers is not None and tok is not None and _near(ctx, t, f, competing, tok)
+    if other and tok is not None and not _near(ctx, t, f, f.markers or (), tok):
+        p.flags.append("MARKER_OTHER_FIELD")  # a marker word of another field at the value
     if (
         "unit" in p.missing
         and passed.get("field")
@@ -1236,6 +1432,9 @@ def _admit(
         None if document_source is None else host(document_source),
         suffixes=table,
         aliases=tuple(dict.fromkeys(a for f in schema.fields.values() for a in f.aliases or ())),
+        columns=tuple(dict.fromkeys(c for f in schema.fields.values() for c in f.columns or ())),
+        markers=tuple(dict.fromkeys(m for f in schema.fields.values() for m in f.markers or ())),
+        competing=_competing(schema),
     )
 
     results: list[tuple[str, int, object, _Passed | _Reject]] = []
@@ -1367,6 +1566,20 @@ def _relate(relations: tuple[Relation, ...], passed: list[_Passed]) -> tuple[Rel
                     RelationResult(r.id, key, holds, _decimal(difference), _decimal(allowance))
                 )
     return tuple(out)
+
+
+def _competing(schema: Schema) -> dict[str, tuple[str, ...]]:
+    """The competing words of each field with markers: the marker words of another field that
+    are not marker words of this field, after whitespace normalisation and the fold (§4.6)."""
+    out = {}
+    for f in schema.fields.values():
+        if f.markers is None:
+            continue
+        own = {fold_text(normalize_ws(m)) for m in f.markers}
+        words = (m for g in schema.fields.values() if g is not f for m in g.markers or ())
+        other = (m for m in words if fold_text(normalize_ws(m)) not in own)
+        out[f.name] = tuple(dict.fromkeys(other))
+    return out
 
 
 def _fold(s: str) -> str:

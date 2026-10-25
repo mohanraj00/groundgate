@@ -53,7 +53,7 @@ def _answer(
 def store(root: Path) -> tuple[FolderStore, dict[str, str]]:
     """The hand-made store.
 
-    conflict: revenue is a review task with choices 0 and 1, net_income an audit task.
+    conflict: revenue is a review task with choices 1 and 2, net_income an audit task.
       revenue     ana choose 0 (2000 ms, 1 key), ben choose 0 (4000 ms, 2 keys)
       net_income  ana confirm, blind (1000 ms, 1 key); ben confirm, reason seen (3000 ms, 1
                   key); cara unsure (700 ms, 1 key)
@@ -73,8 +73,8 @@ def store(root: Path) -> tuple[FolderStore, dict[str, str]]:
     """
     s = FolderStore(root)
     conflict, ct = _packet(s, "conflict")
-    _answer(s, conflict, "ana", ct["revenue"], "choose", 2000, 1, decision=0)
-    _answer(s, conflict, "ben", ct["revenue"], "choose", 4000, 2, decision=0)
+    _answer(s, conflict, "ana", ct["revenue"], "choose", 2000, 1, decision=1)
+    _answer(s, conflict, "ben", ct["revenue"], "choose", 4000, 2, decision=1)
     _answer(s, conflict, "ana", ct["net_income"], "confirm", 1000, 1)
     _answer(s, conflict, "ben", ct["net_income"], "confirm", 3000, 1, seen=True)
     _answer(s, conflict, "cara", ct["net_income"], "unsure", 700, 1)

@@ -144,7 +144,7 @@ def test_the_packet_names_each_input(tmp_path: Path) -> None:
         )
         assert receipt.to_dict()["packs"][0]["id"] == "lac-x-test"
         packet = json.loads(store.get("packet@1", k))
-        assert packet["format"] == "packet@1" and packet["spec"] == "0.11"
+        assert packet["format"] == "packet@1" and packet["spec"] == "0.12"
         assert packet["document"] == {
             "id": "grant-1",
             "source": "https://example.org/grant",
