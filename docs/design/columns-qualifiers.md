@@ -166,8 +166,13 @@ to $400 only, and "family" is next to $800 only.
 
 ### 6.2 The qualifier item
 
+A **competing word** of a field is a qualifier word of another field of the schema that is not
+also a qualifier word of this field, after whitespace normalisation and the fold of each letter.
+So when `deductible_family` and `out_of_pocket_family` both list "family", "family" is not a
+competing word of either. The aliases tell those two fields apart, not the qualifier.
+
 A `qualifier` item passes when it holds a qualifier word of the field, that mention is next to
-the token, and no qualifier word of another field of the schema is next to the token.
+the token, and no competing word of the field is next to the token.
 
 When a qualifier item passes, a field item that is a label cell for the token passes without
 rule 1 of label cells: number tokens can lie between the item and the token. Rules 2, 3 and 4
@@ -177,8 +182,8 @@ reach.
 
 ### 6.3 Another field's word at the value
 
-When the field has `qualifiers`, and a qualifier word of another field of the schema is next to
-the token while no qualifier word of this field is, the decision gets the new flag
+When the field has `qualifiers`, and a competing word of the field is next to the token while no
+qualifier word of this field is, the decision gets the new flag
 `QUALIFIER_OTHER_FIELD`. This holds also for a candidate with no qualifier item. So a model that
 gives $800 of "$800 family" as `deductible_individual` goes to review.
 
@@ -192,7 +197,7 @@ gives $800 of "$800 family" as `deductible_individual` goes to review.
 | Code | Text |
 |---|---|
 | `COLUMN_NOT_AT_VALUE` | The field has `columns`, no column item puts the value in a column of the field, and no passing field item holds a column word of the field (§4.6). |
-| `QUALIFIER_OTHER_FIELD` | The field has `qualifiers`, a qualifier word of another field is next to the value, and no qualifier word of this field is (§4.6). |
+| `QUALIFIER_OTHER_FIELD` | The field has `qualifiers`, a competing word (a qualifier word of another field that this field does not list) is next to the value, and no qualifier word of this field is (§4.6). |
 
 - The receipt gets no new member. A decision records the codes as today.
 
@@ -250,6 +255,9 @@ gives $800 of "$800 family" as `deductible_individual` goes to review.
 - `qualifier-before`: "Individual $0 / Family $0" with the qualifier item "Family": admitted.
 - `qualifier-other`: `deductible_individual` = 800 at "$800 family": review,
   `QUALIFIER_OTHER_FIELD`, also with no qualifier item.
+- `qualifier-shared`: `deductible_family` and `out_of_pocket_family` both list "family".
+  `deductible_family` = 800 at "Overall deductible\tIn-Network: $400 person/$800 family" with
+  the qualifier item "family": admitted, and no `QUALIFIER_OTHER_FIELD`.
 - `qualifier-slash`: "$400 person/$800 family": "person" is not next to $800.
 - `qualifier-four-words`: a fifth word before the token: the label cell fails, as in 0.11.
 - `qualifier-sentence`: the later part after a sentence end: the label cell fails, as in 0.11.
