@@ -1113,3 +1113,37 @@ def test_a_column_item_stops_at_a_page_break(page: str) -> None:
     d = gg.admit(text, schema, [cand]).decisions[0]
     assert "COLUMN_NOT_AT_VALUE" in d.codes
     assert ("column", False) in [(p.role, p.passed) for p in d.parts]
+
+
+def test_the_boundary_rule_reads_each_marker_mention_once() -> None:
+    """An answer cell with many marker mentions before the value stays linear: the boundary rule
+    sweeps the mentions once (spec 0.12). Four times the mentions take less than eight times as
+    long."""
+    usd = {"type": "integer", "unit": "USD", "multiple": True}
+    schema = {
+        "fields": {
+            "fam": {**usd, "aliases": ["Deductible"], "markers": ["family"]},
+            "ind": {**usd, "aliases": ["Individual"], "markers": ["person"]},
+        }
+    }
+    cand = {
+        "id": "c",
+        "field": "fam",
+        "value": 2,
+        "unit": "USD",
+        "evidence": [
+            {"text": "$2"},
+            {"role": "field", "text": "Deductible"},
+            {"role": "marker", "text": "family"},
+        ],
+    }
+
+    def prepare(n: int) -> Callable[[], None]:
+        text = "Deductible\t" + "$1/person/" * n + "$2 family\n"
+
+        def run() -> None:
+            assert gg.admit(text, schema, [cand]).decisions[0].outcome == "admitted"
+
+        return run
+
+    assert_linear(prepare, 1000, 4000)

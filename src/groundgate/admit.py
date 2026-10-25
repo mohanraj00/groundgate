@@ -854,6 +854,8 @@ def _bounded(ctx: _Ctx, t: _Text, f: Field, slot: int, pos: int) -> bool:
         while i >= 0:
             held.append((i, i + len(form)))
             i = text.find(form, i + 1, pos)
+    held.sort()
+    k, reach = 0, -1  # the furthest end of a held span that starts at or before the run
     i = end
     while i < pos:
         if not text[i].isalpha():
@@ -862,7 +864,10 @@ def _bounded(ctx: _Ctx, t: _Text, f: Field, slot: int, pos: int) -> bool:
         j = i
         while j < pos and text[j].isalpha():
             j += 1
-        if not any(x <= i and j <= y for x, y in held):
+        while k < len(held) and held[k][0] <= i:  # the runs only move right: one sweep (#543)
+            reach = max(reach, held[k][1])
+            k += 1
+        if reach < j:
             return False
         i = j
     return True
