@@ -356,7 +356,11 @@ def _check_nodes(raw: list[object], data: bytes) -> Iterable[Node]:
 
 
 def read_document(
-    path: str | Path, pages: Iterable[int] | None = None, *, ocr: bool = False
+    path: str | Path,
+    pages: Iterable[int] | None = None,
+    *,
+    ocr: bool = False,
+    data: bytes | None = None,
 ) -> tuple[Extracted, Document]:
     """Read ``path`` as ``read`` does, and also give its document model. The text and the
     layout are the same as the text and the layout of ``read``.
@@ -367,12 +371,13 @@ def read_document(
     ``layout`` paragraph for each paragraph of the OCR engine, and a ``doubt`` entry for each
     OCR word with a confidence below 1. A read with OCR records the tesseract version in
     ``reader``. OCR is off by default: an OCR word can be wrong, and ``admit`` does not read
-    ``doubt``.
+    ``doubt``. If ``data`` is given, it is the bytes of the file, and ``read_document`` does
+    not read the file again.
     """
     path = Path(path)
     suffix = path.suffix.lower()
     options = {"pages": None if pages is None else list(pages)}
-    source = path.read_bytes()
+    source = path.read_bytes() if data is None else data
     raws: list[Raw] = []
     doubt: list[dict[str, Any]] = []
     if suffix == ".pdf":

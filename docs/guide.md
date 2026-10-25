@@ -77,6 +77,9 @@ confidence from 0 to 1. A doubt is information only, as a node is.
 The lookups are `node`, `at`, `of_kind`, `find`, `children`, `section` and `cell`. A node is
 information only: `admit` never reads one. `groundgate read FILE --document doc.json` writes the
 object as canonical JSON, and `Document.from_dict(obj, text)` checks one that you load again.
+With `--store DIR`, `read --document` also writes the object to the store as `document@1`, and
+the reading names it. This read does not use the reading cache, as with `--ocr`. `forget` removes
+the `document@1` object with the text.
 
 `read` writes a table one row on each line, with a tab between two cells. For HTML, the cells are
 the table's `td` and `th` elements. A PDF has no cells, so `read` finds them: a row is the text at

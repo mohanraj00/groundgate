@@ -307,6 +307,28 @@ def test_forget_removes_the_document_data(
         assert len(store.read(("deleted",))) == len(gone)  # an absent object gets no record
 
 
+def test_forget_removes_the_document_model_of_a_reading(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """A reading names its ``document@1``, so check sees it and forget removes it (#407)."""
+    root = tmp_path / "s"
+    doc = tmp_path / "a.txt"
+    doc.write_text(TEXT, encoding="utf-8")
+    with FolderStore(root, clock=clock) as store:
+        reading, _ = put_reading(store, doc, document=True)
+        model = json.loads(store.get("reading@1", reading))["document"]
+        admitted, _ = admit_packet(store, TEXT, SCHEMA, candidates(), reading=reading)
+    assert all_keys(root)[model] == "document@1"
+    assert main(["store", "check", "--store", str(root)]) == 0
+    capsys.readouterr()
+    assert main(["store", "forget", "--store", str(root), admitted, "--reason", "asked"]) == 0
+    assert f"deleted document@1 {model}" in capsys.readouterr().out
+    after = all_keys(root)
+    assert model not in after and "reading@1" in after.values()
+    assert main(["store", "check", "--store", str(root)]) == 0
+    assert f"input deleted: document@1 {model}" in capsys.readouterr().out
+
+
 def test_one_text_that_two_packets_share_goes_for_both(tmp_path: Path) -> None:
     root = tmp_path / "s"
     with FolderStore(root) as store:

@@ -320,6 +320,7 @@ def _reading_named(objects: _Objects, k: str) -> list[tuple[str, str]]:
     named = [("source@1", k) for k in _keys(reading["source"])]
     named += [("text@1", k) for k in _keys(reading["text"])]
     named += [("layout@1", k) for k in _keys(reading["layout"])]
+    named += [("document@1", k) for k in _keys(reading["document"])]
     return named
 
 

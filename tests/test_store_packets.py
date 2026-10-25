@@ -425,6 +425,58 @@ def test_a_new_reader_version_misses_the_reading_cache(
         assert json.loads(store.get("reading@1", newer))["reader"]["version"] == "99.0.0"
 
 
+def test_read_store_writes_the_document_model(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """``read --store --document`` writes ``document@1``, and the reading names it (#407)."""
+    from groundgate.read.document import Document
+
+    source = tmp_path / "a.pdf"
+    source.write_bytes(FEE_PDF)
+    root = tmp_path / "s"
+    out = tmp_path / "doc.json"
+    assert main(["read", "--store", str(root), str(source), "--document", str(out)]) == 0
+    k = capsys.readouterr().out.strip()
+    assert main(["read", str(source), "--document", str(tmp_path / "plain.json")]) == 0
+    capsys.readouterr()
+    assert out.read_bytes() == (tmp_path / "plain.json").read_bytes()
+    with FolderStore(root) as store:
+        reading = json.loads(store.get("reading@1", k))
+        assert reading["document"] == key("document@1", out.read_bytes())
+        text = store.get("text@1", reading["text"]).decode("utf-8")
+        model = Document.from_dict(json.loads(store.get("document@1", reading["document"])), text)
+        assert model.text == text and "Fee: $500" in text
+        assert json.loads(out.read_bytes())["text"] == reading["text"]
+
+
+def test_a_read_with_the_document_model_does_not_use_the_cache(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    source = tmp_path / "a.pdf"
+    source.write_bytes(FEE_PDF)
+    with FolderStore(tmp_path / "s") as store:
+        plain, _ = put_reading(store, source)
+        rebuild(store)
+        import groundgate.read.document as model
+
+        calls: list[object] = []
+        real = model.read_document
+
+        def counted(*args: Any, **kwargs: Any) -> Any:
+            calls.append(args)
+            return real(*args, **kwargs)
+
+        monkeypatch.setattr(model, "read_document", counted)
+        k, doc = put_reading(store, source, document=True)
+        assert k != plain and len(calls) == 1 and "Fee: $500" in doc.text
+        assert json.loads(store.get("reading@1", plain))["document"] is None
+        assert put_reading(store, source, document=True)[0] == k and len(calls) == 2
+        # Two readings of one source, reader and options: the cache gives no hit.
+        rebuild(store)
+        reads = _count_reads(monkeypatch)
+        assert put_reading(store, source)[0] == plain and len(reads) == 1
+
+
 def test_a_bad_reading_cache_is_a_miss(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     source = tmp_path / "a.pdf"
     source.write_bytes(FEE_PDF)

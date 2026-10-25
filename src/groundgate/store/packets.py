@@ -195,7 +195,12 @@ def _members(obj: object, names: tuple[str, ...], kind: str, k: str) -> Mapping[
 
 
 def put_reading(
-    store: Store, path: str | Path, pages: Sequence[int] | None = None, *, ocr: bool = False
+    store: Store,
+    path: str | Path,
+    pages: Sequence[int] | None = None,
+    *,
+    ocr: bool = False,
+    document: bool = False,
 ) -> tuple[str, Any]:
     """Read the file at ``path`` as ``groundgate read`` does, and write the source, the text,
     the layout (PDF only) and a ``reading@1`` object. Return the reading key and the result of
@@ -211,7 +216,12 @@ def put_reading(
     warning about words drawn outside a PDF page shows only on the read that wrote the
     reading. ``ocr`` is the option of ``read``. With ``ocr=True``, ``put_reading`` does not use
     the cache, because a cached reading can come from a read with no OCR. A reading with OCR
-    records the tesseract version in its reader, so a later read never uses it from the cache."""
+    records the tesseract version in its reader, so a later read never uses it from the cache.
+
+    With ``document=True``, ``put_reading`` also writes the ``document@1`` object of the file
+    (docs/design/document-model.md) and the reading names it (#407). Then ``put_reading`` does
+    not use the cache, as with OCR. The cache gives a hit only for one reading of a source, reader
+    and options, so after a reading with a document, a read with no document misses too."""
     from ..read import ReadError, read, reader
 
     path = Path(path)
@@ -223,11 +233,17 @@ def put_reading(
         "reader": reader(),
         "options": {"pages": None if pages is None else list(pages)},
     }
-    hit = None if ocr else _cached_reading(store, path, want)
+    hit = None if ocr or document else _cached_reading(store, path, want)
     if hit is not None:
         store.put("source@1", source)
         return hit
-    doc = read(path, pages=pages, data=source, ocr=ocr)
+    model = None
+    if document:
+        from ..read.document import read_document
+
+        doc, model = read_document(path, pages, ocr=ocr, data=source)
+    else:
+        doc = read(path, pages=pages, data=source, ocr=ocr)
     store.put("source@1", source)
     layout = None
     if doc.layout is not None:
@@ -238,7 +254,7 @@ def put_reading(
         "reader": reader(doc.ocr),
         "text": store.put("text@1", doc.text.encode("utf-8")),
         "layout": layout,
-        "document": None,
+        "document": None if model is None else store.put("document@1", model.to_json()),
     }
     return store.put("reading@1", _json(reading, "reading")), doc
 
@@ -296,6 +312,7 @@ def load_reading(store: Store, k: str) -> dict[str, Any]:
         if _key_or_none(obj, name, "reading") is None:
             raise StoreError(f"the reading member {name} is not a store key")
     _key_or_none(obj, "layout", "reading")
+    _key_or_none(obj, "document", "reading")
     return dict(obj)
 
 
