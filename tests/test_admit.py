@@ -1190,3 +1190,32 @@ def test_a_marker_item_reads_only_the_mentions_next_to_each_quote() -> None:
         return run
 
     assert_linear(prepare, 1000, 4000)
+
+
+def test_the_boundary_rule_reads_an_answer_slot_once() -> None:
+    """A value quote that occurs many times after many marker mentions stays linear: the boundary
+    rule reads the runs of letters of the answer slot once for all occurrences (spec 0.12). Four
+    times the occurrences take less than eight times as long."""
+    usd = {"type": "integer", "unit": "USD", "multiple": True}
+    schema = {"fields": {"f": {**usd, "aliases": ["Deductible"], "markers": ["family"]}}}
+    cand = {
+        "id": "c",
+        "field": "f",
+        "value": 1,
+        "unit": "USD",
+        "evidence": [
+            {"text": "$1"},
+            {"role": "field", "text": "Deductible"},
+            {"role": "marker", "text": "family$1"},
+        ],
+    }
+
+    def prepare(n: int) -> Callable[[], None]:
+        text = "Deductible\t$0 bad/" + "family$1/" * n
+
+        def run() -> None:
+            assert "FIELD_CITATION_INVALID" in gg.admit(text, schema, [cand]).decisions[0].codes
+
+        return run
+
+    assert_linear(prepare, 1000, 4000)

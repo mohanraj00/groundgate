@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import bisect
 import dataclasses
+import heapq
 import itertools
 import os
 import re
@@ -169,6 +170,9 @@ class _Text:
     reach: dict[tuple[int, int], int] = field(default_factory=dict)  # of each header slot
     cells: dict[int, list[tuple[int, int]]] = field(default_factory=dict)  # slots by line start
     ends: dict[tuple[str, ...], list[tuple[int, int]]] = field(default_factory=dict)  # by end
+    bounds: dict[tuple[int, int, str | None], tuple[list[int], list[int]]] = field(
+        default_factory=dict
+    )  # the runs of letters of each answer slot (the boundary rule)
 
     def line(self, pos: int) -> tuple[int, int]:
         """The start and the end of the line that holds ``pos``."""
@@ -854,7 +858,7 @@ def _field_ok(
     slot_end = line_end if slot_end < 0 else slot_end
     if pos >= slot_end:
         return False, False  # a later slot or a later line
-    if blocked and not (marker and _bounded(ctx, t, f, slot, pos)):
+    if blocked and not (marker and _bounded(ctx, t, f, (slot, slot_end), pos)):
         return False, False
     left = sentence(text, pos)[0]
     names = ctx.aliases
@@ -865,38 +869,59 @@ def _field_ok(
     ), False
 
 
-def _bounded(ctx: _Ctx, t: _Text, f: Field, slot: int, pos: int) -> bool:
+def _bounded(ctx: _Ctx, t: _Text, f: Field, slot: tuple[int, int], pos: int) -> bool:
     """Whether each run of letters after the first number token of the answer slot and before
     the value lies in a mention of a marker word of the schema or in a form of the field's unit
     (the boundary rule, SPEC §4.6, spec 0.12)."""
-    end = t.token_after(slot)
+    end = t.token_after(slot[0])
     if end is None or end > pos:
         return True
     text = t.text
-    held = t.within(ctx.markers, end, pos) if ctx.markers else []
+    if text[pos].isalpha():  # a run that the value cuts: read the slot up to the value
+        return _covers(ctx, t, f, end, pos)[1][-1:] <= [pos]
+    starts, needs = _covers(ctx, t, f, end, slot[1])
+    k = bisect.bisect_left(starts, pos)  # the runs that start before the value
+    return k == 0 or needs[k - 1] <= pos
+
+
+def _covers(ctx: _Ctx, t: _Text, f: Field, end: int, stop: int) -> tuple[list[int], list[int]]:
+    """The runs of letters in text[end:stop]: the start of each, and the furthest of the ends
+    that the held spans of the runs up to it need. A run lies in a held span when the value
+    starts at or after the span's end. Each slot and unit is read once (#543)."""
+    key = (end, stop, f.unit)
+    if key in t.bounds:
+        return t.bounds[key]
+    text = t.text
+    held = t.within(ctx.markers, end, stop) if ctx.markers else []
     prefixes, suffixes = ctx.schema.units.get(f.unit, ([], [])) if f.unit else ([], [])
     for form in {x for x in prefixes + suffixes if any(ch.isalpha() for ch in x)}:
-        i = text.find(form, end, pos)
+        i = text.find(form, end, stop)
         while i >= 0:
             held.append((i, i + len(form)))
-            i = text.find(form, i + 1, pos)
+            i = text.find(form, i + 1, stop)
     held.sort()
-    k, reach = 0, -1  # the furthest end of a held span that starts at or before the run
-    i = end
-    while i < pos:
+    starts: list[int] = []
+    needs: list[int] = []
+    ends: list[int] = []  # a heap of the ends of the held spans that start at or before the run
+    k, i, need = 0, end, -1
+    while i < stop:
         if not text[i].isalpha():
             i += 1
             continue
         j = i
-        while j < pos and text[j].isalpha():
+        while j < stop and text[j].isalpha():
             j += 1
-        while k < len(held) and held[k][0] <= i:  # the runs only move right: one sweep (#543)
-            reach = max(reach, held[k][1])
+        while k < len(held) and held[k][0] <= i:
+            heapq.heappush(ends, held[k][1])
             k += 1
-        if reach < j:
-            return False
+        while ends and ends[0] < j:  # this span ends too soon for this run and each run after
+            heapq.heappop(ends)
+        need = max(need, ends[0] if ends else len(text) + 1)
+        starts.append(i)
+        needs.append(need)
         i = j
-    return True
+    t.bounds[key] = starts, needs
+    return starts, needs
 
 
 def _only(text: str, a: int, b: int, forms: Sequence[str]) -> bool:
