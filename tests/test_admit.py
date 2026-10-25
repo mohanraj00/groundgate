@@ -1092,3 +1092,24 @@ def test_a_column_item_reads_the_lines_between_once() -> None:
         return run
 
     assert_linear(prepare, 4000, 16000)
+
+
+@pytest.mark.parametrize("page", ["\f", "\n\f", "\fx\t1\n"])
+def test_a_column_item_stops_at_a_page_break(page: str) -> None:
+    """A page break between the header and the value stops the column item, also at the start
+    of the value's line (rule 3 of column items, SPEC §4.6, spec 0.12)."""
+    text = f"Parameter\tTyp.\n{page}current\t2\n"
+    schema = {"fields": {"x": {"type": "number", "aliases": ["current"], "columns": ["Typ."]}}}
+    cand = {
+        "id": "c",
+        "field": "x",
+        "value": 2,
+        "evidence": [
+            {"text": "2"},
+            {"role": "field", "text": "current"},
+            {"role": "column", "text": "Typ."},
+        ],
+    }
+    d = gg.admit(text, schema, [cand]).decisions[0]
+    assert "COLUMN_NOT_AT_VALUE" in d.codes
+    assert ("column", False) in [(p.role, p.passed) for p in d.parts]
