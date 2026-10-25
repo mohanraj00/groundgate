@@ -1094,11 +1094,20 @@ def test_a_column_item_reads_the_lines_between_once() -> None:
     assert_linear(prepare, 4000, 16000)
 
 
-@pytest.mark.parametrize("page", ["\f", "\n\f", "\fx\t1\n"])
-def test_a_column_item_stops_at_a_page_break(page: str) -> None:
-    """A page break between the header and the value stops the column item, also at the start
-    of the value's line (rule 3 of column items, SPEC §4.6, spec 0.12)."""
-    text = f"Parameter\tTyp.\n{page}current\t2\n"
+@pytest.mark.parametrize(
+    "text",
+    [
+        "Parameter\tTyp.\n\fcurrent\t2\n",
+        "Parameter\tTyp.\n\n\fcurrent\t2\n",
+        "Parameter\tTyp.\n\fx\t1\ncurrent\t2\n",
+        "Parameter\tTyp.\f\ncurrent\t2\n",
+        "Parameter\tTyp. \f\ncurrent\t2\n",
+    ],
+)
+def test_a_column_item_stops_at_a_page_break(text: str) -> None:
+    """A page break between the header and the value stops the column item, also at the end of
+    the header's line and at the start of the value's line (rule 3 of column items, SPEC §4.6,
+    spec 0.12)."""
     schema = {"fields": {"x": {"type": "number", "aliases": ["current"], "columns": ["Typ."]}}}
     cand = {
         "id": "c",

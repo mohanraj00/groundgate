@@ -935,8 +935,8 @@ def _column_ok(ctx: _Ctx, t: _Text, f: Field, span: tuple[int, int], tok: Token)
     if not (_only(text, row[n][0], tok.start, forms) and _only(text, tok.end, row[n][1], forms)):
         return False  # rule 2: only the token, whitespace and unit forms in the slot
     h_end, v_start = head[-1][1], row[0][0]
-    if h_end >= v_start or "\f" in text[v_start : tok.start]:
-        return False  # rule 3: the header line comes first, and no page break is before the value
+    if h_end >= v_start or "\f" in text[b:h_end] or "\f" in text[v_start : tok.start]:
+        return False  # rule 3: the header comes first, and no page break is on the two lines
     if any(t.within(f.columns, x, y) for i, (x, y) in enumerate(head) if i != n):
         return False  # rule 4
     return v_start <= _reach(ctx, t, head, n)
