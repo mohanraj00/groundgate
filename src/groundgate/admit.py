@@ -166,6 +166,7 @@ class _Text:
     breaks: list[int] | None = None  # the places of the line breaks, read once
     tabs: list[int] | None = None  # the places of the tabs, read once
     words: dict[int, list[int]] = field(default_factory=dict)  # word starts of each answer slot
+    reach: dict[tuple[int, int], int] = field(default_factory=dict)  # of each header slot
 
     def line(self, pos: int) -> tuple[int, int]:
         """The start and the end of the line that holds ``pos``."""
@@ -212,20 +213,25 @@ class _Text:
         if words not in self.spans:
             self.spans[words] = sorted((x, y) for x, y, _ in self.key_mentions(words))
         found = self.spans[words]
-        i = bisect.bisect_left(found, (a, -1))
-        ahead = itertools.islice(found, i, None)
-        return [m for m in itertools.takewhile(lambda m: m[0] < b, ahead) if m[1] <= b]
+        i, out = bisect.bisect_left(found, (a, -1)), []
+        while i < len(found) and found[i][0] < b:
+            if found[i][1] <= b:
+                out.append(found[i])
+            i += 1
+        return out
 
     def slots(self, pos: int) -> list[tuple[int, int]]:
         """The slots of the line that holds ``pos``: the parts between its tabs (SPEC §4.6)."""
         start, end = self.line(pos)
         if self.tabs is None:
             self.tabs = [m.start() for m in re.finditer("\t", self.text)]
-        i = bisect.bisect_left(self.tabs, start)
+        tabs = self.tabs
+        i = bisect.bisect_left(tabs, start)
         out = []
-        for tab in itertools.takewhile(lambda x: x < end, self.tabs[i:]):
-            out.append((start, tab))
-            start = tab + 1
+        while i < len(tabs) and tabs[i] < end:  # no copy of the tabs after the line (#543)
+            out.append((start, tabs[i]))
+            start = tabs[i] + 1
+            i += 1
         out.append((start, end))
         return out
 
@@ -898,23 +904,36 @@ def _column_ok(ctx: _Ctx, t: _Text, f: Field, span: tuple[int, int], tok: Token)
     if not (_only(text, row[n][0], tok.start, forms) and _only(text, tok.end, row[n][1], forms)):
         return False  # rule 2: only the token, whitespace and unit forms in the slot
     h_end, v_start = head[-1][1], row[0][0]
-    if h_end >= v_start or "\f" in text[h_end:v_start]:
-        return False  # rule 3: the header line comes first, with no page break between
+    if h_end >= v_start:
+        return False  # rule 3: the header line comes first
     if any(t.within(f.columns, x, y) for i, (x, y) in enumerate(head) if i != n):
         return False  # rule 4
-    pos = h_end + 1
-    while pos < v_start:  # each line between
+    return v_start <= _reach(ctx, t, head, n)
+
+
+def _reach(ctx: _Ctx, t: _Text, head: list[tuple[int, int]], n: int) -> int:
+    """The start of the first line after the header line that cannot stand between it and a
+    value (rules 3 and 5 of column items), read once for each header slot."""
+    key = (head[0][0], n)
+    if key in t.reach:
+        return t.reach[key]
+    text = t.text
+    pos = head[-1][1] + 1
+    while pos <= len(text):
         line = t.slots(pos)
         x, y = line[0][0], line[-1][1]
-        if len(line) != len(head) or not text[x:y].strip():
-            return False  # rule 3
-        if ctx.columns and t.within(ctx.columns, x, y):
-            return False  # rule 5: a second header
-        cell = line[n]
-        if not tokens(text, *cell) and any(ch.isalpha() for ch in text[cell[0] : cell[1]]):
-            return False  # rule 5: a cell with letters and no number
+        cell = line[n] if len(line) == len(head) else None
+        if (
+            cell is None
+            or not text[x:y].strip()  # rule 3: a blank line
+            or "\f" in text[x : y + 1]  # rule 3: a page break
+            or (ctx.columns and t.within(ctx.columns, x, y))  # rule 5: a second header
+            or (not tokens(text, *cell) and any(ch.isalpha() for ch in text[cell[0] : cell[1]]))
+        ):
+            break
         pos = y + 1
-    return True
+    t.reach[key] = pos
+    return pos
 
 
 def _next_to(
@@ -941,8 +960,10 @@ def _marker_ok(ctx: _Ctx, t: _Text, f: Field, span: tuple[int, int], tok: Token)
     if f.markers is None:
         return False
     prefixes, suffixes = ctx.schema.units.get(f.unit, ([], [])) if f.unit else ([], [])
+    slot = next(s for s in t.slots(tok.start) if s[0] <= tok.start <= s[1])
+    a, b = max(span[0], slot[0]), min(span[1], slot[1])  # the mention lies in the token's slot
     return any(
-        _next_to(t.text, m, tok, prefixes, suffixes) for m in t.within(f.markers, *span)
+        _next_to(t.text, m, tok, prefixes, suffixes) for m in t.within(f.markers, a, b)
     ) and not _near(ctx, t, f, ctx.competing.get(f.name, ()), tok)
 
 

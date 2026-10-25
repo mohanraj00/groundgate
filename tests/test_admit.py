@@ -1037,3 +1037,58 @@ def test_a_blank_unit_form_is_refused(form: str) -> None:
         schema = {"fields": {"usd": {"type": "number", "unit": "USD"}}, "units": {"USD": forms}}
         with pytest.raises(gg.PacketError, match="non-blank strings"):
             gg.admit("x", schema, [])
+
+
+def test_a_marker_mention_stays_in_the_token_slot() -> None:
+    """A marker word of two words can cross a tab, as "family\\tplan". That mention is not in
+    the slot of the token, so the marker item fails, and the label cell keeps rule 1
+    (SPEC §4.6, spec 0.12)."""
+    text = "Deductible\t$400 person/$800 family\tplan\n"
+    ded = {"type": "integer", "unit": "USD", "multiple": True, "aliases": ["Deductible"]}
+    schema = {
+        "fields": {
+            "ded": {**ded, "markers": ["family plan"]},
+            "ind": {**ded, "aliases": ["Individual"], "markers": ["person"]},
+        }
+    }
+    cand = {
+        "id": "c",
+        "field": "ded",
+        "value": 800,
+        "unit": "USD",
+        "evidence": [
+            {"text": "$800"},
+            {"role": "field", "text": "Deductible"},
+            {"role": "marker", "text": "family\tplan"},
+        ],
+    }
+    d = gg.admit(text, schema, [cand]).decisions[0]
+    assert d.codes == ("FIELD_CITATION_INVALID",)
+    assert [(p.role, p.passed) for p in d.parts] == [("field", False), ("marker", False)]
+
+
+def test_a_column_item_reads_the_lines_between_once() -> None:
+    """A column header far above the value stays linear: the lines between the header and the
+    value are not copied or read again for each line (spec 0.12). Four times the rows take
+    less than eight times as long."""
+    schema = {"fields": {"typ": {"type": "number", "aliases": ["current"], "columns": ["Typ."]}}}
+    cand = {
+        "id": "c",
+        "field": "typ",
+        "value": 2,
+        "evidence": [
+            {"text": "2"},
+            {"role": "field", "text": "current"},
+            {"role": "column", "text": "Typ."},
+        ],
+    }
+
+    def prepare(rows: int) -> Callable[[], None]:
+        text = "Parameter\tTyp.\n" + "current\t1\n" * rows + "current\t2\n"
+
+        def run() -> None:
+            assert gg.admit(text, schema, [cand]).decisions[0].outcome == "admitted"
+
+        return run
+
+    assert_linear(prepare, 4000, 16000)
