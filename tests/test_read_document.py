@@ -532,9 +532,17 @@ def test_cli_read_document(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -
     doc = Document.from_dict(json.loads(out.read_bytes()), text)
     assert out.read_bytes() == doc.to_json()
     assert doc.reader["name"] == "groundgate.read" and doc.options == {"pages": None}
-    store = ["read", str(tmp_path / "a.html"), "--document", str(out), "--store", str(tmp_path)]
-    assert main(store) == 2
-    assert "--store" in capsys.readouterr().err
+    plain = out.read_bytes()
+    store = [
+        "read",
+        str(tmp_path / "a.html"),
+        "--document",
+        str(out),
+        "--store",
+        str(tmp_path / "s"),
+    ]
+    assert main(store) == 0  # with --store, the same document@1 goes into the store too (#407)
+    assert capsys.readouterr().out.startswith("sha256:") and out.read_bytes() == plain
 
 
 def test_admit_and_the_core_rules_do_not_import_the_document_model() -> None:

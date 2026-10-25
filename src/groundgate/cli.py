@@ -968,22 +968,23 @@ def _check(args: argparse.Namespace) -> int:
 def _read(args: argparse.Namespace) -> int:
     from .read import read
 
-    if args.document and args.store is not None:
-        print("groundgate: --document does not work with --store yet (#407)", file=sys.stderr)
-        return 2
-    if args.document:
+    if args.store is not None:
+        if args.layout and Path(args.file).suffix.lower() != ".pdf":  # before a store write
+            print("groundgate: --layout needs a PDF", file=sys.stderr)
+            return 2
+        from .store.packets import load_reading, put_reading
+
+        with _store(args.store, make=True) as store:
+            want = bool(args.document)
+            reading, doc = put_reading(store, args.file, args.pages, ocr=args.ocr, document=want)
+            if args.document:
+                model = store.get("document@1", load_reading(store, reading)["document"])
+                Path(args.document).write_bytes(model)
+    elif args.document:
         from .read.document import read_document
 
         doc, document = read_document(args.file, pages=args.pages, ocr=args.ocr)
         Path(args.document).write_bytes(document.to_json())
-    elif args.store is not None:
-        if args.layout and Path(args.file).suffix.lower() != ".pdf":  # before a store write
-            print("groundgate: --layout needs a PDF", file=sys.stderr)
-            return 2
-        from .store.packets import put_reading
-
-        with _store(args.store, make=True) as store:
-            reading, doc = put_reading(store, args.file, args.pages, ocr=args.ocr)
     else:
         doc = read(args.file, pages=args.pages, ocr=args.ocr)
     for w in doc.warnings:
