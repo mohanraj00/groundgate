@@ -182,8 +182,9 @@ the token, and no competing word of the field is next to the token.
 
 When a marker item passes, a field item that is a label cell for the token passes without
 rule 1 of label cells: number tokens can lie between the item and the token. Rules 2, 3 and 4
-stay, and one more rule holds. After the first number token of the answer slot, each word
-before the token is a marker word of a field of the schema, or a form of the field's unit.
+stay, and one more rule holds. After the first number token of the answer slot, each run of
+letters before the token lies in a marker word of a field of the schema, or in a form of the
+field's unit.
 So "In-Network: $400 person/$800 family" passes for $800: "person" is the only word between.
 A later part of the cell is a **boundary**: in "In-Network: $800 family Out-of-Network: $1600
 family", the word "Out-of-Network:" stands between, so $1600 stays out of reach. The rule does

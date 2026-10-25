@@ -1,0 +1,465 @@
+{
+ "name": "126-column-items",
+ "description": "A column item puts the value in the column of a header cell by the tab slots: the same slot n of 1 or more, the same slot count on the two lines and on each line between, no blank line, no other slot of the header with a column word of the field, and no second header between. A field item in slot 0 of the value's line is then a row label. A field with columns needs its column, from a column item or a column word in a passing field item, or the decision gets COLUMN_NOT_AT_VALUE. A field without columns decides as in spec 0.11 (spec 0.12, #540).",
+ "document": "Parameter\tMin.\tTyp.\tMax.\nSupply voltage range\t6\t12\t35\nSupply current\t1\t–\t3\n\nParameter\tMin.\tTyp.\tMax.\tUnit\nSupply current\t0.5\t0.8\t0.9\n\nParameter\tMin.\tTyp.\tMax.\nSupply voltage range\t9\t13\t36\nParameter\tMin.\tMax.\tTyp.\nSupply current\t1.1\t3.3\t2.2\n\nParameter\tTyp.\tTyp.\nSupply current\t4.4\t5.5\n\nTypical supply current 7.7\n\nSupply current 2 mA At maximum VDD 2\n",
+ "schema": {
+  "fields": {
+   "vmax": {
+    "type": "number",
+    "multiple": true,
+    "aliases": [
+     "Supply voltage range"
+    ],
+    "columns": [
+     "Max."
+    ]
+   },
+   "ityp": {
+    "type": "number",
+    "multiple": true,
+    "aliases": [
+     "Supply current",
+     "Typical supply current"
+    ],
+    "columns": [
+     "Typ.",
+     "Typical"
+    ]
+   },
+   "vmax_old": {
+    "type": "number",
+    "multiple": true,
+    "aliases": [
+     "Supply voltage range"
+    ]
+   },
+   "ityp_old": {
+    "type": "number",
+    "multiple": true,
+    "aliases": [
+     "Supply current"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "k1",
+   "field": "vmax",
+   "value": "35",
+   "evidence": [
+    {
+     "start": 51,
+     "end": 53,
+     "text": "35"
+    },
+    {
+     "role": "field",
+     "text": "Supply voltage range"
+    },
+    {
+     "role": "column",
+     "start": 20,
+     "end": 24,
+     "text": "Max."
+    }
+   ]
+  },
+  {
+   "id": "k2",
+   "field": "vmax",
+   "value": "6",
+   "evidence": [
+    {
+     "start": 46,
+     "end": 47,
+     "text": "6"
+    },
+    {
+     "role": "field",
+     "text": "Supply voltage range"
+    },
+    {
+     "role": "column",
+     "start": 20,
+     "end": 24,
+     "text": "Max."
+    }
+   ]
+  },
+  {
+   "id": "k3",
+   "field": "ityp",
+   "value": "0.8",
+   "evidence": [
+    {
+     "start": 127,
+     "end": 130,
+     "text": "0.8"
+    },
+    {
+     "role": "field",
+     "text": "Supply current"
+    },
+    {
+     "role": "column",
+     "start": 93,
+     "end": 97,
+     "text": "Typ."
+    }
+   ]
+  },
+  {
+   "id": "k4",
+   "field": "ityp",
+   "value": "3.3",
+   "evidence": [
+    {
+     "start": 234,
+     "end": 237,
+     "text": "3.3"
+    },
+    {
+     "role": "field",
+     "text": "Supply current"
+    },
+    {
+     "role": "column",
+     "start": 151,
+     "end": 155,
+     "text": "Typ."
+    }
+   ]
+  },
+  {
+   "id": "k5",
+   "field": "ityp",
+   "value": "3.3",
+   "evidence": [
+    {
+     "start": 234,
+     "end": 237,
+     "text": "3.3"
+    },
+    {
+     "role": "field",
+     "text": "Supply current"
+    },
+    {
+     "role": "column",
+     "start": 210,
+     "end": 214,
+     "text": "Typ."
+    }
+   ]
+  },
+  {
+   "id": "k6",
+   "field": "ityp",
+   "value": "2.2",
+   "evidence": [
+    {
+     "start": 238,
+     "end": 241,
+     "text": "2.2"
+    },
+    {
+     "role": "field",
+     "text": "Supply current"
+    },
+    {
+     "role": "column",
+     "start": 210,
+     "end": 214,
+     "text": "Typ."
+    }
+   ]
+  },
+  {
+   "id": "k7",
+   "field": "ityp",
+   "value": "4.4",
+   "evidence": [
+    {
+     "start": 278,
+     "end": 281,
+     "text": "4.4"
+    },
+    {
+     "role": "field",
+     "text": "Supply current"
+    },
+    {
+     "role": "column",
+     "start": 253,
+     "end": 257,
+     "text": "Typ."
+    }
+   ]
+  },
+  {
+   "id": "k8",
+   "field": "ityp",
+   "value": "7.7",
+   "evidence": [
+    {
+     "start": 310,
+     "end": 313,
+     "text": "7.7"
+    },
+    {
+     "role": "field",
+     "text": "Typical supply current"
+    }
+   ]
+  },
+  {
+   "id": "k9",
+   "field": "ityp",
+   "value": "7.7",
+   "evidence": [
+    {
+     "start": 310,
+     "end": 313,
+     "text": "7.7"
+    }
+   ]
+  },
+  {
+   "id": "k10",
+   "field": "ityp",
+   "value": "2",
+   "evidence": [
+    {
+     "start": 330,
+     "end": 334,
+     "text": "2 mA"
+    },
+    {
+     "role": "field",
+     "text": "Supply current"
+    }
+   ]
+  },
+  {
+   "id": "k11",
+   "field": "vmax_old",
+   "value": "35",
+   "evidence": [
+    {
+     "start": 51,
+     "end": 53,
+     "text": "35"
+    },
+    {
+     "role": "field",
+     "text": "Supply voltage range"
+    },
+    {
+     "role": "column",
+     "start": 20,
+     "end": 24,
+     "text": "Max."
+    }
+   ]
+  },
+  {
+   "id": "k12",
+   "field": "ityp_old",
+   "value": "2",
+   "evidence": [
+    {
+     "start": 330,
+     "end": 334,
+     "text": "2 mA"
+    },
+    {
+     "role": "field",
+     "text": "Supply current"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": true
+     },
+     {
+      "role": "column",
+      "passed": true
+     }
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "COLUMN_NOT_AT_VALUE"
+    ],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": true
+     },
+     {
+      "role": "column",
+      "passed": false
+     }
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "COLUMN_NOT_AT_VALUE"
+    ],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": false
+     },
+     {
+      "role": "column",
+      "passed": false
+     }
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "COLUMN_NOT_AT_VALUE"
+    ],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": false
+     },
+     {
+      "role": "column",
+      "passed": false
+     }
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "COLUMN_NOT_AT_VALUE"
+    ],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": false
+     },
+     {
+      "role": "column",
+      "passed": false
+     }
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": true
+     },
+     {
+      "role": "column",
+      "passed": true
+     }
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "COLUMN_NOT_AT_VALUE"
+    ],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": true
+     },
+     {
+      "role": "column",
+      "passed": false
+     }
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": true
+     }
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "COLUMN_NOT_AT_VALUE"
+    ],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": true
+     }
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID"
+    ],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": false
+     },
+     {
+      "role": "column",
+      "passed": false
+     }
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": true
+     }
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

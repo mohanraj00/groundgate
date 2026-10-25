@@ -1100,10 +1100,12 @@ to the token.
 
 When a marker item passes, a field item that is a label cell for the token passes without rule 1
 of label cells, so number tokens can lie between the item and the token. Rules 2, 3 and 4 stay,
-and one more rule holds: after the first number token of the answer slot, each word before the
-token is a marker word of a field of the schema, or a form of the field's unit. So in
+and one more rule holds: after the first number token of the answer slot, each run of letters
+(general category L) before the token lies in a mention of a marker word of a field of the
+schema, or in a form of the field's unit. So in
 "In-Network: $400 person/$800 family", the field item passes for $800, because "person" is the
-only word between. In "In-Network: $800 family Out-of-Network: $1600 family", the word
+only run of letters between, and in "Individual $0 / Family $0" the field item passes for the
+second $0. In "In-Network: $800 family Out-of-Network: $1600 family", the word
 "Out-of-Network:" stands between, so the field item fails for $1600.
 
 When the field has `markers`, a competing word of the field is next to the token, and no marker
@@ -1336,7 +1338,7 @@ is a string, otherwise `null`.
   applied, the found occurrence for a quote, otherwise the cited span if it is valid, otherwise
   `null`. It is in the value item's text.
 - `parts` lists each role item of a candidate that reached the role checks, as
-  `{"role", "start", "end", "passed"}`, in the role order `sign`, `scale`, `unit`, `field`, `key`.
+  `{"role", "start", "end", "passed"}`, in the role order `sign`, `scale`, `unit`, `field`, `column`, `marker`, `key`.
   `start` and `end` are the item's span in the value's text: the found occurrence of a quote, or
   the item's offsets when they are valid there. They are null when the item is not in that text.
   Each field item is listed, in its order in the evidence list. A field item without `aliases` is

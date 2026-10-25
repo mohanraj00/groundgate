@@ -5705,6 +5705,198 @@ for suffix, form, why in [
     )
 
 
+# ---------------------------------------------------------------- column and marker words (spec 0.12, #540)
+def col(text: str, n: int = 1) -> dict[str, Any]:
+    return q(text, n, role="column")
+
+
+def mk(text: str, n: int = 1) -> dict[str, Any]:
+    return q(text, n, role="marker")
+
+
+FT, FF = ("field", True), ("field", False)
+CT, CF = ("column", True), ("column", False)
+MT, MF = ("marker", True), ("marker", False)
+COLUMN = (REVIEW, ["COLUMN_NOT_AT_VALUE"])
+vector(
+    "126-column-items",
+    "A column item puts the value in the column of a header cell by the tab slots: the same slot "
+    "n of 1 or more, the same slot count on the two lines and on each line between, no blank "
+    "line, no other slot of the header with a column word of the field, and no second header "
+    "between. A field item in slot 0 of the value's line is then a row label. A field with "
+    "columns needs its column, from a column item or a column word in a passing field item, or "
+    "the decision gets COLUMN_NOT_AT_VALUE. A field without columns decides as in spec 0.11 "
+    "(spec 0.12, #540).",
+    "Parameter\tMin.\tTyp.\tMax.\n"
+    "Supply voltage range\t6\t12\t35\n"
+    "Supply current\t1\t\u2013\t3\n\n"
+    "Parameter\tMin.\tTyp.\tMax.\tUnit\n"
+    "Supply current\t0.5\t0.8\t0.9\n\n"
+    "Parameter\tMin.\tTyp.\tMax.\n"
+    "Supply voltage range\t9\t13\t36\n"
+    "Parameter\tMin.\tMax.\tTyp.\n"
+    "Supply current\t1.1\t3.3\t2.2\n\n"
+    "Parameter\tTyp.\tTyp.\n"
+    "Supply current\t4.4\t5.5\n\n"
+    "Typical supply current 7.7\n\n"
+    "Supply current 2 mA At maximum VDD 2\n",
+    {
+        "fields": {
+            "vmax": {"type": "number", "multiple": True, "aliases": ["Supply voltage range"],
+                     "columns": ["Max."]},
+            "ityp": {"type": "number", "multiple": True,
+                     "aliases": ["Supply current", "Typical supply current"],
+                     "columns": ["Typ.", "Typical"]},
+            "vmax_old": {"type": "number", "multiple": True, "aliases": ["Supply voltage range"]},
+            "ityp_old": {"type": "number", "multiple": True, "aliases": ["Supply current"]},
+        }
+    },
+    [
+        # the row label and the column item pass; FIELD_CITATION_INVALID in spec 0.11
+        c("k1", "vmax", "35", None, [q("35"), row("Supply voltage range"), col("Max.")],
+          ("admitted", [], [], [FT, CT])),
+        # another slot: the label cell passes, the column item fails
+        c("k2", "vmax", "6", None, [q("6"), row("Supply voltage range"), col("Max.")],
+          (*COLUMN, [], [FT, CF])),
+        # rule 3: the header has 5 slots and the row 4
+        c("k3", "ityp", "0.8", None, [q("0.8"), row("Supply current"), col("Typ.", 2)],
+          (REVIEW, ["FIELD_CITATION_INVALID", "COLUMN_NOT_AT_VALUE"], [], [FF, CF])),
+        # rule 5: a second header between; rule 2: the second Typ. is in another slot
+        c("k4", "ityp", "3.3", None, [q("3.3"), row("Supply current"), col("Typ.", 3)],
+          (REVIEW, ["FIELD_CITATION_INVALID", "COLUMN_NOT_AT_VALUE"], [], [FF, CF])),
+        c("k5", "ityp", "3.3", None, [q("3.3"), row("Supply current"), col("Typ.", 4)],
+          (REVIEW, ["FIELD_CITATION_INVALID", "COLUMN_NOT_AT_VALUE"], [], [FF, CF])),
+        c("k6", "ityp", "2.2", None, [q("2.2"), row("Supply current"), col("Typ.", 4)],
+          ("admitted", [], [], [FT, CT])),
+        # rule 4: Typ. in two slots of the header; the label cell passes
+        c("k7", "ityp", "4.4", None, [q("4.4"), row("Supply current"), col("Typ.", 5)],
+          (*COLUMN, [], [FT, CF])),
+        # a column word in the passing field item
+        c("k8", "ityp", "7.7", None, [q("7.7"), row("Typical supply current")],
+          ("admitted", [], [], [FT])),
+        # no field item and no column item
+        c("k9", "ityp", "7.7", None, [q("7.7")], COLUMN),
+        # a line with no tab: admitted in spec 0.11, the escape of #539
+        c("k10", "ityp", "2", None, [q("2 mA"), row("Supply current")], (*COLUMN, [], [FT])),
+        # must not change: a field without columns, where a column item fails and adds no flag
+        c("k11", "vmax_old", "35", None, [q("35"), row("Supply voltage range"), col("Max.")],
+          (REVIEW, ["FIELD_CITATION_INVALID"], [], [FF, CF])),
+        c("k12", "ityp_old", "2", None, [q("2 mA"), row("Supply current")],
+          ("admitted", [], [], [FT])),
+    ],
+)  # fmt: skip
+
+DED = {"type": "integer", "unit": "USD", "multiple": True, "aliases": ["overall deductible"]}
+vector(
+    "127-marker-items",
+    "A marker item binds a value to the field by a marker word next to the token, before or "
+    "after it, with only whitespace, brackets and unit forms between. A competing word next to "
+    "the token stops it. A marker word that two fields share does not compete. With a passing "
+    "marker item, a label cell passes with numbers between, when each run of letters after the "
+    "first number of the answer slot is in a marker word or a unit form. Rules 2, 3 and 4 of "
+    "label cells stay. A competing word at the value with no marker word of the field gives "
+    "MARKER_OTHER_FIELD. A field without markers decides as in spec 0.11 (spec 0.12, #540).",
+    "Overall deductible\tIn-Network: $400 person/$800 family\n\n"
+    "Overall deductible\tIndividual $0 / Family $0\n\n"
+    "Overall deductible\tIn-Network: $900 family Out-of-Network: $1,800 family\n\n"
+    "Overall deductible\tIn-Network: $250 person, $500 couple, $750 family\n\n"
+    "Overall deductible\tIn-Network: $350 person. $650 family\n",
+    {
+        "fields": {
+            "ded_fam": {**DED, "markers": ["family"]},
+            "ded_ind": {**DED, "markers": ["person", "individual"]},
+            "ded_two": {**DED, "markers": ["couple"]},
+            "oop_fam": {"type": "integer", "unit": "USD", "multiple": True,
+                        "aliases": ["out-of-pocket limit"], "markers": ["family"]},
+            "ded_plain": DED,
+        }
+    },
+    [
+        # after the value; "family" is shared with oop_fam, so it does not compete
+        c("m1", "ded_fam", "800", "USD", [q("$800"), row("Overall deductible"), mk("family")],
+          ("admitted", [], [], [FT, MT])),
+        # must not change: no marker item, so rule 1 of label cells stays
+        c("m2", "ded_fam", "800", "USD", [q("$800"), row("Overall deductible")],
+          (REVIEW, ["FIELD_CITATION_INVALID"], [], [FF])),
+        # a competing word at the value
+        c("m3", "ded_ind", "800", "USD", [q("$800"), row("Overall deductible")],
+          (REVIEW, ["FIELD_CITATION_INVALID", "MARKER_OTHER_FIELD"], [], [FF])),
+        c("m4", "ded_ind", "400", "USD", [q("$400"), row("Overall deductible"), mk("person")],
+          ("admitted", [], [], [FT, MT])),
+        # the slash breaks "next to": "person" is next to $400 only
+        c("m5", "ded_ind", "800", "USD", [q("$800"), row("Overall deductible"), mk("person")],
+          (REVIEW, ["FIELD_CITATION_INVALID", "MARKER_OTHER_FIELD"], [], [FF, MF])),
+        # before the value
+        c("m6", "ded_fam", "0", "USD",
+          [q("$0", 2), row("Overall deductible"), mk("Family")], ("admitted", [], [], [FT, MT])),
+        # the boundary: "Out-of-Network:" stands after the first number
+        c("m7", "ded_fam", "1800", "USD",
+          [q("$1,800"), row("Overall deductible"), mk("family", 3)],
+          (REVIEW, ["FIELD_CITATION_INVALID"], [], [FF, MT])),
+        c("m8", "ded_fam", "900", "USD", [q("$900"), row("Overall deductible"), mk("family", 2)],
+          ("admitted", [], [], [FT, MT])),
+        # rule 2: 5 words before the value
+        c("m9", "ded_fam", "750", "USD", [q("$750"), row("Overall deductible"), mk("family", 4)],
+          (REVIEW, ["FIELD_CITATION_INVALID"], [], [FF, MT])),
+        # rule 3: a sentence end before the value
+        c("m10", "ded_fam", "650", "USD", [q("$650"), row("Overall deductible"), mk("family", 5)],
+          (REVIEW, ["FIELD_CITATION_INVALID"], [], [FF, MT])),
+        # must not change: a field without markers, where a marker item fails and adds no flag
+        c("m11", "ded_plain", "800", "USD",
+          [q("$800"), row("Overall deductible"), mk("family")],
+          (REVIEW, ["FIELD_CITATION_INVALID"], [], [FF, MF])),
+    ],
+)  # fmt: skip
+
+vector(
+    "128-column-and-marker-escapes",
+    "The two cases of #539 lane 0 in one packet. The plain row 'Supply current 2 mA At maximum "
+    "VDD 2' gave supply_current_typ = 2 in spec 0.11. With columns, the value has no column, so "
+    "it goes to review. In an answer cell with two amounts, a competing marker word at the value "
+    "sends the wrong field to review, and the marker item admits the right one (spec 0.12, #540).",
+    "Supply current 2 mA At maximum VDD 2\n\n"
+    "Overall deductible\t$500 person / $1,000 family\n",
+    {
+        "fields": {
+            "ityp": {"type": "number", "multiple": True, "aliases": ["Supply current"],
+                     "columns": ["Typ."]},
+            "ded_ind": {**DED, "markers": ["person"]},
+            "ded_fam": {**DED, "markers": ["family"]},
+        }
+    },
+    [
+        c("n1", "ityp", "2", None, [q("2 mA"), row("Supply current")], (*COLUMN, [], [FT])),
+        c("n2", "ded_ind", "1000", "USD", [q("$1,000"), row("Overall deductible")],
+          (REVIEW, ["FIELD_CITATION_INVALID", "MARKER_OTHER_FIELD"], [], [FF])),
+        c("n3", "ded_fam", "1000", "USD",
+          [q("$1,000"), row("Overall deductible"), mk("family")], ("admitted", [], [], [FT, MT])),
+        c("n4", "ded_ind", "500", "USD", [q("$500"), row("Overall deductible")],
+          ("admitted", [], [], [FT])),
+    ],
+)  # fmt: skip
+
+for name, member, words, why in [
+    ("schema-columns-blank", "columns", ["Typ.", " "], "a blank column word"),
+    (
+        "schema-markers-equal",
+        "markers",
+        ["Family", "family"],
+        "two marker words that are equal after the fold of each letter",
+    ),
+    ("schema-columns-empty", "columns", [], "an empty list of column words"),
+]:
+    INVALID.append(
+        {
+            "name": name,
+            "description": f"A field with {why} breaks the rule of SPEC 2.3: `{member}` follows "
+            "the rules of `keys` (spec 0.12, #540).",
+            "document": "x",
+            "schema": {"fields": {"f": {"type": "number", "aliases": ["f"], member: words}}},
+            "policy": None,
+        }
+    )
+
+
 def main() -> None:
     out_dir = HERE / "vectors"
     out_dir.mkdir(exist_ok=True)
