@@ -1,7 +1,7 @@
 {
  "name": "126-column-items",
  "description": "A column item puts the value in the column of a header cell by the tab slots: the same slot n of 1 or more, the same slot count on the two lines and on each line between, no blank line, no other slot of the header with a column word of the field, and no second header between. A field item in slot 0 of the value's line is then a row label. A field with columns needs its column, from a column item or a column word in a passing field item, or the decision gets COLUMN_NOT_AT_VALUE. A field without columns decides as in spec 0.11 (spec 0.12, #540).",
- "document": "Parameter\tMin.\tTyp.\tMax.\nSupply voltage range\t6\t12\t35\nSupply current\t1\t–\t3\n\nParameter\tMin.\tTyp.\tMax.\tUnit\nSupply current\t0.5\t0.8\t0.9\n\nParameter\tMin.\tTyp.\tMax.\nSupply voltage range\t9\t13\t36\nParameter\tMin.\tMax.\tTyp.\nSupply current\t1.1\t3.3\t2.2\n\nParameter\tTyp.\tTyp.\nSupply current\t4.4\t5.5\n\nTypical supply current 7.7\n\nSupply current 2 mA At maximum VDD 2\n",
+ "document": "Parameter\tMin.\tTyp.\tMax.\nSupply voltage range\t6\t12\t35\nSupply current\t1\t–\t3\n\nParameter\tMin.\tTyp.\tMax.\tUnit\nSupply current\t0.5\t0.8\t0.9\n\nParameter\tMin.\tTyp.\tMax.\nSupply voltage range\t9\t13\t36\nParameter\tMin.\tMax.\tTyp.\nSupply current\t1.1\t3.3\t2.2\n\nParameter\tTyp.\tTyp.\nSupply current\t4.4\t5.5\n\nTypical supply current 7.7\n\nSupply current 2 mA At maximum VDD 2\n\nParameter\tSymbol\tMin.\tTyp.\tMax.\nSupply voltage range\tVCC\t6\t12\t37\n",
  "schema": {
   "fields": {
    "vmax": {
@@ -279,6 +279,66 @@
      "text": "Supply current"
     }
    ]
+  },
+  {
+   "id": "k13",
+   "field": "vmax",
+   "value": "37",
+   "evidence": [
+    {
+     "start": 415,
+     "end": 417,
+     "text": "37"
+    },
+    {
+     "role": "field",
+     "text": "Supply voltage range"
+    },
+    {
+     "role": "column",
+     "start": 380,
+     "end": 384,
+     "text": "Max."
+    }
+   ]
+  },
+  {
+   "id": "k14",
+   "field": "vmax",
+   "value": "37",
+   "evidence": [
+    {
+     "start": 415,
+     "end": 417,
+     "text": "37"
+    },
+    {
+     "role": "field",
+     "text": "Supply voltage range"
+    }
+   ]
+  },
+  {
+   "id": "k15",
+   "field": "vmax_old",
+   "value": "37",
+   "evidence": [
+    {
+     "start": 415,
+     "end": 417,
+     "text": "37"
+    },
+    {
+     "role": "field",
+     "text": "Supply voltage range"
+    },
+    {
+     "role": "column",
+     "start": 380,
+     "end": 384,
+     "text": "Max."
+    }
+   ]
   }
  ],
  "expected": {
@@ -318,14 +378,13 @@
    {
     "outcome": "needs_verification",
     "codes": [
-     "FIELD_CITATION_INVALID",
      "COLUMN_NOT_AT_VALUE"
     ],
     "missing": [],
     "parts": [
      {
       "role": "field",
-      "passed": false
+      "passed": true
      },
      {
       "role": "column",
@@ -336,42 +395,8 @@
    {
     "outcome": "needs_verification",
     "codes": [
-     "FIELD_CITATION_INVALID",
      "COLUMN_NOT_AT_VALUE"
     ],
-    "missing": [],
-    "parts": [
-     {
-      "role": "field",
-      "passed": false
-     },
-     {
-      "role": "column",
-      "passed": false
-     }
-    ]
-   },
-   {
-    "outcome": "needs_verification",
-    "codes": [
-     "FIELD_CITATION_INVALID",
-     "COLUMN_NOT_AT_VALUE"
-    ],
-    "missing": [],
-    "parts": [
-     {
-      "role": "field",
-      "passed": false
-     },
-     {
-      "role": "column",
-      "passed": false
-     }
-    ]
-   },
-   {
-    "outcome": "admitted",
-    "codes": [],
     "missing": [],
     "parts": [
      {
@@ -380,7 +405,7 @@
      },
      {
       "role": "column",
-      "passed": true
+      "passed": false
      }
     ]
    },
@@ -409,6 +434,38 @@
      {
       "role": "field",
       "passed": true
+     },
+     {
+      "role": "column",
+      "passed": true
+     }
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "COLUMN_NOT_AT_VALUE"
+    ],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": true
+     },
+     {
+      "role": "column",
+      "passed": false
+     }
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": true
      }
     ]
    },
@@ -428,6 +485,61 @@
      {
       "role": "field",
       "passed": true
+     }
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": true
+     },
+     {
+      "role": "column",
+      "passed": false
+     }
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": true
+     }
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": true
+     },
+     {
+      "role": "column",
+      "passed": true
+     }
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "COLUMN_NOT_AT_VALUE"
+    ],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": false
      }
     ]
    },
@@ -445,17 +557,6 @@
      {
       "role": "column",
       "passed": false
-     }
-    ]
-   },
-   {
-    "outcome": "admitted",
-    "codes": [],
-    "missing": [],
-    "parts": [
-     {
-      "role": "field",
-      "passed": true
      }
     ]
    }

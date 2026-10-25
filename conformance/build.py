@@ -5739,7 +5739,9 @@ vector(
     "Parameter\tTyp.\tTyp.\n"
     "Supply current\t4.4\t5.5\n\n"
     "Typical supply current 7.7\n\n"
-    "Supply current 2 mA At maximum VDD 2\n",
+    "Supply current 2 mA At maximum VDD 2\n\n"
+    "Parameter\tSymbol\tMin.\tTyp.\tMax.\n"
+    "Supply voltage range\tVCC\t6\t12\t37\n",
     {
         "fields": {
             "vmax": {"type": "number", "multiple": True, "aliases": ["Supply voltage range"],
@@ -5752,7 +5754,7 @@ vector(
         }
     },
     [
-        # the row label and the column item pass; FIELD_CITATION_INVALID in spec 0.11
+        # only numbers between: the field item is at the row, and the column item passes
         c("k1", "vmax", "35", None, [q("35"), row("Supply voltage range"), col("Max.")],
           ("admitted", [], [], [FT, CT])),
         # another slot: the label cell passes, the column item fails
@@ -5760,12 +5762,12 @@ vector(
           (*COLUMN, [], [FT, CF])),
         # rule 3: the header has 5 slots and the row 4
         c("k3", "ityp", "0.8", None, [q("0.8"), row("Supply current"), col("Typ.", 2)],
-          (REVIEW, ["FIELD_CITATION_INVALID", "COLUMN_NOT_AT_VALUE"], [], [FF, CF])),
+          (*COLUMN, [], [FT, CF])),
         # rule 5: a second header between; rule 2: the second Typ. is in another slot
         c("k4", "ityp", "3.3", None, [q("3.3"), row("Supply current"), col("Typ.", 3)],
-          (REVIEW, ["FIELD_CITATION_INVALID", "COLUMN_NOT_AT_VALUE"], [], [FF, CF])),
+          (*COLUMN, [], [FT, CF])),
         c("k5", "ityp", "3.3", None, [q("3.3"), row("Supply current"), col("Typ.", 4)],
-          (REVIEW, ["FIELD_CITATION_INVALID", "COLUMN_NOT_AT_VALUE"], [], [FF, CF])),
+          (*COLUMN, [], [FT, CF])),
         c("k6", "ityp", "2.2", None, [q("2.2"), row("Supply current"), col("Typ.", 4)],
           ("admitted", [], [], [FT, CT])),
         # rule 4: Typ. in two slots of the header; the label cell passes
@@ -5780,9 +5782,17 @@ vector(
         c("k10", "ityp", "2", None, [q("2 mA"), row("Supply current")], (*COLUMN, [], [FT])),
         # must not change: a field without columns, where a column item fails and adds no flag
         c("k11", "vmax_old", "35", None, [q("35"), row("Supply voltage range"), col("Max.")],
-          (REVIEW, ["FIELD_CITATION_INVALID"], [], [FF, CF])),
+          ("admitted", [], [], [FT, CF])),
         c("k12", "ityp_old", "2", None, [q("2 mA"), row("Supply current")],
           ("admitted", [], [], [FT])),
+        # a text column between: only the row label lets the field item pass
+        c("k13", "vmax", "37", None, [q("37"), row("Supply voltage range"), col("Max.", 5)],
+          ("admitted", [], [], [FT, CT])),
+        c("k14", "vmax", "37", None, [q("37"), row("Supply voltage range")],
+          (REVIEW, ["FIELD_CITATION_INVALID", "COLUMN_NOT_AT_VALUE"], [], [FF])),
+        # must not change: FIELD_CITATION_INVALID in spec 0.11
+        c("k15", "vmax_old", "37", None, [q("37"), row("Supply voltage range"), col("Max.", 5)],
+          (REVIEW, ["FIELD_CITATION_INVALID"], [], [FF, CF])),
     ],
 )  # fmt: skip
 
