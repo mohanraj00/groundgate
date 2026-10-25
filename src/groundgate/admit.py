@@ -167,6 +167,8 @@ class _Text:
     tabs: list[int] | None = None  # the places of the tabs, read once
     words: dict[int, list[int]] = field(default_factory=dict)  # word starts of each answer slot
     reach: dict[tuple[int, int], int] = field(default_factory=dict)  # of each header slot
+    cells: dict[int, list[tuple[int, int]]] = field(default_factory=dict)  # slots by line start
+    ends: dict[tuple[str, ...], list[tuple[int, int]]] = field(default_factory=dict)  # by end
 
     def line(self, pos: int) -> tuple[int, int]:
         """The start and the end of the line that holds ``pos``."""
@@ -220,9 +222,32 @@ class _Text:
             i += 1
         return out
 
+    def slot(self, pos: int) -> tuple[int, int]:
+        """The slot of its line that holds ``pos``."""
+        line = self.slots(pos)
+        return line[bisect.bisect_right(line, (pos, len(self.text) + 1)) - 1]
+
+    def starting(self, words: tuple[str, ...], a: int, b: int) -> list[tuple[int, int]]:
+        """The key mentions of ``words`` that start at or after ``a`` and at or before ``b``."""
+        self.within(words, 0, 0)  # the spans of ``words``, sorted by start
+        found = self.spans[words]
+        i, j = bisect.bisect_left(found, (a, -1)), bisect.bisect_right(found, (b, len(self.text)))
+        return found[i:j]
+
+    def ending(self, words: tuple[str, ...], a: int, b: int) -> list[tuple[int, int]]:
+        """The key mentions of ``words`` that end at or after ``a`` and at or before ``b``."""
+        if words not in self.ends:
+            self.within(words, 0, 0)
+            self.ends[words] = sorted((y, x) for x, y in self.spans[words])
+        found = self.ends[words]
+        i, j = bisect.bisect_left(found, (a, -1)), bisect.bisect_right(found, (b, len(self.text)))
+        return [(x, y) for y, x in found[i:j]]
+
     def slots(self, pos: int) -> list[tuple[int, int]]:
         """The slots of the line that holds ``pos``: the parts between its tabs (SPEC §4.6)."""
         start, end = self.line(pos)
+        if start in self.cells:
+            return self.cells[start]
         if self.tabs is None:
             self.tabs = [m.start() for m in re.finditer("\t", self.text)]
         tabs = self.tabs
@@ -233,6 +258,7 @@ class _Text:
             start = tabs[i] + 1
             i += 1
         out.append((start, end))
+        self.cells[self.line(pos)[0]] = out
         return out
 
     def letter_after(self, pos: int) -> int:
@@ -951,25 +977,39 @@ def _next_to(
     return tok.end <= x and _only(text, tok.end, x, suffixes)
 
 
-def _near(ctx: _Ctx, t: _Text, f: Field, words: tuple[str, ...], tok: Token) -> bool:
-    """Whether a mention of ``words`` is next to the token."""
+def _near(
+    ctx: _Ctx, t: _Text, f: Field, words: tuple[str, ...], tok: Token
+) -> list[tuple[int, int]]:
+    """The mentions of ``words`` in the token's slot that are next to the token. Only the
+    mentions that end in the gap before the token, or start in the gap after it, are read."""
     if not words:
-        return False
+        return []
     prefixes, suffixes = ctx.schema.units.get(f.unit, ([], [])) if f.unit else ([], [])
-    slot = next(s for s in t.slots(tok.start) if s[0] <= tok.start <= s[1])
-    return any(_next_to(t.text, m, tok, prefixes, suffixes) for m in t.within(words, *slot))
+    text = t.text
+    before, after = set("".join(prefixes)) | set("()"), set("".join(suffixes))
+    q = tok.start  # no mention that ends before q is next to the token
+    while q > 0 and text[q - 1] not in "\t\n" and (text[q - 1].isspace() or text[q - 1] in before):
+        q -= 1
+    r = tok.end  # no mention that starts after r is next to the token
+    while r < len(text) and text[r] not in "\t\n" and (text[r].isspace() or text[r] in after):
+        r += 1
+    slot = t.slot(tok.start)
+    near = t.ending(words, q, tok.start) + t.starting(words, tok.end, r)
+    return [
+        m
+        for m in near
+        if slot[0] <= m[0] and m[1] <= slot[1] and _next_to(text, m, tok, prefixes, suffixes)
+    ]
 
 
 def _marker_ok(ctx: _Ctx, t: _Text, f: Field, span: tuple[int, int], tok: Token) -> bool:
     """Whether a marker item at ``span`` is a marker item for the token (SPEC §4.6)."""
     if f.markers is None:
         return False
-    prefixes, suffixes = ctx.schema.units.get(f.unit, ([], [])) if f.unit else ([], [])
-    slot = next(s for s in t.slots(tok.start) if s[0] <= tok.start <= s[1])
-    a, b = max(span[0], slot[0]), min(span[1], slot[1])  # the mention lies in the token's slot
-    return any(
-        _next_to(t.text, m, tok, prefixes, suffixes) for m in t.within(f.markers, a, b)
-    ) and not _near(ctx, t, f, ctx.competing.get(f.name, ()), tok)
+    a, b = span  # the mention lies in the item and in the token's slot
+    return any(a <= x and y <= b for x, y in _near(ctx, t, f, f.markers, tok)) and not _near(
+        ctx, t, f, ctx.competing.get(f.name, ()), tok
+    )
 
 
 def _relief(

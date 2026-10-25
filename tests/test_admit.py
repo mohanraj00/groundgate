@@ -1147,3 +1147,37 @@ def test_the_boundary_rule_reads_each_marker_mention_once() -> None:
         return run
 
     assert_linear(prepare, 1000, 4000)
+
+
+def test_a_marker_item_reads_only_the_mentions_next_to_each_quote() -> None:
+    """A quote that occurs many times in a cell with many marker mentions stays linear: each
+    occurrence reads only the mentions next to it (spec 0.12). Four times the occurrences take
+    less than eight times as long."""
+    usd = {"type": "integer", "unit": "USD", "multiple": True}
+    schema = {
+        "fields": {
+            "fam": {**usd, "aliases": ["Deductible"], "markers": ["family"]},
+            "ind": {**usd, "aliases": ["Individual"], "markers": ["person"]},
+        }
+    }
+    cand = {
+        "id": "c",
+        "field": "fam",
+        "value": 1,
+        "unit": "USD",
+        "evidence": [
+            {"text": "$1"},
+            {"role": "field", "text": "Deductible"},
+            {"role": "marker", "text": "family"},
+        ],
+    }
+
+    def prepare(n: int) -> Callable[[], None]:
+        text = "Deductible\tone two three four five " + "$1 family/person/" * n + "\n"
+
+        def run() -> None:
+            gg.admit(text, schema, [cand])
+
+        return run
+
+    assert_linear(prepare, 1000, 4000)
