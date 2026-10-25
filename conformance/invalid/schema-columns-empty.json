@@ -1,0 +1,21 @@
+{
+ "name": "schema-columns-empty",
+ "description": "A field with an empty list of column words breaks the rule of SPEC 2.3: `columns` follows the rules of `keys` (spec 0.12, #540).",
+ "document": "x",
+ "schema": {
+  "fields": {
+   "f": {
+    "type": "number",
+    "aliases": [
+     "f"
+    ],
+    "columns": []
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

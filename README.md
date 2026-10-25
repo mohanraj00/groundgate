@@ -341,9 +341,9 @@ print(gg.verify(receipt.to_dict(), text, schema, candidates).ok)
 ```
 
 ```text
-admitted            ira_limit       7000
-needs_verification  phaseout_start  79000  QUALIFIED_VALUE
 rejected            ira_limit       70000  VALUE_NOT_IN_EVIDENCE
+needs_verification  phaseout_start  79000  QUALIFIED_VALUE
+admitted            ira_limit       7000
 True
 ```
 
@@ -437,6 +437,8 @@ A fact that passes every check can still be flagged for a person:
 | `SIGN_CITATION_INVALID`, `SCALE_CITATION_INVALID`, `UNIT_CITATION_INVALID`, `FIELD_CITATION_INVALID` | a cited part fails its check |
 | `KEY_NOT_AT_VALUE` | the text puts no key, or another key, at the value, such as another indication's heading |
 | `KEY_CITATION_INVALID` | the cited key item does not name the key |
+| `COLUMN_NOT_AT_VALUE` | the field has `columns`, and the value is not in a column of the field (spec 0.12) |
+| `MARKER_OTHER_FIELD` | a marker word of another field, such as "family", is next to the value (spec 0.12) |
 | `EVIDENCE_QUOTED`, `EVIDENCE_STATED` | only an external quote, or the extractor's own knowledge, supports the value |
 | `LOW_CONFIDENCE` | the extractor's confidence is below the policy minimum |
 | `CONFLICTING_CANDIDATES` | another proposal for the same field and key has a different value |
@@ -459,8 +461,8 @@ implementation can prove it agrees.
 ## Receipts
 
 ```json
-{"groundgate": "0.11",
- "document": {"id": "irs-p590a-2025-pages-1-2", "sha256": "sha256:93e71e53d954...", "source": null},
+{"groundgate": "0.12",
+ "document": {"id": "irs-p590a-2025-pages-1-2", "sha256": "sha256:9c0bb3f8d04b...", "source": null},
  "references": [],
  "packs": [],
  "schema_sha256": "sha256:...", "policy_sha256": "sha256:...",
@@ -468,7 +470,7 @@ implementation can prove it agrees.
                 "outcome": "admitted", "codes": [], "value": "7000", "unit": "USD",
                 "source": "document", "ref": null, "url": null,
                 "evidence": {"start": 2317, "end": 2323}, "parts": [], "missing": [], "packs": [],
-                "candidate_sha256": "sha256:2246982c..."},
+                "candidate_sha256": "sha256:c64383ff..."},
                "..."],
  "coverage": [{"field": "roth_phaseout_single_2025_end", "code": "REQUIRED_FIELD_MISSING"}],
  "judgments": [],
@@ -488,7 +490,7 @@ a changed document, schema, policy, candidate or outcome.
   `CONFLICTING_CANDIDATES` catches it only when the models disagree, and in the benchmark they
   mostly agreed: six of the eight escapes were this case. When the field depends on a condition
   the schema can name, such as a drug's indications, a keyed field checks it (spec 0.2).
-- **No dates, arrays of records, or cross-document checks** in spec 0.11.
+- **No dates, arrays of records, or cross-document checks** in spec 0.12.
 - **English number formats only.** A decimal comma (`1.234,56`), space groups (`1 234`) and
   number words (`five`) have no value, so a fact that cites them is rejected. The
   [guide](docs/guide.md#how-values-are-read) lists what is read. Locale packs for other formats

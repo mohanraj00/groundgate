@@ -30,7 +30,7 @@ print(gg.jcs(gg.Schema.from_dict(schema).to_dict()))
 
 ```text
 admitted
-{"fields":{"late_penalty":{"aliases":null,"comparator":"eq","keys":null,"maximum":null,"minimum":null,"multiple":false,"required":false,"type":"integer","unit":"USD"}},"units":{}}
+{"fields":{"late_penalty":{"aliases":null,"columns":null,"comparator":"eq","keys":null,"markers":null,"maximum":null,"minimum":null,"multiple":false,"required":false,"type":"integer","unit":"USD"}},"units":{}}
 ```
 
 `gg.Schema.from_dict` adds the defaults, and `gg.jcs` writes the result as canonical JSON. The

@@ -311,7 +311,7 @@ for d in sorted(receipt["decisions"], key=lambda d: d["candidate_id"]):
 
 ```text
 "https://rates.example.org/notices/2026/0417"
-rates-2026 sha256:d9ebfcff34b44b6c https://rates.example.org/2026/
+rates-2026 sha256:f0d4046a6de5a455 https://rates.example.org/2026/
 known knowledge None None None
 table reference rates-2026 None {'start': 75, 'end': 83}
 web external None https://rates.example.org/2026/standard-deduction/ None

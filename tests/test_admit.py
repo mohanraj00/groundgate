@@ -36,7 +36,7 @@ CANDS = [
 
 def test_receipt_shape_and_summary() -> None:
     r = gg.admit(DOC, SCHEMA, CANDS, document_id="doc-1").to_dict()
-    assert r["groundgate"] == "0.11"
+    assert r["groundgate"] == "0.12"
     assert r["document"]["id"] == "doc-1"
     assert r["summary"] == {"admitted": 2, "needs_verification": 0, "rejected": 1}
     shas = [d["candidate_sha256"] for d in r["decisions"]]
@@ -87,7 +87,7 @@ def test_verify_names_a_receipt_from_another_spec_version() -> None:
     r["groundgate"] = "0.1"
     result = gg.verify(r, DOC, SCHEMA, CANDS)
     assert result.problems == (
-        "receipt was decided under spec 0.1; this groundgate implements 0.11",
+        "receipt was decided under spec 0.1; this groundgate implements 0.12",
     )
 
 
@@ -327,9 +327,9 @@ def test_flag_order_and_code_descriptions_are_pinned() -> None:
     assert FLAG_ORDER == (
         "NON_VERBATIM_EVIDENCE", "QUALIFIED_VALUE", "SCALE_WORD", "PART_MISSING",
         "SIGN_CITATION_INVALID", "SCALE_CITATION_INVALID", "UNIT_CITATION_INVALID",
-        "FIELD_CITATION_INVALID", "KEY_NOT_AT_VALUE", "KEY_CITATION_INVALID", "EVIDENCE_QUOTED",
-        "EVIDENCE_STATED", "LOW_CONFIDENCE", "CONFLICTING_CANDIDATES", "RELATION_FAILED",
-        "MODEL_DOUBT",
+        "FIELD_CITATION_INVALID", "KEY_NOT_AT_VALUE", "KEY_CITATION_INVALID",
+        "COLUMN_NOT_AT_VALUE", "MARKER_OTHER_FIELD", "EVIDENCE_QUOTED", "EVIDENCE_STATED",
+        "LOW_CONFIDENCE", "CONFLICTING_CANDIDATES", "RELATION_FAILED", "MODEL_DOUBT",
     )  # fmt: skip
     assert tuple(codes.FLAG) == FLAG_ORDER
     assert tuple(codes.INFO) == INFO_ORDER
@@ -1037,3 +1037,185 @@ def test_a_blank_unit_form_is_refused(form: str) -> None:
         schema = {"fields": {"usd": {"type": "number", "unit": "USD"}}, "units": {"USD": forms}}
         with pytest.raises(gg.PacketError, match="non-blank strings"):
             gg.admit("x", schema, [])
+
+
+def test_a_marker_mention_stays_in_the_token_slot() -> None:
+    """A marker word of two words can cross a tab, as "family\\tplan". That mention is not in
+    the slot of the token, so the marker item fails, and the label cell keeps rule 1
+    (SPEC §4.6, spec 0.12)."""
+    text = "Deductible\t$400 person/$800 family\tplan\n"
+    ded = {"type": "integer", "unit": "USD", "multiple": True, "aliases": ["Deductible"]}
+    schema = {
+        "fields": {
+            "ded": {**ded, "markers": ["family plan"]},
+            "ind": {**ded, "aliases": ["Individual"], "markers": ["person"]},
+        }
+    }
+    cand = {
+        "id": "c",
+        "field": "ded",
+        "value": 800,
+        "unit": "USD",
+        "evidence": [
+            {"text": "$800"},
+            {"role": "field", "text": "Deductible"},
+            {"role": "marker", "text": "family\tplan"},
+        ],
+    }
+    d = gg.admit(text, schema, [cand]).decisions[0]
+    assert d.codes == ("FIELD_CITATION_INVALID",)
+    assert [(p.role, p.passed) for p in d.parts] == [("field", False), ("marker", False)]
+
+
+def test_a_column_item_reads_the_lines_between_once() -> None:
+    """A column header far above the value stays linear: the lines between the header and the
+    value are not copied or read again for each line (spec 0.12). Four times the rows take
+    less than eight times as long."""
+    schema = {"fields": {"typ": {"type": "number", "aliases": ["current"], "columns": ["Typ."]}}}
+    cand = {
+        "id": "c",
+        "field": "typ",
+        "value": 2,
+        "evidence": [
+            {"text": "2"},
+            {"role": "field", "text": "current"},
+            {"role": "column", "text": "Typ."},
+        ],
+    }
+
+    def prepare(rows: int) -> Callable[[], None]:
+        text = "Parameter\tTyp.\n" + "current\t1\n" * rows + "current\t2\n"
+
+        def run() -> None:
+            assert gg.admit(text, schema, [cand]).decisions[0].outcome == "admitted"
+
+        return run
+
+    assert_linear(prepare, 4000, 16000)
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        "Parameter\tTyp.\n\fcurrent\t2\n",
+        "Parameter\tTyp.\n\n\fcurrent\t2\n",
+        "Parameter\tTyp.\n\fx\t1\ncurrent\t2\n",
+        "Parameter\tTyp.\f\ncurrent\t2\n",
+        "Parameter\tTyp. \f\ncurrent\t2\n",
+    ],
+)
+def test_a_column_item_stops_at_a_page_break(text: str) -> None:
+    """A page break between the header and the value stops the column item, also at the end of
+    the header's line and at the start of the value's line (rule 3 of column items, SPEC §4.6,
+    spec 0.12)."""
+    schema = {"fields": {"x": {"type": "number", "aliases": ["current"], "columns": ["Typ."]}}}
+    cand = {
+        "id": "c",
+        "field": "x",
+        "value": 2,
+        "evidence": [
+            {"text": "2"},
+            {"role": "field", "text": "current"},
+            {"role": "column", "text": "Typ."},
+        ],
+    }
+    d = gg.admit(text, schema, [cand]).decisions[0]
+    assert "COLUMN_NOT_AT_VALUE" in d.codes
+    assert ("column", False) in [(p.role, p.passed) for p in d.parts]
+
+
+def test_the_boundary_rule_reads_each_marker_mention_once() -> None:
+    """An answer cell with many marker mentions before the value stays linear: the boundary rule
+    sweeps the mentions once (spec 0.12). Four times the mentions take less than eight times as
+    long."""
+    usd = {"type": "integer", "unit": "USD", "multiple": True}
+    schema = {
+        "fields": {
+            "fam": {**usd, "aliases": ["Deductible"], "markers": ["family"]},
+            "ind": {**usd, "aliases": ["Individual"], "markers": ["person"]},
+        }
+    }
+    cand = {
+        "id": "c",
+        "field": "fam",
+        "value": 2,
+        "unit": "USD",
+        "evidence": [
+            {"text": "$2"},
+            {"role": "field", "text": "Deductible"},
+            {"role": "marker", "text": "family"},
+        ],
+    }
+
+    def prepare(n: int) -> Callable[[], None]:
+        text = "Deductible\t" + "$1/person/" * n + "$2 family\n"
+
+        def run() -> None:
+            assert gg.admit(text, schema, [cand]).decisions[0].outcome == "admitted"
+
+        return run
+
+    assert_linear(prepare, 1000, 4000)
+
+
+def test_a_marker_item_reads_only_the_mentions_next_to_each_quote() -> None:
+    """A quote that occurs many times in a cell with many marker mentions stays linear: each
+    occurrence reads only the mentions next to it (spec 0.12). Four times the occurrences take
+    less than eight times as long."""
+    usd = {"type": "integer", "unit": "USD", "multiple": True}
+    schema = {
+        "fields": {
+            "fam": {**usd, "aliases": ["Deductible"], "markers": ["family"]},
+            "ind": {**usd, "aliases": ["Individual"], "markers": ["person"]},
+        }
+    }
+    cand = {
+        "id": "c",
+        "field": "fam",
+        "value": 1,
+        "unit": "USD",
+        "evidence": [
+            {"text": "$1"},
+            {"role": "field", "text": "Deductible"},
+            {"role": "marker", "text": "family"},
+        ],
+    }
+
+    def prepare(n: int) -> Callable[[], None]:
+        text = "Deductible\tone two three four five " + "$1 family/person/" * n + "\n"
+
+        def run() -> None:
+            gg.admit(text, schema, [cand])
+
+        return run
+
+    assert_linear(prepare, 1000, 4000)
+
+
+def test_the_boundary_rule_reads_an_answer_slot_once() -> None:
+    """A value quote that occurs many times after many marker mentions stays linear: the boundary
+    rule reads the runs of letters of the answer slot once for all occurrences (spec 0.12). Four
+    times the occurrences take less than eight times as long."""
+    usd = {"type": "integer", "unit": "USD", "multiple": True}
+    schema = {"fields": {"f": {**usd, "aliases": ["Deductible"], "markers": ["family"]}}}
+    cand = {
+        "id": "c",
+        "field": "f",
+        "value": 1,
+        "unit": "USD",
+        "evidence": [
+            {"text": "$1"},
+            {"role": "field", "text": "Deductible"},
+            {"role": "marker", "text": "family$1"},
+        ],
+    }
+
+    def prepare(n: int) -> Callable[[], None]:
+        text = "Deductible\t$0 bad/" + "family$1/" * n
+
+        def run() -> None:
+            assert "FIELD_CITATION_INVALID" in gg.admit(text, schema, [cand]).decisions[0].codes
+
+        return run
+
+    assert_linear(prepare, 1000, 4000)

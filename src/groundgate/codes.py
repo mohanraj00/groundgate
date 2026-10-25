@@ -35,6 +35,8 @@ FLAG = {
         "The key the document mentions at the value is not the candidate's key, or none is."
     ),
     "KEY_CITATION_INVALID": "The key item does not hold a mention of the candidate's key.",
+    "COLUMN_NOT_AT_VALUE": "The value is not in a column of the field, such as Typ. or Max.",
+    "MARKER_OTHER_FIELD": "A marker word of another field, such as family, is next to the value.",
     "EVIDENCE_QUOTED": "Only an external quote supports the value; the policy sends it to review.",
     "EVIDENCE_STATED": "Only the extractor's knowledge supports the value; the policy says review.",
     "LOW_CONFIDENCE": "The extractor's confidence is below the policy minimum.",

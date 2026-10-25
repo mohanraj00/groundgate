@@ -63,6 +63,8 @@ class Field:
     multiple: bool = False
     keys: tuple[str, ...] | None = None
     aliases: tuple[str, ...] | None = None
+    columns: tuple[str, ...] | None = None  # the column words of the field (SPEC §2.3, spec 0.12)
+    markers: tuple[str, ...] | None = None  # the marker words of the field (spec 0.12)
     description: str | None = None
     _raw: dict[str, Any] = field(default_factory=dict, compare=False, repr=False)
     template: str | None = None  # "<pack id>/<field name>" of a kind pack (SPEC §2.3, §4.9)
@@ -81,6 +83,8 @@ class Field:
             "multiple",
             "keys",
             "aliases",
+            "columns",
+            "markers",
             "description",
             "template",
         }
@@ -96,6 +100,8 @@ class Field:
             "multiple": d.get("multiple", False),
             "keys": d.get("keys"),
             "aliases": d.get("aliases"),
+            "columns": d.get("columns"),
+            "markers": d.get("markers"),
         }
         if "description" in d:
             description = d["description"]
@@ -115,11 +121,12 @@ class Field:
         for flag in ("required", "multiple"):
             if not isinstance(raw[flag], bool):
                 raise PacketError(f"field {name!r} {flag} must be a boolean")
-        for member in ("keys", "aliases"):
+        for member in ("keys", "aliases", "columns", "markers"):
             _words(name, member, raw[member])
             if raw[member] is not None:
                 raw[member] = list(raw[member])
         keys, aliases = raw["keys"], raw["aliases"]
+        columns, markers = raw["columns"], raw["markers"]
         return cls(
             name=name,
             type=raw["type"],
@@ -131,6 +138,8 @@ class Field:
             multiple=raw["multiple"],
             keys=None if keys is None else tuple(keys),
             aliases=None if aliases is None else tuple(aliases),
+            columns=None if columns is None else tuple(columns),
+            markers=None if markers is None else tuple(markers),
             description=raw.get("description"),
             _raw=raw,
             template=raw.get("template"),
@@ -321,7 +330,8 @@ def check_template(name: str, t: dict[str, Any]) -> None:
 
 
 def _words(name: str, member: str, words: object) -> None:
-    """The rule of keys and aliases: null or a non-empty list of distinct, non-blank strings."""
+    """The rule of keys, aliases, columns and markers: null or a non-empty list of distinct,
+    non-blank strings."""
     if words is None:
         return
     if not isinstance(words, list) or not words or not all(isinstance(k, str) for k in words):

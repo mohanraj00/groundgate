@@ -1,0 +1,484 @@
+{
+ "name": "127-marker-items",
+ "description": "A marker item binds a value to the field by a marker word next to the token, before or after it, with only whitespace, brackets and unit forms between. A competing word next to the token stops it. A marker word that two fields share does not compete. With a passing marker item, a label cell passes with numbers between, when each run of letters after the first number of the answer slot is in a marker word or a unit form. Rules 2, 3 and 4 of label cells stay. A competing word at the value with no marker word of the field gives MARKER_OTHER_FIELD. A field without markers decides as in spec 0.11 (spec 0.12, #540).",
+ "document": "Overall deductible\tIn-Network: $400 person/$800 family\n\nOverall deductible\tIndividual $0 / Family $0\n\nOverall deductible\tIn-Network: $900 family Out-of-Network: $1,800 family\n\nOverall deductible\tIn-Network: $250 person, $500 couple, $750 family\n\nOverall deductible\tIn-Network: $350 person. $650 family\n",
+ "schema": {
+  "fields": {
+   "ded_fam": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "overall deductible"
+    ],
+    "markers": [
+     "family"
+    ]
+   },
+   "ded_ind": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "overall deductible"
+    ],
+    "markers": [
+     "person",
+     "individual"
+    ]
+   },
+   "ded_two": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "overall deductible"
+    ],
+    "markers": [
+     "couple"
+    ]
+   },
+   "oop_fam": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "out-of-pocket limit"
+    ],
+    "markers": [
+     "family"
+    ]
+   },
+   "ded_plain": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true,
+    "aliases": [
+     "overall deductible"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "m1",
+   "field": "ded_fam",
+   "value": "800",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 43,
+     "end": 47,
+     "text": "$800"
+    },
+    {
+     "role": "field",
+     "text": "Overall deductible"
+    },
+    {
+     "role": "marker",
+     "start": 48,
+     "end": 54,
+     "text": "family"
+    }
+   ]
+  },
+  {
+   "id": "m2",
+   "field": "ded_fam",
+   "value": "800",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 43,
+     "end": 47,
+     "text": "$800"
+    },
+    {
+     "role": "field",
+     "text": "Overall deductible"
+    }
+   ]
+  },
+  {
+   "id": "m3",
+   "field": "ded_ind",
+   "value": "800",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 43,
+     "end": 47,
+     "text": "$800"
+    },
+    {
+     "role": "field",
+     "text": "Overall deductible"
+    }
+   ]
+  },
+  {
+   "id": "m4",
+   "field": "ded_ind",
+   "value": "400",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 31,
+     "end": 35,
+     "text": "$400"
+    },
+    {
+     "role": "field",
+     "text": "Overall deductible"
+    },
+    {
+     "role": "marker",
+     "start": 36,
+     "end": 42,
+     "text": "person"
+    }
+   ]
+  },
+  {
+   "id": "m5",
+   "field": "ded_ind",
+   "value": "800",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 43,
+     "end": 47,
+     "text": "$800"
+    },
+    {
+     "role": "field",
+     "text": "Overall deductible"
+    },
+    {
+     "role": "marker",
+     "start": 36,
+     "end": 42,
+     "text": "person"
+    }
+   ]
+  },
+  {
+   "id": "m6",
+   "field": "ded_fam",
+   "value": "0",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 98,
+     "end": 100,
+     "text": "$0"
+    },
+    {
+     "role": "field",
+     "text": "Overall deductible"
+    },
+    {
+     "role": "marker",
+     "start": 91,
+     "end": 97,
+     "text": "Family"
+    }
+   ]
+  },
+  {
+   "id": "m7",
+   "field": "ded_fam",
+   "value": "1800",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 161,
+     "end": 167,
+     "text": "$1,800"
+    },
+    {
+     "role": "field",
+     "text": "Overall deductible"
+    },
+    {
+     "role": "marker",
+     "start": 168,
+     "end": 174,
+     "text": "family"
+    }
+   ]
+  },
+  {
+   "id": "m8",
+   "field": "ded_fam",
+   "value": "900",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 133,
+     "end": 137,
+     "text": "$900"
+    },
+    {
+     "role": "field",
+     "text": "Overall deductible"
+    },
+    {
+     "role": "marker",
+     "start": 138,
+     "end": 144,
+     "text": "family"
+    }
+   ]
+  },
+  {
+   "id": "m9",
+   "field": "ded_fam",
+   "value": "750",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 233,
+     "end": 237,
+     "text": "$750"
+    },
+    {
+     "role": "field",
+     "text": "Overall deductible"
+    },
+    {
+     "role": "marker",
+     "start": 238,
+     "end": 244,
+     "text": "family"
+    }
+   ]
+  },
+  {
+   "id": "m10",
+   "field": "ded_fam",
+   "value": "650",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 290,
+     "end": 294,
+     "text": "$650"
+    },
+    {
+     "role": "field",
+     "text": "Overall deductible"
+    },
+    {
+     "role": "marker",
+     "start": 295,
+     "end": 301,
+     "text": "family"
+    }
+   ]
+  },
+  {
+   "id": "m11",
+   "field": "ded_plain",
+   "value": "800",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 43,
+     "end": 47,
+     "text": "$800"
+    },
+    {
+     "role": "field",
+     "text": "Overall deductible"
+    },
+    {
+     "role": "marker",
+     "start": 48,
+     "end": 54,
+     "text": "family"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": true
+     },
+     {
+      "role": "marker",
+      "passed": true
+     }
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID"
+    ],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": false
+     }
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "MARKER_OTHER_FIELD"
+    ],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": false
+     }
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": true
+     },
+     {
+      "role": "marker",
+      "passed": true
+     }
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID",
+     "MARKER_OTHER_FIELD"
+    ],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": false
+     },
+     {
+      "role": "marker",
+      "passed": false
+     }
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": true
+     },
+     {
+      "role": "marker",
+      "passed": true
+     }
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID"
+    ],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": false
+     },
+     {
+      "role": "marker",
+      "passed": true
+     }
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": true
+     },
+     {
+      "role": "marker",
+      "passed": true
+     }
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID"
+    ],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": false
+     },
+     {
+      "role": "marker",
+      "passed": true
+     }
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID"
+    ],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": false
+     },
+     {
+      "role": "marker",
+      "passed": true
+     }
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID"
+    ],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": false
+     },
+     {
+      "role": "marker",
+      "passed": false
+     }
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

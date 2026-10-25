@@ -159,8 +159,8 @@ print(stored["receipt_sha256"][:23])
 ```
 
 ```text
-0.11 lease-0417 {'admitted': 1, 'needs_verification': 2, 'rejected': 1}
-sha256:6c8ccda778d114b1
+0.12 lease-0417 {'admitted': 1, 'needs_verification': 2, 'rejected': 1}
+sha256:17af6b70a5e0d0db
 ```
 
 A receipt holds digests of its inputs, not the inputs. To verify it later, you need the same
@@ -200,15 +200,14 @@ The digests in the output are cut to 16 digits:
 False
 coverage differs from the re-derived receipt
 summary differs from the re-derived receipt
-decision for candidate sha256:01e4953e2e062e04... differs
-decision for candidate sha256:2c2fb9194ff7f452... differs
-decision for candidate sha256:5e5ae947faf916ff... differs
+decision for candidate sha256:4e69c2dee90ad28f... differs
+decision for candidate sha256:dc1fa1fede333704... differs
 ```
 
 The changed rent is not in the text, so it is rejected. The required field `monthly_rent` then
 has no fact, so the coverage and the summary differ too. Decisions are sorted by the digest of
 their candidate. A changed candidate gets a new digest and can move other decisions. Here it
-moves two other decisions, so three decisions differ.
+moves one other decision, so two decisions differ.
 
 `verify` does not say which input changed. It says which part of the receipt differs. To find
 the changed input, compare the digest of each stored input with the receipt. For a candidate,
@@ -232,7 +231,7 @@ print(check.problems)
 
 ```text
 False
-('receipt was decided under spec 0.4; this groundgate implements 0.11',)
+('receipt was decided under spec 0.4; this groundgate implements 0.12',)
 ```
 
 `verify` checks nothing more. So pin the groundgate release that decided the receipts in the
@@ -286,7 +285,7 @@ print(packet[:23])
 ```
 
 ```text
-sha256:3e0c27fa9861a3cb
+sha256:b395110a327802ab
 ```
 
 The same inputs give the same key. Later, `load_packet` gets each input back, and `verify`

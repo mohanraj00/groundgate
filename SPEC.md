@@ -1,7 +1,7 @@
-# groundgate specification v0.11
+# groundgate specification v0.12 (draft)
 
-Status: released with groundgate 0.11.0. Version string: `groundgate/0.11`. Spec 0.10 was
-released with groundgate 0.10.0 and is in the `v0.10.0` tag. Spec 0.9 is in the `v0.9.0` tag,
+Status: draft, not released. Version string: `groundgate/0.12`. Spec 0.11 was released with
+groundgate 0.11.0 and is in the `v0.11.0` tag. Spec 0.10 is in the `v0.10.0` tag. Spec 0.9 is in the `v0.9.0` tag,
 spec 0.8 in the `v0.8.0` tag, spec 0.7 in the `v0.7.0` tag, spec 0.6 in the `v0.6.0` tag, spec
 0.5 in the `v0.5.0` tag, spec 0.4 in the `v0.4.0` tag, spec 0.3 in the `v0.3.0` tag, spec 0.2 in
 the `v0.2.0` tag, and spec 0.1 in the `v0.1.0` tag. Any change to how
@@ -86,6 +86,8 @@ boundaries. Heuristic windows in §4 are measured in Unicode code points.
   "multiple": false,
   "keys": ["<key>"] | null,
   "aliases": ["<words>"] | null,
+  "columns": ["<words>"] | null,
+  "markers": ["<words>"] | null,
   "description": "<text>",
   "template": "<pack id>/<field name>"
 }},
@@ -97,7 +99,7 @@ boundaries. Heuristic windows in §4 are measured in Unicode code points.
 ```
 
 Defaults: `type` `"number"`, `unit` null, `comparator` `"eq"`, bounds null, `required` false, `multiple` false,
-`keys` null, `aliases` null.
+`keys` null, `aliases` null, `columns` null, `markers` null.
 
 A field name (spec 0.11, #359) has 1 to 64 characters. Each character is a lowercase ASCII
 letter, a digit or `_`, and the first character is a letter. So `net_sales` and `e` are names,
@@ -116,6 +118,11 @@ otherwise the packet is invalid.
 operating income field. A field item (§4.6) is checked against them. They follow the same rules as
 `keys`: null or a non-empty list of strings, none blank, no two equal after whitespace
 normalisation (§4.4) and the fold of each letter (§4).
+`columns` (spec 0.12, #540) are the words of a column header that name the column of the field,
+such as "Typ." or "Max.". `markers` (spec 0.12, #540) are the words next to a value that name
+the field, such as "family" in "$800 family". Both follow the same rules as `keys`. A **column
+word** of a field is a member of its `columns`, and a **marker word** is a member of its
+`markers`. A mention of either is matched as a key mention is (§4.5). §4.6 reads them.
 `units` extends and overrides the built-in table (§4.3). Each unit is an object with only
 `prefix` and `suffix`, each a list of non-blank strings (spec 0.11, #423); an absent list is
 empty.
@@ -250,7 +257,8 @@ An **evidence item** is one piece of support for the value. Its `source` says wh
 | `external` | the extractor | `url`, `retrieved`, `text` | quoted |
 | `knowledge` | the extractor | `text` | stated |
 
-- `role` is one of `value` (default), `sign`, `scale`, `unit`, `key` and `field` (§4.6).
+- `role` is one of `value` (default), `sign`, `scale`, `unit`, `key`, `field`, `column` and
+  `marker` (§4.6). The roles `column` and `marker` are new in spec 0.12 (#540).
 - `ref` is the `id` of a reference in the packet. The item's offsets are in that reference.
 - `start` and `end` are a span (§2.2). Give both or neither. Without them, `text` is a **quote**,
   and groundgate finds it (§4.6).
@@ -322,7 +330,7 @@ not a string/integer, `unit` or `key` is not a string, `confidence` is not a num
 `search_region` is present but not an object with integer `start` and `end`, or `evidence` is
 present but not an object or a list of objects. It also rejects when an evidence item:
 
-- has a `source` other than the four kinds, or a `role` other than the six;
+- has a `source` other than the four kinds, or a `role` other than the eight;
 - is an outside item with a `role`, `start` or `end`, or a document or reference item with a `url`
   or `retrieved`;
 - has a `ref` on an item that is not from a reference, or a reference item has no `ref` or a `ref`
@@ -447,6 +455,8 @@ rejected by steps 1–11 or on the outside path.
 | `FIELD_CITATION_INVALID` | The field has `aliases`, the candidate has field items, and none of them passes its check (§4.6). |
 | `KEY_NOT_AT_VALUE` | The field has `keys`, and the candidate's `key` is not a key at the value (§4.5), and a passing key item does not put it there. |
 | `KEY_CITATION_INVALID` | The key item fails its check. |
+| `COLUMN_NOT_AT_VALUE` | The field has `columns`, no column item passes, and no passing field item holds a mention of a column word of the field (§4.6, spec 0.12). Also on a candidate with no field item and no column item. |
+| `MARKER_OTHER_FIELD` | The field has `markers`, a competing word of the field is next to the token, and no marker word of the field is next to it (§4.6, spec 0.12). Also on a candidate with no marker item. |
 | `EVIDENCE_QUOTED` | On the outside path, the deciding item is external, with the action `review`. |
 | `EVIDENCE_STATED` | On the outside path, the deciding item is knowledge, with the action `review`. |
 | `LOW_CONFIDENCE` | `policy.min_confidence` is set and `confidence` is below it. |
@@ -992,8 +1002,10 @@ than a key or field item fails. Otherwise it passes when its role's check holds:
 | `sign` | The item holds **brackets around the value**: a `(` before the token with only whitespace and prefixes of the field's unit between them, and a `)` after it with only whitespace between them. Or it holds a **loss word** (a `sign.loss` word of the packs that the packet reads; the base pack gives none, and the built-in pack `finance` of §4.8 gives `loss`, `losses`, `deficit`, `deficits`) with no negation (`no`, `not`, `without`) directly before it, only whitespace between, and at most 4 words (runs of letters) between the loss word and the token. A loss-word item ends at or before the token in the value's sentence (§4.5), and from the start of the item to the token there is no number token, no line break, no tab and no **gain word** (`income`, `gain`, `gains`, `profit`, `profits`, `earnings`). Each word is matched whole and case-insensitively. |
 | `scale` | The item holds a scale form (below). Or the item holds a currency scale (§4.1), as in "£m" (spec 0.10). It ends at or before the token. No scale word, also with a final `s`, lies between its end and the token, and no currency scale with a power of ten other than the item's scale (below) lies there. So the second `£m` of the header row `\t£m\t£m` does not stop an item on the first. |
 | `unit` | The item holds a prefix or suffix of the field's unit as a whole (with no letter or digit directly before a form that starts with one, and none directly after a form that ends with one). Then either the field's unit is at the token (§4.3), so the item repeats it, or the field check passes (below), the item ends at or before the token, no unit form is next to the token (§3.1), and the item is at a unit place of the value (below). Or the item holds a heading unit (§4.3) that reaches the token, the field check passes, the item ends at or before the token, no unit form is next to the token, and the token's heading currency is the field's unit (spec 0.10). Or the field's unit has no prefix and no suffix in the unit table, so it is at every token (§4.3), and the item holds a currency name of the field's unit or its code (§4.3). The item then repeats the unit (spec 0.11, #423). In each case, the token has no heading conflict (§4.3, spec 0.10, #365). |
-| `field` | The field has `aliases`, the item holds a mention of one of them (matched as key mentions are, §4.5, in the whole text, so a mention inside a longer mention does not count), and the item ends at or before the token. Then one of these holds: no letter (general category L) lies between the item's end and the token (the item is at the **row**); the item is a **label cell** for the token (below); or the item is in the value's sentence with no number token between its end and the token, and the token is not after the end of a label slot that holds the item. |
+| `field` | The field has `aliases`, the item holds a mention of one of them (matched as key mentions are, §4.5, in the whole text, so a mention inside a longer mention does not count), and the item ends at or before the token. Then one of these holds: no letter (general category L) lies between the item's end and the token (the item is at the **row**); the item is a **label cell** for the token (below); the item is a **row label** for the token (below, spec 0.12); or the item is in the value's sentence with no number token between its end and the token, and the token is not after the end of a label slot that holds the item. |
 | `key` | The item holds a key mention of the candidate's `key` (a mention of the whole text, §4.5). |
+| `column` | The field has `columns`, and the item is a column item for the token (below, spec 0.12). |
+| `marker` | The field has `markers`, and the item is a marker item for the token (below, spec 0.12). |
 
 **Scale forms (spec 0.11, #423).** A scale item holds a **scale form** when it holds one of
 these:
@@ -1030,11 +1042,79 @@ line when all of these hold (spec 0.10, #316):
 3. No sentence end (§4.2) lies in the answer slot before the token.
 4. No mention of an alias of a field of the schema lies in the answer slot before the token.
 
-A field item in a label slot reaches a token after that slot only at the row or as a label
-cell. The sentence rule does not carry it into a later slot or onto a later line, because a tab
+A field item in a label slot reaches a token after that slot only at the row, as a label
+cell or as a row label. The sentence rule does not carry it into a later slot or onto a later line, because a tab
 and a line break do not end a sentence, and the next cell or row can hold another value. A
 label cell is not at the row, so the column rule (§4.5) does not use it. A line with no tab has
 no label slot, and its field items keep the sentence rule.
+
+**Slots (spec 0.12, #540).** The **slots** of a line are the parts between its tabs. Slot 0 is
+the text before the first tab, and a line with no tab has one slot. So slot 0 is the label slot,
+and slot 1 is the answer slot.
+
+**Column items.** A column item is a **column item** for the token when all of these hold:
+
+1. It holds a mention of a column word of the field and lies wholly in slot n of its line, the
+   **header line**, with n of 1 or more.
+2. The token lies wholly in slot n of the value's line. That slot holds only the token,
+   whitespace and forms of the field's unit (§4.3). So "35" and "35 V" pass, and "6...35" fails.
+3. The header line comes before the value's line, and the two lines have the same number of
+   slots. Each line between them is not blank and has that number of slots. No page break
+   (`\f`) stands between them.
+4. No other slot of the header line holds a mention of a column word of the field.
+5. No line between them holds a mention of a column word of any field of the schema. Slot n of
+   each line between holds a number token or no letter. So a second header stops the rule, also
+   when its words are not column words, as "Nom.". A dash for an empty cell does not stop it.
+
+A field item is a **row label** for the token when it lies wholly in slot 0 of the value's line,
+it holds a mention of an alias of the field, it ends at or before the token, and a column item of
+the candidate passes. Text and numbers in the other slots of the line then do not stop it. A row
+label is not at the row, so the column rule (§4.5) does not use it.
+
+**The column of the field.** When the field has `columns`, the value must be in a column of the
+field. This holds when a column item passes, or when a passing field item holds a mention of a
+column word of the field, as "Typical supply current" holds "Typical". Otherwise the decision
+gets `COLUMN_NOT_AT_VALUE`. So on a line with no tab, no column item passes, and a right value
+there goes to review unless its field item holds a column word.
+
+**Marker items.** A mention is **next to** the token when one of these holds:
+
+1. **Before**: it ends before the token, on the same line and in the same slot, and only
+   whitespace, `(`, `)` and prefixes of the field's unit (§4.3) stand between its end and the
+   token. So "Family $0" and "IND $1,500" have the marker before the value.
+2. **After**: it starts after the token, on the same line and in the same slot, and only
+   whitespace and suffixes of the field's unit stand between the token and its start. So "$800
+   family" has the marker after the value.
+
+So a `/`, a `;` or a word between them breaks it. In "$400 person/$800 family", "person" is next
+to $400 only, and "family" is next to $800 only.
+
+A **competing word** of a field is a marker word of another field of the schema that is not also
+a marker word of this field, after whitespace normalisation (§4.4) and the fold of each letter.
+So when `deductible_family` and `out_of_pocket_family` both list "family", "family" is not a
+competing word of either, and their aliases tell them apart.
+
+A marker item is a **marker item** for the token when it holds a mention of a marker word of the
+field, that mention is next to the token, and no mention of a competing word of the field is next
+to the token.
+
+When a marker item passes, a field item that is a label cell for the token passes without rule 1
+of label cells, so number tokens can lie between the item and the token. Rules 2, 3 and 4 stay,
+and one more rule holds: after the first number token of the answer slot, each run of letters
+(general category L) before the token lies in a mention of a marker word of a field of the
+schema, or in a form of the field's unit. So in
+"In-Network: $400 person/$800 family", the field item passes for $800, because "person" is the
+only run of letters between, and in "Individual $0 / Family $0" the field item passes for the
+second $0. In "In-Network: $800 family Out-of-Network: $1600 family", the word
+"Out-of-Network:" stands between, so the field item fails for $1600.
+
+When the field has `markers`, a competing word of the field is next to the token, and no marker
+word of the field is next to it, the decision gets `MARKER_OTHER_FIELD`. This holds also with no
+marker item. So $800 of "$800 family" as `deductible_individual` goes to review.
+
+A column item on a field without `columns`, and a marker item on a field without `markers`, fail
+and change nothing: they add no flag. So a schema with no `columns` and no `markers` decides as
+in spec 0.11.
 
 The scale and the sign of a token are its **parts**. A token is **negative** when the candidate
 has a sign item, or, on a field with a unit, when brackets enclose it in the text, as the sign
@@ -1220,7 +1300,7 @@ more limit. The packet is also invalid when a kind pack fails one of these check
 ## 5. Receipt
 
 ```json
-{"groundgate": "0.11",
+{"groundgate": "0.12",
  "document": {"id": null, "sha256": "sha256:...", "source": null},
  "references": [],
  "packs": [],
@@ -1258,7 +1338,7 @@ is a string, otherwise `null`.
   applied, the found occurrence for a quote, otherwise the cited span if it is valid, otherwise
   `null`. It is in the value item's text.
 - `parts` lists each role item of a candidate that reached the role checks, as
-  `{"role", "start", "end", "passed"}`, in the role order `sign`, `scale`, `unit`, `field`, `key`.
+  `{"role", "start", "end", "passed"}`, in the role order `sign`, `scale`, `unit`, `field`, `column`, `marker`, `key`.
   `start` and `end` are the item's span in the value's text: the found occurrence of a quote, or
   the item's offsets when they are valid there. They are null when the item is not in that text.
   Each field item is listed, in its order in the evidence list. A field item without `aliases` is
@@ -1337,10 +1417,10 @@ strings escaped as ECMAScript `JSON.stringify` does, numbers serialised as ECMAS
 `Number.prototype.toString`. NaN and infinities are not permitted. Integers outside
 [-(2^53-1), 2^53-1] are not permitted (they are not exactly representable).
 
-`digest(kind, obj) = "sha256:" + hex(SHA-256("groundgate/0.11:" + kind + "\0" + JCS(obj)))`, where
+`digest(kind, obj) = "sha256:" + hex(SHA-256("groundgate/0.12:" + kind + "\0" + JCS(obj)))`, where
 the prefix is ASCII and `JCS(obj)` is UTF-8.
 
-## 7. Non-goals for v0.11
+## 7. Non-goals for v0.12
 
 Semantic correctness (whether the sentence describes the field) by groundgate itself: a recorded
 `field_match` judgment can only add doubt, and a field item checks only the field's own aliases.

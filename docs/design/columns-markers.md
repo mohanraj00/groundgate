@@ -1,7 +1,9 @@
-# Column words and qualifier words in the field check
+# Column words and marker words in the field check
 
 Status: approved by the maintainer on 2026-10-24, with the recommendation of each open question
-(section 12). Nothing in this file is built. The note proposes a decision change for spec 0.12
+(section 12). On 2026-10-25 the maintainer renamed the qualifier words of this note to marker
+words, because SPEC §4.2 already uses "qualifier" for words such as "up to". SPEC.md has the
+rules as spec 0.12 (#542). Nothing in this file is built. The note proposes a decision change for spec 0.12
 (milestone 0.14, #540). The vectors come by hand in `conformance/build.py` before the code.
 
 ## 1. The answers in short
@@ -11,9 +13,9 @@ Status: approved by the maintainer on 2026-10-24, with the recommendation of eac
 | What fails | 29 reviews of right values where the cited field item holds an alias but its place fails SPEC §4.6, and 2 escapes where the row label is an alias but the value is in another column. | 2 |
 | Text or nodes | The gate stays on the text. `groundgate read` writes a tab between the cells of a row, so the text already holds the cells. `admit` still never reads a node (document-model.md §5.2). | 3 |
 | Column words | A new schema member `columns`. A new item role `column` puts the value in the column of a header cell, by the tab slots of the two lines. | 4, 5 |
-| Qualifier words | A new schema member `qualifiers`. A new item role `qualifier` binds a value to the field by the word next to it, as "family" in "$800 family". | 4, 6 |
+| Marker words | A new schema member `markers`. A new item role `marker` binds a value to the field by the word next to it, as "family" in "$800 family". | 4, 6 |
 | The escapes | A field with `columns` needs its column at the value, or the value goes to review. | 5.3 |
-| Old packets | A schema with no `columns` and no `qualifiers` decides as in 0.11. | 8 |
+| Old packets | A schema with no `columns` and no `markers` decides as in 0.11. | 8 |
 | The terms | Lane 1e of #539 proposes the words from the field description, and the user approves them. | 10 |
 
 ## 2. What fails today
@@ -94,16 +96,16 @@ review (section 5.3). It does not guess.
 
 ```text
 {"fields": {"supply_current_typ": {"aliases": ["Supply current"], "columns": ["Typ", "Typical"]},
-            "deductible_family": {"aliases": ["Overall deductible"], "qualifiers": ["family", "FAM"]},
+            "deductible_family": {"aliases": ["Overall deductible"], "markers": ["family", "FAM"]},
             "deductible_individual": {"aliases": ["Overall deductible"],
-                                      "qualifiers": ["individual", "person", "member", "IND"]}}}
+                                      "markers": ["individual", "person", "member", "IND"]}}}
 ```
 
 - `columns`: the words of a column header that name the column of the field, such as "Typ" or
   "Max.". Null (default) or a non-empty list of strings, with the rules of `keys` and `aliases`:
   none blank, and no two equal after whitespace normalisation (§4.4) and the fold of each letter.
-- `qualifiers`: the words next to a value that name the field, such as "family". The same rules.
-- A column word or a qualifier word is matched as a key mention is (§4.5): case-insensitively,
+- `markers`: the words next to a value that name the field, such as "family". The same rules.
+- A column word or a marker word is matched as a key mention is (§4.5): case-insensitively,
   with whitespace and dash folding, and with no letter or digit directly before or after.
 - Both members are part of the schema digest. They do not change `field_keys` or the receipt
   shape.
@@ -152,36 +154,37 @@ In section 2.3 the row has no tab, so no column item can pass, and "Supply curre
 column word. Both escapes go to review. A right value in a row that lost its tabs goes to review
 too. That is the cost, and the measure (section 10) counts it.
 
-## 6. Qualifier words
+## 6. Marker words
 
 ### 6.1 Next to the value
 
-A qualifier mention is **next to** the token when one of these holds:
+A marker mention is **next to** the token when one of these holds:
 
 1. **Before.** It ends before the token, on the same line and in the same slot, and only
    whitespace, `(`, `)` and prefixes of the field's unit stand between its end and the token. So
-   "Family $0" and "IND $1,500" have the qualifier before the value.
+   "Family $0" and "IND $1,500" have the marker before the value.
 2. **After.** It starts after the token, on the same line and in the same slot, and only
    whitespace and suffixes of the field's unit stand between the token and its start. So
-   "$800 family" and "$500 member" have the qualifier after the value.
+   "$800 family" and "$500 member" have the marker after the value.
 
 A `/`, a `;` or a word between them breaks it. So in "$400 person/$800 family", "person" is next
 to $400 only, and "family" is next to $800 only.
 
-### 6.2 The qualifier item
+### 6.2 The marker item
 
-A **competing word** of a field is a qualifier word of another field of the schema that is not
-also a qualifier word of this field, after whitespace normalisation and the fold of each letter.
+A **competing word** of a field is a marker word of another field of the schema that is not
+also a marker word of this field, after whitespace normalisation and the fold of each letter.
 So when `deductible_family` and `out_of_pocket_family` both list "family", "family" is not a
-competing word of either. The aliases tell those two fields apart, not the qualifier.
+competing word of either. The aliases tell those two fields apart, not the marker.
 
-A `qualifier` item passes when it holds a qualifier word of the field, that mention is next to
+A `marker` item passes when it holds a marker word of the field, that mention is next to
 the token, and no competing word of the field is next to the token.
 
-When a qualifier item passes, a field item that is a label cell for the token passes without
+When a marker item passes, a field item that is a label cell for the token passes without
 rule 1 of label cells: number tokens can lie between the item and the token. Rules 2, 3 and 4
-stay, and one more rule holds. After the first number token of the answer slot, each word
-before the token is a qualifier word of a field of the schema, or a form of the field's unit.
+stay, and one more rule holds. After the first number token of the answer slot, each run of
+letters before the token lies in a marker word of a field of the schema, or in a form of the
+field's unit.
 So "In-Network: $400 person/$800 family" passes for $800: "person" is the only word between.
 A later part of the cell is a **boundary**: in "In-Network: $800 family Out-of-Network: $1600
 family", the word "Out-of-Network:" stands between, so $1600 stays out of reach. The rule does
@@ -189,29 +192,29 @@ not depend on the limit of 4 words.
 
 ### 6.3 Another field's word at the value
 
-When the field has `qualifiers`, and a competing word of the field is next to the token while no
-qualifier word of this field is, the decision gets the new flag
-`QUALIFIER_OTHER_FIELD`. This holds also for a candidate with no qualifier item. So a model that
+When the field has `markers`, and a competing word of the field is next to the token while no
+marker word of this field is, the decision gets the new flag
+`MARKER_OTHER_FIELD`. This holds also for a candidate with no marker item. So a model that
 gives $800 of "$800 family" as `deductible_individual` goes to review.
 
 ## 7. Roles, codes and the receipt
 
-- §2.5: the roles `column` and `qualifier`, on a document or reference item, with offsets or a
+- §2.5: the roles `column` and `marker`, on a document or reference item, with offsets or a
   quote, as the other role items have. On a field without `columns`, a column item fails and has
-  no effect. The same holds for a qualifier item on a field without `qualifiers`.
+  no effect. The same holds for a marker item on a field without `markers`.
 - §3.3, two new flags, each with the outcome at best `needs_verification`:
 
 | Code | Text |
 |---|---|
 | `COLUMN_NOT_AT_VALUE` | The field has `columns`, no column item puts the value in a column of the field, and no passing field item holds a column word of the field (§4.6). |
-| `QUALIFIER_OTHER_FIELD` | The field has `qualifiers`, a competing word (a qualifier word of another field that this field does not list) is next to the value, and no qualifier word of this field is (§4.6). |
+| `MARKER_OTHER_FIELD` | The field has `markers`, a competing word (a marker word of another field that this field does not list) is next to the value, and no marker word of this field is (§4.6). |
 
 - The receipt gets no new member. A decision records the codes as today.
 
 ## 8. What stays the same for 0.11 packets
 
-- A schema with no `columns` and no `qualifiers` decides as in 0.11: the same outcome, codes,
-  `missing`, `parts` and relations in each vector of 0.11. A column item or a qualifier item on
+- A schema with no `columns` and no `markers` decides as in 0.11: the same outcome, codes,
+  `missing`, `parts` and relations in each vector of 0.11. A column item or a marker item on
   such a field fails and changes nothing.
 - The default policy has no new member. Only the `groundgate/0.12:` prefix changes the digests.
 - The row label way of section 5.2 needs a passing column item, so it adds nothing for a field
@@ -235,7 +238,7 @@ gives $800 of "$800 family" as `deductible_individual` goes to review.
 
 ## 10. The measure
 
-1. **The terms.** Lane 1e proposes `columns`, `qualifiers` and aliases from the name and the
+1. **The terms.** Lane 1e proposes `columns`, `markers` and aliases from the name and the
    description of each field, with no document, and the maintainer approves the diff. Words that
    I choose by hand from the development documents are tuning, so they never count as a result.
 2. **A replay on the development split.** The rules run on the recorded candidates of the #534
@@ -243,7 +246,7 @@ gives $800 of "$800 family" as `deductible_individual` goes to review.
    review to admitted, the wrong values that get in, and the right values that the column rule
    sends to review. This shows if a rule does what this note says, before the vectors.
 3. **The claim.** Only the new held-out set of lane 2 gives the 0.14 number. The runner prompt
-   asks for column and qualifier items before that run.
+   asks for column and marker items before that run.
 
 ## 11. Vectors I write by hand, after approval
 
@@ -260,22 +263,22 @@ gives $800 of "$800 family" as `deductible_individual` goes to review.
 - `column-field-word`: "Typical supply current 2 mA" with the column word "Typical": admitted.
 - `column-no-items`: a candidate with no field item and no column item on a field with
   `columns`: review, `COLUMN_NOT_AT_VALUE`.
-- `qualifier-after`: section 2.1, `deductible_family` = 800 with the qualifier item "family":
+- `marker-after`: section 2.1, `deductible_family` = 800 with the marker item "family":
   admitted.
-- `qualifier-before`: "Individual $0 / Family $0" with the qualifier item "Family": admitted.
-- `qualifier-other`: `deductible_individual` = 800 at "$800 family": review,
-  `QUALIFIER_OTHER_FIELD`, also with no qualifier item.
-- `qualifier-shared`: `deductible_family` and `out_of_pocket_family` both list "family".
+- `marker-before`: "Individual $0 / Family $0" with the marker item "Family": admitted.
+- `marker-other`: `deductible_individual` = 800 at "$800 family": review,
+  `MARKER_OTHER_FIELD`, also with no marker item.
+- `marker-shared`: `deductible_family` and `out_of_pocket_family` both list "family".
   `deductible_family` = 800 at "Overall deductible\tIn-Network: $400 person/$800 family" with
-  the qualifier item "family": admitted, and no `QUALIFIER_OTHER_FIELD`.
-- `qualifier-boundary`: `deductible_family` = 1600 at "Overall deductible\tIn-Network: $800
-  family Out-of-Network: $1600 family" with the qualifier item on the second "family": the
+  the marker item "family": admitted, and no `MARKER_OTHER_FIELD`.
+- `marker-boundary`: `deductible_family` = 1600 at "Overall deductible\tIn-Network: $800
+  family Out-of-Network: $1600 family" with the marker item on the second "family": the
   label cell fails, as in 0.11. The same cell with 800 and the first "family": admitted.
-- `qualifier-slash`: "$400 person/$800 family": "person" is not next to $800.
-- `qualifier-four-words`: a fifth word before the token: the label cell fails, as in 0.11.
-- `qualifier-sentence`: the later part after a sentence end: the label cell fails, as in 0.11.
-- `columns-absent`: each case above with no `columns` and no `qualifiers`: the 0.11 outcome.
-- Invalid packets: a blank column word, two equal qualifier words after the fold.
+- `marker-slash`: "$400 person/$800 family": "person" is not next to $800.
+- `marker-four-words`: a fifth word before the token: the label cell fails, as in 0.11.
+- `marker-sentence`: the later part after a sentence end: the label cell fails, as in 0.11.
+- `columns-absent`: each case above with no `columns` and no `markers`: the 0.11 outcome.
+- Invalid packets: a blank column word, two equal marker words after the fold.
 
 ## 12. Open questions
 
@@ -287,7 +290,7 @@ The maintainer chose the recommendation for each question on 2026-10-24.
    escapes become reviews, and a person sees the value.
 3. **The column requirement.** Does a field with `columns` need its column (section 5.3)? I
    recommend yes. Without it, the escapes of section 2.3 stay.
-4. **Rule 2 of label cells.** Keep the 4-word limit with a qualifier item? I recommend yes, also
+4. **Rule 2 of label cells.** Keep the 4-word limit with a marker item? I recommend yes, also
    though some cells stay in review (section 9, point 4). It is the rule that keeps a later
    network or tier out.
 5. **Abbreviations.** Must "FAM" and "IND" be in the schema, or does the gate know them? I
@@ -299,8 +302,8 @@ The maintainer chose the recommendation for each question on 2026-10-24.
 ## 13. Code issues, after approval
 
 1. The spec text and the vectors of section 11, by hand, before the code.
-2. `admit`: the members, the roles, the slot rule, the qualifier rule and the two flags.
-3. The runner prompt: ask for a column item in a table and a qualifier item in an answer cell.
+2. `admit`: the members, the roles, the slot rule, the marker rule and the two flags.
+3. The runner prompt: ask for a column item in a table and a marker item in an answer cell.
    The instruction text changes, so the prompt digests change.
 4. The PDF reader: one line for each row of a two-column table (section 9, point 1).
 5. The replay of section 10, point 2, with the terms of lane 1e.
