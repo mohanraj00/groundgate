@@ -127,6 +127,10 @@ A `column` item passes when all of these hold:
    Each line between them is not blank, has that number of slots, and no page break (`\f`)
    stands between them.
 4. No other slot of the header line holds a column word of the field.
+5. No line between them holds a column word of any field of the schema. Slot n of each line
+   between holds a number token or no letter. So a second header stops the rule, as a key
+   mention does in §4.5 rule 2, also when its column words are not in the schema, as "Nom.".
+   A dash for an empty cell does not stop it.
 
 A field item **reaches** the token as a **row label** when it lies wholly in slot 0 of the
 value's line, it holds an alias of the field, and a column item of the candidate passes. This is
@@ -245,6 +249,9 @@ gives $800 of "$800 family" as `deductible_individual` goes to review.
 - `column-slot-other`: the same row, 6 with the column item "Max.": the column item fails,
   `COLUMN_NOT_AT_VALUE`.
 - `column-slot-count`: the header has 7 slots and the row 6: the column item fails.
+- `column-reordered-header`: "Parameter\tMin.\tTyp.\tMax.\nSupply voltage\t6\t12\t35\nParameter\tMin.\tMax.\tTyp.\nSupply current\t1\t3\t2". `supply_current_typ` = 3
+  with the first "Typ." and the row label "Supply current": the column item fails (rule 5),
+  `COLUMN_NOT_AT_VALUE`. The same value with the second "Typ." fails rule 2.
 - `column-slot-two-words`: a header with "Typ." in 2 slots: the column item fails (rule 4).
 - `column-plain-row`: section 2.3 with a field that has `columns`: review, `COLUMN_NOT_AT_VALUE`.
 - `column-field-word`: "Typical supply current 2 mA" with the column word "Typical": admitted.
