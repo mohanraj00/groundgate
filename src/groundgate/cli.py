@@ -397,6 +397,7 @@ def _store_command(args: argparse.Namespace) -> int:
 
 def main(argv: list[str] | None = None) -> int:
     from .store.packets import printable
+
     argv = sys.argv[1:] if argv is None else list(argv)
     if argv[:1] == ["extract"]:  # 0.9 moved the reader to `read`, with any old options
         print(

@@ -185,10 +185,7 @@ def test_the_mismatch_lines_escape_a_control_character(
     schema = write(tmp_path, "schema.json", SCHEMA)
     cands = write(tmp_path, "cands.json", CANDS)
     receipt_path = write(tmp_path, "receipt.json", resealed(r))
-    assert (
-        main(["verify", str(receipt_path), str(doc), str(schema), str(cands)])
-        == 1
-    )
+    assert main(["verify", str(receipt_path), str(doc), str(schema), str(cands)]) == 1
     err = capsys.readouterr().err
     assert "\\u001b[2J" in err
     assert "\x1b" not in err
