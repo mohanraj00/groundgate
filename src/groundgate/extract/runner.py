@@ -32,6 +32,8 @@ if TYPE_CHECKING:
     from ..store import Store
 
 Json = dict[str, Any]
+# groundgate-run/6 (#554): the runner accepts column and marker items, and the prompt asks for
+# them for a field with columns or markers. A repair can change them when the gate names them.
 # groundgate-run/5 (#494): the search leaves out common words, and a cut that keeps every match
 # does not truncate the search. run/5 also names each object by its store key beside its run
 # key (#429), so a store can replay the run from its packet. run/5 also takes a document (#508):
@@ -42,8 +44,8 @@ Json = dict[str, Any]
 # `search_limit`. groundgate-run/2 (#318, #319) had a new prompt, field item causes and rounding
 # lines. An older record fails replay with a version message. The run/3 prompt asks for the
 # whole scale heading (#428); the run/3 records from before #428 were never released.
-_VERSION = "groundgate-run/5"
-_ROLES = {"value", "sign", "scale", "unit", "field", "key"}
+_VERSION = "groundgate-run/6"
+_ROLES = {"value", "sign", "scale", "unit", "field", "key", "column", "marker"}
 _SEARCH_MATCH_LIMIT = 1024
 # The rounding check (#319) reads only numbers with at most this many digits and this exponent.
 # It uses exact integer arithmetic, so a larger number fails closed: it is never dropped.
@@ -106,6 +108,18 @@ _NODE_INSTRUCTIONS = (
     " A marker such as \u27e612\u27e7 before the text of a table cell gives the node id of "
     'the cell. Cite the cell as {"source": "document", "role": ..., "node": 12}, or add "text" '
     "to quote a part of it. A marker is not part of the text, so do not copy it into a quote."
+)
+# The column words and marker words of the requested fields (SPEC §2.3, §4.6, #554). The prompt
+# has these only when a requested field has columns or markers.
+_WORD_INSTRUCTIONS = (
+    ' The member "field_words" gives the column words and the marker words of some fields. '
+    'For such a field with "columns", add a "column" item that quotes the column header of the '
+    'value, such as "Typ." over the value. For such a field with "markers", add a "marker" item '
+    'that quotes the marker word next to the value, such as "family" in "$800 family".'
+)
+# A marker word is document text, and a node id is not (#526).
+_WORD_NODE_INSTRUCTIONS = (
+    " A marker word is a word of the document text. It is not a node id such as \u27e612\u27e7."
 )
 
 
@@ -999,6 +1013,17 @@ def _output_schema(schema: Schema, fields: list[str], refs: list[str], nodes: bo
                 for item in defs[name]["items"]["anyOf"]
                 if item["$ref"].split("/")[-1] not in {"external", "knowledge"}
             ]
+    extra = [
+        r
+        for r, member in (("column", "columns"), ("marker", "markers"))
+        if _words(schema, fields, member)
+    ]
+    if extra:
+        # The roles of spec 0.12 (#554): only when a requested field has columns or markers.
+        for definition in defs.values():
+            role = definition.get("properties", {}).get("role")
+            if isinstance(role, dict) and "enum" in role:
+                definition["properties"]["role"] = {**role, "enum": [*role["enum"], *extra]}
     if nodes:
         # A run on a document can also cite a marked cell by its id (#526).
         quote = defs["document"]
@@ -1020,6 +1045,16 @@ def _output_schema(schema: Schema, fields: list[str], refs: list[str], nodes: bo
     shape["properties"]["not_found"] = {"type": "array", "items": {"enum": fields}}
     shape["required"].append("not_found")
     return shape
+
+
+def _words(schema: Schema, fields: list[str], member: str) -> Json:
+    """The ``columns`` or the ``markers`` of each requested field that has them."""
+    out: Json = {}
+    for name in fields:
+        words = getattr(schema.fields[name], member)
+        if words is not None:
+            out[name] = list(words)
+    return out
 
 
 class _Engine:
@@ -1183,11 +1218,20 @@ class _Engine:
             "sources": [self.source_entry(r) for r in regions],
             **extra,
         }
+        words: Json = {}
+        for member in ("columns", "markers"):
+            for name, found in _words(self.schema, fields, member).items():
+                words.setdefault(name, {})[member] = found
+        if words:
+            body["field_words"] = words
         if phase == "repair":
             body["reply_shape"] = 'one replacement candidate, or {"not_found":true}'
             # The extraction envelope is not the repair response shape.
             body.pop("output_schema")
         instructions = _INSTRUCTIONS + (_NODE_INSTRUCTIONS if self.citations is not None else "")
+        if words:
+            instructions += _WORD_INSTRUCTIONS
+            instructions += _WORD_NODE_INSTRUCTIONS if self.citations is not None else ""
         prompt = instructions + "\n" + jcs(body)
         self.sent = (prompt, self.marked(regions))
         return prompt
@@ -1908,6 +1952,15 @@ class _Engine:
                 roles.add(role)
                 if role == "unit" and field is not None and field.aliases:
                     roles.add("field")
+                if role == "field" and field is not None:
+                    # A row label passes with a column item, and a label cell with numbers
+                    # before the value passes with a marker item (SPEC §4.6, #554).
+                    roles |= {"column"} if field.columns else set()
+                    roles |= {"marker"} if field.markers else set()
+            elif code == "COLUMN_NOT_AT_VALUE":
+                roles.add("column")
+            elif code == "MARKER_OTHER_FIELD":
+                roles.add("marker")
             elif code == "KEY_NOT_AT_VALUE":
                 if (
                     field is None

@@ -261,7 +261,7 @@ retries. A smaller harness limit is reported rather than silently treated as an 
 
 Each projection document from #383 on also records `search_limit`: the number of fields whose
 targeted search found no region that fits the prompt budget, in either sweep of a
-`groundgate-run/5` record (`groundgate-run/4` before #494, `groundgate-run/3` before #466). The baseline has no targeted search, so its count is 0. `results.json` then gives, for each arm and kind, the documents and the fields
+`groundgate-run/6` record (`groundgate-run/5` before #554, `groundgate-run/4` before #494, `groundgate-run/3` before #466). The baseline has no targeted search, so its count is 0. `results.json` then gives, for each arm and kind, the documents and the fields
 at `search_limit`. A run without this member keeps its published `document_states`.
 `python -m requested.limits` counts the same from the `groundgate-run/2` records of the local
 requested3 cache into a new `limits.json` beside the set. It reads no label and makes no model

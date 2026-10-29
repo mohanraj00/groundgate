@@ -11,6 +11,7 @@ import pytest
 
 import groundgate as gg
 from groundgate.extract import ExtractInputError, RunPolicy, RunResult, extract, replay
+from groundgate.extract.runner import _WORD_NODE_INSTRUCTIONS
 from groundgate.read.document import Document, read_document
 from groundgate.store import FolderStore, key
 from groundgate.store.maintain import check, forget_packet
@@ -532,3 +533,17 @@ def test_a_copied_marker_in_a_marked_region_gives_the_cell_span(tmp_path: Path) 
         assert result.receipt.decisions[0].outcome == "admitted"
         span = result.receipt.decisions[0].evidence
         assert span is not None and cell.start <= span[0] < span[1] <= cell.end
+
+
+def test_a_column_item_can_cite_a_header_cell(tmp_path: Path) -> None:
+    # A marker word is document text, not a node id: the prompt says so (#554).
+    schema = {"fields": {"amount": {"aliases": ["Revenue"], "columns": ["2024"]}}}
+    doc = document(tmp_path, TABLE)
+    value, label, header = (doc.find(text)[0].node for text in ("5", "Revenue", "2024"))
+    assert value is not None and label is not None and header is not None
+    evidence = [node(value.id), node(label.id, role="field"), node(header.id, role="column")]
+    client = Client(cited(*evidence))
+    result = run(doc, client, schema)
+    assert result.receipt.decisions[0].outcome == "admitted"
+    assert client.prompts[0].split("\n", 1)[0].endswith(_WORD_NODE_INSTRUCTIONS)
+    assert replay(result.record, result.artifacts, doc, schema).ok

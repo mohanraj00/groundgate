@@ -19,7 +19,7 @@ from groundgate.extract import (
     extract,
     replay,
 )
-from groundgate.extract.runner import _chunks, _queries
+from groundgate.extract.runner import _INSTRUCTIONS, _WORD_INSTRUCTIONS, _chunks, _queries
 
 
 class Client:
@@ -63,6 +63,22 @@ def envelope(*candidates, missing=()):
 SCHEMA = {"fields": {"amount": {"type": "integer"}}}
 # the loss words come from the built-in pack finance (#336)
 FINANCE_SCHEMA = {"packs": [{"id": "finance", "version": "1.0.0"}], **SCHEMA}
+
+
+# A field with columns and fields with markers (spec 0.12, #554).
+COLUMN_TEXT = "Parameter\tMin.\tTyp.\tMax.\nCurrent\t1\t5\t9"
+COLUMN_SCHEMA = {"fields": {"amount": {"aliases": ["Current"], "columns": ["Typ."]}}}
+MARKER_TEXT = "Deductible\t$400 person / $800 family"
+# The field "single" is not in the text, so the runner does not search for it.
+MARKER_SCHEMA = {
+    "fields": {
+        "family": {"unit": "USD", "aliases": ["Deductible"], "markers": ["family"]},
+        "single": {"unit": "USD", "aliases": ["Copay"], "markers": ["person"]},
+    }
+}
+MARKER_FIRST = candidate(
+    "800", "family", "USD", [item("800"), item("$", "unit"), item("Deductible", "field")]
+)
 
 
 def execute(text, client, schema=SCHEMA, **kwargs):
@@ -505,16 +521,97 @@ def test_runtime_error_has_partial_record(monkeypatch):
             ),
             "KEY_NOT_AT_VALUE",
         ),
+        (
+            COLUMN_TEXT,
+            COLUMN_SCHEMA,
+            candidate(evidence=[item("5"), item("Current", "field")]),
+            candidate(evidence=[item("5"), item("Current", "field"), item("Typ.", "column")]),
+            "COLUMN_NOT_AT_VALUE",
+        ),
+        (
+            MARKER_TEXT,
+            MARKER_SCHEMA,
+            MARKER_FIRST,
+            {**MARKER_FIRST, "evidence": [*MARKER_FIRST["evidence"], item("family", "marker")]},
+            "FIELD_CITATION_INVALID",
+        ),
     ],
 )
 def test_each_repairable_evidence_role(text, schema, first, new, code):
     initial = gg.admit(text, schema, [{"id": "first", **first}])
     assert code in initial.decisions[0].codes
-    client = Client(envelope(first), new)
+    client = Client(envelope(first, missing=sorted(set(schema["fields"]) - {first["field"]})), new)
     result = execute(text, client, schema)
     assert len(client.prompts) == 2
     assert result.receipt.decisions[0].outcome == "admitted"
     assert_replays(result, text, schema)
+
+
+def split_prompt(prompt):
+    instructions, data = prompt.split("\n", 1)
+    return instructions, json.loads(data)
+
+
+def prompt_roles(prompt):
+    shape = split_prompt(prompt)[1]["output_schema"]["$defs"]["document"]
+    return shape["properties"]["role"]["enum"]
+
+
+def test_a_field_with_no_columns_or_markers_keeps_the_prompt():
+    client = Client(envelope(candidate()))
+    execute("Amount 5.", client)
+    instructions, data = split_prompt(client.prompts[0])
+    assert instructions == _INSTRUCTIONS
+    assert "field_words" not in data
+    assert "column" not in prompt_roles(client.prompts[0])
+
+
+def test_the_prompt_asks_for_column_and_marker_items():
+    schema = {"fields": {**COLUMN_SCHEMA["fields"], **MARKER_SCHEMA["fields"]}}
+    client = Client(envelope(missing=("amount", "family", "single")))
+    execute("Amount 5.", client, schema)
+    instructions, data = split_prompt(client.prompts[0])
+    assert instructions == _INSTRUCTIONS + _WORD_INSTRUCTIONS
+    assert data["field_words"] == {
+        "amount": {"columns": ["Typ."]},
+        "family": {"markers": ["family"]},
+        "single": {"markers": ["person"]},
+    }
+    assert prompt_roles(client.prompts[0])[-2:] == ["column", "marker"]
+
+
+@pytest.mark.parametrize(
+    "text, schema, reply",
+    [
+        (
+            COLUMN_TEXT,
+            COLUMN_SCHEMA,
+            candidate(evidence=[item("5"), item("Current", "field"), item("Typ.", "column")]),
+        ),
+        (
+            MARKER_TEXT,
+            MARKER_SCHEMA,
+            {**MARKER_FIRST, "evidence": [*MARKER_FIRST["evidence"], item("family", "marker")]},
+        ),
+    ],
+)
+def test_a_column_or_marker_item_is_admitted_and_replays(text, schema, reply):
+    client = Client(envelope(reply, missing=sorted(set(schema["fields"]) - {reply["field"]})))
+    result = execute(text, client, schema)
+    assert len(client.prompts) == 1
+    assert result.receipt.decisions[0].outcome == "admitted"
+    assert_replays(result, text, schema)
+
+
+def test_a_repair_for_a_column_shows_only_its_field():
+    # The repair prompt of one field shows the words of that field only (#554).
+    first = candidate(evidence=[item("5"), item("Current", "field")])
+    schema = {"fields": {**COLUMN_SCHEMA["fields"], **MARKER_SCHEMA["fields"]}}
+    client = Client(envelope(first, missing=("family", "single")), {"not_found": True})
+    execute(COLUMN_TEXT, client, schema)
+    _, data = split_prompt(client.prompts[1])
+    assert data["field_words"] == {"amount": {"columns": ["Typ."]}}
+    assert data["allowed_roles"] == ["column"]
 
 
 def test_repair_round_limit_and_duplicate_budget():
@@ -1144,7 +1241,7 @@ def test_record_is_a_hash_chained_log_and_inputs_are_objects():
     assert result.run_sha256 == lines[-1]["entry_sha256"]
     # Keys use the stable runner prefix, not the core digest that names the spec version.
     inputs = lines[0]["inputs"]
-    text_key = "sha256:" + hashlib.sha256(b"groundgate-run/5:text\0Amount 5.").hexdigest()
+    text_key = "sha256:" + hashlib.sha256(b"groundgate-run/6:text\0Amount 5.").hexdigest()
     # The store key of each object is in the record too (#429).
     store_text = "sha256:" + hashlib.sha256(b"groundgate-object/1:text@1\0Amount 5.").hexdigest()
     assert inputs["document"] == {
@@ -1473,23 +1570,29 @@ def test_a_relation_checks_the_re_admit_after_rounding():
 
 @pytest.mark.parametrize(
     "old_version",
-    ["groundgate-run/1", "groundgate-run/2", "groundgate-run/3", "groundgate-run/4"],
+    [
+        "groundgate-run/1",
+        "groundgate-run/2",
+        "groundgate-run/3",
+        "groundgate-run/4",
+        "groundgate-run/5",
+    ],
 )
 def test_an_older_record_fails_replay_with_a_version_message(tmp_path, old_version):
     # 0.9.0 wrote groundgate-run/1 records, 0.10.0 wrote groundgate-run/2, 0.11.0 wrote
-    # groundgate-run/3 and 0.12.0 wrote groundgate-run/4. This runner writes groundgate-run/5
-    # (#494).
+    # groundgate-run/3, 0.12.0 wrote groundgate-run/4 and 0.13.0 wrote groundgate-run/5. This
+    # runner writes groundgate-run/6 (#554).
     result = execute("Amount 5.", Client(envelope(candidate())))
-    assert result.record[0]["runner"] == "groundgate-run/5"
+    assert result.record[0]["runner"] == "groundgate-run/6"
     old = copy.deepcopy(result.record)
     old[0]["runner"] = old_version
     verification = replay(old, result.artifacts, "Amount 5.", SCHEMA)
     message = f"runner version differs: the record is {old_version!r}, this runner is "
     assert not verification.ok
-    assert verification.problems == (message + "'groundgate-run/5'",)
+    assert verification.problems == (message + "'groundgate-run/6'",)
     result.write(tmp_path)
     log = tmp_path / "run.jsonl"
-    log.write_text(log.read_text().replace("groundgate-run/5", old_version, 1))
+    log.write_text(log.read_text().replace("groundgate-run/6", old_version, 1))
     with pytest.raises(ValueError, match=f"the record is '{old_version}'"):
         RunResult.read(tmp_path)
 
