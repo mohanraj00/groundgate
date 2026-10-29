@@ -42,9 +42,8 @@ or `conformance/`, or a `.claude/`, `.codex/`, `.mcp.json`, `AGENTS.md` or `CLAU
 `pull_request_target`, so a fork PR cannot change it. It never checks out the PR code, and
 GitHub does not hold its runs for approval.
 
-- The check is not a required check yet. It becomes one only after a test fork PR shows that
-  the check lands on the PR head. If it lands on the base commit, a follow-up PR that posts a
-  commit status with `statuses: write` goes to the maintainer first.
+- The check is a required check in the ruleset on `main`. On the fork PR #447, it ran on the PR
+  head, and the merge waited until its last run passed.
 - Only the maintainer adds or removes `maintainer-approved`. The job accepts the label only if
   the login `mohanraj00` added it. AGENTS.md says that an agent never adds or removes it.
 - The label covers the PR head at the time it is added. If the head changed before the job ran,
@@ -103,4 +102,5 @@ Each outside PR ends with one of these labels:
 Remove `changes-requested` when the author pushes the changes. Keep `external` on the PR.
 
 Each of these label changes runs `outside-pr-paths` again without the approval. On a PR that
-needs `maintainer-approved`, set `accepted` first, and add `maintainer-approved` last.
+needs `maintainer-approved`, set `accepted` first, and add `maintainer-approved` last. Merge only
+after the run of the last label change passes. Before that, GitHub blocks the merge.
