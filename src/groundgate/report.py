@@ -31,6 +31,8 @@ LABELS = {
     "admitted": "Admitted",
 }
 _SURROGATE = re.compile("[\ud800-\udfff]")
+_C0 = re.compile("[\x01-\x08\x0b-\x1f\x7f]")  # tab, LF and CR stay
+_NO_REFERENCE = re.compile("[\x00\x80-\x9f]")
 SEVERITY = {"admitted": 0, "needs_verification": 1, "rejected": 2}
 
 
@@ -67,7 +69,11 @@ class _Pack:
 
 def _e(s: object) -> str:
     # A lone surrogate (half an emoji from a model) cannot be written as UTF-8: show U+FFFD.
-    return escape(_SURROGATE.sub("\ufffd", str(s)), quote=True)
+    # A page on stdout can reach a terminal (#544), so no control character stays raw. A C0
+    # control becomes a character reference, which a browser shows as the raw character. A
+    # browser reads NUL and most C1 references as other characters, so these show U+FFFD.
+    html = escape(_NO_REFERENCE.sub("\ufffd", _SURROGATE.sub("\ufffd", str(s))), quote=True)
+    return _C0.sub(lambda m: f"&#x{ord(m[0]):x};", html)
 
 
 def _wrap(name: object) -> str:

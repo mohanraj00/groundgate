@@ -415,8 +415,8 @@ def main(argv: list[str] | None = None) -> int:
         store_args = _store_parser().parse_args(argv[1:])
         try:
             return _store_command(store_args)
-        except (ValueError, OSError) as e:
-            print(f"groundgate: {e}", file=sys.stderr)
+        except (ValueError, OSError) as e:  # an error can quote input: escape each control
+            print(f"groundgate: {printable(str(e), limit=None)}", file=sys.stderr)
             return 2
     check = argv[:2] == ["schema", "check"]
     parser = _check_parser() if check else _parser()
@@ -477,7 +477,7 @@ def main(argv: list[str] | None = None) -> int:
         extra.update(schema=schema, policy=policy, judgments=judgments)
         return _report(args, stored, text, candidates, extra, layout, title)
     except (PacketError, ValueError, OSError, ImportError) as e:  # JSON, UTF-8: ValueError
-        print(f"groundgate: {e}", file=sys.stderr)
+        print(f"groundgate: {printable(str(e), limit=None)}", file=sys.stderr)  # can quote input
         return 2
 
 
