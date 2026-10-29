@@ -41,8 +41,8 @@ A scanned document has 2 more members (#548):
 
 `source`, `source_bytes`, `source_sha256` and `approved_max_bytes` stay the original download.
 `text_sha256` of a scanned document is the text that `groundgate read --ocr` makes from the
-image-only copy. `bench/requested/run_set.py` reads the image-only copy as `<id>.pdf` for a
-document with `image_only`, and checks its hash and its size. Other documents are checked as
+image-only copy. `bench/requested/run_set.py` and `bench/requested/diagnostics.py` read the
+image-only copy as `<id>.pdf` for a document with `image_only`, and check its hash and its size. Other documents are checked as
 before.
 
 ## Selection

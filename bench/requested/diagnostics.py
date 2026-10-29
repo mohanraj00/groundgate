@@ -25,7 +25,9 @@ import groundgate as gg
 
 from .metrics import measure
 from .run_set import (
+    _MAX_COPY,
     CacheError,
+    _image_only,
     _json,
     _publish,
     _read,
@@ -416,6 +418,7 @@ class DiagnosticSession:
             ):
                 raise DiagnosticError("diagnostic declaration must be frozen")
             directory = _unlinked(directory.absolute())
+            self.caps: dict[Path, int] = {}
             self.paths = {
                 self.plan_path: plan_sha256,
                 directory / "manifest.json": self.plan["manifest_sha256"],
@@ -437,15 +440,25 @@ class DiagnosticSession:
             total = 0
             for ident, doc in self.docs.items():
                 _ident(ident)
-                for suffix, member, cap in (
-                    ("pdf", "source_sha256", 128 * 1024 * 1024),
-                    ("txt", "text_sha256", _MAX),
+                try:
+                    copy_of = _image_only(doc)
+                except CacheError as exc:
+                    raise DiagnosticError(str(exc)) from exc
+                pdf_hash = copy_of["sha256"] if copy_of else doc["source_sha256"]
+                for suffix, expected, cap in (
+                    ("pdf", pdf_hash, _MAX_COPY if copy_of else 128 * 1024 * 1024),
+                    ("txt", doc["text_sha256"], _MAX),
                 ):
                     path = _child(self.sources, ident + "." + suffix)
-                    if file_digest(path, cap) != _sha(doc[member]):
+                    if file_digest(path, cap) != _sha(expected):
                         raise DiagnosticError("source or text digest differs")
-                    self.paths[path] = doc[member]
-                    if suffix == "pdf":
+                    self.paths[path] = expected
+                    self.caps[path] = cap
+                    if suffix == "pdf" and copy_of is not None:
+                        # The OCR arm reads the image-only copy. source_* pins the download.
+                        if path.stat().st_size != copy_of["bytes"]:
+                            raise DiagnosticError("image-only copy size differs")
+                    elif suffix == "pdf":
                         if (
                             type(doc.get("approved_max_bytes")) is not int
                             or path.stat().st_size != doc.get("source_bytes")
@@ -888,7 +901,7 @@ class DiagnosticSession:
         if any(digest(encoded(obj)) != expected for obj, expected in self._states):
             raise DiagnosticError("in-memory diagnostic input changed")
         for path, expected in self.paths.items():
-            if file_digest(_unlinked(path)) != expected:
+            if file_digest(_unlinked(path), self.caps.get(path, 128 * 1024 * 1024)) != expected:
                 raise DiagnosticError("frozen diagnostic input changed")
 
     @staticmethod
