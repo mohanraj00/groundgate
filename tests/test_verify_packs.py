@@ -368,3 +368,32 @@ def test_the_cli_report_with_no_pack_folder_is_invalid_input(
     args = _report_args(tmp_path)
     assert main([*args, "--pack-dir", str(tmp_path / "none")]) == 2
     assert "cannot be opened" in capsys.readouterr().err
+
+
+@pytest.mark.parametrize("command", ["verify", "report"])
+def test_the_error_line_escapes_a_control_character(
+    command: str, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """An error can quote a key of the receipt (#544): the error line escapes each control
+    character, as the mismatch lines do."""
+    r = receipt()
+    r["\x1b[2J"] = 2**53  # no canonical JSON form, so the receipt is rejected before a digest
+    doc = tmp_path / "doc.txt"
+    doc.write_text(DOC, encoding="utf-8")
+    schema = write(tmp_path, "schema.json", SCHEMA)
+    cands = write(tmp_path, "cands.json", CANDS)
+    receipt_path = write(tmp_path, "receipt.json", r)
+    assert main([command, str(receipt_path), str(doc), str(schema), str(cands)]) == 2
+    err = capsys.readouterr().err
+    assert "groundgate: receipt.\\u001b[2J: integer is outside" in err
+    assert "\x1b" not in err
+
+
+def test_the_store_error_line_escapes_a_control_character(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    folder = tmp_path / "\x1b[2J"
+    assert main(["store", "check", "--store", str(folder)]) == 2
+    err = capsys.readouterr().err
+    assert "\\u001b[2J: the store folder is not there" in err
+    assert "\x1b" not in err
