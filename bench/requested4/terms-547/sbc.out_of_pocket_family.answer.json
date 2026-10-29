@@ -1,0 +1,12 @@
+{
+  "aliases": [
+    "In-network family out-of-pocket limit",
+    "In-network family out-of-pocket maximum"
+  ],
+  "columns": [],
+  "markers": [
+    "family",
+    "in-network"
+  ],
+  "notes": "The aliases explicitly name the family limit and its network scope. Columns is empty because no dedicated value column is indicated. The markers distinguish family from individual and in-network from out-of-network amounts within a shared cell."
+}

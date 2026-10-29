@@ -1,0 +1,6 @@
+{
+  "aliases": ["Supply current", "Typical supply current", "Power supply current"],
+  "columns": ["Typ.", "Typ", "Typical"],
+  "markers": [],
+  "notes": "Aliases name supply current explicitly, with operating modes and reference conditions retained rather than choosing between equally applicable values. Columns identify the typical value alongside minimum or maximum values. Markers are unnecessary because the row label and typical column identify the field."
+}
