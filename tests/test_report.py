@@ -458,3 +458,25 @@ def test_cli_report_names_the_packs(tmp_path: Path) -> None:
     html = report.read_text(encoding="utf-8")
     assert "<code>us-10k</code> kind 1.0.0" in html and "<code>finance</code> vocabulary" in html
     assert '<span class="pill draft">draft pack</span>' in html
+
+
+def test_cli_report_on_stdout_writes_no_control_character(
+    tmp_path: Path, capsysbinary: pytest.CaptureFixture[bytes]
+) -> None:
+    """A page on stdout can reach a terminal (#544). Each C0 control and DEL becomes a
+    character reference, which a browser shows as before. NUL and a C1 control have no reference
+    that a browser keeps, so the page shows U+FFFD for them."""
+    doc = "Code: 5\x1b[2J\x7f\x9b2J.\x00 Tab\tstays."
+    schema = {"fields": {"code": {"type": "string"}}}
+    cands = [{"id": "a", "field": "code", "value": "5\x1b[2J", "evidence": {"text": "5\x1b[2J"}}]
+    paths = []
+    for name, obj in [("r.json", gg.admit(doc, schema, cands).to_dict()), ("s.json", schema)]:
+        (tmp_path / name).write_text(json.dumps(obj))
+        paths.append(str(tmp_path / name))
+    (tmp_path / "doc.txt").write_text(doc, encoding="utf-8")
+    (tmp_path / "c.json").write_text(json.dumps(cands))
+    args = [paths[0], str(tmp_path / "doc.txt"), paths[1], str(tmp_path / "c.json")]
+    assert main(["report", *args]) == 0
+    page = capsysbinary.readouterr().out.decode("utf-8")
+    assert not re.search("[\x00-\x08\x0b-\x1f\x7f-\x9f]", page)
+    assert ">5&#x1b;[2J</mark>&#x7f;\ufffd2J." in page and "\ufffd Tab\tstays" in page
