@@ -34,8 +34,10 @@ A scanned document has 2 more members (#548):
 - `image_only`: the copy of the scan that the OCR arm reads. It has the copy's `sha256`, its
   `bytes`, the `method` and its `resolution_dpi`, and the `renderer`. The method
   `image-only-render/1` renders each page with the renderer at the resolution and keeps only the
-  page images (`bench/requested/image_only.py`). The method `image-only/1` keeps the page images
-  with no change, and its `resolution_dpi` is null.
+  page images. `bench/requested/image_only.py` (#551) makes this copy:
+  `PYTHONPATH=bench uv run python -m requested.image_only --dpi 350 SOURCE.pdf OUT.pdf`. The
+  method `image-only/1` keeps the page images with no change, and its `resolution_dpi` is null.
+  No document of this set uses `image-only/1`, and no tool in this repository makes it yet.
 - `source_layer_text_sha256`: the reader text of the text layer in the original download. That
   layer comes from the archive's OCR, so a second arm can compare it with groundgate's OCR.
 
