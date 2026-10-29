@@ -1,0 +1,13 @@
+{
+  "aliases": [
+    "Minimum operating temperature",
+    "Lower operating temperature limit"
+  ],
+  "columns": [
+    "Min.",
+    "Minimum",
+    "Low"
+  ],
+  "markers": [],
+  "notes": "Aliases explicitly name the lower operating temperature limit without including storage temperature. Columns identify the minimum value in an operating-temperature row containing multiple values. Markers are unnecessary because the row label and column header identify the field."
+}

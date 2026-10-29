@@ -1,0 +1,1 @@
+{"aliases":["Cost of sales","Cost of goods sold","COGS"],"columns":[],"markers":[],"notes":"Aliases directly name cost of sales and exclude operating expenses. Columns is empty because this field is identified by its row label, not a distinct value-column header. Markers is empty because no within-cell qualifier is needed to identify the amount."}

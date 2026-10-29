@@ -1,0 +1,281 @@
+{
+  "issue": 547,
+  "approved_on": "2026-10-29",
+  "source": {
+    "model": "gpt-6.1-sol",
+    "client": "codex-cli 0.162.1, read-only, ephemeral, an empty folder",
+    "run_on": "2026-10-29",
+    "input": "the field name, its description, type and unit, and the names and descriptions of the other fields of the schema; no document"
+  },
+  "rule": "The maintainer approved each field one time. The terms add to the schemas of manifest.json, which stay frozen. The markers of each sbc pair are the union of the model answers for the two fields of the pair.",
+  "fields": {
+    "component": {
+      "operating_temperature_max": {
+        "prompt_sha256": "0e262570a2583ddb5e59321e14153f37c5c6c9f6ebe9315d7b527229c9d6b7b8",
+        "aliases": [
+          "Maximum operating temperature",
+          "Max. operating temperature"
+        ],
+        "columns": [
+          "Max.",
+          "Max",
+          "Maximum"
+        ]
+      },
+      "operating_temperature_min": {
+        "prompt_sha256": "88342e43caf4667936a0c2a1dfa705acc170f9e40fdec116362fe7c961323849",
+        "aliases": [
+          "Minimum operating temperature",
+          "Lower operating temperature limit"
+        ],
+        "columns": [
+          "Min.",
+          "Minimum",
+          "Low"
+        ]
+      },
+      "supply_current_typ": {
+        "prompt_sha256": "2073e3ed96a4b7781f4b156e3fd0a3a74dd070d3a3cf37070b6d3170270c52ff",
+        "aliases": [
+          "Typical supply current",
+          "Power supply current"
+        ],
+        "columns": [
+          "Typ.",
+          "Typ",
+          "Typical"
+        ]
+      },
+      "supply_voltage_max": {
+        "prompt_sha256": "2857813ebfb40753d44e866a072589c4d2244fd55935cdc12c7561e1c6643805",
+        "aliases": [
+          "Maximum recommended supply voltage",
+          "Maximum operating supply voltage"
+        ],
+        "columns": [
+          "Max.",
+          "Max",
+          "Maximum"
+        ],
+        "markers": [
+          "max.",
+          "max"
+        ]
+      },
+      "supply_voltage_min": {
+        "prompt_sha256": "4c09f2a7265edd38854b1053d891eec2521cf6c64b5c09d1368e29fadd32af82",
+        "aliases": [
+          "Minimum recommended supply voltage",
+          "Minimum operating supply voltage"
+        ],
+        "columns": [
+          "Min.",
+          "Min",
+          "Minimum"
+        ]
+      }
+    },
+    "sbc": {
+      "deductible_family": {
+        "prompt_sha256": "14e17fcad6e569f746c2572e292ff993e1549eafd07a75e679602ba5ef2cf8cd",
+        "aliases": [
+          "In-network family deductible",
+          "Family deductible (in-network)"
+        ],
+        "markers": [
+          "family",
+          "per family"
+        ]
+      },
+      "deductible_individual": {
+        "prompt_sha256": "7716576d7934b0a6949fc8198191433eef73aaf89ae05cf800373e1f3df1d5e8",
+        "aliases": [
+          "Individual deductible",
+          "In-network individual deductible"
+        ],
+        "markers": [
+          "individual",
+          "person",
+          "per person",
+          "Self Only"
+        ]
+      },
+      "out_of_pocket_family": {
+        "prompt_sha256": "2854dffef6fb4ad61ff48af9c4db4541623ffa307e1569c53fe58ba6ecd22add",
+        "aliases": [
+          "In-network family out-of-pocket limit",
+          "In-network family out-of-pocket maximum"
+        ],
+        "markers": [
+          "family",
+          "per family"
+        ]
+      },
+      "out_of_pocket_individual": {
+        "prompt_sha256": "d5915b748c917ea6110d3d5e0b99a31085e6a926da8ccf8e305c3a2a740b41e8",
+        "aliases": [
+          "Individual out-of-pocket limit",
+          "Individual out-of-pocket maximum"
+        ],
+        "markers": [
+          "individual",
+          "person",
+          "per person",
+          "Self Only"
+        ]
+      },
+      "specialist_copay": {
+        "prompt_sha256": "e6799ea31d1501fd5f22edc5ee9e896be7976bc07d565d4589a764ba41ee87ed",
+        "aliases": [
+          "Specialist office visit",
+          "Specialist visit copay"
+        ],
+        "columns": [
+          "In-Network Provider",
+          "Network Provider"
+        ]
+      }
+    },
+    "annual": {
+      "cost_of_sales": {
+        "prompt_sha256": "22eeb6eb3e78aa150883c38ce542ea25d4348b490b19ca5af1978883d65b4b97",
+        "aliases": [
+          "Cost of goods sold",
+          "COGS"
+        ]
+      },
+      "gross_profit": {
+        "prompt_sha256": "fc6f96e3af4d4668c8e5908eaa895bdb4a6ebd8878f810a2179a14820b63ffef",
+        "aliases": [
+          "Gross profit/(loss)"
+        ]
+      },
+      "revenue": {
+        "prompt_sha256": "62268afc7863fb3b66ad0f0c6831306a5594f8bac00b0d53ef277a5bdadd13a4",
+        "aliases": [
+          "Sales revenue"
+        ]
+      },
+      "total_assets": {
+        "prompt_sha256": "a46bd1ff8336a5d13872b85f3dde7eb1c6503e9968d74af26f793bd4c8237bec",
+        "aliases": [
+          "Total consolidated assets"
+        ]
+      },
+      "total_equity": {
+        "prompt_sha256": "c2244232558a82161474b6a95d9a5fc8f343bdb6340c0e91ddd5ce07de88f4f9",
+        "aliases": [
+          "Total equity (deficit)"
+        ]
+      },
+      "total_liabilities": {
+        "prompt_sha256": "414fde7202c8a2ffca69392df2aa2446538f9f4be340c3b90e9b48db386e8f0f"
+      }
+    },
+    "sds": {
+      "flash_point": {
+        "prompt_sha256": "c9a401572f352d034af8bbb6425bf6956152376341f11791e778f5194a1c6a6d",
+        "aliases": [
+          "Flashpoint"
+        ]
+      },
+      "initial_boiling_point": {
+        "prompt_sha256": "29c49a7ed36fc59f02744bc44a2f78ca824c4257a9182df06e97bbca1a77f362",
+        "aliases": [
+          "Initial boiling temperature",
+          "IBP"
+        ]
+      },
+      "ph": {
+        "prompt_sha256": "405b4f02d29eceb25dc771951981d13074f86e7d0fab2aed06a2604594926243",
+        "aliases": [
+          "pH value"
+        ]
+      },
+      "relative_density": {
+        "prompt_sha256": "6baa6e63bd0e6c1e4bb7f72f1dab3fa963195bfb107a9aee463cc1505b09d892"
+      },
+      "un_number": {
+        "prompt_sha256": "7f6f830c807f930c1ffdbf94488b779554aea292953812dc326172d0203ab066",
+        "aliases": [
+          "United Nations number"
+        ],
+        "markers": [
+          "UN"
+        ]
+      }
+    }
+  },
+  "removed": [
+    {
+      "kind": "sbc",
+      "field": "deductible_family",
+      "member": "columns",
+      "term": "In-Network Provider",
+      "reason": "SBC values are mostly in answer cells, so columns send right values to review (COLUMN_NOT_AT_VALUE)."
+    },
+    {
+      "kind": "sbc",
+      "field": "deductible_family",
+      "member": "columns",
+      "term": "In-Network",
+      "reason": "SBC values are mostly in answer cells, so columns send right values to review (COLUMN_NOT_AT_VALUE)."
+    },
+    {
+      "kind": "sbc",
+      "field": "deductible_family",
+      "member": "columns",
+      "term": "Family",
+      "reason": "SBC values are mostly in answer cells, so columns send right values to review (COLUMN_NOT_AT_VALUE)."
+    },
+    {
+      "kind": "sbc",
+      "field": "deductible_individual",
+      "member": "columns",
+      "term": "In-Network",
+      "reason": "SBC values are mostly in answer cells, so columns send right values to review (COLUMN_NOT_AT_VALUE)."
+    },
+    {
+      "kind": "sbc",
+      "field": "deductible_individual",
+      "member": "columns",
+      "term": "Network Provider",
+      "reason": "SBC values are mostly in answer cells, so columns send right values to review (COLUMN_NOT_AT_VALUE)."
+    },
+    {
+      "kind": "sbc",
+      "field": "out_of_pocket_family",
+      "member": "markers",
+      "term": "in-network",
+      "reason": "A competing word of the other sbc fields (SPEC 4.6)."
+    },
+    {
+      "kind": "sbc",
+      "field": "out_of_pocket_individual",
+      "member": "columns",
+      "term": "Individual",
+      "reason": "SBC values are mostly in answer cells, so columns send right values to review (COLUMN_NOT_AT_VALUE)."
+    },
+    {
+      "kind": "sbc",
+      "field": "out_of_pocket_individual",
+      "member": "columns",
+      "term": "Self Only",
+      "reason": "SBC values are mostly in answer cells, so columns send right values to review (COLUMN_NOT_AT_VALUE)."
+    },
+    {
+      "kind": "sbc",
+      "field": "out_of_pocket_individual",
+      "member": "columns",
+      "term": "In-Network",
+      "reason": "SBC values are mostly in answer cells, so columns send right values to review (COLUMN_NOT_AT_VALUE)."
+    },
+    {
+      "kind": "annual",
+      "field": "gross_profit",
+      "member": "aliases",
+      "term": "Gross loss",
+      "reason": "A gross loss row prints a positive number for a negative profit, so the sign can be wrong."
+    }
+  ]
+}
