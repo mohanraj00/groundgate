@@ -54,13 +54,13 @@ def runner_envelope(*items, missing=()):
     return envelope(*items) | {"not_found": list(missing)}
 
 
-def fixture(tmp_path, text="Amount 5.", fields=None, settings=None, mutate=None):
+def fixture(tmp_path, text="Amount 5.", fields=None, settings=None, mutate=None, pdf=None):
     directory = tmp_path / "set"
     sources = tmp_path / "sources"
     cache = tmp_path / "cache"
     directory.mkdir(parents=True)
     sources.mkdir()
-    (sources / "doc.pdf").write_bytes(b"synthetic source bytes")
+    (sources / "doc.pdf").write_bytes(pdf or b"synthetic source bytes")
     (sources / "doc.txt").write_text(text, encoding="utf-8")
     fields = fields or {"amount": {"type": "number"}}
     manifest = {
@@ -1439,3 +1439,59 @@ def test_heldout_guard_refuses_a_gap_in_the_loop_records(tmp_path):
     with pytest.raises(harness.CacheError, match="no gap"):
         session.run("baseline", client)
     assert client.prompts == []
+
+
+def _scanned(copy_bytes, **image_only):
+    def change(m, labels, c):
+        doc = m["documents"][0]
+        m["schemas"] = {"scanned": m["schemas"]["kind"]}
+        doc["kind"] = "scanned"
+        doc["image_only"] = {
+            "sha256": harness.digest(copy_bytes),
+            "bytes": len(copy_bytes),
+            "method": "image-only-render/1",
+            "resolution_dpi": 300,
+            "renderer": "pdftoppm 25.01.0",
+        } | image_only
+        doc["source_layer_text_sha256"] = "sha256:" + "1" * 64
+
+    return change
+
+
+def test_scanned_document_reads_the_image_only_copy(tmp_path):
+    copy_bytes = b"image-only copy bytes, larger than the approved download"
+    session, _ = fixture(tmp_path, mutate=_scanned(copy_bytes), pdf=copy_bytes)
+    path = session.sources / "doc.pdf"
+    assert session.paths[path] == harness.digest(copy_bytes)
+    session.check_inputs()
+    path.write_bytes(copy_bytes + b" ")
+    with pytest.raises(harness.CacheError):
+        session.check_inputs()
+
+
+@pytest.mark.parametrize(
+    "image_only",
+    [
+        {"bytes": 1},
+        {"sha256": "sha256:" + "0" * 64},
+        {"method": "image-only/2"},
+        {"resolution_dpi": None},
+        {"method": "image-only/1"},
+        {"renderer": ""},
+        {"extra": 1},
+    ],
+)
+def test_invalid_image_only_copy_refuses(tmp_path, image_only):
+    copy_bytes = b"image-only copy bytes"
+    with pytest.raises(harness.CacheError):
+        fixture(tmp_path, mutate=_scanned(copy_bytes, **image_only), pdf=copy_bytes)
+
+
+def test_image_only_needs_the_scanned_kind(tmp_path):
+    def change(m, labels, c):
+        _scanned(b"x")(m, labels, c)
+        m["documents"][0]["kind"] = "kind"
+        m["schemas"]["kind"] = m["schemas"]["scanned"]
+
+    with pytest.raises(harness.CacheError, match="scanned documents only"):
+        fixture(tmp_path, mutate=change, pdf=b"x")

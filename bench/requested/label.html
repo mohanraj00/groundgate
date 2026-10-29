@@ -113,6 +113,10 @@ function render() {
     box.append(element('legend', `${slot.field}${slot.key === null ? '' : ` / ${slot.key}`}`));
     if (spec.description) box.append(element('p', spec.description));
     if (spec.aliases && spec.aliases.length) box.append(element('p', `Aliases: ${spec.aliases.join(', ')}`));
+    if (spec.type === 'number') {
+      const row = spec.aliases && spec.aliases.length ? spec.aliases.join(' or ') : slot.field;
+      box.append(element('p', `Check every part: the row (${row}); the period or condition; the amount with its printed scale (for example thousands, millions, or a prefix such as m or µ) and its sign; the unit (${spec.unit || 'none'}).`));
+    }
     const status = control(box, 'Decision', 'select', null, {'data-member': 'status'});
     for (const [value, title] of [['unlabeled', 'Not labeled'], ['present', 'Present'], ['absent', 'Absent'], ['unclear', 'Unclear']]) {
       const option = element('option', title); option.value = value; status.append(option);
