@@ -1,0 +1,1 @@
+{"aliases":["Revenue","Turnover","Sales revenue"],"columns":[],"markers":[],"notes":"Aliases are printed labels for revenue, excluding broader income totals. Columns is empty because the field is a standalone financial line item rather than a named value column. Markers is empty because no within-cell qualifier is needed to distinguish revenue from the other fields."}

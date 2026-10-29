@@ -1,0 +1,6 @@
+{
+  "aliases": ["Maximum recommended supply voltage", "Maximum operating supply voltage"],
+  "columns": ["Max.", "Max", "Maximum"],
+  "markers": ["max.", "max"],
+  "notes": "Aliases explicitly name the upper supply-voltage limit for recommended operation. Columns identify the upper value in a recommended supply-voltage row containing multiple values. Markers identify the upper value when minimum and maximum share a cell, provided the context establishes recommended operation rather than absolute ratings."
+}

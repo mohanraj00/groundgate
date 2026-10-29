@@ -1,0 +1,1 @@
+{"aliases":["Maximum operating temperature","Max. operating temperature"],"columns":["Max.","Max","Maximum"],"markers":[],"notes":"Aliases explicitly name the upper operating temperature limit. Columns identify the maximum value when an operating-temperature row contains multiple values. Markers are unnecessary because the row label and maximum column identify the field."}

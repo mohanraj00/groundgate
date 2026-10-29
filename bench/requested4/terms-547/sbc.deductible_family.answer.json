@@ -1,0 +1,6 @@
+{
+  "aliases": ["In-network family deductible", "Family deductible (in-network)"],
+  "columns": ["In-Network Provider", "In-Network", "Family"],
+  "markers": ["family", "per family"],
+  "notes": "Aliases explicitly name the family deductible and its network scope. Columns identify the in-network or family value when the row and other headers establish the remaining context. Markers distinguish the family amount from an individual amount within the same deductible cell."
+}

@@ -1,0 +1,18 @@
+You help write a schema for a document checker. Do not read any file or run any command. Answer only from the text below.
+
+Document kind: component
+Field: supply_current_typ
+Description: Typical supply current at the document reference condition. Distinguish operating modes; do not choose between equally applicable conditions.
+Type: number; unit: mA
+
+The other fields of the same schema:
+- operating_temperature_max: Upper operating temperature limit, not storage temperature.
+- operating_temperature_min: Lower operating temperature limit, not storage temperature.
+- supply_voltage_max: Maximum recommended supply voltage at the same stated reference condition, not an absolute maximum rating.
+- supply_voltage_min: Minimum recommended supply voltage at the stated reference condition, not an absolute maximum rating.
+
+Propose three lists of words, as a document of this kind prints them:
+1. aliases: the names that a document uses for this field, as a row label or a heading. Give only names that name this field and no other quantity. Do not give a name that can also name a section or a different total.
+2. columns: column header words that name the column of this field when a table row holds more than one value (for example "Low" and "High" in a row with two values). Give an empty list if the value of this field is not one column of such a row.
+3. markers: short words next to the value that tell this field apart from another field in the same cell, such as "net" in "10 kg net / 12 kg gross". Give an empty list if no such word is needed.
+Each word must be one that a document prints, with its usual abbreviations. Keep each list short. Put a one-sentence reason for each list in notes.

@@ -1,0 +1,1 @@
+{"aliases":["UN number","UN No.","United Nations number"],"columns":[],"markers":["UN"],"notes":"Aliases explicitly name the product’s UN number. No column qualifier is needed to select this field from a row containing multiple values. The prefix UN identifies the four-digit number when other transport details share the cell."}
