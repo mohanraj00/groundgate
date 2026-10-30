@@ -28,6 +28,9 @@ Json = dict[str, Any]
 _VERSION = "requested-run/1"
 _MAX_FILE = 128 * 1024 * 1024
 _MAX_TEXT = 16 * 1024 * 1024
+_MAX_COPY = 256 * 1024 * 1024
+_DIGEST = re.compile(r"sha256:[0-9a-f]{64}\Z")
+_COPY_METHODS = {"image-only/1", "image-only-render/1"}
 _MAX_REPLY = 8 * 1024 * 1024
 _MAX_REQUEST_CONTEXT = 4096
 _ID = re.compile(r"[a-z][a-z0-9_-]{0,79}\Z")
@@ -192,6 +195,34 @@ def _unlinked(path: Path) -> Path:
     if any(parent.is_symlink() for parent in (path, *path.parents)):
         raise CacheError("symlink paths are not supported")
     return path.resolve()
+
+
+def _image_only(doc: Json) -> Json | None:
+    """Return the checked ``image_only`` member of a scanned document, or None (#548)."""
+    layer = doc.get("source_layer_text_sha256")
+    if layer is not None and (not isinstance(layer, str) or not _DIGEST.fullmatch(layer)):
+        raise CacheError("source_layer_text_sha256 must be a sha256 digest")
+    if "image_only" not in doc:
+        return None
+    value = doc["image_only"]
+    if doc.get("kind") != "scanned" or not isinstance(value, dict):
+        raise CacheError("image_only is for scanned documents only")
+    if set(value) != {"sha256", "bytes", "method", "resolution_dpi", "renderer"}:
+        raise CacheError("unknown or missing image_only member")
+    dpi = value["resolution_dpi"]
+    rendered = value["method"] == "image-only-render/1"
+    if (
+        not isinstance(value["sha256"], str)
+        or not _DIGEST.fullmatch(value["sha256"])
+        or type(value["bytes"]) is not int
+        or not 0 < value["bytes"] <= _MAX_COPY
+        or value["method"] not in _COPY_METHODS
+        or not (type(dpi) is int and dpi > 0 if rendered else dpi is None)
+        or not isinstance(value["renderer"], str)
+        or not value["renderer"].strip()
+    ):
+        raise CacheError("invalid image_only member")
+    return value
 
 
 def _external(path: Path, repository: Path) -> Path:
@@ -580,6 +611,7 @@ class FrozenSet:
             self.directory / "labels.json": labels_sha256,
             _unlinked(configuration.absolute()): configuration_sha256,
         }
+        self.caps: dict[Path, int] = {}
         raw = {path: _read(path) for path in self.paths}
         if any(digest(raw[path]) != sha for path, sha in self.paths.items()):
             raise CacheError("frozen file digest differs")
@@ -642,16 +674,23 @@ class FrozenSet:
                 raise CacheError("unsafe or duplicate document id")
             if doc.get("split") not in {"development", "heldout"}:
                 raise CacheError("unknown split")
-            for suffix, member, cap in (
-                (".pdf", "source_sha256", _MAX_FILE),
-                (".txt", "text_sha256", _MAX_TEXT),
+            copy_of = _image_only(doc)
+            pdf_hash = copy_of["sha256"] if copy_of else doc.get("source_sha256")
+            for suffix, expected, cap in (
+                (".pdf", pdf_hash, _MAX_COPY if copy_of else _MAX_FILE),
+                (".txt", doc.get("text_sha256"), _MAX_TEXT),
             ):
                 path = _unlinked(self.sources / (ident + suffix))
                 body = _read(path, cap)
-                if digest(body) != doc.get(member):
+                if not isinstance(expected, str) or digest(body) != expected:
                     raise CacheError("source or reader text digest differs: " + ident)
-                self.paths[path] = doc[member]
-                if suffix == ".pdf":
+                self.paths[path] = expected
+                self.caps[path] = cap
+                if suffix == ".pdf" and copy_of is not None:
+                    # The OCR arm reads the image-only copy. source_* pins the download.
+                    if len(body) != copy_of["bytes"]:
+                        raise CacheError("image-only copy size differs: " + ident)
+                elif suffix == ".pdf":
                     if (
                         len(body) != doc.get("source_bytes")
                         or type(doc.get("approved_max_bytes")) is not int
@@ -795,7 +834,10 @@ class FrozenSet:
             or digest(encoded(self.documents)) != self._documents_state_sha256
         ):
             raise CacheError("frozen manifest or document metadata changed in memory")
-        if any(digest(_read(path)) != sha for path, sha in self.paths.items()):
+        if any(
+            digest(_read(path, self.caps.get(path, _MAX_FILE))) != sha
+            for path, sha in self.paths.items()
+        ):
             raise CacheError("frozen source, text, label, manifest or configuration changed")
         if source_code_digest() != self.code_sha256:
             raise CacheError("source code changed")

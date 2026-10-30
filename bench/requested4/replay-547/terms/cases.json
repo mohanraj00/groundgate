@@ -1,0 +1,581 @@
+{
+ "gained": [],
+ "lost": [
+  {
+   "document": "component-c09",
+   "field": "supply_voltage_max",
+   "label": "present",
+   "value": "3.6",
+   "unit": "V",
+   "codes_after": [
+    [
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "component-c09",
+   "field": "supply_voltage_min",
+   "label": "present",
+   "value": "3",
+   "unit": "V",
+   "codes_after": [
+    [
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "component-c10",
+   "field": "supply_voltage_max",
+   "label": "present",
+   "value": "3.6",
+   "unit": "V",
+   "codes_after": [
+    [
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "component-c10",
+   "field": "supply_voltage_min",
+   "label": "present",
+   "value": "3",
+   "unit": "V",
+   "codes_after": [
+    [
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "component-c12",
+   "field": "supply_voltage_max",
+   "label": "present",
+   "value": "3.6",
+   "unit": "V",
+   "codes_after": [
+    [
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "component-c12",
+   "field": "supply_voltage_min",
+   "label": "present",
+   "value": "3",
+   "unit": "V",
+   "codes_after": [
+    [
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "component-c17",
+   "field": "operating_temperature_max",
+   "label": "present",
+   "value": "85",
+   "unit": "C",
+   "codes_after": [
+    [
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "component-c17",
+   "field": "operating_temperature_min",
+   "label": "present",
+   "value": "-40",
+   "unit": "C",
+   "codes_after": [
+    [
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "component-c19",
+   "field": "operating_temperature_max",
+   "label": "present",
+   "value": "105",
+   "unit": "C",
+   "codes_after": [
+    [
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "component-c19",
+   "field": "operating_temperature_min",
+   "label": "present",
+   "value": "-40",
+   "unit": "C",
+   "codes_after": [
+    [
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "sbc-c18",
+   "field": "specialist_copay",
+   "label": "present",
+   "value": "25",
+   "unit": "USD",
+   "codes_after": [
+    [
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "sbc-c19",
+   "field": "specialist_copay",
+   "label": "present",
+   "value": "25",
+   "unit": "USD",
+   "codes_after": [
+    [
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "sbc-c20",
+   "field": "specialist_copay",
+   "label": "present",
+   "value": "15",
+   "unit": "USD",
+   "codes_after": [
+    [
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  }
+ ],
+ "escapes_added": [],
+ "escapes_removed": [
+  {
+   "document": "component-c17",
+   "field": "supply_current_typ",
+   "label": "absent",
+   "value": "2",
+   "unit": "mA",
+   "codes_after": [
+    [
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "component-c19",
+   "field": "supply_current_typ",
+   "label": "absent",
+   "value": "2",
+   "unit": "mA",
+   "codes_after": [
+    [
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  }
+ ],
+ "new_codes": [
+  {
+   "document": "component-c01",
+   "field": "operating_temperature_max",
+   "label": "present",
+   "value": "85",
+   "unit": "C",
+   "codes_after": [
+    [
+     "FIELD_CITATION_INVALID",
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "component-c01",
+   "field": "operating_temperature_min",
+   "label": "present",
+   "value": "-40",
+   "unit": "C",
+   "codes_after": [
+    [
+     "FIELD_CITATION_INVALID",
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "component-c01",
+   "field": "supply_voltage_max",
+   "label": "present",
+   "value": "35",
+   "unit": "V",
+   "codes_after": [
+    [
+     "FIELD_CITATION_INVALID",
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "component-c01",
+   "field": "supply_voltage_min",
+   "label": "present",
+   "value": "6",
+   "unit": "V",
+   "codes_after": [
+    [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "component-c02",
+   "field": "operating_temperature_max",
+   "label": "present",
+   "value": "85",
+   "unit": "C",
+   "codes_after": [
+    [
+     "FIELD_CITATION_INVALID",
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "component-c02",
+   "field": "operating_temperature_min",
+   "label": "present",
+   "value": "-40",
+   "unit": "C",
+   "codes_after": [
+    [
+     "SIGN_CITATION_INVALID",
+     "COLUMN_NOT_AT_VALUE",
+     "VALUE_DERIVED"
+    ]
+   ]
+  },
+  {
+   "document": "component-c02",
+   "field": "supply_voltage_max",
+   "label": "present",
+   "value": "35",
+   "unit": "V",
+   "codes_after": [
+    [
+     "FIELD_CITATION_INVALID",
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "component-c02",
+   "field": "supply_voltage_min",
+   "label": "present",
+   "value": "6",
+   "unit": "V",
+   "codes_after": [
+    [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "component-c09",
+   "field": "operating_temperature_max",
+   "label": "present",
+   "value": "125",
+   "unit": "C",
+   "codes_after": [
+    [
+     "FIELD_CITATION_INVALID",
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "component-c09",
+   "field": "operating_temperature_min",
+   "label": "present",
+   "value": "-40",
+   "unit": "C",
+   "codes_after": [
+    [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "component-c09",
+   "field": "supply_current_typ",
+   "label": "present",
+   "value": "1.2",
+   "unit": "mA",
+   "codes_after": [
+    [
+     "FIELD_CITATION_INVALID",
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "component-c09",
+   "field": "supply_voltage_max",
+   "label": "present",
+   "value": "3.6",
+   "unit": "V",
+   "codes_after": [
+    [
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "component-c09",
+   "field": "supply_voltage_min",
+   "label": "present",
+   "value": "3",
+   "unit": "V",
+   "codes_after": [
+    [
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "component-c10",
+   "field": "operating_temperature_max",
+   "label": "present",
+   "value": "125",
+   "unit": "C",
+   "codes_after": [
+    [
+     "FIELD_CITATION_INVALID",
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "component-c10",
+   "field": "operating_temperature_min",
+   "label": "present",
+   "value": "-40",
+   "unit": "C",
+   "codes_after": [
+    [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "component-c10",
+   "field": "supply_voltage_max",
+   "label": "present",
+   "value": "3.6",
+   "unit": "V",
+   "codes_after": [
+    [
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "component-c10",
+   "field": "supply_voltage_min",
+   "label": "present",
+   "value": "3",
+   "unit": "V",
+   "codes_after": [
+    [
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "component-c12",
+   "field": "operating_temperature_max",
+   "label": "present",
+   "value": "85",
+   "unit": "C",
+   "codes_after": [
+    [
+     "FIELD_CITATION_INVALID",
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "component-c12",
+   "field": "operating_temperature_min",
+   "label": "present",
+   "value": "-40",
+   "unit": "C",
+   "codes_after": [
+    [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "component-c12",
+   "field": "supply_current_typ",
+   "label": "present",
+   "value": "2.1",
+   "unit": "mA",
+   "codes_after": [
+    [
+     "UNIT_CITATION_INVALID",
+     "FIELD_CITATION_INVALID",
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "component-c12",
+   "field": "supply_voltage_max",
+   "label": "present",
+   "value": "3.6",
+   "unit": "V",
+   "codes_after": [
+    [
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "component-c12",
+   "field": "supply_voltage_min",
+   "label": "present",
+   "value": "3",
+   "unit": "V",
+   "codes_after": [
+    [
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "component-c17",
+   "field": "operating_temperature_max",
+   "label": "present",
+   "value": "85",
+   "unit": "C",
+   "codes_after": [
+    [
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "component-c17",
+   "field": "operating_temperature_min",
+   "label": "present",
+   "value": "-40",
+   "unit": "C",
+   "codes_after": [
+    [
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "component-c19",
+   "field": "operating_temperature_max",
+   "label": "present",
+   "value": "105",
+   "unit": "C",
+   "codes_after": [
+    [
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "component-c19",
+   "field": "operating_temperature_min",
+   "label": "present",
+   "value": "-40",
+   "unit": "C",
+   "codes_after": [
+    [
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "sbc-c18",
+   "field": "deductible_family",
+   "label": "present",
+   "value": "0",
+   "unit": "USD",
+   "codes_after": [
+    [
+     "FIELD_CITATION_INVALID",
+     "MARKER_OTHER_FIELD"
+    ]
+   ]
+  },
+  {
+   "document": "sbc-c18",
+   "field": "specialist_copay",
+   "label": "present",
+   "value": "25",
+   "unit": "USD",
+   "codes_after": [
+    [
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "sbc-c19",
+   "field": "specialist_copay",
+   "label": "present",
+   "value": "25",
+   "unit": "USD",
+   "codes_after": [
+    [
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  },
+  {
+   "document": "sbc-c20",
+   "field": "specialist_copay",
+   "label": "present",
+   "value": "15",
+   "unit": "USD",
+   "codes_after": [
+    [
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   ]
+  }
+ ],
+ "counts": {
+  "gained": 0,
+  "lost": 13,
+  "escapes_added": 0,
+  "escapes_removed": 2,
+  "new_codes": 30
+ }
+}
