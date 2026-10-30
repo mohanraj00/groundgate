@@ -20,7 +20,7 @@ def write(path, obj):
     return d.digest(path.read_bytes())
 
 
-def fixture(tmp_path):
+def fixture(tmp_path, image_only=None):
     directory, sources, inputs, cache = (
         tmp_path / n for n in ("set", "sources", "inputs", "cache")
     )
@@ -52,6 +52,19 @@ def fixture(tmp_path):
             }
         ],
     }
+    if image_only is not None:
+        # A scanned document: doc.pdf is the image-only copy, not the download.
+        copy_bytes = b"image-only copy, larger than the download"
+        (sources / "doc.pdf").write_bytes(copy_bytes)
+        manifest["schemas"] = {"scanned": schema}
+        manifest["documents"][0]["kind"] = "scanned"
+        manifest["documents"][0]["image_only"] = {
+            "sha256": d.digest(copy_bytes),
+            "bytes": len(copy_bytes),
+            "method": "image-only-render/1",
+            "resolution_dpi": 300,
+            "renderer": "pdftoppm 26.04.0",
+        } | image_only
     labels = {
         "status": "sealed",
         "documents": [
@@ -902,3 +915,24 @@ def test_retained_running_head_is_scored_by_target_block_not_text_presence():
     annotation[0]["routes"][0]["cases"][0]["target"]["box"] = [0, 20, 40, 30]
     ambiguous = d.score_layout(annotation, observations)["routes"]
     assert all(r["evaluated"] == 0 and r["unassessed"] == 1 for r in ambiguous.values())
+
+
+def test_scanned_document_reads_the_image_only_copy(tmp_path):
+    session, *_ = fixture(tmp_path, image_only={})
+    run = session()
+    path = run.sources / "doc.pdf"
+    assert run.paths[path] == d.digest(path.read_bytes())
+    run.check_inputs()
+    path.write_bytes(path.read_bytes() + b" ")
+    with pytest.raises(d.DiagnosticError):
+        run.check_inputs()
+
+
+@pytest.mark.parametrize(
+    "image_only",
+    [{"sha256": "sha256:" + "0" * 64}, {"bytes": 1}, {"method": "image-only/2"}],
+)
+def test_invalid_image_only_copy_refuses(tmp_path, image_only):
+    session, *_ = fixture(tmp_path, image_only=image_only)
+    with pytest.raises(d.DiagnosticError):
+        session()
