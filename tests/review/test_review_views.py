@@ -90,6 +90,8 @@ def test_the_latest_view_gives_each_resolution_that_read_the_current_heads(
         a = write_resolution(store, k, None, ["ben", "cy"]).key
         b = write_resolution(store, k, AGREE_2, ["ben", "cy"]).key
         store.put("resolution@1", b'{"packet":1}')  # not a resolution
+        no_policy = {"answers": [], "packet": k, "policy": "not-a-key"}
+        store.put("resolution@1", jcs(no_policy).encode("utf-8"))
         found = json.loads(latest_view(store))
     assert found == {
         "format": "latest-resolutions@1",
@@ -157,3 +159,18 @@ def test_the_measures_view_gives_each_policy_and_each_split(tmp_path: Path) -> N
     every_all = found["results"][[p for p, _ in policies].index(every) * 3]
     assert every_all["packets"] == 2 and every_all["skipped"] == 1  # ben's bad record
     assert found["results"][1]["packets"] == 0 and found["results"][1]["no_split"] == 3
+
+
+def test_a_symlink_answer_log_makes_the_packet_stale(tmp_path: Path) -> None:
+    store, k, tasks = store_with_tasks(tmp_path / "store")
+    with store:
+        write_resolution(store, k, None, [])
+        Review(store, "ben").answer(answer(tasks["net_income"], "not_in_document"))
+        assert json.loads(latest_view(store))["stale"] == [k]
+    (log,) = (tmp_path / "store" / "logs" / "answers").rglob("*.jsonl")
+    log.rename(tmp_path / "moved.jsonl")
+    log.symlink_to(tmp_path / "moved.jsonl")
+    with FolderStore(tmp_path / "store") as store:
+        found = json.loads(latest_view(store))
+    # the log is not listed, but the old resolution with no answers is still not current
+    assert found["resolutions"] == [] and found["stale"] == [k]
