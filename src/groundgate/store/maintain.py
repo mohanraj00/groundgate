@@ -538,6 +538,7 @@ def check(store: FolderStore, *, repair: bool = False) -> Report:
                 named(f"the reading {k}", kind, n)
         except StoreError as exc:
             report.find(str(exc))
+    _orphan_run_objects(report, objects)
 
     logs, problems = store.log_names()
     for problem in problems:
@@ -559,6 +560,27 @@ def check(store: FolderStore, *, repair: bool = False) -> Report:
         except StoreError as exc:
             report.find(str(exc))
     return report
+
+
+def _orphan_run_objects(report: Report, objects: _Objects) -> None:
+    """A finding for each prompt, reply and admission that no run record of the store names.
+    Only a run record names them, so ``forget`` cannot find them again: a ``forget`` of 0.12
+    removed a changed record and kept them, and so does ``FolderStore.forget`` on the key of a
+    record (#499). A run record or an object that cannot be read can name any of them, and it
+    is a finding already, so then there is no search."""
+    seen: set[str] = set()
+    for k in sorted(k for k, kind in objects.kinds.items() if kind and kind.startswith("run@")):
+        try:
+            found, _ = _run_objects(objects, _run(objects, k))
+        except (StoreError, ValueError, RecursionError):
+            return
+        seen.update(n for _, n in found)
+    if objects.unread():
+        return
+    for kind in ("prompt@1", "reply@1", "admission@1"):
+        for k in sorted(objects.of(kind)):
+            if k not in seen:
+                report.find(f"the {kind} object {k}: no run record names it")
 
 
 def _split_view(report: Report, log: tuple[str, ...], records: list[dict[str, Any]]) -> None:
