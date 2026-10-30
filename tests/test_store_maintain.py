@@ -514,7 +514,8 @@ def test_forget_names_only_the_objects_of_its_packet(
     # The other packet keeps its prompts, replies and admissions.
     with FolderStore(root) as store:
         assert check(store).findings == [
-            f"{_rel(bad)} is not a valid reply@1 object: a reply@1 object is not UTF-8"
+            f"{_rel(bad)} is not a valid reply@1 object: a reply@1 object is not UTF-8",
+            f"the reply@1 object {bad}: no run record names it",  # #499
         ]
         done = forget_packet(store, two, "asked")
     # The reply is the same for both runs, so the first forget removed it for both.
@@ -1028,3 +1029,43 @@ def test_forget_log_after_another_forget_took_the_log(
         with pytest.raises(NotFound):
             store.forget_log(log, "asked")
         assert store.read(("deleted",)) == []
+
+
+def test_check_finds_the_objects_that_no_run_record_names(tmp_path: Path) -> None:
+    """A forget of 0.12 removed a changed run record and kept its prompts, replies and
+    admissions, and so does FolderStore.forget on the key of a record. check reports each
+    one, and FolderStore.forget on its key removes it (#499)."""
+    root = tmp_path / "s"
+    with FolderStore(root) as store:
+        packet = save_run(store)
+        run = json.loads(store.get("packet@1", packet))["run"]
+        store.forget(run, "the record changed")
+    left = sorted(
+        (v, k) for k, v in all_keys(root).items() if v in ("prompt@1", "reply@1", "admission@1")
+    )
+    assert {v for v, _ in left} >= {"prompt@1", "reply@1"}
+    with FolderStore(root) as store:
+        found = [f for f in check(store).findings if "no run record names it" in f]
+    assert sorted(found) == sorted(f"the {v} object {k}: no run record names it" for v, k in left)
+    with FolderStore(root) as store:
+        for _, k in left:
+            store.forget(k, "no run record names it")
+        found = [f for f in check(store).findings if "no run record names it" in f]
+    assert found == []
+
+
+def test_check_does_not_look_for_orphans_past_a_run_record_that_it_cannot_read(
+    tmp_path: Path,
+) -> None:
+    """A run record that cannot be read can name each prompt, reply and admission. check
+    reports the record, and no orphan (#499)."""
+    root = tmp_path / "s"
+    with FolderStore(root) as store:
+        packet = save_run(store)
+        run = json.loads(store.get("packet@1", packet))["run"]
+    path = path_of(root, run)
+    path.write_bytes(path.read_bytes() + b"x")
+    with FolderStore(root) as store:
+        report = check(store)
+    assert report.findings
+    assert not [f for f in report.findings if "no run record names it" in f]
