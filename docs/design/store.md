@@ -258,6 +258,9 @@ their issues (#432).
    it. If a copy of the original record exists, put it back and run `forget` again. If not,
    call `FolderStore.forget` on the key of the record. Its prompts, replies and admissions
    then stay with no record that names them, and a second `forget --all` removes the packet.
+   `store check` reports each prompt, reply and admission that no run record names, and
+   `FolderStore.forget` on its key removes it (#499). A `forget` of 0.12 left such objects
+   when it removed a changed run record.
    A run record names its prompts, replies and admissions by run keys, and the deleted log
    keeps the run keys of each one that `groundgate store forget` removes. If a run record names a run key of the
    deleted log, the object was removed before, and `forget` prints it as "absent". If a run
