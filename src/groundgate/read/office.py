@@ -243,14 +243,15 @@ def _main(z: _Zip, kind: str) -> str:
 
 class _Styles:
     """The paragraph and character styles of a DOCX file that change what ``read`` gives: the
-    heading level of a paragraph style, and the ``vanish`` and ``vertAlign`` properties of each
-    style. A style without a property takes it from its ``basedOn`` style."""
+    heading level and the numbering of a paragraph style, and the ``vanish`` and ``vertAlign``
+    of each style. A style without a property takes it from its ``basedOn`` style."""
 
     def __init__(self) -> None:
         self.levels: dict[str, int] = {}
         self.vanish: dict[str, bool] = {}
         self.align: dict[str, str] = {}
         self.based_on: dict[str, str] = {}
+        self.lists: dict[str, bool] = {}  # the ``numId`` of a style: not 0 gives list items
         self.default = False
         self.default_align: str | None = None
         self.default_paragraph: str | None = None  # the style of a paragraph with no pStyle
@@ -265,6 +266,10 @@ class _Styles:
     def level(self, style: str | None) -> int | None:
         """The heading level of a paragraph style, or 0 for body text, or None."""
         return self._find(self.levels, style)
+
+    def listed(self, style: str | None) -> bool:
+        found = self._find(self.lists, style)
+        return bool(found)
 
     def paragraph(self, style: str | None) -> str | None:
         """The style of a paragraph: its ``pStyle``, or the default paragraph style."""
@@ -289,6 +294,7 @@ def _styles(z: _Zip, document: str) -> _Styles:
         return out
     stack: list[str] = []
     current: list[str] = []  # the id and the type of the open style
+    outlined: set[str] = set()  # the styles with an outline level, which comes before the name
 
     def start(tag: str, attrs: dict[str, str]) -> None:
         parent = stack[-1] if stack else ""
@@ -317,12 +323,15 @@ def _styles(z: _Zip, document: str) -> _Styles:
         elif tag == "w:name":
             value = attrs.get("val", "").strip().lower()
             m = _HEADING.fullmatch(value)
-            if m or value == "title":
+            if (m or value == "title") and current[0] not in outlined:
                 out.levels[current[0]] = min(int(m.group(1)), 6) if m else 1
-        elif tag == "w:outlineLvl" and current[0] not in out.levels:
+        elif tag == "w:outlineLvl" and parent == "w:pPr":
             level = _outline(attrs)
             if level is not None:
                 out.levels[current[0]] = level
+                outlined.add(current[0])
+        elif tag == "w:numId" and parent == "w:numPr" and stack[-3:-2] == ["w:pPr"]:
+            out.lists[current[0]] = attrs.get("val", "0") != "0"
 
     def end(tag: str) -> None:
         stack.pop()
@@ -402,7 +411,7 @@ class _Docx:
                 self.w.block(1)
             else:
                 self._break()
-                self.para = {"start": self.w.size, "style": None, "outline": None, "list": False}
+                self.para = {"start": self.w.size, "style": None, "outline": None, "list": None}
         elif tag == "w:tbl":
             if self.para is not None:
                 self.inner += 1
@@ -487,8 +496,8 @@ class _Docx:
         elif tag == "w:outlineLvl" and parent == "w:pPr":
             self.para["outline"] = _outline(attrs)
             return
-        elif tag == "w:numId" and attrs.get("val", "0") != "0":
-            self.para["list"] = True
+        elif tag == "w:numId" and parent == "w:numPr":
+            self.para["list"] = attrs.get("val", "0") != "0"  # numId 0 removes the style's list
             return
         if tag == "w:r":
             self.vanish, self.run_style, self.align = None, None, None
@@ -581,12 +590,14 @@ class _Docx:
         assert self.para is not None
         para, self.para = self.para, None
         container = self.containers[-1]
+        style = self.styles.paragraph(para["style"])
         level = para["outline"]  # a direct outline level comes before the style
         if level is None:
-            level = self.styles.level(self.styles.paragraph(para["style"]))
+            level = self.styles.level(style)
+        listed = para["list"] if para["list"] is not None else self.styles.listed(style)
         level = level or None
         before = len(self.n.raws)
-        if level is not None or not para["list"]:
+        if level is not None or not listed:
             container[1] = None
             kind = "heading" if level is not None else "paragraph"
             i = self.n.open(kind, container[0], {"level": level} if level is not None else None)

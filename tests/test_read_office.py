@@ -614,6 +614,24 @@ def test_docx_text_box_paragraph_style_hides_runs(tmp_path: Path) -> None:
     assert text == "Before\n5 mg\nafter"
 
 
+def test_docx_style_outline_level_and_list(tmp_path: Path) -> None:
+    styles = (
+        '<w:style w:type="paragraph" w:styleId="Plain"><w:name w:val="heading 1"/>'
+        '<w:pPr><w:outlineLvl w:val="9"/></w:pPr></w:style>'
+        '<w:style w:type="paragraph" w:styleId="Step"><w:pPr>'
+        '<w:numPr><w:numId w:val="3"/></w:numPr></w:pPr></w:style>'
+    )
+    off = '<w:pStyle w:val="Step"/><w:numPr><w:numId w:val="0"/></w:numPr>'
+    body = (
+        _p("Dose", '<w:pStyle w:val="Plain"/>')
+        + _p("500 mg", '<w:pStyle w:val="Step"/>')
+        + _p("5 mg", '<w:pStyle w:val="Step"/>')
+        + _p("Note", off)
+    )
+    _, nodes = _nodes(_write(tmp_path, "l.docx", docx(body, styles)))
+    assert [n["kind"] for n in nodes] == ["paragraph", "list", "item", "item", "paragraph"]
+
+
 def test_docx_properties_before_a_change_are_not_used(tmp_path: Path) -> None:
     styles = (
         '<w:style w:type="paragraph" w:styleId="Draft"><w:rPr><w:vanish/></w:rPr></w:style>'
