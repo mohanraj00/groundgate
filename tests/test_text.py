@@ -119,6 +119,21 @@ def test_many_space_groups_on_one_line_take_linear_time() -> None:
     assert_linear(prepare, 2000, 8000)
 
 
+def test_a_long_line_with_no_tab_takes_linear_time() -> None:
+    """The first read of the space groups finds the lines with a tab in linear time (#427)."""
+
+    def prepare(n: int) -> Callable[[], None]:
+        text = "1 2 " + "x" * n
+
+        def run() -> None:
+            _grouped.cache_clear()
+            assert len(tokens(text)) == 2
+
+        return run
+
+    assert_linear(prepare, 20_000, 80_000)
+
+
 @given(st.integers(min_value=-(10**12), max_value=10**12))
 def test_grouped_integers_round_trip(n: int) -> None:
     assert parse_value(f"{n:,}") == n
@@ -467,6 +482,15 @@ def test_code_scale(text: str, unit: str, power: int | None, form: bool) -> None
     (SPEC §4.1, §4.6, spec 0.12, #568)."""
     assert item_scale(text, 0, len(text)) == power
     assert scale_form(text, 0, len(text), unit, []) is form
+
+
+def test_a_code_scale_that_continues_after_the_item_is_none() -> None:
+    """An item that ends inside "SEKmn" holds no code scale (SPEC §4.1, #568)."""
+    text = "SEKmn\nSales\t5"
+    assert item_scale(text, 0, 4) is None
+    assert not scale_form(text, 0, 4, "SEK", [])
+    assert item_scale("SEKm\t5", 0, 4) == 6
+    assert scale_form("SEKm\t5", 0, 4, "SEK", [])
 
 
 @pytest.mark.parametrize(("word", "power"), [("THOUSAND", 3), ("Million", 6), ("LAKH", 5)])

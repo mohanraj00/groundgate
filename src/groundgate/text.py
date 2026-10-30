@@ -129,9 +129,6 @@ def _next_to_group_space(text: str, s: int, e: int) -> bool:
     return before or (e < len(text) and text[e] in _GROUP_SPACES and _digit(text, e + 1))
 
 
-_TAB_LINE = re.compile(r"[^\n]*\t[^\n]*")
-
-
 def _grouped_at(text: str, s: int) -> Token | None:
     """The space-grouped token that holds ``s``, or None."""
     starts, found = _grouped(text)
@@ -144,8 +141,14 @@ def _grouped(text: str) -> tuple[list[int], list[Token]]:
     """The space-grouped tokens of the text, on its lines that hold a tab (SPEC §4.1, #427), and
     their starts. The text is read once, so many tokens on one line stay linear."""
     found: list[Token] = []
-    for line in _TAB_LINE.finditer(text):
-        for m in _TOKEN.finditer(text, line.start(), line.end()):
+    ls = 0
+    while ls <= len(text):
+        le = text.find("\n", ls)
+        le = len(text) if le < 0 else le
+        line, ls = (ls, le), le + 1
+        if text.find("\t", *line) < 0:
+            continue
+        for m in _TOKEN.finditer(text, *line):
             s = m.start()
             if found and s < found[-1].end:
                 continue
@@ -1195,8 +1198,8 @@ def scale_form(text: str, start: int, end: int, unit: str | None, forms: list[st
     currency form and a scale word with no "per" or "/" before the form; or a code scale whose
     currency is the unit (spec 0.12, #568)."""
     voc = _VOCAB.get()
-    for m in voc._CODE_SCALE.finditer(text, start, end):
-        if ("ZAR" if m.group(1) == "R" else m.group(1)) == unit:
+    for m in voc._CODE_SCALE.finditer(text, start, min(len(text), end + 1)):
+        if m.end() <= end and ("ZAR" if m.group(1) == "R" else m.group(1)) == unit:
             return True
     first, second, third = _scale_form_patterns(unit, tuple(forms))
     if first.search(text, start, end) or (second is not None and second.search(text, start, end)):
@@ -1284,12 +1287,22 @@ def item_scale(text: str, start: int, end: int) -> int | None:
     """The power of ten of the first scale word in text[start:end], also with a final "s", or
     of the first currency scale or code scale, whichever comes first."""
     voc = _VOCAB.get()
-    m = voc._ITEM_SCALE.search(text, start, end)
-    if m is None:
-        return None
-    if m.group(1) is not None:
-        return voc._SCALE_EXP[_listed(voc._SCALE_EXP, m.group(1))]
-    return voc._SUFFIX_EXP[(m.group(2) or m.group(4)).lower()]
+    for m in voc._ITEM_SCALE.finditer(text, start, end):
+        if m.group(1) is not None:
+            return voc._SCALE_EXP[_listed(voc._SCALE_EXP, m.group(1))]
+        if _whole_code(text, m, end):
+            return voc._SUFFIX_EXP[(m.group(2) or m.group(4)).lower()]
+    return None
+
+
+def _whole_code(text: str, m: re.Match[str], end: int) -> bool:
+    """Whether a match of the item scale pattern is no code scale, or a code scale that the text
+    after ``end`` does not continue, as "SEKm" in "SEKmn" (SPEC §4.1, #568)."""
+    voc = _VOCAB.get()
+    if m.group(4) is None:
+        return True
+    whole = voc._CODE_SCALE.match(text, m.start(), min(len(text), end + 1))
+    return whole is not None and whole.end() <= end
 
 
 def scale_between(text: str, start: int, end: int, power: int | None) -> bool:
@@ -1297,6 +1310,8 @@ def scale_between(text: str, start: int, end: int, power: int | None) -> bool:
     a code scale whose power of ten is not ``power`` (SPEC §4.6)."""
     voc = _VOCAB.get()
     for m in voc._ITEM_SCALE.finditer(text, start, end):
+        if not _whole_code(text, m, end):
+            continue
         if m.group(1) is not None or voc._SUFFIX_EXP[(m.group(2) or m.group(4)).lower()] != power:
             return True
     return False
