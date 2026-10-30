@@ -1,0 +1,26 @@
+{
+ "name": "doubt-extra-key",
+ "description": "A doubt list with an entry with another key breaks the rule of SPEC 2.1 (spec 0.12, #535).",
+ "document": "Fee\t$90 é\n",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  }
+ },
+ "policy": null,
+ "doubt": [
+  {
+   "start": 0,
+   "end": 3,
+   "confidence": 0.5,
+   "word": "Fee"
+  }
+ ],
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

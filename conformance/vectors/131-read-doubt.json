@@ -1,0 +1,214 @@
+{
+ "name": "131-read-doubt",
+ "description": "A packet's doubt list holds the spans that a reader read with a low confidence, as OCR does. A document item of the candidate that passes its check and shares a byte with a doubt span below policy.min_read_confidence (default 1) flags READ_DOUBT. A doubt span that no cited item touches flags nothing, and a candidate that fails a check is rejected as before (spec 0.12, #535).",
+ "document": "Scanned invoice\n\nTotal due\t$1,250\nTax\t$80\nShipping\t$45\nDiscount\t$15\nFee\t$90\n",
+ "schema": {
+  "fields": {
+   "total": {
+    "type": "number",
+    "unit": "USD",
+    "multiple": false,
+    "aliases": [
+     "Total due"
+    ]
+   },
+   "tax": {
+    "type": "number",
+    "unit": "USD",
+    "multiple": false,
+    "aliases": [
+     "Tax"
+    ]
+   },
+   "ship": {
+    "type": "number",
+    "unit": "USD",
+    "multiple": false,
+    "aliases": [
+     "Shipping"
+    ]
+   },
+   "disc": {
+    "type": "number",
+    "unit": "USD",
+    "multiple": false,
+    "aliases": [
+     "Discount"
+    ]
+   },
+   "fee": {
+    "type": "number",
+    "unit": "USD",
+    "multiple": false,
+    "aliases": [
+     "Fee"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "doubt": [
+  {
+   "confidence": 0.42,
+   "start": 28,
+   "end": 33
+  },
+  {
+   "confidence": 0.3,
+   "start": 34,
+   "end": 37
+  },
+  {
+   "confidence": 0.5,
+   "start": 50,
+   "end": 51
+  },
+  {
+   "confidence": 0.6,
+   "start": 65,
+   "end": 67
+  },
+  {
+   "confidence": 0.2,
+   "start": 68,
+   "end": 71
+  }
+ ],
+ "candidates": [
+  {
+   "id": "rd1",
+   "field": "total",
+   "value": "1250",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 27,
+     "end": 33,
+     "text": "$1,250"
+    },
+    {
+     "role": "field",
+     "text": "Total due"
+    }
+   ]
+  },
+  {
+   "id": "rd2",
+   "field": "tax",
+   "value": "80",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 38,
+     "end": 41,
+     "text": "$80"
+    },
+    {
+     "role": "field",
+     "text": "Tax"
+    }
+   ]
+  },
+  {
+   "id": "rd3",
+   "field": "disc",
+   "value": "15",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 64,
+     "end": 67,
+     "text": "$15"
+    },
+    {
+     "role": "field",
+     "text": "Discount"
+    }
+   ]
+  },
+  {
+   "id": "rd4",
+   "field": "ship",
+   "value": "45",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 51,
+     "end": 54,
+     "text": "$45"
+    },
+    {
+     "role": "field",
+     "text": "Shipping"
+    }
+   ]
+  },
+  {
+   "id": "rd5",
+   "field": "fee",
+   "value": "90",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 72,
+     "end": 75,
+     "text": "$90"
+    }
+   ]
+  },
+  {
+   "id": "rd6",
+   "field": "tax",
+   "value": "81",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 38,
+     "end": 41,
+     "text": "$80"
+    },
+    {
+     "role": "field",
+     "text": "Tax"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "READ_DOUBT"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "READ_DOUBT"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "READ_DOUBT"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

@@ -39,9 +39,11 @@ def vector(
     document_source: str | None = None,
     relations: list[tuple[str, str | None, bool, str, str]] | None = None,
     packs: list[dict[str, Any]] | None = None,
+    doubt: list[dict[str, Any]] | None = None,
 ) -> None:
     """``relations`` is the receipt's relation results (SPEC §5), each as (id, key, holds,
-    difference, allowance), in receipt order; None when the schema has no relations."""
+    difference, allowance), in receipt order; None when the schema has no relations. ``doubt``
+    is the packet's doubt list (SPEC §2.1), each entry a quote marker with a ``confidence``."""
     VECTORS.append(
         {
             "name": name,
@@ -61,6 +63,7 @@ def vector(
                 for i, k, h, d, a in relations
             ],
             "packs": packs,
+            "doubt": doubt,
         }
     )
 
@@ -5906,6 +5909,117 @@ for name, member, words, why in [
         }
     )
 
+# ---------------------------------------------------------------- read doubt (spec 0.12, #535)
+DOUBT_DOC = (
+    "Scanned invoice\n\nTotal due\t$1,250\nTax\t$80\nShipping\t$45\nDiscount\t$15\nFee\t$90\n"
+)
+DOUBT_FIELDS = {
+    "fields": {
+        "total": money("USD", "Total due"),
+        "tax": money("USD", "Tax"),
+        "ship": money("USD", "Shipping"),
+        "disc": money("USD", "Discount"),
+        "fee": money("USD", "Fee"),
+    }
+}
+
+
+def doubt(quote: str, confidence: float, n: int = 1) -> dict[str, Any]:
+    """A doubt entry (SPEC §2.1) on the n-th occurrence of ``quote``."""
+    return q(quote, n, NO_TEXT, confidence=confidence)
+
+
+DOUBTS = [
+    doubt("1,250", 0.42),
+    doubt("Tax", 0.3),
+    doubt("\t", 0.5, 3),  # the tab between "Shipping" and "$45"
+    doubt("15", 0.6),
+    doubt("Fee", 0.2),
+]
+READ_DOUBT = (REVIEW, ["READ_DOUBT"])
+
+vector(
+    "131-read-doubt",
+    "A packet's doubt list holds the spans that a reader read with a low confidence, as OCR "
+    "does. A document item of the candidate that passes its check and shares a byte with a "
+    "doubt span below policy.min_read_confidence (default 1) flags READ_DOUBT. A doubt span "
+    "that no cited item touches flags nothing, and a candidate that fails a check is rejected "
+    "as before (spec 0.12, #535).",
+    DOUBT_DOC,
+    DOUBT_FIELDS,
+    [
+        # admitted in spec 0.11: the packet had no doubt list
+        c("rd1", "total", "1250", "USD", [q("$1,250"), row("Total due")], READ_DOUBT),
+        c("rd2", "tax", "80", "USD", [q("$80"), row("Tax")], READ_DOUBT),
+        c("rd3", "disc", "15", "USD", [q("$15"), row("Discount")], READ_DOUBT),
+        # must not change: the doubt span on the tab shares no byte with a cited item
+        c("rd4", "ship", "45", "USD", [q("$45"), row("Shipping")]),
+        # must not change: the doubt span on "Fee" is not cited
+        c("rd5", "fee", "90", "USD", [q("$90")]),
+        # must not change: the value fails step 10
+        c("rd6", "tax", "81", "USD", [q("$80"), row("Tax")],
+          ("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
+    ],
+    doubt=DOUBTS,
+)  # fmt: skip
+
+vector(
+    "132-read-doubt-limit",
+    "policy.min_read_confidence sets the limit: a doubt span flags READ_DOUBT only when its "
+    "confidence is below the limit. With 0.4, the spans of 0.42 and 0.6 flag nothing, and the "
+    "span of 0.3 still flags (spec 0.12, #535).",
+    DOUBT_DOC,
+    DOUBT_FIELDS,
+    [
+        c("rl1", "total", "1250", "USD", [q("$1,250"), row("Total due")]),
+        c("rl2", "tax", "80", "USD", [q("$80"), row("Tax")], READ_DOUBT),
+        c("rl3", "disc", "15", "USD", [q("$15"), row("Discount")]),
+    ],
+    policy={"min_read_confidence": 0.4},
+    doubt=DOUBTS,
+)  # fmt: skip
+
+BAD_DOC = "Fee\t$90 é\n"  # the e with an acute accent is bytes 8 and 9
+for name, entries, why in [
+    ("doubt-not-list", {"start": 0, "end": 3, "confidence": 0.5}, "a doubt that is not a list"),
+    ("doubt-order", [{"start": 4, "end": 7, "confidence": 0.5},
+                     {"start": 0, "end": 3, "confidence": 0.5}], "two spans out of text order"),
+    ("doubt-overlap", [{"start": 0, "end": 5, "confidence": 0.5},
+                       {"start": 4, "end": 7, "confidence": 0.5}], "two spans that overlap"),
+    ("doubt-empty", [{"start": 3, "end": 3, "confidence": 0.5}], "an empty span"),
+    ("doubt-boundary", [{"start": 9, "end": 10, "confidence": 0.5}],
+     "a span that starts inside a character"),
+    ("doubt-past-end", [{"start": 4, "end": 99, "confidence": 0.5}],
+     "a span past the end of the text"),
+    ("doubt-confidence-high", [{"start": 0, "end": 3, "confidence": 1.5}],
+     "a confidence above 1"),
+    ("doubt-confidence-string", [{"start": 0, "end": 3, "confidence": "0.5"}],
+     "a confidence that is a string"),
+    ("doubt-extra-key", [{"start": 0, "end": 3, "confidence": 0.5, "word": "Fee"}],
+     "an entry with another key"),
+]:  # fmt: skip
+    INVALID.append(
+        {
+            "name": name,
+            "description": f"A doubt list with {why} breaks the rule of SPEC 2.1 "
+            "(spec 0.12, #535).",
+            "document": BAD_DOC,
+            "schema": {"fields": {"fee": USD}},
+            "policy": None,
+            "doubt": entries,
+        }
+    )
+INVALID.append(
+    {
+        "name": "policy-min-read-confidence-high",
+        "description": "policy.min_read_confidence is a number in [0, 1] (SPEC 2.4, spec 0.12, "
+        "#535).",
+        "document": BAD_DOC,
+        "schema": {"fields": {"fee": USD}},
+        "policy": {"min_read_confidence": 1.5},
+    }
+)
+
 
 def main() -> None:
     out_dir = HERE / "vectors"
@@ -5934,6 +6048,7 @@ def main() -> None:
             **({"document_source": v["document_source"]} if v["document_source"] else {}),
             **({"references": v["references"]} if v["references"] is not None else {}),
             **({"packs": v["packs"]} if v["packs"] is not None else {}),
+            **({"doubt": resolve(doc, v["doubt"])} if v["doubt"] is not None else {}),
             "candidates": cands,
             **({"judgments": v["judgments"]} if v["judgments"] is not None else {}),
             "expected": {
