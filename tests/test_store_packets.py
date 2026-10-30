@@ -97,7 +97,7 @@ def test_read_admit_verify_report_from_the_packet_key(
     with FolderStore(store) as s:
         found = load_packet(s, packet)
         assert found.reading == reading and found.layout is None  # layout only on request
-        assert json.loads(s.get("reading@1", reading))["options"] == {"pages": None}
+        assert json.loads(s.get("reading@2", reading))["options"] == {"pages": None}
 
 
 def test_admit_store_writes_the_receipt_to_output(
@@ -313,7 +313,7 @@ def test_a_reading_of_another_text_is_refused(tmp_path: Path) -> None:
             admit_packet(store, TEXT, SCHEMA, cands(), reading="a.txt")
         with pytest.raises(ValueError, match="not a regular file"):
             put_reading(store, tmp_path)
-        layoutless = json.loads(store.get("reading@1", reading))
+        layoutless = json.loads(store.get("reading@2", reading))
         assert layoutless["layout"] is None and layoutless["reader"]["name"] == "groundgate.read"
         assert store.get("source@1", layoutless["source"]) == b"Another text."
 
@@ -340,7 +340,7 @@ def test_one_read_gives_the_source_and_the_text(
     monkeypatch.setattr(reader, "read", change_then_read)
     with FolderStore(tmp_path / "s") as store:
         reading, doc = put_reading(store, source)
-        obj = json.loads(store.get("reading@1", reading))
+        obj = json.loads(store.get("reading@2", reading))
         assert store.get("source@1", obj["source"]) == first
         assert store.get("text@1", obj["text"]).decode() == doc.text
         assert doc.text.strip() == "Fee: $500"
@@ -388,8 +388,57 @@ def test_read_store_uses_the_reading_cache(
         k = first.out.strip()
         hit, doc = put_reading(store, source, [1, 2, 3])
         assert hit == k and "Fee: $500" in doc.text
-        stored = json.loads(store.get("reading@1", k))["layout"]
+        stored = json.loads(store.get("reading@2", k))["layout"]
         assert doc.layout.to_dict() == json.loads(store.get("layout@1", stored))
+
+
+def test_a_cache_hit_gives_the_warning_about_hidden_words(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """The reading keeps the warnings of read, so a hit gives the same ones (#523)."""
+    source = tmp_path / "proof.pdf"
+    source.write_bytes(make_pdf([[(72, 800, "Draft proof 99"), (72, 700, "Fee: $5.")]]))
+    root = tmp_path / "s"
+    argv = ["read", "--store", str(root), str(source)]
+    assert main(argv) == 0
+    first = capsys.readouterr()
+    assert "page 1: dropped 3 words drawn outside the visible page" in first.err
+    assert main(["store", "rebuild", "--store", str(root)]) == 0
+    capsys.readouterr()
+    import groundgate.read as reader
+
+    monkeypatch.setattr(reader, "read", _no_read)
+    assert main(argv) == 0
+    again = capsys.readouterr()
+    assert (again.out, again.err) == (first.out, first.err)
+    with FolderStore(root) as store:
+        obj = json.loads(store.get("reading@2", first.out.strip()))
+        assert obj["warnings"] == ["page 1: dropped 3 words drawn outside the visible page"]
+
+
+def test_a_reading_at_1_never_hits_the_reading_cache(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """A ``reading@1`` does not keep the warnings, so read runs again and writes ``reading@2``.
+    Then the row of the cache has both, and the ``reading@2`` hits."""
+    source = tmp_path / "a.pdf"
+    source.write_bytes(FEE_PDF)
+    with FolderStore(tmp_path / "s") as store:
+        k, _ = put_reading(store, source)
+        obj = json.loads(store.get("reading@2", k))
+        del obj["warnings"]
+        old = store.put("reading@1", jcs({**obj, "format": "reading@1"}).encode())
+        store.forget(k, "test")
+        rebuild(store)
+        calls = _count_reads(monkeypatch)
+        again, _ = put_reading(store, source)
+        assert again == k and len(calls) == 1
+        rebuild(store)
+        cache = json.loads(store.read_view("readings.json"))
+        assert cache["readings"][0]["readings"] == sorted([old, k])
+        hit, doc = put_reading(store, source)
+        assert hit == k and len(calls) == 1 and "Fee: $500" in doc.text
+    assert main(["store", "check", "--store", str(tmp_path / "s")]) == 0
 
 
 def test_only_a_pdf_hits_the_reading_cache(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
@@ -422,7 +471,7 @@ def test_a_new_reader_version_misses_the_reading_cache(
         monkeypatch.setattr(gg, "__version__", "99.0.0")
         newer, _ = put_reading(store, source)
         assert newer != k and len(calls) == 2
-        assert json.loads(store.get("reading@1", newer))["reader"]["version"] == "99.0.0"
+        assert json.loads(store.get("reading@2", newer))["reader"]["version"] == "99.0.0"
 
 
 def test_read_store_writes_the_document_model(
@@ -441,7 +490,7 @@ def test_read_store_writes_the_document_model(
     capsys.readouterr()
     assert out.read_bytes() == (tmp_path / "plain.json").read_bytes()
     with FolderStore(root) as store:
-        reading = json.loads(store.get("reading@1", k))
+        reading = json.loads(store.get("reading@2", k))
         assert reading["document"] == key("document@1", out.read_bytes())
         text = store.get("text@1", reading["text"]).decode("utf-8")
         model = Document.from_dict(json.loads(store.get("document@1", reading["document"])), text)
@@ -469,7 +518,7 @@ def test_a_read_with_the_document_model_does_not_use_the_cache(
         monkeypatch.setattr(model, "read_document", counted)
         k, doc = put_reading(store, source, document=True)
         assert k != plain and len(calls) == 1 and "Fee: $500" in doc.text
-        assert json.loads(store.get("reading@1", plain))["document"] is None
+        assert json.loads(store.get("reading@2", plain))["document"] is None
         assert put_reading(store, source, document=True)[0] == k and len(calls) == 2
         # Two readings of one source, reader and options: the cache gives no hit.
         rebuild(store)
@@ -507,7 +556,7 @@ def test_a_bad_reading_cache_is_a_miss(tmp_path: Path, monkeypatch: pytest.Monke
             assert again == k and "Fee: $500" in doc.text
         calls.clear()
         view.write_bytes(jcs(cache).encode())
-        store.forget(json.loads(store.get("reading@1", k))["text"], "test")
+        store.forget(json.loads(store.get("reading@2", k))["text"], "test")
         again, doc = put_reading(store, source)
         assert again == k and "Fee: $500" in doc.text and len(calls) == 1
 
