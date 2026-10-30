@@ -1106,3 +1106,26 @@ def test_forget_reports_an_answer_log_that_cannot_be_read(tmp_path: Path) -> Non
     rel = f"logs/answers/{k[7:]}/{reviewer_key('ana')[7:]}.jsonl"
     assert ("log", rel, "unchecked", 0) in done
     assert own not in left and k in left
+
+
+def test_forget_all_reports_a_correction_of_an_earlier_spec_version(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    # The packet and its correction come from an earlier spec version, and a plain forget
+    # removed the candidates of the correction. A digest names its spec version, so the
+    # receipt of the correction does not match the digests of this version. forget --all
+    # reports the correction as "unchecked" and keeps the packet and its review records (#525).
+    root, k, tk, rk, receipt, fixed = _one_correction(tmp_path)
+    with FolderStore(root) as store:
+        forget_packet(store, fixed, "plain")
+    import groundgate.canonical
+    import groundgate.store.maintain
+
+    monkeypatch.setattr(groundgate.canonical, "SPEC_VERSION", "9.0")
+    monkeypatch.setattr(groundgate.store.maintain, "SPEC_VERSION", "9.0")
+    with FolderStore(root) as store:
+        done = forget_packet(store, k, "all", everything=True)
+        left, _ = store.object_keys()
+    assert ("packet@1", fixed, "unchecked", 0) in done
+    assert ("packet@1", k, "kept", 0) in done
+    assert {k, tk, rk, fixed, receipt} <= set(left)

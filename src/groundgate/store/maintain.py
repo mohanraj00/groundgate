@@ -21,7 +21,7 @@ from contextlib import suppress
 from dataclasses import dataclass, field
 from typing import Any
 
-from ..canonical import digest, jcs
+from ..canonical import SPEC_VERSION, digest, jcs
 from . import KEY, FolderStore, NotFound, StoreError, Torn, _canonical, check_bytes, key
 from .packets import _PACKET, _READING, printable
 
@@ -845,8 +845,8 @@ def _correction_inputs(
     the packet need not be in the store.
     A record or a task that does not have the expected form gives nothing. Each answer log of
     the packet that the store cannot read goes into ``unread``. None if a correction answer is
-    there, but the receipt or the judgments of the packet cannot be read: then nothing tells
-    which packets are its corrections."""
+    there, but the receipt or the judgments of the packet cannot be read, or the packet is of
+    another spec version: then nothing tells which packets are its corrections."""
     answers: list[tuple[Mapping[str, Any], Mapping[str, Any]]] = []  # the record and its task
     logs, _ = objects.store.log_names()
     for log in logs:
@@ -869,6 +869,10 @@ def _correction_inputs(
                 answers.append((r, task))
     if not answers:
         return []
+    if obj["spec"] != SPEC_VERSION:
+        # A digest names the spec version (SPEC §6), so the digests of an earlier version do
+        # not match those of this one, and nothing tells which packets are corrections (#525).
+        return None
     try:
         receipt = objects.json("receipt@1", obj["receipt"])
         decisions = receipt["decisions"]
