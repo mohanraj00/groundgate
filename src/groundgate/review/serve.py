@@ -352,9 +352,18 @@ class Review:
     def _refresh(self, pk: str) -> None:
         """The queue of the packet: each task that this reviewer did not answer, and whose slot
         an answer does not settle (§8, Order)."""
-        doc = self.docs[pk]
         logs = self._logs(pk)
         answered = {r.get("task") for r in logs.get(self.reviewer, [])}
+        settled = self.settled(pk, logs, self.policy)
+        doc = self.docs[pk]
+        doc.open = [k for k in doc.tasks if k not in answered and k not in settled]
+
+    def settled(
+        self, pk: str, logs: Mapping[str, list[dict[str, Any]]], policy: Mapping[str, Any]
+    ) -> set[str]:
+        """The tasks of the packet whose slot an answer of ``logs`` settles under ``policy``,
+        a checked ``review-policy@1`` object."""
+        doc = self.docs[pk]
         latest: dict[object, set[object]] = {}  # task -> the latest verdict of each reviewer
         for records in logs.values():
             last = {r.get("task"): r.get("verdict") for r in records}
@@ -362,28 +371,34 @@ class Review:
                 latest.setdefault(task, set()).add(verdict)
         settled: set[str] = set()
         try:  # an answer to a calibrate task settles no slot
-            resolution, _ = resolve(pk, doc.packet, doc.schema, self.policy, logs,
+            resolution, _ = resolve(pk, doc.packet, doc.schema, policy, logs,
                                     layout=doc.layout)  # fmt: skip
         except (AnswerError, PacketError, ValueError):
             resolution = {"slots": []}  # a bad log settles nothing; resolve names it
         for s in resolution["slots"]:
             if s["status"] in _SETTLED and latest.get(s["task"], set()) - {"unsure"}:
                 settled.add(s["task"])
-        doc.open = [k for k in doc.tasks if k not in answered and k not in settled]
+        return settled
 
     # The API
 
     def queue(self) -> dict[str, Any]:
         """The open tasks, grouped by document and in page order."""
-        items = []
-        for pk, doc in self.docs.items():
-            for tk in doc.open:
-                places = (doc.by_key.get(tk) or doc.labels[tk])[1]["places"]
-                first = places[0]["start"] if places else len(doc.units.source.data)
-                page = places[0]["page"] if places else None
-                items.append(((doc.document, pk, first, tk),
-                              {"task": tk, "document": doc.document, "page": page}))  # fmt: skip
-        return {"reviewer": self.reviewer, "tasks": [i for _, i in sorted(items)]}
+        items = [self.place(pk, tk) for pk, doc in self.docs.items() for tk in doc.open]
+        return {
+            "reviewer": self.reviewer,
+            "tasks": [
+                {"task": tk, "document": d, "page": page} for d, _, _, tk, page in sorted(items)
+            ],
+        }
+
+    def place(self, pk: str, tk: str) -> tuple[str, str, int, str, int | None]:
+        """The queue order of a task (document, packet, first offset, task), and its page."""
+        doc = self.docs[pk]
+        places = (doc.by_key.get(tk) or doc.labels[tk])[1]["places"]
+        first = places[0]["start"] if places else len(doc.units.source.data)
+        page = places[0]["page"] if places else None
+        return doc.document, pk, first, tk, page
 
     def _task(self, tk: object) -> tuple[str, _Doc, Slot, dict[str, Any]]:
         if not isinstance(tk, str) or not _KEY.fullmatch(tk):
