@@ -614,6 +614,28 @@ def test_docx_text_box_paragraph_style_hides_runs(tmp_path: Path) -> None:
     assert text == "Before\n5 mg\nafter"
 
 
+def test_docx_properties_before_a_change_are_not_used(tmp_path: Path) -> None:
+    styles = (
+        '<w:style w:type="paragraph" w:styleId="Draft"><w:rPr><w:vanish/></w:rPr></w:style>'
+        '<w:style w:type="paragraph" w:styleId="Visible"/>'
+        '<w:style w:type="character" w:styleId="Old"><w:rPr>'
+        '<w:rPrChange w:id="3" w:author="a"><w:rPr><w:vanish/></w:rPr></w:rPrChange>'
+        "</w:rPr></w:style>"
+    )
+    ppr = "<w:pPr>"
+    old = (
+        f'<w:pPrChange w:id="1" w:author="a">{ppr}<w:pStyle w:val="Visible"/></w:pPr></w:pPrChange>'
+    )
+    hidden = _p("500 mg", f'<w:pStyle w:val="Draft"/>{old}')
+    gone = (
+        f'<w:pPrChange w:id="2" w:author="a">{ppr}<w:pStyle w:val="Draft"/></w:pPr></w:pPrChange>'
+    )
+    shown = _p("5 mg", f'<w:pStyle w:val="Visible"/>{gone}')
+    run = '<w:r><w:rPr><w:rStyle w:val="Old"/></w:rPr><w:t>daily</w:t></w:r>'
+    text, _ = _nodes(_write(tmp_path, "c.docx", docx(hidden + shown + f"<w:p>{run}</w:p>", styles)))
+    assert text == "5 mg\n\ndaily"
+
+
 def test_xlsx_string_escapes(tmp_path: Path) -> None:
     inline = "<is><t>500_x000D_600 mg _x005F_x000D_ _xD800_</t></is>"
     sheet = f'<sheetData><row r="1"><c r="A1" t="inlineStr">{inline}</c></row></sheetData>'

@@ -60,6 +60,18 @@ NAMESPACES = {
 }
 _T = TypeVar("_T")
 OFF = {"0", "false", "off"}
+# The properties from before a tracked change. The reader shows the document after the changes.
+_CHANGES = {
+    "w:pPrChange",
+    "w:rPrChange",
+    "w:tblPrChange",
+    "w:tblPrExChange",
+    "w:trPrChange",
+    "w:tcPrChange",
+    "w:sectPrChange",
+    "w:tblGridChange",
+    "w:numberingChange",
+}
 _CELL_REF = re.compile(r"([A-Z]{1,3})([0-9]{1,7})")
 _HEADING = re.compile(r"heading ([1-9])")
 _ESCAPE = re.compile(r"_x([0-9A-Fa-f]{4})_")  # a character in an XLSX string, as _x000D_
@@ -281,6 +293,8 @@ def _styles(z: _Zip, document: str) -> _Styles:
     def start(tag: str, attrs: dict[str, str]) -> None:
         parent = stack[-1] if stack else ""
         stack.append(tag)
+        if not _CHANGES.isdisjoint(stack):
+            return
         if tag == "w:style":
             current[:] = [attrs.get("styleId", ""), attrs.get("type", "")]
             on = attrs.get("default", "0").lower() not in OFF
@@ -373,7 +387,7 @@ class _Docx:
                 self.skip = 1
                 return
             self.choices[-1] = True
-        if self.skip or tag in ("mc:Fallback", "w:moveFrom"):
+        if self.skip or tag in ("mc:Fallback", "w:moveFrom") or tag in _CHANGES:
             self.skip += 1
             return
         if tag == "mc:AlternateContent":
