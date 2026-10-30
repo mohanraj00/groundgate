@@ -75,7 +75,7 @@ _RUN_KINDS = frozenset(kind for _, kind in _RUN_OBJECTS.values())
 # A string of a run record line with this many characters or more, that is also in the
 # document text, is document text.
 MIN_TEXT = 8
-VIEWS = ("readings.json", "calibrate-labels.json")
+VIEWS = ("readings.json", "calibrate-labels.json", "review-queue.json")
 _BYTES = frozenset({"source@1", "text@1", "prompt@1", "reply@1"})
 
 
@@ -538,6 +538,7 @@ def check(store: FolderStore, *, repair: bool = False) -> Report:
                 named(f"the reading {k}", kind, n)
         except StoreError as exc:
             report.find(str(exc))
+    _orphan_run_objects(report, objects)
 
     logs, problems = store.log_names()
     for problem in problems:
@@ -559,6 +560,27 @@ def check(store: FolderStore, *, repair: bool = False) -> Report:
         except StoreError as exc:
             report.find(str(exc))
     return report
+
+
+def _orphan_run_objects(report: Report, objects: _Objects) -> None:
+    """A finding for each prompt, reply and admission that no run record of the store names.
+    Only a run record names them, so ``forget`` cannot find them again: a ``forget`` of 0.12
+    removed a changed record and kept them, and so does ``FolderStore.forget`` on the key of a
+    record (#499). A run record or an object that cannot be read can name any of them, and it
+    is a finding already, so then there is no search."""
+    seen: set[str] = set()
+    for k in sorted(k for k, kind in objects.kinds.items() if kind and kind.startswith("run@")):
+        try:
+            found, _ = _run_objects(objects, _run(objects, k))
+        except (StoreError, ValueError, RecursionError):
+            return
+        seen.update(n for _, n in found)
+    if objects.unread():
+        return
+    for kind in ("prompt@1", "reply@1", "admission@1"):
+        for k in sorted(objects.of(kind)):
+            if k not in seen:
+                report.find(f"the {kind} object {k}: no run record names it")
 
 
 def _split_view(report: Report, log: tuple[str, ...], records: list[dict[str, Any]]) -> None:
@@ -605,11 +627,13 @@ def rebuild(store: FolderStore) -> list[str]:
     """Build each view again from the objects and logs, and return the path of each view
     file. The same objects and logs give the same bytes."""
     from ..review.labels import labels_view
+    from ..review.views import queue_view
 
     objects = _Objects(store)
     return [
         store.write_view("readings.json", _reading_cache(objects)),
         store.write_view("calibrate-labels.json", labels_view(store)),
+        store.write_view("review-queue.json", queue_view(store)),
     ]
 
 
