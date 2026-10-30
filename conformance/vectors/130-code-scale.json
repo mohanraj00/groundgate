@@ -1,0 +1,293 @@
+{
+ "name": "130-code-scale",
+ "description": "Scale form 4: a code scale whose currency is the field's unit. A code scale is a code of the currency table in capitals, or R for ZAR, directly followed by a scale suffix or by '000, as in 'SEKm', 'CHF'000' or 'R’000'. It gives the item its scale. A code scale of another currency gives the scale but fails the check. 'MSEK' holds no code scale, and a code scale makes no heading scale (spec 0.12, #568).",
+ "document": "Consolidated income statement\nSEKm\tNote\t2025\t2024\nNet sales\t3\t46,613\t48,352\nGross income\t\t14,099\t14,299\n\nStatement of financial position\tR’000\tR’000\nTotal assets\t22 591 916\t21 004 117\nInventories\t3,100\t2,950\n\nCHF'000\t2025\nRevenue\t5,200\n\nMSEK\t2025\nOther income\t7,700\n",
+ "schema": {
+  "fields": {
+   "sek": {
+    "type": "number",
+    "unit": "SEK",
+    "multiple": true,
+    "aliases": [
+     "Net sales",
+     "Gross income",
+     "Other income"
+    ]
+   },
+   "chf": {
+    "type": "number",
+    "unit": "CHF",
+    "multiple": true,
+    "aliases": [
+     "Net sales",
+     "Revenue"
+    ]
+   },
+   "zar": {
+    "type": "number",
+    "unit": "ZAR",
+    "multiple": true,
+    "aliases": [
+     "Total assets",
+     "Inventories"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "cs1",
+   "field": "sek",
+   "value": "46613000000",
+   "unit": "SEK",
+   "evidence": [
+    {
+     "start": 62,
+     "end": 68,
+     "text": "46,613"
+    },
+    {
+     "role": "field",
+     "text": "Net sales"
+    },
+    {
+     "role": "scale",
+     "text": "SEKm"
+    }
+   ]
+  },
+  {
+   "id": "cs2",
+   "field": "sek",
+   "value": "14099000000",
+   "unit": "SEK",
+   "evidence": [
+    {
+     "start": 90,
+     "end": 96,
+     "text": "14,099"
+    },
+    {
+     "role": "field",
+     "text": "Gross income"
+    },
+    {
+     "role": "scale",
+     "text": "SEKm"
+    },
+    {
+     "role": "unit",
+     "text": "SEK"
+    }
+   ]
+  },
+  {
+   "id": "cs3",
+   "field": "zar",
+   "value": "22591916000",
+   "unit": "ZAR",
+   "evidence": [
+    {
+     "start": 166,
+     "end": 176,
+     "text": "22 591 916"
+    },
+    {
+     "role": "field",
+     "text": "Total assets"
+    },
+    {
+     "role": "scale",
+     "text": "R’000"
+    }
+   ]
+  },
+  {
+   "id": "cs4",
+   "field": "zar",
+   "value": "3100000",
+   "unit": "ZAR",
+   "evidence": [
+    {
+     "start": 200,
+     "end": 205,
+     "text": "3,100"
+    },
+    {
+     "role": "field",
+     "text": "Inventories"
+    },
+    {
+     "role": "scale",
+     "text": "R’000"
+    }
+   ]
+  },
+  {
+   "id": "cs5",
+   "field": "chf",
+   "value": "5200000",
+   "unit": "CHF",
+   "evidence": [
+    {
+     "start": 234,
+     "end": 239,
+     "text": "5,200"
+    },
+    {
+     "role": "field",
+     "text": "Revenue"
+    },
+    {
+     "role": "scale",
+     "text": "CHF'000"
+    }
+   ]
+  },
+  {
+   "id": "cs6",
+   "field": "chf",
+   "value": "48352000000",
+   "unit": "CHF",
+   "evidence": [
+    {
+     "start": 69,
+     "end": 75,
+     "text": "48,352"
+    },
+    {
+     "role": "field",
+     "text": "Net sales"
+    },
+    {
+     "role": "scale",
+     "text": "SEKm"
+    }
+   ]
+  },
+  {
+   "id": "cs7",
+   "field": "sek",
+   "value": "14299000",
+   "unit": "SEK",
+   "evidence": [
+    {
+     "start": 97,
+     "end": 103,
+     "text": "14,299"
+    },
+    {
+     "role": "field",
+     "text": "Gross income"
+    },
+    {
+     "role": "scale",
+     "text": "R’000"
+    }
+   ]
+  },
+  {
+   "id": "cs8",
+   "field": "sek",
+   "value": "7700000000",
+   "unit": "SEK",
+   "evidence": [
+    {
+     "start": 264,
+     "end": 269,
+     "text": "7,700"
+    },
+    {
+     "role": "field",
+     "text": "Other income"
+    },
+    {
+     "role": "scale",
+     "text": "MSEK"
+    }
+   ]
+  },
+  {
+   "id": "cs9",
+   "field": "sek",
+   "value": "48352000000",
+   "unit": "SEK",
+   "evidence": [
+    {
+     "start": 69,
+     "end": 75,
+     "text": "48,352"
+    },
+    {
+     "role": "field",
+     "text": "Net sales"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SCALE_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SCALE_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PART_MISSING"
+    ],
+    "missing": [
+     "scale"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}
