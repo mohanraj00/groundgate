@@ -277,7 +277,7 @@ class RunResult:
         ``save`` writes each object of the run as its store kind (``text@1``, ``document@1``,
         ``schema@1``, ``policy@1``, ``reference@1``, ``prompt@1``, ``reply@1``, ``admission@1``),
         then the
-        record as one ``run@5`` object, then the final inputs, the receipt and a ``packet@1``
+        record as one ``run@6`` object, then the final inputs, the receipt and a ``packet@1``
         object that names the record. The record bytes are the bytes of ``run.jsonl`` from
         ``write``. The record names each object by its run key and its store key, so ``load``
         replays the run from the packet key (#429).
@@ -363,7 +363,7 @@ class RunResult:
         and the references. The packet must have no judgments, because a
         run has none. Each object must also have the run key of the record. The replayed
         receipt and candidates must be those of the packet. A packet with no run, a record that
-        is not ``groundgate-run/5``, a packet of other inputs, a changed object or a replay that
+        is not ``groundgate-run/6``, a packet of other inputs, a changed object or a replay that
         differs raises ``ValueError``. An object that is not in the store raises ``InputGone``,
         with the deletion if ``forget`` removed it.
 
@@ -468,7 +468,7 @@ def _named(record: Sequence[Mapping[str, Any]]) -> tuple[Json, list[str]]:
 
 def _stored(record: Sequence[Mapping[str, Any]]) -> list[tuple[str, str, str]]:
     """The runner kind, the run key and the store key of each object that the record names
-    (#429). A ``groundgate-run/5`` record names each object by both keys."""
+    (#429). A record from ``groundgate-run/5`` on names each object by both keys."""
     try:
         inputs = record[0]["inputs"]
         document = inputs["document"]
