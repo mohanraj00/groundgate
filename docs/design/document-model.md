@@ -146,8 +146,8 @@ heading levels.
 | HTML | `h1` to `h6` | `p` and other blocks | `ul`, `ol`, `li` | `table`, `tr`, `td`, `th`, with `rowspan` and `colspan` |
 | XML (SPL) | a `title`, at the depth of its `section` | `paragraph` | `list`, `item` | `table`, `tr`, `td`, `th` |
 | Other XML | none | the block elements of `markup.py` | none | only the HTML table names |
-| DOCX (#7) | the heading styles | paragraphs | numbered paragraphs | tables |
-| XLSX (#7) | the sheet name | none | none | one table for each sheet |
+| DOCX (#529) | the heading styles | paragraphs | numbered paragraphs | tables |
+| XLSX (#529) | the sheet name | none | none | one table for each sheet |
 | PDF text layer | none in `document@1` | text blocks (`layout`) | none | rows and cells from `_tables` (`layout`) or `grid` (`rules`) |
 | OCR (#7) | none | the blocks of the engine (`layout`) | none | none in the first version |
 | Text and Markdown | none | blocks between blank lines (`layout`) | none | none |

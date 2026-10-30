@@ -5,9 +5,10 @@
 >>> doc.layout.locate(start, end)       # page boxes for a decision's evidence span
 
 Supported: PDF with a text layer (``groundgate[pdf]``), HTML, XML (including DailyMed SPL),
-and plain text. With ``ocr=True``, a scanned PDF page gets OCR with the ``tesseract`` program
-and ``groundgate[ocr]`` (``read/ocr.py``). OCR is off by default: an OCR word can be wrong, and
-``admit`` does not read ``doubt``.
+DOCX and XLSX (``read/office.py``, the standard library only), and plain text. With
+``ocr=True``, a scanned PDF page gets OCR with the ``tesseract`` program and ``groundgate[ocr]``
+(``read/ocr.py``). OCR is off by default: an OCR word can be wrong, and ``admit`` does not read
+``doubt``.
 """
 
 from __future__ import annotations
@@ -27,6 +28,7 @@ READER = "groundgate.read"
 
 TEXT_SUFFIXES = {".txt", ".text", ".md", ".markdown"}
 HTML_SUFFIXES = {".html", ".htm", ".xhtml"}
+OFFICE_SUFFIXES = {".docx", ".xlsx"}
 
 
 class ReadError(ValueError):
@@ -94,6 +96,10 @@ def read(
             raise ReadError(f"{path}: not well-formed XML ({e})") from e
     elif suffix in HTML_SUFFIXES:
         text = html_text(_decode(data, path))
+    elif suffix in OFFICE_SUFFIXES:
+        from .office import office_nodes
+
+        text, _ = office_nodes(data, path)
     elif suffix in TEXT_SUFFIXES:
         text = _decode(data, path)
     else:
