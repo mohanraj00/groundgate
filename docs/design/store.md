@@ -259,7 +259,8 @@ view keeps both, one row for each policy. The rows are sorted by packet, policy 
 `stale` lists, in order, each packet with an answer log and no current resolution. This
 includes a packet with a log that no resolution read, a packet with a log that the store
 cannot read, and a packet whose log folder has an entry that is not a log, for example a
-symlink. An object whose members do not match `resolution@1` is left out: it must have the five
+symlink. If `logs/answers` is not a folder, no resolution is current, and each packet of a
+resolution is stale. An object whose members do not match `resolution@1` is left out: it must have the five
 members, the format name, a key for the packet, the policy and each head, and a list of slots.
 
 The measures view comes with its issue (#515).

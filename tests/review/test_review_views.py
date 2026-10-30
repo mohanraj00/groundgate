@@ -145,3 +145,16 @@ def test_a_symlink_answer_log_makes_the_packet_stale(tmp_path: Path) -> None:
         found = json.loads(latest_view(store))
     # the log is not listed, but the old resolution with no answers is still not current
     assert found["resolutions"] == [] and found["stale"] == [k]
+
+
+def test_an_answers_folder_that_is_a_symlink_makes_each_packet_stale(tmp_path: Path) -> None:
+    store, k, tasks = store_with_tasks(tmp_path / "store")
+    with store:
+        write_resolution(store, k, None, [])
+        Review(store, "ben").answer(answer(tasks["net_income"], "not_in_document"))
+    folder = tmp_path / "store" / "logs" / "answers"
+    folder.rename(tmp_path / "moved")
+    folder.symlink_to(tmp_path / "moved")
+    with FolderStore(tmp_path / "store") as store:
+        found = json.loads(latest_view(store))
+    assert found["resolutions"] == [] and found["stale"] == [k]
