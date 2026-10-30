@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from typing import Any
 
+import pytest
 from test_review_serve import answer, store_with_tasks
 
 from groundgate.canonical import jcs
@@ -156,5 +158,24 @@ def test_an_answers_folder_that_is_a_symlink_makes_each_packet_stale(tmp_path: P
     folder.rename(tmp_path / "moved")
     folder.symlink_to(tmp_path / "moved")
     with FolderStore(tmp_path / "store") as store:
+        found = json.loads(latest_view(store))
+    assert found["resolutions"] == [] and found["stale"] == [k]
+
+
+def test_an_answer_during_the_build_makes_the_packet_stale(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    store, k, tasks = store_with_tasks(tmp_path / "store")
+    with store:
+        Review(store, "ben").answer(answer(tasks["net_income"], "not_in_document"))
+        write_resolution(store, k, None, ["ben"])
+        review = Review(store, "ben")
+        keys = store.object_keys
+
+        def late() -> Any:  # the answer comes after the first read of the heads
+            review.answer(answer(tasks["revenue"], "unsure"))
+            return keys()
+
+        monkeypatch.setattr(store, "object_keys", late)
         found = json.loads(latest_view(store))
     assert found["resolutions"] == [] and found["stale"] == [k]

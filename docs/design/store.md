@@ -260,7 +260,10 @@ view keeps both, one row for each policy. The rows are sorted by packet, policy 
 includes a packet with a log that no resolution read, a packet with a log that the store
 cannot read, and a packet whose log folder has an entry that is not a log, for example a
 symlink. If `logs/answers` is not a folder, no resolution is current, and each packet of a
-resolution is stale. An object whose members do not match `resolution@1` is left out: it must have the five
+resolution is stale. `rebuild` reads the heads again after it selects the rows, and a packet
+whose heads changed during the build is stale. The view is a snapshot: before a reader acts on
+a resolution, it compares the `answers` heads of the resolution with the logs. An object whose
+members do not match `resolution@1` is left out: it must have the five
 members, the format name, a key for the packet, the policy and each head, and a list of slots.
 
 The measures view comes with its issue (#515).
