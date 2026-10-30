@@ -3214,7 +3214,7 @@ vector(
     "38-ambiguous-tab-unit-source",
     "A unit row with multiple cells in a tab slot cannot supply a unit by column, nor can a "
     "target row with multiple cells in one slot (spec 0.9, #278).",
-    "Top\t$10 20\t30\nCash\t100\t200\n\nTop\t$40\t50\nCash\t300 400\t500",
+    "Top\t$10 20\t30\nCash\t100\t200\n\nTop\t$40\t50\nCash\t300 40\t500",
     {"fields": {"cash": UNIT_CASH}},
     [
         c("u8", "cash", "100", "USD", [q("100"), row("Cash")],

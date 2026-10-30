@@ -14,6 +14,7 @@ from groundgate.text import (
     _MIXED_HEADERS,
     _SENTENCE_END,
     HeadingIndex,
+    _grouped,
     _label_line_in,
     _mixed_header_lines,
     canonical,
@@ -65,6 +66,57 @@ def test_region_never_reads_a_prefix() -> None:
     assert tokens(split, 10, 13) == []
     assert [t.value for t in tokens(split, 10, 15)] == [Decimal("29.97")]
     assert [t.value for t in tokens("fees of 1,500, then", 8, 13)] == [Decimal(1500)]
+
+
+@pytest.mark.parametrize(
+    ("text", "values"),
+    [
+        ("Sales\t36 428 426\t34 805 221", [Decimal(36428426), Decimal(34805221)]),
+        ("Sales\t-1\u202f250.5", [Decimal("-1250.5")]),
+        ("Sales\t\u22121\u00a0250", [Decimal(-1250)]),
+        ("Sales\t1\u2009250", [Decimal(1250)]),
+        ("Sales 36 428 426", [Decimal(36), Decimal(428), Decimal(426)]),
+        ("Sales\t12 3456", [Decimal(12), Decimal(3456)]),
+        ("Sales\t1  234", [Decimal(1), Decimal(234)]),
+        ("Sales\t1 234 5678", [Decimal(1), Decimal(234), Decimal(5678)]),
+        ("Sales\t1 2345 678 901", [Decimal(1), Decimal(2345), Decimal(678), Decimal(901)]),
+        ("Sales\t1 234,5", [Decimal(1), None]),
+        ("Sales\t1 234.5.6", [Decimal(1), Decimal("234.5")]),
+        ("Sales\t1 234.", [Decimal(1234)]),
+        ("Sales\t1 234\n5 678", [Decimal(1234), Decimal(5), Decimal(678)]),
+        ("Sales\tA1 234", [Decimal(234)]),
+    ],
+)
+def test_space_groups(text: str, values: list[Decimal | None]) -> None:
+    """On a line with a tab, digits grouped in threes by a group space make one token (SPEC
+    §4.1, spec 0.12, #427)."""
+    assert _values(text) == values
+
+
+def test_a_region_reads_no_part_of_a_space_grouped_token() -> None:
+    text = "Sales\t36 428 426\t9"
+    at = text.index("36")
+    assert tokens(text, at + 3, at + 10) == []  # "428 426"
+    assert tokens(text, at, at + 6) == []  # "36 428"
+    assert [t.value for t in tokens(text, at, at + 10)] == [Decimal(36428426)]
+    assert first_token_end(text, at + 3) == len(text)  # the 9 after the tab
+    assert parse_value("36 428 426") is None
+    assert parse_value("36428426") == Decimal(36428426)
+
+
+def test_many_space_groups_on_one_line_take_linear_time() -> None:
+    """Each token next to a group space reads the text's space groups once (#427)."""
+
+    def prepare(copies: int) -> Callable[[], None]:
+        text = "Sales\t" + " ".join(["1 2345"] * copies)
+
+        def run() -> None:
+            _grouped.cache_clear()
+            assert len(tokens(text)) == 2 * copies
+
+        return run
+
+    assert_linear(prepare, 2000, 8000)
 
 
 @given(st.integers(min_value=-(10**12), max_value=10**12))
@@ -391,6 +443,30 @@ def test_other_letters_are_no_scale_word(word: str) -> None:
     assert token_scale(s, tokens(s)[0]) is None
     assert item_scale(s, 0, len(s)) is None
     assert not in_scale(s, 0, len(s))
+
+
+@pytest.mark.parametrize(
+    ("text", "unit", "power", "form"),
+    [
+        ("SEKm", "SEK", 6, True),
+        ("SEKbn", "SEK", 9, True),
+        ("CHF'000", "CHF", 3, True),
+        ("R\u2019000", "ZAR", 3, True),
+        ("ZARk", "ZAR", 3, True),
+        ("SEKm", "CHF", 6, False),
+        ("R'000", "SEK", 3, False),
+        ("MSEK", "SEK", None, False),
+        ("SEKmn", "SEK", None, False),
+        ("sekm", "SEK", None, False),
+        ("SEKm1", "SEK", None, False),
+        ("SEK000", "SEK", None, False),
+    ],
+)
+def test_code_scale(text: str, unit: str, power: int | None, form: bool) -> None:
+    """A code scale gives an item its scale, and it is scale form 4 for its own currency only
+    (SPEC §4.1, §4.6, spec 0.12, #568)."""
+    assert item_scale(text, 0, len(text)) == power
+    assert scale_form(text, 0, len(text), unit, []) is form
 
 
 @pytest.mark.parametrize(("word", "power"), [("THOUSAND", 3), ("Million", 6), ("LAKH", 5)])
