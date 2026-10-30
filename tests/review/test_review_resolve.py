@@ -1051,3 +1051,58 @@ def test_forget_all_finishes_after_a_stop_at_a_task(
     assert not any(state == "unchecked" for _, _, state, _ in done)
     assert not {k, rk, own["receipt"], own["judgments"]} & left
     assert other in left
+
+
+# store forget without --all (#524)
+
+
+def test_forget_removes_the_candidates_of_a_correction(tmp_path: Path) -> None:
+    # The candidates of a correction hold the value that a person typed. A plain forget removes
+    # them, and keeps the correction packet, its receipt and the review records. A later
+    # forget --all still finds the correction by its receipt.
+    store, k, tk, data = one_choice(tmp_path)
+    root = tmp_path / "s"
+    with store:
+        store.append(
+            ("answers", k, reviewer_key("ana")),
+            record(tk, "ana", "correct", candidate=correction("4200000")),
+        )
+        got = write_resolution(store, k, policy(), ["ana"])
+    receipt = correction_receipt(data["packet"], correction("4200000"))
+    with FolderStore(root) as store:
+        fixed = _correction_packet(store, receipt)
+        candidates = json.loads(store.get("packet@1", fixed))["candidates"]
+        assert b"4200000" in store.object_bytes(candidates)
+        done = forget_packet(store, k, "plain")
+        left, _ = store.object_keys()
+        assert ("candidates@1", candidates, "deleted", 0) in done
+        assert not any(state == "unchecked" for _, _, state, _ in done)
+        assert candidates not in left
+        assert {k, got.key, tk, receipt, fixed} <= set(left)
+        done = forget_packet(store, k, "all", everything=True)
+        left, _ = store.object_keys()
+    assert not any(state == "unchecked" for _, _, state, _ in done)
+    assert not {k, got.key, tk, receipt, fixed} & set(left)
+
+
+def test_forget_reports_an_answer_log_that_cannot_be_read(tmp_path: Path) -> None:
+    # A torn answer log can name a correction, so its candidates can stay. A plain forget
+    # reports the log as "unchecked" and removes the rest.
+    store, k, tk, _ = one_choice(tmp_path)
+    root = tmp_path / "s"
+    with store:
+        store.append(
+            ("answers", k, reviewer_key("ana")),
+            record(tk, "ana", "correct", candidate=correction("4200000")),
+        )
+        write_resolution(store, k, policy(), ["ana"])
+    path = root / "logs" / "answers" / k[7:] / f"{reviewer_key('ana')[7:]}.jsonl"
+    with path.open("ab") as f:
+        f.write(b"{")
+    with FolderStore(root) as store:
+        done = forget_packet(store, k, "plain")
+        own = json.loads(store.get("packet@1", k))["candidates"]
+        left, _ = store.object_keys()
+    rel = f"logs/answers/{k[7:]}/{reviewer_key('ana')[7:]}.jsonl"
+    assert ("log", rel, "unchecked", 0) in done
+    assert own not in left and k in left
