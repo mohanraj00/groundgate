@@ -30,33 +30,10 @@ from typing import Any
 import groundgate as gg
 
 from .metrics import decision_key, key, signature
-from .run_set import FrozenSet, _projection, digest, encoded
+from .run_set import TERMS, FrozenSet, _projection, apply_terms, digest, encoded
 
 Json = dict[str, Any]
-TERMS = ("aliases", "columns", "markers")
 NEW_CODES = ("COLUMN_NOT_AT_VALUE", "MARKER_OTHER_FIELD")
-
-
-def apply_terms(schema: Json, terms: Json) -> Json:
-    """Return a schema with the approved terms of one kind added to its fields.
-
-    Aliases add to the aliases of the field, in order and without repeats. ``columns`` and
-    ``markers`` are new members (SPEC §2.3). A term for an unknown field or a field that already
-    has columns or markers stops the replay.
-    """
-    out = json.loads(json.dumps(schema))
-    for field, entry in terms.items():
-        if field not in out["fields"]:
-            raise ValueError("terms name an unknown field: " + field)
-        spec = out["fields"][field]
-        if "aliases" in entry:
-            spec["aliases"] = list(dict.fromkeys([*spec.get("aliases", []), *entry["aliases"]]))
-        for member in ("columns", "markers"):
-            if member in entry:
-                if spec.get(member) is not None:
-                    raise ValueError(f"field already has {member}: {field}")
-                spec[member] = list(entry[member])
-    return gg.Schema.from_dict(out).to_dict()
 
 
 def _without_new_members(schema: Json) -> Json:
@@ -90,6 +67,7 @@ def replay(
     stub = SimpleNamespace(
         manifest=manifest,
         settings={"max_prompt_chars": header["configuration"]["run_policy"]["max_prompt_chars"]},
+        terms={},
     )
     outputs, changes = [], []
     for doc in manifest["documents"]:

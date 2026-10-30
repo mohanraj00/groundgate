@@ -54,7 +54,9 @@ def runner_envelope(*items, missing=()):
     return envelope(*items) | {"not_found": list(missing)}
 
 
-def fixture(tmp_path, text="Amount 5.", fields=None, settings=None, mutate=None, pdf=None):
+def fixture(
+    tmp_path, text="Amount 5.", fields=None, settings=None, mutate=None, pdf=None, terms=None
+):
     directory = tmp_path / "set"
     sources = tmp_path / "sources"
     cache = tmp_path / "cache"
@@ -130,6 +132,11 @@ def fixture(tmp_path, text="Amount 5.", fields=None, settings=None, mutate=None,
         },
     }
     config["run_policy"].update(settings or {})
+    extra = {}
+    if terms is not None:
+        extra["terms"] = tmp_path / "terms.json"
+        extra["terms"].write_bytes(harness.encoded(terms))
+        config["terms_sha256"] = harness.digest(extra["terms"].read_bytes())
     if mutate:
         mutate(manifest, labels, config)
     paths = {
@@ -140,8 +147,57 @@ def fixture(tmp_path, text="Amount 5.", fields=None, settings=None, mutate=None,
     for name, value in (("manifest", manifest), ("labels", labels), ("configuration", config)):
         paths[name].write_bytes(harness.encoded(value))
     kwargs = {name + "_sha256": harness.digest(path.read_bytes()) for name, path in paths.items()}
-    session = harness.FrozenSet(directory, sources, cache, paths["configuration"], **kwargs)
+    session = harness.FrozenSet(
+        directory, sources, cache, paths["configuration"], **kwargs, **extra
+    )
     return session, paths
+
+
+TERMS = {
+    "fields": {
+        "kind": {
+            "amount": {
+                "prompt_sha256": "0" * 64,
+                "aliases": ["Total amount"],
+                "columns": ["Max."],
+                "markers": ["In-network"],
+            }
+        }
+    }
+}
+
+
+def test_terms_file_adds_columns_and_markers_and_pins_its_digest(tmp_path):
+    session, _ = fixture(tmp_path, terms=TERMS)
+    field = session.schema(session.documents["doc"])["fields"]["amount"]
+    assert field["aliases"] == ["Total amount"]
+    assert field["columns"] == ["Max."]
+    assert field["markers"] == ["In-network"]
+    raw = (tmp_path / "terms.json").read_bytes()
+    assert session.header["configuration"]["terms_sha256"] == harness.digest(raw)
+
+
+def test_a_run_without_terms_records_no_terms_digest(tmp_path):
+    session, _ = fixture(tmp_path)
+    field = session.schema(session.documents["doc"])["fields"]["amount"]
+    assert field.get("columns") is None and field.get("markers") is None
+    assert "terms_sha256" not in session.header["configuration"]
+
+
+@pytest.mark.parametrize(
+    "terms, change",
+    [
+        (TERMS, lambda m, labels, c: c.pop("terms_sha256")),
+        (None, lambda m, labels, c: c.update(terms_sha256="sha256:" + "0" * 64)),
+        (TERMS, lambda m, labels, c: c.update(terms_sha256="sha256:" + "0" * 64)),
+        ({"fields": {"kind": {"other": {"columns": ["Max"]}}}}, None),
+        ({"fields": {"other": {"amount": {"columns": ["Max"]}}}}, None),
+        ({"fields": {"kind": {"amount": {"units": ["V"]}}}}, None),
+    ],
+)
+def test_terms_file_and_digest_must_agree(tmp_path, terms, change):
+    with pytest.raises(harness.CacheError):
+        fixture(tmp_path, terms=terms, mutate=change)
 
 
 def output(result):

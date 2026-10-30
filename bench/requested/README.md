@@ -219,6 +219,14 @@ sends the same effective schema, and the recorded schema digest covers the appen
 Changed request metadata in memory or on disk stops a call before a reservation. Commit, reader and transport names are caller
 declarations; the actual code and input bytes are checked independently before each call.
 
+`FrozenSet(..., terms=path)` adds approved schema terms to the frozen schemas (#557). The terms
+file has the shape of `bench/requested4/terms-547.json`: `fields`, then each kind, then each
+field, with `aliases`, `columns` and `markers`. The configuration must then hold
+`terms_sha256`, the digest of the terms file, and the harness checks the file against it before
+each call. A terms file without `terms_sha256`, or the reverse, stops the run. A run without
+terms has no `terms_sha256`, so the configurations of earlier runs do not change. The runner asks
+for column and marker items only for a field with `columns` or `markers`.
+
 `session.run("baseline", client, split="heldout")` runs the released feedback-loop algorithm
 with the same current core as the runner. Its instruction string is copied exactly from the
 released own-model guide, including external and knowledge evidence with the default review
