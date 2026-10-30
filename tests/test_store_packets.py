@@ -416,6 +416,27 @@ def test_a_cache_hit_gives_the_warning_about_hidden_words(
         assert obj["warnings"] == ["page 1: dropped 3 words drawn outside the visible page"]
 
 
+def test_a_cached_warning_is_escaped(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """A stored reading is untrusted: a control character in its warning prints as an escape."""
+    source = tmp_path / "a.pdf"
+    source.write_bytes(FEE_PDF)
+    root = tmp_path / "s"
+    with FolderStore(root) as store:
+        k, _ = put_reading(store, source)
+        obj = json.loads(store.get("reading@2", k))
+        store.forget(k, "test")
+        store.put("reading@2", jcs({**obj, "warnings": ["\x1b[2Jforged\nline"]}).encode())
+        rebuild(store)
+    import groundgate.read as reader
+
+    monkeypatch.setattr(reader, "read", _no_read)
+    assert main(["read", "--store", str(root), str(source)]) == 0
+    err = capsys.readouterr().err
+    assert err == "groundgate: warning: \\u001b[2Jforged\\u000aline\n"
+
+
 def test_a_reading_at_1_never_hits_the_reading_cache(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
