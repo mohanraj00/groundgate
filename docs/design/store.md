@@ -238,6 +238,12 @@ their issues (#432).
 
    The kept objects hold digests, values, offsets, codes and questions, and no document text
    other than the values. A review question and its choices can quote a value.
+   `forget` also removes the `candidates@1` of each correction packet that `review resolve`
+   wrote for the packet (#524). They hold the value that a person typed in review, and that
+   value comes from the document. The correction packet, its judgments and its receipt stay,
+   as for any packet. An answer log of the packet that `forget` cannot read can name a
+   correction, so `forget` prints it as "unchecked" and exits 1. So does a packet that can be a
+   correction when its candidates and its receipt cannot tell.
    Issue 3 checks that no line of a run record holds document text, and `forget` removes the
    record if a line does. A line holds document text if one of its strings has 8 or more
    characters and is in the text. A store key, a field name of the schema, the document id and

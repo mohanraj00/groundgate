@@ -680,7 +680,7 @@ _RECEIPT_INPUTS = ("groundgate", "document", "references", "packs", "schema_sha2
 
 
 def _review_plan(
-    objects: _Objects, packet: str, obj: Mapping[str, Any]
+    objects: _Objects, packet: str, obj: Mapping[str, Any], *, orphans: bool = True
 ) -> tuple[
     list[tuple[str, str]],
     frozenset[str],
@@ -698,6 +698,7 @@ def _review_plan(
     tell: then ``forget`` keeps the review provenance and reports them as ``unchecked``. Also
     return each receipt that no packet names and that can be the receipt of a correction, but
     that does not record enough to prove it (``_orphans``): it stays, and ``forget`` reports it.
+    Without ``orphans``, there is no search for such receipts.
     A ``review-policy@1`` object holds no document data and stays.
 
     A correction packet is a packet with the inputs of the packet, no run record, and the exact
@@ -764,7 +765,7 @@ def _review_plan(
             for _, n in [*own, *receipts, ("packet@1", k)]:
                 shared[n] = shared.get(n, 0) + len(users)
     unproven: list[tuple[str, str]] = []
-    if wanted:
+    if wanted and orphans:
         proven, maybe, stops = _orphans(objects, obj, wanted)
         unread += stops  # the search cannot run: keep the review provenance
         plan += [("receipt@1", n) for n in proven if n not in elsewhere]
@@ -946,7 +947,10 @@ def forget_packet(
     store: FolderStore, packet: str, reason: str, *, everything: bool = False
 ) -> list[tuple[str, str, str, int]]:
     """Remove the objects of a packet that §8 rule 3 lists as "Removed", and record each
-    deletion in ``logs/deleted.jsonl``. An object that two packets share goes for both.
+    deletion in ``logs/deleted.jsonl``. An object that two packets share goes for both. The
+    ``candidates@1`` of each correction packet that ``review resolve`` wrote for the packet go
+    too, because they hold the value that a person typed (#524). An answer log that cannot be
+    read, and a packet that can be a correction but cannot be told, are ``unchecked``.
 
     ``forget`` also removes the run record if a line holds document text, or if its text is not
     in the store (then the lines cannot be checked). The run
@@ -1086,6 +1090,11 @@ def forget_packet(
         plan = first + plan + [(kind, k, False) for kind, k in review if kind in _RECORDS]
     else:
         plan = [(kind, k, always) for kind, k, always in plan if kind in REMOVED or always]
+        # The candidates of a correction hold the value that a person typed in review, and
+        # that value comes from the document (#524). The rest of a correction stays.
+        review, corrections, _, unread_review, _ = _review_plan(objects, packet, obj, orphans=False)
+        plan = [(kind, k, False) for kind, k in review if kind == "candidates@1"] + plan
+        unchecked += unread_review
     others = _others(objects, packet, corrections)
     for ck, cn in shared_corrections.items():
         others[ck] = others.get(ck, 0) + cn
