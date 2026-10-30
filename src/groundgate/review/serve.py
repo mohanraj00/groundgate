@@ -208,9 +208,9 @@ class _Doc:
 
 
 def _named(record: Mapping[str, Any]) -> bool:
-    """True if an answer record names its task with a string. ``resolve`` refuses the other
-    records, but a set or a dict key must not fail on them first."""
-    return isinstance(record.get("task"), str)
+    """True if an answer record gives its task and its verdict as strings. ``resolve`` refuses
+    the other records, but a set or a dict key must not fail on them first."""
+    return isinstance(record.get("task"), str) and isinstance(record.get("verdict"), str)
 
 
 def _task_key(task: Mapping[str, Any]) -> str:

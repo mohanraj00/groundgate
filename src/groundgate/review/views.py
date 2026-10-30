@@ -44,7 +44,7 @@ def queue_view(store: Any) -> bytes:
     reviewer that gave an answer to the task, so the queue of one reviewer is the tasks that do
     not name it. A packet that ``review serve`` leaves out, and a log that it cannot read, are
     left out here too."""
-    from .serve import Review
+    from .serve import Review, _named
 
     review = Review(store, "store rebuild", DEFAULT_POLICY)
     logs = {pk: review._logs(pk) for pk in review.docs}
@@ -57,7 +57,9 @@ def queue_view(store: Any) -> bytes:
                 if tk in settled:
                     continue
                 names = sorted(
-                    n for n, rs in logs[pk].items() if any(r.get("task") == tk for r in rs)
+                    n
+                    for n, rs in logs[pk].items()
+                    if any(r.get("task") == tk and _named(r) for r in rs)
                 )
                 items.append((review.place(pk, tk), names))
         tasks = [

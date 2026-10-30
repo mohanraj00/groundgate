@@ -59,8 +59,11 @@ def test_a_bad_answer_record_does_not_stop_the_queue_view(tmp_path: Path) -> Non
         Review(store, "ana").answer(answer(tasks["net_income"], "unsure"))
         bad = {"reviewer": "ana", "task": [], "verdict": "unsure"}
         store.append(("answers", k, reviewer_key("ana")), bad)
+        bad = {"reviewer": "ana", "task": tasks["revenue"], "verdict": []}
+        store.append(("answers", k, reviewer_key("ana")), bad)
         found = json.loads(queue_view(store))
         ana = Review(store, "ana").queue()["tasks"]
     (queue,) = found["queues"]
-    assert len(queue["tasks"]) == 2
+    answered = {t["task"]: t["answered"] for t in queue["tasks"]}
+    assert answered == {tasks["net_income"]: ["ana"], tasks["revenue"]: []}
     assert [t["task"] for t in ana] == [tasks["revenue"]]  # ana answered net income
