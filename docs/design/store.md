@@ -279,7 +279,8 @@ The view gives one result for each policy and each scope. The scopes are all pac
 split, with null first. `kinds`, `packets`, `other_split` and `no_split` are the members of
 `review measures --json` with no change. `skipped` is the number of skipped lines, not the
 lines: a line holds the text of an error, so its bytes can change when only a message changes.
-A `splits` log that the store cannot read, or that `review measures` refuses, gives no scope.
+A `splits` log that the store cannot read, or that `review measures` refuses, gives no scope,
+also if it changes during the build.
 
 ## 8. Rules
 

@@ -255,3 +255,22 @@ def test_a_log_that_turns_unreadable_during_the_build_makes_the_packet_stale(
         monkeypatch.setattr(store, "object_keys", late)
         found = json.loads(latest_view(store))
     assert found["resolutions"] == [] and found["stale"] == [k]
+
+
+def test_a_splits_log_that_changes_during_the_build_gives_no_scope(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    store, _ = measures_store(tmp_path)
+    log = ("splits", set_key("set-a"))
+    document = "sha256:" + "1" * 64
+    store.append(log, {"set": "set-a", "document": document, "split": "development"})
+    keys = store.object_keys
+
+    def late() -> Any:  # a second split for the document, after the scopes are known
+        if len(store.read(log)) == 1:
+            store.append(log, {"set": "set-a", "document": document, "split": "held-out"})
+        return keys()
+
+    monkeypatch.setattr(store, "object_keys", late)
+    found = json.loads(measures_view(store))
+    assert [(r["set"], r["split"]) for r in found["results"]] == [(None, None)]
