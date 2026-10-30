@@ -108,19 +108,13 @@ def _heads(obj: Any) -> dict[str, str] | None:
     return out
 
 
-def latest_view(store: Any) -> bytes:
-    """The view ``latest-resolutions@1``. A stored ``resolution@1`` object is current if its
-    ``answers`` heads are the current heads of all the answer logs of its packet: the same logs,
-    and the same last entry of each log. The view has one row for each current resolution,
-    sorted by packet, policy and resolution. ``stale`` lists each packet with an answer log
-    and no current resolution. A packet with a log that the store cannot read has no current
-    resolution, and so does a packet folder of the answer logs with an entry that is not a log.
-    If ``logs/answers`` is not a folder, no resolution is current, and each packet of a
-    resolution is stale.
-    An object whose members do not match ``resolution@1`` is left out."""
-    from ..store import StoreError, key
+def _log_heads(store: Any) -> tuple[dict[str, dict[str, str] | None], bool]:
+    """The head of each answer log by packet and reviewer key, with None for a packet with a
+    log that the store cannot read or an entry that is not a log, and True if
+    ``logs/answers`` is not a folder."""
+    from ..store import StoreError
 
-    heads: dict[str, dict[str, str] | None] = {}  # packet -> reviewer key -> head, or None
+    heads: dict[str, dict[str, str] | None] = {}
     names, problems = store.log_names()
     for log in names:
         if log[0] != "answers":
@@ -135,12 +129,29 @@ def latest_view(store: Any) -> bytes:
             continue
         if records:
             found[log[2]] = records[-1]["entry_sha256"]
-    blind = "logs/answers is not a folder" in problems  # then no log of any packet is known
     for problem in problems:  # a symlink or other entry under the packet folder of a log
         m = _ANSWERS.match(problem)
         if m:
             heads["sha256:" + m.group(1)] = None
+    return heads, "logs/answers is not a folder" in problems
+
+
+def latest_view(store: Any) -> bytes:
+    """The view ``latest-resolutions@1``. A stored ``resolution@1`` object is current if its
+    ``answers`` heads are the current heads of all the answer logs of its packet: the same logs,
+    and the same last entry of each log. The view has one row for each current resolution,
+    sorted by packet, policy and resolution. ``stale`` lists each packet with an answer log
+    and no current resolution. A packet with a log that the store cannot read has no current
+    resolution, and so does a packet folder of the answer logs with an entry that is not a log.
+    If ``logs/answers`` is not a folder in either read, no resolution is current, and each
+    packet of a resolution is stale. The heads are read again after the rows: a packet whose heads
+    changed during the build is stale. An object whose members do not match ``resolution@1``
+    is left out."""
+    from ..store import StoreError, key
+
+    heads, blind = _log_heads(store)
     rows = set()
+    packets = set()  # the packet of each resolution
     keys, _ = store.object_keys()
     for k in keys:
         try:
@@ -156,10 +167,18 @@ def latest_view(store: Any) -> bytes:
         read = _heads(obj)
         if read is None:
             continue
-        if blind:
-            heads.setdefault(obj["packet"], None)
-        elif heads.get(obj["packet"], {}) == read:
+        packets.add(obj["packet"])
+        if heads.get(obj["packet"], {}) == read:
             rows.add((obj["packet"], obj["policy"], k))
+    again, blind_again = _log_heads(store)  # an append during the build makes a packet stale
+    if blind or blind_again:  # then no log of any packet is known
+        rows = set()
+        for pk in packets:
+            heads.setdefault(pk, None)
+    for pk in set(heads) | set(again):
+        if pk not in heads or pk not in again or heads[pk] != again[pk] or again[pk] is None:
+            heads.setdefault(pk, None)
+            rows = {row for row in rows if row[0] != pk}
     current = {pk for pk, _, _ in rows}
     out = {
         "format": "latest-resolutions@1",

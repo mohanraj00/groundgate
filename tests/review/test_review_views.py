@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from typing import Any
 
+import pytest
 from test_review_measures import EVERY
 from test_review_measures import store as measures_store
 from test_review_serve import answer, store_with_tasks
@@ -188,5 +190,68 @@ def test_an_answers_folder_that_is_a_symlink_makes_each_packet_stale(tmp_path: P
     folder.rename(tmp_path / "moved")
     folder.symlink_to(tmp_path / "moved")
     with FolderStore(tmp_path / "store") as store:
+        found = json.loads(latest_view(store))
+    assert found["resolutions"] == [] and found["stale"] == [k]
+
+
+def test_an_answer_during_the_build_makes_the_packet_stale(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    store, k, tasks = store_with_tasks(tmp_path / "store")
+    with store:
+        Review(store, "ben").answer(answer(tasks["net_income"], "not_in_document"))
+        write_resolution(store, k, None, ["ben"])
+        review = Review(store, "ben")
+        keys = store.object_keys
+
+        def late() -> Any:  # the answer comes after the first read of the heads
+            review.answer(answer(tasks["revenue"], "unsure"))
+            return keys()
+
+        monkeypatch.setattr(store, "object_keys", late)
+        found = json.loads(latest_view(store))
+    assert found["resolutions"] == [] and found["stale"] == [k]
+
+
+def test_an_answers_folder_that_turns_into_a_symlink_makes_each_packet_stale(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    store, k, _ = store_with_tasks(tmp_path / "store")
+    folder = tmp_path / "store" / "logs" / "answers"
+    with store:
+        write_resolution(store, k, None, [])
+        assert json.loads(latest_view(store))["resolutions"] != []
+        folder.mkdir(parents=True, exist_ok=True)
+        keys = store.object_keys
+
+        def late() -> Any:  # the folder turns into a symlink after the first read
+            if not folder.is_symlink():
+                folder.rename(tmp_path / "moved")
+                folder.symlink_to(tmp_path / "moved")
+            return keys()
+
+        monkeypatch.setattr(store, "object_keys", late)
+        found = json.loads(latest_view(store))
+    assert found["resolutions"] == [] and found["stale"] == [k]
+
+
+def test_a_log_that_turns_unreadable_during_the_build_makes_the_packet_stale(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    store, k, tasks = store_with_tasks(tmp_path / "store")
+    with store:
+        write_resolution(store, k, None, [])
+        review = Review(store, "ben")
+        keys = store.object_keys
+
+        def late() -> Any:  # a first log, with a torn line, after the first read
+            if not list((tmp_path / "store" / "logs").rglob("*.jsonl")):
+                review.answer(answer(tasks["revenue"], "unsure"))
+                (log,) = (tmp_path / "store" / "logs" / "answers").rglob("*.jsonl")
+                with log.open("a", encoding="utf-8") as f:
+                    f.write('{"torn": ')
+            return keys()
+
+        monkeypatch.setattr(store, "object_keys", late)
         found = json.loads(latest_view(store))
     assert found["resolutions"] == [] and found["stale"] == [k]
