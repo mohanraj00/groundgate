@@ -561,3 +561,33 @@ def test_xlsx_shared_string_repeats_past_the_text_limit(
     data = xlsx([("S", "visible", rows)], shared=["x" * 50])
     with pytest.raises(ReadError, match="text is larger than 1000"):
         read(_write(tmp_path, "big.xlsx", data))
+
+
+def test_docx_no_break_hyphen_and_default_script(tmp_path: Path) -> None:
+    hyphen = "<w:p><w:r><w:t>500</w:t><w:noBreakHyphen/><w:t>600 mg</w:t></w:r></w:p>"
+    text, _ = _nodes(_write(tmp_path, "h.docx", docx(hyphen)))
+    assert text == "500-600 mg"
+    styles = (
+        "<w:docDefaults><w:rPrDefault><w:rPr>"
+        '<w:vertAlign w:val="superscript"/></w:rPr></w:rPrDefault></w:docDefaults>'
+    )
+    runs = (
+        '<w:p><w:r><w:rPr><w:vertAlign w:val="baseline"/></w:rPr><w:t>10</w:t></w:r>'
+        "<w:r><w:t>9</w:t></w:r></w:p>"
+    )
+    text, _ = _nodes(_write(tmp_path, "s.docx", docx(runs, styles)))
+    assert text == "10^9"
+
+
+def test_docx_deleted_table_row_gives_no_text(tmp_path: Path) -> None:
+    deleted = '<w:trPr><w:del w:id="1" w:author="A"/></w:trPr>'
+    table = (
+        f"<w:tbl><w:tr>{_tc('Dose')}</w:tr>"
+        f"<w:tr>{deleted}{_tc('500 mg')}</w:tr>"
+        f"<w:tr>{_tc('5 mg')}</w:tr></w:tbl>"
+    )
+    text, nodes = _nodes(_write(tmp_path, "d.docx", docx(table)))
+    assert text == "Dose\n5 mg"
+    cells = [(n["text"], n["row"]) for n in nodes if n["kind"] == "cell"]
+    assert cells == [("Dose", 0), ("5 mg", 2)]
+    assert sum(n["kind"] == "row" for n in nodes) == 2

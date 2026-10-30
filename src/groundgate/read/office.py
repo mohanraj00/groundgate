@@ -20,8 +20,9 @@ MAX_EXPANDED. ``_parse`` refuses a DOCTYPE, so no entity is declared or loaded, 
 deeper than MAX_XML_DEPTH. An XLSX text longer than MAX_TEXT is refused, because one short
 shared string can repeat in each cell. DOCX text is never longer than its XML.
 
-A DOCX gives the text of the document after its tracked changes: deleted and moved-from text
-gives no text. Of the branches of ``mc:AlternateContent``, only the first ``mc:Choice`` is read.
+A DOCX gives the text of the document after its tracked changes: deleted text, deleted table
+rows and moved-from text give no text. Of the branches of ``mc:AlternateContent``, only the
+first ``mc:Choice`` is read.
 """
 
 from __future__ import annotations
@@ -232,6 +233,7 @@ class _Styles:
         self.align: dict[str, str] = {}
         self.based_on: dict[str, str] = {}
         self.default = False
+        self.default_align: str | None = None
         self.default_paragraph: str | None = None  # the style of a paragraph with no pStyle
 
     def hidden(self, style: str | None) -> bool | None:
@@ -279,6 +281,8 @@ def _styles(z: _Zip, document: str) -> _Styles:
                 out.default_paragraph = current[0]
         elif tag == "w:vanish" and parent == "w:rPr" and "w:rPrDefault" in stack:
             out.default = attrs.get("val", "true").lower() not in OFF
+        elif tag == "w:vertAlign" and parent == "w:rPr" and "w:rPrDefault" in stack:
+            out.default_align = attrs.get("val", "")
         elif not current or "w:style" not in stack:
             return
         elif tag == "w:basedOn" and parent == "w:style":
@@ -323,6 +327,7 @@ class _Table:
         self.row_raw = -1
         self.column = 0
         self.header = False
+        self.deleted = False  # the open row is a deleted row of tracked changes
         self.merge: dict[int, int] = {}  # column -> the cell that a vertical merge starts
 
 
@@ -383,8 +388,10 @@ class _Docx:
         elif tag == "w:tr" and self.tables:
             t = self.tables[-1]
             self.w.start("tr")
-            t.row, t.column, t.header = t.row + 1, 0, False
+            t.row, t.column, t.header, t.deleted = t.row + 1, 0, False, False
             t.row_raw = self.n.open("row", t.raw if t.raw >= 0 else None)
+        elif tag == "w:tc" and self.tables and self.tables[-1].deleted:
+            self.skip = 1  # the cells of a deleted row give no text
         elif tag == "w:tc" and self.tables:
             t = self.tables[-1]
             self.w.start("td")
@@ -410,7 +417,11 @@ class _Docx:
 
     def _table_property(self, tag: str, parent: str, attrs: dict[str, str]) -> None:
         t = self.tables[-1]
-        if tag == "w:tblHeader" and parent == "w:trPr":
+        if tag == "w:del" and parent == "w:trPr":
+            t.deleted = True
+            if t.row_raw >= 0:
+                self.n.raws[t.row_raw].keep = False
+        elif tag == "w:tblHeader" and parent == "w:trPr":
             t.header = attrs.get("val", "true").lower() not in OFF
         elif tag == "w:gridBefore" and parent == "w:trPr":
             t.column += span_number(attrs.get("val")) if attrs.get("val") else 0
@@ -463,6 +474,8 @@ class _Docx:
                 if script and not self.scripted:
                     self.w.start(script)
                     self.script, self.scripted = script, True
+            elif tag == "w:noBreakHyphen":
+                self.w.text("-")
             elif tag == "w:tab":
                 self.w.text(" ")
             elif tag in ("w:br", "w:cr"):
@@ -470,13 +483,14 @@ class _Docx:
 
     def _script(self) -> str | None:
         """``sup`` or ``sub`` for a run with a superscript or a subscript ``vertAlign``: its own,
-        or the one of its character style or of the style of its paragraph."""
+        or the one of its character style, of the style of its paragraph or of the document
+        defaults, in that order."""
         para = self.styles.paragraph(self.para["style"] if self.para else None)
-        for align in (self.align, self.styles.vert_align(self.run_style)):
-            if align is not None:
-                break
-        else:
-            align = self.styles.vert_align(para)
+        align = self.align
+        for value in (self.styles.vert_align(self.run_style), self.styles.vert_align(para)):
+            align = value if align is None else align
+        if align is None:
+            align = self.styles.default_align
         return {"superscript": "sup", "subscript": "sub"}.get(align or "")
 
     def _hidden(self) -> bool:
