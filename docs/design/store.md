@@ -257,8 +257,10 @@ logs, and the same last entry of each log. `rebuild` does not resolve again, bec
 writes packets and receipts. If two current resolutions of a packet have different policies, the
 view keeps both, one row for each policy. The rows are sorted by packet, policy and resolution.
 `stale` lists, in order, each packet with an answer log and no current resolution. This
-includes a packet with a log that no resolution read, and a packet with a log that the store
-cannot read. An object that does not have the members of `resolution@1` is left out.
+includes a packet with a log that no resolution read, a packet with a log that the store
+cannot read, and a packet whose log folder has an entry that is not a log, for example a
+symlink. An object whose members do not match `resolution@1` is left out: it must have the five
+members, the format name, a key for the packet, the policy and each head, and a list of slots.
 
 The measures view comes with its issue (#515).
 

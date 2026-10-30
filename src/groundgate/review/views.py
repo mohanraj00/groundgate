@@ -15,6 +15,8 @@ from ..canonical import jcs
 from .tasks import DEFAULT_POLICY, check_policy
 
 _KEY = re.compile(r"sha256:[0-9a-f]{64}")
+_ANSWERS = re.compile(r"logs/answers/([0-9a-f]{64})[/ ]")
+_RESOLUTION = frozenset({"format", "packet", "policy", "answers", "slots"})
 
 __all__ = ["latest_view", "policies", "queue_view"]
 
@@ -71,17 +73,51 @@ def queue_view(store: Any) -> bytes:
     return jcs({"format": "review-queue@1", "queues": queues}).encode("utf-8")
 
 
+def _heads(obj: Any) -> dict[str, str] | None:
+    """The reviewer key and head of each log that a ``resolution@1`` object read, or None if
+    its members do not match the format: the five members, the format name, the packet and
+    policy keys, each head and a list of slots."""
+    from ..store import reviewer_key
+
+    if not (
+        isinstance(obj, dict)
+        and set(obj) == _RESOLUTION
+        and obj["format"] == "resolution@1"
+        and all(isinstance(obj[m], str) and _KEY.fullmatch(obj[m]) for m in ("packet", "policy"))
+        and isinstance(obj["answers"], list)
+        and isinstance(obj["slots"], list)
+    ):
+        return None
+    out = {}
+    for a in obj["answers"]:
+        if not (
+            isinstance(a, dict)
+            and set(a) == {"reviewer", "head"}
+            and isinstance(a["reviewer"], str)
+            and a["reviewer"].strip()
+            and isinstance(a["head"], str)
+            and _KEY.fullmatch(a["head"])
+        ):
+            return None
+        try:
+            out[reviewer_key(a["reviewer"])] = a["head"]
+        except UnicodeEncodeError:
+            return None
+    return out
+
+
 def latest_view(store: Any) -> bytes:
     """The view ``latest-resolutions@1``. A stored ``resolution@1`` object is current if its
     ``answers`` heads are the current heads of all the answer logs of its packet: the same logs,
     and the same last entry of each log. The view has one row for each current resolution,
     sorted by packet, policy and resolution. ``stale`` lists each packet with an answer log
     and no current resolution. A packet with a log that the store cannot read has no current
-    resolution. An object that does not have the members of ``resolution@1`` is left out."""
-    from ..store import StoreError, key, reviewer_key
+    resolution, and so does a packet folder of the answer logs with an entry that is not a log.
+    An object whose members do not match ``resolution@1`` is left out."""
+    from ..store import StoreError, key
 
     heads: dict[str, dict[str, str] | None] = {}  # packet -> reviewer key -> head, or None
-    names, _ = store.log_names()
+    names, problems = store.log_names()
     for log in names:
         if log[0] != "answers":
             continue
@@ -95,6 +131,10 @@ def latest_view(store: Any) -> bytes:
             continue
         if records:
             found[log[2]] = records[-1]["entry_sha256"]
+    for problem in problems:  # a symlink or other entry under the packet folder of a log
+        m = _ANSWERS.match(problem)
+        if m:
+            heads["sha256:" + m.group(1)] = None
     rows = set()
     keys, _ = store.object_keys()
     for k in keys:
@@ -106,14 +146,11 @@ def latest_view(store: Any) -> bytes:
             continue
         try:
             obj = json.loads(data)
-            read = {reviewer_key(a["reviewer"]): a["head"] for a in obj["answers"]}
-            pk, policy = obj["packet"], obj["policy"]
-        except (ValueError, RecursionError, KeyError, TypeError, AttributeError):
-            continue  # UnicodeEncodeError is a ValueError
-        if not (isinstance(pk, str) and _KEY.fullmatch(pk) and isinstance(policy, str)):
+        except (ValueError, RecursionError):  # deep nesting fits in a store object
             continue
-        if heads.get(pk, {}) == read:
-            rows.add((pk, policy, k))
+        read = _heads(obj)
+        if read is not None and heads.get(obj["packet"], {}) == read:
+            rows.add((obj["packet"], obj["policy"], k))
     current = {pk for pk, _, _ in rows}
     out = {
         "format": "latest-resolutions@1",
