@@ -207,6 +207,12 @@ class _Doc:
     words: dict[int, list[Any]] = field(default_factory=dict)  # PDF words by page
 
 
+def _named(record: Mapping[str, Any]) -> bool:
+    """True if an answer record names its task with a string. ``resolve`` refuses the other
+    records, but a set or a dict key must not fail on them first."""
+    return isinstance(record.get("task"), str)
+
+
 def _task_key(task: Mapping[str, Any]) -> str:
     from ..store import key
 
@@ -353,7 +359,7 @@ class Review:
         """The queue of the packet: each task that this reviewer did not answer, and whose slot
         an answer does not settle (§8, Order)."""
         logs = self._logs(pk)
-        answered = {r.get("task") for r in logs.get(self.reviewer, [])}
+        answered = {r.get("task") for r in logs.get(self.reviewer, []) if _named(r)}
         settled = self.settled(pk, logs, self.policy)
         doc = self.docs[pk]
         doc.open = [k for k in doc.tasks if k not in answered and k not in settled]
@@ -366,7 +372,7 @@ class Review:
         doc = self.docs[pk]
         latest: dict[object, set[object]] = {}  # task -> the latest verdict of each reviewer
         for records in logs.values():
-            last = {r.get("task"): r.get("verdict") for r in records}
+            last = {r.get("task"): r.get("verdict") for r in records if _named(r)}
             for task, verdict in last.items():
                 latest.setdefault(task, set()).add(verdict)
         settled: set[str] = set()

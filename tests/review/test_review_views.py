@@ -11,7 +11,7 @@ from groundgate.canonical import jcs
 from groundgate.review.serve import Review
 from groundgate.review.tasks import DEFAULT_POLICY
 from groundgate.review.views import queue_view
-from groundgate.store import key
+from groundgate.store import key, reviewer_key
 from groundgate.store.maintain import rebuild
 
 AGREE_2 = {**DEFAULT_POLICY, "agree": 2}
@@ -51,3 +51,16 @@ def test_a_rebuild_after_a_delete_gives_the_same_queue_bytes(tmp_path: Path) -> 
         view.unlink()
         rebuild(store)
     assert view.read_bytes() == first
+
+
+def test_a_bad_answer_record_does_not_stop_the_queue_view(tmp_path: Path) -> None:
+    store, k, tasks = store_with_tasks(tmp_path / "store")
+    with store:
+        Review(store, "ana").answer(answer(tasks["net_income"], "unsure"))
+        bad = {"reviewer": "ana", "task": [], "verdict": "unsure"}
+        store.append(("answers", k, reviewer_key("ana")), bad)
+        found = json.loads(queue_view(store))
+        ana = Review(store, "ana").queue()["tasks"]
+    (queue,) = found["queues"]
+    assert len(queue["tasks"]) == 2
+    assert [t["task"] for t in ana] == [tasks["revenue"]]  # ana answered net income
