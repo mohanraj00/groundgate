@@ -260,7 +260,20 @@ view keeps both, one row for each policy. The rows are sorted by packet, policy 
 includes a packet with a log that no resolution read, and a packet with a log that the store
 cannot read. An object that does not have the members of `resolution@1` is left out.
 
-The measures view comes with its issue (#515).
+`store rebuild` builds the measures as `views/review-measures.json` (`review-measures@1`, #515):
+
+```json
+{"format": "review-measures@1",
+ "results": [{"policy": "sha256:...", "set": null, "split": null,
+              "kinds": {}, "packets": 12, "skipped": 1, "other_split": 0, "no_split": 0}]}
+```
+
+The view gives one result for each policy and each scope. The scopes are all packets (`set` and
+`split` null), and each split of each `splits` log. The results are sorted by policy, set and
+split, with null first. `kinds`, `packets`, `other_split` and `no_split` are the members of
+`review measures --json` with no change. `skipped` is the number of skipped lines, not the
+lines: a line holds the text of an error, so its bytes can change when only a message changes.
+A `splits` log that the store cannot read, or that `review measures` refuses, gives no scope.
 
 ## 8. Rules
 

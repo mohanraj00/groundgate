@@ -80,6 +80,7 @@ VIEWS = (
     "calibrate-labels.json",
     "review-queue.json",
     "latest-resolutions.json",
+    "review-measures.json",
 )
 _BYTES = frozenset({"source@1", "text@1", "prompt@1", "reply@1"})
 
@@ -610,7 +611,7 @@ def rebuild(store: FolderStore) -> list[str]:
     """Build each view again from the objects and logs, and return the path of each view
     file. The same objects and logs give the same bytes."""
     from ..review.labels import labels_view
-    from ..review.views import latest_view, queue_view
+    from ..review.views import latest_view, measures_view, queue_view
 
     objects = _Objects(store)
     return [
@@ -618,6 +619,7 @@ def rebuild(store: FolderStore) -> list[str]:
         store.write_view("calibrate-labels.json", labels_view(store)),
         store.write_view("review-queue.json", queue_view(store)),
         store.write_view("latest-resolutions.json", latest_view(store)),
+        store.write_view("review-measures.json", measures_view(store)),
     ]
 
 
