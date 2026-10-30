@@ -242,6 +242,12 @@ their issues (#432).
 
    The kept objects hold digests, values, offsets, codes and questions, and no document text
    other than the values. A review question and its choices can quote a value.
+   `forget` also removes the `candidates@1` of each correction packet that `review resolve`
+   wrote for the packet (#524). They hold the value that a person typed in review, and that
+   value comes from the document. The correction packet, its judgments and its receipt stay,
+   as for any packet. An answer log of the packet that `forget` cannot read can name a
+   correction, so `forget` prints it as "unchecked" and exits 1. So does a packet that can be a
+   correction when its candidates and its receipt cannot tell.
    Issue 3 checks that no line of a run record holds document text, and `forget` removes the
    record if a line does. A line holds document text if one of its strings has 8 or more
    characters and is in the text. A store key, a field name of the schema, the document id and
@@ -256,6 +262,9 @@ their issues (#432).
    it. If a copy of the original record exists, put it back and run `forget` again. If not,
    call `FolderStore.forget` on the key of the record. Its prompts, replies and admissions
    then stay with no record that names them, and a second `forget --all` removes the packet.
+   `store check` reports each prompt, reply and admission that no run record names, and
+   `FolderStore.forget` on its key removes it (#499). A `forget` of 0.12 left such objects
+   when it removed a changed run record.
    A run record names its prompts, replies and admissions by run keys, and the deleted log
    keeps the run keys of each one that `groundgate store forget` removes. If a run record names a run key of the
    deleted log, the object was removed before, and `forget` prints it as "absent". If a run
@@ -277,7 +286,9 @@ their issues (#432).
    "unchecked" and exits 1, because the log can name a correction. A packet that can be a
    correction, but whose candidates and receipt cannot be read, is "unchecked" too. So is such
    a packet when a correction answer stays, but the receipt or the judgments of the packet are
-   gone. The corrections go first, then the tasks, the resolutions and the answer logs of the
+   gone. So is such a packet when the packet is of another spec version (#525): a digest names
+   its spec version (SPEC §6), so the candidate digests of the receipt do not match those of
+   this version. The corrections go first, then the tasks, the resolutions and the answer logs of the
    packet, then its receipt and its judgments, and the packet last. So a `forget --all` that
    stops can finish later. The receipt of a correction goes after its packet. A retry removes a receipt that no packet
    names only if it proves the correction: its spec version, document, references, packs,
