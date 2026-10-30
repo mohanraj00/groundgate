@@ -17,7 +17,11 @@ docs/design/document-model.md §5.1:
 These files are untrusted input. ``_Zip`` refuses a file larger than MAX_FILE, more than
 MAX_MEMBERS members, a member name outside the archive, and a total expanded size larger than
 MAX_EXPANDED. ``_parse`` refuses a DOCTYPE, so no entity is declared or loaded, and an element
-deeper than MAX_XML_DEPTH.
+deeper than MAX_XML_DEPTH. An XLSX text longer than MAX_TEXT is refused, because one short
+shared string can repeat in each cell. DOCX text is never longer than its XML.
+
+A DOCX gives the text of the document after its tracked changes: deleted and moved-from text
+gives no text. Of the branches of ``mc:AlternateContent``, only the first ``mc:Choice`` is read.
 """
 
 from __future__ import annotations
@@ -41,6 +45,7 @@ MAX_FILE = 64 * 2**20  # the bytes of the zip file
 MAX_MEMBERS = 10_000
 MAX_EXPANDED = 256 * 2**20  # the sum of the expanded sizes of all members
 MAX_XML_DEPTH = 512
+MAX_TEXT = 64 * 2**20  # the code points of an XLSX text: a shared string can repeat in each cell
 
 # The namespaces of the transitional and the strict forms of Office Open XML.
 NAMESPACES = {
@@ -227,6 +232,7 @@ class _Styles:
         self.align: dict[str, str] = {}
         self.based_on: dict[str, str] = {}
         self.default = False
+        self.default_paragraph: str | None = None  # the style of a paragraph with no pStyle
 
     def hidden(self, style: str | None) -> bool | None:
         """The ``vanish`` of ``style`` and the styles it is based on, or None when none says."""
@@ -234,6 +240,14 @@ class _Styles:
 
     def vert_align(self, style: str | None) -> str | None:
         return self._find(self.align, style)
+
+    def level(self, style: str | None) -> int | None:
+        """The heading level of a paragraph style, or 0 for body text, or None."""
+        return self._find(self.levels, style)
+
+    def paragraph(self, style: str | None) -> str | None:
+        """The style of a paragraph: its ``pStyle``, or the default paragraph style."""
+        return style if style is not None else self.default_paragraph
 
     def _find(self, table: dict[str, _T], style: str | None) -> _T | None:
         seen: set[str] = set()
@@ -260,6 +274,9 @@ def _styles(z: _Zip, document: str) -> _Styles:
         stack.append(tag)
         if tag == "w:style":
             current[:] = [attrs.get("styleId", ""), attrs.get("type", "")]
+            on = attrs.get("default", "0").lower() not in OFF
+            if on and current[1] == "paragraph" and out.default_paragraph is None:
+                out.default_paragraph = current[0]
         elif tag == "w:vanish" and parent == "w:rPr" and "w:rPrDefault" in stack:
             out.default = attrs.get("val", "true").lower() not in OFF
         elif not current or "w:style" not in stack:
@@ -292,10 +309,11 @@ def _styles(z: _Zip, document: str) -> _Styles:
 
 
 def _outline(attrs: dict[str, str]) -> int | None:
+    """The heading level of an outline level: 0 to 8 give 1 to 6, and 9 (body text) gives 0."""
     value = attrs.get("val", "")
-    return (
-        min(int(value) + 1, 6) if value.isascii() and value.isdigit() and int(value) < 9 else None
-    )
+    if not (value.isascii() and value.isdigit() and int(value) <= 9):
+        return None
+    return 0 if int(value) == 9 else min(int(value) + 1, 6)
 
 
 class _Table:
@@ -316,7 +334,10 @@ class _Docx:
         self.w = nodes.w
         self.styles = styles
         self.stack: list[str] = []
-        self.skip = 0  # the depth inside ``mc:Fallback``, which repeats the ``mc:Choice``
+        # The depth inside a subtree that gives no text: ``w:moveFrom`` (the old place of moved
+        # text), ``mc:Fallback``, and each ``mc:Choice`` after the first, which repeat the first.
+        self.skip = 0
+        self.choices: list[bool] = []  # for each open ``mc:AlternateContent``: a choice was read
         self.para: dict[str, Any] | None = None  # the outer paragraph that is open
         self.inner = 0  # paragraphs and tables inside the outer paragraph (text boxes)
         # [the cell, the open list, the paragraphs so far] of the top level and each open cell
@@ -333,9 +354,16 @@ class _Docx:
     def start(self, tag: str, attrs: dict[str, str]) -> None:
         parent = self.stack[-1] if self.stack else ""
         self.stack.append(tag)
-        if self.skip or tag == "mc:Fallback":
+        if tag == "mc:Choice" and not self.skip and self.choices:
+            if self.choices[-1]:
+                self.skip = 1
+                return
+            self.choices[-1] = True
+        if self.skip or tag in ("mc:Fallback", "w:moveFrom"):
             self.skip += 1
             return
+        if tag == "mc:AlternateContent":
+            self.choices.append(False)
         if tag == "w:p":
             if self.para is not None:
                 self.inner += 1
@@ -443,7 +471,7 @@ class _Docx:
     def _script(self) -> str | None:
         """``sup`` or ``sub`` for a run with a superscript or a subscript ``vertAlign``: its own,
         or the one of its character style or of the style of its paragraph."""
-        para = self.para["style"] if self.para else None
+        para = self.styles.paragraph(self.para["style"] if self.para else None)
         for align in (self.align, self.styles.vert_align(self.run_style)):
             if align is not None:
                 break
@@ -457,7 +485,7 @@ class _Docx:
         for value in (
             self.vanish,
             self.styles.hidden(self.run_style),
-            self.styles.hidden(self.para["style"] if self.para else None),
+            self.styles.hidden(self.styles.paragraph(self.para["style"] if self.para else None)),
         ):
             if value is not None:
                 return value
@@ -474,6 +502,8 @@ class _Docx:
             return
         if tag == "w:t":
             self.in_text = False
+        elif tag == "mc:AlternateContent" and self.choices:
+            self.choices.pop()
         elif tag == "w:r" and self.scripted and self.script:
             self.w.end(self.script)
             self.scripted = False
@@ -497,7 +527,10 @@ class _Docx:
         assert self.para is not None
         para, self.para = self.para, None
         container = self.containers[-1]
-        level = self.styles.levels.get(para["style"] or "") or para["outline"]
+        level = para["outline"]  # a direct outline level comes before the style
+        if level is None:
+            level = self.styles.level(self.styles.paragraph(para["style"]))
+        level = level or None
         before = len(self.n.raws)
         if level is not None or not para["list"]:
             container[1] = None
@@ -723,6 +756,11 @@ def _sheets(z: _Zip, workbook: str) -> list[tuple[str, str]]:
     return out
 
 
+def _budget(z: _Zip, w: _Writer, value: str) -> None:
+    if w.size + len(value) > MAX_TEXT:
+        raise ReadError(f"{z.path}: the text is larger than {MAX_TEXT} characters")
+
+
 def _xlsx(z: _Zip, nodes: _Nodes) -> None:
     workbook = _main(z, "xl/workbook.xml")
     shared = _shared_strings(z, workbook)
@@ -741,6 +779,7 @@ def _xlsx(z: _Zip, nodes: _Nodes) -> None:
             continue
         w.start("h1")
         heading = nodes.open("heading", None, {"level": 1})
+        _budget(z, w, name)
         w.text(name)
         nodes.close(heading)
         w.end("h1")
@@ -758,6 +797,7 @@ def _xlsx(z: _Zip, nodes: _Nodes) -> None:
             members = {"row": row, "column": column, "rows": rows, "columns": columns}
             w.start("td")
             cell = nodes.open("cell", row_raw if row_raw >= 0 else None, members | {"header": None})
+            _budget(z, w, value)
             w.text(value)
             nodes.close(cell)
             w.end("td")

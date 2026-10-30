@@ -490,3 +490,74 @@ def test_xlsx_rich_text_marks_scripts(tmp_path: Path) -> None:
     shared = [f"<r><t>CO</t></r>{sub}"]
     text, _ = _nodes(_write(tmp_path, "r.xlsx", xlsx([("S", "visible", sheet)], shared=shared)))
     assert text == "S\n\n10^9 5 cells\tCO_2"
+
+
+def test_docx_default_paragraph_style_and_inherited_levels(tmp_path: Path) -> None:
+    styles = (
+        '<w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/>'
+        "<w:rPr><w:vanish/></w:rPr></w:style>"
+        '<w:style w:type="paragraph" w:styleId="Shown"><w:rPr><w:vanish w:val="0"/></w:rPr>'
+        "</w:style>"
+        '<w:style w:type="paragraph" w:styleId="H"><w:pPr><w:outlineLvl w:val="0"/></w:pPr>'
+        '<w:rPr><w:vanish w:val="0"/></w:rPr></w:style>'
+        '<w:style w:type="paragraph" w:styleId="Custom"><w:basedOn w:val="H"/></w:style>'
+        '<w:style w:type="paragraph" w:styleId="Body"><w:basedOn w:val="H"/>'
+        '<w:pPr><w:outlineLvl w:val="9"/></w:pPr></w:style>'
+    )
+    body = (
+        _p("500 mg hidden")
+        + _p("Shown", '<w:pStyle w:val="Shown"/>')
+        + _p("Custom", '<w:pStyle w:val="Custom"/>')
+        + _p("Body", '<w:pStyle w:val="Body"/>')
+        + _p("Direct", '<w:pStyle w:val="Custom"/><w:outlineLvl w:val="9"/>')
+    )
+    text, nodes = _nodes(_write(tmp_path, "s.docx", docx(body, styles)))
+    assert text == "Shown\n\nCustom\n\nBody\n\nDirect"
+    assert [(n["kind"], n.get("level")) for n in nodes] == [
+        ("paragraph", None),
+        ("heading", 1),
+        ("paragraph", None),
+        ("paragraph", None),
+    ]
+
+
+def test_docx_reads_one_alternate_content_choice(tmp_path: Path) -> None:
+    choice = "<mc:Choice Requires='{}'>{}</mc:Choice>"
+    body = (
+        "<mc:AlternateContent>"
+        + choice.format("wps", _p("500 mg"))
+        + choice.format(
+            "w14",
+            _p("500 mg")
+            + "<mc:AlternateContent>"
+            + choice.format("x", _p("inner"))
+            + "</mc:AlternateContent>",
+        )
+        + f"<mc:Fallback>{_p('5 mg')}</mc:Fallback>"
+        + "</mc:AlternateContent>"
+        + "<mc:AlternateContent>"
+        + choice.format("wps", _p("second"))
+        + choice.format("w14", _p("again"))
+        + "</mc:AlternateContent>"
+    )
+    text, _ = _nodes(_write(tmp_path, "a.docx", docx(body)))
+    assert text == "500 mg\n\nsecond"
+
+
+def test_docx_moved_from_text_gives_no_text(tmp_path: Path) -> None:
+    moved = '<w:moveFrom w:id="1" w:author="a"><w:r><w:t>500 mg</w:t></w:r></w:moveFrom>'
+    to = '<w:moveTo w:id="2" w:author="a"><w:r><w:t>5 mg</w:t></w:r></w:moveTo>'
+    body = f"<w:p>{moved}<w:r><w:t>Dose: </w:t></w:r>{to}</w:p>"
+    text, _ = _nodes(_write(tmp_path, "m.docx", docx(body)))
+    assert text == "Dose: 5 mg"
+
+
+def test_xlsx_shared_string_repeats_past_the_text_limit(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setattr(office, "MAX_TEXT", 1000)
+    cells = "".join(f'<c r="A{i}" t="s"><v>0</v></c>' for i in range(1, 30))
+    rows = f'<sheetData><row r="1">{cells}</row></sheetData>'
+    data = xlsx([("S", "visible", rows)], shared=["x" * 50])
+    with pytest.raises(ReadError, match="text is larger than 1000"):
+        read(_write(tmp_path, "big.xlsx", data))
