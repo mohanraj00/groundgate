@@ -62,7 +62,7 @@ def xlsx(sheets: list[tuple[str, str, str]], shared: list[str] | None = None) ->
     }
     if shared is not None:
         rels.append(("rIdS", "sharedStrings", "sharedStrings.xml"))
-        items = "".join(f"<si><t>{s}</t></si>" for s in shared)
+        items = "".join(f"<si>{s if s.startswith('<r>') else f'<t>{s}</t>'}</si>" for s in shared)
         members["xl/sharedStrings.xml"] = f'<sst xmlns="{X}">{items}</sst>'
     members["xl/_rels/workbook.xml.rels"] = _rels(*rels)
     entries = "".join(
@@ -430,3 +430,63 @@ def test_xlsx_bad_shared_string_index_gives_no_text(tmp_path: Path) -> None:
     )
     text, _ = _nodes(_write(tmp_path, "i.xlsx", xlsx([("S", "visible", sheet)], shared=["a"])))
     assert text == "S\n\n3"
+
+
+def test_docx_hidden_and_script_runs_from_styles(tmp_path: Path) -> None:
+    styles = (
+        '<w:docDefaults><w:rPrDefault><w:rPr><w:vanish w:val="0"/></w:rPr></w:rPrDefault>'
+        "</w:docDefaults>"
+        '<w:style w:type="character" w:styleId="Hidden"><w:rPr><w:vanish/></w:rPr></w:style>'
+        '<w:style w:type="character" w:styleId="Secret"><w:basedOn w:val="Hidden"/></w:style>'
+        '<w:style w:type="character" w:styleId="Sup">'
+        '<w:rPr><w:vertAlign w:val="superscript"/></w:rPr></w:style>'
+        '<w:style w:type="paragraph" w:styleId="Draft"><w:rPr><w:vanish/></w:rPr></w:style>'
+        '<w:style w:type="character" w:styleId="Loop"><w:basedOn w:val="Loop"/></w:style>'
+    )
+
+    def run(text: str, rpr: str = "") -> str:
+        return f'<w:r><w:rPr>{rpr}</w:rPr><w:t xml:space="preserve">{text}</w:t></w:r>'
+
+    body = (
+        "<w:p>"
+        + run("500 mg")
+        + run(" hidden", '<w:rStyle w:val="Hidden"/>')
+        + run(" based", '<w:rStyle w:val="Secret"/>')
+        + run(" shown", '<w:rStyle w:val="Hidden"/><w:vanish w:val="0"/>')
+        + run(" loop", '<w:rStyle w:val="Loop"/>')
+        + run(" 10")
+        + run("9", '<w:rStyle w:val="Sup"/>')
+        + run("5", '<w:rStyle w:val="Sup"/><w:vertAlign w:val="baseline"/>')
+        + "</w:p>"
+        + '<w:p><w:pPr><w:pStyle w:val="Draft"/></w:pPr>'
+        + run("draft")
+        + run(" kept", '<w:vanish w:val="false"/>')
+        + "</w:p>"
+    )
+    text, _ = _nodes(_write(tmp_path, "h.docx", docx(body, styles)))
+    assert text == "500 mg shown loop 10^9 5\n\nkept"
+
+
+def test_docx_document_default_hides_runs(tmp_path: Path) -> None:
+    styles = (
+        "<w:docDefaults><w:rPrDefault><w:rPr><w:vanish/></w:rPr></w:rPrDefault></w:docDefaults>"
+    )
+    text, _ = _nodes(
+        _write(
+            tmp_path, "d.docx", docx(_p("gone") + _p("seen", rpr='<w:vanish w:val="0"/>'), styles)
+        )
+    )
+    assert text == "seen"
+
+
+def test_xlsx_rich_text_marks_scripts(tmp_path: Path) -> None:
+    sup = '<r><rPr><vertAlign val="superscript"/></rPr><t>9</t></r>'
+    sub = '<r><rPr><vertAlign val="subscript"/></rPr><t>2</t></r>'
+    inline = f"<is><r><t>10</t></r>{sup}<r><t>5 cells</t></r></is>"
+    sheet = (
+        f'<sheetData><row r="1"><c r="A1" t="inlineStr">{inline}</c>'
+        '<c r="B1" t="s"><v>0</v></c></row></sheetData>'
+    )
+    shared = [f"<r><t>CO</t></r>{sub}"]
+    text, _ = _nodes(_write(tmp_path, "r.xlsx", xlsx([("S", "visible", sheet)], shared=shared)))
+    assert text == "S\n\n10^9 5 cells\tCO_2"

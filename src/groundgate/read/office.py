@@ -7,10 +7,12 @@ docs/design/document-model.md §5.1:
 - DOCX: a paragraph with a heading style or an outline level gives a heading. A numbered
   paragraph gives a list item, and adjacent items give one list. A table gives its rows and its
   cells, with ``gridSpan`` and ``vMerge`` as the span of a cell. A superscript run reads ``^``
-  and a subscript run ``_``, as in HTML. Hidden runs (``vanish``) give no text.
+  and a subscript run ``_``, as in HTML. A hidden run (``vanish`` on the run, its character
+  style, its paragraph style or the document defaults) gives no text.
 - XLSX: each sheet gives a heading with the sheet name and one table. The row and the column of
-  a cell are its place in the sheet, from 0. A merged cell spans its range. A number reads as
-  the sheet stores it, not as the sheet formats it. Hidden sheets, rows and columns give no text.
+  a cell are its place in the sheet, from 0. Rich text marks superscripts and subscripts as DOCX
+  does. A merged cell spans its range. A number reads as the sheet stores it, not as the sheet
+  formats it. Hidden sheets, rows and columns give no text.
 
 These files are untrusted input. ``_Zip`` refuses a file larger than MAX_FILE, more than
 MAX_MEMBERS members, a member name outside the archive, and a total expanded size larger than
@@ -28,7 +30,7 @@ import zipfile
 import zlib
 from collections.abc import Callable
 from pathlib import Path
-from typing import Any
+from typing import Any, TypeVar
 from xml.parsers import expat
 
 from . import ReadError
@@ -49,6 +51,7 @@ NAMESPACES = {
     "http://schemas.openxmlformats.org/package/2006/relationships": "rel",
     "http://schemas.openxmlformats.org/markup-compatibility/2006": "mc",
 }
+_T = TypeVar("_T")
 OFF = {"0", "false", "off"}
 _CELL_REF = re.compile(r"([A-Z]{1,3})([0-9]{1,7})")
 _HEADING = re.compile(r"heading ([1-9])")
@@ -213,29 +216,78 @@ def _main(z: _Zip, kind: str) -> str:
 # DOCX
 
 
-def _heading_styles(z: _Zip, document: str) -> dict[str, int]:
-    """The heading level of each paragraph style id: from a name ``heading N`` or ``Title``,
-    or from the outline level of the style."""
-    styles = z.target(document, "styles")
-    out: dict[str, int] = {}
-    if styles is None:
+class _Styles:
+    """The paragraph and character styles of a DOCX file that change what ``read`` gives: the
+    heading level of a paragraph style, and the ``vanish`` and ``vertAlign`` properties of each
+    style. A style without a property takes it from its ``basedOn`` style."""
+
+    def __init__(self) -> None:
+        self.levels: dict[str, int] = {}
+        self.vanish: dict[str, bool] = {}
+        self.align: dict[str, str] = {}
+        self.based_on: dict[str, str] = {}
+        self.default = False
+
+    def hidden(self, style: str | None) -> bool | None:
+        """The ``vanish`` of ``style`` and the styles it is based on, or None when none says."""
+        return self._find(self.vanish, style)
+
+    def vert_align(self, style: str | None) -> str | None:
+        return self._find(self.align, style)
+
+    def _find(self, table: dict[str, _T], style: str | None) -> _T | None:
+        seen: set[str] = set()
+        while style is not None and style not in seen:
+            if style in table:
+                return table[style]
+            seen.add(style)
+            style = self.based_on.get(style)
+        return None
+
+
+def _styles(z: _Zip, document: str) -> _Styles:
+    """The styles of ``document``: the heading level of each paragraph style id, from a name
+    ``heading N`` or ``Title`` or from the outline level, and the hidden styles."""
+    member = z.target(document, "styles")
+    out = _Styles()
+    if member is None:
         return out
-    current: list[str] = []
+    stack: list[str] = []
+    current: list[str] = []  # the id and the type of the open style
 
     def start(tag: str, attrs: dict[str, str]) -> None:
+        parent = stack[-1] if stack else ""
+        stack.append(tag)
         if tag == "w:style":
-            current[:] = [attrs.get("styleId", "")] if attrs.get("type") == "paragraph" else []
-        elif current and tag == "w:name":
+            current[:] = [attrs.get("styleId", ""), attrs.get("type", "")]
+        elif tag == "w:vanish" and parent == "w:rPr" and "w:rPrDefault" in stack:
+            out.default = attrs.get("val", "true").lower() not in OFF
+        elif not current or "w:style" not in stack:
+            return
+        elif tag == "w:basedOn" and parent == "w:style":
+            out.based_on[current[0]] = attrs.get("val", "")
+        elif tag == "w:vanish" and parent == "w:rPr" and stack[-3:-2] == ["w:style"]:
+            out.vanish[current[0]] = attrs.get("val", "true").lower() not in OFF
+        elif tag == "w:vertAlign" and parent == "w:rPr" and stack[-3:-2] == ["w:style"]:
+            out.align[current[0]] = attrs.get("val", "")
+        elif current[1] != "paragraph":
+            return
+        elif tag == "w:name":
             value = attrs.get("val", "").strip().lower()
             m = _HEADING.fullmatch(value)
             if m or value == "title":
-                out[current[0]] = min(int(m.group(1)), 6) if m else 1
-        elif current and tag == "w:outlineLvl" and current[0] not in out:
+                out.levels[current[0]] = min(int(m.group(1)), 6) if m else 1
+        elif tag == "w:outlineLvl" and current[0] not in out.levels:
             level = _outline(attrs)
             if level is not None:
-                out[current[0]] = level
+                out.levels[current[0]] = level
 
-    _parse(z.read(styles), f"{z.path}: {styles}", start)
+    def end(tag: str) -> None:
+        stack.pop()
+        if tag == "w:style":
+            current.clear()
+
+    _parse(z.read(member), f"{z.path}: {member}", start, end)
     return out
 
 
@@ -259,7 +311,7 @@ class _Table:
 class _Docx:
     """The handlers of ``word/document.xml``."""
 
-    def __init__(self, nodes: _Nodes, styles: dict[str, int]) -> None:
+    def __init__(self, nodes: _Nodes, styles: _Styles) -> None:
         self.n = nodes
         self.w = nodes.w
         self.styles = styles
@@ -272,8 +324,10 @@ class _Docx:
         self.tables: list[_Table] = []
         self.cells: list[int] = []
         self.in_text = False
-        self.hidden = False
-        self.script: str | None = None
+        self.vanish: bool | None = None  # the direct ``vanish`` of the open run
+        self.run_style: str | None = None
+        self.align: str | None = None  # the direct ``vertAlign`` of the open run
+        self.script: str | None = None  # the mark that the open run started
         self.scripted = False
 
     def start(self, tag: str, attrs: dict[str, str]) -> None:
@@ -357,6 +411,8 @@ class _Docx:
         elif tag == "w:pStyle" and parent == "w:pPr":
             self.para["style"] = attrs.get("val")
             return
+        elif tag == "w:vanish" and parent == "w:rPr" and self.stack[-3:-2] == ["w:pPr"]:
+            return  # the paragraph mark only
         elif tag == "w:outlineLvl" and parent == "w:pPr":
             self.para["outline"] = _outline(attrs)
             return
@@ -364,24 +420,48 @@ class _Docx:
             self.para["list"] = True
             return
         if tag == "w:r":
-            self.hidden, self.script, self.scripted = False, None, False
+            self.vanish, self.run_style, self.align = None, None, None
+            self.script, self.scripted = None, False
+        elif tag == "w:rStyle" and parent == "w:rPr" and self.stack[-3:-2] == ["w:r"]:
+            self.run_style = attrs.get("val")
         elif tag == "w:vanish" and parent == "w:rPr" and self.stack[-3:-2] == ["w:r"]:
-            self.hidden = attrs.get("val", "true").lower() not in OFF
+            self.vanish = attrs.get("val", "true").lower() not in OFF
         elif tag == "w:vertAlign" and parent == "w:rPr" and self.stack[-3:-2] == ["w:r"]:
-            align = attrs.get("val")
-            self.script = (
-                "sup" if align == "superscript" else "sub" if align == "subscript" else None
-            )
-        elif parent == "w:r" and not self.hidden:
+            self.align = attrs.get("val", "")
+        elif parent == "w:r" and not self._hidden():
             if tag == "w:t":
                 self.in_text = True
-                if self.script and not self.scripted:
-                    self.w.start(self.script)
-                    self.scripted = True
+                script = self._script()
+                if script and not self.scripted:
+                    self.w.start(script)
+                    self.script, self.scripted = script, True
             elif tag == "w:tab":
                 self.w.text(" ")
             elif tag in ("w:br", "w:cr"):
                 self.w.block(1)
+
+    def _script(self) -> str | None:
+        """``sup`` or ``sub`` for a run with a superscript or a subscript ``vertAlign``: its own,
+        or the one of its character style or of the style of its paragraph."""
+        para = self.para["style"] if self.para else None
+        for align in (self.align, self.styles.vert_align(self.run_style)):
+            if align is not None:
+                break
+        else:
+            align = self.styles.vert_align(para)
+        return {"superscript": "sup", "subscript": "sub"}.get(align or "")
+
+    def _hidden(self) -> bool:
+        """The run is hidden: by its own ``vanish``, its character style, the style of its
+        paragraph or the document defaults, in that order."""
+        for value in (
+            self.vanish,
+            self.styles.hidden(self.run_style),
+            self.styles.hidden(self.para["style"] if self.para else None),
+        ):
+            if value is not None:
+                return value
+        return self.styles.default
 
     def chars(self, data: str) -> None:
         if self.in_text and not self.skip:
@@ -417,7 +497,7 @@ class _Docx:
         assert self.para is not None
         para, self.para = self.para, None
         container = self.containers[-1]
-        level = self.styles.get(para["style"] or "") or para["outline"]
+        level = self.styles.levels.get(para["style"] or "") or para["outline"]
         before = len(self.n.raws)
         if level is not None or not para["list"]:
             container[1] = None
@@ -456,7 +536,7 @@ class _Docx:
 
 def _docx(z: _Zip, nodes: _Nodes) -> None:
     document = _main(z, "word/document.xml")
-    reader = _Docx(nodes, _heading_styles(z, document))
+    reader = _Docx(nodes, _styles(z, document))
     _parse(z.read(document), f"{z.path}: {document}", reader.start, reader.end, reader.chars)
 
 
@@ -477,27 +557,66 @@ def _cell_place(ref: str | None) -> tuple[int, int] | None:
     return row - 1, column - 1
 
 
+class _Rich:
+    """The text of a string with rich text runs. A superscript run reads ``^`` and a subscript
+    run ``_``, as in ``_Writer``: ``10`` and a superscript ``9`` read ``10^9``, never ``109``."""
+
+    def __init__(self) -> None:
+        self.parts: list[str] = []
+        self.script: str | None = None
+        self.marked = False
+        self.after = False
+
+    def start(self, tag: str, parent: str, attrs: dict[str, str]) -> None:
+        if tag == "x:r":
+            self.script, self.marked = None, False
+        elif tag == "x:vertAlign" and parent == "x:rPr":
+            self.script = {"superscript": "^", "subscript": "_"}.get(attrs.get("val", ""))
+
+    def text(self, data: str) -> None:
+        if not data:
+            return
+        if self.script and not self.marked:
+            self.parts.append(self.script)
+            self.marked = True
+        elif self.after and data[0].isdigit():
+            self.parts.append(" ")  # "10", a superscript "9", then "5" must not read "10^95"
+        self.after = False
+        self.parts.append(data)
+
+    def end(self, tag: str) -> None:
+        if tag == "x:r" and self.marked:
+            self.after = True
+
+    def value(self) -> str:
+        return "".join(self.parts)
+
+
 def _shared_strings(z: _Zip, workbook: str) -> list[str]:
     member = z.target(workbook, "sharedStrings")
     out: list[str] = []
     if member is None:
         return out
     stack: list[str] = []
-    parts: list[str] = []
+    rich = _Rich()
 
     def start(tag: str, attrs: dict[str, str]) -> None:
+        nonlocal rich
+        parent = stack[-1] if stack else ""
         stack.append(tag)
         if tag == "x:si":
-            parts.clear()
+            rich = _Rich()
+        rich.start(tag, parent, attrs)
 
     def end(tag: str) -> None:
         stack.pop()
+        rich.end(tag)
         if tag == "x:si":
-            out.append("".join(parts))
+            out.append(rich.value())
 
     def chars(data: str) -> None:
         if stack and stack[-1] == "x:t" and "x:rPh" not in stack:
-            parts.append(data)
+            rich.text(data)
 
     _parse(z.read(member), f"{z.path}: {member}", start, end, chars)
     return out
@@ -518,7 +637,10 @@ class _Sheet:
         self.cell: dict[str, Any] | None = None
 
     def start(self, tag: str, attrs: dict[str, str]) -> None:
+        parent = self.stack[-1] if self.stack else ""
         self.stack.append(tag)
+        if self.cell is not None:
+            self.cell["rich"].start(tag, parent, attrs)
         if tag == "x:row":
             r = attrs.get("r", "")
             self.row = (
@@ -530,7 +652,7 @@ class _Sheet:
             place = _cell_place(attrs.get("r"))
             row, column = place if place else (max(self.row, 0), self.column + 1)
             self.row, self.column = row, column
-            self.cell = {"type": attrs.get("t", "n"), "parts": []}
+            self.cell = {"type": attrs.get("t", "n"), "rich": _Rich()}
         elif tag == "x:col" and attrs.get("hidden", "0").lower() not in OFF:
             low, high = attrs.get("min", ""), attrs.get("max", "")
             if low.isascii() and low.isdigit() and high.isascii() and high.isdigit():
@@ -548,14 +670,16 @@ class _Sheet:
         if (tag == "x:v" and self.stack[-2:-1] == ["x:c"]) or (
             tag == "x:t" and "x:is" in self.stack
         ):
-            self.cell["parts"].append(data)
+            self.cell["rich"].text(data)
 
     def end(self, tag: str) -> None:
         self.stack.pop()
+        if self.cell is not None:
+            self.cell["rich"].end(tag)
         if tag != "x:c" or self.cell is None:
             return
         cell, self.cell = self.cell, None
-        value = "".join(cell["parts"])
+        value = cell["rich"].value()
         if cell["type"] == "s":
             index = value.strip()
             ok = index.isascii() and index.isdigit() and int(index) < len(self.shared)
