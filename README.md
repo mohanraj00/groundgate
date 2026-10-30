@@ -439,6 +439,7 @@ A fact that passes every check can still be flagged for a person:
 | `KEY_CITATION_INVALID` | the cited key item does not name the key |
 | `COLUMN_NOT_AT_VALUE` | the field has `columns`, and the value is not in a column of the field (spec 0.12) |
 | `MARKER_OTHER_FIELD` | a marker word of another field, such as "family", is next to the value (spec 0.12) |
+| `READ_DOUBT` | a cited item is on a word that the reader, such as OCR, read with a low confidence (spec 0.12) |
 | `EVIDENCE_QUOTED`, `EVIDENCE_STATED` | only an external quote, or the extractor's own knowledge, supports the value |
 | `LOW_CONFIDENCE` | the extractor's confidence is below the policy minimum |
 | `CONFLICTING_CANDIDATES` | another proposal for the same field and key has a different value |
@@ -462,7 +463,8 @@ implementation can prove it agrees.
 
 ```json
 {"groundgate": "0.12",
- "document": {"id": "irs-p590a-2025-pages-1-2", "sha256": "sha256:9c0bb3f8d04b...", "source": null},
+ "document": {"id": "irs-p590a-2025-pages-1-2", "sha256": "sha256:9c0bb3f8d04b...", "source": null,
+              "doubt_sha256": null},
  "references": [],
  "packs": [],
  "schema_sha256": "sha256:...", "policy_sha256": "sha256:...",

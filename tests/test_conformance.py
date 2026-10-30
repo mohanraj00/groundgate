@@ -26,7 +26,7 @@ FLAG_CODES = {
     "MODEL_CLEARED", "KEY_CITED", "KEY_CITATION_INVALID", "PART_MISSING", "SIGN_CITATION_INVALID",
     "SCALE_CITATION_INVALID", "UNIT_CITATION_INVALID", "FIELD_CITATION_INVALID", "EVIDENCE_QUOTED",
     "EVIDENCE_STATED", "VALUE_DERIVED", "ADMITTED_BY_POLICY", "RELATION_FAILED",
-    "COLUMN_NOT_AT_VALUE", "MARKER_OTHER_FIELD",
+    "COLUMN_NOT_AT_VALUE", "MARKER_OTHER_FIELD", "READ_DOUBT",
 }  # fmt: skip
 
 
@@ -40,6 +40,7 @@ def _extra(v: dict[str, Any]) -> dict[str, Any]:
         "references": v.get("references"),
         "document_source": v.get("document_source"),
         "packs": v.get("packs") or (),
+        "doubt": v.get("doubt"),
     }
 
 

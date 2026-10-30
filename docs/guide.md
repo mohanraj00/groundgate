@@ -43,8 +43,9 @@ can show page numbers.
 
 A PDF page with no text layer and an image is a scan. OCR is opt-in: use `ocr=True` in Python,
 or `groundgate read --ocr` on the command line. OCR is off by default, because an OCR word can be
-wrong and `admit` does not read `doubt`. With OCR off, a page with no text layer gives a warning
-and no text. With OCR on, `read` OCRs a scanned page with the `tesseract` program, and pypdfium2
+wrong. `admit` takes the `doubt` spans of a document as `doubt=` and sends evidence on them to
+review (`READ_DOUBT`), but `extract` does not give them to `admit` yet (#573). With OCR off, a
+page with no text layer gives a warning and no text. With OCR on, `read` OCRs a scanned page with the `tesseract` program, and pypdfium2
 renders the page at 300 dpi. Install both:
 
 ```bash
@@ -428,8 +429,8 @@ A fact that passes them all is checked for flags. Any flag makes it `needs_verif
 
 `NON_VERBATIM_EVIDENCE`, `QUALIFIED_VALUE`, `SCALE_WORD`, `PART_MISSING`, `SIGN_CITATION_INVALID`,
 `SCALE_CITATION_INVALID`, `UNIT_CITATION_INVALID`, `FIELD_CITATION_INVALID`, `KEY_NOT_AT_VALUE`,
-`KEY_CITATION_INVALID`, `COLUMN_NOT_AT_VALUE`, `MARKER_OTHER_FIELD`, `EVIDENCE_QUOTED`,
-`EVIDENCE_STATED`, `LOW_CONFIDENCE`, `CONFLICTING_CANDIDATES`, `RELATION_FAILED`, and `MODEL_DOUBT` from a recorded judgment.
+`KEY_CITATION_INVALID`, `COLUMN_NOT_AT_VALUE`, `MARKER_OTHER_FIELD`, `READ_DOUBT`,
+`EVIDENCE_QUOTED`, `EVIDENCE_STATED`, `LOW_CONFIDENCE`, `CONFLICTING_CANDIDATES`, `RELATION_FAILED`, and `MODEL_DOUBT` from a recorded judgment.
 `EVIDENCE_REANCHORED`, `VALUE_DERIVED`, `KEY_CITED`, `ADMITTED_BY_POLICY` and `MODEL_CLEARED`
 only inform.
 
@@ -562,6 +563,7 @@ Flags send the fact to a person:
 | `KEY_CITATION_INVALID` | The key item does not hold a mention of the key, or is not in the value's text. | A person checks the fact. |
 | `COLUMN_NOT_AT_VALUE` | The field has `columns`, and no column item puts the value under a header cell of the field. A passing field item with a column word, as "Typical supply current", also puts it there. On a line with no tab, no column item passes. | In a table, ask the extractor for a `column` item. Otherwise a person checks the fact. |
 | `MARKER_OTHER_FIELD` | The field has `markers`, a marker word of another field is next to the value, as "family" in "$800 family", and no marker word of this field is. | A person checks the fact. Usually the value is of the other field. |
+| `READ_DOUBT` | The value item or a passing role item shares a byte with a span of the packet's `doubt` list whose `confidence` is below `min_read_confidence` (default 1). OCR gives such spans. | A person checks the fact on the page image. A lower `min_read_confidence` is your choice: groundgate has not measured one. |
 | `EVIDENCE_QUOTED`, `EVIDENCE_STATED` | Only outside evidence supports the value. | Check the source. If you trust it, add the URL prefix to `sources.external.allow`, or set `sources.knowledge` to `admit`. |
 | `LOW_CONFIDENCE` | The extractor's `confidence` is below `min_confidence`. | A person checks the fact. |
 | `CONFLICTING_CANDIDATES` | Two proposers read different values. | A person picks one. groundgate never picks. |
