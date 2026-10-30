@@ -120,9 +120,9 @@ def main() -> None:
     config = _json(_read(a.config))
     settings = _settings(config["run_policy"])
     policy = gg.Policy.from_dict(config["policy"]).to_dict()
-    # FrozenSet.schema needs only the manifest and the settings. A full FrozenSet also pins the
-    # code digest of the freeze, which a later version string changes.
-    frozen = cast(FrozenSet, SimpleNamespace(manifest=manifest, settings=settings))
+    # FrozenSet.schema needs only the manifest, the settings and the terms. A full FrozenSet
+    # also pins the code digest of the freeze, which a later version string changes.
+    frozen = cast(FrozenSet, SimpleNamespace(manifest=manifest, settings=settings, terms={}))
     recorded = a.cache / "runner" / a.split
     published = a.cache / a.arm / a.split
 

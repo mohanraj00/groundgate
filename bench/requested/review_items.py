@@ -129,7 +129,7 @@ def run_documents(
         raise ValueError(f"{run_path(set_dir, split).name} is not the {split} run of {ARM}")
     binding = run["binding_sha256"]
     config = run["provenance"]["configuration"]
-    frozen = SimpleNamespace(manifest=manifest, settings=_settings(config["run_policy"]))
+    frozen = SimpleNamespace(manifest=manifest, settings=_settings(config["run_policy"]), terms={})
     docs = {d["id"]: d for d in manifest["documents"]}
     folder = cache / binding.removeprefix("sha256:") / ARM / split
     for out in sorted(run["documents"], key=lambda d: str(d["id"])):

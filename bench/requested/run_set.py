@@ -119,6 +119,48 @@ def source_code_digest() -> str:
     return digest(encoded(files))
 
 
+TERMS = ("aliases", "columns", "markers")
+
+
+def apply_terms(schema: Json, terms: Json) -> Json:
+    """Return a schema with the approved terms of one kind added to its fields.
+
+    Aliases add to the aliases of the field, in order and without repeats. ``columns`` and
+    ``markers`` are new members (SPEC §2.3). A term for an unknown field or a field that already
+    has columns or markers stops the run or the replay.
+    """
+    out = json.loads(json.dumps(schema))
+    for field, entry in terms.items():
+        if field not in out["fields"]:
+            raise ValueError("terms name an unknown field: " + field)
+        spec = out["fields"][field]
+        if "aliases" in entry:
+            spec["aliases"] = list(dict.fromkeys([*(spec.get("aliases") or []), *entry["aliases"]]))
+        for member in ("columns", "markers"):
+            if member in entry:
+                if spec.get(member) is not None:
+                    raise ValueError(f"field already has {member}: {field}")
+                spec[member] = list(entry[member])
+    return gg.Schema.from_dict(out).to_dict()
+
+
+def _terms(raw: bytes, manifest: Json) -> Json:
+    """Return the checked ``fields`` of a terms file, by kind and then by field (#557)."""
+    fields = _json(raw).get("fields")
+    if not isinstance(fields, dict):
+        raise CacheError("terms file has no fields")
+    for kind, entries in fields.items():
+        schema = manifest["schemas"].get(kind)
+        if schema is None or not isinstance(entries, dict):
+            raise CacheError("terms name an unknown kind: " + str(kind))
+        for field, entry in entries.items():
+            if field not in schema["fields"]:
+                raise CacheError(f"terms name an unknown field: {kind}.{field}")
+            if not isinstance(entry, dict) or set(entry) - {"prompt_sha256", *TERMS}:
+                raise CacheError(f"unknown term member: {kind}.{field}")
+    return fields
+
+
 def _validate_blind_labels(manifest: Json, labels: Json) -> None:
     """Validate the entire pinned seal, then let the caller discard its parsed gold labels."""
     try:
@@ -601,6 +643,7 @@ class FrozenSet:
         manifest_sha256: str,
         labels_sha256: str,
         configuration_sha256: str,
+        terms: Path | None = None,
     ):
         self.directory = _unlinked(directory.absolute())
         repository = Path(__file__).resolve().parents[2]
@@ -630,7 +673,7 @@ class FrozenSet:
             raise CacheError("request_context check needs a valid manifest") from exc
         del gold
         self.config = _json(raw[_unlinked(configuration.absolute())])
-        if set(self.config) != {
+        if set(self.config) - {"terms_sha256"} != {
             "model_id",
             "transport",
             "policy",
@@ -662,6 +705,21 @@ class FrozenSet:
         self.code_sha256 = source_code_digest()
         if self.code_sha256 != self.config["code_sha256"]:
             raise CacheError("source code digest differs")
+        # A terms file adds approved terms to the frozen schemas (#557). The configuration pins
+        # its digest, so a run without terms keeps the configuration of earlier runs.
+        terms_sha256 = self.config.get("terms_sha256")
+        if (terms is None) != (terms_sha256 is None):
+            raise CacheError("a terms file needs terms_sha256 in the configuration, and back")
+        self.terms: Json = {}
+        if terms is not None:
+            if not isinstance(terms_sha256, str) or not _DIGEST.fullmatch(terms_sha256):
+                raise CacheError("terms_sha256 must be a sha256 digest")
+            path = _unlinked(terms.absolute())
+            body = _read(path)
+            if digest(body) != terms_sha256:
+                raise CacheError("terms file digest differs")
+            self.terms = _terms(body, self.manifest)
+            self.paths[path] = terms_sha256
         documents = self.manifest.get("documents")
         if not isinstance(documents, list) or not documents:
             raise CacheError("manifest has no documents")
@@ -710,6 +768,7 @@ class FrozenSet:
             self.documents[ident] = copy.deepcopy(doc)
         self._manifest_state_sha256 = digest(encoded(self.manifest))
         self._documents_state_sha256 = digest(encoded(self.documents))
+        self._terms_state_sha256 = digest(encoded(self.terms))
         # Commit, reader and transport labels are caller declarations. Actual imported code,
         # configuration and source/text bytes are independently pinned and checked here.
         self.header = {
@@ -790,6 +849,8 @@ class FrozenSet:
         if not same_request(template, schema):
             raise CacheError("document schema changes fixed requests or types")
         effective = gg.Schema.from_dict(schema).to_dict()
+        if self.terms.get(doc["kind"]):
+            effective = apply_terms(effective, self.terms[doc["kind"]])
         if "request_context" in doc:
             context = doc["request_context"]
             if (
@@ -832,8 +893,9 @@ class FrozenSet:
         if (
             digest(encoded(self.manifest)) != self._manifest_state_sha256
             or digest(encoded(self.documents)) != self._documents_state_sha256
+            or digest(encoded(self.terms)) != self._terms_state_sha256
         ):
-            raise CacheError("frozen manifest or document metadata changed in memory")
+            raise CacheError("frozen manifest, document metadata or terms changed in memory")
         if any(
             digest(_read(path, self.caps.get(path, _MAX_FILE))) != sha
             for path, sha in self.paths.items()
