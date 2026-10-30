@@ -223,8 +223,30 @@ It leaves out a task that its packet does not give with the same bytes. It also 
 record that names another reviewer than its log, that fails the check of `review resolve`, or
 that gives no label.
 `groundgate calibrate` does not read this file: it reads the answer logs, checks each record
-against its packet, and stops at the log heads of a judge run. The other three views come with
-their issues (#432).
+against its packet, and stops at the log heads of a judge run.
+
+`store rebuild` has no policy input, so each review view gives one result for each policy:
+each `review-policy@1` object in the store that passes the policy check, and the default policy
+of `review tasks`. The results are sorted by policy key. A reader uses the result of its policy
+key.
+
+`store rebuild` builds the review queue as `views/review-queue.json` (`review-queue@1`, #513):
+
+```json
+{"format": "review-queue@1",
+ "queues": [{"policy": "sha256:...",
+             "tasks": [{"task": "sha256:...", "packet": "sha256:...", "document": "...",
+                        "page": 3, "answered": ["alice"]}]}]}
+```
+
+Each queue holds the open tasks for all reviewers. An open task is a task whose slot no answer
+settles under the policy, the same rule as the queue of `review serve`. `answered` lists, in
+order, each reviewer that gave an answer to the task. The queue of one reviewer is the tasks
+that do not name that reviewer, which is the queue that `review serve` gives. The tasks are in
+the order of `review serve`: document, packet, first offset, task. A packet that `review serve`
+leaves out gives no task, and a log that it cannot read gives no answer.
+
+The latest resolution and the measures views come with their issues (#514, #515).
 
 ## 8. Rules
 
