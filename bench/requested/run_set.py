@@ -768,6 +768,7 @@ class FrozenSet:
             self.documents[ident] = copy.deepcopy(doc)
         self._manifest_state_sha256 = digest(encoded(self.manifest))
         self._documents_state_sha256 = digest(encoded(self.documents))
+        self._terms_state_sha256 = digest(encoded(self.terms))
         # Commit, reader and transport labels are caller declarations. Actual imported code,
         # configuration and source/text bytes are independently pinned and checked here.
         self.header = {
@@ -892,8 +893,9 @@ class FrozenSet:
         if (
             digest(encoded(self.manifest)) != self._manifest_state_sha256
             or digest(encoded(self.documents)) != self._documents_state_sha256
+            or digest(encoded(self.terms)) != self._terms_state_sha256
         ):
-            raise CacheError("frozen manifest or document metadata changed in memory")
+            raise CacheError("frozen manifest, document metadata or terms changed in memory")
         if any(
             digest(_read(path, self.caps.get(path, _MAX_FILE))) != sha
             for path, sha in self.paths.items()

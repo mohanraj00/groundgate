@@ -184,6 +184,15 @@ def test_a_run_without_terms_records_no_terms_digest(tmp_path):
     assert "terms_sha256" not in session.header["configuration"]
 
 
+def test_terms_changed_in_memory_stop_the_run(tmp_path):
+    session, _ = fixture(tmp_path, terms=TERMS)
+    session.terms["kind"]["amount"]["columns"] = ["Unapproved column"]
+    client = Client(envelope(candidate()))
+    with pytest.raises(harness.CacheError, match="terms changed in memory"):
+        session.run("baseline", client)
+    assert client.prompts == []
+
+
 @pytest.mark.parametrize(
     "terms, change",
     [
