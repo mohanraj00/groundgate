@@ -591,3 +591,31 @@ def test_docx_deleted_table_row_gives_no_text(tmp_path: Path) -> None:
     cells = [(n["text"], n["row"]) for n in nodes if n["kind"] == "cell"]
     assert cells == [("Dose", 0), ("5 mg", 2)]
     assert sum(n["kind"] == "row" for n in nodes) == 2
+
+
+def test_docx_deleted_cell_gives_no_text(tmp_path: Path) -> None:
+    deleted = '<w:cellDel w:id="1" w:author="A"/>'
+    table = f"<w:tbl><w:tr>{_tc('Dose')}{_tc('500 mg', deleted)}{_tc('5 mg')}</w:tr></w:tbl>"
+    text, nodes = _nodes(_write(tmp_path, "c.docx", docx(table)))
+    assert text == "Dose\t5 mg"
+    cells = [(n["text"], n["column"]) for n in nodes if n["kind"] == "cell"]
+    assert cells == [("Dose", 0), ("5 mg", 1)]
+
+
+def test_docx_text_box_paragraph_style_hides_runs(tmp_path: Path) -> None:
+    styles = '<w:style w:type="paragraph" w:styleId="Draft"><w:rPr><w:vanish/></w:rPr></w:style>'
+    box = (
+        "<w:p><w:r><w:t>Before</w:t></w:r><w:r><w:pict><w:txbxContent>"
+        + _p("500 mg", '<w:pStyle w:val="Draft"/>')
+        + _p("5 mg")
+        + "</w:txbxContent></w:pict></w:r><w:r><w:t>after</w:t></w:r></w:p>"
+    )
+    text, _ = _nodes(_write(tmp_path, "b.docx", docx(box, styles)))
+    assert text == "Before\n5 mg\nafter"
+
+
+def test_xlsx_string_escapes(tmp_path: Path) -> None:
+    inline = "<is><t>500_x000D_600 mg _x005F_x000D_ _xD800_</t></is>"
+    sheet = f'<sheetData><row r="1"><c r="A1" t="inlineStr">{inline}</c></row></sheetData>'
+    text, _ = _nodes(_write(tmp_path, "e.xlsx", xlsx([("S", "visible", sheet)])))
+    assert text == "S\n\n500 600 mg _x000D_ �"

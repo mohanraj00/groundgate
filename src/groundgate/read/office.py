@@ -11,8 +11,9 @@ docs/design/document-model.md §5.1:
   style, its paragraph style or the document defaults) gives no text.
 - XLSX: each sheet gives a heading with the sheet name and one table. The row and the column of
   a cell are its place in the sheet, from 0. Rich text marks superscripts and subscripts as DOCX
-  does. A merged cell spans its range. A number reads as the sheet stores it, not as the sheet
-  formats it. Hidden sheets, rows and columns give no text.
+  does. An escape such as ``_x000D_`` reads as its character. A merged cell spans its range. A
+  number reads as the sheet stores it, not as the sheet formats it. Hidden sheets, rows and
+  columns give no text.
 
 These files are untrusted input. ``_Zip`` refuses a file larger than MAX_FILE, more than
 MAX_MEMBERS members, a member name outside the archive, and a total expanded size larger than
@@ -21,8 +22,8 @@ deeper than MAX_XML_DEPTH. An XLSX text longer than MAX_TEXT is refused, because
 shared string can repeat in each cell. DOCX text is never longer than its XML.
 
 A DOCX gives the text of the document after its tracked changes: deleted text, deleted table
-rows and moved-from text give no text. Of the branches of ``mc:AlternateContent``, only the
-first ``mc:Choice`` is read.
+rows and cells, and moved-from text give no text. Of the branches of ``mc:AlternateContent``,
+only the first ``mc:Choice`` is read.
 """
 
 from __future__ import annotations
@@ -61,6 +62,12 @@ _T = TypeVar("_T")
 OFF = {"0", "false", "off"}
 _CELL_REF = re.compile(r"([A-Z]{1,3})([0-9]{1,7})")
 _HEADING = re.compile(r"heading ([1-9])")
+_ESCAPE = re.compile(r"_x([0-9A-Fa-f]{4})_")  # a character in an XLSX string, as _x000D_
+
+
+def _unescape(m: re.Match[str]) -> str:
+    code = int(m.group(1), 16)
+    return "\ufffd" if 0xD800 <= code <= 0xDFFF else chr(code)
 
 
 class _Zip:
@@ -349,6 +356,8 @@ class _Docx:
         self.containers: list[list[int | None]] = [[None, None, 0]]
         self.tables: list[_Table] = []
         self.cells: list[int] = []
+        self.deleted: list[bool] = []  # for each open cell: a deleted cell of tracked changes
+        self.inner_styles: list[str | None] = []  # the style of each open text box paragraph
         self.in_text = False
         self.vanish: bool | None = None  # the direct ``vanish`` of the open run
         self.run_style: str | None = None
@@ -369,9 +378,13 @@ class _Docx:
             return
         if tag == "mc:AlternateContent":
             self.choices.append(False)
+        if tag in ("w:p", "w:tbl") and self.para is None and self.deleted and self.deleted[-1]:
+            self.skip = 1  # the content of a deleted cell gives no text
+            return
         if tag == "w:p":
             if self.para is not None:
                 self.inner += 1
+                self.inner_styles.append(None)
                 self.w.block(1)
             else:
                 self._break()
@@ -399,6 +412,7 @@ class _Docx:
             members.update(rows=1, columns=1, header=True if t.header else None)
             cell = self.n.open("cell", t.row_raw if t.row_raw >= 0 else None, members)
             self.cells.append(cell)
+            self.deleted.append(False)
             self.containers.append([cell if cell >= 0 else None, None, 0])
         elif self.para is None and self.tables:
             self._table_property(tag, parent, attrs)
@@ -425,6 +439,8 @@ class _Docx:
             t.header = attrs.get("val", "true").lower() not in OFF
         elif tag == "w:gridBefore" and parent == "w:trPr":
             t.column += span_number(attrs.get("val")) if attrs.get("val") else 0
+        elif tag == "w:cellDel" and parent == "w:tcPr" and self.deleted:
+            self.deleted[-1] = True
         elif tag in ("w:gridSpan", "w:vMerge") and parent == "w:tcPr" and self.cells:
             cell = self.cells[-1]
             if cell < 0:
@@ -445,8 +461,10 @@ class _Docx:
 
     def _paragraph_property(self, tag: str, parent: str, attrs: dict[str, str]) -> None:
         assert self.para is not None
-        if self.inner:  # the properties of a paragraph in a text box give no node
-            pass
+        if self.inner:  # a paragraph in a text box gives no node, but its style hides runs
+            if tag == "w:pStyle" and parent == "w:pPr" and self.inner_styles:
+                self.inner_styles[-1] = attrs.get("val")
+                return
         elif tag == "w:pStyle" and parent == "w:pPr":
             self.para["style"] = attrs.get("val")
             return
@@ -481,11 +499,17 @@ class _Docx:
             elif tag in ("w:br", "w:cr"):
                 self.w.block(1)
 
+    def _paragraph_style(self) -> str | None:
+        """The ``pStyle`` of the innermost open paragraph, in a text box or not."""
+        if self.inner_styles:
+            return self.inner_styles[-1]
+        return self.para["style"] if self.para else None
+
     def _script(self) -> str | None:
         """``sup`` or ``sub`` for a run with a superscript or a subscript ``vertAlign``: its own,
         or the one of its character style, of the style of its paragraph or of the document
         defaults, in that order."""
-        para = self.styles.paragraph(self.para["style"] if self.para else None)
+        para = self.styles.paragraph(self._paragraph_style())
         align = self.align
         for value in (self.styles.vert_align(self.run_style), self.styles.vert_align(para)):
             align = value if align is None else align
@@ -499,7 +523,7 @@ class _Docx:
         for value in (
             self.vanish,
             self.styles.hidden(self.run_style),
-            self.styles.hidden(self.styles.paragraph(self.para["style"] if self.para else None)),
+            self.styles.hidden(self.styles.paragraph(self._paragraph_style())),
         ):
             if value is not None:
                 return value
@@ -523,6 +547,8 @@ class _Docx:
             self.scripted = False
         elif tag in ("w:p", "w:tbl") and self.inner:
             self.inner -= 1
+            if tag == "w:p" and self.inner_styles:
+                self.inner_styles.pop()
             self.w.block(1)
         elif tag == "w:p" and self.para is not None:
             self._paragraph()
@@ -567,6 +593,10 @@ class _Docx:
         t = self.tables[-1]
         cell = self.cells.pop()
         self.containers.pop()
+        if self.deleted.pop():  # the cell is not in the document: no node, no column, no tab
+            if cell >= 0:
+                self.n.raws[cell].keep = False
+            return
         columns = 1
         if cell >= 0:
             raw = self.n.raws[cell]
@@ -636,7 +666,7 @@ class _Rich:
             self.after = True
 
     def value(self) -> str:
-        return "".join(self.parts)
+        return _ESCAPE.sub(_unescape, "".join(self.parts))
 
 
 def _shared_strings(z: _Zip, workbook: str) -> list[str]:
