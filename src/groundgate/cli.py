@@ -991,8 +991,10 @@ def _read(args: argparse.Namespace) -> int:
         Path(args.document).write_bytes(document.to_json())
     else:
         doc = read(args.file, pages=args.pages, ocr=args.ocr)
-    for w in doc.warnings:
-        print(f"groundgate: warning: {w}", file=sys.stderr)
+    from .escape import escape
+
+    for w in doc.warnings:  # a cached reading is untrusted
+        print(f"groundgate: warning: {escape(w)}", file=sys.stderr)
     if args.layout:
         if doc.layout is None:
             print("groundgate: --layout needs a PDF", file=sys.stderr)
