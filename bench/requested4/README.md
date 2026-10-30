@@ -463,6 +463,52 @@ The strict rule now gives 11 absence hits and no `not_found` entry on a present 
 absences stay unreported, because 20 searches still lose a match. The miss rate drops by 4
 values in each arm. The new escape is on a component datasheet.
 
+## The replay of the lane 1e terms (#547)
+
+This is step 4 of #547. It measures the approved terms of `terms-547.json` on the development
+split. It is not a claim: only a held-out set gives the 0.14 claim. The replay takes the recorded
+final candidates of the #534 runner arm (`groundgate-run/5`, binding `cc5b4bc9`) and admits them
+again with the current core. It makes no model call and runs no search, so the `not_found`
+entries stay as recorded. `replay-547/control` is the same replay with no terms. It changes 0
+decisions, so the current core gives the recorded receipts.
+
+```bash
+PYTHONPATH=bench uv run python -m requested.replay_terms --set bench/requested4 \
+    --terms bench/requested4/terms-547.json \
+    --cache ../groundgate-cache-464/runs/dev464/cc5b4bc93522b6512647767f799992bc085cbed014f8417afa216f4bdc35afcc \
+    --sources bench/requested4/.cache/run_sources --runs bench/requested4/replay-547/terms/runs
+uv run python bench/score.py --requested --set bench/requested4 --split development \
+    --runs bench/requested4/replay-547/terms/runs --out bench/requested4/replay-547/terms
+```
+
+From a worktree, give the cache and the sources in full. `--no-terms` in place of `--terms`
+writes the control.
+
+| Run | Right admits | Reviews | Rejected right | Escapes | Miss rate |
+|---|---:|---:|---:|---:|---:|
+| #534 (`development-464`) | 50 | 58 | 14 | 2 | 59.02% (72 of 122) |
+| control, no terms | 50 | 58 | 14 | 2 | 59.02% (72 of 122) |
+| approved terms | 37 | 71 | 14 | 0 | 69.67% (85 of 122) |
+
+`replay-547/terms/cases.json` gives each case with its document, field and value:
+
+- 0 right values move from review to admitted. The aliases change no decision.
+- The 2 escapes go to review with `COLUMN_NOT_AT_VALUE`: `supply_current_typ` 2 mA on
+  component-c17 and component-c19. Both slots are absent.
+- 13 right admits go to review with `COLUMN_NOT_AT_VALUE`: `supply_voltage_max` and
+  `supply_voltage_min` on component-c09, c10 and c12, `operating_temperature_max` and
+  `operating_temperature_min` on component-c17 and c19, and `specialist_copay` on sbc-c18, c19
+  and c20.
+- 30 right values that are not admitted have a decision with `COLUMN_NOT_AT_VALUE` or
+  `MARKER_OTHER_FIELD`. These are the 13 above and 17 right values that were in review before
+  for other codes. One of the 17 has `MARKER_OTHER_FIELD`: `deductible_family` 0 USD on
+  sbc-c18.
+
+The cause is in the candidates. The #534 candidates have field, value, scale, unit and sign
+items, and no column item and no marker item. So the column rule passes only when a field item
+holds a column word of the field. A fair measure of the column terms needs candidates from a
+runner that can cite a column item.
+
 ## What comes next
 
 The learning loop runs on the development split only (`bench/requested/loop.py`). It writes one
