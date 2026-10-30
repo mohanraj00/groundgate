@@ -242,7 +242,25 @@ that do not name that reviewer, which is the queue that `review serve` gives. Th
 the order of `review serve`: document, packet, first offset, task. A packet that `review serve`
 leaves out gives no task, and a log that it cannot read gives no answer.
 
-The latest resolution and the measures views come with their issues (#514, #515).
+`store rebuild` builds the latest resolution of each packet as
+`views/latest-resolutions.json` (`latest-resolutions@1`, #514):
+
+```json
+{"format": "latest-resolutions@1",
+ "resolutions": [{"packet": "sha256:...", "policy": "sha256:...", "resolution": "sha256:..."}],
+ "stale": ["sha256:..."]}
+```
+
+A `resolution@1` object has no time, so "latest" means current. A stored resolution is current
+if its `answers` heads are the current heads of all the answer logs of its packet: the same
+logs, and the same last entry of each log. `rebuild` does not resolve again, because `resolve`
+writes packets and receipts. If two current resolutions of a packet have different policies, the
+view keeps both, one row for each policy. The rows are sorted by packet, policy and resolution.
+`stale` lists, in order, each packet with an answer log and no current resolution. This
+includes a packet with a log that no resolution read, and a packet with a log that the store
+cannot read. An object that does not have the members of `resolution@1` is left out.
+
+The measures view comes with its issue (#515).
 
 ## 8. Rules
 
