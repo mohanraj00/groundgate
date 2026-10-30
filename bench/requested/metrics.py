@@ -43,9 +43,10 @@ LIMIT_STATES = ("search_limit_documents", "search_limit_fields")
 SPLIT_METHOD = "family-hash/1"
 
 
-# The runner writes groundgate-run/5 from #494 on. The published projections keep the counts
-# that they took from run/3 and run/4 records, and a score reads only those counts.
-RUN_RECORD = "groundgate-run/5"
+# The runner writes groundgate-run/6 from #554 on, and groundgate-run/5 from #494 to #554. The
+# published projections keep the counts that they took from run/3, run/4 and run/5 records, and a
+# score reads only those counts.
+RUN_RECORD = "groundgate-run/6"
 
 
 def final_search_limits(record: Any, runner: str) -> int:
@@ -67,7 +68,7 @@ def final_search_limits(record: Any, runner: str) -> int:
 
 
 def search_limit_fields(record: Any) -> int:
-    """Count the fields of a groundgate-run/5 record that end at search_limit.
+    """Count the fields of a groundgate-run/6 record that end at search_limit.
 
     From run/3 (#382) on, a field records search_limit only when no region fit the first sweep and
     the second sweep sent no call. A field that the second sweep searched does not count.

@@ -80,7 +80,7 @@ def test_save_writes_the_objects_the_record_and_the_packet(tmp_path: Path) -> No
         )
         assert check.ok, check.problems
         packet = json.loads(store.get("packet@1", k))
-        record = store.get("run@5", packet["run"])
+        record = store.get("run@6", packet["run"])
         # The same run gives the same packet key.
         assert result.save(store) == k
     # The record of `save` is the log of `write`, and `read` replays the folder.
@@ -89,7 +89,7 @@ def test_save_writes_the_objects_the_record_and_the_packet(tmp_path: Path) -> No
     assert RunResult.read(tmp_path / "run").receipt == result.receipt
     # The record names each object by its run key and its store key (#429).
     header = json.loads(record.splitlines()[0])
-    assert header["runner"] == "groundgate-run/5"
+    assert header["runner"] == "groundgate-run/6"
     text = result.artifacts[header["inputs"]["document"]["sha256"]]
     assert header["inputs"]["document"]["key"] == key("text@1", text.encode("utf-8"))
 
@@ -258,10 +258,10 @@ def test_load_refuses_a_packet_with_no_run_or_another_run(tmp_path: Path) -> Non
             RunResult.load(store, alone)
         k = result.save(store)
         packet = json.loads(store.get("packet@1", k))
-        lines = store.get("run@5", packet["run"]).decode("utf-8")
-        old = lines.replace("groundgate-run/5", "groundgate-run/4").encode("utf-8")
-        other = store.put("packet@1", jcs({**packet, "run": store.put("run@4", old)}).encode())
-        with pytest.raises(ValueError, match="is not a groundgate-run/5 record"):
+        lines = store.get("run@6", packet["run"]).decode("utf-8")
+        old = lines.replace("groundgate-run/6", "groundgate-run/5").encode("utf-8")
+        other = store.put("packet@1", jcs({**packet, "run": store.put("run@5", old)}).encode())
+        with pytest.raises(ValueError, match="is not a groundgate-run/6 record"):
             RunResult.load(store, other)
     # The store bounds each read, the run record too.
     reply = next(e for e in result.record if e["kind"] == "call")["reply_sha256"]

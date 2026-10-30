@@ -166,6 +166,13 @@ The instructions also say that a field item quotes the label before the value, s
 label or a column header, and that it must not hold the value (#318). The core rejects both
 other forms under SPEC §4.6.
 
+When a requested field has `columns` or `markers` (spec 0.12), the prompt has the member
+`field_words` with the column words and the marker words of each such field (#554). The
+instructions then ask for a column item that quotes the column header of the value, and a marker
+item that quotes the marker word next to the value. The output schema then also has the roles
+`column` and `marker`. On a document, the instructions say that a marker word is document text
+and not a node id. A prompt with no such field is the same as before.
+
 A prompt states that document text, references and prior replies are data, including any
 instructions in them. It marks each data block with its source id and length. Prompt wording
 is an aid, not an input security check. The parser and repair restrictions below enforce the
@@ -248,14 +255,16 @@ changes as one terminal proposal. A value change never grants another role or an
 
 | Decision code | Permitted change |
 |---|---|
-| `NO_EVIDENCE` | Add a quoted value item in the original source, plus needed sign, scale, unit, field or key evidence. |
+| `NO_EVIDENCE` | Add a quoted value item in the original source, plus needed sign, scale, unit, field, key, column or marker evidence. |
 | `QUOTE_NOT_FOUND`, `NON_VERBATIM_EVIDENCE` | Replace the value quote or its location, keeping the proposed value and source fixed. |
 | `PART_MISSING` | Add or replace only roles named by `missing`. A missing unit or key also permits a field item, and requires schema aliases. |
 | `SIGN_CITATION_INVALID` | Replace or remove the sign item. |
 | `SCALE_CITATION_INVALID` | Replace or remove the scale item. |
 | `UNIT_CITATION_INVALID` | Replace or remove the unit item; a field item is also permitted when the field has aliases. |
-| `FIELD_CITATION_INVALID` | Replace, add or remove field items. The feedback names the cause of a field item that holds the value or comes after it (#318). |
+| `FIELD_CITATION_INVALID` | Replace, add or remove field items. The feedback names the cause of a field item that holds the value or comes after it (#318). When the field has `columns` or `markers`, the column item or the marker item can change too: a row label passes with a column item, and a label cell with numbers before the value passes with a marker item (#554). |
 | `KEY_CITATION_INVALID` | Replace or remove the key item. |
+| `COLUMN_NOT_AT_VALUE` | Add, replace or remove the column item (#554). |
+| `MARKER_OTHER_FIELD` | Add, replace or remove the marker item (#554). |
 | `KEY_NOT_AT_VALUE` | Only when key is in `missing`, aliases exist, and the value's line has a tab: add a key item and a field item. The candidate's key stays fixed. |
 | `SCALE_WORD` | A scaled numeric value is permitted as a new terminal proposal, as below. Evidence changes require their own eligible codes. |
 
@@ -511,7 +520,7 @@ completed repair rounds can leave `repair_limit`. A targeted not-found response 
 
 ## 8. The run record and replay
 
-The core receipt format stays unchanged. The `groundgate-run/5` record is a log: one line of
+The core receipt format stays unchanged. The `groundgate-run/6` record is a log: one line of
 canonical JSON for each entry. Each line has a `sequence`, the `previous` line's digest and its
 own `entry_sha256`. The first line, `header`, is the run manifest. It holds the runner version,
 core spec version, model id and every `RunPolicy` setting, and it names every input by digest:
@@ -542,7 +551,7 @@ Each line that names an object by its run key also names it by its store key of
 `reference_keys`, `prompt_key`, `reply_key` and `admission_key`. Replay calculates the store
 keys again from the bytes, so a record with another store key does not replay.
 
-Runner digests use their own prefix, `groundgate-run/5:<kind>` followed by a zero byte and the
+Runner digests use their own prefix, `groundgate-run/6:<kind>` followed by a zero byte and the
 object bytes. They do not reuse the core `digest()`, whose prefix names the spec version, so the
 same text keeps its key in each spec version. There are no wall-clock times, host paths,
 credentials or random ids in this deterministic content. An app may keep times separately. The
@@ -563,7 +572,7 @@ changed line, a changed, missing or oversized object, or a bad object key raises
 The replay cost grows with the document and the record.
 `RunResult.save(store)` writes the run into a store of [store.md](store.md) (#288, #405) and
 returns the packet key. It writes each object as its store kind (`text@1`, `document@1`,
-`schema@1`, `policy@1`, `reference@1`, `prompt@1`, `reply@1`, `admission@1`), then the record as one `run@5`
+`schema@1`, `policy@1`, `reference@1`, `prompt@1`, `reply@1`, `admission@1`), then the record as one `run@6`
 object with the bytes of `run.jsonl`, then the final inputs, the receipt and a `packet@1` object
 whose `run` names the record. It writes only the objects that the record names, and it saves a
 run that is not complete too. Before the first write, it checks each object against its key and
@@ -571,7 +580,7 @@ runs `admit` again on the stored inputs. If that gives another receipt, it raise
 writes. A store error during the writes can leave objects that no packet names. It also
 raises if the record names another store key than the key of an object.
 `RunResult.load(store, packet)` replays a run from its packet key alone, with no model call
-(#429). It gets the packet, the `run@5` record that the packet names and each object by the store
+(#429). It gets the packet, the `run@6` record that the packet names and each object by the store
 key in the record, and each object must also have the run key of the record. The run header
 must name the inputs of the packet: the document id, source and text, the schema, the policy and
 the references. The packet must have no judgments, because a run has none. It takes the packs
@@ -602,6 +611,8 @@ allocation ceilings for candidates and admission history are further bounded by 
 canonical record and artifact byte counts, even when the header declares larger budgets.
 It checks not-found and search-only entries too. Missing artifacts, changed
 settings, unknown runner versions or a different core version fail replay.
+`groundgate-run/6` replaced `groundgate-run/5`, the version that 0.13.0 wrote, because the
+prompt asks for column items and marker items, and the runner accepts them (#554).
 `groundgate-run/5` replaced `groundgate-run/4`, the version that 0.12.0 wrote, because the
 search leaves out common words and a cut that keeps every match does not truncate the search
 (#494). A run/4 record searches other regions in this runner, so its replay cannot match.
