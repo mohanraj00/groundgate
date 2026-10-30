@@ -125,10 +125,13 @@ def test_a_bad_answer_record_does_not_stop_the_queue_view(tmp_path: Path) -> Non
         Review(store, "ana").answer(answer(tasks["net_income"], "unsure"))
         bad = {"reviewer": "ana", "task": [], "verdict": "unsure"}
         store.append(("answers", k, reviewer_key("ana")), bad)
+        bad = {"reviewer": "ana", "task": tasks["revenue"], "verdict": []}
+        store.append(("answers", k, reviewer_key("ana")), bad)
         found = json.loads(queue_view(store))
         ana = Review(store, "ana").queue()["tasks"]
     (queue,) = found["queues"]
-    assert len(queue["tasks"]) == 2
+    answered = {t["task"]: t["answered"] for t in queue["tasks"]}
+    assert answered == {tasks["net_income"]: ["ana"], tasks["revenue"]: []}
     assert [t["task"] for t in ana] == [tasks["revenue"]]  # ana answered net income
 
 
@@ -173,4 +176,17 @@ def test_a_symlink_answer_log_makes_the_packet_stale(tmp_path: Path) -> None:
     with FolderStore(tmp_path / "store") as store:
         found = json.loads(latest_view(store))
     # the log is not listed, but the old resolution with no answers is still not current
+    assert found["resolutions"] == [] and found["stale"] == [k]
+
+
+def test_an_answers_folder_that_is_a_symlink_makes_each_packet_stale(tmp_path: Path) -> None:
+    store, k, tasks = store_with_tasks(tmp_path / "store")
+    with store:
+        write_resolution(store, k, None, [])
+        Review(store, "ben").answer(answer(tasks["net_income"], "not_in_document"))
+    folder = tmp_path / "store" / "logs" / "answers"
+    folder.rename(tmp_path / "moved")
+    folder.symlink_to(tmp_path / "moved")
+    with FolderStore(tmp_path / "store") as store:
+        found = json.loads(latest_view(store))
     assert found["resolutions"] == [] and found["stale"] == [k]

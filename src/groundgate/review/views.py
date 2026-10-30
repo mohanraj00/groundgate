@@ -49,7 +49,7 @@ def queue_view(store: Any) -> bytes:
     reviewer that gave an answer to the task, so the queue of one reviewer is the tasks that do
     not name it. A packet that ``review serve`` leaves out, and a log that it cannot read, are
     left out here too."""
-    from .serve import Review
+    from .serve import Review, _named
 
     review = Review(store, "store rebuild", DEFAULT_POLICY)
     logs = {pk: review._logs(pk) for pk in review.docs}
@@ -62,7 +62,9 @@ def queue_view(store: Any) -> bytes:
                 if tk in settled:
                     continue
                 names = sorted(
-                    n for n, rs in logs[pk].items() if any(r.get("task") == tk for r in rs)
+                    n
+                    for n, rs in logs[pk].items()
+                    if any(r.get("task") == tk and _named(r) for r in rs)
                 )
                 items.append((review.place(pk, tk), names))
         tasks = [
@@ -113,6 +115,8 @@ def latest_view(store: Any) -> bytes:
     sorted by packet, policy and resolution. ``stale`` lists each packet with an answer log
     and no current resolution. A packet with a log that the store cannot read has no current
     resolution, and so does a packet folder of the answer logs with an entry that is not a log.
+    If ``logs/answers`` is not a folder, no resolution is current, and each packet of a
+    resolution is stale.
     An object whose members do not match ``resolution@1`` is left out."""
     from ..store import StoreError, key
 
@@ -131,6 +135,7 @@ def latest_view(store: Any) -> bytes:
             continue
         if records:
             found[log[2]] = records[-1]["entry_sha256"]
+    blind = "logs/answers is not a folder" in problems  # then no log of any packet is known
     for problem in problems:  # a symlink or other entry under the packet folder of a log
         m = _ANSWERS.match(problem)
         if m:
@@ -149,7 +154,11 @@ def latest_view(store: Any) -> bytes:
         except (ValueError, RecursionError):  # deep nesting fits in a store object
             continue
         read = _heads(obj)
-        if read is not None and heads.get(obj["packet"], {}) == read:
+        if read is None:
+            continue
+        if blind:
+            heads.setdefault(obj["packet"], None)
+        elif heads.get(obj["packet"], {}) == read:
             rows.add((obj["packet"], obj["policy"], k))
     current = {pk for pk, _, _ in rows}
     out = {
