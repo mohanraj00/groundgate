@@ -100,14 +100,16 @@ def render(
     document_source: str | None = None,
     packs: Sequence[object] = (),
     pack_dir: str | os.PathLike[str] | None = None,
+    doubt: Sequence[object] | None = None,
 ) -> str:
     """Render ``receipt`` over ``text``. ``candidates`` supply the quotes shown on each card.
 
-    With ``schema`` (and ``policy``, ``judgments``, ``references``, ``document_source`` and
-    ``packs`` if they were used), the receipt is re-derived first and the page says whether it
-    matched. Without them the page says it is unverified. ``pack_dir`` is a folder of pack
-    files, and ``verify`` reads it with the same rules (docs/design/packs.md §11). The page
-    shows the cited text of a reference decision only when ``references`` holds that reference.
+    With ``schema`` (and ``policy``, ``judgments``, ``references``, ``document_source``,
+    ``packs`` and ``doubt`` if they were used), the receipt is re-derived first and the page
+    says whether it matched. Without them the page says it is unverified. ``pack_dir`` is a
+    folder of pack files, and ``verify`` reads it with the same rules (docs/design/packs.md
+    §11). The page shows the cited text of a reference decision only when ``references`` holds
+    that reference.
     """
     verified = (
         None
@@ -123,6 +125,7 @@ def render(
             document_source=document_source,
             packs=packs,
             pack_dir=pack_dir,
+            doubt=doubt,
         ).ok
     )
     texts: dict[str, tuple[str, Offsets]] = {}
