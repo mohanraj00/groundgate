@@ -1,0 +1,14 @@
+{
+ "gained": [],
+ "lost": [],
+ "escapes_added": [],
+ "escapes_removed": [],
+ "new_codes": [],
+ "counts": {
+  "gained": 0,
+  "lost": 0,
+  "escapes_added": 0,
+  "escapes_removed": 0,
+  "new_codes": 0
+ }
+}
