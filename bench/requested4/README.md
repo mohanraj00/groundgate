@@ -509,6 +509,50 @@ items, and no column item and no marker item. So the column rule passes only whe
 holds a column word of the field. A fair measure of the column terms needs candidates from a
 runner that can cite a column item.
 
+## The runner with column and marker items (#556)
+
+This is a development check of #554, not the 0.14 claim. Only the held-out set
+`bench/requested5` gives the claim. I ran the runner arm again on the 32 development documents
+on 2026-10-30, on origin/main 3b35003 (`groundgate-run/6`), with the approved terms of
+`terms-547.json` in the live schema (#557, `terms_sha256` in the configuration). The model,
+transport and run limits are the same as in #534. The runner made 246 calls. No document was
+incomplete, had a transport error or stopped at `search_limit`. The projection and the scores
+are in `development-556/`. `development-556/COMPARE.md` puts the run beside `development-464`
+and beside `replay-547/terms` (`bench/report.py --compare`).
+
+```bash
+uv run python bench/score.py --requested --set bench/requested4 --split development \
+    --runs bench/requested4/development-556/runs --out bench/requested4/development-556
+```
+
+| Run | Right admits | Reviews | Rejected right | Escapes | Miss rate |
+|---|---:|---:|---:|---:|---:|
+| #534 (`development-464`) | 50 | 58 | 14 | 2 | 59.02% (72 of 122) |
+| #552 terms replay | 37 | 71 | 14 | 0 | 69.67% (85 of 122) |
+| this run (`development-556`) | 43 | 64 | 14 | 0 | 64.75% (79 of 122) |
+
+The runner now gives column and marker items: the candidates hold 41 column items and 52 marker
+items. Of the 13 right admits that the #552 replay sent to review with `COLUMN_NOT_AT_VALUE`, 5
+are admitted again: `supply_voltage_max` on component-c09, c10 and c12, and
+`supply_voltage_min` on component-c09 and c12. The other 8 cite a column item, but the item
+does not pass the column rule of SPEC §4.6 in the reader text, so they stay in review with
+`COLUMN_NOT_AT_VALUE`:
+
+- `operating_temperature_max` and `operating_temperature_min` on component-c17 and c19: the
+  value line has no tab, so it does not have the slots of the header line (rule 3).
+- `supply_voltage_min` on component-c10: the Condition cell of the value line is empty, so 3.0
+  is not in the slot of "Min".
+- `specialist_copay` on sbc-c18, c19 and c20: the header runs over two lines, and the lines
+  between the header and the value hold words in the slot of the column (rule 5).
+
+The run has no escape. The 2 escapes of #534 (`supply_current_typ` 2 mA on component-c17 and
+c19, both absent) go to review with `COLUMN_NOT_AT_VALUE`. Against the #552 replay, 4 fields
+lose right admits to review: `un_number` (2) and `initial_boiling_point` (1) on sds,
+`out_of_pocket_family` (1) on sbc and `revenue` (1) on annual. These are new model calls, so
+part of each move is run noise. The field moves come from `by_kind_field` of the two
+`results.json` files. I counted the item roles in the cached records with a script outside the
+repository.
+
 ## What comes next
 
 The learning loop runs on the development split only (`bench/requested/loop.py`). It writes one
