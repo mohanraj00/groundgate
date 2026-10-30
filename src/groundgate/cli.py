@@ -341,7 +341,9 @@ def _store_parser() -> argparse.ArgumentParser:
         "forget",
         help="remove the document data of a packet and record each deletion",
         description="Remove the objects of PACKET that hold document data, and record each "
-        "deletion in logs/deleted.jsonl. An object that two packets share goes for both. "
+        "deletion in logs/deleted.jsonl. The candidates of each correction that review "
+        "resolve wrote for PACKET go too: they hold the value that a person typed. An object "
+        "that two packets share goes for both. "
         "The packet, the receipt and the other kept objects stay, and verify then reports "
         "'input deleted'. The run record goes too if a line holds document text: a string of "
         "8 or more characters that is in the text. That check is not a proof. If forget "

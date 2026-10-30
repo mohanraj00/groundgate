@@ -21,7 +21,7 @@ from contextlib import suppress
 from dataclasses import dataclass, field
 from typing import Any
 
-from ..canonical import digest, jcs
+from ..canonical import SPEC_VERSION, digest, jcs
 from . import KEY, FolderStore, NotFound, StoreError, Torn, _canonical, check_bytes, key
 from .packets import _PACKET, _READING, printable
 
@@ -538,6 +538,7 @@ def check(store: FolderStore, *, repair: bool = False) -> Report:
                 named(f"the reading {k}", kind, n)
         except StoreError as exc:
             report.find(str(exc))
+    _orphan_run_objects(report, objects)
 
     logs, problems = store.log_names()
     for problem in problems:
@@ -559,6 +560,27 @@ def check(store: FolderStore, *, repair: bool = False) -> Report:
         except StoreError as exc:
             report.find(str(exc))
     return report
+
+
+def _orphan_run_objects(report: Report, objects: _Objects) -> None:
+    """A finding for each prompt, reply and admission that no run record of the store names.
+    Only a run record names them, so ``forget`` cannot find them again: a ``forget`` of 0.12
+    removed a changed record and kept them, and so does ``FolderStore.forget`` on the key of a
+    record (#499). A run record or an object that cannot be read can name any of them, and it
+    is a finding already, so then there is no search."""
+    seen: set[str] = set()
+    for k in sorted(k for k, kind in objects.kinds.items() if kind and kind.startswith("run@")):
+        try:
+            found, _ = _run_objects(objects, _run(objects, k))
+        except (StoreError, ValueError, RecursionError):
+            return
+        seen.update(n for _, n in found)
+    if objects.unread():
+        return
+    for kind in ("prompt@1", "reply@1", "admission@1"):
+        for k in sorted(objects.of(kind)):
+            if k not in seen:
+                report.find(f"the {kind} object {k}: no run record names it")
 
 
 def _split_view(report: Report, log: tuple[str, ...], records: list[dict[str, Any]]) -> None:
@@ -680,7 +702,7 @@ _RECEIPT_INPUTS = ("groundgate", "document", "references", "packs", "schema_sha2
 
 
 def _review_plan(
-    objects: _Objects, packet: str, obj: Mapping[str, Any]
+    objects: _Objects, packet: str, obj: Mapping[str, Any], *, orphans: bool = True
 ) -> tuple[
     list[tuple[str, str]],
     frozenset[str],
@@ -698,6 +720,7 @@ def _review_plan(
     tell: then ``forget`` keeps the review provenance and reports them as ``unchecked``. Also
     return each receipt that no packet names and that can be the receipt of a correction, but
     that does not record enough to prove it (``_orphans``): it stays, and ``forget`` reports it.
+    Without ``orphans``, there is no search for such receipts.
     A ``review-policy@1`` object holds no document data and stays.
 
     A correction packet is a packet with the inputs of the packet, no run record, and the exact
@@ -764,7 +787,7 @@ def _review_plan(
             for _, n in [*own, *receipts, ("packet@1", k)]:
                 shared[n] = shared.get(n, 0) + len(users)
     unproven: list[tuple[str, str]] = []
-    if wanted:
+    if wanted and orphans:
         proven, maybe, stops = _orphans(objects, obj, wanted)
         unread += stops  # the search cannot run: keep the review provenance
         plan += [("receipt@1", n) for n in proven if n not in elsewhere]
@@ -844,8 +867,8 @@ def _correction_inputs(
     the packet need not be in the store.
     A record or a task that does not have the expected form gives nothing. Each answer log of
     the packet that the store cannot read goes into ``unread``. None if a correction answer is
-    there, but the receipt or the judgments of the packet cannot be read: then nothing tells
-    which packets are its corrections."""
+    there, but the receipt or the judgments of the packet cannot be read, or the packet is of
+    another spec version: then nothing tells which packets are its corrections."""
     answers: list[tuple[Mapping[str, Any], Mapping[str, Any]]] = []  # the record and its task
     logs, _ = objects.store.log_names()
     for log in logs:
@@ -868,6 +891,10 @@ def _correction_inputs(
                 answers.append((r, task))
     if not answers:
         return []
+    if obj["spec"] != SPEC_VERSION:
+        # A digest names the spec version (SPEC §6), so the digests of an earlier version do
+        # not match those of this one, and nothing tells which packets are corrections (#525).
+        return None
     try:
         receipt = objects.json("receipt@1", obj["receipt"])
         decisions = receipt["decisions"]
@@ -946,7 +973,10 @@ def forget_packet(
     store: FolderStore, packet: str, reason: str, *, everything: bool = False
 ) -> list[tuple[str, str, str, int]]:
     """Remove the objects of a packet that §8 rule 3 lists as "Removed", and record each
-    deletion in ``logs/deleted.jsonl``. An object that two packets share goes for both.
+    deletion in ``logs/deleted.jsonl``. An object that two packets share goes for both. The
+    ``candidates@1`` of each correction packet that ``review resolve`` wrote for the packet go
+    too, because they hold the value that a person typed (#524). An answer log that cannot be
+    read, and a packet that can be a correction but cannot be told, are ``unchecked``.
 
     ``forget`` also removes the run record if a line holds document text, or if its text is not
     in the store (then the lines cannot be checked). The run
@@ -1086,6 +1116,11 @@ def forget_packet(
         plan = first + plan + [(kind, k, False) for kind, k in review if kind in _RECORDS]
     else:
         plan = [(kind, k, always) for kind, k, always in plan if kind in REMOVED or always]
+        # The candidates of a correction hold the value that a person typed in review, and
+        # that value comes from the document (#524). The rest of a correction stays.
+        review, corrections, _, unread_review, _ = _review_plan(objects, packet, obj, orphans=False)
+        plan = [(kind, k, False) for kind, k in review if kind == "candidates@1"] + plan
+        unchecked += unread_review
     others = _others(objects, packet, corrections)
     for ck, cn in shared_corrections.items():
         others[ck] = others.get(ck, 0) + cn
