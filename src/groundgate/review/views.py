@@ -176,7 +176,7 @@ def latest_view(store: Any) -> bytes:
         for pk in packets:
             heads.setdefault(pk, None)
     for pk in set(heads) | set(again):
-        if heads.get(pk) != again.get(pk):
+        if pk not in heads or pk not in again or heads[pk] != again[pk] or again[pk] is None:
             heads.setdefault(pk, None)
             rows = {row for row in rows if row[0] != pk}
     current = {pk for pk, _, _ in rows}
