@@ -179,3 +179,25 @@ def test_an_answer_during_the_build_makes_the_packet_stale(
         monkeypatch.setattr(store, "object_keys", late)
         found = json.loads(latest_view(store))
     assert found["resolutions"] == [] and found["stale"] == [k]
+
+
+def test_an_answers_folder_that_turns_into_a_symlink_makes_each_packet_stale(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    store, k, _ = store_with_tasks(tmp_path / "store")
+    folder = tmp_path / "store" / "logs" / "answers"
+    with store:
+        write_resolution(store, k, None, [])
+        assert json.loads(latest_view(store))["resolutions"] != []
+        folder.mkdir(parents=True, exist_ok=True)
+        keys = store.object_keys
+
+        def late() -> Any:  # the folder turns into a symlink after the first read
+            if not folder.is_symlink():
+                folder.rename(tmp_path / "moved")
+                folder.symlink_to(tmp_path / "moved")
+            return keys()
+
+        monkeypatch.setattr(store, "object_keys", late)
+        found = json.loads(latest_view(store))
+    assert found["resolutions"] == [] and found["stale"] == [k]

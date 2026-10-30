@@ -143,14 +143,15 @@ def latest_view(store: Any) -> bytes:
     sorted by packet, policy and resolution. ``stale`` lists each packet with an answer log
     and no current resolution. A packet with a log that the store cannot read has no current
     resolution, and so does a packet folder of the answer logs with an entry that is not a log.
-    If ``logs/answers`` is not a folder, no resolution is current, and each packet of a
-    resolution is stale. The heads are read again after the rows: a packet whose heads
+    If ``logs/answers`` is not a folder in either read, no resolution is current, and each
+    packet of a resolution is stale. The heads are read again after the rows: a packet whose heads
     changed during the build is stale. An object whose members do not match ``resolution@1``
     is left out."""
     from ..store import StoreError, key
 
     heads, blind = _log_heads(store)
     rows = set()
+    packets = set()  # the packet of each resolution
     keys, _ = store.object_keys()
     for k in keys:
         try:
@@ -166,13 +167,14 @@ def latest_view(store: Any) -> bytes:
         read = _heads(obj)
         if read is None:
             continue
-        if blind:
-            heads.setdefault(obj["packet"], None)
-        elif heads.get(obj["packet"], {}) == read:
+        packets.add(obj["packet"])
+        if heads.get(obj["packet"], {}) == read:
             rows.add((obj["packet"], obj["policy"], k))
     again, blind_again = _log_heads(store)  # an append during the build makes a packet stale
-    if blind_again:
+    if blind or blind_again:  # then no log of any packet is known
         rows = set()
+        for pk in packets:
+            heads.setdefault(pk, None)
     for pk in set(heads) | set(again):
         if heads.get(pk) != again.get(pk):
             heads.setdefault(pk, None)
