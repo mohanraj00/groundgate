@@ -279,7 +279,9 @@ their issues (#432).
    "unchecked" and exits 1, because the log can name a correction. A packet that can be a
    correction, but whose candidates and receipt cannot be read, is "unchecked" too. So is such
    a packet when a correction answer stays, but the receipt or the judgments of the packet are
-   gone. The corrections go first, then the tasks, the resolutions and the answer logs of the
+   gone. So is such a packet when the packet is of another spec version (#525): a digest names
+   its spec version (SPEC §6), so the candidate digests of the receipt do not match those of
+   this version. The corrections go first, then the tasks, the resolutions and the answer logs of the
    packet, then its receipt and its judgments, and the packet last. So a `forget --all` that
    stops can finish later. The receipt of a correction goes after its packet. A retry removes a receipt that no packet
    names only if it proves the correction: its spec version, document, references, packs,
