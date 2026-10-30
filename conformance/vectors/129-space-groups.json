@@ -1,7 +1,7 @@
 {
  "name": "129-space-groups",
- "description": "On a line that holds a tab, a number token can group its digits in threes with one space, no-break space, thin space or narrow no-break space between the groups, as in '36 428 426'. A tab ends the token, so two cells never join. On a line with no tab, two spaces, or a group of other than 3 digits, the space ends the token as before. A span that starts inside a grouped token reads no value, and a candidate value never uses space groups (spec 0.12, #427).",
- "document": "Statement of financial position\n\nCost of sales\t36 428 426\t34 805 221\nTotal assets\t3 087 950\t2 845 032\nTotal liabilities\t15 734 323\nRevenue\t1 250\nTotal equity 6 857 593\nInventories\t12 3456\nTrade payables\t1  234\n",
+ "description": "On a line that holds a tab, a number token can group its digits in threes with one space, no-break space, thin space or narrow no-break space between the groups, as in '36 428 426'. A tab ends the token, so two cells never join. On a line with no tab, two spaces, or a group of other than 3 digits, the space ends the token as before. A span that starts inside a grouped token reads no value, and a candidate value never uses space groups. A number character other than 0 to 9 after the match, and the 000 of a currency scale at its start, make no grouped token (spec 0.12, #427).",
+ "document": "Statement of financial position\n\nCost of sales\t36 428 426\t34 805 221\nTotal assets\t3 087 950\t2 845 032\nTotal liabilities\t15 734 323\nRevenue\t1 250\nTotal equity 6 857 593\nInventories\t12 3456\nTrade payables\t1  234\nProvisions\t1 234२\nOther reserves\t£000 456 789\n",
  "schema": {
   "fields": {
    "zar": {
@@ -15,7 +15,16 @@
      "Revenue",
      "Total equity",
      "Inventories",
-     "Trade payables"
+     "Trade payables",
+     "Provisions"
+    ]
+   },
+   "gbp": {
+    "type": "number",
+    "unit": "GBP",
+    "multiple": true,
+    "aliases": [
+     "Other reserves"
     ]
    }
   }
@@ -174,6 +183,40 @@
      "text": "Cost of sales"
     }
    ]
+  },
+  {
+   "id": "ns10",
+   "field": "zar",
+   "value": "1234",
+   "unit": "ZAR",
+   "evidence": [
+    {
+     "start": 226,
+     "end": 231,
+     "text": "1 234"
+    },
+    {
+     "role": "field",
+     "text": "Provisions"
+    }
+   ]
+  },
+  {
+   "id": "ns11",
+   "field": "gbp",
+   "value": "456789",
+   "unit": "GBP",
+   "evidence": [
+    {
+     "start": 252,
+     "end": 263,
+     "text": "000 456 789"
+    },
+    {
+     "role": "field",
+     "text": "Other reserves"
+    }
+   ]
   }
  ],
  "expected": {
@@ -222,6 +265,18 @@
     "outcome": "rejected",
     "codes": [
      "TYPE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
     ]
    }
   ],

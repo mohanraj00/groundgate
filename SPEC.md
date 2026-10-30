@@ -591,9 +591,11 @@ digits in threes with a **group space** between the groups: one space (U+0020), 
 of `[-−]?\d{1,3}(G\d{3})+(\.\d+)?`, where `G` is one group space, with the conditions before it of
 a number token. A digit, a group space followed by a digit, or a `,` or `.` followed by a digit
 directly after the match makes it no space-grouped token. A digit and a group space directly
-before the match also make it none, so a match never starts inside a longer one. Its value is the
-digits without the group spaces, so `36 428 426` is 36428426. The match is one token, and the
-shorter tokens inside it are not read. A tab ends a token, so two cells never join:
+before the match also make it none, so a match never starts inside a longer one. A number
+character other than 0 to 9 directly after the match, or after one `.` or `,`, also makes it
+none, as for a number token. A match that starts with the `000` of a currency scale is none, so
+in `£000 456 789` the `000` is no token. Its value is the digits without the group spaces, so
+`36 428 426` is 36428426. The match is one token, and the shorter tokens inside it are not read. A tab ends a token, so two cells never join:
 `3 087 950\t2 845 032` is two tokens. Two group spaces, or a group of other than 3 digits after
 the first, end the match: `1  234` and `12 3456` are two tokens each. On a line with no tab, a
 space ends a token as before, so "6 857 593" in a sentence or a plain-text table is three tokens.

@@ -5916,7 +5916,8 @@ vector(
     "'36 428 426'. A tab ends the token, so two cells never join. On a line with no tab, two "
     "spaces, or a group of other than 3 digits, the space ends the token as before. A span that "
     "starts inside a grouped token reads no value, and a candidate value never uses space "
-    "groups (spec 0.12, #427).",
+    "groups. A number character other than 0 to 9 after the match, and the 000 of a currency "
+    "scale at its start, make no grouped token (spec 0.12, #427).",
     "Statement of financial position\n\n"
     "Cost of sales\t36 428 426\t34 805 221\n"
     "Total assets\t3 087 950\t2 845 032\n"
@@ -5924,10 +5925,13 @@ vector(
     "Revenue\t1\u00a0250\n"
     "Total equity 6 857 593\n"
     "Inventories\t12 3456\n"
-    "Trade payables\t1  234\n",
+    "Trade payables\t1  234\n"
+    "Provisions\t1 234\u0968\n"
+    "Other reserves\t\u00a3000 456 789\n",
     {"fields": {"zar": money("ZAR", "Cost of sales", "Total assets", "Total liabilities",
                              "Revenue", "Total equity", "Inventories", "Trade payables",
-                             multiple=True)}},
+                             "Provisions", multiple=True),
+                "gbp": money("GBP", "Other reserves", multiple=True)}},
     [
         # rejected with VALUE_NOT_IN_EVIDENCE in spec 0.11
         c("ns1", "zar", "36428426", "ZAR", [q("36 428 426"), row("Cost of sales")]),
@@ -5945,6 +5949,10 @@ vector(
         # a candidate value never uses space groups
         c("ns9", "zar", "36 428 426", "ZAR", [q("36 428 426"), row("Cost of sales")],
           ("rejected", ["TYPE_INVALID"])),
+        # must not change: a number character other than 0 to 9 after the match
+        c("ns10", "zar", "1234", "ZAR", [q("1 234"), row("Provisions")], NOT_IN),
+        # the 000 of a currency scale starts no grouped token
+        c("ns11", "gbp", "456789", "GBP", [q("000 456 789"), row("Other reserves")], NOT_IN),
     ],
 )  # fmt: skip
 
