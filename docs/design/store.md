@@ -270,7 +270,21 @@ before a reader acts on a resolution, it compares the `answers` heads of the res
 logs. An object whose members do not match `resolution@1` is left out: it must have the five
 members, the format name, a key for the packet, the policy and each head, and a list of slots.
 
-The measures view comes with its issue (#515).
+`store rebuild` builds the measures as `views/review-measures.json` (`review-measures@1`, #515):
+
+```json
+{"format": "review-measures@1",
+ "results": [{"policy": "sha256:...", "set": null, "split": null,
+              "kinds": {}, "packets": 12, "skipped": 1, "other_split": 0, "no_split": 0}]}
+```
+
+The view gives one result for each policy and each scope. The scopes are all packets (`set` and
+`split` null), and each split of each `splits` log. The results are sorted by policy, set and
+split, with null first. `kinds`, `packets`, `other_split` and `no_split` are the members of
+`review measures --json` with no change. `skipped` is the number of skipped lines, not the
+lines: a line holds the text of an error, so its bytes can change when only a message changes.
+A `splits` log that the store cannot read, or that `review measures` refuses, gives no scope,
+also if it changes during the build.
 
 ## 8. Rules
 

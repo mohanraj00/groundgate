@@ -18,7 +18,7 @@ _KEY = re.compile(r"sha256:[0-9a-f]{64}")
 _ANSWERS = re.compile(r"logs/answers/([0-9a-f]{64})[/ ]")
 _RESOLUTION = frozenset({"format", "packet", "policy", "answers", "slots"})
 
-__all__ = ["latest_view", "policies", "queue_view"]
+__all__ = ["latest_view", "measures_view", "policies", "queue_view"]
 
 
 def policies(store: Any) -> list[tuple[str, dict[str, Any]]]:
@@ -186,3 +186,51 @@ def latest_view(store: Any) -> bytes:
         "stale": sorted(pk for pk in heads if pk not in current),
     }
     return jcs(out).encode("utf-8")
+
+
+def measures_view(store: Any) -> bytes:
+    """The view ``review-measures@1``: the result of ``review measures`` for each policy and
+    each scope. The scopes are all packets (``set`` and ``split`` null), and each split of each
+    ``splits`` log. The results are sorted by policy, set and split, with null first.
+    ``skipped`` is the number of skipped lines, because their text can change when only a
+    message changes. A splits log that the store cannot read, or that ``read_split`` refuses,
+    gives no scope, also if it changes during the build."""
+    from ..store import StoreError
+    from ..store.splits import split_view
+    from .measures import measures
+
+    scopes: list[tuple[str | None, str | None]] = [(None, None)]
+    names, _ = store.log_names()
+    sets = []
+    for log in names:
+        if log[0] != "splits":
+            continue
+        try:
+            records = store.read(log)
+            found = split_view(records, log[1])
+        except (StoreError, ValueError):
+            continue
+        if records:
+            sets.append((records[0]["set"], sorted(set(found.values()))))
+    for name, splits in sorted(sets):
+        scopes += [(name, split) for split in splits]
+    results = []
+    bad = set()  # a set whose splits log changed after the read above
+    for pkey, policy in policies(store):
+        for set_name, split in scopes:
+            if set_name in bad:
+                continue
+            try:
+                m = measures(store, policy, set_name=set_name, split=split)
+            except (StoreError, ValueError):
+                if set_name is None:
+                    raise
+                bad.add(set_name)
+                continue
+            results.append(
+                {"policy": pkey, "set": set_name, "split": split, "kinds": m.kinds,
+                 "packets": m.packets, "skipped": len(m.skipped),
+                 "other_split": m.other_split, "no_split": m.no_split}
+            )  # fmt: skip
+    results = [r for r in results if r["set"] not in bad]
+    return jcs({"format": "review-measures@1", "results": results}).encode("utf-8")

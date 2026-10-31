@@ -213,6 +213,7 @@ def test_rebuild_gives_the_same_view_bytes(
     out = (
         "wrote views/readings.json\nwrote views/calibrate-labels.json\n"
         "wrote views/review-queue.json\nwrote views/latest-resolutions.json\n"
+        "wrote views/review-measures.json\n"
     )
     assert capsys.readouterr().out == out
     view = root / "views" / "readings.json"
@@ -244,6 +245,7 @@ def test_rebuild_gives_the_same_view_bytes(
     (root / "views" / "calibrate-labels.json").unlink()
     (root / "views" / "review-queue.json").unlink()
     (root / "views" / "latest-resolutions.json").unlink()
+    (root / "views" / "review-measures.json").unlink()
     (root / "views").rmdir()
     with FolderStore(root) as store:
         assert rebuild(store) == [
@@ -251,6 +253,7 @@ def test_rebuild_gives_the_same_view_bytes(
             "views/calibrate-labels.json",
             "views/review-queue.json",
             "views/latest-resolutions.json",
+            "views/review-measures.json",
         ]
     assert view.read_bytes() == first
     with FolderStore(root) as store:
