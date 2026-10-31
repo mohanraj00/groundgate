@@ -318,8 +318,8 @@ document text (runner.md §3).
   (review.md §7, #414) asks about each node that the app uses, for example the cell that a field
   cites. The page draws the boxes of a node from the layout.
 - **The store.** `document@1` is the canonical JSON of section 4.1, and the `document` member of
-  `reading@1` names its key. `forget` removes it, because a node span with the text gives the
-  document text (store.md §8).
+  a reading (`reading@1` or `reading@2`) names its key. `forget` removes it, because a node span
+  with the text gives the document text (store.md §8).
 
 ## 12. Untrusted input
 
