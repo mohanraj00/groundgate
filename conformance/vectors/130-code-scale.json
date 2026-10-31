@@ -1,7 +1,7 @@
 {
  "name": "130-code-scale",
- "description": "Scale form 4: a code scale whose currency is the field's unit. A code scale is a code of the currency table in capitals, or R for ZAR, directly followed by a scale suffix or by '000, as in 'SEKm', 'CHF'000' or 'R’000'. It gives the item its scale. A code scale of another currency gives the scale but fails the check. 'MSEK' holds no code scale, and a code scale makes no heading scale (spec 0.12, #568).",
- "document": "Consolidated income statement\nSEKm\tNote\t2025\t2024\nNet sales\t3\t46,613\t48,352\nGross income\t\t14,099\t14,299\n\nStatement of financial position\tR’000\tR’000\nTotal assets\t22 591 916\t21 004 117\nInventories\t3,100\t2,950\n\nCHF'000\t2025\nRevenue\t5,200\n\nMSEK\t2025\nOther income\t7,700\n",
+ "description": "Scale form 4: a code scale whose currency is the field's unit. A code scale is a code of the currency table in capitals, or R for ZAR, directly followed by a scale suffix or by '000, as in 'SEKm', 'CHF'000' or 'R’000'. It gives the item its scale. A code scale of another currency gives the scale but fails the check. 'MSEK' holds no code scale, and a code scale makes no heading scale. A code scale cut from a longer word, as SEKm in MSEKm, fails the check (spec 0.12, #568).",
+ "document": "Consolidated income statement\nSEKm\tNote\t2025\t2024\nNet sales\t3\t46,613\t48,352\nGross income\t\t14,099\t14,299\n\nStatement of financial position\tR’000\tR’000\nTotal assets\t22 591 916\t21 004 117\nInventories\t3,100\t2,950\n\nCHF'000\t2025\nRevenue\t5,200\n\nMSEK\t2025\nOther income\t7,700\n\nMSEKm in thousands\t2025\nOther costs\t5\n",
  "schema": {
   "fields": {
    "sek": {
@@ -11,7 +11,8 @@
     "aliases": [
      "Net sales",
      "Gross income",
-     "Other income"
+     "Other income",
+     "Other costs"
     ]
    },
    "chf": {
@@ -224,6 +225,73 @@
      "text": "Net sales"
     }
    ]
+  },
+  {
+   "id": "cs10",
+   "field": "sek",
+   "value": "5000000",
+   "unit": "SEK",
+   "evidence": [
+    {
+     "start": 307,
+     "end": 308,
+     "text": "5"
+    },
+    {
+     "role": "field",
+     "text": "Other costs"
+    },
+    {
+     "role": "scale",
+     "start": 272,
+     "end": 289,
+     "text": "SEKm in thousands"
+    }
+   ]
+  },
+  {
+   "id": "cs11",
+   "field": "sek",
+   "value": "5000000",
+   "unit": "SEK",
+   "evidence": [
+    {
+     "start": 307,
+     "end": 308,
+     "text": "5"
+    },
+    {
+     "role": "field",
+     "text": "Other costs"
+    },
+    {
+     "role": "scale",
+     "text": "SEKm in thousands"
+    }
+   ]
+  },
+  {
+   "id": "cs12",
+   "field": "sek",
+   "value": "5000",
+   "unit": "SEK",
+   "evidence": [
+    {
+     "start": 307,
+     "end": 308,
+     "text": "5"
+    },
+    {
+     "role": "field",
+     "text": "Other costs"
+    },
+    {
+     "role": "scale",
+     "start": 272,
+     "end": 289,
+     "text": "SEKm in thousands"
+    }
+   ]
   }
  ],
  "expected": {
@@ -285,6 +353,26 @@
     ],
     "missing": [
      "scale"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SCALE_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SCALE_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
     ]
    }
   ],

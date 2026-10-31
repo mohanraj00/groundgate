@@ -5963,7 +5963,8 @@ vector(
     "the currency table in capitals, or R for ZAR, directly followed by a scale suffix or by "
     "'000, as in 'SEKm', 'CHF'000' or 'R\u2019000'. It gives the item its scale. A code scale of "
     "another currency gives the scale but fails the check. 'MSEK' holds no code scale, and a "
-    "code scale makes no heading scale (spec 0.12, #568).",
+    "code scale makes no heading scale. A code scale cut from a longer word, as SEKm in MSEKm, "
+    "fails the check (spec 0.12, #568).",
     "Consolidated income statement\n"
     "SEKm\tNote\t2025\t2024\n"
     "Net sales\t3\t46,613\t48,352\n"
@@ -5972,8 +5973,10 @@ vector(
     "Total assets\t22 591 916\t21 004 117\n"
     "Inventories\t3,100\t2,950\n\n"
     "CHF'000\t2025\nRevenue\t5,200\n\n"
-    "MSEK\t2025\nOther income\t7,700\n",
-    {"fields": {"sek": money("SEK", "Net sales", "Gross income", "Other income", multiple=True),
+    "MSEK\t2025\nOther income\t7,700\n"
+    "\nMSEKm in thousands\t2025\nOther costs\t5\n",
+    {"fields": {"sek": money("SEK", "Net sales", "Gross income", "Other income",
+                             "Other costs", multiple=True),
                 "chf": money("CHF", "Net sales", "Revenue", multiple=True),
                 "zar": money("ZAR", "Total assets", "Inventories", multiple=True)}},
     [
@@ -5998,6 +6001,14 @@ vector(
         # must not change: SEKm makes no heading scale, so the scale is missing
         c("cs9", "sek", "48352000000", "SEK", [q("48,352"), row("Net sales")],
           (REVIEW, ["PART_MISSING"], ["scale"])),
+        # admitted with VALUE_DERIVED before this rule: SEKm cut from MSEKm is no code scale
+        c("cs10", "sek", "5000000", "SEK",
+          [q("5", 9), row("Other costs"), q("SEKm in thousands", role="scale")], SCALE_FAILS),
+        c("cs11", "sek", "5000000", "SEK",
+          [q("5", 9), row("Other costs"), scale_item("SEKm in thousands")], SCALE_FAILS),
+        # must not change: the derivation reads the first scale of the item text, 10^6
+        c("cs12", "sek", "5000", "SEK",
+          [q("5", 9), row("Other costs"), q("SEKm in thousands", role="scale")], NOT_IN),
     ],
 )  # fmt: skip
 
