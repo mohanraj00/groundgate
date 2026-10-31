@@ -615,6 +615,32 @@ def test_read_doubt_reads_the_reanchored_span() -> None:
     assert d["codes"] == ["EVIDENCE_REANCHORED"]
 
 
+def test_doubted_finds_each_overlap() -> None:
+    """The search on the doubt spans gives the answer of a scan of every span (#535)."""
+    from groundgate.admit import _doubted
+
+    rng = random.Random(535)
+    for _ in range(200):
+        cuts = sorted(rng.sample(range(60), 2 * rng.randint(0, 8)))
+        spans = list(zip(cuts[::2], cuts[1::2], strict=True))
+        doubt = ([s for s, _ in spans], [e for _, e in spans])
+        a = rng.randrange(60)
+        b = rng.randrange(a + 1, 61)
+        assert _doubted(doubt, a, b) == any(a < e and s < b for s, e in spans), (spans, a, b)
+
+
+def test_doubted_stays_fast_with_many_spans() -> None:
+    """One look-up per cited span, not a scan of the list (#535): four times the candidates and
+    the spans take less than eight times as long."""
+    from groundgate.admit import _doubted
+
+    def prepare(n: int) -> Callable[[], object]:
+        doubt = ([4 * i for i in range(n)], [4 * i + 2 for i in range(n)])
+        return lambda: [_doubted(doubt, 4 * i + 2, 4 * i + 4) for i in range(n)]
+
+    assert_linear(prepare, 2000, 8000)
+
+
 def test_read_doubt_ignores_a_role_item_that_fails() -> None:
     """A role item that fails its check flags its own code, not READ_DOUBT (#535)."""
     cand = {"field": "limit", "value": "7000", "unit": "USD",

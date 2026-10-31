@@ -323,7 +323,8 @@ class _Ctx:
     columns: tuple[str, ...] = ()  # the column words of every field (spec 0.12)
     markers: tuple[str, ...] = ()  # the marker words of every field
     competing: dict[str, tuple[str, ...]] = field(default_factory=dict)  # by field name
-    doubt: tuple[tuple[int, int], ...] = ()  # byte spans below min_read_confidence (#535)
+    # the starts and the ends of the doubt spans below min_read_confidence, in text order (#535)
+    doubt: tuple[list[int], list[int]] = field(default_factory=lambda: ([], []))
 
     def any_unit_at(self, t: _Text, tok: Token) -> bool:
         """Whether a form of any unit in the table is next to the token (SPEC §3.1)."""
@@ -666,11 +667,20 @@ def _check(ctx: _Ctx, cand: object) -> _Passed:
     mc = ctx.policy.min_confidence
     if mc is not None and conf is not None and conf < mc:
         p.flags.append("LOW_CONFIDENCE")
-    if ctx.doubt and p.at is not None and p.at.item.source == "document":
+    if ctx.doubt[0] and p.at is not None and p.at.item.source == "document":
         spans = [_bytes(p.at.t, p.at.span)] + [x.span for x in p.parts if x.passed and x.span]
-        if any(a < e and s < b for a, b in spans for s, e in ctx.doubt):
+        if any(_doubted(ctx.doubt, a, b) for a, b in spans):
             p.flags.append("READ_DOUBT")
     return p
+
+
+def _doubted(doubt: tuple[list[int], list[int]], a: int, b: int) -> bool:
+    """Whether the byte span [a, b) shares a byte with a span of ``doubt``, the starts and the
+    ends of the counted doubt spans (SPEC §3.3). The spans are in text order with no overlap,
+    so their ends are in order too."""
+    starts, ends = doubt
+    i = bisect.bisect_right(ends, a)  # the first doubt span that ends after a
+    return i < len(starts) and starts[i] < b
 
 
 def _checked(
@@ -1563,8 +1573,9 @@ def _admit(
         columns=tuple(dict.fromkeys(c for f in schema.fields.values() for c in f.columns or ())),
         markers=tuple(dict.fromkeys(m for f in schema.fields.values() for m in f.markers or ())),
         competing=_competing(schema),
-        doubt=tuple(
-            (d["start"], d["end"]) for d in doubt if d["confidence"] < policy.min_read_confidence
+        doubt=(
+            [d["start"] for d in doubt if d["confidence"] < policy.min_read_confidence],
+            [d["end"] for d in doubt if d["confidence"] < policy.min_read_confidence],
         ),
     )
 
