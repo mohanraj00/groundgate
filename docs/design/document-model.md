@@ -146,8 +146,8 @@ heading levels.
 | HTML | `h1` to `h6` | `p` and other blocks | `ul`, `ol`, `li` | `table`, `tr`, `td`, `th`, with `rowspan` and `colspan` |
 | XML (SPL) | a `title`, at the depth of its `section` | `paragraph` | `list`, `item` | `table`, `tr`, `td`, `th` |
 | Other XML | none | the block elements of `markup.py` | none | only the HTML table names |
-| DOCX (#7) | the heading styles | paragraphs | numbered paragraphs | tables |
-| XLSX (#7) | the sheet name | none | none | one table for each sheet |
+| DOCX (#529) | the heading styles | paragraphs | numbered paragraphs | tables |
+| XLSX (#529) | the sheet name | none | none | one table for each sheet |
 | PDF text layer | none in `document@1` | text blocks (`layout`) | none | rows and cells from `_tables` (`layout`) or `grid` (`rules`) |
 | OCR (#7) | none | the blocks of the engine (`layout`) | none | none in the first version |
 | Text and Markdown | none | blocks between blank lines (`layout`) | none | none |
@@ -318,8 +318,8 @@ document text (runner.md §3).
   (review.md §7, #414) asks about each node that the app uses, for example the cell that a field
   cites. The page draws the boxes of a node from the layout.
 - **The store.** `document@1` is the canonical JSON of section 4.1, and the `document` member of
-  `reading@1` names its key. `forget` removes it, because a node span with the text gives the
-  document text (store.md §8).
+  a reading (`reading@1` or `reading@2`) names its key. `forget` removes it, because a node span
+  with the text gives the document text (store.md §8).
 
 ## 12. Untrusted input
 

@@ -116,7 +116,7 @@ def _parser() -> argparse.ArgumentParser:
     )
     sub = ap.add_subparsers(dest="command", required=True)
 
-    x = sub.add_parser("read", help="turn a PDF, HTML, XML or text file into NFC text")
+    x = sub.add_parser("read", help="turn a PDF, HTML, XML, DOCX, XLSX or text file into NFC text")
     x.add_argument("file")
     x.add_argument("-o", "--output", help="write the text here instead of stdout")
     x.add_argument("--layout", help="also write page and word boxes (PDF only) as JSON")
@@ -991,8 +991,10 @@ def _read(args: argparse.Namespace) -> int:
         Path(args.document).write_bytes(document.to_json())
     else:
         doc = read(args.file, pages=args.pages, ocr=args.ocr)
-    for w in doc.warnings:
-        print(f"groundgate: warning: {w}", file=sys.stderr)
+    from .escape import escape
+
+    for w in doc.warnings:  # a cached reading is untrusted
+        print(f"groundgate: warning: {escape(w)}", file=sys.stderr)
     if args.layout:
         if doc.layout is None:
             print("groundgate: --layout needs a PDF", file=sys.stderr)

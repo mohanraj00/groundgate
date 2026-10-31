@@ -14,7 +14,7 @@ The rest is not built. The note changes no decision and no receipt.
 |---|---|---|
 | What the store holds | Objects that never change, logs that only grow, and views that the store can build again. | 3 |
 | The key | `sha256:` and SHA-256 over `groundgate-object/1:`, the kind, a zero byte and the exact bytes. The kind has a version, for example `text@1`. The prefix names the key scheme, not the spec or the runner. | 4 |
-| The manifest | Two objects: `reading@1` (from source to text) and `packet@1` (one `admit` call). The run record stays the manifest of a run, and the packet names it. | 5 |
+| The manifest | Two objects: `reading@2` (from source to text) and `packet@1` (one `admit` call). The run record stays the manifest of a run, and the packet names it. | 5 |
 | The interface | Five operations: `put`, `get`, `append`, `read` and `forget`. | 6 |
 | The reference store | A folder, with the standard library only. Views are JSON files. No SQLite in format 1. | 7 |
 | Two writers at the same time | Each log has one writer. Two reviewers write two logs. | 7.3 |
@@ -70,7 +70,7 @@ new key. The store prefix changes only when the key scheme changes.
 | `source@1` | the exact source file | `read` |
 | `text@1` | the UTF-8 of the NFC text | `read`, `extract`, `admit` |
 | `layout@1` | canonical JSON of the pages and word boxes | `read` |
-| `reading@1` | section 5.1 | `read` |
+| `reading@2` (`reading@1` before 0.14) | section 5.1 | `read` |
 | `schema@1`, `policy@1`, `reference@1` | canonical JSON of the object that `admit` took | `extract`, `admit` |
 | `pack@1` | canonical JSON of a pack of the app. Built-in packs stay in the wheel. | `admit` |
 | `candidates@1`, `judgments@1` | canonical JSON of the list | `extract`, `admit` |
@@ -97,16 +97,20 @@ small objects. They name the same keys as the run header, so no data is copied.
 ### 5.1 The reading
 
 ```json
-{"format": "reading@1",
+{"format": "reading@2",
  "source": "sha256:...",
- "reader": {"name": "groundgate.read", "version": "0.11.0"},
+ "reader": {"name": "groundgate.read", "version": "0.14.0"},
  "options": {"pages": null},
- "text": "sha256:...", "layout": "sha256:...", "document": null}
+ "text": "sha256:...", "layout": "sha256:...", "document": null,
+ "warnings": ["page 1: dropped 3 words drawn outside the visible page"]}
 ```
 
 The reading cache maps the source key, the reader name and version, and the options to the
 reading. If the reader changes, the key changes, so a stale entry never applies (#285, §2).
 `document` stays null unless `read --store --document` writes `document@1` (#407).
+`warnings` keeps the warnings of `read` in their order, so a cache hit gives the same warnings as
+a new read (#523). `reading@1` has the same members without `warnings`. `read --store` writes
+`reading@2` since 0.14. The store still reads a `reading@1`, but the cache never gives it.
 
 ### 5.2 The packet
 
@@ -209,10 +213,10 @@ resolution of each packet, the labels for calibrate and the measures.
 reader and options to its readings, and it leaves out a reading whose text is deleted.
 `read --store` of a PDF looks in this cache. If one reading has the same source, reader
 version and options, and its text and layout are in the store, `read --store` uses it and does
-not run the reader again. A reading of a text, HTML or XML file does not name its format, so
-`read --store` always reads those files. A new reader version misses the cache. A cache hit
-cannot give the warning about words outside a PDF page, because the reading does not keep it
-(#483). `store rebuild` also
+not run the reader again. A row can name a `reading@1` too, and `read --store` does not count it.
+A reading of a text, HTML or XML file does not name its format, so `read --store` always reads
+those files. A new reader version misses the cache. A cache hit gives the warnings that the
+reading keeps (#523). `store rebuild` also
 builds the calibrate labels, as `views/calibrate-labels.json` (`calibrate-labels@1`, #406). For
 each calibrate task (review.md §11) and each reviewer, it gives the label of the last answer.
 It leaves out a task that its packet does not give with the same bytes. It also leaves out a
@@ -242,7 +246,31 @@ that do not name that reviewer, which is the queue that `review serve` gives. Th
 the order of `review serve`: document, packet, first offset, task. A packet that `review serve`
 leaves out gives no task, and a log that it cannot read gives no answer.
 
-The latest resolution and the measures views come with their issues (#514, #515).
+`store rebuild` builds the latest resolution of each packet as
+`views/latest-resolutions.json` (`latest-resolutions@1`, #514):
+
+```json
+{"format": "latest-resolutions@1",
+ "resolutions": [{"packet": "sha256:...", "policy": "sha256:...", "resolution": "sha256:..."}],
+ "stale": ["sha256:..."]}
+```
+
+A `resolution@1` object has no time, so "latest" means current. A stored resolution is current
+if its `answers` heads are the current heads of all the answer logs of its packet: the same
+logs, and the same last entry of each log. `rebuild` does not resolve again, because `resolve`
+writes packets and receipts. If two current resolutions of a packet have different policies, the
+view keeps both, one row for each policy. The rows are sorted by packet, policy and resolution.
+`stale` lists, in order, each packet with an answer log and no current resolution. This
+includes a packet with a log that no resolution read, a packet with a log that the store
+cannot read, and a packet whose log folder has an entry that is not a log, for example a
+symlink. `rebuild` reads the heads again after it selects the rows, and a packet whose heads
+changed during the build is stale. If `logs/answers` is not a folder in either read, no
+resolution is current, and each packet of a resolution is stale. The view is a snapshot:
+before a reader acts on a resolution, it compares the `answers` heads of the resolution with the
+logs. An object whose members do not match `resolution@1` is left out: it must have the five
+members, the format name, a key for the packet, the policy and each head, and a list of slots.
+
+The measures view comes with its issue (#515).
 
 ## 8. Rules
 
@@ -256,7 +284,7 @@ The latest resolution and the measures views come with their issues (#514, #515)
 
    | Removed | Kept |
    |---|---|
-   | `source@1`, `text@1`, `layout@1`, `document@1`, `reference@1`, `candidates@1`, `prompt@1`, `reply@1`, `admission@1` | `packet@1`, `reading@1`, `receipt@1`, `schema@1`, `policy@1`, `pack@1`, `judgments@1`, `run@N`, `task@1`, `resolution@1`, the answer logs |
+   | `source@1`, `text@1`, `layout@1`, `document@1`, `reference@1`, `candidates@1`, `prompt@1`, `reply@1`, `admission@1` | `packet@1`, `reading@1`, `reading@2`, `receipt@1`, `schema@1`, `policy@1`, `pack@1`, `judgments@1`, `run@N`, `task@1`, `resolution@1`, the answer logs |
 
    The kept objects hold digests, values, offsets, codes and questions, and no document text
    other than the values. A review question and its choices can quote a value.
