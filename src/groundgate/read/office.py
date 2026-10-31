@@ -256,9 +256,16 @@ class _Styles:
         self.default_align: str | None = None
         self.default_paragraph: str | None = None  # the style of a paragraph with no pStyle
 
-    def hidden(self, style: str | None) -> bool | None:
-        """The ``vanish`` of ``style`` and the styles it is based on, or None when none says."""
-        return self._find(self.vanish, style)
+    def hidden(self, style: str | None) -> bool:
+        """``style`` toggles hidden text. In a style, ``vanish`` turns the inherited value over,
+        and ``vanish`` 0 keeps it, so an odd count of ``vanish`` in the ``basedOn`` chain hides."""
+        seen: set[str] = set()
+        on = False
+        while style is not None and style not in seen:
+            on ^= self.vanish.get(style, False)
+            seen.add(style)
+            style = self.based_on.get(style)
+        return on
 
     def vert_align(self, style: str | None) -> str | None:
         return self._find(self.align, style)
@@ -541,16 +548,12 @@ class _Docx:
         return {"superscript": "sup", "subscript": "sub"}.get(align or "")
 
     def _hidden(self) -> bool:
-        """The run is hidden: by its own ``vanish``, its character style, the style of its
-        paragraph or the document defaults, in that order."""
-        for value in (
-            self.vanish,
-            self.styles.hidden(self.run_style),
-            self.styles.hidden(self.styles.paragraph(self._paragraph_style())),
-        ):
-            if value is not None:
-                return value
-        return self.styles.default
+        """The run is hidden. Its own ``vanish`` sets the value. If it has none, the document
+        default is turned over by the style of its paragraph and by its character style."""
+        if self.vanish is not None:
+            return self.vanish
+        paragraph = self.styles.hidden(self.styles.paragraph(self._paragraph_style()))
+        return self.styles.default ^ paragraph ^ self.styles.hidden(self.run_style)
 
     def chars(self, data: str) -> None:
         if self.in_text and not self.skip:

@@ -632,6 +632,25 @@ def test_docx_style_outline_level_and_list(tmp_path: Path) -> None:
     assert [n["kind"] for n in nodes] == ["paragraph", "list", "item", "item", "paragraph"]
 
 
+def test_docx_style_vanish_toggles(tmp_path: Path) -> None:
+    styles = (
+        '<w:style w:type="paragraph" w:styleId="Hide"><w:rPr><w:vanish/></w:rPr></w:style>'
+        '<w:style w:type="paragraph" w:styleId="Keep"><w:basedOn w:val="Hide"/>'
+        '<w:rPr><w:vanish w:val="0"/></w:rPr></w:style>'
+        '<w:style w:type="paragraph" w:styleId="Back"><w:basedOn w:val="Hide"/>'
+        "<w:rPr><w:vanish/></w:rPr></w:style>"
+        '<w:style w:type="character" w:styleId="Over"><w:rPr><w:vanish/></w:rPr></w:style>'
+    )
+    over = '<w:r><w:rPr><w:rStyle w:val="Over"/></w:rPr><w:t>daily</w:t></w:r>'
+    body = (
+        _p("500 mg", '<w:pStyle w:val="Keep"/>')
+        + _p("5 mg", '<w:pStyle w:val="Back"/>')
+        + f'<w:p><w:pPr><w:pStyle w:val="Hide"/></w:pPr>{over}</w:p>'
+    )
+    text, _ = _nodes(_write(tmp_path, "v.docx", docx(body, styles)))
+    assert text == "5 mg\n\ndaily"
+
+
 def test_docx_properties_before_a_change_are_not_used(tmp_path: Path) -> None:
     styles = (
         '<w:style w:type="paragraph" w:styleId="Draft"><w:rPr><w:vanish/></w:rPr></w:style>'
