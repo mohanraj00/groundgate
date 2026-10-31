@@ -18,6 +18,7 @@ from groundgate.text import (
     _label_line_in,
     _mixed_header_lines,
     canonical,
+    code_scale_cut,
     currency_name,
     first_token_end,
     heading_units,
@@ -495,6 +496,33 @@ def test_a_code_scale_that_continues_after_the_item_is_none() -> None:
     assert not scale_form(text, 0, 4, "SEK", [])
     assert item_scale("SEKm\t5", 0, 4) == 6
     assert scale_form("SEKm\t5", 0, 4, "SEK", [])
+
+
+def test_a_code_scale_cut_from_a_longer_word_fails_the_scale_check() -> None:
+    """The first scale of "SEKm in thousands", read alone, is SEKm, but "MSEKm" holds no code
+    scale. The scale item then fails, and the value goes to review (spec 0.12, #568)."""
+    text = "MSEKm in thousands\nSales\t5"
+    assert code_scale_cut(text, 1, 18)
+    assert not code_scale_cut("SEKm in thousands", 0, 17)
+    assert not code_scale_cut(text, 6, 18)  # "in thousands" holds no code scale
+    schema = {"fields": {"sek": {"type": "number", "unit": "SEK", "aliases": ["Sales"]}}}
+    for scale in ({"start": 1, "end": 18}, {"text": "SEKm in thousands"}):
+        cand = {
+            "id": "c",
+            "field": "sek",
+            "value": "5000000",
+            "unit": "SEK",
+            "evidence": [
+                {"text": "5"},
+                {"role": "field", "text": "Sales"},
+                {"role": "scale", **scale},
+            ],
+        }
+        d = gg.admit(text, schema, [cand]).decisions[0]
+        assert (d.outcome, d.codes) == (
+            "needs_verification",
+            ("SCALE_CITATION_INVALID", "VALUE_DERIVED"),
+        )
 
 
 @pytest.mark.parametrize(("word", "power"), [("THOUSAND", 3), ("Million", 6), ("LAKH", 5)])

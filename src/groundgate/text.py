@@ -1300,6 +1300,19 @@ def item_scale(text: str, start: int, end: int) -> int | None:
     return None
 
 
+def code_scale_cut(text: str, start: int, end: int) -> bool:
+    """Whether the first scale of text[start:end], read alone, is a code scale that the text
+    around it does not hold, as "SEKm" in "MSEKm" (SPEC §4.1, #568). The item's scale then
+    comes from a code scale that is not there."""
+    voc = _VOCAB.get()
+    alone = text[start:end]
+    m = voc._ITEM_SCALE.search(alone)
+    if m is None or m.group(4) is None:
+        return False
+    whole = voc._CODE_SCALE.match(text, start + m.start(), min(len(text), end + 1))
+    return whole is None or whole.end() > end
+
+
 def _whole_code(text: str, m: re.Match[str], end: int) -> bool:
     """Whether a match of the item scale pattern is no code scale, or a code scale that the text
     after ``end`` does not continue, as "SEKm" in "SEKmn" (SPEC §4.1, #568)."""
