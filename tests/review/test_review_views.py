@@ -7,14 +7,17 @@ from pathlib import Path
 from typing import Any
 
 import pytest
+from test_review_measures import EVERY
+from test_review_measures import store as measures_store
 from test_review_serve import answer, store_with_tasks
 
 from groundgate.canonical import jcs
+from groundgate.review.measures import measures
 from groundgate.review.resolve import write_resolution
 from groundgate.review.serve import Review
 from groundgate.review.tasks import DEFAULT_POLICY
-from groundgate.review.views import latest_view, queue_view
-from groundgate.store import FolderStore, key, reviewer_key
+from groundgate.review.views import latest_view, measures_view, queue_view
+from groundgate.store import FolderStore, key, reviewer_key, set_key
 from groundgate.store.maintain import rebuild
 
 AGREE_2 = {**DEFAULT_POLICY, "agree": 2}
@@ -45,7 +48,7 @@ def test_the_queue_view_gives_the_open_tasks_for_each_policy(tmp_path: Path) -> 
 
 def test_a_rebuild_after_a_delete_gives_the_same_view_bytes(tmp_path: Path) -> None:
     store, k, tasks = store_with_tasks(tmp_path / "store")
-    names = ["review-queue.json", "latest-resolutions.json"]
+    names = ["review-queue.json", "latest-resolutions.json", "review-measures.json"]
     views = tmp_path / "store" / "views"
     with store:
         Review(store, "ben").answer(answer(tasks["net_income"], "confirm"))
@@ -132,6 +135,35 @@ def test_a_bad_answer_record_does_not_stop_the_queue_view(tmp_path: Path) -> Non
     answered = {t["task"]: t["answered"] for t in queue["tasks"]}
     assert answered == {tasks["net_income"]: ["ana"], tasks["revenue"]: []}
     assert [t["task"] for t in ana] == [tasks["revenue"]]  # ana answered net income
+
+
+def test_the_measures_view_gives_each_policy_and_each_split(tmp_path: Path) -> None:
+    store, keys = measures_store(tmp_path)
+    every = store.put("review-policy@1", jcs(EVERY).encode("utf-8"))
+    default = key("review-policy@1", jcs(DEFAULT_POLICY).encode("utf-8"))
+    log = ("splits", set_key("set-a"))
+    store.append(log, {"set": "set-a", "document": "sha256:" + "1" * 64, "split": "held-out"})
+    store.append(log, {"set": "set-a", "document": "sha256:" + "2" * 64, "split": "development"})
+    bad = ("splits", set_key("set-b"))
+    store.append(bad, {"set": "set-a", "document": "sha256:" + "3" * 64, "split": "x"})
+    store.append(("answers", keys["text"], reviewer_key("ben")), {"reviewer": "ben", "task": []})
+    found = json.loads(measures_view(store))
+    assert found["format"] == "review-measures@1"
+    scopes = [(None, None), ("set-a", "development"), ("set-a", "held-out")]  # set-b names set-a
+    policies = sorted([(default, DEFAULT_POLICY), (every, EVERY)])
+    assert [(r["policy"], r["set"], r["split"]) for r in found["results"]] == [
+        (p, s, t) for p, _ in policies for s, t in scopes
+    ]
+    for row, (policy, set_name, split) in zip(
+        found["results"], [(p, s, t) for _, p in policies for s, t in scopes], strict=True
+    ):
+        m = measures(store, policy, set_name=set_name, split=split)
+        assert row["kinds"] == m.kinds and row["packets"] == m.packets
+        assert (row["other_split"], row["no_split"]) == (m.other_split, m.no_split)
+        assert row["skipped"] == len(m.skipped)
+    every_all = found["results"][[p for p, _ in policies].index(every) * 3]
+    assert every_all["packets"] == 2 and every_all["skipped"] == 1  # ben's bad record
+    assert found["results"][1]["packets"] == 0 and found["results"][1]["no_split"] == 3
 
 
 def test_a_symlink_answer_log_makes_the_packet_stale(tmp_path: Path) -> None:
@@ -223,3 +255,22 @@ def test_a_log_that_turns_unreadable_during_the_build_makes_the_packet_stale(
         monkeypatch.setattr(store, "object_keys", late)
         found = json.loads(latest_view(store))
     assert found["resolutions"] == [] and found["stale"] == [k]
+
+
+def test_a_splits_log_that_changes_during_the_build_gives_no_scope(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    store, _ = measures_store(tmp_path)
+    log = ("splits", set_key("set-a"))
+    document = "sha256:" + "1" * 64
+    store.append(log, {"set": "set-a", "document": document, "split": "development"})
+    keys = store.object_keys
+
+    def late() -> Any:  # a second split for the document, after the scopes are known
+        if len(store.read(log)) == 1:
+            store.append(log, {"set": "set-a", "document": document, "split": "held-out"})
+        return keys()
+
+    monkeypatch.setattr(store, "object_keys", late)
+    found = json.loads(measures_view(store))
+    assert [(r["set"], r["split"]) for r in found["results"]] == [(None, None)]
