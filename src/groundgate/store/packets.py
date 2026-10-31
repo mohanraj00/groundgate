@@ -1,6 +1,6 @@
 """Readings and packets in a store (docs/design/store.md §5, §9).
 
-``put_reading`` reads a file and writes the source, the text, the layout and a ``reading@1``
+``put_reading`` reads a file and writes the source, the text, the layout and a ``reading@2``
 object. ``admit_packet`` runs ``admit`` and writes the inputs, the receipt and a ``packet@1``
 object. ``load_packet`` gets each input of a packet back, so that ``verify`` and ``report`` can
 decide again from the packet key alone.
@@ -51,6 +51,9 @@ _PACKET = (
     "spec",
 )
 _READING = ("document", "format", "layout", "options", "reader", "source", "text")
+_READING2 = (*_READING, "warnings")
+# The reading kinds. ``put_reading`` writes ``reading@2``, which keeps the warnings of ``read``.
+READINGS = ("reading@1", "reading@2")
 
 
 class InputGone(StoreError):
@@ -203,7 +206,7 @@ def put_reading(
     document: bool = False,
 ) -> tuple[str, Any]:
     """Read the file at ``path`` as ``groundgate read`` does, and write the source, the text,
-    the layout (PDF only) and a ``reading@1`` object. Return the reading key and the result of
+    the layout (PDF only) and a ``reading@2`` object. Return the reading key and the result of
     ``read``. The file must be a regular file. ``put_reading`` reads its bytes one time and
     gives them to ``read``, so ``source@1`` and ``text@1`` come from the same bytes.
 
@@ -212,9 +215,9 @@ def put_reading(
     ``put_reading`` uses that reading and does not run ``read``. Only a PDF reading has a
     layout, so the reading shows its format. A reading of other files does not name the format
     (text, HTML or XML), so ``put_reading`` always reads those files. A new reader version
-    misses the cache. On a cache hit, the warnings come from the stored text and layout, so a
-    warning about words drawn outside a PDF page shows only on the read that wrote the
-    reading. ``ocr`` is the option of ``read``. With ``ocr=True``, ``put_reading`` does not use
+    misses the cache. The reading keeps the warnings of ``read``, so a cache hit gives the same
+    warnings as a new read (#523). A ``reading@1`` does not keep them, so it never gives a hit.
+    ``ocr`` is the option of ``read``. With ``ocr=True``, ``put_reading`` does not use
     the cache, because a cached reading can come from a read with no OCR. A reading with OCR
     records the tesseract version in its reader, so a later read never uses it from the cache.
 
@@ -249,20 +252,21 @@ def put_reading(
     if doc.layout is not None:
         layout = store.put("layout@1", _json(doc.layout.to_dict(), "layout"))
     reading = {
-        "format": "reading@1",
+        "format": "reading@2",
         **want,
         "reader": reader(doc.ocr),
         "text": store.put("text@1", doc.text.encode("utf-8")),
         "layout": layout,
         "document": None if model is None else store.put("document@1", model.to_json()),
+        "warnings": list(doc.warnings),
     }
-    return store.put("reading@1", _json(reading, "reading")), doc
+    return store.put("reading@2", _json(reading, "reading")), doc
 
 
 def _cached_reading(store: Store, path: Path, want: dict[str, Any]) -> tuple[str, Any] | None:
     """The reading key and the result of ``read`` from the reading cache, or ``None`` on a miss.
     The cache and the objects are untrusted. Each value that does not agree with ``want`` is a
-    miss, and so is a row with more than one reading. Only a PDF can hit."""
+    miss, and so is a row with no ``reading@2`` or more than one. Only a PDF can hit."""
     view = getattr(store, "read_view", None)
     if view is None or path.suffix.lower() != ".pdf":
         return None
@@ -274,9 +278,12 @@ def _cached_reading(store: Store, path: Path, want: dict[str, Any]) -> tuple[str
             if jcs({m: row.get(m) for m in want}) != name:
                 continue
             found = row.get("readings")
-            if not isinstance(found, list) or len(found) != 1 or not isinstance(found[0], str):
+            if not isinstance(found, list) or not all(isinstance(k, str) for k in found):
                 return None
-            return _stored_reading(store, found[0], name)
+            current = [k for k in found if load_reading(store, k)["format"] == "reading@2"]
+            if len(current) != 1:
+                return None
+            return _stored_reading(store, current[0], name)
     except (StoreError, ValueError, TypeError, KeyError, AttributeError, RecursionError):
         return None  # a deep nest in the view or an object is a miss too
     return None
@@ -290,7 +297,7 @@ def _stored_reading(store: Store, k: str, name: str) -> tuple[str, Any] | None:
     obj = load_reading(store, k)
     if jcs({m: obj[m] for m in ("source", "reader", "options")}) != name:
         return None
-    if obj["document"] is not None:
+    if obj["format"] != "reading@2" or obj["document"] is not None:
         return None
     text = store.get("text@1", obj["text"]).decode("utf-8")
     if not is_nfc(text):
@@ -300,14 +307,25 @@ def _stored_reading(store: Store, k: str, name: str) -> tuple[str, Any] | None:
     layout = Layout.from_dict(_get_json(store, "layout@1", obj["layout"]))
     if layout.document_sha256 != digest("document", {"text": text}):
         return None
-    from ..read.pdf import layout_warnings
-
-    return k, Extracted(text, layout, tuple(layout_warnings(layout.pages, obj["options"]["pages"])))
+    return k, Extracted(text, layout, tuple(obj["warnings"]))
 
 
 def load_reading(store: Store, k: str) -> dict[str, Any]:
-    """The ``reading@1`` object of key ``k``, with its members checked."""
-    obj = _members(_get_json(store, "reading@1", k), _READING, "reading@1", k)
+    """The ``reading@2`` or ``reading@1`` object of key ``k``, with its members checked. Its
+    ``format`` member names the kind."""
+    kind = "reading@2"
+    try:
+        _get(store, kind, k)
+    except InputGone:
+        raise
+    except StoreError:  # the bytes do not have this key as reading@2
+        kind = "reading@1"
+    names = _READING2 if kind == "reading@2" else _READING
+    obj = _members(_get_json(store, kind, k), names, kind, k)
+    if kind == "reading@2":
+        warnings = obj["warnings"]
+        if not isinstance(warnings, list) or not all(isinstance(w, str) for w in warnings):
+            raise StoreError(f"the reading@2 object {k} member warnings is not a list of strings")
     for name in ("source", "text"):
         if _key_or_none(obj, name, "reading") is None:
             raise StoreError(f"the reading member {name} is not a store key")

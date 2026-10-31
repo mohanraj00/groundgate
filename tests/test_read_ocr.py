@@ -287,7 +287,7 @@ def test_tesseract_reading_in_the_store_names_the_engine(
     assert main(["read", "--store", str(root), "--ocr", str(path)]) == 0
     k = capsys.readouterr().out.strip()
     with FolderStore(root) as store:
-        reading = json.loads(store.get("reading@1", k))
+        reading = json.loads(store.get("reading@2", k))
     assert reading["reader"]["name"] == "groundgate.read+tesseract"
 
 
