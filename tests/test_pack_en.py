@@ -248,7 +248,11 @@ def test_the_pack_patterns_match_as_the_old_patterns(name: str, s: str) -> None:
         if (name, key) in _CHANGED:
             continue
         new, old = getattr(V, key), OLD[key]
-        assert [_spans(m) for m in new.finditer(s)] == [_spans(m) for m in old.finditer(s)], key
+        got = [_spans(m) for m in new.finditer(s)]
+        if key == "_ITEM_SCALE":
+            # spec 0.12 adds the code scale as groups 3 and 4 (#568): the old matches stay
+            got = [(m.span(), m.groups()[:2]) for m in new.finditer(s) if m.group(4) is None]
+        assert got == [_spans(m) for m in old.finditer(s)], key
     ends = sorted({t.end for t in toks})
     for e in ends:
         assert _spans(V._SCALE.match(s[e : e + 12])) == _spans(OLD["_SCALE"].match(s[e : e + 12]))

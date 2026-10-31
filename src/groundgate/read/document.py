@@ -24,7 +24,7 @@ from pathlib import Path
 from typing import Any
 
 from ..canonical import jcs
-from . import HTML_SUFFIXES, TEXT_SUFFIXES, Extracted, ReadError, _decode, reader
+from . import HTML_SUFFIXES, OFFICE_SUFFIXES, TEXT_SUFFIXES, Extracted, ReadError, _decode, reader
 from .layout import Layout
 from .nodes import MAX_DEPTH, MAX_NODES, PARENTS, Raw, chars_of_bytes, finish
 
@@ -365,14 +365,14 @@ def read_document(
     """Read ``path`` as ``read`` does, and also give its document model. The text and the
     layout are the same as the text and the layout of ``read``.
 
-    HTML and XML give ``markup`` nodes. A PDF gives ``layout`` paragraphs and tables, and
-    ``rules`` tables where the page draws the rules. A text or Markdown file gives ``layout``
-    paragraphs: the blocks between blank lines. With ``ocr=True``, a scanned PDF page gives a
-    ``layout`` paragraph for each paragraph of the OCR engine, and a ``doubt`` entry for each
-    OCR word with a confidence below 1. A read with OCR records the tesseract version in
+    HTML, XML, DOCX and XLSX give ``markup`` nodes. A PDF gives ``layout`` paragraphs and
+    tables, and ``rules`` tables where the page draws the rules. A text or Markdown file gives
+    ``layout`` paragraphs: the blocks between blank lines. With ``ocr=True``, a scanned PDF page
+    gives a ``layout`` paragraph for each paragraph of the OCR engine, and a ``doubt`` entry for
+    each OCR word with a confidence below 1. A read with OCR records the tesseract version in
     ``reader``. OCR is off by default: an OCR word can be wrong, and ``admit`` does not read
-    ``doubt``. If ``data`` is given, it is the bytes of the file, and ``read_document`` does
-    not read the file again.
+    ``doubt``. If ``data`` is given, it is the bytes of the file, and ``read_document`` does not
+    read the file again.
     """
     path = Path(path)
     suffix = path.suffix.lower()
@@ -413,6 +413,10 @@ def read_document(
             from .markup import html_nodes
 
             text, raws = html_nodes(_decode(source, path))
+        elif suffix in OFFICE_SUFFIXES:
+            from .office import office_nodes
+
+            text, raws = office_nodes(source, path)
         elif suffix in TEXT_SUFFIXES:
             text = unicodedata.normalize("NFC", _decode(source, path))
             raws = _paragraphs(text)

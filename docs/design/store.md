@@ -246,7 +246,31 @@ that do not name that reviewer, which is the queue that `review serve` gives. Th
 the order of `review serve`: document, packet, first offset, task. A packet that `review serve`
 leaves out gives no task, and a log that it cannot read gives no answer.
 
-The latest resolution and the measures views come with their issues (#514, #515).
+`store rebuild` builds the latest resolution of each packet as
+`views/latest-resolutions.json` (`latest-resolutions@1`, #514):
+
+```json
+{"format": "latest-resolutions@1",
+ "resolutions": [{"packet": "sha256:...", "policy": "sha256:...", "resolution": "sha256:..."}],
+ "stale": ["sha256:..."]}
+```
+
+A `resolution@1` object has no time, so "latest" means current. A stored resolution is current
+if its `answers` heads are the current heads of all the answer logs of its packet: the same
+logs, and the same last entry of each log. `rebuild` does not resolve again, because `resolve`
+writes packets and receipts. If two current resolutions of a packet have different policies, the
+view keeps both, one row for each policy. The rows are sorted by packet, policy and resolution.
+`stale` lists, in order, each packet with an answer log and no current resolution. This
+includes a packet with a log that no resolution read, a packet with a log that the store
+cannot read, and a packet whose log folder has an entry that is not a log, for example a
+symlink. `rebuild` reads the heads again after it selects the rows, and a packet whose heads
+changed during the build is stale. If `logs/answers` is not a folder in either read, no
+resolution is current, and each packet of a resolution is stale. The view is a snapshot:
+before a reader acts on a resolution, it compares the `answers` heads of the resolution with the
+logs. An object whose members do not match `resolution@1` is left out: it must have the five
+members, the format name, a key for the packet, the policy and each head, and a list of slots.
+
+The measures view comes with its issue (#515).
 
 ## 8. Rules
 

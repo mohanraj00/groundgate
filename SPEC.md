@@ -600,6 +600,23 @@ token that continues past the span's end is ignored, so a span can never read a 
 number. The `000` of a currency scale (below) is no token, so `£000` and `£'000` are never an
 amount of zero (spec 0.10, #313).
 
+**Space groups (spec 0.12, #427).** On a line that holds a tab, a number token can also group its
+digits in threes with a **group space** between the groups: one space (U+0020), no-break space
+(U+00A0), thin space (U+2009) or narrow no-break space (U+202F). Such a token is a maximal match
+of `[-−]?\d{1,3}(G\d{3})+(\.\d+)?`, where `G` is one group space, with the conditions before it of
+a number token. A digit, a group space followed by a digit, or a `,` or `.` followed by a digit
+directly after the match makes it no space-grouped token. A digit and a group space directly
+before the match also make it none, so a match never starts inside a longer one. A number
+character other than 0 to 9 directly after the match, or after one `.` or `,`, also makes it
+none, as for a number token. A match that starts with the `000` of a currency scale is none, so
+in `£000 456 789` the `000` is no token. Its value is the digits without the group spaces, so
+`36 428 426` is 36428426. The match is one token, and the shorter tokens inside it are not read. A tab ends a token, so two cells never join:
+`3 087 950\t2 845 032` is two tokens. Two group spaces, or a group of other than 3 digits after
+the first, end the match: `1  234` and `12 3456` are two tokens each. On a line with no tab, a
+space ends a token as before, so "6 857 593" in a sentence or a plain-text table is three tokens.
+A span that starts or ends inside a space-grouped token reads no part of it, so `428 426` inside
+`36 428 426` has no value.
+
 A number token with a value that is followed by a **scale word** also has a **scaled value**. The
 scale words are `thousand`, `million`, `billion`, `trillion`, `lakh` and `crore`, matched as whole
 words, case-insensitively, after at most 2 whitespace code points. The scaled value is the value
@@ -627,6 +644,14 @@ A **currency scale** is a currency sign directly followed by `k`, `K`, `m`, `M`,
 stop the form. So `£000s`, `£0001`, `£000,000` and `£000.5` are no currency scale, and `£ 000`,
 with a space after the sign, is none either (spec 0.10, #313).
 
+A **code scale** is a code of the currency table (§4.3) in capitals, or `R`, directly followed by
+`k`, `K`, `m`, `M`, `bn`, `Bn`, `BN`, `'000` or `’000`, with no letter or number directly before it
+and none directly after it. Its **currency** is the code, and the currency of `R` is `ZAR`. So
+`SEKm` is SEK and 10^6, `CHF'000` is CHF and 10^3, and `R’000` is ZAR and 10^3. `MSEK`, `SEKmn`
+and `sekm` are no code scale. A code scale is read only in a scale item (§4.6). It is no currency
+scale, no heading scale and no heading unit, so it never gives a token a scale that no candidate
+cites (spec 0.12, #568).
+
 A **heading scale** is `in`, whitespace and a scale word (also with a final `s`) on a line that
 holds no tab, such as "(in thousands)". A currency scale on any line, with or without a tab, is
 also a heading scale, such as the header row `\t£m\t£m` (spec 0.10). It reaches the lines after it
@@ -635,7 +660,8 @@ may stand between the heading and the first of them, and the first line after th
 ends the table. So it reaches a token on such a line. A line with spaces between its cells, as
 from a plain-text table, holds no tab, so no heading scale reaches it (#152).
 
-Candidate values parse the same way after trimming, and must be a single token. `integer` fields
+Candidate values parse the same way after trimming, and must be a single token. A candidate value
+never uses space groups, so `"36 428 426"` is `TYPE_INVALID` (spec 0.12, #427). `integer` fields
 additionally require an integral value. The **canonical value** is the decimal without grouping,
 exponent, trailing fractional zeros or a trailing `.`, with `-0` written `0`.
 
@@ -1015,7 +1041,7 @@ than a key or field item fails. Otherwise it passes when its role's check holds:
 | Role | Passes when |
 |---|---|
 | `sign` | The item holds **brackets around the value**: a `(` before the token with only whitespace and prefixes of the field's unit between them, and a `)` after it with only whitespace between them. Or it holds a **loss word** (a `sign.loss` word of the packs that the packet reads; the base pack gives none, and the built-in pack `finance` of §4.8 gives `loss`, `losses`, `deficit`, `deficits`) with no negation (`no`, `not`, `without`) directly before it, only whitespace between, and at most 4 words (runs of letters) between the loss word and the token. A loss-word item ends at or before the token in the value's sentence (§4.5), and from the start of the item to the token there is no number token, no line break, no tab and no **gain word** (`income`, `gain`, `gains`, `profit`, `profits`, `earnings`). Each word is matched whole and case-insensitively. |
-| `scale` | The item holds a scale form (below). Or the item holds a currency scale (§4.1), as in "£m" (spec 0.10). It ends at or before the token. No scale word, also with a final `s`, lies between its end and the token, and no currency scale with a power of ten other than the item's scale (below) lies there. So the second `£m` of the header row `\t£m\t£m` does not stop an item on the first. |
+| `scale` | The item holds a scale form (below). Or the item holds a currency scale (§4.1), as in "£m" (spec 0.10). It ends at or before the token. No scale word, also with a final `s`, lies between its end and the token, and no currency scale or code scale (§4.1) with a power of ten other than the item's scale (below) lies there. So the second `£m` of the header row `\t£m\t£m` does not stop an item on the first. If the first scale of the item's text, read alone, is a code scale, the text around the item must hold that code scale. So `SEKm` cut from `MSEKm` fails (spec 0.12, #568). |
 | `unit` | The item holds a prefix or suffix of the field's unit as a whole (with no letter or digit directly before a form that starts with one, and none directly after a form that ends with one). Then either the field's unit is at the token (§4.3), so the item repeats it, or the field check passes (below), the item ends at or before the token, no unit form is next to the token (§3.1), and the item is at a unit place of the value (below). Or the item holds a heading unit (§4.3) that reaches the token, the field check passes, the item ends at or before the token, no unit form is next to the token, and the token's heading currency is the field's unit (spec 0.10). Or the field's unit has no prefix and no suffix in the unit table, so it is at every token (§4.3), and the item holds a currency name of the field's unit or its code (§4.3). The item then repeats the unit (spec 0.11, #423). In each case, the token has no heading conflict (§4.3, spec 0.10, #365). |
 | `field` | The field has `aliases`, the item holds a mention of one of them (matched as key mentions are, §4.5, in the whole text, so a mention inside a longer mention does not count), and the item ends at or before the token. Then one of these holds: no letter (general category L) lies between the item's end and the token (the item is at the **row**); the item is a **label cell** for the token (below); the item is a **row label** for the token (below, spec 0.12); or the item is in the value's sentence with no number token between its end and the token, and the token is not after the end of a label slot that holds the item. |
 | `key` | The item holds a key mention of the candidate's `key` (a mention of the whole text, §4.5). |
@@ -1034,6 +1060,8 @@ these:
    same place, the form is the longest one, also when it starts before the item. The form does
    not count when `per` or `/` stands before it, with only whitespace between. So in
    "tCO2e/US$ million" the form is `US$`, and the `$` inside it does not count.
+4. a code scale (§4.1) whose currency is the field's unit, as in "SEKm" for a value in SEK or
+   "R’000" for a value in ZAR (spec 0.12, #568).
 
 Each scale word also matches with a final `s` (spec 0.11, #423).
 
@@ -1135,8 +1163,8 @@ The scale and the sign of a token are its **parts**. A token is **negative** whe
 has a sign item, or, on a field with a unit, when brackets enclose it in the text, as the sign
 check reads them. The token's **derived values**
 are its value, and its scaled value if it has one. When the candidate has a scale item whose text
-holds a scale word (also with a final `s`) or a currency scale, the item's **scale** is the factor
-of the first of them in that text. A token with no scaled value then has only its value times the
+holds a scale word (also with a final `s`), a currency scale or a code scale (§4.1, spec 0.12), the
+item's **scale** is the factor of the first of them in that text. A token with no scaled value then has only its value times the
 item's scale: the number as written is not a derived value (#242). When the token
 is negative, each of these also has its negative (minus its absolute value). A failing sign or
 scale item still gives its part: the decision then has the item's flag.

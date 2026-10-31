@@ -3217,7 +3217,7 @@ vector(
     "38-ambiguous-tab-unit-source",
     "A unit row with multiple cells in a tab slot cannot supply a unit by column, nor can a "
     "target row with multiple cells in one slot (spec 0.9, #278).",
-    "Top\t$10 20\t30\nCash\t100\t200\n\nTop\t$40\t50\nCash\t300 400\t500",
+    "Top\t$10 20\t30\nCash\t100\t200\n\nTop\t$40\t50\nCash\t300 40\t500",
     {"fields": {"cash": UNIT_CASH}},
     [
         c("u8", "cash", "100", "USD", [q("100"), row("Cash")],
@@ -6019,6 +6019,112 @@ INVALID.append(
         "policy": {"min_read_confidence": 1.5},
     }
 )
+
+# ---------------------------------------------------------------- space groups (spec 0.12, #427)
+NOT_IN = ("rejected", ["VALUE_NOT_IN_EVIDENCE"])
+
+vector(
+    "129-space-groups",
+    "On a line that holds a tab, a number token can group its digits in threes with one space, "
+    "no-break space, thin space or narrow no-break space between the groups, as in "
+    "'36 428 426'. A tab ends the token, so two cells never join. On a line with no tab, two "
+    "spaces, or a group of other than 3 digits, the space ends the token as before. A span that "
+    "starts inside a grouped token reads no value, and a candidate value never uses space "
+    "groups. A number character other than 0 to 9 after the match, and the 000 of a currency "
+    "scale at its start, make no grouped token (spec 0.12, #427).",
+    "Statement of financial position\n\n"
+    "Cost of sales\t36 428 426\t34 805 221\n"
+    "Total assets\t3 087 950\t2 845 032\n"
+    "Total liabilities\t15\u202f734\u202f323\n"
+    "Revenue\t1\u00a0250\n"
+    "Total equity 6 857 593\n"
+    "Inventories\t12 3456\n"
+    "Trade payables\t1  234\n"
+    "Provisions\t1 234\u0968\n"
+    "Other reserves\t\u00a3000 456 789\n",
+    {"fields": {"zar": money("ZAR", "Cost of sales", "Total assets", "Total liabilities",
+                             "Revenue", "Total equity", "Inventories", "Trade payables",
+                             "Provisions", multiple=True),
+                "gbp": money("GBP", "Other reserves", multiple=True)}},
+    [
+        # rejected with VALUE_NOT_IN_EVIDENCE in spec 0.11
+        c("ns1", "zar", "36428426", "ZAR", [q("36 428 426"), row("Cost of sales")]),
+        c("ns2", "zar", "2845032", "ZAR", [q("2 845 032"), row("Total assets")]),
+        c("ns3", "zar", "15734323", "ZAR",
+          [q("15\u202f734\u202f323"), row("Total liabilities")]),
+        c("ns4", "zar", "1250", "ZAR", [q("1\u00a0250"), REV]),
+        # must not change: the line holds no tab
+        c("ns5", "zar", "6857593", "ZAR", [q("6 857 593"), row("Total equity")], NOT_IN),
+        # must not change: a group of 4 digits, and two spaces, end the token
+        c("ns6", "zar", "123456", "ZAR", [q("12 3456"), row("Inventories")], NOT_IN),
+        c("ns7", "zar", "1234", "ZAR", [q("1  234"), row("Trade payables")], NOT_IN),
+        # must not change: the span starts inside the token 36 428 426
+        c("ns8", "zar", "428426", "ZAR", [q("428 426"), row("Cost of sales")], NOT_IN),
+        # a candidate value never uses space groups
+        c("ns9", "zar", "36 428 426", "ZAR", [q("36 428 426"), row("Cost of sales")],
+          ("rejected", ["TYPE_INVALID"])),
+        # must not change: a number character other than 0 to 9 after the match
+        c("ns10", "zar", "1234", "ZAR", [q("1 234"), row("Provisions")], NOT_IN),
+        # the 000 of a currency scale starts no grouped token
+        c("ns11", "gbp", "456789", "GBP", [q("000 456 789"), row("Other reserves")], NOT_IN),
+    ],
+)  # fmt: skip
+
+# ---------------------------------------------------------------- code scales (spec 0.12, #568)
+vector(
+    "130-code-scale",
+    "Scale form 4: a code scale whose currency is the field's unit. A code scale is a code of "
+    "the currency table in capitals, or R for ZAR, directly followed by a scale suffix or by "
+    "'000, as in 'SEKm', 'CHF'000' or 'R\u2019000'. It gives the item its scale. A code scale of "
+    "another currency gives the scale but fails the check. 'MSEK' holds no code scale, and a "
+    "code scale makes no heading scale. A code scale cut from a longer word, as SEKm in MSEKm, "
+    "fails the check (spec 0.12, #568).",
+    "Consolidated income statement\n"
+    "SEKm\tNote\t2025\t2024\n"
+    "Net sales\t3\t46,613\t48,352\n"
+    "Gross income\t\t14,099\t14,299\n\n"
+    "Statement of financial position\tR\u2019000\tR\u2019000\n"
+    "Total assets\t22 591 916\t21 004 117\n"
+    "Inventories\t3,100\t2,950\n\n"
+    "CHF'000\t2025\nRevenue\t5,200\n\n"
+    "MSEK\t2025\nOther income\t7,700\n"
+    "\nMSEKm in thousands\t2025\nOther costs\t5\n",
+    {"fields": {"sek": money("SEK", "Net sales", "Gross income", "Other income",
+                             "Other costs", multiple=True),
+                "chf": money("CHF", "Net sales", "Revenue", multiple=True),
+                "zar": money("ZAR", "Total assets", "Inventories", multiple=True)}},
+    [
+        # rejected with VALUE_NOT_IN_EVIDENCE in spec 0.11
+        c("cs1", "sek", "46613000000", "SEK",
+          [q("46,613"), row("Net sales"), scale_item("SEKm")], DERIVED),
+        c("cs2", "sek", "14099000000", "SEK",
+          [q("14,099"), row("Gross income"), scale_item("SEKm"), unit_item("SEK")], DERIVED),
+        c("cs3", "zar", "22591916000", "ZAR",
+          [q("22 591 916"), row("Total assets"), scale_item("R\u2019000")], DERIVED),
+        c("cs4", "zar", "3100000", "ZAR",
+          [q("3,100"), row("Inventories"), scale_item("R\u2019000")], DERIVED),
+        c("cs5", "chf", "5200000", "CHF", [q("5,200"), REV, scale_item("CHF'000")], DERIVED),
+        # rejected in spec 0.11: SEKm is no form of CHF, and R is a form of ZAR only
+        c("cs6", "chf", "48352000000", "CHF",
+          [q("48,352"), row("Net sales"), scale_item("SEKm")], SCALE_FAILS),
+        c("cs7", "sek", "14299000", "SEK",
+          [q("14,299"), row("Gross income"), scale_item("R\u2019000")], SCALE_FAILS),
+        # must not change: a letter stands before SEK, so MSEK holds no code scale
+        c("cs8", "sek", "7700000000", "SEK",
+          [q("7,700"), row("Other income"), scale_item("MSEK")], NOT_IN),
+        # must not change: SEKm makes no heading scale, so the scale is missing
+        c("cs9", "sek", "48352000000", "SEK", [q("48,352"), row("Net sales")],
+          (REVIEW, ["PART_MISSING"], ["scale"])),
+        # admitted with VALUE_DERIVED before this rule: SEKm cut from MSEKm is no code scale
+        c("cs10", "sek", "5000000", "SEK",
+          [q("5", 9), row("Other costs"), q("SEKm in thousands", role="scale")], SCALE_FAILS),
+        c("cs11", "sek", "5000000", "SEK",
+          [q("5", 9), row("Other costs"), scale_item("SEKm in thousands")], SCALE_FAILS),
+        # must not change: the derivation reads the first scale of the item text, 10^6
+        c("cs12", "sek", "5000", "SEK",
+          [q("5", 9), row("Other costs"), q("SEKm in thousands", role="scale")], NOT_IN),
+    ],
+)  # fmt: skip
 
 
 def main() -> None:

@@ -42,6 +42,7 @@ from .text import (
     brackets_around,
     canonical,
     cells,
+    code_scale_cut,
     currency_name,
     currency_scale,
     first_token_end,
@@ -1183,6 +1184,7 @@ def _roles(
                         or currency_scale(t.text, a, b)
                     )
                     and b <= tok.start
+                    and not code_scale_cut(t.text, a, b)
                     and not scale_between(t.text, b, tok.start, item_scale(t.text, a, b))
                 )
             elif role == "unit":
