@@ -90,6 +90,7 @@ FLAG_ORDER = (  # SPEC §3.3 table order; it is part of every receipt hash
     "KEY_CITATION_INVALID",
     "COLUMN_NOT_AT_VALUE",
     "MARKER_OTHER_FIELD",
+    "READ_DOUBT",
     "EVIDENCE_QUOTED",
     "EVIDENCE_STATED",
     "LOW_CONFIDENCE",
@@ -323,6 +324,8 @@ class _Ctx:
     columns: tuple[str, ...] = ()  # the column words of every field (spec 0.12)
     markers: tuple[str, ...] = ()  # the marker words of every field
     competing: dict[str, tuple[str, ...]] = field(default_factory=dict)  # by field name
+    # the starts and the ends of the doubt spans below min_read_confidence, in text order (#535)
+    doubt: tuple[list[int], list[int]] = field(default_factory=lambda: ([], []))
 
     def any_unit_at(self, t: _Text, tok: Token) -> bool:
         """Whether a form of any unit in the table is next to the token (SPEC §3.1)."""
@@ -665,7 +668,20 @@ def _check(ctx: _Ctx, cand: object) -> _Passed:
     mc = ctx.policy.min_confidence
     if mc is not None and conf is not None and conf < mc:
         p.flags.append("LOW_CONFIDENCE")
+    if ctx.doubt[0] and p.at is not None and p.at.item.source == "document":
+        spans = [_bytes(p.at.t, p.at.span)] + [x.span for x in p.parts if x.passed and x.span]
+        if any(_doubted(ctx.doubt, a, b) for a, b in spans):
+            p.flags.append("READ_DOUBT")
     return p
+
+
+def _doubted(doubt: tuple[list[int], list[int]], a: int, b: int) -> bool:
+    """Whether the byte span [a, b) shares a byte with a span of ``doubt``, the starts and the
+    ends of the counted doubt spans (SPEC §3.3). The spans are in text order with no overlap,
+    so their ends are in order too."""
+    starts, ends = doubt
+    i = bisect.bisect_right(ends, a)  # the first doubt span that ends after a
+    return i < len(starts) and starts[i] < b
 
 
 def _checked(
@@ -1441,6 +1457,29 @@ def _references(raw: object) -> dict[str, tuple[_Text, str | None]]:
     return out
 
 
+def _doubt(raw: object, offsets: Offsets) -> list[dict[str, Any]]:
+    """The packet's doubt list (SPEC §2.1), or PacketError."""
+    if raw is None:
+        return []
+    if isinstance(raw, (str, bytes)) or not isinstance(raw, Sequence):
+        raise PacketError("doubt must be a list")
+    out: list[dict[str, Any]] = []
+    for n, d in enumerate(raw):
+        where = f"doubt {n}"
+        if not isinstance(d, Mapping) or set(d) != {"start", "end", "confidence"}:
+            raise PacketError(f"{where} must be an object with start, end and confidence")
+        span = _span(d)
+        if span is None or _valid(offsets, span) is None:
+            raise PacketError(f"{where} must be a valid span of the document")
+        if out and span[0] < out[-1]["end"]:
+            raise PacketError(f"{where} must start at or after the end of the span before it")
+        c = d["confidence"]
+        if isinstance(c, bool) or not isinstance(c, (int, float)) or not 0 <= c <= 1:
+            raise PacketError(f"{where} confidence must be a number in [0, 1]")
+        out.append({"start": span[0], "end": span[1], "confidence": c})
+    return out
+
+
 def _check_integers(value: object, path: str) -> None:
     """Reject integers without a canonical JSON form before any digest (SPEC §6)."""
     if isinstance(value, int):
@@ -1465,6 +1504,7 @@ def admit(
     references: Sequence[object] | None = None,
     document_source: str | None = None,
     packs: Sequence[object] = (),
+    doubt: Sequence[object] | None = None,
 ) -> Receipt:
     """Decide every candidate and return the receipt.
 
@@ -1476,10 +1516,12 @@ def admit(
     ``judgments`` are recorded answers of a judge (SPEC §2.6); the policy's ``judge`` block says
     which apply. ``references`` are other source texts that the app supplies, and
     ``document_source`` is the URL of the document (SPEC §2.1). ``packs`` are the vocabulary
-    packs that the schema names, as pack objects (SPEC §4.8).
+    packs that the schema names, as pack objects (SPEC §4.8). ``doubt`` is the list of spans that
+    a reader read with a low confidence, as the ``doubt`` member of ``document@1`` (SPEC §2.1).
 
     Raises ``PacketError`` when the text is not NFC, ``candidates`` is not a list, or the schema,
-    policy, judgments, references, document source or packs are invalid. Then no receipt is made.
+    policy, judgments, references, document source, packs or doubt are invalid. Then no receipt
+    is made.
     """
     if not isinstance(text, str) or not is_nfc(text):
         raise PacketError("document text must be a string in Unicode NFC")
@@ -1489,6 +1531,7 @@ def admit(
     _check_integers(document_id, "document_id")
     _check_integers(references, "references")
     _check_integers(judgments, "judgments")
+    _check_integers(doubt, "doubt")
     _check_integers(policy.to_dict() if isinstance(policy, Policy) else policy, "policy")
     if not isinstance(schema, Schema):
         schema = Schema.from_dict(schema, packs)
@@ -1501,9 +1544,12 @@ def admit(
     ):
         raise PacketError("document source must be a non-blank string or null")
     refs = _references(references)
+    spans = _doubt(doubt, Offsets(text))
     by_cand = _judgments(judgments, candidates)
     with using(schema.vocabulary):
-        return _admit(text, schema, candidates, policy, document_id, refs, by_cand, document_source)
+        return _admit(
+            text, schema, candidates, policy, document_id, refs, by_cand, document_source, spans
+        )
 
 
 def _admit(
@@ -1515,6 +1561,7 @@ def _admit(
     refs: dict[str, tuple[_Text, str | None]],
     by_cand: dict[int, dict[str, Any]],
     document_source: str | None,
+    doubt: list[dict[str, Any]],
 ) -> Receipt:
     table = frozenset(x for _, suffixes in schema.units.values() for x in suffixes)
     ctx = _Ctx(
@@ -1528,6 +1575,10 @@ def _admit(
         columns=tuple(dict.fromkeys(c for f in schema.fields.values() for c in f.columns or ())),
         markers=tuple(dict.fromkeys(m for f in schema.fields.values() for m in f.markers or ())),
         competing=_competing(schema),
+        doubt=(
+            [d["start"] for d in doubt if d["confidence"] < policy.min_read_confidence],
+            [d["end"] for d in doubt if d["confidence"] < policy.min_read_confidence],
+        ),
     )
 
     results: list[tuple[str, int, object, _Passed | _Reject]] = []
@@ -1582,6 +1633,7 @@ def _admit(
         ),
         relations if schema.relations else None,
         packs=schema.packs,
+        doubt_sha256=digest("doubt", {"doubt": doubt}) if doubt else None,
     )
     return Receipt(**{**draft.__dict__, "receipt_sha256": digest("receipt", draft.body())})
 
@@ -1853,12 +1905,13 @@ def verify(
     document_source: str | None = None,
     packs: Sequence[object] = (),
     pack_dir: str | os.PathLike[str] | None = None,
+    doubt: Sequence[object] | None = None,
 ) -> Verification:
     """Re-derive the receipt from its inputs and compare it with ``receipt``.
 
     ``receipt`` is the JSON object that ``Receipt.to_dict()`` returned. The other arguments are
     the inputs given to ``admit``, with the same ``judgments``, ``references``,
-    ``document_source`` and ``packs``. The result has ``ok`` and
+    ``document_source``, ``packs`` and ``doubt``. The result has ``ok`` and
     ``problems``: ``(True, ())`` when every byte re-derives. A receipt from another spec version
     gives one problem and no further
     checks. Raises ``PacketError`` when ``receipt`` is not a JSON object or an input is invalid.
@@ -1910,6 +1963,7 @@ def verify(
             references=references,
             document_source=document_source,
             packs=[*packs, *found],
+            doubt=doubt,
         ).to_dict()
     for key in (
         "document",

@@ -480,3 +480,13 @@ def test_cli_report_on_stdout_writes_no_control_character(
     page = capsysbinary.readouterr().out.decode("utf-8")
     assert not re.search("[\x00-\x08\x0b-\x1f\x7f-\x9f]", page)
     assert ">5&#x1b;[2J</mark>&#x7f;\ufffd2J." in page and "\ufffd Tab\tstays" in page
+
+
+def test_report_verifies_a_receipt_with_a_doubt_list() -> None:
+    """``render`` gives the doubt list to ``verify`` (#535)."""
+    start = DOC.encode().index(b"7,000")
+    doubt = [{"start": start, "end": start + 5, "confidence": 0.5}]
+    receipt = gg.admit(DOC, SCHEMA, CANDS[:1], doubt=doubt).to_dict()
+    assert receipt["decisions"][0]["codes"] == ["READ_DOUBT"]
+    assert "receipt verified" in render(receipt, DOC, CANDS[:1], schema=SCHEMA, doubt=doubt)
+    assert "does not match" in render(receipt, DOC, CANDS[:1], schema=SCHEMA)

@@ -67,6 +67,14 @@ A packet may also carry **packs**: the vocabulary packs and kind packs that the 
 (§2.3, §4.8, §4.9), and the vocabulary packs that those kind packs need, as pack objects. Each
 given pack must pass the checks of §4.8 and §4.9, or the packet is invalid.
 
+A packet may also carry **doubt** (spec 0.12, #535): the spans of the document that a reader read
+with a low confidence, as OCR does. It is a list of `{"start": s, "end": e, "confidence": c}`.
+Each entry is a valid span of the document (§2.2), and `c` is a number in [0, 1]. The list is in
+text order with no overlap: each span starts at or after the end of the span before it. The
+default is `[]`. Other keys, or a malformed entry, make the packet invalid. These are the checks
+of the `doubt` member of `document@1`, so an app copies that member as it is. `doubt_sha256` is
+the digest of kind `doubt` over `{"doubt": <list>}`.
+
 ### 2.2 Offsets
 
 A **span** is `{"start": s, "end": e}`: zero-based, half-open **UTF-8 byte** offsets into the
@@ -186,7 +194,8 @@ boolean.
 ### 2.4 Policy
 
 ```json
-{"min_confidence": null, "unit_window": 24, "reanchor": true, "judge": null,
+{"min_confidence": null, "min_read_confidence": 1, "unit_window": 24, "reanchor": true,
+ "judge": null,
  "sources": {"external": {"allow": [], "other": "review"}, "knowledge": "review"}}
 ```
 
@@ -208,6 +217,11 @@ without `://` has no host either, so `"document-domain"` then matches nothing.
 `min_confidence` is null or a number in [0, 1], `unit_window` a non-negative integer, and
 `reanchor` a boolean. Defaults fill in each member of the policy and of `sources` that is absent;
 other keys or values make the packet invalid.
+
+`min_read_confidence` is a number in [0, 1], default `1` (spec 0.12, #535). A doubt span (§2.1)
+counts when its `confidence` is below it. With the default, each doubt span counts, so all
+evidence on a word that a reader doubts goes to review (`READ_DOUBT`, §3.3). An app that sets a
+lower limit owns that choice: groundgate has not measured one.
 
 `judge` is null or names the one judge whose recorded judgments (§2.6) the decision reads, with
 its thresholds:
@@ -457,6 +471,7 @@ rejected by steps 1–11 or on the outside path.
 | `KEY_CITATION_INVALID` | The key item fails its check. |
 | `COLUMN_NOT_AT_VALUE` | The field has `columns`, no column item passes, and no passing field item holds a mention of a column word of the field (§4.6, spec 0.12). Also on a candidate with no field item and no column item. |
 | `MARKER_OTHER_FIELD` | The field has `markers`, a competing word of the field is next to the token, and no marker word of the field is next to it (§4.6, spec 0.12). Also on a candidate with no marker item. |
+| `READ_DOUBT` | The value item, or a role item that passes its check, is in the document and shares at least one byte with a doubt span (§2.1) whose `confidence` is below `policy.min_read_confidence`. The value item counts with its evidence span (§5): the found occurrence of a quote, or the re-anchored span. A role item counts with its span in `parts` (§5). A recorded judgment never removes this flag (spec 0.12, #535). |
 | `EVIDENCE_QUOTED` | On the outside path, the deciding item is external, with the action `review`. |
 | `EVIDENCE_STATED` | On the outside path, the deciding item is knowledge, with the action `review`. |
 | `LOW_CONFIDENCE` | `policy.min_confidence` is set and `confidence` is below it. |
@@ -1329,7 +1344,7 @@ more limit. The packet is also invalid when a kind pack fails one of these check
 
 ```json
 {"groundgate": "0.12",
- "document": {"id": null, "sha256": "sha256:...", "source": null},
+ "document": {"id": null, "sha256": "sha256:...", "source": null, "doubt_sha256": null},
  "references": [],
  "packs": [],
  "schema_sha256": "sha256:...", "policy_sha256": "sha256:...",
@@ -1344,7 +1359,9 @@ more limit. The packet is also invalid when a kind pack fails one of these check
  "receipt_sha256": "sha256:..."}
 ```
 
-`document.source` is the document source, or null. `references` lists each reference as
+`document.source` is the document source, or null. `document.doubt_sha256` is the digest of the
+packet's doubt list (§2.1), or null when the list is empty, so a receipt shows which doubt spans
+its decisions read (spec 0.12, #535). `references` lists each reference as
 `{"id", "sha256", "source"}`, sorted by `id`. `packs` lists each pack that the schema names, and
 each pack that a named kind pack needs, as `{"id", "type", "version", "sha256"}`, sorted by `id`.
 `type` is `vocabulary` or `kind`. It lists a named built-in pack such as `finance`, but never the

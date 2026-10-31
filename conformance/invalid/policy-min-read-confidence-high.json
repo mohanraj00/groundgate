@@ -1,0 +1,20 @@
+{
+ "name": "policy-min-read-confidence-high",
+ "description": "policy.min_read_confidence is a number in [0, 1] (SPEC 2.4, spec 0.12, #535).",
+ "document": "Fee\t$90 é\n",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  }
+ },
+ "policy": {
+  "min_read_confidence": 1.5
+ },
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

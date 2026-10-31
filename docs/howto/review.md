@@ -160,7 +160,7 @@ print(stored["receipt_sha256"][:23])
 
 ```text
 0.12 lease-0417 {'admitted': 1, 'needs_verification': 2, 'rejected': 1}
-sha256:17af6b70a5e0d0db
+sha256:db393f803db82190
 ```
 
 A receipt holds digests of its inputs, not the inputs. To verify it later, you need the same
@@ -285,7 +285,7 @@ print(packet[:23])
 ```
 
 ```text
-sha256:b395110a327802ab
+sha256:a17b933b68f460fc
 ```
 
 The same inputs give the same key. Later, `load_packet` gets each input back, and `verify`

@@ -3,12 +3,13 @@
   "document": {
     "id": "irs-p590a-2025-pages-1-2",
     "sha256": "sha256:9c0bb3f8d04b881c6bafe4bd962101de293cc7629583999500a299e98593c20a",
-    "source": null
+    "source": null,
+    "doubt_sha256": null
   },
   "references": [],
   "packs": [],
   "schema_sha256": "sha256:6ca0f23b502958929ae6ce80a9476b1970a48ce155b2a5d7fa484404fb0e30d8",
-  "policy_sha256": "sha256:ab17a7db3eeff694f5681c5c748863014a1ff0a3b29df4a56f14d7329c7c7e03",
+  "policy_sha256": "sha256:fc4e7173740fc3211dcc0a83b1bd51a0d54a28ac418a8cd1aca30cbaabf1564a",
   "decisions": [
     {
       "candidate_id": "GPT-OSS_120B_Medium/2",
@@ -991,5 +992,5 @@
     "needs_verification": 3,
     "rejected": 1
   },
-  "receipt_sha256": "sha256:71810b8cdf38698bd6888c60f1a3e650b23b4c66e95ed3dbdd128384bfcd8c0b"
+  "receipt_sha256": "sha256:f026ee7a62b1f120c99d8cae61b3d55aeabf6ec7c7242f898da63a1d601008b4"
 }

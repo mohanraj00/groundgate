@@ -1,0 +1,30 @@
+{
+ "name": "doubt-overlap",
+ "description": "A doubt list with two spans that overlap breaks the rule of SPEC 2.1 (spec 0.12, #535).",
+ "document": "Fee\t$90 é\n",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  }
+ },
+ "policy": null,
+ "doubt": [
+  {
+   "start": 0,
+   "end": 5,
+   "confidence": 0.5
+  },
+  {
+   "start": 4,
+   "end": 7,
+   "confidence": 0.5
+  }
+ ],
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

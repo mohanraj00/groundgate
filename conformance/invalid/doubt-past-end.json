@@ -1,0 +1,25 @@
+{
+ "name": "doubt-past-end",
+ "description": "A doubt list with a span past the end of the text breaks the rule of SPEC 2.1 (spec 0.12, #535).",
+ "document": "Fee\t$90 é\n",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  }
+ },
+ "policy": null,
+ "doubt": [
+  {
+   "start": 4,
+   "end": 99,
+   "confidence": 0.5
+  }
+ ],
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

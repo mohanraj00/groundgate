@@ -1,0 +1,151 @@
+{
+ "name": "132-read-doubt-limit",
+ "description": "policy.min_read_confidence sets the limit: a doubt span flags READ_DOUBT only when its confidence is below the limit. With 0.4, the spans of 0.42 and 0.6 flag nothing, and the span of 0.3 still flags (spec 0.12, #535).",
+ "document": "Scanned invoice\n\nTotal due\t$1,250\nTax\t$80\nShipping\t$45\nDiscount\t$15\nFee\t$90\n",
+ "schema": {
+  "fields": {
+   "total": {
+    "type": "number",
+    "unit": "USD",
+    "multiple": false,
+    "aliases": [
+     "Total due"
+    ]
+   },
+   "tax": {
+    "type": "number",
+    "unit": "USD",
+    "multiple": false,
+    "aliases": [
+     "Tax"
+    ]
+   },
+   "ship": {
+    "type": "number",
+    "unit": "USD",
+    "multiple": false,
+    "aliases": [
+     "Shipping"
+    ]
+   },
+   "disc": {
+    "type": "number",
+    "unit": "USD",
+    "multiple": false,
+    "aliases": [
+     "Discount"
+    ]
+   },
+   "fee": {
+    "type": "number",
+    "unit": "USD",
+    "multiple": false,
+    "aliases": [
+     "Fee"
+    ]
+   }
+  }
+ },
+ "policy": {
+  "min_read_confidence": 0.4
+ },
+ "doubt": [
+  {
+   "confidence": 0.42,
+   "start": 28,
+   "end": 33
+  },
+  {
+   "confidence": 0.3,
+   "start": 34,
+   "end": 37
+  },
+  {
+   "confidence": 0.5,
+   "start": 50,
+   "end": 51
+  },
+  {
+   "confidence": 0.6,
+   "start": 65,
+   "end": 67
+  },
+  {
+   "confidence": 0.2,
+   "start": 68,
+   "end": 71
+  }
+ ],
+ "candidates": [
+  {
+   "id": "rl1",
+   "field": "total",
+   "value": "1250",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 27,
+     "end": 33,
+     "text": "$1,250"
+    },
+    {
+     "role": "field",
+     "text": "Total due"
+    }
+   ]
+  },
+  {
+   "id": "rl2",
+   "field": "tax",
+   "value": "80",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 38,
+     "end": 41,
+     "text": "$80"
+    },
+    {
+     "role": "field",
+     "text": "Tax"
+    }
+   ]
+  },
+  {
+   "id": "rl3",
+   "field": "disc",
+   "value": "15",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 64,
+     "end": 67,
+     "text": "$15"
+    },
+    {
+     "role": "field",
+     "text": "Discount"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "READ_DOUBT"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

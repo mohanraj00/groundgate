@@ -57,6 +57,12 @@ def test_accepts_schema_and_policy_objects() -> None:
     assert a == b
 
 
+def test_policy_keeps_its_positional_order() -> None:
+    """A new policy member comes last, so a positional call keeps its meaning (#535)."""
+    p = gg.Policy(None, 0, False)
+    assert (p.unit_window, p.reanchor, p.min_read_confidence) == (0, False, 1)
+
+
 def test_verify_detects_tampering() -> None:
     r = gg.admit(DOC, SCHEMA, CANDS).to_dict()
     assert gg.verify(r, DOC, SCHEMA, CANDS).ok
@@ -328,8 +334,9 @@ def test_flag_order_and_code_descriptions_are_pinned() -> None:
         "NON_VERBATIM_EVIDENCE", "QUALIFIED_VALUE", "SCALE_WORD", "PART_MISSING",
         "SIGN_CITATION_INVALID", "SCALE_CITATION_INVALID", "UNIT_CITATION_INVALID",
         "FIELD_CITATION_INVALID", "KEY_NOT_AT_VALUE", "KEY_CITATION_INVALID",
-        "COLUMN_NOT_AT_VALUE", "MARKER_OTHER_FIELD", "EVIDENCE_QUOTED", "EVIDENCE_STATED",
-        "LOW_CONFIDENCE", "CONFLICTING_CANDIDATES", "RELATION_FAILED", "MODEL_DOUBT",
+        "COLUMN_NOT_AT_VALUE", "MARKER_OTHER_FIELD", "READ_DOUBT", "EVIDENCE_QUOTED",
+        "EVIDENCE_STATED", "LOW_CONFIDENCE", "CONFLICTING_CANDIDATES", "RELATION_FAILED",
+        "MODEL_DOUBT",
     )  # fmt: skip
     assert tuple(codes.FLAG) == FLAG_ORDER
     assert tuple(codes.INFO) == INFO_ORDER
@@ -574,6 +581,96 @@ def test_receipt_lists_references_and_the_document_source() -> None:
                      document_source="https://example.org/doc").ok  # fmt: skip
     # another document source changes the receipt
     assert not gg.verify(body, DOC, FEE_SCHEMA, [cand], references=refs).ok
+
+
+def test_read_doubt_binds_the_receipt_and_reads_only_the_document() -> None:
+    """The receipt names the doubt list, and a doubt span flags only a document item (#535)."""
+    doubt = [{**{k: v for k, v in ev("7,000").items() if k != "text"}, "confidence": 0.5}]
+    body = gg.admit(DOC, SCHEMA, CANDS[:1], doubt=doubt).to_dict()
+    assert body["document"]["doubt_sha256"] == gg.digest("doubt", {"doubt": doubt})
+    assert body["decisions"][0]["codes"] == ["READ_DOUBT"]
+    assert gg.verify(body, DOC, SCHEMA, CANDS[:1], doubt=doubt).ok
+    assert not gg.verify(body, DOC, SCHEMA, CANDS[:1]).ok  # the receipt names its doubt list
+    assert gg.admit(DOC, SCHEMA, CANDS[:1], doubt=[]).to_dict()["document"]["doubt_sha256"] is None
+    # a value in a reference at the same byte offsets is not on a doubt span of the document
+    refs = [{"id": "r", "text": DOC}]
+    cand = {"field": "limit", "value": "7000", "unit": "USD",
+            "evidence": [{"source": "reference", "ref": "r", **ev("$7,000")}]}  # fmt: skip
+    r = gg.admit(DOC, SCHEMA, [cand], references=refs, doubt=doubt).to_dict()
+    assert (r["decisions"][0]["outcome"], r["decisions"][0]["codes"]) == ("admitted", [])
+    # a limit at or below the confidence counts no span
+    r = gg.admit(DOC, SCHEMA, CANDS[:1], {"min_read_confidence": 0.5}, doubt=doubt).to_dict()
+    assert r["decisions"][0]["codes"] == []
+
+
+def test_read_doubt_reads_the_reanchored_span() -> None:
+    """A re-anchored value counts with its new span, not with the offsets as given (#535)."""
+    cand = {"field": "limit", "value": "7000", "unit": "USD",
+            "evidence": {"start": 0, "end": 6, "text": "$7,000"}}  # fmt: skip
+    at_quote = [{**{k: v for k, v in ev("7,000").items() if k != "text"}, "confidence": 0.5}]
+    at_given = [{"start": 0, "end": 3, "confidence": 0.5}]
+    d = gg.admit(DOC, SCHEMA, [cand], doubt=at_quote).to_dict()["decisions"][0]
+    assert d["codes"] == ["READ_DOUBT", "EVIDENCE_REANCHORED"]
+    d = gg.admit(DOC, SCHEMA, [cand], doubt=at_given).to_dict()["decisions"][0]
+    assert d["codes"] == ["EVIDENCE_REANCHORED"]
+
+
+def test_doubted_finds_each_overlap() -> None:
+    """The search on the doubt spans gives the answer of a scan of every span (#535)."""
+    from groundgate.admit import _doubted
+
+    rng = random.Random(535)
+    for _ in range(200):
+        cuts = sorted(rng.sample(range(60), 2 * rng.randint(0, 8)))
+        spans = list(zip(cuts[::2], cuts[1::2], strict=True))
+        doubt = ([s for s, _ in spans], [e for _, e in spans])
+        a = rng.randrange(60)
+        b = rng.randrange(a + 1, 61)
+        assert _doubted(doubt, a, b) == any(a < e and s < b for s, e in spans), (spans, a, b)
+
+
+def test_doubted_stays_fast_with_many_spans() -> None:
+    """One look-up per cited span, not a scan of the list (#535): four times the candidates and
+    the spans take less than eight times as long."""
+    from groundgate.admit import _doubted
+
+    def prepare(n: int) -> Callable[[], object]:
+        doubt = ([4 * i for i in range(n)], [4 * i + 2 for i in range(n)])
+        return lambda: [_doubted(doubt, 4 * i + 2, 4 * i + 4) for i in range(n)]
+
+    assert_linear(prepare, 2000, 8000)
+
+
+def test_read_doubt_ignores_a_role_item_that_fails() -> None:
+    """A role item that fails its check flags its own code, not READ_DOUBT (#535)."""
+    cand = {"field": "limit", "value": "7000", "unit": "USD",
+            "evidence": [ev("$7,000"), {"role": "sign", **ev("contribution")}]}  # fmt: skip
+    doubt = [{**{k: v for k, v in ev("contribution").items() if k != "text"}, "confidence": 0}]
+    d = gg.admit(DOC, SCHEMA, [cand], doubt=doubt).to_dict()["decisions"][0]
+    assert d["codes"] == ["SIGN_CITATION_INVALID"]
+
+
+@pytest.mark.parametrize(
+    "doubt",
+    [
+        {"start": 0, "end": 3, "confidence": 0.5},
+        "doubt",
+        [{"start": 0, "end": 3}],
+        [{"start": 0, "end": 3, "confidence": True}],
+        [{"start": 0, "end": 3, "confidence": -0.1}],
+        [{"start": 3, "end": 0, "confidence": 0.5}],
+        [{"start": 0, "end": 2**60, "confidence": 0.5}],
+    ],
+)
+def test_an_invalid_doubt_list_makes_the_packet_invalid(doubt: object) -> None:
+    with pytest.raises(gg.PacketError):
+        gg.admit(DOC, SCHEMA, CANDS, doubt=doubt)  # type: ignore[arg-type]
+
+
+@pytest.mark.parametrize("value", [None, True, -0.1, "0.5"])
+def test_min_read_confidence_is_a_number_in_0_1(value: object) -> None:
+    with pytest.raises(gg.PacketError):
+        gg.Policy.from_dict({"min_read_confidence": value})
 
 
 def test_a_rejected_outside_candidate_reports_its_deciding_item() -> None:

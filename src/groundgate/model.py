@@ -538,12 +538,20 @@ class Policy:
     reanchor: bool = True
     judge: JudgePolicy | None = None
     sources: Sources = Sources()
+    min_read_confidence: float = 1  # last, so the order of the other members stays (#535)
 
     @classmethod
     def from_dict(cls, d: object) -> Policy:
         if not isinstance(d, dict):
             raise PacketError("policy must be an object")
-        unknown = set(d) - {"min_confidence", "unit_window", "reanchor", "judge", "sources"}
+        unknown = set(d) - {
+            "min_confidence",
+            "min_read_confidence",
+            "unit_window",
+            "reanchor",
+            "judge",
+            "sources",
+        }
         if unknown:
             raise PacketError(f"policy has unknown keys {sorted(unknown)}")
         mc = d.get("min_confidence")
@@ -551,6 +559,9 @@ class Policy:
             isinstance(mc, bool) or not isinstance(mc, (int, float)) or not 0 <= mc <= 1
         ):
             raise PacketError("policy min_confidence must be a number in [0, 1] or null")
+        mr = d.get("min_read_confidence", 1)
+        if not _probability(mr):
+            raise PacketError("policy min_read_confidence must be a number in [0, 1]")
         uw = d.get("unit_window", 24)
         if isinstance(uw, bool) or not isinstance(uw, int) or uw < 0:
             raise PacketError("policy unit_window must be a non-negative integer")
@@ -560,11 +571,19 @@ class Policy:
         judge = d.get("judge")
         jp = None if judge is None else JudgePolicy.from_dict(judge)
         sources = Sources.from_dict(d.get("sources", {}))
-        return cls(min_confidence=mc, unit_window=uw, reanchor=ra, judge=jp, sources=sources)
+        return cls(
+            min_confidence=mc,
+            min_read_confidence=mr,
+            unit_window=uw,
+            reanchor=ra,
+            judge=jp,
+            sources=sources,
+        )
 
     def to_dict(self) -> dict[str, Any]:
         return {
             "min_confidence": self.min_confidence,
+            "min_read_confidence": self.min_read_confidence,
             "unit_window": self.unit_window,
             "reanchor": self.reanchor,
             "judge": None if self.judge is None else self.judge.to_dict(),
@@ -705,6 +724,7 @@ class Receipt:
     references: tuple[tuple[str, str, str | None], ...] = ()  # (id, sha256, source)
     relations: tuple[RelationResult, ...] | None = None  # None when the schema has no relations
     packs: tuple[dict[str, str], ...] = ()  # the packs that applied, sorted by id (SPEC §5)
+    doubt_sha256: str | None = None  # None when the packet has no doubt span (SPEC §5)
 
     def body(self) -> dict[str, Any]:
         counts = {"admitted": 0, "needs_verification": 0, "rejected": 0}
@@ -716,6 +736,7 @@ class Receipt:
                 "id": self.document_id,
                 "sha256": self.document_sha256,
                 "source": self.document_source,
+                "doubt_sha256": self.doubt_sha256,
             },
             "references": [{"id": i, "sha256": h, "source": s} for i, h, s in self.references],
             "packs": [dict(p) for p in self.packs],

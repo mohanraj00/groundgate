@@ -947,17 +947,19 @@ class DiagnosticSession:
         )
         checksum = receipt.pop("receipt_sha256", None)
         spec = version["spec_version"]
+        document = {
+            "id": packet["document_id"],
+            "source": packet["document_source"],
+            "sha256": core_digest(spec, "document", {"text": packet["text"]}),
+        }
+        if isinstance(receipt.get("document"), dict) and "doubt_sha256" in receipt["document"]:
+            document["doubt_sha256"] = None  # a worker packet has no doubt list (SPEC §5, #535)
         if (
             checksum != core_digest(spec, "receipt", receipt)
             or receipt.get("groundgate") != spec
             or receipt.get("schema_sha256") != core_digest(spec, "schema", schema)
             or receipt.get("policy_sha256") != core_digest(spec, "policy", policy)
-            or receipt.get("document")
-            != {
-                "id": packet["document_id"],
-                "source": packet["document_source"],
-                "sha256": core_digest(spec, "document", {"text": packet["text"]}),
-            }
+            or receipt.get("document") != document
         ):
             raise DiagnosticError("worker receipt binding differs")
         references = [
