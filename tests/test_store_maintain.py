@@ -219,8 +219,8 @@ def test_rebuild_gives_the_same_view_bytes(
     view = root / "views" / "readings.json"
     first = view.read_bytes()
     found = json.loads(first)
-    source = json.loads(store.get("reading@1", reading))["source"]
-    reader = json.loads(store.get("reading@1", reading))["reader"]
+    source = json.loads(store.get("reading@2", reading))["source"]
+    reader = json.loads(store.get("reading@2", reading))["reader"]
     assert found == {
         "format": "reading-cache@1",
         "readings": sorted(
@@ -257,7 +257,7 @@ def test_rebuild_gives_the_same_view_bytes(
         ]
     assert view.read_bytes() == first
     with FolderStore(root) as store:
-        store.forget(json.loads(store.get("reading@1", again))["text"], "test")
+        store.forget(json.loads(store.get("reading@2", again))["text"], "test")
         rebuild(store)
     assert json.loads(view.read_bytes())["readings"] == []  # both readings share the text
 
@@ -293,7 +293,7 @@ def test_forget_removes_the_document_data(
     )
     assert {kind for kind in after.values()} == {
         "packet@1",
-        "reading@1",
+        "reading@2",
         "receipt@1",
         "schema@1",
         "policy@1",
@@ -329,7 +329,7 @@ def test_forget_removes_the_document_model_of_a_reading(
     doc.write_text(TEXT, encoding="utf-8")
     with FolderStore(root, clock=clock) as store:
         reading, _ = put_reading(store, doc, document=True)
-        model = json.loads(store.get("reading@1", reading))["document"]
+        model = json.loads(store.get("reading@2", reading))["document"]
         admitted, _ = admit_packet(store, TEXT, SCHEMA, candidates(), reading=reading)
     assert all_keys(root)[model] == "document@1"
     assert main(["store", "check", "--store", str(root)]) == 0
@@ -337,7 +337,7 @@ def test_forget_removes_the_document_model_of_a_reading(
     assert main(["store", "forget", "--store", str(root), admitted, "--reason", "asked"]) == 0
     assert f"deleted document@1 {model}" in capsys.readouterr().out
     after = all_keys(root)
-    assert model not in after and "reading@1" in after.values()
+    assert model not in after and "reading@2" in after.values()
     assert main(["store", "check", "--store", str(root)]) == 0
     assert f"input deleted: document@1 {model}" in capsys.readouterr().out
 

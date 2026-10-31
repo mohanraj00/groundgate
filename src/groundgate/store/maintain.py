@@ -23,7 +23,7 @@ from typing import Any
 
 from ..canonical import SPEC_VERSION, digest, jcs
 from . import KEY, FolderStore, NotFound, StoreError, Torn, _canonical, check_bytes, key
-from .packets import _PACKET, _READING, printable
+from .packets import _PACKET, _READING, _READING2, READINGS, printable
 
 __all__ = ["Report", "check", "forget_packet", "rebuild"]
 
@@ -31,6 +31,7 @@ __all__ = ["Report", "check", "forget_packet", "rebuild"]
 KINDS = (
     "packet@1",
     "reading@1",
+    "reading@2",
     "receipt@1",
     "schema@1",
     "policy@1",
@@ -289,10 +290,18 @@ def _packet(objects: _Objects, k: str) -> dict[str, Any]:
 
 
 def _reading(objects: _Objects, k: str) -> dict[str, Any]:
-    obj = objects.json("reading@1", k)
-    if not isinstance(obj, dict) or sorted(obj) != list(_READING) or obj["format"] != "reading@1":
-        raise StoreError(f"the reading@1 object {k} does not have the members of reading@1")
+    kind = "reading@2" if objects.kinds.get(k) == "reading@2" else "reading@1"
+    names = _READING2 if kind == "reading@2" else _READING
+    obj = objects.json(kind, k)
+    if not isinstance(obj, dict) or sorted(obj) != list(names) or obj["format"] != kind:
+        raise StoreError(f"the {kind} object {k} does not have the members of {kind}")
     return obj
+
+
+def _reading_kind(objects: _Objects, k: str) -> str:
+    """The kind of the reading ``k``, or ``reading@N`` if it is not a reading."""
+    found = objects.kinds.get(k)
+    return found if found in READINGS else "reading@N"
 
 
 def _keys(value: Any) -> list[str]:
@@ -502,7 +511,7 @@ def check(store: FolderStore, *, repair: bool = False) -> Report:
         elif found != kind:
             report.find(f"{owner} names the {kind} object {k}, but {_rel(k)} is not one")
 
-    readings = set(objects.of("reading@1"))
+    readings = {k for kind in READINGS for k in objects.of(kind)}
     for k in list(objects.of("packet@1")):
         owner = f"the packet {k}"
         try:
@@ -510,7 +519,7 @@ def check(store: FolderStore, *, repair: bool = False) -> Report:
             for kind, n in _named(packet):
                 named(owner, kind, n)
             for n in _keys(packet["reading"]):
-                named(owner, "reading@1", n)
+                named(owner, _reading_kind(objects, n), n)
                 readings.add(n)
             runs = _keys(packet["run"])
         except StoreError as exc:
@@ -537,7 +546,7 @@ def check(store: FolderStore, *, repair: bool = False) -> Report:
             except (StoreError, ValueError, RecursionError) as exc:  # a key, but not a format
                 report.find(f"{owner}: {exc}")
     for k in sorted(readings):
-        if objects.kinds.get(k) != "reading@1":
+        if objects.kinds.get(k) not in READINGS:
             continue
         try:
             for kind, n in _reading_named(objects, k):
@@ -609,7 +618,7 @@ def _reading_cache(objects: _Objects) -> bytes:
     """The reading cache (§5.1): for each source, reader and options, the readings. A reading
     whose text or layout is not in the store is not in the cache."""
     entries: dict[str, dict[str, Any]] = {}
-    for k in objects.of("reading@1"):
+    for k in (k for kind in READINGS for k in objects.of(kind)):
         try:
             reading = _reading(objects, k)
             parts = _reading_named(objects, k)
@@ -661,7 +670,7 @@ def _packet_names(objects: _Objects, k: str) -> set[str] | None:
         return None
     for n in readings:
         named.add(n)
-        if objects.kinds.get(n) == "reading@1":
+        if objects.kinds.get(n) in READINGS:
             with suppress(StoreError, ValueError, RecursionError):  # check reports it
                 named.update(m for _, m in _reading_named(objects, n))
     for n in runs:
@@ -1093,12 +1102,12 @@ def forget_packet(
             unchecked += [(kind or "object", n) for n, kind in objects.unread()]
     plan += [(kind, k, False) for kind, k in named]
     for k in _keys(obj["reading"]):
-        plan.append(("reading@1", k, False))
-        if objects.kinds.get(k) == "reading@1":
+        plan.append((_reading_kind(objects, k), k, False))
+        if objects.kinds.get(k) in READINGS:
             try:
                 plan += [(kind, n, False) for kind, n in _reading_named(objects, k)]
             except StoreError:
-                unchecked.append(("reading@1", k))
+                unchecked.append((_reading_kind(objects, k), k))
     corrections: frozenset[str] = frozenset()
     shared_corrections: dict[str, int] = {}
     unread_review: list[tuple[str, str]] = []
