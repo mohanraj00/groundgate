@@ -534,11 +534,11 @@ class Sources:
 @dataclass(frozen=True)
 class Policy:
     min_confidence: float | None = None
-    min_read_confidence: float = 1  # a doubt span below it counts (SPEC §2.4, #535)
     unit_window: int = 24
     reanchor: bool = True
     judge: JudgePolicy | None = None
     sources: Sources = Sources()
+    min_read_confidence: float = 1  # last, so the order of the other members stays (#535)
 
     @classmethod
     def from_dict(cls, d: object) -> Policy:

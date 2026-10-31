@@ -57,6 +57,12 @@ def test_accepts_schema_and_policy_objects() -> None:
     assert a == b
 
 
+def test_policy_keeps_its_positional_order() -> None:
+    """A new policy member comes last, so a positional call keeps its meaning (#535)."""
+    p = gg.Policy(None, 0, False)
+    assert (p.unit_window, p.reanchor, p.min_read_confidence) == (0, False, 1)
+
+
 def test_verify_detects_tampering() -> None:
     r = gg.admit(DOC, SCHEMA, CANDS).to_dict()
     assert gg.verify(r, DOC, SCHEMA, CANDS).ok
