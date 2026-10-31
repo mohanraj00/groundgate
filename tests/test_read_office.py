@@ -673,6 +673,29 @@ def test_docx_properties_before_a_change_are_not_used(tmp_path: Path) -> None:
     assert text == "5 mg\n\ndaily"
 
 
+def test_docx_text_box_keeps_the_outer_run(tmp_path: Path) -> None:
+    def run(props: str, box: str) -> str:
+        return (
+            f"<w:r><w:rPr>{props}</w:rPr><w:t>A </w:t><w:pict><w:txbxContent>{box}"
+            "</w:txbxContent></w:pict><w:t>B</w:t></w:r>"
+        )
+
+    hidden_box = "<w:p><w:r><w:rPr><w:vanish/></w:rPr><w:t>C</w:t></w:r></w:p>"
+    body = f"<w:p>{run('<w:vanish/>', _p('box'))}</w:p><w:p>{run('', hidden_box)}</w:p>"
+    text, _ = _nodes(_write(tmp_path, "r.docx", docx(body)))
+    assert text == "box\n\nA\nB"
+
+
+def test_xlsx_rows_hidden_by_default(tmp_path: Path) -> None:
+    sheet = (
+        '<sheetFormatPr defaultRowHeight="15" zeroHeight="1"/><sheetData>'
+        '<row r="1"><c r="A1"><v>500</v></c></row>'
+        '<row r="2" hidden="0"><c r="A2"><v>5</v></c></row></sheetData>'
+    )
+    text, _ = _nodes(_write(tmp_path, "z.xlsx", xlsx([("S", "visible", sheet)])))
+    assert text == "S\n\n5"
+
+
 def test_xlsx_string_escapes(tmp_path: Path) -> None:
     inline = "<is><t>500_x000D_600 mg _x005F_x000D_ _xD800_</t></is>"
     sheet = f'<sheetData><row r="1"><c r="A1" t="inlineStr">{inline}</c></row></sheetData>'

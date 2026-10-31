@@ -388,6 +388,7 @@ class _Docx:
         self.cells: list[int] = []
         self.deleted: list[bool] = []  # for each open cell: a deleted cell of tracked changes
         self.inner_styles: list[str | None] = []  # the style of each open text box paragraph
+        self.runs: list[tuple[Any, ...]] = []  # the properties of the runs around a text box run
         self.in_text = False
         self.vanish: bool | None = None  # the direct ``vanish`` of the open run
         self.run_style: str | None = None
@@ -408,6 +409,10 @@ class _Docx:
             return
         if tag == "mc:AlternateContent":
             self.choices.append(False)
+        if tag == "w:r":
+            self.runs.append((self.vanish, self.run_style, self.align, self.script, self.scripted))
+            self.vanish, self.run_style, self.align = None, None, None
+            self.script, self.scripted = None, False
         if tag in ("w:p", "w:tbl") and self.para is None and self.deleted and self.deleted[-1]:
             self.skip = 1  # the content of a deleted cell gives no text
             return
@@ -506,10 +511,7 @@ class _Docx:
         elif tag == "w:numId" and parent == "w:numPr":
             self.para["list"] = attrs.get("val", "0") != "0"  # numId 0 removes the style's list
             return
-        if tag == "w:r":
-            self.vanish, self.run_style, self.align = None, None, None
-            self.script, self.scripted = None, False
-        elif tag == "w:rStyle" and parent == "w:rPr" and self.stack[-3:-2] == ["w:r"]:
+        if tag == "w:rStyle" and parent == "w:rPr" and self.stack[-3:-2] == ["w:r"]:
             self.run_style = attrs.get("val")
         elif tag == "w:vanish" and parent == "w:rPr" and self.stack[-3:-2] == ["w:r"]:
             self.vanish = attrs.get("val", "true").lower() not in OFF
@@ -568,9 +570,12 @@ class _Docx:
             self.in_text = False
         elif tag == "mc:AlternateContent" and self.choices:
             self.choices.pop()
-        elif tag == "w:r" and self.scripted and self.script:
-            self.w.end(self.script)
-            self.scripted = False
+        elif tag == "w:r":
+            if self.scripted and self.script:
+                self.w.end(self.script)
+            if self.runs:
+                saved = self.runs.pop()
+                self.vanish, self.run_style, self.align, self.script, self.scripted = saved
         elif tag in ("w:p", "w:tbl") and self.inner:
             self.inner -= 1
             if tag == "w:p" and self.inner_styles:
@@ -738,6 +743,7 @@ class _Sheet:
         self.stack: list[str] = []
         self.row = -1
         self.row_hidden = False
+        self.rows_hidden = False  # ``zeroHeight``: a row without ``hidden`` is hidden
         self.column = -1
         self.cell: dict[str, Any] | None = None
 
@@ -751,13 +757,16 @@ class _Sheet:
             self.row = (
                 int(r) - 1 if r.isascii() and r.isdigit() and 0 < int(r) <= 2**20 else self.row + 1
             )
-            self.row_hidden = attrs.get("hidden", "0").lower() not in OFF
+            hidden = attrs.get("hidden")
+            self.row_hidden = self.rows_hidden if hidden is None else hidden.lower() not in OFF
             self.column = -1
         elif tag == "x:c":
             place = _cell_place(attrs.get("r"))
             row, column = place if place else (max(self.row, 0), self.column + 1)
             self.row, self.column = row, column
             self.cell = {"type": attrs.get("t", "n"), "rich": _Rich()}
+        elif tag == "x:sheetFormatPr":
+            self.rows_hidden = attrs.get("zeroHeight", "0").lower() not in OFF
         elif tag == "x:col" and attrs.get("hidden", "0").lower() not in OFF:
             low, high = attrs.get("min", ""), attrs.get("max", "")
             if low.isascii() and low.isdigit() and high.isascii() and high.isdigit():
