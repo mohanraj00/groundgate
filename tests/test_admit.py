@@ -805,7 +805,8 @@ def test_field_occurrences_stay_linear(layout: str) -> None:
     }
 
     def prepare(copies: int) -> Callable[[], None]:
-        text = layout.format(" ".join(["160"] * copies))
+        # copies split by a space on a line with a tab would make one space-grouped token
+        text = layout.format(("\t" if "\t" in layout else " ").join(["160"] * copies))
 
         def run() -> None:
             r = gg.admit(text, schema, [cand])
