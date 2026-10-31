@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import bisect
 import contextlib
+import functools
 import itertools
 import re
 import unicodedata
@@ -22,6 +23,9 @@ _TOKEN = re.compile(r"[-\u2212]?[0-9][0-9,]*(?:\.[0-9]+)?")
 _VALID = re.compile(
     r"^[-\u2212]?(?:[0-9]{1,3}(?:,[0-9]{3})+|[0-9]{1,2}(?:,[0-9]{2})*,[0-9]{3}|[0-9]+)(?:\.[0-9]+)?$"
 )
+# a token grouped in threes with group spaces, on a line that holds a tab (SPEC §4.1, #427)
+_GROUP_SPACES = " \u00a0\u2009\u202f"
+_GROUPED = re.compile(r"[-\u2212]?[0-9]{1,3}(?:[ \u00a0\u2009\u202f][0-9]{3})+(?:\.[0-9]+)?")
 _SENTENCE_END = re.compile(r"\.\s|;\s|•|\n[ \t\r]*\n")
 _BLANK_LINE = re.compile(r"\n[ \t\r]*\n")
 _WS_RUN = re.compile(r"\s*")
@@ -85,12 +89,23 @@ def first_token_end(text: str, start: int) -> int | None:
 
 
 def _tokens(text: str, start: int, end: int) -> Iterator[Token]:
+    skip = start  # the end of the last space-grouped token: the tokens inside it are not read
     for m in _TOKEN.finditer(text, start, end):
         s, tok = m.start(), m.group()
+        if s < skip:
+            continue
         if tok[0] in "-\u2212" and s > 0 and _letter_or_number(text[s - 1]):
             s, tok = s + 1, tok[1:]
         if s > 0 and (_letter_or_number(text[s - 1]) or text[s - 1] in ".,"):
             continue
+        if _next_to_group_space(text, s, m.end()):
+            grouped = _grouped_at(text, s)
+            if grouped is not None:
+                # a span that starts or ends inside a space-grouped token reads no part of it
+                if grouped.start == s and grouped.end <= end:
+                    yield grouped
+                skip = grouped.end
+                continue
         if _other_digits_follow(text, m.end()):
             continue
         if tok.endswith(","):
@@ -104,9 +119,68 @@ def _tokens(text: str, start: int, end: int) -> Iterator[Token]:
         yield Token(s, e, _to_decimal(tok))
 
 
-def _scale_zeros(text: str, s: int) -> bool:
+def _digit(text: str, i: int) -> bool:
+    return 0 <= i < len(text) and "0" <= text[i] <= "9"
+
+
+def _next_to_group_space(text: str, s: int, e: int) -> bool:
+    """Whether a group space and a digit stand directly before ``s`` or directly after ``e``."""
+    before = s >= 2 and text[s - 1] in _GROUP_SPACES and _digit(text, s - 2)
+    return before or (e < len(text) and text[e] in _GROUP_SPACES and _digit(text, e + 1))
+
+
+def _grouped_at(text: str, s: int) -> Token | None:
+    """The space-grouped token that holds ``s``, or None."""
+    starts, found = _grouped(text, _VOCAB.get())
+    i = bisect.bisect_right(starts, s) - 1
+    return found[i] if i >= 0 and s < found[i].end else None
+
+
+@functools.lru_cache(maxsize=64)
+def _grouped(text: str, voc: Vocabulary) -> tuple[list[int], list[Token]]:
+    """The space-grouped tokens of the text, on its lines that hold a tab (SPEC §4.1, #427), and
+    their starts. The text is read once, so many tokens on one line stay linear. The currency
+    signs of ``voc`` make the 000 of a currency scale."""
+    found: list[Token] = []
+    ls = 0
+    while ls <= len(text):
+        le = text.find("\n", ls)
+        le = len(text) if le < 0 else le
+        line, ls = (ls, le), le + 1
+        if text.find("\t", *line) < 0:
+            continue
+        for m in _TOKEN.finditer(text, *line):
+            s = m.start()
+            if found and s < found[-1].end:
+                continue
+            if text[s] in "-\u2212" and s > 0 and _letter_or_number(text[s - 1]):
+                s += 1
+            if s > 0 and (_letter_or_number(text[s - 1]) or text[s - 1] in ".,"):
+                continue
+            if s >= 2 and text[s - 1] in _GROUP_SPACES and _digit(text, s - 2):
+                continue  # a match never starts inside a longer one
+            g = _GROUPED.match(text, s)
+            if g is None:
+                continue
+            e = g.end()
+            if (
+                _digit(text, e)
+                or (e < len(text) and text[e] in _GROUP_SPACES + ",." and _digit(text, e + 1))
+                or _other_digits_follow(text, e)
+            ):
+                continue
+            if text.startswith("000", s) and _scale_zeros(text, s, voc):
+                continue  # the 000 of a currency scale, as in "£000", starts no token
+            digits = g.group().replace("\u2212", "-")
+            for space in _GROUP_SPACES:
+                digits = digits.replace(space, "")
+            found.append(Token(s, e, Decimal(digits)))
+    return [t.start for t in found], found
+
+
+def _scale_zeros(text: str, s: int, voc: Vocabulary | None = None) -> bool:
     """Whether the 000 at ``s`` is the 000 of a currency scale (SPEC §4.1, #313)."""
-    voc = _VOCAB.get()
+    voc = voc or _VOCAB.get()
     sign = s - 1
     if sign > 0 and text[sign] in "'\u2019":
         sign -= 1
@@ -1126,8 +1200,12 @@ def scale_form(text: str, start: int, end: int, unit: str | None, forms: list[st
     """Whether text[start:end] holds a scale form for a field whose unit is ``unit``, with these
     prefixes and suffixes in the unit table (SPEC §4.6, spec 0.11, #423): "in", an optional
     currency form and a scale word; a scale word, "of" and a currency name or the code; or a
-    currency form and a scale word with no "per" or "/" before the form."""
+    currency form and a scale word with no "per" or "/" before the form; or a code scale whose
+    currency is the unit (spec 0.12, #568)."""
     voc = _VOCAB.get()
+    for m in voc._CODE_SCALE.finditer(text, start, min(len(text), end + 1)):
+        if m.end() <= end and ("ZAR" if m.group(1) == "R" else m.group(1)) == unit:
+            return True
     first, second, third = _scale_form_patterns(unit, tuple(forms))
     if first.search(text, start, end) or (second is not None and second.search(text, start, end)):
         return True
@@ -1212,22 +1290,47 @@ def currency_scale(text: str, start: int, end: int) -> bool:
 
 def item_scale(text: str, start: int, end: int) -> int | None:
     """The power of ten of the first scale word in text[start:end], also with a final "s", or
-    of the first currency scale, whichever comes first."""
+    of the first currency scale or code scale, whichever comes first."""
     voc = _VOCAB.get()
-    m = voc._ITEM_SCALE.search(text, start, end)
-    if m is None:
-        return None
-    if m.group(1) is not None:
-        return voc._SCALE_EXP[_listed(voc._SCALE_EXP, m.group(1))]
-    return voc._SUFFIX_EXP[m.group(2).lower()]
+    for m in voc._ITEM_SCALE.finditer(text, start, end):
+        if m.group(1) is not None:
+            return voc._SCALE_EXP[_listed(voc._SCALE_EXP, m.group(1))]
+        if _whole_code(text, m, end):
+            return voc._SUFFIX_EXP[(m.group(2) or m.group(4)).lower()]
+    return None
+
+
+def code_scale_cut(text: str, start: int, end: int) -> bool:
+    """Whether the first scale of text[start:end], read alone, is a code scale that the text
+    around it does not hold, as "SEKm" in "MSEKm" (SPEC §4.1, #568). The item's scale then
+    comes from a code scale that is not there."""
+    voc = _VOCAB.get()
+    alone = text[start:end]
+    m = voc._ITEM_SCALE.search(alone)
+    if m is None or m.group(4) is None:
+        return False
+    whole = voc._CODE_SCALE.match(text, start + m.start(), min(len(text), end + 1))
+    return whole is None or whole.end() > end
+
+
+def _whole_code(text: str, m: re.Match[str], end: int) -> bool:
+    """Whether a match of the item scale pattern is no code scale, or a code scale that the text
+    after ``end`` does not continue, as "SEKm" in "SEKmn" (SPEC §4.1, #568)."""
+    voc = _VOCAB.get()
+    if m.group(4) is None:
+        return True
+    whole = voc._CODE_SCALE.match(text, m.start(), min(len(text), end + 1))
+    return whole is not None and whole.end() <= end
 
 
 def scale_between(text: str, start: int, end: int, power: int | None) -> bool:
-    """Whether text[start:end] holds a scale word, also with a final "s", or a currency scale
-    whose power of ten is not ``power`` (SPEC §4.6)."""
+    """Whether text[start:end] holds a scale word, also with a final "s", or a currency scale or
+    a code scale whose power of ten is not ``power`` (SPEC §4.6)."""
     voc = _VOCAB.get()
     for m in voc._ITEM_SCALE.finditer(text, start, end):
-        if m.group(1) is not None or voc._SUFFIX_EXP[m.group(2).lower()] != power:
+        if not _whole_code(text, m, end):
+            continue
+        if m.group(1) is not None or voc._SUFFIX_EXP[(m.group(2) or m.group(4)).lower()] != power:
             return True
     return False
 
@@ -1630,9 +1733,6 @@ class Vocabulary:
         )
         self._LOSS = re.compile(rf"(?<![^\W_])(?:{_folded_words(pack['sign']['loss'])})(?![^\W_])")
         self._GAIN = re.compile(rf"(?<![^\W_])(?:{_folded_words(pack['sign']['gain'])})(?![^\W_])")
-        self._ITEM_SCALE = re.compile(
-            rf"(?<![^\W_])({self._SCALE_WORDS}){final_s}(?![^\W_])|" + self._CURRENCY_FORM
-        )
         # "per" before a currency form, with only whitespace between (SPEC §4.6, spec 0.11, #423)
         self._PER_END = re.compile(rf"(?<![^\W_]){folded_word('per')}\Z")
         self._scale_forms: dict[tuple[str | None, tuple[str, ...]], _FormPatterns] = {}
@@ -1657,6 +1757,21 @@ class Vocabulary:
                 for code, (names, _) in self.CURRENCY_NAMES.items()
             )
             + r")(?![^\W_])"
+        )
+        # a code scale: a code of the currency table in capitals, or R for ZAR, directly followed
+        # by a scale suffix or '000, as in "SEKm" or "R'000" (SPEC §4.1, spec 0.12, #568)
+        codes = sorted([*self.CURRENCY_NAMES, "R"], key=len, reverse=True)
+        code_suffixes = [
+            *(c for x in pack["scale"]["suffixes"] for c in _cased(x)),
+            *(f for f in pack["scale"]["currency"] if not f.isdigit()),
+        ]
+        self._CODE_FORM = rf"(?<![^\W_])({_words(codes)})({_words(code_suffixes)})(?![^\W_])"
+        self._CODE_SCALE = re.compile(self._CODE_FORM)
+        self._ITEM_SCALE = re.compile(
+            rf"(?<![^\W_])({self._SCALE_WORDS}){final_s}(?![^\W_])|"
+            + self._CURRENCY_FORM
+            + "|"
+            + self._CODE_FORM
         )
 
 
