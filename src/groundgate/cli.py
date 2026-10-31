@@ -116,7 +116,7 @@ def _parser() -> argparse.ArgumentParser:
     )
     sub = ap.add_subparsers(dest="command", required=True)
 
-    x = sub.add_parser("read", help="turn a PDF, HTML, XML or text file into NFC text")
+    x = sub.add_parser("read", help="turn a PDF, HTML, XML, DOCX, XLSX or text file into NFC text")
     x.add_argument("file")
     x.add_argument("-o", "--output", help="write the text here instead of stdout")
     x.add_argument("--layout", help="also write page and word boxes (PDF only) as JSON")
