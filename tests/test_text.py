@@ -85,6 +85,10 @@ def test_region_never_reads_a_prefix() -> None:
         ("Sales\t1 234.", [Decimal(1234)]),
         ("Sales\t1 234\n5 678", [Decimal(1234), Decimal(5), Decimal(678)]),
         ("Sales\tA1 234", [Decimal(234)]),
+        ("Sales\t1 234\u0968", [Decimal(1)]),
+        ("Sales\t1 234.\u0968", [Decimal(1)]),
+        ("Sales\t1 234,\u0968", [Decimal(1)]),
+        ("Sales\t\u00a3000 456 789", [Decimal(456), Decimal(789)]),
     ],
 )
 def test_space_groups(text: str, values: list[Decimal | None]) -> None:

@@ -131,15 +131,16 @@ def _next_to_group_space(text: str, s: int, e: int) -> bool:
 
 def _grouped_at(text: str, s: int) -> Token | None:
     """The space-grouped token that holds ``s``, or None."""
-    starts, found = _grouped(text)
+    starts, found = _grouped(text, _VOCAB.get())
     i = bisect.bisect_right(starts, s) - 1
     return found[i] if i >= 0 and s < found[i].end else None
 
 
 @functools.lru_cache(maxsize=64)
-def _grouped(text: str) -> tuple[list[int], list[Token]]:
+def _grouped(text: str, voc: Vocabulary) -> tuple[list[int], list[Token]]:
     """The space-grouped tokens of the text, on its lines that hold a tab (SPEC §4.1, #427), and
-    their starts. The text is read once, so many tokens on one line stay linear."""
+    their starts. The text is read once, so many tokens on one line stay linear. The currency
+    signs of ``voc`` make the 000 of a currency scale."""
     found: list[Token] = []
     ls = 0
     while ls <= len(text):
@@ -162,10 +163,14 @@ def _grouped(text: str) -> tuple[list[int], list[Token]]:
             if g is None:
                 continue
             e = g.end()
-            if _digit(text, e) or (
-                e < len(text) and text[e] in _GROUP_SPACES + ",." and _digit(text, e + 1)
+            if (
+                _digit(text, e)
+                or (e < len(text) and text[e] in _GROUP_SPACES + ",." and _digit(text, e + 1))
+                or _other_digits_follow(text, e)
             ):
                 continue
+            if text.startswith("000", s) and _scale_zeros(text, s, voc):
+                continue  # the 000 of a currency scale, as in "£000", starts no token
             digits = g.group().replace("\u2212", "-")
             for space in _GROUP_SPACES:
                 digits = digits.replace(space, "")
@@ -173,9 +178,9 @@ def _grouped(text: str) -> tuple[list[int], list[Token]]:
     return [t.start for t in found], found
 
 
-def _scale_zeros(text: str, s: int) -> bool:
+def _scale_zeros(text: str, s: int, voc: Vocabulary | None = None) -> bool:
     """Whether the 000 at ``s`` is the 000 of a currency scale (SPEC §4.1, #313)."""
-    voc = _VOCAB.get()
+    voc = voc or _VOCAB.get()
     sign = s - 1
     if sign > 0 and text[sign] in "'\u2019":
         sign -= 1
