@@ -15,6 +15,7 @@ from groundgate.extract.runner import _WORD_NODE_INSTRUCTIONS
 from groundgate.read.document import Document, read_document
 from groundgate.store import FolderStore, key
 from groundgate.store.maintain import check, forget_packet
+from groundgate.store.packets import load_packet
 
 SCHEMA = {"fields": {"amount": {"type": "integer"}}}
 TABLE = (
@@ -36,8 +37,8 @@ def document(tmp_path: Path, html: str) -> Document:
     return read_document(path)[1]
 
 
-def bare(text: str) -> Document:
-    """A document with no nodes."""
+def bare(text: str, doubt: list[Any] | None = None) -> Document:
+    """A document with no nodes, and the doubt spans of a scan if ``doubt`` is given."""
     obj = {
         "format": "document@1",
         "source": key("source@1", text.encode()),
@@ -45,7 +46,7 @@ def bare(text: str) -> Document:
         "options": {"pages": None},
         "text": key("text@1", text.encode()),
         "nodes": [],
-        "doubt": [],
+        "doubt": doubt or [],
     }
     return Document.from_dict(obj, text)
 
@@ -262,6 +263,39 @@ def test_the_record_names_the_document_and_the_store_keeps_it(tmp_path: Path) ->
         assert loaded.candidates == result.candidates
         done = forget_packet(store, packet, "the owner asked")
         assert ("document@1", named["document_key"], "deleted", 0) in done
+
+
+def test_a_scan_with_doubt_gets_the_same_receipt_from_extract_and_the_store(
+    tmp_path: Path,
+) -> None:
+    text = "Total 5 and 6.\n"
+    doc = bare(text, [{"start": 6, "end": 7, "confidence": 0.4}])
+    quote = {"source": "document", "role": "value", "text": "5"}
+    result = run(doc, Client(cited(quote)))
+    decision = result.receipt.decisions[0]
+    assert decision.outcome == "needs_verification" and "READ_DOUBT" in decision.codes
+    assert result.receipt.doubt_sha256 is not None
+    assert replay(result.record, result.artifacts, doc, SCHEMA).ok
+    result.write(tmp_path / "run")
+    assert RunResult.read(tmp_path / "run").receipt.to_dict() == result.receipt.to_dict()
+    with FolderStore(tmp_path / "store") as store:
+        packet = result.save(store)
+        assert not check(store).findings
+        found = load_packet(store, packet)
+        assert found.doubt == doc.doubt
+        assert found.receipt == result.receipt.to_dict()
+        assert gg.verify(found.receipt, found.text, found.schema, found.candidates,
+                         **found.inputs()).ok  # fmt: skip
+        assert RunResult.load(store, packet).receipt.to_dict() == result.receipt.to_dict()
+        # the doubt spans hold offsets and confidences, no text: forget keeps them
+        done = forget_packet(store, packet, "the owner asked")
+        assert not [d for d in done if d[0] == "doubt@1"]
+        assert store.get("doubt@1", json.loads(store.get("packet@1", packet))["doubt"])
+    # a document with no doubt gives a packet with no member doubt
+    clean = run(bare(text), Client(cited(quote)))
+    assert clean.receipt.decisions[0].outcome == "admitted"
+    with FolderStore(tmp_path / "store2") as store:
+        assert "doubt" not in json.loads(store.get("packet@1", clean.save(store)))
 
 
 def test_the_runner_checks_the_document() -> None:

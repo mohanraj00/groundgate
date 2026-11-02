@@ -203,9 +203,9 @@ def read_pdf(
     ``data`` is given, ``read_pdf`` reads those bytes and does not open ``path``.
 
     If ``ocr`` is True, a page with no text layer and an image gets OCR (``read/ocr.py``). OCR
-    is off by default: an OCR word can be wrong, and ``extract`` does not give ``doubt`` to
-    ``admit`` yet (#573). If
-    ``scan`` is given, it gets the tesseract version, the OCR pages and the doubt spans."""
+    is off by default, because an OCR word can be wrong. ``extract`` gives the ``doubt`` spans
+    to ``admit`` (#573). If ``scan`` is given, it gets the tesseract version, the OCR pages and
+    the doubt spans."""
     try:
         from pdfminer.pdftypes import PDFException
         from pdfminer.psexceptions import PSException

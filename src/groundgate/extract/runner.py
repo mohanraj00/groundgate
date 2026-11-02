@@ -312,6 +312,7 @@ class RunResult:
             text = self.artifacts[inputs["document"]["sha256"]]
             document_id = inputs["document"]["id"]
             document_source = inputs["document"]["source"]
+            document = _saved_document(inputs["document"], self.artifacts, text)
             given = {
                 "schema": _strict_json(self.artifacts[inputs["schema_sha256"]]),
                 "policy": _strict_json(self.artifacts[inputs["policy_sha256"]]),
@@ -320,8 +321,9 @@ class RunResult:
                 "candidates": self.candidates,
                 "judgments": None,
                 "document_id": document_id,
+                "doubt": (document.doubt or None) if document is not None else None,
             }
-        except (KeyError, TypeError, RecursionError) as exc:
+        except (KeyError, TypeError, IndexError, RecursionError) as exc:
             raise ValueError("the log does not name its inputs") from exc
         try:
             back = json.loads(jcs(given))
@@ -341,6 +343,7 @@ class RunResult:
             references=back["references"] or None,
             document_source=document_source,
             packs=back["packs"],
+            doubt=back["doubt"],
         )
         if again.to_dict() != self.receipt.to_dict():
             raise PacketError(
@@ -1334,6 +1337,8 @@ class _Engine:
             self.document_id,
             references=self.references,
             document_source=self.document_source,
+            # the OCR words with a low confidence go to review (SPEC 3.3 READ_DOUBT, #573)
+            doubt=None if self.document is None else self.document.doubt,
         )
         body = {"candidates": candidates, "receipt": receipt.to_dict()}
         if phase == "final":

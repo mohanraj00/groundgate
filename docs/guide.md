@@ -44,7 +44,8 @@ can show page numbers.
 A PDF page with no text layer and an image is a scan. OCR is opt-in: use `ocr=True` in Python,
 or `groundgate read --ocr` on the command line. OCR is off by default, because an OCR word can be
 wrong. `admit` takes the `doubt` spans of a document as `doubt=` and sends evidence on them to
-review (`READ_DOUBT`), but `extract` does not give them to `admit` yet (#573). With OCR off, a
+review (`READ_DOUBT`). `extract` gives them to `admit`, and the packet in a store keeps them,
+so `verify` from the store decides again with them (#573). With OCR off, a
 page with no text layer gives a warning and no text. With OCR on, `read` OCRs a scanned page with the `tesseract` program, and pypdfium2
 renders the page at 300 dpi. Install both:
 
