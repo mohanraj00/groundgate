@@ -340,6 +340,15 @@ break.
 Format 1 reserves the kind names and the members `statements` and `nodes`. A later kind adds a
 template and a view, and it does not change `answer@1`.
 
+**The OCR crop.** When a reading names the tesseract reader (#7), the text that the person
+checks is the reader's text, not the printed page. So the view of a `number`, `text` or `span`
+task also shows a crop of the scan at each place of the task, next to the reader's text. The
+crop is a view, not a kind: it changes no task, answer or template. The page shows it for each
+place of such a document, also when the reader has no doubt there, so the crop never tells the
+person the reason (section 8). The reading records OCR for the document, not for each page,
+so each place of that document gets a crop. The crop comes from the source in the store each time. After
+`forget` of the source, the page says that the scan is gone and shows the text only (#537).
+
 - A **closed set** needs a schema member with the options. That changes what the gate checks,
   so a spec issue comes first.
 - A **model text** task comes from an input that the app gives: the model text and its
@@ -356,7 +365,10 @@ These rules come from the bench label pages, where I measured what works.
   `layout.json` as positioned text, with the value in a box. For HTML, it shows the original
   page in a sandboxed frame (section 9). It marks the value there only when the value text
   occurs one time on the page. If not, the page says so. For plain text, it shows the lines
-  around the value.
+  around the value. For a document that a reading read with OCR, the page also shows the crop
+  of each place (section 7). The crop is the box of the place with 24 points of the page on
+  each side, cut at the page edge, rendered in gray. If the `ocr` extra is not installed, the
+  page shows the text and the line "Install groundgate[ocr] to see the scan".
 - **The question names every part.** "$4,200,000 (written 4,200, in thousands)", not "4,200".
   On the bench, most wrong answers came from a part that the question did not name, usually the
   scale. If the scale line is on an earlier page, the page shows that page too, or names it.
@@ -410,6 +422,13 @@ The review page needs a script, so it is a separate local server. Its rules:
    a document, a reply, a task or a request.
 8. Check each answer against its task before the write: a verdict that the kind permits, a
    decision in the choices, and a span inside the text.
+9. A crop is an image response for a one-time ticket, as the frame of rule 6, because an
+   `img` element cannot send the header. A ticket gives only one place of its task. The
+   server renders the crop in a child process (`python -I`), with a time limit of 10 seconds,
+   at most 2^22 pixels (a larger box renders at a lower dpi, as `MAX_PIXELS` in read/ocr.py)
+   and a response of at most 4 MiB. On a time-out or an error, the page shows the text only.
+   The response has `Content-Type: image/png`, `X-Content-Type-Options: nosniff` and the CSP
+   `default-src 'none'`.
 
 The server is for one local user. `--reviewer` is a name that the user gives, and the server
 does not authenticate it. Any holder of the token can answer as that name, also when the review
@@ -449,6 +468,7 @@ extra measure:
 | `closed_set` | The share of answers that choose another option |
 | `model_text` | The time for each statement, and the share of statements marked `unsupported` |
 | `structure` | The time for each page, and the share of nodes corrected |
+| OCR crop | The time for each item, and the share of answers that correct the value, on tasks whose `codes` hold `READ_DOUBT`, and on the other tasks of a document read with OCR |
 
 ## 11. Fit with other work
 
@@ -515,4 +535,4 @@ issues 1 and 2. No issue changes a decision.
 6. **Calibrate labels through the review server.** After #385. Calibrate items become blind
    tasks, and `labels.json` becomes a view. Needs a security review.
 7. **Later kinds.** `structure` with #414 in 0.14. `closed_set` after a spec issue for the
-   options. `model_text` after an issue for its input. The OCR crop in 0.14 (#537).
+   options. `model_text` after an issue for its input. The OCR crop is a view (section 7, #537).
