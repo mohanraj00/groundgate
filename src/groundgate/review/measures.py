@@ -135,7 +135,11 @@ def _logs(store: Any) -> tuple[dict[str, dict[str, list[dict[str, Any]]]], list[
         if not records:
             continue
         name = records[0].get("reviewer")
-        if not isinstance(name, str) or reviewer_key(name) != log[2]:
+        try:
+            named = isinstance(name, str) and reviewer_key(name) == log[2]
+        except ValueError:  # a name that is not NFC, or that has no UTF-8, names no log
+            named = False
+        if not named:
             skipped.append(f"answer log {log[1]} {log[2]}: the reviewer is not the log name")
             continue
         out.setdefault(log[1], {})[name] = records

@@ -31,7 +31,11 @@ def split_view(records: Sequence[Mapping[str, Any]], log_key: str) -> dict[str, 
     for r in records:
         name, document, split = r.get("set"), r.get("document"), r.get("split")
         where = f"splits record {printable(r.get('sequence'))}"
-        if not isinstance(name, str) or set_key(name) != log_key:
+        try:
+            named = isinstance(name, str) and set_key(name) == log_key
+        except ValueError:  # a name that is not NFC, or that has no UTF-8, names no log
+            named = False
+        if not named:
             raise ValueError(f"{where} names another set")
         if not isinstance(document, str) or not KEY.fullmatch(document):
             raise ValueError(f"{where} has no document key")

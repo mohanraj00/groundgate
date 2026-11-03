@@ -100,16 +100,27 @@ def _object_key(kind: str, data: bytes) -> str:
     return "sha256:" + digest.hexdigest()
 
 
+def _name_key(kind: str, what: str, name: str) -> str:
+    """The store key of a name of ``kind`` over its UTF-8. A name that is not NFC raises
+    ``ValueError``, so one name has one key (#418)."""
+    if not isinstance(name, str):
+        raise TypeError(f"a {what} name must be a string")
+    if not unicodedata.is_normalized("NFC", name):
+        raise ValueError(f"a {what} name must be NFC")
+    return key(kind, name.encode("utf-8"))
+
+
 def reviewer_key(name: str) -> str:
     """The store key of a reviewer name: the kind ``reviewer@1`` over its UTF-8. An answer log
-    is filed under this digest, never under the name."""
-    return key("reviewer@1", name.encode("utf-8"))
+    is filed under this digest, never under the name. A name that is not NFC raises
+    ``ValueError``."""
+    return _name_key("reviewer@1", "reviewer", name)
 
 
 def set_key(name: str) -> str:
     """The store key of a set name: the kind ``set@1`` over its UTF-8. A splits log is filed
-    under this digest, never under the name."""
-    return key("set@1", name.encode("utf-8"))
+    under this digest, never under the name. A name that is not NFC raises ``ValueError``."""
+    return _name_key("set@1", "set", name)
 
 
 def check_bytes(kind: str, data: bytes) -> None:
