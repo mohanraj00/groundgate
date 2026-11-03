@@ -10,6 +10,7 @@ from typing import Any
 import pytest
 
 import groundgate as gg
+from groundgate.canonical import jcs
 from groundgate.extract import ExtractInputError, RunPolicy, RunResult, extract, replay
 from groundgate.extract.runner import _WORD_NODE_INSTRUCTIONS
 from groundgate.read.document import Document, read_document
@@ -287,6 +288,13 @@ def test_a_scan_with_doubt_gets_the_same_receipt_from_extract_and_the_store(
         assert gg.verify(found.receipt, found.text, found.schema, found.candidates,
                          **found.inputs()).ok  # fmt: skip
         assert RunResult.load(store, packet).receipt.to_dict() == result.receipt.to_dict()
+        # a packet with no doubt, or another doubt, does not name the inputs of its run
+        obj = json.loads(store.get("packet@1", packet))
+        other = store.put("doubt@1", jcs([{"start": 0, "end": 1, "confidence": 0.4}]).encode())
+        for changed in ({k: v for k, v in obj.items() if k != "doubt"}, {**obj, "doubt": other}):
+            bad = store.put("packet@1", jcs(changed).encode())
+            with pytest.raises(ValueError, match="another doubt"):
+                RunResult.load(store, bad)
         # the doubt spans hold offsets and confidences, no text: forget keeps them
         done = forget_packet(store, packet, "the owner asked")
         assert not [d for d in done if d[0] == "doubt@1"]

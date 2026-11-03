@@ -34,6 +34,8 @@ if TYPE_CHECKING:
 Json = dict[str, Any]
 # groundgate-run/6 (#554): the runner accepts column and marker items, and the prompt asks for
 # them for a field with columns or markers. A repair can change them when the gate names them.
+# The run/6 admit takes the doubt of a document (#573); the run/6 records from before #573 were
+# never released.
 # groundgate-run/5 (#494): the search leaves out common words, and a cut that keeps every match
 # does not truncate the search. run/5 also names each object by its store key beside its run
 # key (#429), so a store can replay the run from its packet. run/5 also takes a document (#508):
@@ -363,12 +365,12 @@ class RunResult:
         store key, and replays the run as ``read`` does, with the packs that the packet names.
         A run on a document also gets its ``document@1`` object (#508). The run header must
         name the inputs of the packet: the document id, source and text, the schema, the policy
-        and the references. The packet must have no judgments, because a
-        run has none. Each object must also have the run key of the record. The replayed
-        receipt and candidates must be those of the packet. A packet with no run, a record that
-        is not ``groundgate-run/6``, a packet of other inputs, a changed object or a replay that
-        differs raises ``ValueError``. An object that is not in the store raises ``InputGone``,
-        with the deletion if ``forget`` removed it.
+        and the references. The packet must have no judgments, because a run has none, and its
+        doubt must be the doubt of the saved document. Each object must also have the run key of
+        the record. The replayed receipt and candidates must be those of the packet. A packet
+        with no run, a record that is not ``groundgate-run/6``, a packet of other inputs, a
+        changed object or a replay that differs raises ``ValueError``. An object that is not in
+        the store raises ``InputGone``, with the deletion if ``forget`` removed it.
 
         The store bounds each read: ``FolderStore`` reads no object above its ``max_bytes``. The
         record and its objects are held in memory together, so open the store with a smaller
@@ -419,6 +421,14 @@ class RunResult:
             document = _saved_document(inputs["document"], artifacts, text)
         except (KeyError, TypeError, IndexError, RecursionError) as exc:
             raise ValueError("the log does not name its inputs") from exc
+        # The replay takes the doubt of the saved document, so the packet must name the same.
+        saved = document.doubt if document is not None else []
+        try:
+            same_doubt = jcs(found.doubt or []) == jcs(saved)
+        except (TypeError, ValueError, RecursionError) as exc:
+            raise ValueError("the packet doubt has no canonical form") from exc
+        if not same_doubt:
+            raise ValueError("the packet names another doubt than the document of its run")
         result = _replay(record, artifacts, document or text, schema, policy, refs, found.packs)
         if isinstance(result, str):
             raise ValueError(result)
