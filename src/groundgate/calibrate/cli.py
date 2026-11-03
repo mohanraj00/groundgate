@@ -609,13 +609,17 @@ def main(argv: list[str] | None = None, prog: str = "groundgate calibrate") -> N
     p.add_argument("--calibration", type=Path, nargs="+", required=True, help="work directories")
     p.add_argument("--out", type=Path, required=True, help="a directory for <doc>.json")
     args = ap.parse_args(argv)
-    reviewer = getattr(args, "reviewer", None)
-    if reviewer is not None:
-        # the answer log is filed under sha256 of the UTF-8 name, so the name must encode
+    for option, name in (("--reviewer", "reviewer"), ("--set", "set_name")):
+        value = getattr(args, name, None)
+        if value is None:
+            continue
+        # a log is filed under sha256 of the UTF-8 name, so the name must encode, in one form
         try:
-            reviewer.encode("utf-8")
+            value.encode("utf-8")
         except UnicodeEncodeError:
-            raise SystemExit("a reviewer name must be valid Unicode text") from None
+            raise SystemExit(f"{option} must be valid Unicode text") from None
+        if not unicodedata.is_normalized("NFC", value):
+            raise SystemExit(f"{option} must be NFC text; normalize the name to NFC and try again")
     if args.cmd == "judge":
         judge_packets(args)
         return
