@@ -899,6 +899,18 @@ def brackets_around(text: str, tok: Token, prefixes: list[str]) -> tuple[int, in
     return i - 1, k + 1
 
 
+def currency_unit(unit: str, prefixes: list[str]) -> bool:
+    """Whether ``unit`` is a currency unit: a code of the currency table, or a unit with a
+    prefix that ends with a currency sign (SPEC §4.3, spec 0.10, #365)."""
+    voc = _VOCAB.get()
+    return unit in voc.CURRENCY_NAMES or any(x[-1] in voc._CONTINUES for x in prefixes)
+
+
+def minus_sign(text: str, tok: Token) -> bool:
+    """Whether the token's value is negative by its leading - or the minus sign (SPEC §3.1)."""
+    return tok.value is not None and tok.value < 0 and text[tok.start] in "-\u2212"
+
+
 def bracket_sign(text: str, tok: Token, prefixes: list[str] | None) -> bool:
     """Whether brackets make the token negative (SPEC §4.6). ``prefixes`` is None on a field
     without a unit, where brackets alone do not make a sign."""
@@ -1143,10 +1155,8 @@ class HeadingIndex:
         """Whether the token at ``pos`` has a heading conflict (SPEC §4.3, spec 0.10, #365):
         ``unit`` is a currency unit, and a heading unit that reaches the token and is not
         unknown does not allow it."""
-        voc = _VOCAB.get()
-        prefixes = units.get(unit, ([], []))[0]
-        if unit not in voc.CURRENCY_NAMES and not any(x[-1] in voc._CONTINUES for x in prefixes):
-            return False  # not a currency unit
+        if not currency_unit(unit, units.get(unit, ([], []))[0]):
+            return False
         return any(unit not in allowed for _, _, allowed in self._allowing(pos, units))
 
 

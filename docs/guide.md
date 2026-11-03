@@ -427,7 +427,7 @@ Checks run in a fixed order and the first failure rejects:
 
 A fact that passes them all is checked for flags. Any flag makes it `needs_verification`:
 
-`NON_VERBATIM_EVIDENCE`, `QUALIFIED_VALUE`, `SCALE_WORD`, `PART_MISSING`, `SIGN_CITATION_INVALID`,
+`NON_VERBATIM_EVIDENCE`, `QUALIFIED_VALUE`, `SCALE_WORD`, `PART_MISSING`, `SIGN_DROPPED`, `SIGN_CITATION_INVALID`,
 `SCALE_CITATION_INVALID`, `UNIT_CITATION_INVALID`, `FIELD_CITATION_INVALID`, `KEY_NOT_AT_VALUE`,
 `KEY_CITATION_INVALID`, `COLUMN_NOT_AT_VALUE`, `MARKER_OTHER_FIELD`, `READ_DOUBT`,
 `EVIDENCE_QUOTED`, `EVIDENCE_STATED`, `LOW_CONFIDENCE`, `CONFLICTING_CANDIDATES`, `RELATION_FAILED`, and `MODEL_DOUBT` from a recorded judgment.
@@ -557,6 +557,7 @@ Flags send the fact to a person:
 | `QUALIFIED_VALUE` | The text says "up to" and the field is `eq`. | If the field is a limit, set its `comparator`. If not, a person checks the fact. |
 | `SCALE_WORD` | The value is sent as written, without its scale word. | Send the scaled value. |
 | `PART_MISSING` | The value needs a sign, a scale or a unit that no item supports. A unit is missing when no unit form is next to the number: the text writes a surface that is not in the table, or the suffix is past `unit_window` or a sentence end. A scale is also missing when a heading such as "(in thousands)" is over the value's table and the value is the number as written. `missing` names the part. | Ask the extractor for those items, or add the unit's surfaces in the schema's `units`. |
+| `SIGN_DROPPED` | The field's unit is a currency, the value is positive and has no sign item, and the only number that matches it is printed with a leading `-` or `−`, as 3266 at "-3,266". The value never passes as a gain at a loss. | A person checks the sign. If the number is a cost that the field gives as positive, admit it. |
 | `SIGN_CITATION_INVALID`, `SCALE_CITATION_INVALID`, `UNIT_CITATION_INVALID` | The item does not hold its part at the value (see [Evidence items](#evidence-items)). A unit item for a unit that is not next to the number also fails when no field item passes, or when it is not on the value's line, in a caption before the table or in the value's column. | A person checks the fact. |
 | `FIELD_CITATION_INVALID` | The item holds none of the field's `aliases`, or it is not on the value's row or in its sentence. | Give the field `aliases` in the document's words. |
 | `KEY_NOT_AT_VALUE` | The value is under a different condition in the text, or a label line or a table cell stands between the key and the value. | In a table, ask the extractor for a `field` item and a `key` item, and give the field `aliases`. Otherwise a person checks the fact. |

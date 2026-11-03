@@ -27,6 +27,7 @@ FLAG = {
         'A scale word such as "million" follows the value, and the value was given unscaled.'
     ),
     "PART_MISSING": "The value needs a sign, a scale or a unit that no evidence item supports.",
+    "SIGN_DROPPED": "The value is positive, and the document prints it with a minus sign.",
     "SIGN_CITATION_INVALID": "The sign item does not make the value negative.",
     "SCALE_CITATION_INVALID": "The scale item does not scale the value.",
     "UNIT_CITATION_INVALID": "The unit item does not supply the field's unit at the value.",
