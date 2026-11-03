@@ -12,6 +12,7 @@ import json
 import os
 import struct
 import sys
+import threading
 import zlib
 from pathlib import Path
 from typing import Any
@@ -283,3 +284,43 @@ def test_a_view_makes_at_most_max_crops_tickets_and_each_one_works(
     view = review.view(tk)["view"]
     assert view["pages"][0]["crops"] == [] and review.crops == {}
     assert view["note"] == "The page shows the scan of the first 0 places only."
+
+
+def test_a_crop_request_loads_the_source_only_with_a_permit(
+    ocr_store: tuple[FolderStore, str, str], monkeypatch: pytest.MonkeyPatch
+) -> None:
+    store, tk, _ = ocr_store
+    monkeypatch.setattr(serve, "CROP_CHILDREN", 1)
+    started, go = threading.Event(), threading.Event()
+    loads: list[str] = []
+    review = Review(store, "ana")
+    load = review.crop_source
+
+    def counted(ticket: str) -> tuple[bytes, int, tuple[float, ...]]:
+        loads.append(ticket)
+        return load(ticket)
+
+    def slow(source: bytes, page: int, box: Any) -> bytes:
+        started.set()
+        assert go.wait(10)
+        return crop.png(1, 1, b"\0")
+
+    monkeypatch.setattr(review, "crop_source", counted)
+    monkeypatch.setattr(crop, "run", slow)
+    doc = review.docs[review.tasks[tk]]
+    assert doc.scan is not None and doc.layout is not None
+    with store, running(review) as (_, _, port):
+        url = review.view(tk)["view"]["pages"][0]["crops"][0]
+        other = review._crop_ticket(doc.scan, 1, [doc.layout.words[0].box])
+        results: list[int] = []
+        threads = [threading.Thread(target=lambda u=u: results.append(fetch(port, u)[0]))
+                   for u in (url, other)]  # fmt: skip
+        threads[0].start()
+        assert started.wait(10)
+        threads[1].start()
+        threads[1].join(0.5)
+        assert len(loads) == 1  # the second request waits for the permit, with no PDF loaded
+        go.set()
+        for t in threads:
+            t.join(10)
+        assert results == [200, 200] and len(loads) == 2

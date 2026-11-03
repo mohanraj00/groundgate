@@ -1104,18 +1104,22 @@ def server(review: Review, port: int = 0) -> tuple[ThreadingHTTPServer, str]:
         def crop(self, ticket: str) -> None:
             from ..read import crop
 
-            try:
-                with lock:
-                    source, page, box = review.crop_source(ticket)
-            except Refused as exc:
-                self.refuse(exc.code, exc.message)
-                return
-            try:  # the child process holds no lock, so a slow crop stops no other request
-                with children:
+            # The permit comes before the source, so at most CROP_CHILDREN copies of a PDF are
+            # in memory. The child process holds no lock, so a slow crop stops no other request.
+            with children:
+                try:
+                    with lock:
+                        source, page, box = review.crop_source(ticket)
+                except Refused as exc:
+                    self.refuse(exc.code, exc.message)
+                    return
+                try:
                     image = crop.run(source, page, box)
-            except crop.CropError:
-                self.refuse(502, "the scan cannot be shown")
-                return
+                except crop.CropError:
+                    self.refuse(502, "the scan cannot be shown")
+                    return
+                finally:
+                    del source
             self.send(image, "image/png", csp=CROP_CSP)
 
         def do_POST(self) -> None:
