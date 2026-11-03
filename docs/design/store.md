@@ -148,8 +148,10 @@ and resolutions name the packet, and the answer logs of a packet are filed under
 `get` takes the kind, because the key covers it. A log name is a log kind and one or two keys,
 for example `("answers", packet, reviewer)`. The reviewer part is the store key of the kind
 `reviewer@1` over the UTF-8 of the reviewer name. The set part of a `splits` log is the store
-key of the kind `set@1` over the UTF-8 of the set name. Thus the file name is a digest, not the
-name that the CLI takes, and a name never becomes a path.
+key of the kind `set@1` over the UTF-8 of the set name. A reviewer name and a set name must be
+NFC. `reviewer_key` and `set_key` refuse a name that is not NFC, so one name has one key and one
+reviewer has one log (#418). Thus the file name is a digest, not the name that the CLI takes, and
+a name never becomes a path.
 
 Each log record has `sequence`, `previous` and `entry_sha256`, as the run record has.
 `entry_sha256` is a store key of the kind `<log>-entry@1` over the record without that member.
