@@ -566,6 +566,7 @@ def write_resolution(
             raise ValueError(
                 "a reviewer name must be a string with a character that is not a space"
             )
+        reviewer_key(name)  # a name that is not NFC raises before a write
     packet, schema, layout, problems = checked_packet(store, packet_key)
     if problems or schema is None:
         return Resolved(None, None, problems)

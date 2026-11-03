@@ -238,6 +238,9 @@ class Review:
     ) -> None:
         if not isinstance(reviewer, str) or not reviewer.strip():
             raise ValueError("a reviewer name must have a character that is not a space")
+        from ..store import reviewer_key
+
+        reviewer_key(reviewer)  # a name that is not NFC or not UTF-8 raises before a write
         self.store = store
         self.reviewer = reviewer
         self.policy = check_policy(dict(DEFAULT_POLICY) if policy is None else policy)
@@ -351,7 +354,13 @@ class Review:
             except StoreError:
                 continue
             name = records[0].get("reviewer") if records else None
-            if isinstance(name, str) and reviewer_key(name) == log[2]:
+            if not isinstance(name, str):
+                continue
+            try:
+                named = reviewer_key(name) == log[2]
+            except ValueError:  # a name that is not NFC, or that has no UTF-8, names no log
+                named = False
+            if named:
                 out[name] = records
         return out
 
