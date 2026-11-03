@@ -1087,6 +1087,8 @@ class _Engine:
     ) -> None:
         self.text, self.schema, self.policy = text, schema, policy
         self.document = document
+        # Each admit of the run takes the doubt of the document (SPEC 3.3 READ_DOUBT, #573).
+        self.doubt = None if document is None else document.doubt
         self.citations = None if document is None else _Citations(document)
         self.settings, self.client, self.model_id = settings, client, model_id
         self.document_id, self.document_source = document_id, document_source
@@ -1347,8 +1349,7 @@ class _Engine:
             self.document_id,
             references=self.references,
             document_source=self.document_source,
-            # the OCR words with a low confidence go to review (SPEC 3.3 READ_DOUBT, #573)
-            doubt=None if self.document is None else self.document.doubt,
+            doubt=self.doubt,
         )
         body = {"candidates": candidates, "receipt": receipt.to_dict()}
         if phase == "final":
@@ -2178,6 +2179,7 @@ class _Engine:
                 self.document_id,
                 references=self.references,
                 document_source=self.document_source,
+                doubt=self.doubt,
             )
             admitted = {d.candidate_id for d in receipt.decisions if d.outcome == "admitted"}
             # A drop stands only when a candidate that rounds to it is admitted without it.
@@ -2276,7 +2278,10 @@ def _run(
     elif isinstance(references, Sequence) and not isinstance(references, (str, bytes)):
         refs = list(references)
     refs = copy.deepcopy(refs)
-    empty = admit(text, s, [], p, document_id, references=refs, document_source=document_source)
+    doubt = None if document is None else document.doubt
+    empty = admit(
+        text, s, [], p, document_id, references=refs, document_source=document_source, doubt=doubt
+    )
     valid_refs = cast(list[Json], refs)
     valid_refs.sort(key=lambda r: r["id"])
     # The run record hashes UTF-8 bytes, so a lone surrogate must stop before the first call.

@@ -306,6 +306,44 @@ def test_a_scan_with_doubt_gets_the_same_receipt_from_extract_and_the_store(
         assert "doubt" not in json.loads(store.get("packet@1", clean.save(store)))
 
 
+def test_the_empty_receipt_of_a_run_keeps_the_doubt() -> None:
+    # The admission limit stops the run before its first admission: the run keeps the receipt
+    # with no candidates, and that receipt binds the doubt too.
+    doc = bare("Amount 5.\n", [{"start": 7, "end": 8, "confidence": 0.4}])
+    nothing = {"candidates": [], "not_found": ["amount"]}
+    result = run(doc, Client(nothing), max_admission_bytes=100)
+    assert not result.complete and result.receipt.doubt_sha256 is not None
+    assert gg.verify(result.receipt.to_dict(), doc.text, SCHEMA, result.candidates,
+                     doubt=doc.doubt).ok  # fmt: skip
+    assert replay(result.record, result.artifacts, doc, SCHEMA).ok
+
+
+def test_the_rounding_rule_reads_the_doubt_of_the_exact_figure() -> None:
+    # The exact figure is on a doubted word, so it is not admitted, and the rounded figure
+    # stays: a drop stands only when the exact figure is admitted without it.
+    schema = {"fields": {"revenue": {"type": "number", "aliases": ["Revenue"]}}}
+    text = "Revenue rose to 17.3bn.\n(in millions)\nRevenue\t17,284\n"
+    start = text.encode().index(b"17,284")
+    doc = bare(text, [{"start": start, "end": start + 6, "confidence": 0.4}])
+
+    def item(quote: str, role: str = "value") -> dict[str, Any]:
+        return {"source": "document", "role": role, "text": quote}
+
+    rounded = {"field": "revenue", "value": "17300000000", "unit": None, "key": None,
+               "evidence": [item("17.3bn")]}  # fmt: skip
+    exact = {"field": "revenue", "value": "17284000000", "unit": None, "key": None,
+             "evidence": [item("17,284"), item("Revenue", "field"),
+                          item("in millions", "scale")]}  # fmt: skip
+    reply = {"candidates": [rounded, exact], "not_found": []}
+    result = run(doc, Client(reply), schema, drop_rounded=True)
+    assert [c["id"] for c in result.candidates] == ["c1-1", "c1-2"]
+    assert any("READ_DOUBT" in d.codes for d in result.receipt.decisions)
+    assert replay(result.record, result.artifacts, doc, schema).ok
+    # without the doubt, the same reply drops the rounded figure
+    clean = run(bare(text), Client(reply), schema, drop_rounded=True)
+    assert [c["id"] for c in clean.candidates] == ["c1-2"]
+
+
 def test_the_runner_checks_the_document() -> None:
     doc = bare("Amount 5.")
     doc.text = "Amount 7."  # the text key no longer names the text
