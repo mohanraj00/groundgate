@@ -121,7 +121,8 @@ CONTEXT_LINES = 5  # the lines before and after a value in the text view
 SPAN_LINES = 12  # a place with more lines than this shows its two ends, and the middle is closed
 SCALE_LINES = 10  # the lines above a selected number where the page looks for a scale (#496)
 MAX_TICKETS = 32
-MAX_CROPS = 64
+MAX_CROPS = 64  # the crops of one task view; a new view ends the tickets of the last one
+CROP_CHILDREN = 4  # the crop processes that run at one time
 _EXACT = Context(prec=MAX_PREC, traps=[Inexact])  # a power of ten with no rounding, as in admit
 MAX_PARTS = 8
 ROLES = ("sign", "scale", "unit", "field", "key")
@@ -484,6 +485,7 @@ class Review:
         if doc.kind == "pdf" and doc.layout is not None:
             numbers = sorted({p["page"] for _, p, _ in places if p["page"] is not None})
             note, scan = self._scan(doc)
+            self.crops.clear()  # the page shows one task, so each ticket of this view works
             pages = []
             for page in doc.layout.pages:
                 if numbers and page.number not in numbers:
@@ -503,7 +505,9 @@ class Review:
                     for b in on:
                         kind = "value" if ns else "part"
                         boxes.append([b.x0, b.top, b.x1, b.bottom, kind, ns])
-                    if scan is not None and on:  # one ticket for each place on this page
+                    if scan is not None and on and len(self.crops) == MAX_CROPS:
+                        note = f"The page shows the scan of the first {MAX_CROPS} places only."
+                    elif scan is not None and on:  # one ticket for each place on this page
                         crops.append(self._crop_ticket(scan, page.number, on))
                 pages.append({"page": page.number, "width": page.width, "height": page.height,
                               "words": words, "marks": boxes, "crops": crops})  # fmt: skip
@@ -608,8 +612,6 @@ class Review:
                max(b.x1 for b in boxes), max(b.bottom for b in boxes))  # fmt: skip
         ticket = secrets.token_urlsafe(16)
         self.crops[ticket] = (source, page, box)
-        while len(self.crops) > MAX_CROPS:
-            del self.crops[next(iter(self.crops))]
         return f"/crop/{ticket}"
 
     def crop_source(self, ticket: str) -> tuple[bytes, int, tuple[float, ...]]:
@@ -1009,6 +1011,7 @@ def server(review: Review, port: int = 0) -> tuple[ThreadingHTTPServer, str]:
     """The review server on 127.0.0.1 and its start URL, which holds the token after #."""
     token = secrets.token_urlsafe(32)
     lock = threading.Lock()
+    children = threading.BoundedSemaphore(CROP_CHILDREN)
     host = ""  # 127.0.0.1 and the bound port, set once the server binds
 
     class Handler(BaseHTTPRequestHandler):
@@ -1108,7 +1111,8 @@ def server(review: Review, port: int = 0) -> tuple[ThreadingHTTPServer, str]:
                 self.refuse(exc.code, exc.message)
                 return
             try:  # the child process holds no lock, so a slow crop stops no other request
-                image = crop.run(source, page, box)
+                with children:
+                    image = crop.run(source, page, box)
             except crop.CropError:
                 self.refuse(502, "the scan cannot be shown")
                 return

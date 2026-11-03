@@ -265,3 +265,21 @@ def test_review_measures_gives_the_ocr_crop_row(ocr_store: tuple[FolderStore, st
         "ocr doubt answers 0, median time none, corrected 0 of 0, "
         "ocr other answers 1, median time 900 ms, corrected 0 of 1"
     )
+
+
+def test_a_view_makes_at_most_max_crops_tickets_and_each_one_works(
+    ocr_store: tuple[FolderStore, str, str], monkeypatch: pytest.MonkeyPatch
+) -> None:
+    store, tk, _ = ocr_store
+    review = Review(store, "ana")
+    first = review.view(tk)["view"]["pages"][0]["crops"][0].removeprefix("/crop/")
+    second = review.view(tk)["view"]["pages"][0]["crops"][0].removeprefix("/crop/")
+    assert list(review.crops) == [second]  # a new view ends the tickets of the last one
+    with pytest.raises(Refused):
+        review.crop_source(first)
+    assert review.crop_source(second)[1] == 1
+    # a place after the limit gets no ticket, so no ticket of the view goes out of the dict
+    monkeypatch.setattr(serve, "MAX_CROPS", 0)
+    view = review.view(tk)["view"]
+    assert view["pages"][0]["crops"] == [] and review.crops == {}
+    assert view["note"] == "The page shows the scan of the first 0 places only."
