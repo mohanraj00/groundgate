@@ -3,7 +3,7 @@
 ``Review`` holds the tasks of each packet in the store and the queue of one reviewer. It shows a
 task with its source, checks a correction with the same ``admit`` call as ``review resolve``,
 checks each answer against its task, and appends the answer to the answer log of the reviewer.
-``server`` puts it behind an HTTP server with the eight rules of §9:
+``server`` puts it behind an HTTP server with the nine rules of §9:
 
 1. The server binds to 127.0.0.1, and refuses a request whose ``Host`` is not 127.0.0.1 and the
    port.
@@ -16,6 +16,9 @@ checks each answer against its task, and appends the answer to the answer log of
 7. A path names an object only by a store key. No path or URL comes from a document or a
    request.
 8. Each answer is checked against its task before the write.
+9. A document that a reading read with OCR shows a crop of the scan at each place (§7). The crop
+   URL holds a ticket for one use and one place. A child process renders the crop with the
+   limits of ``groundgate.read.crop``.
 
 A calibrate task (§11, ``groundgate.review.labels``) is served only when the packet gives it. It
 shows no code and no outcome, and it takes an ``answer@2`` label. ``only`` limits the queue to
@@ -30,6 +33,7 @@ from __future__ import annotations
 import bisect
 import contextlib
 import hmac
+import importlib.util
 import json
 import re
 import secrets
@@ -47,6 +51,7 @@ from ..canonical import jcs
 from ..codes import DESCRIPTIONS, INFO
 from ..escape import escape
 from ..model import PacketError, Schema
+from ..read import READER
 from ..read.layout import Layout
 from ..read.markup import html_text
 from ..text import (
@@ -108,10 +113,15 @@ STATIC = {
 _KEY = re.compile(r"sha256:[0-9a-f]{64}")
 _API = re.compile(r"/api/(task|reason)/(.*)")
 _TICKET = re.compile(r"/frame/([A-Za-z0-9_-]{22})")
+_CROP = re.compile(r"/crop/([A-Za-z0-9_-]{22})")
+CROP_CSP = "default-src 'none'"
+NO_OCR = "Install groundgate[ocr] to see the scan"
+SCAN_GONE = "The scan is gone: the source was forgotten. The page shows the text only."
 CONTEXT_LINES = 5  # the lines before and after a value in the text view
 SPAN_LINES = 12  # a place with more lines than this shows its two ends, and the middle is closed
 SCALE_LINES = 10  # the lines above a selected number where the page looks for a scale (#496)
 MAX_TICKETS = 32
+MAX_CROPS = 64
 _EXACT = Context(prec=MAX_PREC, traps=[Inexact])  # a power of ten with no rounding, as in admit
 MAX_PARTS = 8
 ROLES = ("sign", "scale", "unit", "field", "key")
@@ -205,6 +215,7 @@ class _Doc:
     html: str | None = None
     open: list[str] = field(default_factory=list)  # the tasks in the queue
     words: dict[int, list[Any]] = field(default_factory=dict)  # PDF words by page
+    scan: str | None = None  # the source key when a reading read the document with OCR (§7)
 
 
 def _named(record: Mapping[str, Any]) -> bool:
@@ -246,6 +257,7 @@ class Review:
         self.tasks: dict[str, str] = {}  # task key -> packet key
         self.skipped: list[str] = []
         self.tickets: dict[str, tuple[str, str | None]] = {}  # frame ticket -> packet, value
+        self.crops: dict[str, tuple[str, int, tuple[float, ...]]] = {}  # -> source, page, box
         self._only = None if only is None else frozenset(only)  # calibrate label: its tasks
         self._load()
 
@@ -322,6 +334,12 @@ class Review:
             doc.kind = "pdf"
             for w in layout.words:
                 doc.words.setdefault(w.box.page, []).append(w)
+            with contextlib.suppress(StoreError):
+                reading = load_reading(self.store, packet.reading) if packet.reading else {}
+                reader, source = reading.get("reader"), reading.get("source")
+                if (isinstance(reader, Mapping) and reader.get("name") == f"{READER}+tesseract"
+                        and isinstance(source, str) and _KEY.fullmatch(source)):  # fmt: skip
+                    doc.scan = source
         elif packet.reading is not None:
             try:
                 raw = self.store.get("source@1", load_reading(self.store, packet.reading)["source"])
@@ -465,6 +483,7 @@ class Review:
         marks = [(span, "value" if ns else "part", ns) for span, _, ns in places]
         if doc.kind == "pdf" and doc.layout is not None:
             numbers = sorted({p["page"] for _, p, _ in places if p["page"] is not None})
+            note, scan = self._scan(doc)
             pages = []
             for page in doc.layout.pages:
                 if numbers and page.number not in numbers:
@@ -477,15 +496,21 @@ class Review:
                     b = w.box
                     words.append([u.u16(span[0]), u.text[span[0] : span[1]],
                                   b.x0, b.top, b.x1, b.bottom])  # fmt: skip
-                boxes = []
+                boxes, crops = [], []
                 for _, p, ns in places:
-                    for b in doc.layout.locate(p["start"], p["end"]):
-                        if b.page == page.number:
-                            kind = "value" if ns else "part"
-                            boxes.append([b.x0, b.top, b.x1, b.bottom, kind, ns])
+                    on = [b for b in doc.layout.locate(p["start"], p["end"])
+                          if b.page == page.number]  # fmt: skip
+                    for b in on:
+                        kind = "value" if ns else "part"
+                        boxes.append([b.x0, b.top, b.x1, b.bottom, kind, ns])
+                    if scan is not None and on:  # one ticket for each place on this page
+                        crops.append(self._crop_ticket(scan, page.number, on))
                 pages.append({"page": page.number, "width": page.width, "height": page.height,
-                              "words": words, "marks": boxes})  # fmt: skip
-            return {"kind": "pdf", "pages": pages}
+                              "words": words, "marks": boxes, "crops": crops})  # fmt: skip
+            shown: dict[str, Any] = {"kind": "pdf", "pages": pages}
+            if note is not None:
+                shown["note"] = note
+            return shown
         out: dict[str, Any] = {"kind": doc.kind, "blocks": self._blocks(u, task["item"], marks)}
         if doc.kind == "html" and doc.html is not None:
             value = next((u.text[s[0] : s[1]] for s, kind, _ in marks if kind == "value"), None)
@@ -562,6 +587,45 @@ class Review:
             ]
             blocks.append({"start": u.u16(a), "text": text[a:b], "closed": shut, "marks": inside})
         return blocks
+
+    def _scan(self, doc: _Doc) -> tuple[str | None, str | None]:
+        """The note of the page and the source key for the crops of an OCR document (§7, §8).
+        Without the ``ocr`` extra, or after ``forget`` of the source, the page shows no crop."""
+        from ..store import StoreError
+
+        if doc.scan is None:
+            return None, None
+        if importlib.util.find_spec("pypdfium2") is None:
+            return NO_OCR, None
+        try:
+            self.store.get("source@1", doc.scan)
+        except StoreError:
+            return SCAN_GONE, None
+        return None, doc.scan
+
+    def _crop_ticket(self, source: str, page: int, boxes: list[Any]) -> str:
+        box = (min(b.x0 for b in boxes), min(b.top for b in boxes),
+               max(b.x1 for b in boxes), max(b.bottom for b in boxes))  # fmt: skip
+        ticket = secrets.token_urlsafe(16)
+        self.crops[ticket] = (source, page, box)
+        while len(self.crops) > MAX_CROPS:
+            del self.crops[next(iter(self.crops))]
+        return f"/crop/{ticket}"
+
+    def crop_source(self, ticket: str) -> tuple[bytes, int, tuple[float, ...]]:
+        """The source bytes, the page and the box of a crop ticket (§9 rule 9). A ticket works
+        one time. The caller renders the crop with ``groundgate.read.crop.run`` outside the
+        lock."""
+        from ..store import StoreError
+
+        found = self.crops.pop(ticket, None)
+        if found is None:
+            raise Refused(404, "the crop ticket is not valid")
+        source, page, box = found
+        try:
+            return self.store.get("source@1", source), page, box
+        except StoreError as exc:
+            raise Refused(410, "the scan is gone") from exc
 
     def frame(self, ticket: str) -> str | None:
         """The HTML source of a frame ticket, with the value in a box when it occurs one time.
@@ -951,11 +1015,16 @@ def server(review: Review, port: int = 0) -> tuple[ThreadingHTTPServer, str]:
         timeout = 30  # a client that sends less than its Content-Length holds a thread no longer
 
         def send(
-            self, body: str, kind: str = "application/json", code: int = 200, csp: str = CSP
+            self,
+            body: str | bytes,
+            kind: str = "application/json",
+            code: int = 200,
+            csp: str = CSP,
         ) -> None:
-            raw = body.encode("utf-8")
+            raw = body if isinstance(body, bytes) else body.encode("utf-8")
             self.send_response(code)
-            self.send_header("Content-Type", f"{kind}; charset=utf-8")
+            self.send_header("Content-Type", kind if isinstance(body, bytes) else
+                             f"{kind}; charset=utf-8")  # fmt: skip
             self.send_header("Content-Length", str(len(raw)))
             self.send_header("Content-Security-Policy", csp)
             self.send_header("X-Content-Type-Options", "nosniff")
@@ -1009,6 +1078,11 @@ def server(review: Review, port: int = 0) -> tuple[ThreadingHTTPServer, str]:
                 else:
                     self.send(page, "text/html", csp=frame_csp(f"http://{host}"))
                 return
+            ticket = _CROP.fullmatch(path)
+            if ticket is not None:  # an img element cannot send the header either (§9 rule 9)
+                if self.allowed(api=False):
+                    self.crop(ticket.group(1))
+                return
             if not self.allowed(api=True):
                 return
             if path == "/api/queue":
@@ -1023,6 +1097,22 @@ def server(review: Review, port: int = 0) -> tuple[ThreadingHTTPServer, str]:
                 self.run(lambda: review.view(found.group(2)))
             else:
                 self.run(lambda: review.reason(found.group(2)))
+
+        def crop(self, ticket: str) -> None:
+            from ..read import crop
+
+            try:
+                with lock:
+                    source, page, box = review.crop_source(ticket)
+            except Refused as exc:
+                self.refuse(exc.code, exc.message)
+                return
+            try:  # the child process holds no lock, so a slow crop stops no other request
+                image = crop.run(source, page, box)
+            except crop.CropError:
+                self.refuse(502, "the scan cannot be shown")
+                return
+            self.send(image, "image/png", csp=CROP_CSP)
 
         def do_POST(self) -> None:
             if not self.allowed(api=True):

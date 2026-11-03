@@ -17,8 +17,10 @@ these measures for each item kind, and for each field in that kind:
 
 The kinds ``text`` and ``span`` also give ``span_moved``, the ``adjust_span`` answers and
 ``answers``, and ``span_move_median``, the median of the characters that the two ends of a
-counted ``adjust_span`` answer move from the nearest choice. The measures never put two kinds
-in one number.
+counted ``adjust_span`` answer move from the nearest choice. On a document that a reading read
+with OCR, each kind also gives ``ocr_crop`` (§10, the OCR crop row): for the tasks whose
+``codes`` hold ``READ_DOUBT`` (``doubt``) and for the other tasks (``other``), the answers, the
+median time and the ``correct`` answers. The measures never put two kinds in one number.
 
 The answer logs and the store objects are untrusted input. A packet whose receipt does not
 match its inputs, or whose answers break their tasks, is left out, and ``skipped`` names it.
@@ -52,6 +54,7 @@ class _Tally:
     audited: int = 0
     moved: int = 0
     moves: list[int] = field(default_factory=list)
+    ocr: dict[str, list[tuple[int, bool]]] = field(default_factory=dict)  # group -> ms, correct
 
     def out(self, item: str) -> dict[str, Any]:
         n = len(self.ms)
@@ -65,6 +68,16 @@ class _Tally:
         if item in _SPANS:
             found["span_moved"] = [self.moved, n]
             found["span_move_median"] = _median(self.moves)
+        if self.ocr:
+            found["ocr_crop"] = {
+                group: {
+                    "answers": len(seen),
+                    "ms_median": _median([ms for ms, _ in seen]),
+                    "corrected": [sum(c for _, c in seen), len(seen)],
+                }
+                for group in ("doubt", "other")
+                for seen in [self.ocr.get(group, [])]
+            }
         return found
 
 
@@ -114,6 +127,17 @@ def _document(store: Any, packet: Any) -> str:
     if packet.reading is not None:
         return str(load_reading(store, packet.reading)["source"])
     return key("text@1", packet.text.encode("utf-8"))
+
+
+def _ocr(store: Any, packet: Any) -> bool:
+    """True when the reading of the packet names the tesseract reader (review.md §7)."""
+    from ..read import READER
+    from ..store.packets import load_reading
+
+    if packet.reading is None:
+        return False
+    reader = load_reading(store, packet.reading)["reader"]
+    return isinstance(reader, Mapping) and reader.get("name") == f"{READER}+tesseract"
 
 
 def _logs(store: Any) -> tuple[dict[str, dict[str, list[dict[str, Any]]]], list[str]]:
@@ -181,11 +205,12 @@ def measures(
                 continue
             resolution, _ = resolve(pk, packet, schema, checked, logs[pk], layout=layout,
                                     seen=seen)  # fmt: skip
+            ocr = _ocr(store, packet)
         except (PacketError, StoreError, ValueError) as exc:  # untrusted input: name it
             skipped.append(f"packet {pk}: {_printable(str(exc))}")
             continue
         packets += 1
-        _count(seen, resolution, packet.receipt["decisions"], tallies, by_field)
+        _count(seen, resolution, packet.receipt["decisions"], tallies, by_field, ocr)
     kinds = {}
     for item in sorted(tallies):
         found = tallies[item].out(item)
@@ -200,8 +225,10 @@ def _count(
     decisions: Sequence[Mapping[str, Any]],
     tallies: dict[str, _Tally],
     by_field: dict[str, dict[str, _Tally]],
+    ocr: bool = False,
 ) -> None:
-    """Add the answers and the audit slots of one packet to the tallies."""
+    """Add the answers and the audit slots of one packet to the tallies. ``ocr`` is True for
+    a document that a reading read with OCR."""
     latest: dict[str, dict[str, Seen]] = {}  # task key -> reviewer -> latest answer
     for s in seen:
         latest.setdefault(s.task_key, {})[s.reviewer] = s
@@ -217,6 +244,11 @@ def _count(
                       by_field.setdefault(item, {}).setdefault(name, _Tally())):  # fmt: skip
                 t.ms.append(s.record["ms"])
                 t.one_key += s.record["keys"] == 1
+                if ocr:
+                    group = "doubt" if "READ_DOUBT" in s.task["codes"] else "other"
+                    t.ocr.setdefault(group, []).append(
+                        (s.record["ms"], s.answer.verdict == "correct")
+                    )
                 if s.answer.target is not None:
                     for b in blind:  # two blind labels make one pair, not two
                         if b.reviewer != s.reviewer and (s not in blind or s.reviewer < b.reviewer):
@@ -284,6 +316,10 @@ def lines(measured: Measured) -> list[str]:
             move = m["span_move_median"]
             parts.append(f"span moved {_ratio(m['span_moved'])}")
             parts.append("median move " + ("none" if move is None else f"{move} characters"))
+        for group, o in m.get("ocr_crop", {}).items():
+            ms = "none" if o["ms_median"] is None else f"{o['ms_median']} ms"
+            parts.append(f"ocr {group} answers {o['answers']}, median time {ms}, "
+                         f"corrected {_ratio(o['corrected'])}")  # fmt: skip
         return _printable(name) + ": " + ", ".join(parts)
 
     out = [f"packets: {measured.packets}"]

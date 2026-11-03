@@ -1,5 +1,6 @@
-"""Packaging rules from CONTRIBUTING: no core dependencies, permissive extras, and one module
-that starts a process: the OCR reader, which runs the tesseract program (#7)."""
+"""Packaging rules from CONTRIBUTING: no core dependencies, permissive extras, and two modules
+that start a process: the OCR reader, which runs the tesseract program (#7), and the OCR crop,
+which runs ``python -I`` (#537)."""
 
 from __future__ import annotations
 
@@ -18,7 +19,7 @@ PERMISSIVE = re.compile(r"^(MIT|BSD-[23]-Clause|Apache-2\.0|MPL-2\.0|ISC)$")
 LICENSES = {
     "pypdfium2": ("BSD-3-Clause, Apache-2.0, dependency licenses", ("BSD-3-Clause", "Apache-2.0"))
 }
-PROCESS = Path("read") / "ocr.py"
+PROCESS = (Path("read") / "ocr.py", Path("read") / "crop.py")
 
 
 def test_version_is_exposed() -> None:
@@ -45,13 +46,15 @@ def test_extras_are_permissively_licensed(requirement: str) -> None:
         assert PERMISSIVE.match(found)
 
 
-def test_groundgate_starts_a_process_only_in_the_ocr_reader() -> None:
+def test_groundgate_starts_a_process_only_in_the_ocr_reader_and_the_crop() -> None:
     root = Path(groundgate.__file__).parent
     for path in root.rglob("*.py"):
         text = path.read_text(encoding="utf-8")
         found = re.search(r"\bsubprocess\b|os\.system|os\.popen|os\.exec|os\.spawn", text)
-        assert path.relative_to(root) == PROCESS or not found, path
-    text = (root / PROCESS).read_text(encoding="utf-8")
-    assert not re.search(r"os\.system|os\.popen|os\.exec|os\.spawn|shell=True", text)
-    assert "subprocess.run(" not in text and "subprocess.call(" not in text
-    assert text.count("subprocess.Popen(") == 1  # in _run: tesseract --version, and one page
+        assert path.relative_to(root) in PROCESS or not found, path
+    for name in PROCESS:
+        text = (root / name).read_text(encoding="utf-8")
+        assert not re.search(r"os\.system|os\.popen|os\.exec|os\.spawn|shell=True", text)
+        assert "subprocess.run(" not in text and "subprocess.call(" not in text
+        # ocr.py: in _run, for tesseract --version and one page; crop.py: in run, for one crop
+        assert text.count("subprocess.Popen(") == 1, name

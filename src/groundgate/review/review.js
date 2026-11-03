@@ -173,6 +173,7 @@ function draw(view) {
   const box = $("source");
   box.replaceChildren();
   if (view.kind === "pdf") {
+    if (view.note) box.append(el("div", "note", view.note));
     for (const p of view.pages) drawPage(box, p);
     return;
   }
@@ -231,8 +232,24 @@ function segments(b) {
   return frag;
 }
 
+// The OCR crop of each place, beside the reader's text (review.md §7). On an error or a
+// time-out, the image goes away and the page shows the text only.
+function drawCrops(box, p) {
+  if (!p.crops || !p.crops.length) return;
+  const row = el("div", "crops");
+  for (const src of p.crops) {
+    const img = el("img", "crop");
+    img.alt = "The scan at this place, page " + p.page;
+    img.addEventListener("error", () => img.remove());
+    img.src = src;
+    row.append(img);
+  }
+  box.append(row);
+}
+
 function drawPage(box, p) {
   box.append(el("div", "pageno", "Page " + p.page));
+  drawCrops(box, p);
   const page = el("div", "page");
   page.style.width = p.width * PX + "px";
   page.style.height = p.height * PX + "px";

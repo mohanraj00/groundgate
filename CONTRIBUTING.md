@@ -51,8 +51,10 @@ reviews the PR, the labels, and when an open PR closes.
   `uv run python conformance/build.py`. Never generate expectations by running groundgate.
 - **Every reason code keeps two vectors.** `tests/test_conformance.py` enforces it.
 - **The core has no dependencies.** Anything that needs a package goes behind an extra
-  (`[pdf]`, `[ocr]`, `[langextract]`) and imports it lazily. Only `read/ocr.py` starts a
-  process: the `tesseract` program, with a list of arguments, no shell and a timeout.
+  (`[pdf]`, `[ocr]`, `[langextract]`) and imports it lazily. Only two modules start a
+  process, each with a list of arguments, no shell and a timeout: `read/ocr.py` starts the
+  `tesseract` program, and `read/crop.py` starts `python -I` to render a crop of a scan for the
+  review page.
 - **No model inside the decision.** The decision is a pure function of its inputs. A model's
   answer enters only as a recorded input (#66), and the core never imports a model. Examples may
   call models; they cache the output so they rebuild without keys.
