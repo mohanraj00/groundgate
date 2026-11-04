@@ -589,6 +589,15 @@ def test_a_dropped_sign_compares_the_value_without_rounding() -> None:
     assert codes("1.234567890123456789012345679") == ["VALUE_NOT_IN_EVIDENCE"]
 
 
+def test_a_dropped_sign_in_brackets_compares_the_value_without_rounding() -> None:
+    doc = "(-1.2345678901234567890123456789) USD"
+    schema = {"fields": {"cost": {"type": "number", "unit": "USD"}}}
+    cand = {"id": "a", "field": "cost", "value": "1.234567890123456789012345679", "unit": "USD",
+            "evidence": {"text": doc}}  # fmt: skip
+    d = gg.admit(doc, schema, [cand]).to_dict()["decisions"][0]
+    assert d["codes"] == ["VALUE_NOT_IN_EVIDENCE"]
+
+
 def test_a_missing_part_at_any_token_stops_a_dropped_sign() -> None:
     doc = "0.5 USD -500 USD"
     schema = {"fields": {"cost": {"type": "number", "unit": "USD"}}}

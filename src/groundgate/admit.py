@@ -452,7 +452,7 @@ def _values(
         out = {tok.value}
     neg = neg_item or bracket_sign(t.text, tok, prefixes)
     if neg:
-        out |= {-abs(v) for v in out}
+        out |= {v.copy_abs().copy_negate() for v in out}
     return out, neg
 
 
