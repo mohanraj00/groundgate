@@ -552,7 +552,7 @@ def _value_at(
         for k in toks:
             vals, _ = _values(t, k, False, scale, signs)
             if minus_sign(t.text, k) and value in {abs(v) for v in vals}:
-                hits, dropped = [(k, set())], True
+                hits, dropped = [(k, heading(k, set()))], True
                 break
     if not hits:
         return None, "VALUE_NOT_IN_EVIDENCE"

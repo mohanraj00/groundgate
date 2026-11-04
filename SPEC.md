@@ -400,7 +400,7 @@ when the candidate has no sign item, `value` is positive, no number token in the
 `value` by a derived value and no part is missing, and `value` equals the absolute value of a
 derived value of a token whose value is negative by its leading `-` or `−`. Step 10 then does
 not reject. The candidate continues at the first such token, and gets the flag
-`SIGN_DROPPED`. A sign item never makes a sign dropped (spec 0.12, #569).
+`SIGN_DROPPED`. If a heading scale reaches that token, `scale` is missing, as above. A sign item never makes a sign dropped (spec 0.12, #569).
 
 Step 11 does not reject at a matching token where **no unit form is next to the token**: no
 prefix of a unit in the table (§4.3) ends at the token's start (whitespace between them allowed),
@@ -470,7 +470,7 @@ rejected by steps 1–11 or on the outside path.
 | `QUALIFIED_VALUE` | A qualifier (§4.2) applies to the value in the text and its comparator differs from the field's `comparator`. Not on a `string` field. |
 | `SCALE_WORD` | A scale word or a scale suffix (§4.1) follows the value, and the candidate's `value` is the number as written, not its scaled value. Not on a `string` field. |
 | `PART_MISSING` | The decision lists a part in `missing` (§3.1). |
-| `SIGN_DROPPED` | The sign is dropped (§3.1): a positive value on a field with a currency unit matches a token printed with a minus sign. A dropped sign adds no part to `missing` (spec 0.12, #569). |
+| `SIGN_DROPPED` | The sign is dropped (§3.1): a positive value on a field with a currency unit matches a token printed with a minus sign. A dropped sign adds no `sign` to `missing` (spec 0.12, #569). |
 | `SIGN_CITATION_INVALID` | The sign item fails its check (§4.6). |
 | `SCALE_CITATION_INVALID` | The scale item fails its check. |
 | `UNIT_CITATION_INVALID` | The unit item fails its check. |

@@ -527,6 +527,24 @@ def test_parts_report_byte_spans_and_verify() -> None:
     assert (d0["codes"], d0["parts"], d0["missing"]) == (["KEY_NOT_AT_VALUE"], [], ["key"])
 
 
+def test_a_dropped_sign_under_a_heading_scale_misses_the_scale() -> None:
+    doc = "(in thousands)\n\nCost\t-500 USD\n"
+    schema = {"fields": {"cost": {"type": "number", "unit": "USD"}}}
+    cand = {
+        "id": "a",
+        "field": "cost",
+        "value": "500",
+        "unit": "USD",
+        "evidence": {"text": "-500 USD"},
+    }
+    d = gg.admit(doc, schema, [cand]).to_dict()["decisions"][0]
+    assert (d["outcome"], d["codes"], d["missing"]) == (
+        "needs_verification",
+        ["PART_MISSING", "SIGN_DROPPED"],
+        ["scale"],
+    )
+
+
 def test_failed_key_item_is_not_cleared_by_a_judgment() -> None:
     start = KEYED_DOC.encode().index(b"Notes")
     cand = _keyed({"role": "key", "start": start, "end": start + 5})
