@@ -22,7 +22,8 @@ same words: the program runs with one thread (``OMP_THREAD_LIMIT=1``), the langu
 and the dpi is fixed. The reader then records the tesseract version (``read.reader``), so a new
 version is a new reading.
 
-This is the only module of groundgate that starts a process.
+This module and the crop of the review page (``read/crop.py``) are the only code of groundgate
+that starts a process.
 """
 
 from __future__ import annotations
