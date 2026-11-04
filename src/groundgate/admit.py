@@ -558,7 +558,7 @@ def _value_at(
             vals, _ = _values(t, k, False, scale, signs)
             if (
                 minus_sign(t.text, k)
-                and value in {abs(v) for v in vals}
+                and value in {v.copy_abs() for v in vals}
                 and (lenient or not heading(k, set()))
             ):
                 hits, dropped = [(k, heading(k, set()))], True
