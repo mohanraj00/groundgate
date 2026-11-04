@@ -1,0 +1,114 @@
+{
+ "name": "134-sign-dropped-span",
+ "description": "A dropped sign on a decimal value and on a value without a row of its own. When the span also holds a token that equals the value, the sign is not dropped and the candidate is admitted as before (spec 0.12, #569).",
+ "document": "Cash flow statement\n\nInterest paid\t-1,250.50\nNet change\t-500\t500\n",
+ "schema": {
+  "fields": {
+   "zar": {
+    "type": "number",
+    "unit": "ZAR",
+    "multiple": true,
+    "aliases": [
+     "Interest paid",
+     "Net change"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "sp1",
+   "field": "zar",
+   "value": "1250.5",
+   "unit": "ZAR",
+   "evidence": [
+    {
+     "start": 35,
+     "end": 44,
+     "text": "-1,250.50"
+    },
+    {
+     "role": "field",
+     "text": "Interest paid"
+    }
+   ]
+  },
+  {
+   "id": "sp2",
+   "field": "zar",
+   "value": "500",
+   "unit": "ZAR",
+   "evidence": [
+    {
+     "start": 56,
+     "end": 60,
+     "text": "-500"
+    },
+    {
+     "role": "field",
+     "text": "Net change"
+    }
+   ]
+  },
+  {
+   "id": "sp3",
+   "field": "zar",
+   "value": "500",
+   "unit": "ZAR",
+   "evidence": [
+    {
+     "start": 56,
+     "end": 64,
+     "text": "-500\t500"
+    },
+    {
+     "role": "field",
+     "text": "Net change"
+    }
+   ]
+  },
+  {
+   "id": "sp4",
+   "field": "zar",
+   "value": "-1250.5",
+   "unit": "ZAR",
+   "evidence": [
+    {
+     "start": 35,
+     "end": 44,
+     "text": "-1,250.50"
+    },
+    {
+     "role": "field",
+     "text": "Interest paid"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SIGN_DROPPED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SIGN_DROPPED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

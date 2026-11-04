@@ -6162,6 +6162,26 @@ vector(
     ],
 )  # fmt: skip
 
+vector(
+    "134-sign-dropped-span",
+    "A dropped sign on a decimal value and on a value without a row of its own. When the span "
+    "also holds a token that equals the value, the sign is not dropped and the candidate is "
+    "admitted as before (spec 0.12, #569).",
+    "Cash flow statement\n\n"
+    "Interest paid\t-1,250.50\n"
+    "Net change\t-500\t500\n",
+    {"fields": {"zar": money("ZAR", "Interest paid", "Net change", multiple=True)}},
+    [
+        # rejected with VALUE_NOT_IN_EVIDENCE in spec 0.11
+        c("sp1", "zar", "1250.5", "ZAR", [q("-1,250.50"), row("Interest paid")], SIGN_DROPPED),
+        c("sp2", "zar", "500", "ZAR", [q("-500"), row("Net change")], SIGN_DROPPED),
+        # must not change: a token in the span equals the value
+        c("sp3", "zar", "500", "ZAR", [q("-500\t500"), row("Net change")]),
+        # must not change: the value keeps the sign
+        c("sp4", "zar", "-1250.5", "ZAR", [q("-1,250.50"), row("Interest paid")]),
+    ],
+)  # fmt: skip
+
 
 def main() -> None:
     out_dir = HERE / "vectors"
