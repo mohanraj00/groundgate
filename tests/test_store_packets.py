@@ -161,6 +161,7 @@ def test_the_packet_names_each_input(tmp_path: Path) -> None:
             "references": refs,
             "document_source": "https://example.org/grant",
             "packs": [LAC],
+            "doubt": None,
         }
         check = gg.verify(
             found.receipt, found.text, found.schema, found.candidates, **found.inputs()
@@ -197,6 +198,53 @@ def test_a_change_from_canonical_json_is_refused(tmp_path: Path) -> None:
         found = load_packet(store, k)
         assert gg.verify(found.receipt, found.text, found.schema, found.candidates,
                          **found.inputs()).ok  # fmt: skip
+
+
+def doubt(quote: str = "$500", confidence: float = 0.4) -> list[Any]:
+    span = ev(quote)
+    return [{"start": span["start"], "end": span["end"], "confidence": confidence}]
+
+
+def test_a_packet_keeps_its_doubt_and_verifies_with_it(tmp_path: Path) -> None:
+    with FolderStore(tmp_path / "s") as store:
+        k, receipt = admit_packet(store, TEXT, SCHEMA, cands(), doubt=doubt())
+        assert "READ_DOUBT" in receipt.decisions[0].codes
+        packet = json.loads(store.get("packet@1", k))
+        assert json.loads(store.get("doubt@1", packet["doubt"])) == doubt()
+        found = load_packet(store, k)
+        assert found.doubt == doubt()
+        check = gg.verify(found.receipt, found.text, found.schema, found.candidates,
+                          **found.inputs())  # fmt: skip
+        assert check.ok, check.problems
+        # without the doubt, the receipt does not verify
+        assert not gg.verify(found.receipt, found.text, found.schema, found.candidates).ok
+
+
+def test_a_packet_with_no_doubt_keeps_its_key(tmp_path: Path) -> None:
+    with FolderStore(tmp_path / "s") as store:
+        k, _ = admit_packet(store, TEXT, SCHEMA, cands())
+        assert admit_packet(store, TEXT, SCHEMA, cands(), doubt=[])[0] == k
+        packet = json.loads(store.get("packet@1", k))
+        assert "doubt" not in packet and load_packet(store, k).doubt is None
+        # a member doubt that is null reads as no doubt
+        null = store.put("packet@1", jcs({**packet, "doubt": None}).encode())
+        found = load_packet(store, null)
+        assert found.doubt is None
+        assert gg.verify(found.receipt, found.text, found.schema, found.candidates,
+                         **found.inputs()).ok  # fmt: skip
+
+
+def test_a_bad_doubt_member_is_refused(tmp_path: Path) -> None:
+    with FolderStore(tmp_path / "s") as store:
+        k, _ = admit_packet(store, TEXT, SCHEMA, cands(), doubt=doubt())
+        packet = json.loads(store.get("packet@1", k))
+        for bad in ("../doubt", "sha256:00", packet["candidates"], ["sha256:" + "0" * 64]):
+            changed = store.put("packet@1", jcs({**packet, "doubt": bad}).encode())
+            with pytest.raises(StoreError):
+                load_packet(store, changed)
+        gone = store.put("packet@1", jcs({**packet, "doubt": "sha256:" + "0" * 64}).encode())
+        with pytest.raises(InputGone, match="the doubt@1 object"):
+            load_packet(store, gone)
 
 
 def test_input_deleted_and_input_missing(

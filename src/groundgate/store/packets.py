@@ -17,7 +17,7 @@ import json
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
+from typing import Any, TypeGuard
 
 from ..admit import admit
 from ..canonical import SPEC_VERSION, jcs
@@ -50,6 +50,9 @@ _PACKET = (
     "schema",
     "spec",
 )
+# A packet with doubt spans has the member ``doubt`` too: the key of a ``doubt@1`` object (#573).
+# A packet with no doubt has no member, so its key stays the key of an older packet.
+_PACKET_DOUBT = tuple(sorted((*_PACKET, "doubt")))
 _READING = ("document", "format", "layout", "options", "reader", "source", "text")
 _READING2 = (*_READING, "warnings")
 # The reading kinds. ``put_reading`` writes ``reading@2``, which keeps the warnings of ``read``.
@@ -80,7 +83,8 @@ class Packet:
     """The inputs of one ``admit`` call, from the store. The members are the arguments of
     ``verify`` and ``render``. ``layout`` is the layout of the reading as a dict, if the packet
     names a reading of a PDF and ``load_packet`` got it. ``run`` is the key of the run record,
-    or ``None``."""
+    or ``None``. ``doubt`` is the doubt list of ``admit``, or ``None`` when the packet has
+    none."""
 
     key: str
     receipt: dict[str, Any]
@@ -95,6 +99,7 @@ class Packet:
     reading: str | None
     layout: dict[str, Any] | None = None
     run: str | None = None
+    doubt: list[Any] | None = None
 
     def inputs(self) -> dict[str, Any]:
         """The keyword arguments of ``verify`` and ``render`` after the first four."""
@@ -104,6 +109,7 @@ class Packet:
             "references": self.references,
             "document_source": self.document_source,
             "packs": self.packs,
+            "doubt": self.doubt,
         }
 
 
@@ -184,6 +190,11 @@ def _key_list(obj: Mapping[str, Any], name: str, what: str) -> list[str]:
     ):
         raise StoreError(f"the {what} member {name} is not a list of store keys")
     return value
+
+
+def packet_members(obj: object) -> TypeGuard[dict[str, Any]]:
+    """``obj`` has the members of ``packet@1``, with or without the member ``doubt``."""
+    return isinstance(obj, dict) and sorted(obj) in (list(_PACKET), list(_PACKET_DOUBT))
 
 
 def _members(obj: object, names: tuple[str, ...], kind: str, k: str) -> Mapping[str, Any]:
@@ -348,6 +359,7 @@ def check_packet(
     references: Sequence[object] | None = None,
     document_source: str | None = None,
     packs: Sequence[object] = (),
+    doubt: Sequence[object] | None = None,
 ) -> Receipt:
     """Do the checks of ``admit_packet`` and return the receipt, but write nothing. If
     ``check_packet`` raises no error, ``admit_packet`` with the same inputs gives the same
@@ -362,6 +374,7 @@ def check_packet(
         references=references,
         document_source=document_source,
         packs=packs,
+        doubt=doubt,
     )[0]
 
 
@@ -376,6 +389,7 @@ def _checked(
     references: Sequence[object] | None,
     document_source: str | None,
     packs: Sequence[object],
+    doubt: Sequence[object] | None,
 ) -> tuple[Receipt, dict[str, Any]]:
     for value, what in ((schema, "schema"), (policy, "policy")):
         if value is not None and not isinstance(value, Mapping):
@@ -390,6 +404,7 @@ def _checked(
         references=references,
         document_source=document_source,
         packs=packs,
+        doubt=doubt,
     )
     given: dict[str, Any] = {
         "schema": schema,
@@ -399,6 +414,7 @@ def _checked(
         "candidates": candidates,
         "judgments": judgments,
         "document_id": document_id,
+        "doubt": list(doubt) if doubt else None,
     }
     back = json.loads(_json(given, "inputs"))
     if not _same(given, back):
@@ -412,6 +428,7 @@ def _checked(
             references=None if references is None else back["references"],
             document_source=document_source,
             packs=back["packs"],
+            doubt=back["doubt"],
         )
         if again.to_dict() != receipt.to_dict():
             raise PacketError(
@@ -434,14 +451,16 @@ def admit_packet(
     document_source: str | None = None,
     packs: Sequence[object] = (),
     reading: str | None = None,
+    doubt: Sequence[object] | None = None,
 ) -> tuple[str, Receipt]:
     """Run ``admit``, then write the text, the schema, the policy, each reference, each pack,
-    the candidates, the judgments, the receipt and a ``packet@1`` object. Return the packet key
-    and the receipt. The same inputs give the same packet key.
+    the candidates, the judgments, the doubt spans, the receipt and a ``packet@1`` object.
+    Return the packet key and the receipt. The same inputs give the same packet key.
 
     The arguments are the arguments of ``admit``, with ``schema`` and ``policy`` as dicts and
     ``packs`` as the packs of the app. ``reading`` is the key of a reading of the same text.
-    The store keeps canonical JSON, where the number 5.0 is 5. If that change gives another
+    ``doubt`` is the ``doubt`` of ``admit``: a packet with doubt spans names a ``doubt@1``
+    object. The store keeps canonical JSON, where the number 5.0 is 5. If that change gives another
     receipt, ``admit_packet`` raises ``PacketError`` and writes nothing, because ``verify``
     from the store would then fail."""
     receipt, given = _checked(
@@ -454,6 +473,7 @@ def admit_packet(
         references=references,
         document_source=document_source,
         packs=packs,
+        doubt=doubt,
     )
     if reading is not None:
         if not isinstance(reading, str) or not KEY.fullmatch(reading):
@@ -498,6 +518,8 @@ def _put_packet(
         "receipt": put("receipt@1", receipt.to_dict()),
         "run": run,
     }
+    if given.get("doubt"):
+        packet["doubt"] = put("doubt@1", given["doubt"])
     return put("packet@1", packet)
 
 
@@ -509,7 +531,9 @@ def load_packet(store: Store, k: str, *, layout: bool = False) -> Packet:
     ``StoreError``."""
     if not isinstance(k, str) or not KEY.fullmatch(k):
         raise ValueError(f"{_printable(k)} is not a store key")
-    obj = _members(_get_json(store, "packet@1", k), _PACKET, "packet@1", k)
+    found = _get_json(store, "packet@1", k)
+    names = _PACKET_DOUBT if isinstance(found, dict) and "doubt" in found else _PACKET
+    obj = _members(found, names, "packet@1", k)
     document = obj["document"]
     if not isinstance(document, dict) or sorted(document) != ["id", "source", "text"]:
         raise StoreError("the packet member document does not have the members id, source, text")
@@ -523,6 +547,7 @@ def load_packet(store: Store, k: str, *, layout: bool = False) -> Packet:
             raise StoreError(f"the packet member {name} is not a store key")
     for name in ("reading", "policy", "judgments", "run"):
         _key_or_none(obj, name, "packet")
+    doubt_key = _key_or_none(obj, "doubt", "packet") if "doubt" in obj else None
     references = _key_list(obj, "references", "packet")
     packs = _key_list(obj, "packs", "packet")
     if not isinstance(obj["spec"], str):
@@ -563,4 +588,5 @@ def load_packet(store: Store, k: str, *, layout: bool = False) -> Packet:
         reading=obj["reading"],
         layout=layout_dict,
         run=obj["run"],
+        doubt=None if doubt_key is None else _get_json(store, "doubt@1", doubt_key),
     )
