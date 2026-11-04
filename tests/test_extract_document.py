@@ -10,11 +10,13 @@ from typing import Any
 import pytest
 
 import groundgate as gg
+from groundgate.canonical import jcs
 from groundgate.extract import ExtractInputError, RunPolicy, RunResult, extract, replay
 from groundgate.extract.runner import _WORD_NODE_INSTRUCTIONS
 from groundgate.read.document import Document, read_document
 from groundgate.store import FolderStore, key
 from groundgate.store.maintain import check, forget_packet
+from groundgate.store.packets import load_packet
 
 SCHEMA = {"fields": {"amount": {"type": "integer"}}}
 TABLE = (
@@ -36,8 +38,8 @@ def document(tmp_path: Path, html: str) -> Document:
     return read_document(path)[1]
 
 
-def bare(text: str) -> Document:
-    """A document with no nodes."""
+def bare(text: str, doubt: list[Any] | None = None) -> Document:
+    """A document with no nodes, and the doubt spans of a scan if ``doubt`` is given."""
     obj = {
         "format": "document@1",
         "source": key("source@1", text.encode()),
@@ -45,7 +47,7 @@ def bare(text: str) -> Document:
         "options": {"pages": None},
         "text": key("text@1", text.encode()),
         "nodes": [],
-        "doubt": [],
+        "doubt": doubt or [],
     }
     return Document.from_dict(obj, text)
 
@@ -262,6 +264,84 @@ def test_the_record_names_the_document_and_the_store_keeps_it(tmp_path: Path) ->
         assert loaded.candidates == result.candidates
         done = forget_packet(store, packet, "the owner asked")
         assert ("document@1", named["document_key"], "deleted", 0) in done
+
+
+def test_a_scan_with_doubt_gets_the_same_receipt_from_extract_and_the_store(
+    tmp_path: Path,
+) -> None:
+    text = "Total 5 and 6.\n"
+    doc = bare(text, [{"start": 6, "end": 7, "confidence": 0.4}])
+    quote = {"source": "document", "role": "value", "text": "5"}
+    result = run(doc, Client(cited(quote)))
+    decision = result.receipt.decisions[0]
+    assert decision.outcome == "needs_verification" and "READ_DOUBT" in decision.codes
+    assert result.receipt.doubt_sha256 is not None
+    assert replay(result.record, result.artifacts, doc, SCHEMA).ok
+    result.write(tmp_path / "run")
+    assert RunResult.read(tmp_path / "run").receipt.to_dict() == result.receipt.to_dict()
+    with FolderStore(tmp_path / "store") as store:
+        packet = result.save(store)
+        assert not check(store).findings
+        found = load_packet(store, packet)
+        assert found.doubt == doc.doubt
+        assert found.receipt == result.receipt.to_dict()
+        assert gg.verify(found.receipt, found.text, found.schema, found.candidates,
+                         **found.inputs()).ok  # fmt: skip
+        assert RunResult.load(store, packet).receipt.to_dict() == result.receipt.to_dict()
+        # a packet with no doubt, or another doubt, does not name the inputs of its run
+        obj = json.loads(store.get("packet@1", packet))
+        other = store.put("doubt@1", jcs([{"start": 0, "end": 1, "confidence": 0.4}]).encode())
+        for changed in ({k: v for k, v in obj.items() if k != "doubt"}, {**obj, "doubt": other}):
+            bad = store.put("packet@1", jcs(changed).encode())
+            with pytest.raises(ValueError, match="another doubt"):
+                RunResult.load(store, bad)
+        # the doubt spans hold offsets and confidences, no text: forget keeps them
+        done = forget_packet(store, packet, "the owner asked")
+        assert not [d for d in done if d[0] == "doubt@1"]
+        assert store.get("doubt@1", json.loads(store.get("packet@1", packet))["doubt"])
+    # a document with no doubt gives a packet with no member doubt
+    clean = run(bare(text), Client(cited(quote)))
+    assert clean.receipt.decisions[0].outcome == "admitted"
+    with FolderStore(tmp_path / "store2") as store:
+        assert "doubt" not in json.loads(store.get("packet@1", clean.save(store)))
+
+
+def test_the_empty_receipt_of_a_run_keeps_the_doubt() -> None:
+    # The admission limit stops the run before its first admission: the run keeps the receipt
+    # with no candidates, and that receipt binds the doubt too.
+    doc = bare("Amount 5.\n", [{"start": 7, "end": 8, "confidence": 0.4}])
+    nothing = {"candidates": [], "not_found": ["amount"]}
+    result = run(doc, Client(nothing), max_admission_bytes=100)
+    assert not result.complete and result.receipt.doubt_sha256 is not None
+    assert gg.verify(result.receipt.to_dict(), doc.text, SCHEMA, result.candidates,
+                     doubt=doc.doubt).ok  # fmt: skip
+    assert replay(result.record, result.artifacts, doc, SCHEMA).ok
+
+
+def test_the_rounding_rule_reads_the_doubt_of_the_exact_figure() -> None:
+    # The exact figure is on a doubted word, so it is not admitted, and the rounded figure
+    # stays: a drop stands only when the exact figure is admitted without it.
+    schema = {"fields": {"revenue": {"type": "number", "aliases": ["Revenue"]}}}
+    text = "Revenue rose to 17.3bn.\n(in millions)\nRevenue\t17,284\n"
+    start = text.encode().index(b"17,284")
+    doc = bare(text, [{"start": start, "end": start + 6, "confidence": 0.4}])
+
+    def item(quote: str, role: str = "value") -> dict[str, Any]:
+        return {"source": "document", "role": role, "text": quote}
+
+    rounded = {"field": "revenue", "value": "17300000000", "unit": None, "key": None,
+               "evidence": [item("17.3bn")]}  # fmt: skip
+    exact = {"field": "revenue", "value": "17284000000", "unit": None, "key": None,
+             "evidence": [item("17,284"), item("Revenue", "field"),
+                          item("in millions", "scale")]}  # fmt: skip
+    reply = {"candidates": [rounded, exact], "not_found": []}
+    result = run(doc, Client(reply), schema, drop_rounded=True)
+    assert [c["id"] for c in result.candidates] == ["c1-1", "c1-2"]
+    assert any("READ_DOUBT" in d.codes for d in result.receipt.decisions)
+    assert replay(result.record, result.artifacts, doc, schema).ok
+    # without the doubt, the same reply drops the rounded figure
+    clean = run(bare(text), Client(reply), schema, drop_rounded=True)
+    assert [c["id"] for c in clean.candidates] == ["c1-2"]
 
 
 def test_the_runner_checks_the_document() -> None:

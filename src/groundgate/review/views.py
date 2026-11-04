@@ -103,7 +103,7 @@ def _heads(obj: Any) -> dict[str, str] | None:
             return None
         try:
             out[reviewer_key(a["reviewer"])] = a["head"]
-        except UnicodeEncodeError:
+        except ValueError:  # a name that is not NFC, or that has no UTF-8, has no key
             return None
     return out
 

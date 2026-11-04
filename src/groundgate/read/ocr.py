@@ -1,7 +1,8 @@
 """OCR of a scanned PDF page with the Tesseract program (#7). Needs ``groundgate[ocr]``.
 
 OCR is opt-in: ``read(path, ocr=True)`` or ``groundgate read --ocr``. An OCR word can be wrong,
-and the extract path does not give ``doubt`` to ``admit`` yet (#573), so OCR is off by default.
+so OCR is off by default. ``extract`` gives the ``doubt`` spans of a scan to ``admit``, and
+evidence on a word with a low confidence goes to review (#573).
 
 A page with no text layer and an image is a scan. pypdfium2 (Apache-2.0 or BSD-3-Clause) renders
 the page in gray at 300 dpi, and the ``tesseract`` program reads the image and gives a TSV table

@@ -32,6 +32,7 @@ import contextlib
 import json
 import re
 import sys
+import unicodedata
 from collections import Counter
 from collections.abc import Iterator
 from pathlib import Path
@@ -58,6 +59,13 @@ def _unique(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
 
 def _constant(name: str) -> Any:
     raise ValueError(f"{name} is not valid JSON")
+
+
+def _nfc(option: str, name: str | None) -> None:
+    """Refuse a name that is not NFC, and name its option. The store files a log under the key
+    of the name, so one name must have one form (#418)."""
+    if name is not None and not unicodedata.is_normalized("NFC", name):
+        raise ValueError(f"{option} must be NFC text; normalize the name to NFC and try again")
 
 
 def _json(path: str) -> Any:
@@ -613,6 +621,7 @@ def _review_tasks(args: argparse.Namespace) -> int:
 def _review_serve(args: argparse.Namespace) -> int:
     from .review.serve import Review, server
 
+    _nfc("--reviewer", args.reviewer)
     policy = _json(args.policy) if args.policy else None
     if not 0 <= args.port <= 65535:
         raise ValueError("the port must be from 0 to 65535")
@@ -634,6 +643,7 @@ def _review_serve(args: argparse.Namespace) -> int:
 def _review_measures(args: argparse.Namespace) -> int:
     from .review.measures import lines, measures
 
+    _nfc("--set", args.set)
     policy = _json(args.policy) if args.policy else None
     with _store(args.store, make=False) as store:
         measured = measures(store, policy, set_name=args.set, split=args.split)
@@ -651,6 +661,8 @@ def _review_resolve(args: argparse.Namespace) -> int:
     from .escape import escape
     from .review.resolve import lines, write_resolution
 
+    for name in args.reviewer:
+        _nfc("--reviewer", name)
     policy = _json(args.policy) if args.policy else None
     with _store(args.store, make=False) as store:
         resolved = write_resolution(store, args.packet, policy, args.reviewer)
