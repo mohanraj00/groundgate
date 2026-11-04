@@ -545,6 +545,16 @@ def test_a_dropped_sign_under_a_heading_scale_misses_the_scale() -> None:
     )
 
 
+def test_a_dropped_sign_counts_for_the_occurrence_rule() -> None:
+    doc = "-500 EUR\n-500 USD"
+    schema = {"fields": {"cost": {"type": "number", "unit": "USD"}}}
+    cand = {"id": "a", "field": "cost", "value": "500", "unit": "USD", "evidence": {"text": "-500"}}
+    d = gg.admit(doc, schema, [cand]).to_dict()["decisions"][0]
+    start = doc.encode().index(b"-500 USD")
+    assert (d["outcome"], d["codes"], d["missing"]) == ("needs_verification", ["SIGN_DROPPED"], [])
+    assert d["evidence"] == {"start": start, "end": start + 4}
+
+
 def test_failed_key_item_is_not_cleared_by_a_judgment() -> None:
     start = KEYED_DOC.encode().index(b"Notes")
     cand = _keyed({"role": "key", "start": start, "end": start + 5})

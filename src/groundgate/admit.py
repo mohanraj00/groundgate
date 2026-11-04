@@ -543,7 +543,6 @@ def _value_at(
     dropped = False
     if (  # a dropped sign (SPEC §3.1, #569)
         not hits
-        and lenient
         and not neg_item
         and value > 0
         and f.unit is not None
