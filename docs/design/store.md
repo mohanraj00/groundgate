@@ -376,8 +376,9 @@ also if it changes during the build.
    After `forget`, `verify` reports "input deleted", with the key, the time and the reason from
    `logs/deleted.jsonl`. An absent object with no deletion record gives "input missing". Neither
    gives "mismatch".
-4. **Do not store page images.** The review page calculates a crop from the source and the box
-   when it needs one, and it keeps the crop as a view. After `forget`, no crop is possible.
+4. **Do not store page images.** The review page calculates a crop from the source and the
+   box when it needs one (review.md §7). A crop is in one response only, and no kind holds
+   it. After `forget`, no crop is possible.
 5. **Encryption at rest belongs to the app.** The reference store writes plain files.
 6. **Use one layout for review and calibrate.** Review answers then become labels for
    `groundgate calibrate` with no conversion (section 10).
@@ -442,4 +443,4 @@ format.
    record version: with #382 if it changes the record.
 5. **Splits and calibrate labels.** The `splits` log for #383, and calibrate labels from the
    answer logs after #385.
-6. **Later.** `document@1` and the reading cache with #285 in 0.13, and the crop view in 0.14 (#537).
+6. **Later.** `document@1` and the reading cache with #285 in 0.13, and the crop view (#537, review.md §7).
