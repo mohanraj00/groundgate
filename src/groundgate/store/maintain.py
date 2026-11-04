@@ -23,7 +23,7 @@ from typing import Any
 
 from ..canonical import SPEC_VERSION, digest, jcs
 from . import KEY, FolderStore, NotFound, StoreError, Torn, _canonical, check_bytes, key
-from .packets import _PACKET, _READING, _READING2, READINGS, printable
+from .packets import _READING, _READING2, READINGS, packet_members, printable
 
 __all__ = ["Report", "check", "forget_packet", "rebuild"]
 
@@ -39,6 +39,7 @@ KINDS = (
     "pack@1",
     "candidates@1",
     "judgments@1",
+    "doubt@1",
     "admission@1",
     "layout@1",
     "text@1",
@@ -281,7 +282,7 @@ def _run_keys_index(objects: _Objects) -> dict[str, list[str]]:
 
 def _packet(objects: _Objects, k: str) -> dict[str, Any]:
     obj = objects.json("packet@1", k)
-    if not isinstance(obj, dict) or sorted(obj) != list(_PACKET) or obj["format"] != "packet@1":
+    if not packet_members(obj) or obj["format"] != "packet@1":
         raise StoreError(f"the packet@1 object {k} does not have the members of packet@1")
     document = obj["document"]
     if not isinstance(document, dict) or sorted(document) != ["id", "source", "text"]:
@@ -324,9 +325,10 @@ def _named(packet: Mapping[str, Any]) -> list[tuple[str, str]]:
         ("packs", "pack@1"),
         ("candidates", "candidates@1"),
         ("judgments", "judgments@1"),
+        ("doubt", "doubt@1"),
         ("receipt", "receipt@1"),
     ):
-        named.extend((kind, k) for k in _keys(packet[name]))
+        named.extend((kind, k) for k in _keys(packet.get(name)))
     return named
 
 
@@ -712,7 +714,7 @@ def _named_by_rest(objects: _Objects, gone: set[str]) -> set[str]:
 
 
 # The members that a correction packet of ``review resolve`` shares with its packet (#516).
-_SAME_INPUTS = ("spec", "document", "reading", "schema", "policy", "references", "packs")
+_SAME_INPUTS = ("spec", "document", "reading", "schema", "policy", "references", "packs", "doubt")
 _CORRECTIONS = frozenset({"correct", "adjust_span"})
 _RECORDS = frozenset({"task@1", "resolution@1"})  # the review records of a packet
 # The members of a receipt that record the inputs of ``admit`` other than the candidates.
@@ -779,7 +781,7 @@ def _review_plan(
             continue
         try:
             other = _packet(objects, k)
-            if other["run"] is not None or any(other[m] != obj[m] for m in _SAME_INPUTS):
+            if other["run"] is not None or any(other.get(m) != obj.get(m) for m in _SAME_INPUTS):
                 continue
             named = _named(other)
             found = None if wanted is None else _is_correction(objects, other, wanted)

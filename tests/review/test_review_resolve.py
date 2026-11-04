@@ -13,7 +13,7 @@ from typing import Any
 
 import pytest
 
-from groundgate import admit
+from groundgate import admit, verify
 from groundgate.canonical import jcs
 from groundgate.cli import main
 from groundgate.model import PacketError
@@ -1083,6 +1083,42 @@ def test_forget_removes_the_candidates_of_a_correction(tmp_path: Path) -> None:
         left, _ = store.object_keys()
     assert not any(state == "unchecked" for _, _, state, _ in done)
     assert not {k, got.key, tk, receipt, fixed} & set(left)
+
+
+def test_a_correction_keeps_the_doubt_of_the_packet(tmp_path: Path) -> None:
+    # The correction packet runs admit with the doubt of the packet (#573), so its receipt
+    # verifies from the store, and forget --all finds it as a correction.
+    data = FILES["one-choice"]["packet"]
+    doubt = [{"start": 0, "end": 1, "confidence": 0.4}]
+    root = tmp_path / "s"
+    with FolderStore(root) as store:
+        k, _ = admit_packet(
+            store, data["text"], data["schema"], data["candidates"], data["policy"],
+            None, data["judgments"], doubt=doubt,
+        )  # fmt: skip
+        tk, _ = task_keys(store, k)["revenue", None]
+        store.append(
+            ("answers", k, reviewer_key("ana")),
+            record(tk, "ana", "correct", candidate=correction("4200000")),
+        )
+        got = write_resolution(store, k, policy(), ["ana"])
+        assert got.resolution is not None and not got.problems
+        mine = json.loads(store.get("packet@1", k))
+        fixed = [
+            p for p in store.object_keys()[0]
+            if p != k and key("packet@1", store.object_bytes(p)) == p
+        ]  # fmt: skip
+        assert len(fixed) == 1
+        other = json.loads(store.get("packet@1", fixed[0]))
+        assert other["doubt"] == mine["doubt"]
+        found = load_packet(store, fixed[0])
+        assert found.doubt == doubt
+        assert verify(found.receipt, found.text, found.schema, found.candidates,
+                      **found.inputs()).ok  # fmt: skip
+    with FolderStore(root) as store:
+        done = forget_packet(store, k, "all", everything=True)
+        assert not any(state == "unchecked" for _, _, state, _ in done)
+        assert fixed[0] not in store.object_keys()[0]
 
 
 def test_forget_reports_an_answer_log_that_cannot_be_read(tmp_path: Path) -> None:

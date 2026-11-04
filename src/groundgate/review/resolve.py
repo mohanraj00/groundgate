@@ -524,6 +524,7 @@ def _admit_only(packet: Any) -> Correct:
             references=packet.references,
             document_source=packet.document_source,
             packs=packet.packs,
+            doubt=packet.doubt,
         ).to_dict()
         return receipt, _store_key("receipt@1", receipt)
 
@@ -566,6 +567,7 @@ def write_resolution(
             raise ValueError(
                 "a reviewer name must be a string with a character that is not a space"
             )
+        reviewer_key(name)  # a name that is not NFC raises before a write
     packet, schema, layout, problems = checked_packet(store, packet_key)
     if problems or schema is None:
         return Resolved(None, None, problems)
@@ -597,6 +599,7 @@ def write_resolution(
             document_source=packet.document_source,
             packs=packet.packs,
             reading=packet.reading,
+            doubt=packet.doubt,
         )
         if _store_key("receipt@1", receipt.to_dict()) != rkey:
             raise PacketError("a correction gave another receipt in the store")
