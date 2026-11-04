@@ -530,19 +530,25 @@ def _value_at(
         return need
 
     hits: list[tuple[Token, set[str]]] = []
+    equal = False  # a token equals the value, also where a heading scale is missing
     for k in toks:
         vals, _ = _values(t, k, neg_item, scale, signs)
-        if value in vals and (lenient or not heading(k, set())):
-            hits.append((k, heading(k, set())))
-    if not hits and lenient:
+        if value in vals:
+            equal = True
+            if lenient or not heading(k, set()):
+                hits.append((k, heading(k, set())))
+    if not hits:
         for k in toks:
             need = _missing(t, k, value, neg_item, scale_item is not None, scale, signs)
             if need is not None:
+                if not lenient:  # a part is missing, so the sign is not dropped
+                    return None, "VALUE_NOT_IN_EVIDENCE"
                 hits = [(k, heading(k, need))]
                 break
     dropped = False
     if (  # a dropped sign (SPEC §3.1, #569)
         not hits
+        and not equal
         and not neg_item
         and value > 0
         and f.unit is not None
@@ -550,7 +556,11 @@ def _value_at(
     ):
         for k in toks:
             vals, _ = _values(t, k, False, scale, signs)
-            if minus_sign(t.text, k) and value in {abs(v) for v in vals}:
+            if (
+                minus_sign(t.text, k)
+                and value in {abs(v) for v in vals}
+                and (lenient or not heading(k, set()))
+            ):
                 hits, dropped = [(k, heading(k, set()))], True
                 break
     if not hits:
