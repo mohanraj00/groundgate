@@ -6183,6 +6183,24 @@ vector(
 )  # fmt: skip
 
 
+# ---------------------------------------------------------------- the digit limit (spec 0.12, #580)
+BIG = "9" * 999990
+
+vector(
+    "135-scale-digit-limit",
+    "A scale that gives a value with more than 1,000,000 digits before the decimal point gives "
+    "the token no scaled value. The candidate is rejected, and admit raises no error. A scaled "
+    "value under the limit in the same document is admitted (spec 0.12, #580).",
+    "Cost 5 trillion USD.\n" + BIG + " trillion USD\n",
+    {"fields": {"cost": {"type": "number", "unit": "USD", "multiple": True}}},
+    [
+        c("dl1", "cost", "5000000000000", "USD", [q("5 trillion USD")]),
+        # spec 0.11 code raised decimal.Overflow here
+        c("dl2", "cost", "1", "USD", [q(BIG + " trillion USD", text=NO_TEXT)], NOT_IN),
+    ],
+)  # fmt: skip
+
+
 def main() -> None:
     out_dir = HERE / "vectors"
     out_dir.mkdir(exist_ok=True)
