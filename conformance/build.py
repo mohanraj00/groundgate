@@ -37,7 +37,7 @@ def vector(
     judgments: list[dict[str, Any]] | None = None,
     references: list[dict[str, Any]] | None = None,
     document_source: str | None = None,
-    relations: list[tuple[str, str | None, bool, str, str]] | None = None,
+    relations: list[tuple[str, str | None, bool, str | None, str | None]] | None = None,
     packs: list[dict[str, Any]] | None = None,
     doubt: list[dict[str, Any]] | None = None,
 ) -> None:
@@ -4496,6 +4496,29 @@ vector(
     relations=[("returns", None, True, "-0.05", "0.0555")],
 )  # fmt: skip
 
+# ---------------------------------------------------------------- the relation digit limit (spec 0.12, #582)
+vector(
+    "136-relation-digit-limit",
+    "A factor of 1,000,000 digits is valid. Times a part of 20, it gives a difference with "
+    "1,000,001 digits before the decimal point, past the digit limit. So the relation fails, "
+    "each of its values goes to review, and the receipt gives no difference and no allowance. "
+    "admit raises no error (spec 0.12, #582).",
+    "Total 5 USD. Part 20 USD.",
+    {
+        "fields": {"total": USD, "part": USD},
+        "relations": [
+            # 5 - 20 * 10^999999 has 1,000,001 digits before the decimal point
+            {"id": "big", "total": "total",
+             "parts": [{"field": "part", "factor": "1" + "0" * 999_999}]},
+        ],
+    },
+    [
+        c("rd1", "total", 5, "USD", [q("Total 5 USD")], (REVIEW, ["RELATION_FAILED"])),
+        c("rd2", "part", 20, "USD", [q("Part 20 USD")], (REVIEW, ["RELATION_FAILED"])),
+    ],
+    relations=[("big", None, False, None, None)],
+)  # fmt: skip
+
 TWO_USD = {"a": USD, "b": USD, "c": USD}
 INVALID.extend(
     [
@@ -4552,6 +4575,24 @@ INVALID.extend(
             ("mixed-keys", "either every field of a relation has keys, or none has",
              {**TWO_USD, "a": {**USD, "keys": ["2025"]}},
              [{"id": "r", "total": "a", "parts": [{"field": "b"}]}]),
+        ]
+    ]
+)  # fmt: skip
+
+INVALID.extend(
+    [
+        {
+            "name": f"schema-relation-{name}",
+            "description": f"A relation is invalid: {why} (SPEC §2.3, spec 0.12, #582).",
+            "document": "A is $3, B is $1 and C is $2.",
+            "schema": {"fields": TWO_USD, "relations": relations},
+            "policy": None,
+        }
+        for name, why, relations in [
+            ("factor-digits", "a factor has at most 1,000,000 digits before the decimal point",
+             [{"id": "r", "total": "a", "parts": [{"field": "b", "factor": "1" + "0" * 1_000_000}]}]),
+            ("tolerance-digits", "a tolerance has at most 1,000,000 digits before the decimal point",
+             [{"id": "r", "total": "a", "parts": [{"field": "b"}], "tolerance": "9" * 1_000_001}]),
         ]
     ]
 )  # fmt: skip

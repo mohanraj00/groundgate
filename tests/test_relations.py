@@ -5,7 +5,10 @@ from __future__ import annotations
 
 from typing import Any
 
+import pytest
+
 import groundgate as gg
+from groundgate.report import render
 
 USD = {"type": "integer", "unit": "USD"}
 DOC = "Revenue was $1.25 billion: $1 billion from sales and $250 million from fees."
@@ -144,3 +147,75 @@ def test_the_runner_asks_for_a_subset_of_the_fields_of_a_relation() -> None:
     shape = _output_schema(schema, ["sales"], [])
     plain = _output_schema(gg.Schema.from_dict({"fields": {"sales": USD}}), ["sales"], [])
     assert shape == plain
+
+
+NUMBER = {"type": "integer"}
+PAIR: dict[str, Any] = {
+    "fields": {"total": NUMBER, "part": NUMBER},
+    "relations": [{"id": "sum", "total": "total", "parts": [{"field": "part"}]}],
+}
+
+
+def pair(total: str, part: str) -> tuple[str, list[dict[str, Any]]]:
+    doc = f"Total {total}. Part {part}."
+    cands = [
+        {"field": f, "value": v, "evidence": {"text": f"{f.title()} {v}"}}
+        for f, v in (("total", total), ("part", part))
+    ]
+    return doc, cands
+
+
+def test_a_difference_past_the_digit_limit_fails_the_relation() -> None:
+    """A total of 1,000,001 nines and a part of 1: the difference has 1,000,001 digits before the
+    decimal point. The relation fails with no difference and no allowance (#582)."""
+    doc, cands = pair("9" * 1_000_001, "1")
+    receipt = gg.admit(doc, PAIR, cands).to_dict()
+    assert receipt["relations"] == [
+        {"id": "sum", "key": None, "holds": False, "difference": None, "allowance": None}
+    ]
+    assert [d["codes"] for d in receipt["decisions"]] == [["RELATION_FAILED"]] * 2
+    assert gg.verify(receipt, doc, PAIR, cands).ok
+    assert "<html" in render(receipt, doc, cands, schema=PAIR)
+
+
+def test_a_difference_at_the_digit_limit_is_a_decimal() -> None:
+    """1,000,000 nines minus 1 has 1,000,000 digits: under the limit, so it is exact."""
+    doc, cands = pair("9" * 1_000_000, "1")
+    relation = gg.admit(doc, PAIR, cands).to_dict()["relations"][0]
+    assert relation == {
+        "id": "sum",
+        "key": None,
+        "holds": False,
+        "difference": "9" * 999_999 + "8",
+        "allowance": "1",
+    }
+
+
+def test_an_allowance_past_the_digit_limit_fails_the_relation() -> None:
+    """A tolerance of 1,000,000 nines is valid. With the half places of the total and the part,
+    the allowance is 10^1000000, which has 1,000,001 digits (#582)."""
+    schema = {**PAIR, "relations": [{**PAIR["relations"][0], "tolerance": "9" * 1_000_000}]}
+    doc, cands = pair("5", "5")
+    receipt = gg.admit(doc, schema, cands).to_dict()
+    assert receipt["relations"][0] == {
+        "id": "sum",
+        "key": None,
+        "holds": False,
+        "difference": None,
+        "allowance": None,
+    }
+    assert gg.verify(receipt, doc, schema, cands).ok
+
+
+def test_a_factor_or_tolerance_past_the_digit_limit_is_invalid() -> None:
+    """The schema check counts the digits before the decimal point (SPEC §2.3, #582)."""
+    doc, cands = pair("5", "5")
+    too_long = "1" + "0" * 1_000_000
+    for member in ({"parts": [{"field": "part", "factor": too_long}]}, {"tolerance": too_long}):
+        schema = {**PAIR, "relations": [{**PAIR["relations"][0], **member}]}
+        with pytest.raises(gg.PacketError, match="1,000,000 digits before the decimal point"):
+            gg.admit(doc, schema, cands)
+    # 1,000,000 digits before the point, and any number after it, are valid.
+    tolerance = "9" * 999_999 + "." + "5" * 10
+    schema = {**PAIR, "relations": [{**PAIR["relations"][0], "tolerance": tolerance}]}
+    assert gg.admit(doc, schema, cands).relations[0].holds

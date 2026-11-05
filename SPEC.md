@@ -167,9 +167,11 @@ A relation is an object with only these members:
 - `parts`: a non-empty list of objects with only `field`, the name of a field in the schema, and
   `factor`. `factor` is a decimal string or an integer that reads as a number (§4.1), as a bound
   is, and it is not zero. The default is `"1"`. A factor of `"-1"` subtracts the part. A factor
-  such as `"0.001"` changes the unit of the part, for example from mg to g.
+  such as `"0.001"` changes the unit of the part, for example from mg to g. A factor has at most
+  1,000,000 digits before the decimal point (spec 0.12, #582).
 - `tolerance`: a decimal string or an integer that reads as a number, not negative, in the unit of
-  the total. The default is `"0"`.
+  the total. The default is `"0"`. A tolerance has at most 1,000,000 digits before the decimal
+  point (spec 0.12, #582).
 
 The packet is also invalid when `relations` is not a list, a relation breaks the rules above, or:
 
@@ -541,6 +543,13 @@ otherwise each key that every field of the relation lists, compared as exact str
 
 The arithmetic is exact, with no rounding. A field can be in several relations. A candidate gets
 the flag once, when one or more of them fail.
+
+**The digit limit (spec 0.12, #582).** When the difference or the allowance has more than
+1,000,000 digits before the decimal point, the relation fails at that key. This is the same limit
+as for a scaled value (§4.1, #580). Each candidate of the relation that passed with the key gets
+`RELATION_FAILED`, and the receipt result has `difference` and `allowance` null. So a document
+with a total of 1,000,001 nines and a part of 1 gives a decision, not an error, and its values go
+to review.
 
 The **place** of a candidate's value is one unit of its last written digit. On the checked path,
 it is the place of the supporting number token (§3.1): 1 for a token with no `.`, or 10^-d for a
@@ -1465,8 +1474,9 @@ policy.
 When the schema has relations, the receipt has a member `relations`: each relation that applied
 at a relation key (§3.4), as `{"id", "key", "holds", "difference", "allowance"}`, sorted by `id`,
 then by `key` in code point order. `key` is null for a relation over fields without `keys`.
-`holds` is a boolean. `difference` and `allowance` are canonical decimals (§4.1). A relation that
-did not apply is not listed, so the list can be empty. A receipt of a schema without relations
+`holds` is a boolean. `difference` and `allowance` are canonical decimals (§4.1), or both null
+when the relation fails at the digit limit (§3.4). A relation that did not apply is not listed,
+so the list can be empty. A receipt of a schema without relations
 has no `relations` member. `receipt_sha256` is the digest of kind `receipt` over the receipt without its
 `receipt_sha256` key.
 

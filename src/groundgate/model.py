@@ -26,7 +26,7 @@ from .pack import (
     pack_digest,
 )
 from .pack import PacketError as PacketError
-from .text import BASE_VOCABULARY, Vocabulary, normalize_ws, parse_value
+from .text import BASE_VOCABULARY, SCALED_DIGITS, Vocabulary, normalize_ws, parse_value
 
 FieldType = Literal["number", "integer", "string"]
 Comparator = Literal["eq", "gt", "ge", "lt", "le", "approx", "range"]
@@ -49,6 +49,15 @@ def _bound(name: str, raw: object, what: str = "field bound") -> Decimal | None:
     if value is None:
         raise PacketError(f"{what} {name}={raw!r} is not a decimal")
     return value
+
+
+def _digit_limit(name: str, value: Decimal | None, where: str) -> None:
+    """Refuse a relation factor or tolerance with more than ``SCALED_DIGITS`` digits before the
+    decimal point (SPEC §2.3, #582). The count reads the parsed digits: no arithmetic runs."""
+    if value and value.adjusted() >= SCALED_DIGITS:
+        raise PacketError(
+            f"{where}: a {name} has at most {SCALED_DIGITS:,} digits before the decimal point"
+        )
 
 
 @dataclass(frozen=True)
@@ -197,6 +206,7 @@ def _relations(raw: object, fields: dict[str, Field]) -> tuple[tuple[Relation, .
             f = _relation_field(where, part.get("field"), fields)
             given = part.get("factor", "1")
             factor = _bound("factor", given, where)
+            _digit_limit("factor", factor, where)
             if factor is None or factor == 0:
                 raise PacketError(f"{where}: a factor must be a decimal that is not zero")
             if "factor" not in part and f.unit != total.unit:
@@ -210,6 +220,7 @@ def _relations(raw: object, fields: dict[str, Field]) -> tuple[tuple[Relation, .
             raise PacketError(f"{where}: some of its fields have keys, and others do not")
         given_tolerance = r.get("tolerance", "0")
         tolerance = _bound("tolerance", given_tolerance, where)
+        _digit_limit("tolerance", tolerance, where)
         if tolerance is None or tolerance < 0:
             raise PacketError(f"{where} tolerance must be a decimal that is not negative")
         out.append(Relation(rid, total.name, tuple(parts), tolerance))
@@ -697,8 +708,8 @@ class RelationResult:
     id: str
     key: str | None
     holds: bool
-    difference: str  # canonical decimal
-    allowance: str  # canonical decimal
+    difference: str | None  # canonical decimal, or None past the digit limit (#582)
+    allowance: str | None  # canonical decimal, or None past the digit limit (#582)
 
     def to_dict(self) -> dict[str, Any]:
         return {
