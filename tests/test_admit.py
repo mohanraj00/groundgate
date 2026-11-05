@@ -598,6 +598,62 @@ def test_a_dropped_sign_in_brackets_compares_the_value_without_rounding() -> Non
     assert d["codes"] == ["VALUE_NOT_IN_EVIDENCE"]
 
 
+# 29 digits: one more than the default Decimal context keeps (#578)
+_N29 = "1.2345678901234567890123456789"
+_N29_ROUND = "1.234567890123456789012345679"
+_M29 = "1234567.8901234567890123456789"  # _N29 times a million
+_M29_ROUND = "1234567.890123456789012345679"
+
+
+def _outcome(doc: str, value: str, evidence: Any = None) -> tuple[str, list[str], list[str]]:
+    schema = {"fields": {"cost": {"type": "number", "unit": "USD"}}}
+    cand = {"id": "a", "field": "cost", "value": value, "unit": "USD",
+            "evidence": evidence or {"text": doc}}  # fmt: skip
+    d = gg.admit(doc, schema, [cand]).to_dict()["decisions"][0]
+    return d["outcome"], d["codes"], d["missing"]
+
+
+@pytest.mark.parametrize(
+    ("doc", "value", "missing"),
+    [
+        (f"{_N29} USD", "-" + _N29, ["sign"]),
+        (f"{_N29} USD", _M29, ["scale"]),
+        (f"({_N29}) USD", "-" + _M29, ["scale"]),
+        (f"{_N29} USD", "-" + _M29, ["sign", "scale"]),
+    ],
+)
+def test_a_missing_part_compares_the_value_without_rounding(
+    doc: str, value: str, missing: list[str]
+) -> None:
+    assert _outcome(doc, value) == ("needs_verification", ["PART_MISSING"], missing)
+    rounded = value.replace(_N29, _N29_ROUND).replace(_M29, _M29_ROUND)
+    assert _outcome(doc, rounded) == ("rejected", ["VALUE_NOT_IN_EVIDENCE"], [])
+
+
+def test_a_scale_word_scales_the_value_without_rounding() -> None:
+    doc = f"{_N29} million USD"
+    assert _outcome(doc, _M29) == ("admitted", [], [])
+    assert _outcome(doc, _M29_ROUND) == ("rejected", ["VALUE_NOT_IN_EVIDENCE"], [])
+
+
+def test_a_scale_item_scales_the_value_without_rounding() -> None:
+    doc = f"$m\nRevenue\t{_N29}\n"
+    ev = [{"text": _N29}, {"role": "scale", "text": "$m"}]
+    assert "VALUE_DERIVED" in _outcome(doc, _M29, ev)[1]
+    assert _outcome(doc, _M29_ROUND, ev) == ("rejected", ["VALUE_NOT_IN_EVIDENCE"], [])
+
+
+def test_the_scale_word_check_compares_the_value_without_rounding() -> None:
+    from decimal import Decimal
+
+    from groundgate.admit import _unscaled
+    from groundgate.text import Token
+
+    tok = Token(0, len(_N29), Decimal(_N29))
+    assert _unscaled(tok, Decimal("-" + _N29))
+    assert not _unscaled(tok, Decimal(_N29_ROUND))
+
+
 def test_a_missing_part_at_any_token_stops_a_dropped_sign() -> None:
     doc = "0.5 USD -500 USD"
     schema = {"fields": {"cost": {"type": "number", "unit": "USD"}}}

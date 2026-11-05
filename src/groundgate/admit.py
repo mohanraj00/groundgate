@@ -115,6 +115,8 @@ PART_ORDER = ("sign", "scale", "unit", "field", "column", "marker", "key")  # SP
 MAX_FIELD_ITEMS = 8  # the field items that a candidate can cite (SPEC §3 step 1, #300)
 MISSING_ORDER = ("sign", "scale", "unit", "key")
 _SCALES = (3, 5, 6, 7, 9, 12)  # the powers of ten of the scale words (SPEC §4.1)
+# scaleb in this context keeps each digit: the default context rounds to 28 digits (#578)
+_EXACT = Context(prec=MAX_PREC, traps=[Inexact])
 _ACTION_RANK = {"admit": 0, "review": 1, "reject": 2}
 
 
@@ -447,7 +449,7 @@ def _values(
     if sv is not None:
         out = {tok.value, sv}
     elif scale is not None:  # a scale item scales the number as written (#242)
-        out = {tok.value.scaleb(scale)}
+        out = {tok.value.scaleb(scale, _EXACT)}
     else:
         out = {tok.value}
     neg = neg_item or bracket_sign(t.text, tok, prefixes)
@@ -468,15 +470,16 @@ def _missing(
     """The parts that the value needs at this token and has no item for (SPEC §3.1)."""
     assert tok.value is not None
     base, neg = _values(t, tok, neg_item, scale, prefixes)
-    if not neg_item and value in {-abs(v) for v in base}:
+    if not neg_item and value in {v.copy_abs().copy_negate() for v in base}:
         return {"sign"}
     if scale_item or scaled_value(t.text, tok) is not None:
         return None
     for k in _SCALES:
-        times = tok.value.scaleb(k)
-        if value in ({times, -abs(times)} if neg else {times}):
+        times = tok.value.scaleb(k, _EXACT)
+        neg_times = times.copy_abs().copy_negate()
+        if value in ({times, neg_times} if neg else {times}):
             return {"scale"}
-        if not neg_item and value == -abs(times):
+        if not neg_item and value == neg_times:
             return {"sign", "scale"}
     return None
 
@@ -601,7 +604,11 @@ def _string_place(t: _Text, value: str, span: tuple[int, int]) -> tuple[int, int
 
 def _unscaled(tok: Token, value: Decimal | str) -> bool:
     """The value is the number as written, with any sign, not its scaled value (SCALE_WORD)."""
-    return tok.value is not None and isinstance(value, Decimal) and abs(tok.value) == abs(value)
+    return (
+        tok.value is not None
+        and isinstance(value, Decimal)
+        and tok.value.copy_abs() == value.copy_abs()
+    )
 
 
 def _same(a: _Item, b: _Item) -> bool:
