@@ -644,6 +644,13 @@ here is the rule at the start of §4. It also applies to the final `s` of a head
 item and a currency statement. So `THOUSAND`, `thouſand` (with U+017F), `bİllion` (U+0130) and
 `mıllıon` (U+0131) are scale words (spec 0.10, #350, #356).
 
+**The digit limit (spec 0.12, #580).** A scaled value has at most 1,000,000 digits before the
+decimal point. This applies to each scale: a scale word, a scale suffix, a heading scale, a
+currency statement and a scale item (§4.6). If a scale gives a value with more digits, the token
+has no scaled value for that scale. Its value as written and its other readings do not change. So
+a token of 999,990 nines followed by `trillion` has its value as written and no scaled value, and
+`admit` gives a decision, not an error.
+
 A **currency sign** is `$`, `€`, `£` or `₹`, the signs that §4.2 also lists. A number token with a
 value also has a scaled value when a currency sign stands directly before it and a **scale
 suffix** stands directly after it: `k` or `K` (10^3), `m` or `M` (10^6), or `bn`, `Bn` or `BN`

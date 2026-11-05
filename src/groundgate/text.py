@@ -39,6 +39,8 @@ _WINDOW = 40
 # scaleb in this context keeps each digit: the default context rounds to 28 digits (#578)
 _EXACT = Context(prec=MAX_PREC, traps=[Inexact])
 
+SCALED_DIGITS = 1_000_000  # the most digits before the decimal point of a scaled value (#580)
+
 
 @dataclass(frozen=True)
 class Token:
@@ -489,7 +491,18 @@ def scaled_value(text: str, tok: Token) -> Decimal | None:
     k = token_scale(text, tok)
     if k is None or tok.value is None:
         return None
-    return tok.value.scaleb(k, _EXACT)
+    return scale_by(tok.value, k)
+
+
+def scale_by(value: Decimal, power: int) -> Decimal | None:
+    """``value`` times ten to ``power``, or None if the result has more than ``SCALED_DIGITS``
+    digits before the decimal point (SPEC §4.1, the digit limit). The limit is on a scale, so
+    ``power`` 0 always gives ``value``, the value as written."""
+    if power == 0:
+        return value
+    if value and value.adjusted() + power >= SCALED_DIGITS:
+        return None
+    return value.scaleb(power, _EXACT)
 
 
 # ----------------------------------------------------------------------- units

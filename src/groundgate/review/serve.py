@@ -42,7 +42,7 @@ import unicodedata
 from collections.abc import Callable, Collection, Mapping
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
-from decimal import MAX_PREC, Context, Decimal, Inexact, InvalidOperation
+from decimal import Decimal, InvalidOperation
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from importlib.resources import files
 from typing import Any
@@ -65,6 +65,7 @@ from ..text import (
     normalize_ws,
     parse_value,
     quote_pattern,
+    scale_by,
     scale_powers,
     scaled_value,
     sentence,
@@ -123,7 +124,6 @@ SCALE_LINES = 10  # the lines above a selected number where the page looks for a
 MAX_TICKETS = 32
 MAX_CROPS = 64  # the crops of one task view; a new view ends the tickets of the last one
 CROP_CHILDREN = 4  # the crop processes that run at one time
-_EXACT = Context(prec=MAX_PREC, traps=[Inexact])  # a power of ten with no rounding, as in admit
 MAX_PARTS = 8
 ROLES = ("sign", "scale", "unit", "field", "key")
 _SETTLED = frozenset({"admitted", "confirmed", "chosen", "corrected", "not_in_document"})
@@ -738,7 +738,9 @@ class Review:
                 scaled = scaled_value(doc.units.text[:b], found[0])
                 power = self._part_scale(doc, body) if scaled is None else None
                 if power is not None:
-                    scaled = found[0].value.scaleb(power, _EXACT)
+                    scaled = scale_by(found[0].value, power)
+                    if scaled is None:
+                        raise Refused(400, "the scaled value has more than 1,000,000 digits")
                 number = found[0].value if scaled is None else scaled
             candidate["value"] = canonical(number)
             units = [c["unit"] for c in task["choices"] if isinstance(c["unit"], str)]
@@ -813,7 +815,9 @@ class Review:
             near = _near_scale(text, m) if token_scale(text[:b], m) is None else None
             if near is not None and abs_value == m.value.copy_abs():
                 power, line = near
-                full = abs_value.scaleb(power, _EXACT)
+                full = scale_by(abs_value, power)
+                if full is None:  # past the digit limit there is no value in full (#580)
+                    continue
                 out.append({"part": "scale", "text": (
                     f"The value is the number as written, {text[m.start : m.end]}, but the text "
                     f'above it gives a scale: "{line}". If the scale applies, select the scale '
@@ -981,7 +985,7 @@ def _near_scale(text: str, tok: Token) -> tuple[int, str] | None:
 
 def _scaled(amount: Decimal) -> set[Decimal]:
     """``amount`` at each scale that the reader knows, and not scaled."""
-    return {amount.scaleb(p, _EXACT) for p in scale_powers()}
+    return {v for p in scale_powers() if (v := scale_by(amount, p)) is not None}
 
 
 def _sign(value: Decimal) -> str:
