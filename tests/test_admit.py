@@ -1456,3 +1456,45 @@ def test_the_boundary_rule_reads_an_answer_slot_once() -> None:
         return run
 
     assert_linear(prepare, 1000, 4000)
+
+
+_LIMIT = 1_000_000  # the most digits before the decimal point of a scaled value (#580)
+
+
+@pytest.mark.parametrize(
+    ("power", "doc", "unit", "scale", "under"),
+    [  # under: the outcome of the scaled value just under the limit
+        (12, "{} trillion USD", "USD", None, ("admitted", [], [])),
+        (9, "${}bn", "USD", None, ("admitted", [], [])),
+        (3, "(in thousands)\n\nCost\t{} USD\n", "USD", None,
+         ("needs_verification", ["PART_MISSING"], ["scale"])),
+        (6, "(in millions of Canadian dollars)\nCost\t{}\n", "CAD",
+         "in millions of Canadian dollars", ("admitted", ["VALUE_DERIVED"], [])),
+        (6, "$m\nRevenue\t{}\n", "USD", "$m",
+         ("needs_verification", ["PART_MISSING", "VALUE_DERIVED"], ["unit"])),
+    ],
+)  # fmt: skip
+def test_a_scale_past_the_digit_limit_gives_no_scaled_value(
+    power: int, doc: str, unit: str, scale: str | None, under: tuple[str, list[str], list[str]]
+) -> None:
+    """A scale word, a scale suffix, a heading scale, a currency statement and a scale item."""
+
+    def outcome(digits: int, value: str) -> tuple[str, list[str], list[str]]:
+        n = "9" * digits
+        ev = (
+            {"text": doc.format(n)}
+            if scale is None
+            else [{"text": n}, {"role": "scale", "text": scale}]
+        )
+        schema = {"fields": {"cost": {"type": "number", "unit": unit}}}
+        cand = {"id": "a", "field": "cost", "value": value.format(n), "unit": unit, "evidence": ev}
+        d = gg.admit(doc.format(n), schema, [cand]).to_dict()["decisions"][0]
+        return d["outcome"], d["codes"], d["missing"]
+
+    digits = _LIMIT - power  # with the scale, exactly 1,000,000 digits
+    scaled = "{}" + "0" * power
+    assert outcome(digits, scaled) == under
+    assert outcome(digits + 1, scaled) == ("rejected", ["VALUE_NOT_IN_EVIDENCE"], [])
+    assert outcome(digits + 1, "{}") == outcome(
+        digits, "{}"
+    )  # the value as written does not change

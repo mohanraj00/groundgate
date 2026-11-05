@@ -65,6 +65,7 @@ from .text import (
     qualifiers,
     quote_pattern,
     scale_between,
+    scale_by,
     scale_form,
     scale_word,
     scaled_value,
@@ -115,8 +116,6 @@ PART_ORDER = ("sign", "scale", "unit", "field", "column", "marker", "key")  # SP
 MAX_FIELD_ITEMS = 8  # the field items that a candidate can cite (SPEC §3 step 1, #300)
 MISSING_ORDER = ("sign", "scale", "unit", "key")
 _SCALES = (3, 5, 6, 7, 9, 12)  # the powers of ten of the scale words (SPEC §4.1)
-# scaleb in this context keeps each digit: the default context rounds to 28 digits (#578)
-_EXACT = Context(prec=MAX_PREC, traps=[Inexact])
 _ACTION_RANK = {"admit": 0, "review": 1, "reject": 2}
 
 
@@ -449,7 +448,8 @@ def _values(
     if sv is not None:
         out = {tok.value, sv}
     elif scale is not None:  # a scale item scales the number as written (#242)
-        out = {tok.value.scaleb(scale, _EXACT)}
+        scaled = scale_by(tok.value, scale)
+        out = set() if scaled is None else {scaled}
     else:
         out = {tok.value}
     neg = neg_item or bracket_sign(t.text, tok, prefixes)
@@ -475,7 +475,9 @@ def _missing(
     if scale_item or scaled_value(t.text, tok) is not None:
         return None
     for k in _SCALES:
-        times = tok.value.scaleb(k, _EXACT)
+        times = scale_by(tok.value, k)
+        if times is None:  # past the digit limit, the token has no value at this scale (#580)
+            continue
         neg_times = times.copy_abs().copy_negate()
         if value in ({times, neg_times} if neg else {times}):
             return {"scale"}
