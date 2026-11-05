@@ -11,7 +11,7 @@ import unicodedata
 from collections.abc import Iterable, Iterator
 from contextvars import ContextVar
 from dataclasses import dataclass
-from decimal import Decimal, InvalidOperation
+from decimal import MAX_PREC, Context, Decimal, Inexact, InvalidOperation
 from typing import Any
 
 from .fold import LOOK_ALIKE, fold_text, folded_word
@@ -34,6 +34,10 @@ _CODE = re.compile(r"\S*?\d|[A-Z]{2}")
 _WS = re.compile(r"\s+")
 _HYPHEN_BREAK = re.compile(r"-\n\s*")
 _WINDOW = 40
+
+
+# scaleb in this context keeps each digit: the default context rounds to 28 digits (#578)
+_EXACT = Context(prec=MAX_PREC, traps=[Inexact])
 
 
 @dataclass(frozen=True)
@@ -485,7 +489,7 @@ def scaled_value(text: str, tok: Token) -> Decimal | None:
     k = token_scale(text, tok)
     if k is None or tok.value is None:
         return None
-    return tok.value.scaleb(k)
+    return tok.value.scaleb(k, _EXACT)
 
 
 # ----------------------------------------------------------------------- units
