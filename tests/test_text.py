@@ -29,6 +29,7 @@ from groundgate.text import (
     parse_value,
     qualifiers,
     scale_form,
+    scaled_value,
     sentence,
     sentence_index,
     token_scale,
@@ -639,3 +640,10 @@ def test_the_longest_form_reads_per_and_slash(text: str) -> None:
 @pytest.mark.parametrize("text", ["\tUS$ million", "Amounts in US dollars million", "MUS$ million"])
 def test_a_longest_form_with_no_per_counts(text: str) -> None:
     assert scale_form(text, 0, len(text), "USD", USD_FORMS)
+
+
+def test_scaled_value_keeps_each_digit() -> None:
+    """29 digits: the default Decimal context rounds to 28 (#578)."""
+    text = "1.2345678901234567890123456789 thousand"
+    (tok,) = tokens(text)
+    assert scaled_value(text, tok) == Decimal("1234.5678901234567890123456789")
