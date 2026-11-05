@@ -434,6 +434,7 @@ A fact that passes every check can still be flagged for a person:
 | `QUALIFIED_VALUE` | "up to", "approximately", "or more" changes the value, and the schema didn't declare it |
 | `SCALE_WORD` | "million", "lakh" and similar follow the value, and the value was given unscaled |
 | `PART_MISSING` | the value needs a sign, a scale or a unit that no evidence item supports |
+| `SIGN_DROPPED` | a positive amount matches a number printed with a minus sign, as 3266 at "-3,266" (spec 0.12) |
 | `SIGN_CITATION_INVALID`, `SCALE_CITATION_INVALID`, `UNIT_CITATION_INVALID`, `FIELD_CITATION_INVALID` | a cited part fails its check |
 | `KEY_NOT_AT_VALUE` | the text puts no key, or another key, at the value, such as another indication's heading |
 | `KEY_CITATION_INVALID` | the cited key item does not name the key |

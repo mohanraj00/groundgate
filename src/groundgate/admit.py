@@ -45,6 +45,7 @@ from .text import (
     code_scale_cut,
     currency_name,
     currency_scale,
+    currency_unit,
     first_token_end,
     form_next,
     gain_word,
@@ -58,6 +59,7 @@ from .text import (
     key_mentions,
     keys_at,
     loss_sign,
+    minus_sign,
     normalize_ws,
     parse_value,
     qualifiers,
@@ -82,6 +84,7 @@ FLAG_ORDER = (  # SPEC §3.3 table order; it is part of every receipt hash
     "QUALIFIED_VALUE",
     "SCALE_WORD",
     "PART_MISSING",
+    "SIGN_DROPPED",
     "SIGN_CITATION_INVALID",
     "SCALE_CITATION_INVALID",
     "UNIT_CITATION_INVALID",
@@ -355,6 +358,7 @@ class _At:
     token: Token | None
     missing: set[str] = field(default_factory=set)
     derived: bool = False
+    dropped: bool = False  # the sign is dropped (SPEC §3.1, #569)
     start: int | None = None  # a string value's first occurrence in the span (#140)
     end: int | None = None  # the end of that occurrence
 
@@ -448,7 +452,7 @@ def _values(
         out = {tok.value}
     neg = neg_item or bracket_sign(t.text, tok, prefixes)
     if neg:
-        out |= {-abs(v) for v in out}
+        out |= {v.copy_abs().copy_negate() for v in out}
     return out, neg
 
 
@@ -526,15 +530,38 @@ def _value_at(
         return need
 
     hits: list[tuple[Token, set[str]]] = []
+    equal = False  # a token equals the value, also where a heading scale is missing
     for k in toks:
         vals, _ = _values(t, k, neg_item, scale, signs)
-        if value in vals and (lenient or not heading(k, set())):
-            hits.append((k, heading(k, set())))
-    if not hits and lenient:
+        if value in vals:
+            equal = True
+            if lenient or not heading(k, set()):
+                hits.append((k, heading(k, set())))
+    if not hits:
         for k in toks:
             need = _missing(t, k, value, neg_item, scale_item is not None, scale, signs)
             if need is not None:
+                if not lenient:  # a part is missing, so the sign is not dropped
+                    return None, "VALUE_NOT_IN_EVIDENCE"
                 hits = [(k, heading(k, need))]
+                break
+    dropped = False
+    if (  # a dropped sign (SPEC §3.1, #569)
+        not hits
+        and not equal
+        and not neg_item
+        and value > 0
+        and f.unit is not None
+        and currency_unit(f.unit, prefixes)
+    ):
+        for k in toks:
+            vals, _ = _values(t, k, False, scale, signs)
+            if (
+                minus_sign(t.text, k)
+                and value in {v.copy_abs() for v in vals}
+                and (lenient or not heading(k, set()))
+            ):
+                hits, dropped = [(k, heading(k, set()))], True
                 break
     if not hits:
         return None, "VALUE_NOT_IN_EVIDENCE"
@@ -542,7 +569,8 @@ def _value_at(
     def at(k: Token, need: set[str]) -> _At:
         assert k.value is not None
         plain = {k.value, scaled_value(t.text, k)}
-        return _At(item, t, span, k, need, derived=not need and value not in plain)
+        derived = not need and not dropped and value not in plain
+        return _At(item, t, span, k, need, derived=derived, dropped=dropped)
 
     if f.unit is None:
         return at(*hits[0]), None
@@ -555,7 +583,9 @@ def _value_at(
                 return at(k, need), None
             if lenient:
                 a = at(k, need | {"unit"})
-                a.derived = not need and value not in {k.value, scaled_value(t.text, k)}
+                a.derived = (
+                    not need and not dropped and value not in {k.value, scaled_value(t.text, k)}
+                )
                 return a, None
     if failed is not None:
         failed.append(hits[0][0])
@@ -784,6 +814,8 @@ def _checked(
             flags.append("SCALE_WORD")
     if at.missing:
         flags.append("PART_MISSING")
+    if at.dropped:
+        flags.append("SIGN_DROPPED")
     if at.derived:
         info.add("VALUE_DERIVED")
     p = _Passed(f, "", None, key, at, flags, info, vitem.source, missing=set(at.missing))

@@ -1,0 +1,169 @@
+{
+ "name": "133-sign-dropped",
+ "description": "On a field with a currency unit, a positive value with no sign item at a token printed with a leading - or the minus sign goes to review with SIGN_DROPPED, and is not rejected. A negative value at that token, and a positive value at a token in brackets, do not change. On a field whose unit is not a currency unit, the positive value is still rejected (spec 0.12, #569).",
+ "document": "Income statement\n\nRevenue\t9,852\nCost of goods sold\t-3,266\nOther costs\t−45\nDistribution costs\t(120)\nLowest temperature\t-40\n",
+ "schema": {
+  "fields": {
+   "zar": {
+    "type": "number",
+    "unit": "ZAR",
+    "multiple": true,
+    "aliases": [
+     "Cost of goods sold",
+     "Other costs",
+     "Distribution costs"
+    ]
+   },
+   "temp": {
+    "type": "number",
+    "unit": "C",
+    "multiple": false,
+    "aliases": [
+     "Lowest temperature"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "sd1",
+   "field": "zar",
+   "value": "3266",
+   "unit": "ZAR",
+   "evidence": [
+    {
+     "start": 51,
+     "end": 57,
+     "text": "-3,266"
+    },
+    {
+     "role": "field",
+     "text": "Cost of goods sold"
+    }
+   ]
+  },
+  {
+   "id": "sd2",
+   "field": "zar",
+   "value": "45",
+   "unit": "ZAR",
+   "evidence": [
+    {
+     "start": 70,
+     "end": 75,
+     "text": "−45"
+    },
+    {
+     "role": "field",
+     "text": "Other costs"
+    }
+   ]
+  },
+  {
+   "id": "sd3",
+   "field": "zar",
+   "value": "-3266",
+   "unit": "ZAR",
+   "evidence": [
+    {
+     "start": 51,
+     "end": 57,
+     "text": "-3,266"
+    },
+    {
+     "role": "field",
+     "text": "Cost of goods sold"
+    }
+   ]
+  },
+  {
+   "id": "sd4",
+   "field": "zar",
+   "value": "120",
+   "unit": "ZAR",
+   "evidence": [
+    {
+     "start": 95,
+     "end": 100,
+     "text": "(120)"
+    },
+    {
+     "role": "field",
+     "text": "Distribution costs"
+    }
+   ]
+  },
+  {
+   "id": "sd5",
+   "field": "temp",
+   "value": "40",
+   "unit": "C",
+   "evidence": [
+    {
+     "start": 120,
+     "end": 123,
+     "text": "-40"
+    },
+    {
+     "role": "field",
+     "text": "Lowest temperature"
+    }
+   ]
+  },
+  {
+   "id": "sd6",
+   "field": "zar",
+   "value": "3267",
+   "unit": "ZAR",
+   "evidence": [
+    {
+     "start": 51,
+     "end": 57,
+     "text": "-3,266"
+    },
+    {
+     "role": "field",
+     "text": "Cost of goods sold"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SIGN_DROPPED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SIGN_DROPPED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

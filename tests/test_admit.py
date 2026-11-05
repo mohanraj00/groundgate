@@ -332,7 +332,7 @@ def test_flag_order_and_code_descriptions_are_pinned() -> None:
 
     assert FLAG_ORDER == (
         "NON_VERBATIM_EVIDENCE", "QUALIFIED_VALUE", "SCALE_WORD", "PART_MISSING",
-        "SIGN_CITATION_INVALID", "SCALE_CITATION_INVALID", "UNIT_CITATION_INVALID",
+        "SIGN_DROPPED", "SIGN_CITATION_INVALID", "SCALE_CITATION_INVALID", "UNIT_CITATION_INVALID",
         "FIELD_CITATION_INVALID", "KEY_NOT_AT_VALUE", "KEY_CITATION_INVALID",
         "COLUMN_NOT_AT_VALUE", "MARKER_OTHER_FIELD", "READ_DOUBT", "EVIDENCE_QUOTED",
         "EVIDENCE_STATED", "LOW_CONFIDENCE", "CONFLICTING_CANDIDATES", "RELATION_FAILED",
@@ -525,6 +525,89 @@ def test_parts_report_byte_spans_and_verify() -> None:
     assert gg.verify(r.to_dict(), KEYED_DOC, KEYED_SCHEMA, [cand]).ok
     d0 = gg.admit(KEYED_DOC, KEYED_SCHEMA, [_keyed()]).to_dict()["decisions"][0]
     assert (d0["codes"], d0["parts"], d0["missing"]) == (["KEY_NOT_AT_VALUE"], [], ["key"])
+
+
+def test_a_dropped_sign_under_a_heading_scale_misses_the_scale() -> None:
+    doc = "(in thousands)\n\nCost\t-500 USD\n"
+    schema = {"fields": {"cost": {"type": "number", "unit": "USD"}}}
+    cand = {
+        "id": "a",
+        "field": "cost",
+        "value": "500",
+        "unit": "USD",
+        "evidence": {"text": "-500 USD"},
+    }
+    d = gg.admit(doc, schema, [cand]).to_dict()["decisions"][0]
+    assert (d["outcome"], d["codes"], d["missing"]) == (
+        "needs_verification",
+        ["PART_MISSING", "SIGN_DROPPED"],
+        ["scale"],
+    )
+
+
+def test_a_dropped_sign_counts_for_the_occurrence_rule() -> None:
+    doc = "-500 EUR\n-500 USD"
+    schema = {"fields": {"cost": {"type": "number", "unit": "USD"}}}
+    cand = {"id": "a", "field": "cost", "value": "500", "unit": "USD", "evidence": {"text": "-500"}}
+    d = gg.admit(doc, schema, [cand]).to_dict()["decisions"][0]
+    start = doc.encode().index(b"-500 USD")
+    assert (d["outcome"], d["codes"], d["missing"]) == ("needs_verification", ["SIGN_DROPPED"], [])
+    assert d["evidence"] == {"start": start, "end": start + 4}
+
+
+def test_a_dropped_sign_under_a_heading_scale_does_not_pass_the_strict_check() -> None:
+    doc = "(in thousands)\n\nCost\t-500 USD\n\n\n-500 USD"
+    schema = {"fields": {"cost": {"type": "number", "unit": "USD"}}}
+    cand = {
+        "id": "a",
+        "field": "cost",
+        "value": "500",
+        "unit": "USD",
+        "evidence": {"text": "-500 USD"},
+    }
+    d = gg.admit(doc, schema, [cand]).to_dict()["decisions"][0]
+    start = doc.encode().rindex(b"-500 USD")
+    assert (d["outcome"], d["codes"], d["missing"]) == ("needs_verification", ["SIGN_DROPPED"], [])
+    assert d["evidence"] == {"start": start, "end": start + 8}
+
+
+def test_a_dropped_sign_compares_the_value_without_rounding() -> None:
+    doc = "-1.2345678901234567890123456789 USD"
+    schema = {"fields": {"cost": {"type": "number", "unit": "USD"}}}
+
+    def codes(value: str) -> list[str]:
+        cand = {
+            "id": "a",
+            "field": "cost",
+            "value": value,
+            "unit": "USD",
+            "evidence": {"text": doc},
+        }
+        return gg.admit(doc, schema, [cand]).to_dict()["decisions"][0]["codes"]  # type: ignore[no-any-return]
+
+    assert codes("1.2345678901234567890123456789") == ["SIGN_DROPPED"]
+    assert codes("1.234567890123456789012345679") == ["VALUE_NOT_IN_EVIDENCE"]
+
+
+def test_a_dropped_sign_in_brackets_compares_the_value_without_rounding() -> None:
+    doc = "(-1.2345678901234567890123456789) USD"
+    schema = {"fields": {"cost": {"type": "number", "unit": "USD"}}}
+    cand = {"id": "a", "field": "cost", "value": "1.234567890123456789012345679", "unit": "USD",
+            "evidence": {"text": doc}}  # fmt: skip
+    d = gg.admit(doc, schema, [cand]).to_dict()["decisions"][0]
+    assert d["codes"] == ["VALUE_NOT_IN_EVIDENCE"]
+
+
+def test_a_missing_part_at_any_token_stops_a_dropped_sign() -> None:
+    doc = "0.5 USD -500 USD"
+    schema = {"fields": {"cost": {"type": "number", "unit": "USD"}}}
+    cand = {"id": "a", "field": "cost", "value": "500", "unit": "USD", "evidence": {"text": doc}}
+    d = gg.admit(doc, schema, [cand]).to_dict()["decisions"][0]
+    assert (d["outcome"], d["codes"], d["missing"]) == (
+        "needs_verification",
+        ["PART_MISSING"],
+        ["scale"],
+    )
 
 
 def test_failed_key_item_is_not_cleared_by_a_judgment() -> None:

@@ -6127,6 +6127,62 @@ vector(
 )  # fmt: skip
 
 
+# ---------------------------------------------------------------- a dropped sign (spec 0.12, #569)
+SIGN_DROPPED = (REVIEW, ["SIGN_DROPPED"])
+
+vector(
+    "133-sign-dropped",
+    "On a field with a currency unit, a positive value with no sign item at a token printed "
+    "with a leading - or the minus sign goes to review with SIGN_DROPPED, and is not rejected. "
+    "A negative value at that token, and a positive value at a token in brackets, do not change. "
+    "On a field whose unit is not a currency unit, the positive value is still rejected "
+    "(spec 0.12, #569).",
+    "Income statement\n\n"
+    "Revenue\t9,852\n"
+    "Cost of goods sold\t-3,266\n"
+    "Other costs\t\u221245\n"
+    "Distribution costs\t(120)\n"
+    "Lowest temperature\t-40\n",
+    {"fields": {"zar": money("ZAR", "Cost of goods sold", "Other costs", "Distribution costs",
+                             multiple=True),
+                "temp": {"type": "number", "unit": "C", "multiple": False,
+                         "aliases": ["Lowest temperature"]}}},
+    [
+        # rejected with VALUE_NOT_IN_EVIDENCE in spec 0.11
+        c("sd1", "zar", "3266", "ZAR", [q("-3,266"), row("Cost of goods sold")], SIGN_DROPPED),
+        c("sd2", "zar", "45", "ZAR", [q("\u221245"), row("Other costs")], SIGN_DROPPED),
+        # must not change: the value keeps the sign
+        c("sd3", "zar", "-3266", "ZAR", [q("-3,266"), row("Cost of goods sold")]),
+        # must not change: brackets already give both signs (§4.6)
+        c("sd4", "zar", "120", "ZAR", [q("(120)"), row("Distribution costs")]),
+        # must not change: C is no currency unit
+        c("sd5", "temp", "40", "C", [q("-40"), row("Lowest temperature")], NOT_IN),
+        # must not change: no token has the absolute value 3267
+        c("sd6", "zar", "3267", "ZAR", [q("-3,266"), row("Cost of goods sold")], NOT_IN),
+    ],
+)  # fmt: skip
+
+vector(
+    "134-sign-dropped-span",
+    "A dropped sign on a decimal value and on a value without a row of its own. When the span "
+    "also holds a token that equals the value, the sign is not dropped and the candidate is "
+    "admitted as before (spec 0.12, #569).",
+    "Cash flow statement\n\n"
+    "Interest paid\t-1,250.50\n"
+    "Net change\t-500\t500\n",
+    {"fields": {"zar": money("ZAR", "Interest paid", "Net change", multiple=True)}},
+    [
+        # rejected with VALUE_NOT_IN_EVIDENCE in spec 0.11
+        c("sp1", "zar", "1250.5", "ZAR", [q("-1,250.50"), row("Interest paid")], SIGN_DROPPED),
+        c("sp2", "zar", "500", "ZAR", [q("-500"), row("Net change")], SIGN_DROPPED),
+        # must not change: a token in the span equals the value
+        c("sp3", "zar", "500", "ZAR", [q("-500\t500"), row("Net change")]),
+        # must not change: the value keeps the sign
+        c("sp4", "zar", "-1250.5", "ZAR", [q("-1,250.50"), row("Interest paid")]),
+    ],
+)  # fmt: skip
+
+
 def main() -> None:
     out_dir = HERE / "vectors"
     out_dir.mkdir(exist_ok=True)

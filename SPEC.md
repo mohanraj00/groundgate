@@ -373,7 +373,7 @@ The value item's **text** is the document, or its reference. The checks read tha
 |---:|---|---|
 | 9 | `SPAN_INVALID` | The value item's span, or `search_region`, is not a valid span (§2.2). |
 | 9a | `QUOTE_NOT_FOUND` | The value item is a quote, and it does not occur in the text (§4.6). |
-| 10 | `VALUE_NOT_IN_EVIDENCE` | No number token (§4.1) in the span equals `value` by one of its derived values (§4.6), and no part is missing (below). For `string` fields: the whitespace-normalised value is not a substring of the whitespace-normalised span text. |
+| 10 | `VALUE_NOT_IN_EVIDENCE` | No number token (§4.1) in the span equals `value` by one of its derived values (§4.6), and no part is missing (below), and the sign is not dropped (below). For `string` fields: the whitespace-normalised value is not a substring of the whitespace-normalised span text. |
 | 11 | `UNIT_NOT_IN_EVIDENCE` | The field has a unit, and no matching number token in the span has that unit at its location (§4.3). |
 
 `search_region` limits the search for a quote and for re-anchoring in the document. It does not
@@ -394,6 +394,13 @@ holds, and the decision lists the part in `missing`:
   token without a scale. This is added to the parts above.
 
 At a token, the sign alone is tried first, then the scale alone, then both.
+
+**A dropped sign.** On a field whose unit is a currency unit (§4.3), the sign is **dropped**
+when the candidate has no sign item, `value` is positive, no number token in the span equals
+`value` by a derived value and no part is missing, and `value` equals the absolute value of a
+derived value of a token whose value is negative by its leading `-` or `−`. Step 10 then does
+not reject. The candidate continues at the first such token, and gets the flag
+`SIGN_DROPPED`. If a heading scale reaches that token, `scale` is missing, as above. A sign item never makes a sign dropped (spec 0.12, #569).
 
 Step 11 does not reject at a matching token where **no unit form is next to the token**: no
 prefix of a unit in the table (§4.3) ends at the token's start (whitespace between them allowed),
@@ -463,6 +470,7 @@ rejected by steps 1–11 or on the outside path.
 | `QUALIFIED_VALUE` | A qualifier (§4.2) applies to the value in the text and its comparator differs from the field's `comparator`. Not on a `string` field. |
 | `SCALE_WORD` | A scale word or a scale suffix (§4.1) follows the value, and the candidate's `value` is the number as written, not its scaled value. Not on a `string` field. |
 | `PART_MISSING` | The decision lists a part in `missing` (§3.1). |
+| `SIGN_DROPPED` | The sign is dropped (§3.1): a positive value on a field with a currency unit matches a token printed with a minus sign. A dropped sign adds no `sign` to `missing` (spec 0.12, #569). |
 | `SIGN_CITATION_INVALID` | The sign item fails its check (§4.6). |
 | `SCALE_CITATION_INVALID` | The scale item fails its check. |
 | `UNIT_CITATION_INVALID` | The unit item fails its check. |
