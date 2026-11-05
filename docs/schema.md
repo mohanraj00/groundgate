@@ -634,6 +634,11 @@ has another unit than the total, it must give a factor. `tolerance` adds to the 
 unit of the total, and is `"0"` by default. The fields of a relation are numbers, not `multiple`,
 and all of them have `keys` or none of them. [SPEC.md](../SPEC.md) §3.4 has the rules.
 
+A factor or a tolerance has at most 1,000,000 digits before the decimal point, or the schema is
+invalid. The same limit applies to the difference and the allowance. If one of them has more
+digits, the relation fails, its values go to review, and the receipt gives `difference` and
+`allowance` as null. So a document with a total of 1,000,001 nines gets a decision, not an error.
+
 ## When the schema is invalid
 
 groundgate refuses an invalid schema. `admit` raises `gg.PacketError` and writes no receipt. The

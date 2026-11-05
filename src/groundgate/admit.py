@@ -12,8 +12,7 @@ from array import array
 from collections import defaultdict
 from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass, field
-from decimal import MAX_PREC, Context, Decimal, Inexact
-from fractions import Fraction
+from decimal import MAX_EMAX, MAX_PREC, MIN_EMIN, Context, Decimal, Inexact
 from typing import Any
 
 from .canonical import SPEC_VERSION, Offsets, digest, is_nfc
@@ -35,6 +34,7 @@ from .model import (
 )
 from .pack import BASE, checked_copy, reading_retired, receipt_packs, schema_named
 from .text import (
+    SCALED_DIGITS,
     HeadingIndex,
     Token,
     UnitPlaces,
@@ -1679,42 +1679,45 @@ def _admit(
     return Receipt(**{**draft.__dict__, "receipt_sha256": digest("receipt", draft.body())})
 
 
-def _place(p: _Passed) -> Fraction:
+# Exact decimal arithmetic for the relations (SPEC §3.4). A sum or a product of decimals is
+# exact here, and fast also for a value of 1,000,000 digits. A Fraction of such a value is not.
+_EXACT = Context(prec=MAX_PREC, Emax=MAX_EMAX, Emin=MIN_EMIN, traps=[Inexact])
+_SHORT = Context(prec=40, Emax=MAX_EMAX, Emin=MIN_EMIN, traps=[Inexact])
+_LIMIT = Decimal(f"1E{SCALED_DIGITS}")  # the least value past the digit limit (§3.4, #582)
+_HALF = Decimal("0.5")
+
+
+def _ratio(a: Decimal, b: Decimal) -> Decimal:
+    """``a / b``, where ``a`` is ``b`` times a scale (a decimal with a short coefficient)."""
+    try:
+        q = _SHORT.divide(a, b)
+        if _EXACT.multiply(q, b) == a:
+            return q
+    except Inexact:
+        pass
+    return _EXACT.divide(a, b)  # pragma: no cover - a scale has a short coefficient
+
+
+def _place(p: _Passed) -> Decimal:
     """One unit of the last written digit of a passed value, times the scale that the value
     takes from its token (SPEC §3.4). On the outside path, that of the canonical value."""
     tok = None if p.at is None else p.at.token
     if tok is None or tok.value is None:
         exponent = Decimal(p.value).as_tuple().exponent
         assert isinstance(exponent, int)
-        return Fraction(10) ** min(exponent, 0)
+        return Decimal((0, (1,), min(exponent, 0)))
     exponent = tok.value.as_tuple().exponent
     assert isinstance(exponent, int)
-    place = Fraction(10) ** exponent
+    place = Decimal((0, (1,), exponent))
     if tok.value != 0:
-        place *= abs(Fraction(Decimal(p.value))) / abs(Fraction(tok.value))
+        place = _EXACT.multiply(place, _ratio(_EXACT.abs(Decimal(p.value)), _EXACT.abs(tok.value)))
     return place
-
-
-def _decimal(x: Fraction) -> str:
-    """The canonical decimal of an exact sum of decimals (SPEC §4.1)."""
-    d = x.denominator  # 2^a * 5^b, because every input is a decimal
-    twos = (d & -d).bit_length() - 1
-    fives = d >> twos
-    b = max(0, round((fives.bit_length() - 1) / 2.321928094887362))  # log2(5)
-    while 5**b < fives:
-        b += 1
-    while b and 5 ** (b - 1) >= fives:
-        b -= 1
-    assert 5**b == fives
-    digits = max(twos, b)
-    # Decimal(int) and scaleb do not convert the int to a string, so no digit limit applies.
-    exact = Context(prec=MAX_PREC, traps=[Inexact])
-    return canonical(Decimal(x.numerator * (10**digits // d)).scaleb(-digits, exact))
 
 
 def _relate(relations: tuple[Relation, ...], passed: list[_Passed]) -> tuple[RelationResult, ...]:
     """Step 13: check each relation at each relation key, and flag the values of each relation
-    that fails (SPEC §3.4). The values come from the candidates that passed."""
+    that fails (SPEC §3.4). The values come from the candidates that passed. A difference or an
+    allowance past the digit limit fails the relation and has no canonical decimal (#582)."""
     by: dict[tuple[str, str | None], list[_Passed]] = defaultdict(list)
     for p in passed:
         by[p.field.name, p.key].append(p)
@@ -1722,34 +1725,39 @@ def _relate(relations: tuple[Relation, ...], passed: list[_Passed]) -> tuple[Rel
     for name, key in by:
         keys_of[name].add(key)
     out: list[RelationResult] = []
+    x = _EXACT
     for r in sorted(relations, key=lambda r: r.id):
         keys = sorted(keys_of.get(r.total, set()), key=lambda k: "" if k is None else k)
         for key in keys:
-            values: list[tuple[Fraction, Fraction]] = []  # (value, place) of each field
+            values: list[tuple[Decimal, Decimal]] = []  # (value, place) of each field
             for name in r.fields:
                 ps = by.get((name, key), [])
                 if len({p.value for p in ps}) != 1:
                     break  # no value that passed, or two values: the relation does not apply
-                values.append((Fraction(Decimal(ps[0].value)), min(_place(p) for p in ps)))
+                values.append((Decimal(ps[0].value), min(_place(p) for p in ps)))
             else:
                 (total, total_place), parts = values[0], values[1:]
-                factors = [Fraction(f) for _, f in r.parts]
-                difference = total - sum(
-                    (f * v for f, (v, _) in zip(factors, parts, strict=True)), Fraction(0)
-                )
-                allowance = Fraction(r.tolerance) + total_place / 2
-                allowance += sum(
-                    (abs(f) * place / 2 for f, (_, place) in zip(factors, parts, strict=True)),
-                    Fraction(0),
-                )
-                holds = abs(difference) <= allowance
+                difference = total
+                allowance = x.add(r.tolerance, x.multiply(total_place, _HALF))
+                for (_, f), (v, place) in zip(r.parts, parts, strict=True):
+                    difference = x.subtract(difference, x.multiply(f, v))
+                    allowance = x.add(allowance, x.multiply(x.multiply(x.abs(f), place), _HALF))
+                size = x.abs(difference)
+                within = size < _LIMIT and allowance < _LIMIT
+                holds = within and size <= allowance
                 if not holds:
                     for name in r.fields:
                         for p in by[name, key]:
                             if "RELATION_FAILED" not in p.flags:
                                 p.flags.append("RELATION_FAILED")
                 out.append(
-                    RelationResult(r.id, key, holds, _decimal(difference), _decimal(allowance))
+                    RelationResult(
+                        r.id,
+                        key,
+                        holds,
+                        canonical(difference) if within else None,
+                        canonical(allowance) if within else None,
+                    )
                 )
     return tuple(out)
 

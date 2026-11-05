@@ -569,7 +569,7 @@ Flags send the fact to a person:
 | `EVIDENCE_QUOTED`, `EVIDENCE_STATED` | Only outside evidence supports the value. | Check the source. If you trust it, add the URL prefix to `sources.external.allow`, or set `sources.knowledge` to `admit`. |
 | `LOW_CONFIDENCE` | The extractor's `confidence` is below `min_confidence`. | A person checks the fact. |
 | `CONFLICTING_CANDIDATES` | Two proposers read different values. | A person picks one. groundgate never picks. |
-| `RELATION_FAILED` | The values of a relation, such as a total and its parts, do not add up. One of them can be a number of another field. | A person checks each value of the relation. The receipt's `relations` gives the difference and the allowance. |
+| `RELATION_FAILED` | The values of a relation, such as a total and its parts, do not add up. One of them can be a number of another field. | A person checks each value of the relation. The receipt's `relations` gives the difference and the allowance, or null for both past 1,000,000 digits. |
 | `MODEL_DOUBT` | A recorded judgment of the policy's judge doubts the value or its key. | A person checks the fact. |
 
 `REQUIRED_FIELD_MISSING` is a coverage finding, not a decision: no candidate of a required field
