@@ -28,6 +28,7 @@ from groundgate.text import (
     keys_at,
     parse_value,
     qualifiers,
+    scale_by,
     scale_form,
     scaled_value,
     sentence,
@@ -647,3 +648,28 @@ def test_scaled_value_keeps_each_digit() -> None:
     text = "1.2345678901234567890123456789 thousand"
     (tok,) = tokens(text)
     assert scaled_value(text, tok) == Decimal("1234.5678901234567890123456789")
+
+
+@pytest.mark.parametrize("power", [3, 5, 12])
+def test_a_scaled_value_has_at_most_a_million_digits(power: int) -> None:
+    """The digit limit (#580): 1,000,000 digits before the decimal point give a value."""
+    under = Decimal(f"9.5E+{999_999 - power}")
+    assert scale_by(under, power) == Decimal("9.5E+999999")
+    assert scale_by(Decimal(f"9.5E+{1_000_000 - power}"), power) is None
+    assert scale_by(Decimal(0), power) == 0
+
+
+def test_power_zero_gives_the_value_as_written_past_the_digit_limit() -> None:
+    """The digit limit is on a scale: a number of 1,000,001 digits keeps its own value (#580)."""
+    big = Decimal("9E+1000000")
+    assert scale_by(big, 0) == big
+    assert scale_by(big, 3) is None
+
+
+def test_the_review_scales_skip_a_value_past_the_digit_limit() -> None:
+    from groundgate.review.serve import _scaled
+
+    # 9E+999990 at the scale 10^12 has 1,000,003 digits
+    assert _scaled(Decimal("9E+999990")) == {
+        Decimal(f"9E+{999_990 + p}") for p in (0, 3, 5, 6, 7, 9)
+    }
