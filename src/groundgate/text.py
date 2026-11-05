@@ -496,7 +496,10 @@ def scaled_value(text: str, tok: Token) -> Decimal | None:
 
 def scale_by(value: Decimal, power: int) -> Decimal | None:
     """``value`` times ten to ``power``, or None if the result has more than ``SCALED_DIGITS``
-    digits before the decimal point (SPEC §4.1, the digit limit)."""
+    digits before the decimal point (SPEC §4.1, the digit limit). The limit is on a scale, so
+    ``power`` 0 always gives ``value``, the value as written."""
+    if power == 0:
+        return value
     if value and value.adjusted() + power >= SCALED_DIGITS:
         return None
     return value.scaleb(power, _EXACT)

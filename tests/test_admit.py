@@ -1498,3 +1498,10 @@ def test_a_scale_past_the_digit_limit_gives_no_scaled_value(
     assert outcome(digits + 1, "{}") == outcome(
         digits, "{}"
     )  # the value as written does not change
+
+
+def test_a_number_past_the_digit_limit_keeps_its_value_as_written() -> None:
+    """#580: the limit is on a scaled value. A number of 1,000,001 digits is its own value."""
+    n = "9" * 1_000_001
+    assert _outcome(f"{n} USD", n) == ("admitted", [], [])
+    assert _outcome(f"{n} USD", "-" + n) == ("needs_verification", ["PART_MISSING"], ["sign"])

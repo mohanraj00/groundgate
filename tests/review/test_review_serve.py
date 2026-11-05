@@ -769,3 +769,21 @@ def test_a_field_with_no_definition_gives_none(served: Served) -> None:
     _, _, tasks, call, _ = served
     view = json.loads(call("GET", f"/api/task/{tasks['revenue']}")[2])
     assert view["definition"] is None
+
+
+def test_a_number_past_the_digit_limit_keeps_the_sign_question(tmp_path: Path) -> None:
+    """#580: a number of 1,000,001 digits has no scaled value, but its value as written stays.
+    A positive value under the number in brackets gets the sign questions."""
+    n = "9" * 1_000_001
+    text = f"({n}) USD"
+    schema = {"fields": {"cost": {"type": "number", "unit": "USD"}}}
+    candidates = [{"id": "c1", "field": "cost", "value": "-" + n, "unit": "USD",
+                   "evidence": {"text": text}}]  # fmt: skip
+    store = FolderStore(tmp_path / "store")
+    k, _ = admit_packet(store, text, schema, candidates, None, None, None)
+    ((tk, _),) = write_tasks(store, k, EVERY).tasks
+    body = {"task": tk, "verdict": "correct", "start": 1, "end": len(n) + 1,
+            "parts": [{"role": "sign", "start": 0, "end": len(n) + 2}]}  # fmt: skip
+    check = Review(store, "ana").check(body)
+    # as for a short number: one question for the written sign, one for the task value
+    assert [a["part"] for a in check["ask"]] == ["sign", "sign"]
