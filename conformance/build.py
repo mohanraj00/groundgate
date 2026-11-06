@@ -6448,6 +6448,55 @@ INVALID.extend(
     ]
 )  # fmt: skip
 
+# ---------------------------------------------------------------- a minus in the next cell (spec 0.12, #586)
+vector(
+    "149-tab-minus-both",
+    "A tab, then a minus directly before a digit, is the sign of the next table cell, not a range "
+    "dash. So neither negative value is a range (SPEC §4.2, spec 0.12, #586).",
+    "Loss\t-3415\t-2980",
+    {"fields": {"a": {"type": "integer"}, "b": {"type": "integer"}}},
+    [
+        c("tm1", "a", -3415, None, [q("-3415")], ADMIT),
+        c("tm2", "b", -2980, None, [q("-2980")], ADMIT),
+    ],
+)  # fmt: skip
+
+vector(
+    "150-tab-minus-after-positive",
+    "A positive value before a tab and a negative next cell is not a range "
+    "(SPEC §4.2, spec 0.12, #586).",
+    "Loss\t3415\t-2980",
+    {"fields": {"a": {"type": "integer"}}},
+    [c("tm3", "a", 3415, None, [q("3415")], ADMIT)],
+)  # fmt: skip
+
+vector(
+    "151-tab-dash-cell-range",
+    "A dash with whitespace after it is still a connector after a tab "
+    "(SPEC §4.2, spec 0.12, #586).",
+    "Loss\t10\t-\t20",
+    {"fields": {"a": {"type": "integer"}}},
+    [c("tm4", "a", 10, None, [q("10")], (REVIEW, ["QUALIFIED_VALUE"]))],
+)  # fmt: skip
+
+vector(
+    "152-space-minus-range",
+    "A minus directly before a digit is still a connector when no tab stands before it "
+    "(SPEC §4.2, spec 0.12, #586).",
+    "Loss 10 -20",
+    {"fields": {"a": {"type": "integer"}}},
+    [c("tm5", "a", 10, None, [q("10")], (REVIEW, ["QUALIFIED_VALUE"]))],
+)  # fmt: skip
+
+vector(
+    "153-tab-minus-currency-range",
+    "A minus before a currency sign is still a connector after a tab, because no digit directly "
+    "follows it (SPEC §4.2, spec 0.12, #586).",
+    "Loss\t-$3,415\t-$2,980",
+    {"fields": {"a": USD}},
+    [c("tm6", "a", 3415, "USD", [q("$3,415")], (REVIEW, ["QUALIFIED_VALUE"]))],
+)  # fmt: skip
+
 
 def main() -> None:
     out_dir = HERE / "vectors"

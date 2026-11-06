@@ -1,0 +1,55 @@
+{
+ "name": "149-tab-minus-both",
+ "description": "A tab, then a minus directly before a digit, is the sign of the next table cell, not a range dash. So neither negative value is a range (SPEC §4.2, spec 0.12, #586).",
+ "document": "Loss\t-3415\t-2980",
+ "schema": {
+  "fields": {
+   "a": {
+    "type": "integer"
+   },
+   "b": {
+    "type": "integer"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "tm1",
+   "field": "a",
+   "value": -3415,
+   "evidence": [
+    {
+     "start": 5,
+     "end": 10,
+     "text": "-3415"
+    }
+   ]
+  },
+  {
+   "id": "tm2",
+   "field": "b",
+   "value": -2980,
+   "evidence": [
+    {
+     "start": 11,
+     "end": 16,
+     "text": "-2980"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}
