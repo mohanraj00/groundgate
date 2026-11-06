@@ -550,6 +550,7 @@ class Policy:
     judge: JudgePolicy | None = None
     sources: Sources = Sources()
     min_read_confidence: float = 1  # last, so the order of the other members stays (#535)
+    proposers: dict[str, str] = field(default_factory=dict, hash=False)  # SPEC §2.4, #509
 
     @classmethod
     def from_dict(cls, d: object) -> Policy:
@@ -562,6 +563,7 @@ class Policy:
             "reanchor",
             "judge",
             "sources",
+            "proposers",
         }
         if unknown:
             raise PacketError(f"policy has unknown keys {sorted(unknown)}")
@@ -582,6 +584,14 @@ class Policy:
         judge = d.get("judge")
         jp = None if judge is None else JudgePolicy.from_dict(judge)
         sources = Sources.from_dict(d.get("sources", {}))
+        proposers = d.get("proposers", {})
+        if not isinstance(proposers, dict) or not all(
+            isinstance(who, str) and normalize_ws(who) and action in ("admit", "corroborate")
+            for who, action in proposers.items()
+        ):
+            raise PacketError(
+                "policy proposers must map each non-blank proposer id to admit or corroborate"
+            )
         return cls(
             min_confidence=mc,
             min_read_confidence=mr,
@@ -589,6 +599,7 @@ class Policy:
             reanchor=ra,
             judge=jp,
             sources=sources,
+            proposers=dict(proposers),
         )
 
     def to_dict(self) -> dict[str, Any]:
@@ -599,6 +610,7 @@ class Policy:
             "reanchor": self.reanchor,
             "judge": None if self.judge is None else self.judge.to_dict(),
             "sources": self.sources.to_dict(),
+            "proposers": dict(self.proposers),
         }
 
 
@@ -620,6 +632,7 @@ class Decision:
     missing: tuple[str, ...] = ()
     packs: tuple[str, ...] = ()  # the ids of the packs that the decision read (SPEC §5)
     evidence_units: EvidenceUnits | None = None  # only after a failed unit check (SPEC §5)
+    proposer: str | None = None  # the candidate's non-blank proposer (SPEC §5, #509)
 
     def to_dict(self) -> dict[str, Any]:
         out: dict[str, Any] = {
@@ -627,6 +640,7 @@ class Decision:
             "candidate_sha256": self.candidate_sha256,
             "field": self.field,
             "key": self.key,
+            "proposer": self.proposer,
             "outcome": self.outcome,
             "codes": list(self.codes),
             "value": self.value,

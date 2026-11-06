@@ -1,0 +1,62 @@
+{
+ "name": "140-corroborate-unnamed",
+ "description": "A candidate with no proposer counts as one more proposer. Its span shares bytes with the corroborate candidate's span, so it agrees, and both are admitted (spec 0.12, #509).",
+ "document": "Supply current Typ 1 mA Max 2 mA. Standby 2 mA.",
+ "schema": {
+  "fields": {
+   "current": {
+    "type": "number",
+    "unit": "mA"
+   }
+  }
+ },
+ "policy": {
+  "proposers": {
+   "structure": "corroborate"
+  }
+ },
+ "candidates": [
+  {
+   "id": "s1",
+   "field": "current",
+   "value": 1,
+   "unit": "mA",
+   "evidence": [
+    {
+     "start": 19,
+     "end": 23,
+     "text": "1 mA"
+    }
+   ],
+   "proposer": "structure"
+  },
+  {
+   "id": "m1",
+   "field": "current",
+   "value": 1,
+   "unit": "mA",
+   "evidence": [
+    {
+     "start": 15,
+     "end": 23,
+     "text": "Typ 1 mA"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "proposer": "structure"
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "proposer": null
+   }
+  ],
+  "coverage": []
+ }
+}

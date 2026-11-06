@@ -1,0 +1,105 @@
+{
+ "name": "148-proposer-invalid",
+ "description": "A proposer that is blank or not a string makes the candidate invalid, and the decision records no proposer (spec 0.12, #509).",
+ "document": "Supply current Typ 1 mA Max 2 mA. Standby 2 mA.",
+ "schema": {
+  "fields": {
+   "current": {
+    "type": "number",
+    "unit": "mA"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "v1",
+   "field": "current",
+   "value": 1,
+   "unit": "mA",
+   "evidence": [
+    {
+     "start": 19,
+     "end": 23,
+     "text": "1 mA"
+    }
+   ],
+   "proposer": ""
+  },
+  {
+   "id": "v2",
+   "field": "current",
+   "value": 1,
+   "unit": "mA",
+   "evidence": [
+    {
+     "start": 19,
+     "end": 23,
+     "text": "1 mA"
+    }
+   ],
+   "proposer": " "
+  },
+  {
+   "id": "v3",
+   "field": "current",
+   "value": 1,
+   "unit": "mA",
+   "evidence": [
+    {
+     "start": 19,
+     "end": 23,
+     "text": "1 mA"
+    }
+   ],
+   "proposer": 5
+  },
+  {
+   "id": "v4",
+   "field": "current",
+   "value": 1,
+   "unit": "mA",
+   "evidence": [
+    {
+     "start": 19,
+     "end": 23,
+     "text": "1 mA"
+    }
+   ],
+   "proposer": []
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ],
+    "proposer": null
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ],
+    "proposer": null
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ],
+    "proposer": null
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ],
+    "proposer": null
+   }
+  ],
+  "coverage": []
+ }
+}

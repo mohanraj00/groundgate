@@ -74,7 +74,7 @@ def c(
     value: Any,
     unit: str | None = None,
     evidence: Any = None,
-    expect: tuple[str, list[str]] = ADMIT,
+    expect: tuple[Any, ...] = ADMIT,
     **extra: Any,
 ) -> dict[str, Any]:
     cand: dict[str, Any] = {"id": cid, "field": field, "value": value}
@@ -92,13 +92,17 @@ def raw(candidate: Any, expect: tuple[Any, ...]) -> dict[str, Any]:
 
 
 def _expect(expect: tuple[Any, ...]) -> dict[str, Any]:
-    """(outcome, codes), (outcome, codes, missing) or (outcome, codes, missing, parts): the
-    decision a candidate must get. ``parts`` is a list of (role, passed) pairs."""
+    """(outcome, codes), (outcome, codes, missing), (outcome, codes, missing, parts) or
+    (outcome, codes, missing, parts, proposer): the decision a candidate must get. ``parts`` is a
+    list of (role, passed) pairs. ``missing`` or ``parts`` None: not checked. ``proposer`` is the
+    decision's ``proposer`` (SPEC §5, spec 0.12, #509)."""
     out: dict[str, Any] = {"outcome": expect[0], "codes": expect[1]}
-    if len(expect) > 2:
+    if len(expect) > 2 and expect[2] is not None:
         out["missing"] = expect[2]
-    if len(expect) > 3:
+    if len(expect) > 3 and expect[3] is not None:
         out["parts"] = [{"role": role, "passed": passed} for role, passed in expect[3]]
+    if len(expect) > 4:
+        out["proposer"] = expect[4]
     return out
 
 
@@ -6239,6 +6243,209 @@ vector(
         # spec 0.11 code raised decimal.Overflow here
         c("dl2", "cost", "1", "USD", [q(BIG + " trillion USD", text=NO_TEXT)], NOT_IN),
     ],
+)  # fmt: skip
+
+
+# ---------------------------------------------------------------- proposer and agreement (spec 0.12, #509)
+CUR = "Supply current Typ 1 mA Max 2 mA. Standby 2 mA."
+CUR_SCHEMA = {"fields": {"current": {"type": "number", "unit": "mA"}}}
+STRUCTURE = {"proposers": {"structure": "corroborate"}}
+ALONE = (REVIEW, ["NOT_CORROBORATED"])
+INVALID_CANDIDATE = ("rejected", ["CANDIDATE_INVALID"])
+SPAN = (REVIEW, ["OTHER_SPAN"])
+
+
+def by(proposer: str | None, expect: tuple[str, list[str]] = ADMIT) -> tuple[Any, ...]:
+    """The expected decision, with its ``proposer`` (SPEC §5, spec 0.12, #509)."""
+    return (*expect, None, None, proposer)
+
+
+vector(
+    "137-proposer-recorded",
+    "The decision records the candidate's proposer. With no proposers in the policy, the "
+    "proposer changes nothing (spec 0.12, #509).",
+    CUR,
+    CUR_SCHEMA,
+    [
+        c("p1", "current", 1, "mA", [q("1 mA")], by("m1"), proposer="m1"),
+    ],
+)  # fmt: skip
+
+vector(
+    "138-corroborate-alone",
+    "A candidate of a corroborate proposer with no other candidate goes to review with "
+    "NOT_CORROBORATED (spec 0.12, #509).",
+    CUR,
+    CUR_SCHEMA,
+    [
+        c("s1", "current", 1, "mA", [q("1 mA")], by("structure", ALONE), proposer="structure"),
+    ],
+    policy=STRUCTURE,
+)  # fmt: skip
+
+vector(
+    "139-corroborate-agree",
+    "A candidate of another proposer with the same value at the same span agrees, so the "
+    "corroborate candidate is admitted (spec 0.12, #509).",
+    CUR,
+    CUR_SCHEMA,
+    [
+        c("s1", "current", 1, "mA", [q("1 mA")], by("structure"), proposer="structure"),
+        c("m1", "current", 1, "mA", [q("1 mA")], by("model"), proposer="model"),
+    ],
+    policy=STRUCTURE,
+)  # fmt: skip
+
+vector(
+    "140-corroborate-unnamed",
+    "A candidate with no proposer counts as one more proposer. Its span shares bytes with the "
+    "corroborate candidate's span, so it agrees, and both are admitted (spec 0.12, #509).",
+    CUR,
+    CUR_SCHEMA,
+    [
+        c("s1", "current", 1, "mA", [q("1 mA")], by("structure"), proposer="structure"),
+        c("m1", "current", 1, "mA", [q("Typ 1 mA")], by(None)),
+    ],
+    policy=STRUCTURE,
+)  # fmt: skip
+
+vector(
+    "141-corroborate-other-span",
+    "Two proposers give the same value at spans that do not overlap. The value 2 under Max and "
+    "the value 2 of Standby are not the same reading, so there is no agreement, and both get "
+    "OTHER_SPAN (spec 0.12, #509).",
+    CUR,
+    CUR_SCHEMA,
+    [
+        c("s1", "current", 2, "mA", [q("2 mA", 1)],
+          by("structure", (REVIEW, ["NOT_CORROBORATED", "OTHER_SPAN"])), proposer="structure"),
+        c("m1", "current", 2, "mA", [q("2 mA", 2)], by("model", SPAN), proposer="model"),
+    ],
+    policy=STRUCTURE,
+)  # fmt: skip
+
+vector(
+    "142-corroborate-same-proposer",
+    "Two candidates of the same proposer never agree, so a reader cannot confirm itself "
+    "(spec 0.12, #509).",
+    CUR,
+    CUR_SCHEMA,
+    [
+        c("s1", "current", 1, "mA", [q("1 mA")], by("structure", ALONE), proposer="structure"),
+        c("s2", "current", 1, "mA", [q("1 mA")], by("structure", ALONE), proposer="structure"),
+    ],
+    policy=STRUCTURE,
+)  # fmt: skip
+
+vector(
+    "143-admit-other-span",
+    "With no corroborate proposer, two proposers that give the same value at other spans are "
+    "admitted, as in spec 0.11 (spec 0.12, #509).",
+    CUR,
+    CUR_SCHEMA,
+    [
+        c("a1", "current", 2, "mA", [q("2 mA", 1)], by("a"), proposer="a"),
+        c("b1", "current", 2, "mA", [q("2 mA", 2)], by("b"), proposer="b"),
+    ],
+)  # fmt: skip
+
+vector(
+    "144-corroborate-rejected-agreement",
+    "A rejected candidate never agrees (spec 0.12, #509).",
+    CUR,
+    CUR_SCHEMA,
+    [
+        c("s1", "current", 1, "mA", [q("1 mA")], by("structure", ALONE), proposer="structure"),
+        c("m1", "current", 1, "mA", [q("Standby")], by("model", NOT_IN), proposer="model"),
+    ],
+    policy=STRUCTURE,
+)  # fmt: skip
+
+vector(
+    "145-corroborate-other-value",
+    "A candidate of another proposer with another value does not agree. Both get "
+    "CONFLICTING_CANDIDATES, and the corroborate candidate also gets NOT_CORROBORATED "
+    "(spec 0.12, #509).",
+    CUR,
+    CUR_SCHEMA,
+    [
+        c("s1", "current", 1, "mA", [q("1 mA")],
+          by("structure", (REVIEW, ["CONFLICTING_CANDIDATES", "NOT_CORROBORATED"])),
+          proposer="structure"),
+        c("m1", "current", 2, "mA", [q("2 mA")], by("model", (REVIEW, ["CONFLICTING_CANDIDATES"])),
+          proposer="model"),
+    ],
+    policy=STRUCTURE,
+)  # fmt: skip
+
+vector(
+    "146-corroborate-reference",
+    "The same bytes in a reference are another text, so a candidate whose value item is in the "
+    "reference does not agree with a candidate in the document (spec 0.12, #509).",
+    CUR,
+    CUR_SCHEMA,
+    [
+        c("s1", "current", 1, "mA", [q("1 mA")], by("structure", ALONE), proposer="structure"),
+        c("m1", "current", 1, "mA", [q("1 mA", source="reference", ref="sheet")], by("model"),
+          proposer="model"),
+    ],
+    policy=STRUCTURE,
+    references=[{"id": "sheet", "text": CUR}],
+)  # fmt: skip
+
+vector(
+    "147-corroborate-keyed",
+    "On a keyed field, agreement needs the same key. The model candidate for adults agrees with "
+    "the structure candidate for adults, and not with the one for children. A model candidate "
+    "for children at the adults value passes with KEY_NOT_AT_VALUE, so it and the structure "
+    "candidate for children get OTHER_SPAN (spec 0.12, #509).",
+    "Adults take 2 mg. Children take 2 mg.",
+    {"fields": {"dose": {"type": "number", "unit": "mg", "keys": ["adults", "children"]}}},
+    [
+        c("k1", "dose", 2, "mg", [q("Adults take 2 mg")], by("structure"), key="adults",
+          proposer="structure"),
+        c("k2", "dose", 2, "mg", [q("Children take 2 mg")],
+          by("structure", (REVIEW, ["NOT_CORROBORATED", "OTHER_SPAN"])), key="children",
+          proposer="structure"),
+        c("k3", "dose", 2, "mg", [q("2 mg")], by("model"), key="adults", proposer="model"),
+        c("k4", "dose", 2, "mg", [q("2 mg")],
+          by("model", (REVIEW, ["KEY_NOT_AT_VALUE", "OTHER_SPAN"])), key="children",
+          proposer="model"),
+    ],
+    policy=STRUCTURE,
+)  # fmt: skip
+
+vector(
+    "148-proposer-invalid",
+    "A proposer that is blank or not a string makes the candidate invalid, and the decision "
+    "records no proposer (spec 0.12, #509).",
+    CUR,
+    CUR_SCHEMA,
+    [
+        c("v1", "current", 1, "mA", [q("1 mA")], by(None, INVALID_CANDIDATE), proposer=""),
+        c("v2", "current", 1, "mA", [q("1 mA")], by(None, INVALID_CANDIDATE), proposer=" "),
+        c("v3", "current", 1, "mA", [q("1 mA")], by(None, INVALID_CANDIDATE), proposer=5),
+        c("v4", "current", 1, "mA", [q("1 mA")], by(None, INVALID_CANDIDATE), proposer=[]),
+    ],
+)  # fmt: skip
+
+INVALID.extend(
+    [
+        {
+            "name": f"policy-proposers-{name}",
+            "description": f"The policy is invalid: {why} (SPEC §2.4, spec 0.12, #509).",
+            "document": CUR,
+            "schema": CUR_SCHEMA,
+            "policy": {"proposers": proposers},
+        }
+        for name, why, proposers in [
+            ("not-object", "proposers is not an object", []),
+            ("blank-id", "a proposer id is blank", {" ": "admit"}),
+            ("bad-action", "a proposer's action is not admit or corroborate",
+             {"structure": "trust"}),
+            ("null-action", "a proposer's action is null", {"structure": None}),
+        ]
+    ]
 )  # fmt: skip
 
 

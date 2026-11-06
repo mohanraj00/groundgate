@@ -1,0 +1,73 @@
+{
+ "name": "146-corroborate-reference",
+ "description": "The same bytes in a reference are another text, so a candidate whose value item is in the reference does not agree with a candidate in the document (spec 0.12, #509).",
+ "document": "Supply current Typ 1 mA Max 2 mA. Standby 2 mA.",
+ "schema": {
+  "fields": {
+   "current": {
+    "type": "number",
+    "unit": "mA"
+   }
+  }
+ },
+ "policy": {
+  "proposers": {
+   "structure": "corroborate"
+  }
+ },
+ "references": [
+  {
+   "id": "sheet",
+   "text": "Supply current Typ 1 mA Max 2 mA. Standby 2 mA."
+  }
+ ],
+ "candidates": [
+  {
+   "id": "s1",
+   "field": "current",
+   "value": 1,
+   "unit": "mA",
+   "evidence": [
+    {
+     "start": 19,
+     "end": 23,
+     "text": "1 mA"
+    }
+   ],
+   "proposer": "structure"
+  },
+  {
+   "id": "m1",
+   "field": "current",
+   "value": 1,
+   "unit": "mA",
+   "evidence": [
+    {
+     "source": "reference",
+     "ref": "sheet",
+     "start": 19,
+     "end": 23,
+     "text": "1 mA"
+    }
+   ],
+   "proposer": "model"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "NOT_CORROBORATED"
+    ],
+    "proposer": "structure"
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "proposer": "model"
+   }
+  ],
+  "coverage": []
+ }
+}

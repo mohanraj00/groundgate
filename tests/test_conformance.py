@@ -27,6 +27,7 @@ FLAG_CODES = {
     "SCALE_CITATION_INVALID", "UNIT_CITATION_INVALID", "FIELD_CITATION_INVALID", "EVIDENCE_QUOTED",
     "EVIDENCE_STATED", "VALUE_DERIVED", "ADMITTED_BY_POLICY", "RELATION_FAILED",
     "COLUMN_NOT_AT_VALUE", "MARKER_OTHER_FIELD", "READ_DOUBT", "SIGN_DROPPED",
+    "NOT_CORROBORATED", "OTHER_SPAN",
 }  # fmt: skip
 
 
@@ -58,6 +59,8 @@ def test_vector(path: Path) -> None:
         assert (got["outcome"], got["codes"]) == (want["outcome"], want["codes"]), label
         if "missing" in want:
             assert got["missing"] == want["missing"], label
+        if "proposer" in want:
+            assert got["proposer"] == want["proposer"], label
         if "parts" in want:
             parts = [{"role": x["role"], "passed": x["passed"]} for x in got["parts"]]
             assert parts == want["parts"], label

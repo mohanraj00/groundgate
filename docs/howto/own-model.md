@@ -307,9 +307,19 @@ b1 needs_verification 3000 CONFLICTING_CANDIDATES
 c1 needs_verification 1500 CONFLICTING_CANDIDATES
 ```
 
-Other members of a candidate, such as `proposer`, are kept and ignored by the checks. The
-candidate hash covers them. A second model helps only when the two models disagree: if both read
-the same wrong value, both candidates get the same decision.
+The decision records `proposer`. With no `corroborate` proposer in the policy's `proposers`, it
+does not change an outcome. With one, `NOT_CORROBORATED` goes on that proposer's candidate, and
+`OTHER_SPAN` can also go on the candidate of another proposer.
+
+`proposer` is your claim, and groundgate does not authenticate it. So `corroborate` gives no
+protection against a party that can write the candidates: that party can omit `proposer`, or add
+a candidate with another `proposer`. If you take candidates from another party, set `proposer`
+yourself. The runner in `src/groundgate/extract/runner.py` rejects a model reply that has a
+`proposer`, so a model cannot set one there.
+
+Other members of a candidate are kept and ignored by the checks. The candidate hash covers them. A second
+model helps only when the two models disagree: if both read the same wrong value, both candidates
+get the same decision.
 
 ## Next
 

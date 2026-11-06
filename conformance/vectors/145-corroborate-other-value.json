@@ -1,0 +1,68 @@
+{
+ "name": "145-corroborate-other-value",
+ "description": "A candidate of another proposer with another value does not agree. Both get CONFLICTING_CANDIDATES, and the corroborate candidate also gets NOT_CORROBORATED (spec 0.12, #509).",
+ "document": "Supply current Typ 1 mA Max 2 mA. Standby 2 mA.",
+ "schema": {
+  "fields": {
+   "current": {
+    "type": "number",
+    "unit": "mA"
+   }
+  }
+ },
+ "policy": {
+  "proposers": {
+   "structure": "corroborate"
+  }
+ },
+ "candidates": [
+  {
+   "id": "s1",
+   "field": "current",
+   "value": 1,
+   "unit": "mA",
+   "evidence": [
+    {
+     "start": 19,
+     "end": 23,
+     "text": "1 mA"
+    }
+   ],
+   "proposer": "structure"
+  },
+  {
+   "id": "m1",
+   "field": "current",
+   "value": 2,
+   "unit": "mA",
+   "evidence": [
+    {
+     "start": 28,
+     "end": 32,
+     "text": "2 mA"
+    }
+   ],
+   "proposer": "model"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "CONFLICTING_CANDIDATES",
+     "NOT_CORROBORATED"
+    ],
+    "proposer": "structure"
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "CONFLICTING_CANDIDATES"
+    ],
+    "proposer": "model"
+   }
+  ],
+  "coverage": []
+ }
+}
