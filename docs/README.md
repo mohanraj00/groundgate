@@ -12,6 +12,8 @@ page for your task.
 | Check your own model's extractions, end to end | [howto/own-model.md](howto/own-model.md) |
 | Send the reasons back to the extractor and decide again | [howto/feedback.md](howto/feedback.md) |
 | Check values in financial tables | [howto/tables.md](howto/tables.md) |
+| Read DOCX, XLSX and other files with their nodes | [howto/documents.md](howto/documents.md) |
+| Read scanned PDFs with OCR, and review their values | [howto/scanned-pdfs.md](howto/scanned-pdfs.md) |
 | Use references, web sources and the model's knowledge | [howto/outside-sources.md](howto/outside-sources.md) |
 | Review flagged facts, and keep and verify receipts | [howto/review.md](howto/review.md) |
 | Keep your pack files with your receipts | [howto/keep-packs.md](howto/keep-packs.md) |
