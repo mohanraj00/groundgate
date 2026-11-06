@@ -27,6 +27,7 @@ from ..model import Decision, PacketError, Policy, Receipt, Schema, extractor_sc
 from ..read.document import Document, DocumentError, Node
 from ..store import key as store_key
 from ..text import canonical, quote_pattern, tokens
+from .structure import propose
 
 if TYPE_CHECKING:
     from ..store import Store
@@ -47,6 +48,7 @@ Json = dict[str, Any]
 # lines. An older record fails replay with a version message. The run/3 prompt asks for the
 # whole scale heading (#428); the run/3 records from before #428 were never released.
 _VERSION = "groundgate-run/6"
+_STRUCTURE = "structure"  # the proposer id of the structure reader (#510)
 _ROLES = {"value", "sign", "scale", "unit", "field", "key", "column", "marker"}
 _SEARCH_MATCH_LIMIT = 1024
 # The rounding check (#319) reads only numbers with at most this many digits and this exponent.
@@ -1510,6 +1512,29 @@ class _Engine:
             )
         return self.decide(phase)
 
+    def structure(self) -> bool:
+        """Add the candidates of the structure reader when the policy names it (#510). The
+        runner sets ``proposer`` itself. A repair never changes these candidates, because no
+        model wrote them. Replay runs the reader again and compares the admission line."""
+        if _STRUCTURE not in self.policy.proposers:
+            return True
+        found = propose(self.text, self.document, self.schema)
+        if not found:
+            return True
+        pending = {
+            f"s{i}": {**c, "id": f"s{i}", "proposer": _STRUCTURE}
+            for i, c in enumerate(found, start=1)
+        }
+        if not self.candidate_room(list(pending.values()), len(pending)):
+            return False
+        for cid, candidate in pending.items():
+            self.tips[cid] = candidate
+            self.raw[cid] = copy.deepcopy(candidate)
+            self.contexts[cid] = []
+            self.terminal.add(cid)
+            self.states[candidate["field"]].append("proposed")
+        return self.decide(_STRUCTURE)
+
     def search(self, name: str) -> tuple[list[Json], list[tuple[int, int, int, int, str]]]:
         """The regions of the first sweep in location order. If no region fits the prompt, also
         every ranked region in rank order, for the second sweep (#382)."""
@@ -2028,6 +2053,8 @@ class _Engine:
                 if c[0]["source"] == "document"
             ],
         )
+        if not self.structure():
+            return self.finish()
         if not contexts:
             for field in fields:
                 self.states[field].append("empty_source")
@@ -2037,7 +2064,8 @@ class _Engine:
             if parsed is None or not self.proposals(parsed, context, "initial"):
                 return self.finish()
         if contexts and self.settings.targeted:
-            represented = {c["field"] for c in self.tips.values()}
+            # A structure candidate needs another proposer, so it does not stop the search.
+            represented = {c["field"] for c in self.tips.values() if "proposer" not in c}
             for field in fields:
                 if field in represented:
                     continue

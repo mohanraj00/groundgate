@@ -452,6 +452,13 @@ that does not overlap, on a field that is not `multiple`, and one of the two pro
 `corroborate`. With no `corroborate` proposer in the policy, neither flag applies. Neither flag
 applies on the outside path, and a recorded judgment removes neither.
 
+`extract` starts its structure reader only when the policy names `structure` in `proposers`. The
+reader uses no model. It finds a table cell by a row label from the field's `aliases` and a column
+header from its `keys`, or a `label: value` line for a field with no `keys`. If two cells match, the
+path crosses a spanned cell, or the header is null, it proposes nothing. Its candidates have
+`"proposer": "structure"`, and the member `basis` gives the basis of each cited cell. A model reply
+with a `proposer` is invalid, so a model cannot claim to be this reader.
+
 A decision carries `candidate_id`, `candidate_sha256`, `field`, `key`, `proposer`, `outcome`, `codes`, the
 canonical `value`, the candidate's `unit`, the `source` it rests on (with `ref` or `url`), the
 value's `evidence` span (the re-anchored one, if it moved, or null on the outside path), the
