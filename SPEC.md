@@ -198,7 +198,8 @@ boolean.
 ```json
 {"min_confidence": null, "min_read_confidence": 1, "unit_window": 24, "reanchor": true,
  "judge": null,
- "sources": {"external": {"allow": [], "other": "review"}, "knowledge": "review"}}
+ "sources": {"external": {"allow": [], "other": "review"}, "knowledge": "review"},
+ "proposers": {}}
 ```
 
 `sources` says what happens to a candidate that only evidence from outside the pinned texts
@@ -215,6 +216,11 @@ The **host** of a URL is the text after its first `://` up to the first `/`, `\`
 last `@`, without a `:` and port, lower-cased. A host that starts with `[` (an IPv6 literal)
 ends at its `]` and keeps its colons. A URL without `://` has no host, and a document source
 without `://` has no host either, so `"document-domain"` then matches nothing.
+
+`proposers` maps a proposer id (a non-blank string) to `admit` or `corroborate` (spec 0.12,
+#509). The default is `{}`. A proposer that the map does not name, and a candidate with no
+`proposer`, is `admit`. A `corroborate` proposer needs another proposer that agrees with it
+(§3.3). Use it for a proposer whose error rate is not measured, such as the structure reader.
 
 `min_confidence` is null or a number in [0, 1], `unit_window` a non-negative integer, and
 `reanchor` a boolean. Defaults fill in each member of the policy and of `sources` that is absent;
@@ -259,9 +265,10 @@ without judgments.
 | `evidence` | no | The evidence items the extractor gives, as a list. One item object counts as a list that holds it. |
 | `search_region` | no | Span of the document within which quotes are found and re-anchoring may look (§3.1, §4.6). Default: the whole document. |
 | `confidence` | no | Number in [0, 1]. |
+| `proposer` | no | A non-blank string that names who proposed the candidate, for example a model or `structure` (spec 0.12, #509). The decision records it. |
 | `id` | no | Caller's identifier, echoed in the decision. |
 
-Other keys are allowed and ignored by the checks (for example the proposer's name); they are covered
+Other keys are allowed and ignored by the checks (for example a model's own score); they are covered
 by `candidate_sha256`, the digest of kind `candidate` over the candidate object as given.
 
 An **evidence item** is one piece of support for the value. Its `source` says where it comes from:
@@ -342,7 +349,7 @@ later check runs. `value` means the candidate's value parsed per its field type.
 | 8 | `NO_EVIDENCE` | The candidate has no value item and no outside item. |
 
 Step 1 rejects when the candidate is not an object, `field` is not a string, `value` is missing or
-not a string/integer, `unit` or `key` is not a string, `confidence` is not a number in [0, 1],
+not a string/integer, `unit`, `key` or `proposer` is not a string, `proposer` is blank (§4.4), `confidence` is not a number in [0, 1],
 `search_region` is present but not an object with integer `start` and `end`, or `evidence` is
 present but not an object or a list of objects. It also rejects when an evidence item:
 
@@ -486,8 +493,20 @@ rejected by steps 1–11 or on the outside path.
 | `EVIDENCE_STATED` | On the outside path, the deciding item is knowledge, with the action `review`. |
 | `LOW_CONFIDENCE` | `policy.min_confidence` is set and `confidence` is below it. |
 | `CONFLICTING_CANDIDATES` | Another candidate for the same non-`multiple` field, and on a keyed field the same `key`, also passed with a different canonical value. Set on every such candidate. |
+| `NOT_CORROBORATED` | The candidate's proposer is `corroborate` in `policy.proposers`, and no candidate of another proposer agrees with it (below) (spec 0.12, #509). |
+| `OTHER_SPAN` | The field is not `multiple`, and a candidate of another proposer, for the same `key` on a keyed field, passed with the same canonical value and an evidence span that does not overlap (below). At least one of the two proposers is `corroborate`. Set on both (spec 0.12, #509). |
 | `RELATION_FAILED` | A relation that names the candidate's field fails at the candidate's key (step 13, §3.4). |
 | `MODEL_DOUBT` | An applying judgment doubts the value (step 12). |
+
+**Agreement (spec 0.12, #509).** Two candidates have **another proposer** when their
+`proposer` values differ. A candidate with no `proposer` counts as one more proposer, with no
+name. A candidate **agrees** with another when both passed on the checked path, have another
+proposer, the same field, the same `key` on a keyed field and the same canonical value, and
+their evidence spans (§5) are in the same text (the document, or the same reference) and share
+at least one byte. Two `corroborate` proposers can agree with each other. A candidate of the
+same proposer never agrees, so a reader cannot confirm itself. A recorded judgment never removes
+`NOT_CORROBORATED` or `OTHER_SPAN`. Neither flag applies on the outside path, because an outside
+item has no span. With `proposers` empty, neither flag applies.
 
 `EVIDENCE_REANCHORED`, `VALUE_DERIVED`, `KEY_CITED`, `ADMITTED_BY_POLICY` and `MODEL_CLEARED` are
 informational: they never change the outcome. `VALUE_DERIVED` says that the value is a derived
@@ -1373,7 +1392,7 @@ more limit. The packet is also invalid when a kind pack fails one of these check
  "packs": [],
  "schema_sha256": "sha256:...", "policy_sha256": "sha256:...",
  "decisions": [{"candidate_id": "c1", "candidate_sha256": "sha256:...", "field": "...",
-                "key": null, "outcome": "admitted", "codes": [], "value": "2000", "unit": "mg",
+                "key": null, "proposer": null, "outcome": "admitted", "codes": [], "value": "2000", "unit": "mg",
                 "source": "document", "ref": null, "url": null,
                 "evidence": {"start": 120, "end": 128}, "parts": [], "missing": [],
                 "packs": []}],
@@ -1396,7 +1415,8 @@ code, or the flag codes in the order of the table in §3.3, followed by `EVIDENC
 `VALUE_DERIVED`, `KEY_CITED`, `ADMITTED_BY_POLICY` and then `MODEL_CLEARED` when they apply.
 `value` is the canonical value and `unit` the candidate's unit, each `null` when the candidate does
 not provide a parseable one. `key` is the candidate's `key` when its field has `keys` and the key
-is a string, otherwise `null`.
+is a string, otherwise `null`. `proposer` is the candidate's `proposer` when it is a non-blank
+string, otherwise `null` (spec 0.12, #509).
 
 - `source` is the kind of the item that the decision rests on: the value item's on the checked
   path from step 9 on, the deciding item's on the outside path, and for a candidate rejected

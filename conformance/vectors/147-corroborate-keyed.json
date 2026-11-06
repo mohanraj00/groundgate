@@ -1,0 +1,115 @@
+{
+ "name": "147-corroborate-keyed",
+ "description": "On a keyed field, agreement needs the same key. The model candidate for adults agrees with the structure candidate for adults, and not with the one for children. A model candidate for children at the adults value passes with KEY_NOT_AT_VALUE, so it and the structure candidate for children get OTHER_SPAN (spec 0.12, #509).",
+ "document": "Adults take 2 mg. Children take 2 mg.",
+ "schema": {
+  "fields": {
+   "dose": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "adults",
+     "children"
+    ]
+   }
+  }
+ },
+ "policy": {
+  "proposers": {
+   "structure": "corroborate"
+  }
+ },
+ "candidates": [
+  {
+   "id": "k1",
+   "field": "dose",
+   "value": 2,
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 0,
+     "end": 16,
+     "text": "Adults take 2 mg"
+    }
+   ],
+   "key": "adults",
+   "proposer": "structure"
+  },
+  {
+   "id": "k2",
+   "field": "dose",
+   "value": 2,
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 18,
+     "end": 36,
+     "text": "Children take 2 mg"
+    }
+   ],
+   "key": "children",
+   "proposer": "structure"
+  },
+  {
+   "id": "k3",
+   "field": "dose",
+   "value": 2,
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 12,
+     "end": 16,
+     "text": "2 mg"
+    }
+   ],
+   "key": "adults",
+   "proposer": "model"
+  },
+  {
+   "id": "k4",
+   "field": "dose",
+   "value": 2,
+   "unit": "mg",
+   "evidence": [
+    {
+     "start": 12,
+     "end": 16,
+     "text": "2 mg"
+    }
+   ],
+   "key": "children",
+   "proposer": "model"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "proposer": "structure"
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "NOT_CORROBORATED",
+     "OTHER_SPAN"
+    ],
+    "proposer": "structure"
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "proposer": "model"
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "KEY_NOT_AT_VALUE",
+     "OTHER_SPAN"
+    ],
+    "proposer": "model"
+   }
+  ],
+  "coverage": []
+ }
+}

@@ -1,0 +1,63 @@
+{
+ "name": "139-corroborate-agree",
+ "description": "A candidate of another proposer with the same value at the same span agrees, so the corroborate candidate is admitted (spec 0.12, #509).",
+ "document": "Supply current Typ 1 mA Max 2 mA. Standby 2 mA.",
+ "schema": {
+  "fields": {
+   "current": {
+    "type": "number",
+    "unit": "mA"
+   }
+  }
+ },
+ "policy": {
+  "proposers": {
+   "structure": "corroborate"
+  }
+ },
+ "candidates": [
+  {
+   "id": "s1",
+   "field": "current",
+   "value": 1,
+   "unit": "mA",
+   "evidence": [
+    {
+     "start": 19,
+     "end": 23,
+     "text": "1 mA"
+    }
+   ],
+   "proposer": "structure"
+  },
+  {
+   "id": "m1",
+   "field": "current",
+   "value": 1,
+   "unit": "mA",
+   "evidence": [
+    {
+     "start": 19,
+     "end": 23,
+     "text": "1 mA"
+    }
+   ],
+   "proposer": "model"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "proposer": "structure"
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "proposer": "model"
+   }
+  ],
+  "coverage": []
+ }
+}

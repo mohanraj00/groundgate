@@ -1,0 +1,67 @@
+{
+ "name": "142-corroborate-same-proposer",
+ "description": "Two candidates of the same proposer never agree, so a reader cannot confirm itself (spec 0.12, #509).",
+ "document": "Supply current Typ 1 mA Max 2 mA. Standby 2 mA.",
+ "schema": {
+  "fields": {
+   "current": {
+    "type": "number",
+    "unit": "mA"
+   }
+  }
+ },
+ "policy": {
+  "proposers": {
+   "structure": "corroborate"
+  }
+ },
+ "candidates": [
+  {
+   "id": "s1",
+   "field": "current",
+   "value": 1,
+   "unit": "mA",
+   "evidence": [
+    {
+     "start": 19,
+     "end": 23,
+     "text": "1 mA"
+    }
+   ],
+   "proposer": "structure"
+  },
+  {
+   "id": "s2",
+   "field": "current",
+   "value": 1,
+   "unit": "mA",
+   "evidence": [
+    {
+     "start": 19,
+     "end": 23,
+     "text": "1 mA"
+    }
+   ],
+   "proposer": "structure"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "NOT_CORROBORATED"
+    ],
+    "proposer": "structure"
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "NOT_CORROBORATED"
+    ],
+    "proposer": "structure"
+   }
+  ],
+  "coverage": []
+ }
+}

@@ -1,0 +1,40 @@
+{
+ "name": "137-proposer-recorded",
+ "description": "The decision records the candidate's proposer. With no proposers in the policy, the proposer changes nothing (spec 0.12, #509).",
+ "document": "Supply current Typ 1 mA Max 2 mA. Standby 2 mA.",
+ "schema": {
+  "fields": {
+   "current": {
+    "type": "number",
+    "unit": "mA"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "p1",
+   "field": "current",
+   "value": 1,
+   "unit": "mA",
+   "evidence": [
+    {
+     "start": 19,
+     "end": 23,
+     "text": "1 mA"
+    }
+   ],
+   "proposer": "m1"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "proposer": "m1"
+   }
+  ],
+  "coverage": []
+ }
+}

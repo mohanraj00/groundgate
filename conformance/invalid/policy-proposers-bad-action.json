@@ -1,0 +1,22 @@
+{
+ "name": "policy-proposers-bad-action",
+ "description": "The policy is invalid: a proposer's action is not admit or corroborate (SPEC §2.4, spec 0.12, #509).",
+ "document": "Supply current Typ 1 mA Max 2 mA. Standby 2 mA.",
+ "schema": {
+  "fields": {
+   "current": {
+    "type": "number",
+    "unit": "mA"
+   }
+  }
+ },
+ "policy": {
+  "proposers": {
+   "structure": "trust"
+  }
+ },
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}
