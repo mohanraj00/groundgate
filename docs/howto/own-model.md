@@ -307,7 +307,8 @@ b1 needs_verification 3000 CONFLICTING_CANDIDATES
 c1 needs_verification 1500 CONFLICTING_CANDIDATES
 ```
 
-Other members of a candidate, such as `proposer`, are kept and ignored by the checks. The
+The decision records `proposer`. It changes the outcome only when the policy's `proposers` names
+it as `corroborate`. Other members of a candidate are kept and ignored by the checks. The
 candidate hash covers them. A second model helps only when the two models disagree: if both read
 the same wrong value, both candidates get the same decision.
 

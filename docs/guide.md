@@ -186,7 +186,9 @@ line, goes to review. A table with one number column under a title such as "As o
 - `key` names the condition on a keyed field. On other fields it is ignored.
 - `start` and `end` in an evidence item are UTF-8 byte offsets, end exclusive. For a Python
   index `i`, the offset is `len(text[:i].encode())`.
-- Any other key (a proposer name, a chunk id) is kept, ignored by the checks, and covered by the
+- `proposer` names who proposed the candidate, as a non-blank string. The decision records it.
+  The policy's [`proposers`](#policy) can make it need a second proposer.
+- Any other key (a model's score, a chunk id) is kept, ignored by the checks, and covered by the
   candidate's hash.
 
 `gg.candidate_schema()` returns a JSON Schema for one candidate, the file
@@ -357,6 +359,7 @@ and `KEY_CITED`:
 | `reanchor` | `true` | When the value item's span misses the value, and exactly one other occurrence of its `text` holds the value with its unit, move the evidence there (`EVIDENCE_REANCHORED`). Only an item with offsets and `text` re-anchors. |
 | `judge` | `null` | The one judge whose recorded judgments apply, and its thresholds. See [Recorded judgments](#recorded-judgments). |
 | `sources` | review | What happens to a value that only external or knowledge evidence supports. See below. |
+| `proposers` | `{}` | Maps a proposer id to `admit` or `corroborate`. A `corroborate` proposer needs another proposer that agrees. See [Decisions](#decisions). |
 
 ```json
 {"sources": {"external": {"allow": ["document-domain", "https://www.law.cornell.edu/"],
@@ -431,7 +434,7 @@ A fact that passes them all is checked for flags. Any flag makes it `needs_verif
 `NON_VERBATIM_EVIDENCE`, `QUALIFIED_VALUE`, `SCALE_WORD`, `PART_MISSING`, `SIGN_DROPPED`, `SIGN_CITATION_INVALID`,
 `SCALE_CITATION_INVALID`, `UNIT_CITATION_INVALID`, `FIELD_CITATION_INVALID`, `KEY_NOT_AT_VALUE`,
 `KEY_CITATION_INVALID`, `COLUMN_NOT_AT_VALUE`, `MARKER_OTHER_FIELD`, `READ_DOUBT`,
-`EVIDENCE_QUOTED`, `EVIDENCE_STATED`, `LOW_CONFIDENCE`, `CONFLICTING_CANDIDATES`, `RELATION_FAILED`, and `MODEL_DOUBT` from a recorded judgment.
+`EVIDENCE_QUOTED`, `EVIDENCE_STATED`, `LOW_CONFIDENCE`, `CONFLICTING_CANDIDATES`, `NOT_CORROBORATED`, `OTHER_SPAN`, `RELATION_FAILED`, and `MODEL_DOUBT` from a recorded judgment.
 `EVIDENCE_REANCHORED`, `VALUE_DERIVED`, `KEY_CITED`, `ADMITTED_BY_POLICY` and `MODEL_CLEARED`
 only inform.
 
@@ -440,7 +443,16 @@ of them passed the checks with different values. groundgate never picks between 
 it helps to send several proposers' candidates through one `admit` call: disagreement becomes a
 flag. It only helps when they disagree.
 
-A decision carries `candidate_id`, `candidate_sha256`, `field`, `key`, `outcome`, `codes`, the
+Use `"proposers": {"structure": "corroborate"}` for a proposer whose error rate is not measured.
+Its candidate goes to review with `NOT_CORROBORATED` until a candidate of another proposer agrees:
+that candidate passed with the same field, key and value, and its span shares a byte in the same
+text. A candidate with no `proposer` counts as one more proposer. A proposer never agrees with
+itself. `OTHER_SPAN` goes on both candidates when another proposer gives the same value at a span
+that does not overlap, on a field that is not `multiple`, and one of the two proposers is
+`corroborate`. With no `corroborate` proposer in the policy, neither flag applies. Neither flag
+applies on the outside path, and a recorded judgment removes neither.
+
+A decision carries `candidate_id`, `candidate_sha256`, `field`, `key`, `proposer`, `outcome`, `codes`, the
 canonical `value`, the candidate's `unit`, the `source` it rests on (with `ref` or `url`), the
 value's `evidence` span (the re-anchored one, if it moved, or null on the outside path), the
 `parts` (each role item's span and whether it passed), and the `missing` parts. These are two
@@ -569,6 +581,8 @@ Flags send the fact to a person:
 | `EVIDENCE_QUOTED`, `EVIDENCE_STATED` | Only outside evidence supports the value. | Check the source. If you trust it, add the URL prefix to `sources.external.allow`, or set `sources.knowledge` to `admit`. |
 | `LOW_CONFIDENCE` | The extractor's `confidence` is below `min_confidence`. | A person checks the fact. |
 | `CONFLICTING_CANDIDATES` | Two proposers read different values. | A person picks one. groundgate never picks. |
+| `NOT_CORROBORATED` | The policy names the candidate's proposer as `corroborate`, and no candidate of another proposer gives the value at a span that shares a byte in the same text. | Send a second proposer's candidates in the same `admit` call. Otherwise a person checks the fact. |
+| `OTHER_SPAN` | Two proposers give the same value at spans that do not overlap, and one of them is `corroborate`. The two readings can be of different things. | A person checks both spans. |
 | `RELATION_FAILED` | The values of a relation, such as a total and its parts, do not add up. One of them can be a number of another field. | A person checks each value of the relation. The receipt's `relations` gives the difference and the allowance, or null for both past 1,000,000 digits. |
 | `MODEL_DOUBT` | A recorded judgment of the policy's judge doubts the value or its key. | A person checks the fact. |
 

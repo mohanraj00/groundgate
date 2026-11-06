@@ -160,7 +160,7 @@ print(stored["receipt_sha256"][:23])
 
 ```text
 0.12 lease-0417 {'admitted': 1, 'needs_verification': 2, 'rejected': 1}
-sha256:db393f803db82190
+sha256:614289c6007c3bbb
 ```
 
 A receipt holds digests of its inputs, not the inputs. To verify it later, you need the same
@@ -261,6 +261,8 @@ The card gives the codes and the cited text. For each common code, the person ch
 | `EVIDENCE_QUOTED` | The page at the URL. It must hold the quoted passage, and the page must apply to this document. |
 | `EVIDENCE_STATED` | A source for the extractor's statement. The statement alone is not evidence. |
 | `CONFLICTING_CANDIDATES` | The text, to choose one of the values. groundgate never chooses. |
+| `NOT_CORROBORATED` | The whole fact. Only one proposer gives this value at this span. |
+| `OTHER_SPAN` | Both spans, to choose the one that holds the field. The same number at two places is two readings. |
 | `LOW_CONFIDENCE`, `MODEL_DOUBT` | The whole fact: the value, the field and the key. |
 | `REQUIRED_FIELD_MISSING` | The document, for the value that no extractor found. |
 
@@ -285,7 +287,7 @@ print(packet[:23])
 ```
 
 ```text
-sha256:a17b933b68f460fc
+sha256:2455e4e6f090da7f
 ```
 
 The same inputs give the same key. Later, `load_packet` gets each input back, and `verify`

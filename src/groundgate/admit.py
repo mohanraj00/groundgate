@@ -99,6 +99,8 @@ FLAG_ORDER = (  # SPEC §3.3 table order; it is part of every receipt hash
     "EVIDENCE_STATED",
     "LOW_CONFIDENCE",
     "CONFLICTING_CANDIDATES",
+    "NOT_CORROBORATED",
+    "OTHER_SPAN",
     "RELATION_FAILED",
     "MODEL_DOUBT",
 )
@@ -637,6 +639,12 @@ def _indexed(t: _Text, quote: str, region: tuple[int, int]) -> _Index:
     return held
 
 
+def _proposer(cand: object) -> str | None:
+    """The candidate's ``proposer`` when it is a non-blank string, else None (SPEC §5)."""
+    who = cand.get("proposer") if isinstance(cand, Mapping) else None
+    return who if isinstance(who, str) and normalize_ws(who) else None
+
+
 def _check(ctx: _Ctx, cand: object) -> _Passed:
     """Steps 1-11, the outside path and per-candidate flags. Raises _Reject."""
     # 1. structure
@@ -650,6 +658,8 @@ def _check(ctx: _Ctx, cand: object) -> _Passed:
     if (unit is not None and not isinstance(unit, str)) or (
         key is not None and not isinstance(key, str)
     ):
+        raise _Reject("CANDIDATE_INVALID")
+    if cand.get("proposer") is not None and _proposer(cand) is None:
         raise _Reject("CANDIDATE_INVALID")
     if conf is not None and (
         isinstance(conf, bool) or not isinstance(conf, (int, float)) or not 0 <= conf <= 1
@@ -1638,6 +1648,7 @@ def _admit(
     for *_, p in results:
         if isinstance(p, _Passed) and len(by_key.get((p.field.name, p.key), ())) > 1:
             p.flags.append("CONFLICTING_CANDIDATES")
+    _agreement(policy, [(p, _proposer(c)) for _, _, c, p in results if isinstance(p, _Passed)])
 
     relations = _relate(schema.relations, [p for *_, p in results if isinstance(p, _Passed)])
 
@@ -1677,6 +1688,58 @@ def _admit(
         doubt_sha256=digest("doubt", {"doubt": doubt}) if doubt else None,
     )
     return Receipt(**{**draft.__dict__, "receipt_sha256": digest("receipt", draft.body())})
+
+
+_Far = list[tuple[int, str | None]]  # the furthest edges of the two proposers that reach furthest
+
+
+def _top(far: _Far, edge: int, who: str | None) -> _Far:
+    """``far`` after one more edge of the proposer ``who``."""
+    own = max([edge, *(e for e, w in far if w == who)])
+    return sorted([(own, who), *((e, w) for e, w in far if w != who)], key=lambda x: -x[0])[:2]
+
+
+def _other(far: _Far, who: str | None) -> int | None:
+    """The furthest edge of a proposer that is not ``who``."""
+    return next((e for e, w in far if w != who), None)
+
+
+def _agreement(policy: Policy, passed: list[tuple[_Passed, str | None]]) -> None:
+    """Set NOT_CORROBORATED and OTHER_SPAN (SPEC §3.3). Both read only the candidates with the
+    same field, key, value and text. Each check reads the two proposers that reach furthest, so
+    n candidates cost n log n, also when each candidate has its own proposer."""
+    if "corroborate" not in policy.proposers.values():
+        return
+    groups: dict[object, list[tuple[int, int, str | None, bool, _Passed]]] = defaultdict(list)
+    for p, who in passed:
+        if p.at is not None:  # an outside item has no span
+            firm = who is not None and policy.proposers.get(who) == "corroborate"
+            where = (p.field.name, p.key, p.value, p.at.t.ref)
+            groups[where].append((*p.at.span, who, firm, p))
+    for group in groups.values():
+        group.sort(key=lambda r: r[0])
+        starts = [r[0] for r in group]
+        reach: list[_Far] = [[]]  # reach[n]: the furthest ends of the first n rows
+        latest: _Far = []  # the latest starts and, negated, the earliest ends
+        earliest: _Far = []
+        latest_firm: _Far = []  # the same, of the corroborate proposers only
+        earliest_firm: _Far = []
+        for start, end, who, firm, _ in group:
+            reach.append(_top(reach[-1], end, who))
+            latest, earliest = _top(latest, start, who), _top(earliest, -end, who)
+            if firm:
+                latest_firm = _top(latest_firm, start, who)
+                earliest_firm = _top(earliest_firm, -end, who)
+        for start, end, who, firm, p in group:
+            near = _other(reach[bisect.bisect_left(starts, end)], who)
+            if firm and (near is None or near <= start):
+                p.flags.append("NOT_CORROBORATED")
+            if p.field.multiple:
+                continue
+            after = _other(latest if firm else latest_firm, who)
+            before = _other(earliest if firm else earliest_firm, who)
+            if (after is not None and after >= end) or (before is not None and -before <= start):
+                p.flags.append("OTHER_SPAN")
 
 
 # Exact decimal arithmetic for the relations (SPEC §3.4). A sum or a product of decimals is
@@ -1876,6 +1939,7 @@ def _decision(ctx: _Ctx, sha: str, cand: object, cid: object, p: _Passed | _Reje
             tuple(sorted(p.parts, key=lambda x: PART_ORDER.index(x.role))),
             missing,
             evidence_units=_evidence_units(ctx, at, codes, missing),
+            proposer=_proposer(cand),
         )
     # rejected: report what is known about the candidate
     field_name: str | None = None
@@ -1911,7 +1975,7 @@ def _decision(ctx: _Ctx, sha: str, cand: object, cid: object, p: _Passed | _Reje
                     source, ref = cited[1], cited[2]
     return Decision(
         _json_id(cid), sha, field_name, "rejected", (p.code,), value, unit, span, key, source, ref,
-        url, evidence_units=_evidence_units(ctx, p.at, (p.code,), ()),
+        url, evidence_units=_evidence_units(ctx, p.at, (p.code,), ()), proposer=_proposer(cand),
     )  # fmt: skip
 
 
