@@ -26,6 +26,9 @@ _VALID = re.compile(
 # a token grouped in threes with group spaces, on a line that holds a tab (SPEC §4.1, #427)
 _GROUP_SPACES = " \u00a0\u2009\u202f"
 _GROUPED = re.compile(r"[-\u2212]?[0-9]{1,3}(?:[ \u00a0\u2009\u202f][0-9]{3})+(?:\.[0-9]+)?")
+# the sign of the number in the next table cell, not a range dash (SPEC §4.2, #586). After
+# whitespace, the token of that number holds the "-", so only the text after a value needs this.
+_NEXT_CELL_SIGN = re.compile(r"[^\S\t]*\t\s*-\d")
 _SENTENCE_END = re.compile(r"\.\s|;\s|•|\n[ \t\r]*\n")
 _BLANK_LINE = re.compile(r"\n[ \t\r]*\n")
 _WS_RUN = re.compile(r"\s*")
@@ -383,7 +386,7 @@ def qualifiers(text: str, tok: Token) -> set[str]:
     prev = [t for t in nearby if t.end <= tok.start and t.end >= prev_end]
     between_before = bool(voc._BETWEEN_END.search(before.rstrip()))
     if (
-        voc._RANGE_NEXT.match(rest)
+        (voc._RANGE_NEXT.match(rest) and not _NEXT_CELL_SIGN.match(rest))
         or (between_before and voc._AND_NEXT.match(rest))
         or (voc._AND_NEXT.match(rest) and _between_words_before(text, tok.start))
         or (
