@@ -307,8 +307,9 @@ b1 needs_verification 3000 CONFLICTING_CANDIDATES
 c1 needs_verification 1500 CONFLICTING_CANDIDATES
 ```
 
-The decision records `proposer`. It changes the outcome only when the policy's `proposers` names
-it as `corroborate`. Other members of a candidate are kept and ignored by the checks. The
+The decision records `proposer`. With no `corroborate` proposer in the policy's `proposers`, it
+does not change an outcome. With one, `NOT_CORROBORATED` goes on that proposer's candidate, and
+`OTHER_SPAN` can also go on the candidate of another proposer. Other members of a candidate are kept and ignored by the checks. The
 candidate hash covers them. A second model helps only when the two models disagree: if both read
 the same wrong value, both candidates get the same decision.
 
