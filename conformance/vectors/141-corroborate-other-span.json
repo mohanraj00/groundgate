@@ -1,0 +1,68 @@
+{
+ "name": "141-corroborate-other-span",
+ "description": "Two proposers give the same value at spans that do not overlap. The value 2 under Max and the value 2 of Standby are not the same reading, so there is no agreement, and both get OTHER_SPAN (spec 0.12, #509).",
+ "document": "Supply current Typ 1 mA Max 2 mA. Standby 2 mA.",
+ "schema": {
+  "fields": {
+   "current": {
+    "type": "number",
+    "unit": "mA"
+   }
+  }
+ },
+ "policy": {
+  "proposers": {
+   "structure": "corroborate"
+  }
+ },
+ "candidates": [
+  {
+   "id": "s1",
+   "field": "current",
+   "value": 2,
+   "unit": "mA",
+   "evidence": [
+    {
+     "start": 28,
+     "end": 32,
+     "text": "2 mA"
+    }
+   ],
+   "proposer": "structure"
+  },
+  {
+   "id": "m1",
+   "field": "current",
+   "value": 2,
+   "unit": "mA",
+   "evidence": [
+    {
+     "start": 42,
+     "end": 46,
+     "text": "2 mA"
+    }
+   ],
+   "proposer": "model"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "NOT_CORROBORATED",
+     "OTHER_SPAN"
+    ],
+    "proposer": "structure"
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "OTHER_SPAN"
+    ],
+    "proposer": "model"
+   }
+  ],
+  "coverage": []
+ }
+}

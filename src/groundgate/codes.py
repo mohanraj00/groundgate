@@ -43,6 +43,8 @@ FLAG = {
     "EVIDENCE_STATED": "Only the extractor's knowledge supports the value; the policy says review.",
     "LOW_CONFIDENCE": "The extractor's confidence is below the policy minimum.",
     "CONFLICTING_CANDIDATES": "Another candidate for this field and key has a different value.",
+    "NOT_CORROBORATED": "No candidate of another proposer gives this value at this span.",
+    "OTHER_SPAN": "Another proposer gives this value at a span that does not overlap.",
     "RELATION_FAILED": (
         "A relation of the schema, such as a total and its parts, does not hold for these values."
     ),

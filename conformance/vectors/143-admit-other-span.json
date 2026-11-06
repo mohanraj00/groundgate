@@ -1,0 +1,59 @@
+{
+ "name": "143-admit-other-span",
+ "description": "With no corroborate proposer, two proposers that give the same value at other spans are admitted, as in spec 0.11 (spec 0.12, #509).",
+ "document": "Supply current Typ 1 mA Max 2 mA. Standby 2 mA.",
+ "schema": {
+  "fields": {
+   "current": {
+    "type": "number",
+    "unit": "mA"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "a1",
+   "field": "current",
+   "value": 2,
+   "unit": "mA",
+   "evidence": [
+    {
+     "start": 28,
+     "end": 32,
+     "text": "2 mA"
+    }
+   ],
+   "proposer": "a"
+  },
+  {
+   "id": "b1",
+   "field": "current",
+   "value": 2,
+   "unit": "mA",
+   "evidence": [
+    {
+     "start": 42,
+     "end": 46,
+     "text": "2 mA"
+    }
+   ],
+   "proposer": "b"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "proposer": "a"
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "proposer": "b"
+   }
+  ],
+  "coverage": []
+ }
+}

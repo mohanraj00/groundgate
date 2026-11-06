@@ -25,6 +25,11 @@
       "description": "For a keyed field, the key that the value belongs to.",
       "type": ["string", "null"]
     },
+    "proposer": {
+      "description": "Who proposed the candidate, for example a model or structure. A non-blank string. The decision records it.",
+      "type": ["string", "null"],
+      "pattern": "\\S"
+    },
     "evidence": {
       "description": "The evidence items. One item object counts as a list that holds it.",
       "anyOf": [
