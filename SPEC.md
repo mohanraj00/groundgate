@@ -222,6 +222,13 @@ without `://` has no host either, so `"document-domain"` then matches nothing.
 `proposer`, is `admit`. A `corroborate` proposer needs another proposer that agrees with it
 (§3.3). Use it for a proposer whose error rate is not measured, such as the structure reader.
 
+`proposer` is a claim of the party that writes the candidates. The core does not authenticate it,
+and the core cannot tell who wrote a candidate. So `corroborate` gives no protection against a
+party that can write candidates: that party can omit `proposer`, or add a candidate with another
+`proposer`. Each candidate must still pass the checks. A caller that takes candidates from another
+party must set `proposer` itself. The runner in `src/groundgate/extract/runner.py` (not part of
+this specification) rejects a model reply that has a `proposer`, so a model cannot set one there.
+
 `min_confidence` is null or a number in [0, 1], `unit_window` a non-negative integer, and
 `reanchor` a boolean. Defaults fill in each member of the policy and of `sources` that is absent;
 other keys or values make the packet invalid.
