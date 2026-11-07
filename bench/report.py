@@ -5,6 +5,10 @@
 compares two requested sets: miss rate, escapes, incomplete documents and search_limit count
 for each arm and kind. A search_limit count comes from results.json, or from a limits.json
 beside it (bench/requested3 has one, from bench/requested/limits.py).
+
+    python bench/report.py --goal-table
+
+writes the goal table of README.md from the results.json of each requested-fields run.
 """
 
 from __future__ import annotations
@@ -1126,12 +1130,80 @@ def render_compare(
     return lines
 
 
+ROOT = Path(__file__).resolve().parent.parent
+GOAL_START, GOAL_END = "<!-- goal-table:start -->", "<!-- goal-table:end -->"
+# One requested-fields run for each release. Each number comes from the set's results.json.
+GOAL_RUNS = (
+    ("0.9", "bench/requested"),
+    ("0.10", "bench/requested3"),
+    ("0.11", "bench/requested4"),
+    ("0.12", "bench/requested4/development"),
+    ("0.13", "bench/requested4/development-464"),
+)
+
+
+def render_goal_table(root: Path = ROOT) -> list[str]:
+    """One row for each release: the runner arm of its requested-fields run."""
+    rows: list[list[object]] = []
+    for release, name in GOAL_RUNS:
+        results = json.loads((root / name / "results.json").read_text(encoding="utf-8"))
+        if results.get("format") != "requested-fields/1":
+            raise ValueError("not a requested-field results.json: " + name)
+        run = results["runs"]["runner"]
+        t = run["total"]
+        m = t["miss_rate"]
+        rows.append(
+            [
+                release,
+                f"`{name}`",
+                run["split"],
+                t["documents"],
+                t["value_hits"],
+                t["reviews"],
+                t["rejected_right_values"],
+                t["escapes"],
+                f"{m['k']}/{m['n']} ({m['rate'] * 100:.2f}%)",
+            ]
+        )
+    head = [
+        "Release",
+        "Set",
+        "Split",
+        "Documents",
+        "Right admits",
+        "Reviews",
+        "Rejected right",
+        "Escapes",
+        "Miss rate",
+    ]
+    return [line for line in table(head, rows, right_from=3) if line]
+
+
+def with_goal_table(readme: str, lines: list[str]) -> str:
+    """The README text with the lines between the goal-table markers replaced."""
+    before, rest = readme.split(GOAL_START, 1)
+    after = rest.split(GOAL_END, 1)[1]
+    return before + "\n".join([GOAL_START, "", *lines, "", GOAL_END]) + after
+
+
 def main() -> None:
-    ap = argparse.ArgumentParser(description="Compare two requested-set results.json files.")
-    ap.add_argument("--compare", type=Path, required=True, help="base results.json, e.g. 0.10")
-    ap.add_argument("results", type=Path, help="new results.json")
+    ap = argparse.ArgumentParser(
+        description="Compare two requested-set results.json files, or write the README goal table."
+    )
+    ap.add_argument("--goal-table", action="store_true", help="write the goal table of README.md")
+    ap.add_argument("--compare", type=Path, help="base results.json, e.g. 0.10")
+    ap.add_argument("results", type=Path, nargs="?", help="new results.json")
     ap.add_argument("--out", type=Path, help="write the table here instead of stdout")
     args = ap.parse_args()
+    if args.goal_table:
+        if args.compare or args.results or args.out:
+            ap.error("--goal-table takes no other argument")
+        readme = ROOT / "README.md"
+        text = readme.read_text(encoding="utf-8")
+        readme.write_text(with_goal_table(text, render_goal_table()), encoding="utf-8")
+        return
+    if args.compare is None or args.results is None:
+        ap.error("--compare and results are required without --goal-table")
     try:
         sets = []
         for path in (args.compare, args.results):
