@@ -3,6 +3,11 @@
 [AGENTS.md](../AGENTS.md) owns the general workflow and the Review guidelines. This file gives
 the exact review requests and the design of the Claude review workflow.
 
+[STANDARD.md](STANDARD.md) is a byte copy of the shared standard. It names required checks, for
+example `cross-review`, `security-review` and `acceptance`. groundgate does not have these
+checks yet. They come in a later rollout. Until then, no check blocks a merge for a missing
+review. The agent that opened the PR follows the rules in AGENTS.md and this file.
+
 ## Cross-harness review
 
 A harness does not review its own change. The reviews run on GitHub. No harness reviews a PR by
