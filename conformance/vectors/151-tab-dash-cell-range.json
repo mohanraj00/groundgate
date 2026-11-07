@@ -1,0 +1,38 @@
+{
+ "name": "151-tab-dash-cell-range",
+ "description": "A dash with whitespace after it is still a connector after a tab (SPEC §4.2, spec 0.12, #586).",
+ "document": "Loss\t10\t-\t20",
+ "schema": {
+  "fields": {
+   "a": {
+    "type": "integer"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "tm4",
+   "field": "a",
+   "value": 10,
+   "evidence": [
+    {
+     "start": 5,
+     "end": 7,
+     "text": "10"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

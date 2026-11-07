@@ -1,0 +1,40 @@
+{
+ "name": "153-tab-minus-currency-range",
+ "description": "A minus before a currency sign is still a connector after a tab, because no digit directly follows it (SPEC §4.2, spec 0.12, #586).",
+ "document": "Loss\t-$3,415\t-$2,980",
+ "schema": {
+  "fields": {
+   "a": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "tm6",
+   "field": "a",
+   "value": 3415,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 6,
+     "end": 12,
+     "text": "$3,415"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

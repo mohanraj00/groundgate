@@ -529,7 +529,8 @@ comparator is not the field's, the fact is flagged `QUALIFIED_VALUE`. Some of th
 
 A negation directly before the word inverts it, so "may not exceed $19,000" is `le`. A change is
 not a range: in "increased from $70,000 to $72,000", $72,000 is the new value and has no
-qualifier. The full lists are in SPEC §4.2.
+qualifier. A tab and then a `-` directly before a digit is not a range either: `-` is the sign of
+the number in the next table cell (spec 0.12). The full lists are in SPEC §4.2.
 
 **Sentence ends.** A sentence ends at `.` or `;` before whitespace, at `•`, and at a blank line.
 The qualifier window, the unit search and the key scope stop there. In spec 0.3, the dot of a

@@ -258,7 +258,8 @@ would still pass.
 groundgate searches for a qualifier in the value's sentence, up to 40 code points before and after
 the value, and not past the next number. If a qualifier applies and its comparator differs from
 the field's, the fact is flagged `QUALIFIED_VALUE`. A negation inverts a qualifier, so "may not
-exceed $19,000" is `le`. SPEC §4.2 has the full lists.
+exceed $19,000" is `le`. A tab and then a `-` directly before a digit is the sign of the number in
+the next table cell, not a range (spec 0.12). SPEC §4.2 has the full lists.
 
 For an `and` range, `between` can stand up to six words before the first number. Each word
 holds only letters and combining marks, and only whitespace separates them, in one
