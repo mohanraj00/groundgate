@@ -97,6 +97,10 @@ known-local-folder = ["pdfgen"]
 "conformance/build.py" = ["E501"]  # vector data reads better unwrapped
 "bench/gold/prelabels.py" = ["E501", "RUF001"]  # contexts are copied verbatim from documents
 "bench/set2/gold/drafts_*.py" = ["E501", "RUF001"]  # the same, for set 2
+# The Claude review files are a shared copy. Their prompts and texts stay unwrapped, and the
+# post script writes a full-width at sign on purpose.
+"tools/claude_review.py" = ["E501", "UP031", "RUF001"]
+"tests/test_claude_review.py" = ["E402", "E501", "UP031", "RUF001"]
 
 [tool.mypy]
 strict = true
