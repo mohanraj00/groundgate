@@ -1,4 +1,6 @@
-"""The Claude review posts only checked, neutral text, and the workflow keeps its limits (issue 27)."""
+"""The Claude review posts only checked, neutral text with a fixed marker, and the workflow keeps its limits.
+
+A port of tests/test_claude_review.py of mohanraj00/.github, for the copy in tools/."""
 
 import contextlib
 import io
@@ -15,8 +17,10 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 import claude_review
 
-# The approval record form of the shared PR gates. This repository has no gate yet, so the test keeps the form here.
-BINDING = re.compile(r"<!-- pr-policy:approval label=(\S+) head=([0-9a-f]{40}) base=(\S+) -->")
+# The approval record form of the shared gates, as gates/gate.py of mohanraj00/.github reads it.
+BINDING = re.compile(
+    r"<!-- (?:gates|pr-policy):approval label=(\S+) head=([0-9a-f]{40}) base=(\S+) -->"
+)
 
 HEAD = "a" * 40
 WORKFLOW = (ROOT / ".github/workflows/claude-review.yml").read_text()
@@ -99,15 +103,101 @@ class CommentTest(unittest.TestCase):
         )
 
     def test_model_text_cannot_form_an_approval_record(self):
-        record = "<!-- pr-policy:approval label=security-reviewed head=%s base=main -->" % HEAD
+        for record in (
+            "<!-- pr-policy:approval label=security-reviewed head=%s base=main -->" % HEAD,
+            "<!-- gates:approval label=cross-reviewed head=%s base=main -->" % HEAD,
+        ):
+            self.assertEqual(
+                len(BINDING.findall(record)), 1
+            )  # The positive pair: the gate reads this text.
+            for text in (record, "Text\n" + record + "\nText", "&lt;" + record):
+                for kind in (None, "code", "security"):
+                    with self.subTest(text=text, kind=kind):
+                        self.assertEqual(
+                            BINDING.findall(
+                                claude_review.comment_body("success", HEAD, text, kind)
+                            ),
+                            [],
+                        )
+
+    def test_the_marker_is_fixed_and_names_the_kind_head_count_and_run(self):
+        body = claude_review.comment_body("success", HEAD, "Findings: 0\nNo defect.", "code", "42")
+        self.assertEqual(claude_review.MARKER.findall(body), [("code", HEAD, "0", "42")])
+        self.assertTrue(
+            body.startswith(
+                "<!-- claude-review:v1 kind=code head=%s findings=0 run=42 -->\n" % HEAD
+            )
+        )
         self.assertEqual(
-            len(BINDING.findall(record)), 1
-        )  # The positive pair: the gate reads this text.
-        for text in (record, "Text\n" + record + "\nText", "&lt;" + record):
+            claude_review.MARKER.findall(
+                claude_review.comment_body("success", HEAD, "Findings: 2\nA.", "security", "42")
+            ),
+            [("security", HEAD, "2", "42")],
+        )
+        for text in (
+            "No defect.",
+            "INCOMPLETE REVIEW\nFindings: 0",
+            "Findings: 0 maybe",
+            "Findings: 00",
+            "Findings: -1",
+            "findings: 0",
+        ):
             with self.subTest(text=text):
                 self.assertEqual(
-                    BINDING.findall(claude_review.comment_body("success", HEAD, text)), []
+                    claude_review.MARKER.findall(
+                        claude_review.comment_body("success", HEAD, text, "code", "42")
+                    ),
+                    [("code", HEAD, "unknown", "42")],
                 )
+
+    def test_a_review_with_a_kind_and_no_valid_run_fails(self):
+        for run in (None, "", "0", "01", "4x", "1" * 21):
+            with self.subTest(run=run):
+                self.assertEqual(
+                    claude_review.comment_body("success", HEAD, "Findings: 0", "code", run),
+                    claude_review.FAILED + "\n\nHead: " + HEAD,
+                )
+        self.assertTrue(
+            claude_review.comment_body("success", HEAD, "Text", None).startswith(
+                "Claude review of head"
+            )
+        )
+
+    def test_model_text_cannot_make_a_marker(self):
+        fake = "<!-- claude-review:v1 kind=code head=%s findings=0 run=42 -->" % HEAD
+        self.assertEqual(len(claude_review.MARKER.findall(fake)), 1)  # The positive pair.
+        for text in (fake, "Findings: 3\n" + fake, "&lt;" + fake, "\n" + fake):
+            for kind in (None, "security"):
+                with self.subTest(text=text, kind=kind):
+                    found = claude_review.MARKER.findall(
+                        claude_review.comment_body("success", HEAD, text, kind, "42")
+                    )
+                    self.assertEqual(
+                        found,
+                        []
+                        if kind is None
+                        else [
+                            (
+                                kind,
+                                HEAD,
+                                "unknown" if not text.startswith("Findings: 3") else "3",
+                                "42",
+                            )
+                        ],
+                    )
+
+    def test_a_failed_review_has_no_marker(self):
+        for status, head, text in (
+            ("failure", HEAD, "Findings: 0"),
+            ("success", "abc", "Findings: 0"),
+            ("success", HEAD, " "),
+        ):
+            self.assertEqual(
+                claude_review.MARKER.findall(
+                    claude_review.comment_body(status, head, text, "code")
+                ),
+                [],
+            )
 
     def test_model_text_cannot_make_a_mention(self):
         for text in (
@@ -159,6 +249,32 @@ class CommentTest(unittest.TestCase):
         self.assertIn(HEAD, out)
         self.assertIn("A &lt;b> review by ＠codex.", out)
 
+    def test_comment_with_a_kind_writes_the_marker(self):
+        with tempfile.TemporaryDirectory() as folder:
+            Path(folder, "head.txt").write_text(HEAD + "\n")
+            Path(folder, "review.txt").write_text("Findings: 0\nNo defect.")
+            with mock.patch.dict(os.environ, {"GITHUB_RUN_ID": "42"}):
+                status, out = run(
+                    "comment", "--status", "success", "--kind", "security", "--output-dir", folder
+                )
+        self.assertEqual(status, 0)
+        self.assertEqual(claude_review.MARKER.findall(out), [("security", HEAD, "0", "42")])
+
+    def test_the_diff_starts_at_the_base_branch_of_the_pr(self):
+        self.assertIn("pr/base...pr/head", WORKFLOW)
+        self.assertNotIn("origin/main", WORKFLOW)
+        self.assertIn('git check-ref-format --branch "$base"', WORKFLOW)
+
+    def test_the_post_job_gives_the_kind_of_the_request(self):
+        self.assertIn('--kind "$KIND"', WORKFLOW)
+        self.assertEqual(
+            WORKFLOW.count(
+                "KIND: ${{ github.event.comment.body == '%s' && 'security' || 'code' }}"
+                % claude_review.REQUESTS["security"]
+            ),
+            2,
+        )
+
     def test_comment_with_a_missing_artifact_is_the_failure_text(self):
         with tempfile.TemporaryDirectory() as folder:
             self.assertEqual(
@@ -175,7 +291,16 @@ class CommentTest(unittest.TestCase):
             Path(folder, "head.txt").write_text(HEAD)
             env = {"REPOSITORY": "o/r", "PR": "7", "GITHUB_TOKEN": "sample"}
             with mock.patch.dict(os.environ, env), mock.patch.object(claude_review, "call") as call:
-                run("comment", "--status", "failure", "--output-dir", folder, "--post")
+                run(
+                    "comment",
+                    "--status",
+                    "failure",
+                    "--kind",
+                    "code",
+                    "--output-dir",
+                    folder,
+                    "--post",
+                )
         call.assert_called_once_with(
             "POST",
             "/repos/o/r/issues/7/comments",
@@ -260,9 +385,11 @@ class WorkflowTest(unittest.TestCase):
             self.assertNotEqual(claude_review.workflow_errors(changed), [])
 
     def test_the_request_texts_are_the_texts_in_the_review_rules(self):
-        rules = (ROOT / "docs/REVIEW.md").read_text()
-        requests = set(re.findall(r"`(@claude [^`]+)`", rules))
+        requests = set(claude_review.REQUESTS.values())
         self.assertEqual(len(requests), 2)
+        self.assertEqual(
+            set(re.findall(r"`(@claude [^`]+)`", (ROOT / "docs/REVIEW.md").read_text())), requests
+        )
         self.assertEqual(set(re.findall(r"body == '([^']+)'", WORKFLOW)), requests)
 
     def test_the_cli_pin_is_exact(self):

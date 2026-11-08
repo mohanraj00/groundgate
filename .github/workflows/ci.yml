@@ -1,73 +1,117 @@
 name: CI
-
+# The ci-ok skeleton. Copy this file to .github/workflows/ci.yml of the project, then put the project jobs in it.
+# Replace the SHA of the gates action with a full SHA of mohanraj00/.github on main.
+# A docs-only PR skips the project jobs, and ci-ok still passes. The check job always runs.
+# Do not use paths-ignore, because a required check can then stay pending.
 on:
-  # A push to any branch runs CI in a fork, so that an outside contributor can link a green run.
-  # In this repository, which is not a fork, only a push to main runs it. The scope job decides.
-  push:
-    branches: ["**"]
   pull_request:
-
-# One group for each PR, and one for each commit on a push. A new PR run cancels the old one. Each
-# push has its own group, so no push run waits or is cancelled, and each commit on main gets a result.
-concurrency:
-  group: ci-${{ github.event.pull_request.number || github.sha }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
-
+  push:
+    branches: [main]
+permissions: {}
 jobs:
-  # The other jobs need this job. If it is skipped, they are skipped too. A skipped check passes a
-  # required check of the same name, so the name of each job is an expression. It gives the
-  # required name only after this job passed. On a skipped job, GitHub shows the expression text.
-  scope:
-    if: >-
-      github.event_name == 'pull_request'
-      || github.ref == 'refs/heads/main' || github.event.repository.fork
-    runs-on: ubuntu-latest
+  changes:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      code: ${{ steps.classify.outputs.code }}
     steps:
-      - run: echo "Full CI run for the $GITHUB_EVENT_NAME event"
-
-  lint:
-    name: ${{ needs.scope.result == 'success' && 'lint' || 'lint-skipped' }}
-    needs: scope
-    runs-on: ubuntu-latest
+      # The classify step reads .github/gates.json from the base branch, so a PR cannot mark its own change as docs.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.base.sha || github.sha }}
+          persist-credentials: false
+      - id: classify
+        uses: mohanraj00/.github/gates@fb951a2ad58ba1283efc2e909d4753202e5cc742
+        with:
+          check: classify
+  # The project check always runs.
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
       - run: uv sync --python 3.12
-      - run: uv run ruff check .
-      - run: uv run ruff format --check .
-      - run: uv run mypy
+      - run: make check
+  # The project jobs below run only for a change that is not docs-only.
+  lint:
+    needs: changes
+    if: needs.changes.outputs.code == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
+      - run: uv sync --python 3.12
       - name: Conformance vectors are up to date
         run: uv run python conformance/build.py && git diff --exit-code conformance/
       - name: The example rebuilds byte for byte from its cached model runs
         run: uv run python examples/irs-590a/build.py && git diff --exit-code examples/
-
   test:
-    name: >-
-      ${{ needs.scope.result == 'success' && 'test' || 'test-skipped' }}
-      (${{ matrix.os }}, ${{ matrix.python }})
-    needs: scope
+    needs: changes
+    if: needs.changes.outputs.code == 'true'
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-24.04]
         python: ["3.10", "3.11", "3.12", "3.13"]
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
       - run: uv sync --python ${{ matrix.python }}
       - run: uv run pytest --cov --cov-report=term-missing
-
-  package:
-    name: ${{ needs.scope.result == 'success' && 'package' || 'package-skipped' }} (${{ matrix.os }})
-    needs: scope
+  # The macOS jobs are not required, so ci-ok does not collect them.
+  test-macos:
+    needs: changes
+    if: needs.changes.outputs.code == 'true'
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [macos-latest]
+        python: ["3.10", "3.11", "3.12", "3.13"]
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
+      - run: uv sync --python ${{ matrix.python }}
+      - run: uv run pytest --cov --cov-report=term-missing
+  package:
+    needs: changes
+    if: needs.changes.outputs.code == 'true'
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
         with:
@@ -81,13 +125,46 @@ jobs:
           /tmp/clean/bin/groundgate --help > /dev/null
           /tmp/clean/bin/python -m pytest -p no:cacheprovider \
             tests/test_package.py tests/test_readme.py tests/test_conformance.py
-
-  langextract:
-    name: ${{ needs.scope.result == 'success' && 'langextract' || 'langextract-skipped' }}
-    needs: scope
-    runs-on: ubuntu-latest
+  # The macOS jobs are not required, so ci-ok does not collect them.
+  package-macos:
+    needs: changes
+    if: needs.changes.outputs.code == 'true'
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: "3.10"
+      - run: uv build
+      - run: uvx twine check --strict dist/*
+      - name: The wheel installs into a clean venv, and the quickstart and vectors pass against it
+        run: |
+          python -m venv /tmp/clean
+          /tmp/clean/bin/pip install -q dist/*.whl pytest
+          /tmp/clean/bin/groundgate --help > /dev/null
+          /tmp/clean/bin/python -m pytest -p no:cacheprovider \
+            tests/test_package.py tests/test_readme.py tests/test_conformance.py
+  langextract:
+    needs: changes
+    if: needs.changes.outputs.code == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
       - run: uv sync --python 3.12 --group langextract
       - run: uv run --group langextract pytest tests/test_langextract.py tests/test_bench.py
@@ -174,3 +251,24 @@ jobs:
           $run04 groundgate-calibrate report --work bench/sec/work-field --check
           $run04 groundgate-calibrate report --work bench/sec/work-key --check
           $run04 python bench/sec/sec.py results --check
+  # The required check. Add each project job to needs. A skipped job passes. A failed or cancelled job fails.
+  ci-ok:
+    needs: [changes, check, lint, test, package, langextract]
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 2
+    permissions: {}
+    steps:
+      - name: Collect the project jobs
+        env:
+          NEEDS: ${{ toJSON(needs) }}
+        run: |
+          python3 -B -I -c '
+          import json, os, sys
+          needs = json.loads(os.environ["NEEDS"])
+          bad = sorted(k for k, v in needs.items() if v["result"] not in ("success", "skipped"))
+          if needs.get("changes", {}).get("result") != "success":
+              bad = sorted(set(bad) | {"changes"})
+          print("\n".join("%s: %s" % (k, v["result"]) for k, v in sorted(needs.items())))
+          sys.exit("Failed jobs: " + ", ".join(bad) if bad else 0)
+          '

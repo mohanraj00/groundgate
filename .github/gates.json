@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "code": ["src/*", "tests/*", "conformance/*", "examples/*", "bench/*", "spikes/*", "tools/*", "scripts/*",
+           "Makefile", "SPEC.md", "README.md", "docs/guide.md", "docs/schema.md", "docs/howto/*",
+           "docs/design/packs.md", "docs/design/store.md"],
+  "security_sources": [],
+  "not_security": [],
+  "boundaries": ["tools/*", "scripts/*", "src/groundgate/cli.py", "src/groundgate/model.py", "src/groundgate/pack.py",
+                 "src/groundgate/report.py", "src/groundgate/escape.py", "src/groundgate/read/*",
+                 "src/groundgate/extract/*", "src/groundgate/adapters/*", "src/groundgate/store/*",
+                 "src/groundgate/review/*", "src/groundgate/calibrate/*"],
+  "level1": ["tools/claude_review.py", "SPEC.md", "conformance/*"],
+  "generated": ["uv.lock", "conformance/vectors/*", "conformance/invalid/*", "examples/irs-590a/candidates.json",
+                "examples/irs-590a/receipt.json", "examples/irs-590a/report.html"]
+}
