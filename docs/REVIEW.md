@@ -4,9 +4,10 @@
 the exact review requests and the design of the Claude review workflow.
 
 [STANDARD.md](STANDARD.md) is a byte copy of the shared standard. It names required checks, for
-example `cross-review`, `security-review` and `acceptance`. groundgate does not have these
-checks yet. They come in a later rollout. Until then, no check blocks a merge for a missing
-review. The agent that opened the PR follows the rules in AGENTS.md and this file.
+example `cross-review`, `security-review` and `acceptance`. The
+[gates](../.github/workflows/gates.yml) workflow runs these checks, and the ruleset of `main`
+makes them required. The agent that opened the PR also follows the rules in AGENTS.md and this
+file.
 
 ## Cross-harness review
 
@@ -89,9 +90,13 @@ texts in the workflow.
 
 ## Use of a Claude result
 
-The `cross-review` and `security-review` gates read the marker. They accept it only from the
-workflow bot, for the current head, and only if its run is an `issue_comment` run of this workflow
-on `main`. A code review passes `cross-review` only with `findings=0`. A person still reads the
-text. The review has no inline
-comments and no conversation. A push makes a new head, so ask again as the request rules say.
+The `cross-review` gate reads the marker. It accepts the marker only from the workflow bot, for
+the current head, and only if its run is an `issue_comment` run of this workflow on `main`. A code
+review passes `cross-review` only with `findings=0`. If the first line says `Findings: 0` and a
+later line starts with a severity tag or a `path:line` reference, the marker gives
+`findings=unknown`.
+
+A Claude security review is advisory. The `security-review` gate does not accept it. The owner
+reads the review, then adds the `security-reviewed` label. A person still reads the text of each
+review. The review has no inline comments and no conversation. A push makes a new head, so ask again as the request rules say.
 The OAuth token is a static secret. If you suspect a leak, revoke it and make a new one.
