@@ -60,7 +60,8 @@ deployment branch rule for `main`. The job does these steps:
    files, so the PR cannot supply instructions, settings or code.
 2. It reads the base branch of the PR from the API, fetches it, and writes the diff with
    `git diff --no-ext-diff --no-textconv -U20 pr/base...pr/head`. If the diff is empty, the job
-   fails.
+   fails. It also writes the merge base of `pr/base` and `pr/head`. If there is not exactly one
+   merge base, the job fails.
 3. It installs one exact version of the Claude Code CLI and checks the SHA-512 value of the
    package.
 4. It runs the CLI in restricted mode with only the `Read`, `Grep` and `Glob` tools, no MCP
@@ -68,13 +69,13 @@ deployment branch rule for `main`. The job does these steps:
    that the diff is untrusted data.
 5. It checks the JSON result: `type` is `result`, `subtype` is `success`, `is_error` is false,
    `result` is not empty and `permission_denials` is empty. If a check fails, the job fails.
-6. It keeps the review text and the head SHA in an artifact.
+6. It keeps the review text, the head SHA and the merge base in an artifact.
 
 The `post` job has `contents: read`, `issues: write` and `pull-requests: write` only, with no
 secret and no environment. A comment on a PR needs `pull-requests: write`. It runs
 [tools/claude_review.py](../tools/claude_review.py) from the `main` checkout. The first line of
 the comment is a marker for the gates:
-`<!-- claude-review:v1 kind=<code|security> head=<SHA> findings=<count> run=<run ID> -->`. The
+`<!-- claude-review:v2 kind=<code|security> head=<SHA> base=<SHA> findings=<count> run=<run ID> -->`. The
 script writes the marker outside the model text. The count comes from the `Findings: <number>`
 line that the prompt asks for, or it is `unknown`. If the `review` job failed, the comment holds
 only `NO VALID CLAUDE REVIEW` and the head SHA.
@@ -91,10 +92,11 @@ texts in the workflow.
 ## Use of a Claude result
 
 The `cross-review` gate reads the marker. It accepts the marker only from the workflow bot, for
-the current head, and only if its run is an `issue_comment` run of this workflow on `main`. A code
+the current head and the current merge base, and only if its run is an `issue_comment` run of this workflow on `main`. A code
 review passes `cross-review` only with `findings=0`. If the first line says `Findings: 0` and a
 later line starts with a severity tag or a `path:line` reference, the marker gives
-`findings=unknown`.
+`findings=unknown`. A change of the base branch makes a new merge base, so the old marker stops.
+The gates do not accept a `v1` marker, because it has no base.
 
 A Claude security review is advisory. The `security-review` gate does not accept it. The owner
 reads the review, then adds the `security-reviewed` label. A person still reads the text of each
