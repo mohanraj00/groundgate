@@ -30,8 +30,7 @@ and these steps make it fast:
 1. Open an issue first, or name the issue that the PR fixes. The PR body says `Fixes #N`.
 2. Run the full check before you push:
    `uv run ruff check . && uv run ruff format --check . && uv run mypy && uv run pytest`.
-3. Enable Actions in your fork, and push your branch there. CI runs on a push to any branch of a
-   fork. Link the green run in the PR body.
+3. Open the PR. CI runs on the PR after I read the diff and approve the run.
 4. Do not edit `CHANGELOG.md`. Put the changelog line in a `## Changelog` section of the PR body
    instead, or write "none" if users will not notice the change.
 5. Do not change `.github/`, `SPEC.md` or `conformance/`, or a `.claude/`, `.codex/`,

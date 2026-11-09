@@ -21,9 +21,11 @@ Claude Code and Codex both work on this repository. This file is the one copy of
   that has the other label or an open PR.
 - Claude Code branches are `N-short-slug`. Codex branches are `codex/N-short-slug`.
 - Codex reviews Claude Code PRs, and Claude Code reviews Codex PRs. No review runs by itself:
-  the agent that opened the PR asks for it in a separate comment that holds only this text.
-  - A Claude Code PR: `@codex review`
-  - A Codex PR: `@claude review this PR. Use the Review guidelines in CLAUDE.md.`
+  the agent that opened the PR asks for it in a separate comment.
+  [docs/REVIEW.md](docs/REVIEW.md) has the exact texts and the rules for each request.
+  - A Claude Code PR: `@codex review`, with `Head: <short SHA>` on the next line.
+  - A Codex PR: `@claude review this PR. Use the Review guidelines in AGENTS.md.` and no other
+    text. The Claude review workflow starts only for this exact text.
 
   Ask again after each push that fixes a finding. Answer each finding on its comment: the fix and
   its commit, or why it does not apply. Never write `@codex` or `@claude` in a PR body, an issue or
@@ -70,8 +72,10 @@ employer and client names out of the repository, including commit messages.
 ## Before every commit
 
 ```bash
-uv run ruff check . && uv run ruff format --check . && uv run mypy && uv run pytest
+make check
 ```
+
+`make check` runs ruff, the ruff format check, mypy and pytest.
 
 ## Review guidelines
 
