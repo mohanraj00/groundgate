@@ -34,7 +34,12 @@ Follow these rules for each request:
 5. If you push fixes after a review, ask again for the new head. Ask at most 3 times for each
    PR. After that, ask the maintainer to review. The `gate` job of the Claude workflow stops a
    second Claude review of one kind for a head, and a Claude review after 3 of one kind.
-6. Fix each real finding, or write on the PR why it is not a defect.
+6. Fix each real finding, or write on the PR why it is not a defect. For a finding in the gates,
+   use the stop rule in [STANDARD.md](STANDARD.md). The gates include the files that this project
+   copies from `mohanraj00/.github`: `docs/STANDARD.md`, `tools/claude_review.py` and
+   `.github/workflows/claude-review.yml`. Never change a copy. If a finding in a copy does not
+   need a fix now, write the reason on the PR, close the thread and file the finding in
+   `mohanraj00/.github`.
 
 Codex reviews through the Codex GitHub integration. Claude Code reviews through the
 [Claude review](../.github/workflows/claude-review.yml) workflow. The workflow starts only if all
