@@ -254,6 +254,23 @@ def test_a_run_saves_and_loads_with_the_candidates(tmp_path: Path) -> None:
     assert RunResult.load(store, packet).candidates == result.candidates
 
 
+def test_a_run_reads_back_when_the_schema_order_is_not_sorted(tmp_path: Path) -> None:
+    """A saved schema loads its fields in sorted order, so the candidate IDs must not follow
+    the order of the schema (#510)."""
+    schema = {
+        "fields": {
+            "z": {"type": "integer", "aliases": ["Revenue"]},
+            "a": {"type": "integer", "aliases": ["Cost"]},
+        }
+    }
+    doc = document(tmp_path, TWO_COLUMNS)
+    assert [c["field"] for c in propose(doc.text, doc, Schema.from_dict(schema))] == ["a", "z"]
+    result = run(doc, schema)
+    folder = tmp_path / "run"
+    result.write(folder)
+    assert RunResult.read(folder).candidates == result.candidates
+
+
 def test_a_lone_candidate_needs_verification_under_corroborate(tmp_path: Path) -> None:
     result = run(document(tmp_path, TABLE))
     for decision in result.receipt.decisions:

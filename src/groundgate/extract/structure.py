@@ -244,7 +244,8 @@ def propose(text: str, document: Document | None, schema: Schema) -> list[Json]:
 
     Each candidate has the extra member ``basis``, the basis of each cell that it cites by role.
     ``admit`` ignores this member (SPEC §2.5). A plain text has no cells, so only its lines can
-    match, and the basis of a line is always ``layout``."""
+    match, and the basis of a line is always ``layout``. The candidates are in the order of
+    their field name, then in the order of the keys of the field."""
     names: dict[str, set[str]] = {}
     for name, field in schema.fields.items():
         for alias in field.aliases or ():
@@ -257,4 +258,8 @@ def propose(text: str, document: Document | None, schema: Schema) -> list[Json]:
         for table in tables:
             _table(document, table, data, names, nested, found, schema)
     _lines(data, tables, names, found, schema)
-    return [m[0] for m in found.values() if len(m) == 1 and m[0] is not None]
+    # Sort by field name, not by schema order: a saved schema is canonical JSON, so its fields
+    # load in sorted order, and replay must give the same candidate IDs (#510). The keys of a
+    # field are a list, so their order stays.
+    ordered = sorted(found.items(), key=lambda item: item[0][0])
+    return [m[0] for _, m in ordered if len(m) == 1 and m[0] is not None]
