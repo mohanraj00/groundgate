@@ -1,0 +1,36 @@
+{
+ "name": "150-tab-minus-after-positive",
+ "description": "A positive value before a tab and a negative next cell is not a range (SPEC §4.2, spec 0.12, #586).",
+ "document": "Loss\t3415\t-2980",
+ "schema": {
+  "fields": {
+   "a": {
+    "type": "integer"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "tm3",
+   "field": "a",
+   "value": 3415,
+   "evidence": [
+    {
+     "start": 5,
+     "end": 9,
+     "text": "3415"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

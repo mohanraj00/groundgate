@@ -1,0 +1,38 @@
+{
+ "name": "152-space-minus-range",
+ "description": "A minus directly before a digit is still a connector when no tab stands before it (SPEC §4.2, spec 0.12, #586).",
+ "document": "Loss 10 -20",
+ "schema": {
+  "fields": {
+   "a": {
+    "type": "integer"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "tm5",
+   "field": "a",
+   "value": 10,
+   "evidence": [
+    {
+     "start": 5,
+     "end": 7,
+     "text": "10"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}
