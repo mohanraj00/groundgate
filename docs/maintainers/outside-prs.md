@@ -15,7 +15,7 @@ the maintainer named for the current milestone.
 3. Read the agent labels on that issue. An agent does not take an issue that has an outside PR.
    If an agent label is on the issue and no agent PR is open, remove the label. If an agent PR
    is open, tell the author, and decide which PR stays.
-4. Check that the PR body has a `## Changelog` section and a link to a green CI run in the fork.
+4. Check that the PR body has a `## Changelog` section.
 
 ## 2. Before "Approve and run"
 
