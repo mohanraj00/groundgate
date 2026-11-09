@@ -430,3 +430,13 @@ def test_a_label_after_a_row_header_or_a_label_is_a_data_cell(tmp_path: Path, ro
         policy={"proposers": {"structure": "admit"}},
     )
     assert "revenue" not in [c["field"] for c in result.candidates]
+
+
+def test_the_keys_keep_the_schema_order_across_tables(tmp_path: Path) -> None:
+    """Two tables give the keys of one field in the other order: the candidates follow the
+    schema keys, not the tables."""
+    html = (
+        "<table><tr><th>Item</th><th>2023</th></tr><tr><td>Revenue</td><td>4</td></tr></table>"
+        "<table><tr><th>Item</th><th>2024</th></tr><tr><td>Revenue</td><td>5</td></tr></table>"
+    )
+    assert [c["key"] for c in found(tmp_path, html)] == ["2024", "2023"]

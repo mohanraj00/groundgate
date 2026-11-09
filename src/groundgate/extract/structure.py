@@ -97,22 +97,30 @@ def _at_header(grid: _Grid, count: int, label: Node, header: Node) -> Node | Non
     return None if value.header is True else value
 
 
-def _in_row(grid: _Grid, cells: list[Node], spanned: list[Node], label: Node) -> Node | None:
+class _Row:
+    """The cells of one row, in the order of their column."""
+
+    def __init__(self, cells: list[Node]) -> None:
+        cells.sort(key=lambda c: _place(c)[1])
+        self.columns = [_place(c)[1] for c in cells]
+        self.full = [c for c in cells if c.start < c.end]
+        self.full_columns = [_place(c)[1] for c in self.full]
+
+
+def _in_row(grid: _Grid, row_of: _Row, label: Node) -> Node | None:
     """The one data cell with text after ``label`` in its row."""
     row, left = _place(label)
-    for cell in spanned:
-        assert cell.row is not None and cell.rows is not None
-        if cell.row <= row < cell.row + cell.rows:
-            return None
-    after = [c for c in cells if c.row == row and _place(c)[1] > left]
-    full = [c for c in after if c.start < c.end]
-    if len(full) != 1:
+    # A bisect on the sorted columns, so a row with many labels costs no more than its cells.
+    after = len(row_of.columns) - bisect_right(row_of.columns, left)
+    first = bisect_right(row_of.full_columns, left)
+    if len(row_of.full) - first != 1:
         return None
-    column = _place(full[0])[1]
-    # Each cell of a row is in the list, so this walk costs no more than the list.
-    if column - left > len(after) or not _whole(grid, ((row, c) for c in range(left, column + 1))):
+    value = row_of.full[first]
+    column = _place(value)[1]
+    # One cell with text follows the label, so the walks of a row cover each cell once at most.
+    if column - left > after or not _whole(grid, ((row, c) for c in range(left, column + 1))):
         return None
-    return full[0] if full[0].header is False else None
+    return value if value.header is False else None
 
 
 def _least_columns(blockers: list[Node], rows: Iterable[int]) -> dict[int, int]:
@@ -216,14 +224,20 @@ def _table(
             found_labels.setdefault(next(iter(who)), []).extend(held)
     # A label is the row label only if no header and no other label comes before it in its row:
     # in "Cost | Revenue | 5", "Revenue" is a data cell of the row of "Cost".
-    least = _least_columns(blockers, (_place(c)[0] for held in found_labels.values() for c in held))
+    label_rows = [_place(c)[0] for held in found_labels.values() for c in held]
+    least = _least_columns(blockers, label_rows)
+    covered = _least_columns(spanned, label_rows)  # the rows that a spanned cell covers
+    by_row: dict[int, list[Node]] = {}
+    for cell in cells:
+        by_row.setdefault(_place(cell)[0], []).append(cell)
+    rows = {row: _Row(held) for row, held in by_row.items()}
     for name, labels in found_labels.items():
         field = schema.fields[name]
         inner = any(least[_place(c)[0]] < _place(c)[1] for c in labels)
         if field.keys is None:
             one = None
-            if len(labels) == 1 and not inner:
-                one = _in_row(grid, cells, spanned, labels[0])
+            if len(labels) == 1 and not inner and _place(labels[0])[0] not in covered:
+                one = _in_row(grid, rows[_place(labels[0])[0]], labels[0])
             add(field, None, labels[0], None, one)
             continue
         wanted = [_name(k) for k in field.keys]
@@ -291,8 +305,14 @@ def propose(text: str, document: Document | None, schema: Schema) -> list[Json]:
         for table in tables:
             _table(document, table, data, names, nested, found, schema)
     _lines(data, tables, names, found, schema)
+
     # Sort by field name, not by schema order: a saved schema is canonical JSON, so its fields
     # load in sorted order, and replay must give the same candidate IDs (#510). The keys of a
-    # field are a list, so their order stays.
-    ordered = sorted(found.items(), key=lambda item: item[0][0])
+    # field are a list, so the key order is the schema order, in all tables.
+    def place(item: tuple[tuple[str, str | None], list[Json | None]]) -> tuple[str, int]:
+        (name, key), _ = item
+        keys = schema.fields[name].keys
+        return name, -1 if key is None or keys is None else keys.index(key)
+
+    ordered = sorted(found.items(), key=place)
     return [m[0] for _, m in ordered if len(m) == 1 and m[0] is not None]
