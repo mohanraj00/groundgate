@@ -45,23 +45,9 @@ reviews the PR, the labels, and when an open PR closes.
 
 ## Rules that keep the project honest
 
-- **A spec change comes with vectors.** If a rule in SPEC.md changes, add or edit a vector in
-  `conformance/build.py`, write the expected outcome by hand, and run
-  `uv run python conformance/build.py`. Never generate expectations by running groundgate.
-- **Every reason code keeps two vectors.** `tests/test_conformance.py` enforces it.
-- **The core has no dependencies.** Anything that needs a package goes behind an extra
-  (`[pdf]`, `[ocr]`, `[langextract]`) and imports it lazily. Only two modules start a
-  process, each with a list of arguments, no shell and a timeout: `read/ocr.py` starts the
-  `tesseract` program, and `read/crop.py` starts `python -I` to render a crop of a scan for the
-  review page.
-- **No model inside the decision.** The decision is a pure function of its inputs. A model's
-  answer enters only as a recorded input (#66), and the core never imports a model. Examples may
-  call models; they cache the output so they rebuild without keys.
-- **A rule about keys or layout is measured on two kinds.** One of them is not the kind that the
-  rule was written from. The key rules of spec 0.3 came from FDA labels, and `bench/status`
-  measures them on IRS publications (#113).
-- **Examples rebuild byte for byte.** If you touch `src/`, run
-  `uv run python examples/irs-590a/build.py` and commit any change it makes. CI fails otherwise.
+The principles and the evidence rules are in [CONSTITUTION.md](CONSTITUTION.md#principles):
+no dependencies in the core, no model inside the decision, vectors for each spec change, and
+measures on documents that a rule was not written from.
 
 ## Releasing
 
@@ -74,4 +60,4 @@ reviews the PR, the labels, and when an open PR closes.
 
 ## License
 
-By contributing you agree that your work is licensed under Apache-2.0.
+The license of a contribution is in [CONSTITUTION.md](CONSTITUTION.md#contributions).
