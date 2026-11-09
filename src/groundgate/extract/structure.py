@@ -185,10 +185,14 @@ def _table(
         text = data[value.start : value.end].decode("utf-8")
         target.append(_candidate(field, key, text, places, bases))
 
-    for name, field in schema.fields.items():
-        labels = [c for n, who in names.items() if who == {name} for c in texts.get(n, ())]
-        if not labels:
-            continue
+    # Look up each cell text once: a scan of every alias for each table costs fields x aliases.
+    found_labels: dict[str, list[Node]] = {}
+    for form, held in texts.items():
+        who = names.get(form)
+        if who is not None and len(who) == 1:
+            found_labels.setdefault(next(iter(who)), []).extend(held)
+    for name, labels in found_labels.items():
+        field = schema.fields[name]
         if field.keys is None:
             one = _in_row(grid, cells, spanned, labels[0]) if len(labels) == 1 else None
             add(field, None, labels[0], None, one)
