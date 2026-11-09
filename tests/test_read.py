@@ -483,28 +483,27 @@ ROOT = Path(__file__).parent.parent
 CACHE = Path(os.environ.get("GROUNDGATE_BENCH_ROOT", ROOT)) / "bench"
 
 
-def _pinned_bench_texts() -> list[tuple[Path, list[int] | None, Path]]:
-    """Each source of bench/afr with a file in a local cache, and its text as #263 pinned it with
-    the current reader in bench/afr/tabs/docs. The caches are not in git, so CI has none and the
-    test skips there. The older sets pin the texts of older readers."""
+def _cached_bench_sources() -> list[tuple[Path, list[int] | None, str]]:
+    """Find cached copies of the benchmark PDFs by source hash."""
     dirs = [d for d in (CACHE / "afr" / ".cache", CACHE / ".cache") if d.is_dir()]
     by_sha = {hashlib.sha256(f.read_bytes()).hexdigest(): f for d in dirs for f in d.glob("*.pdf")}
     sources = json.loads((ROOT / "bench" / "afr" / "sources.json").read_text())["sources"]
     return [
-        (by_sha[s["sha256"]], s["select"]["pages"], ROOT / "bench/afr/tabs/docs" / f"{s['id']}.txt")
+        (by_sha[s["sha256"]], s["select"]["pages"], s["id"])
         for s in sources
         if s["sha256"] in by_sha
     ]
 
 
 def test_read_gives_the_bytes_of_the_pinned_bench_texts() -> None:
-    """0.9 moved the reader from groundgate.extract to groundgate.read (#286). The text of every
-    bench document stays the same, so every published number stays the same."""
-    cases = _pinned_bench_texts()
+    """Pin current reader bytes separately from the published 0.8 benchmark inputs (#599)."""
+    pins = json.loads((ROOT / "tests/fixtures/afr_reader_sha256.json").read_text(encoding="utf-8"))
+    cases = _cached_bench_sources()
     if not cases:
         pytest.skip("no local bench cache (set GROUNDGATE_BENCH_ROOT to a checkout with one)")
-    for path, pages, pinned in cases:
-        assert read(path, pages=pages).text == pinned.read_text(encoding="utf-8"), pinned.name
+    for path, pages, source_id in cases:
+        text = read(path, pages=pages).text
+        assert hashlib.sha256(text.encode("utf-8")).hexdigest() == pins[source_id], source_id
 
 
 def test_cli_read_writes_the_text_and_extract_names_read(
