@@ -40,6 +40,7 @@ def vector(
     relations: list[tuple[str, str | None, bool, str | None, str | None]] | None = None,
     packs: list[dict[str, Any]] | None = None,
     doubt: list[dict[str, Any]] | None = None,
+    export: list[dict[str, Any]] | None = None,
 ) -> None:
     """``relations`` is the receipt's relation results (SPEC §5), each as (id, key, holds,
     difference, allowance), in receipt order; None when the schema has no relations. ``doubt``
@@ -64,6 +65,7 @@ def vector(
             ],
             "packs": packs,
             "doubt": doubt,
+            "export": export,
         }
     )
 
@@ -6498,6 +6500,51 @@ vector(
 )  # fmt: skip
 
 
+vector(
+    "export-invoice",
+    "Only the two admitted facts appear. Spans count UTF-8 bytes after a non-ASCII character.",
+    "Café invoice\nItems: 2\nBoxes: 3\nEstimate: up to 4\n",
+    {"fields": {name: {"type": "integer"} for name in ("items", "boxes", "estimate", "weight")}},
+    [
+        c("a", "items", 2, evidence=q("2")),
+        c("b", "boxes", 3, evidence={"text": "3"}),
+        c("c", "estimate", 4, evidence=q("4"), expect=(REVIEW, ["QUALIFIED_VALUE"])),
+        c("d", "weight", 8, evidence=q("2"), expect=("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
+    ],
+    export=[
+        {"field": "items", "value": "2", "key": None, "unit": None, "source": "document",
+         "span": {"start": 21, "end": 22}},
+        {"field": "boxes", "value": "3", "key": None, "unit": None, "source": "document",
+         "span": {"start": 30, "end": 31}},
+    ],
+)  # fmt: skip
+
+EXPORT_URL = "https://example.org/stock"
+vector(
+    "export-citation-sources",
+    "A reference span belongs to the reference. Policy admissions can have no text span.",
+    "Stock ledger",
+    {"fields": {name: {"type": "integer"} for name in ("crates", "pallets", "shelves")}},
+    [
+        c("a", "crates", 5, evidence={"source": "reference", "ref": "stock", "text": "5"}),
+        c("b", "pallets", 6, evidence=ext("Pallets: 6", EXPORT_URL),
+          expect=("admitted", ["ADMITTED_BY_POLICY"])),
+        c("c", "shelves", 7, evidence=know("Shelves: 7"),
+          expect=("admitted", ["ADMITTED_BY_POLICY"])),
+    ],
+    policy={"sources": {"external": {"allow": [EXPORT_URL]}, "knowledge": "admit"}},
+    references=[{"id": "stock", "text": "Crates: 5"}],
+    export=[
+        {"field": "crates", "value": "5", "key": None, "unit": None, "source": "reference",
+         "ref": "stock", "span": {"start": 8, "end": 9}},
+        {"field": "pallets", "value": "6", "key": None, "unit": None, "source": "external",
+         "url": EXPORT_URL, "span": None},
+        {"field": "shelves", "value": "7", "key": None, "unit": None, "source": "knowledge",
+         "span": None},
+    ],
+)  # fmt: skip
+
+
 def main() -> None:
     out_dir = HERE / "vectors"
     out_dir.mkdir(exist_ok=True)
@@ -6532,6 +6579,7 @@ def main() -> None:
                 "decisions": expected,
                 "coverage": v["coverage"],
                 **({"relations": v["relations"]} if v["relations"] is not None else {}),
+                **({"export": v["export"]} if v["export"] is not None else {}),
             },
         }
         (out_dir / f"{v['name']}.json").write_text(

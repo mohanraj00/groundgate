@@ -1507,6 +1507,40 @@ so the list can be empty. A receipt of a schema without relations
 has no `relations` member. `receipt_sha256` is the digest of kind `receipt` over the receipt without its
 `receipt_sha256` key.
 
+### 5.1 Admitted facts export
+
+`groundgate export --store DIR PACKET` writes one `facts@1` JSON object for a stored packet.
+It re-derives the receipt as `groundgate verify --store DIR PACKET` does. A mismatch exits 1
+with no export. Invalid input or a missing store object exits 2. Use `-o FILE` to write the
+export to a file.
+
+```json
+{"format": "facts@1", "packet_sha256": "sha256:...",
+ "facts": [{"field": "items", "key": null, "value": "2", "unit": null,
+            "citation": {"source": "document", "ref": null, "url": null,
+                         "source_sha256": "sha256:...", "text_sha256": "sha256:...",
+                         "span": {"start": 21, "end": 22},
+                         "receipt_sha256": "sha256:..."}}]}
+```
+
+An invoice with the NFC text `Café invoice\nItems: 2\n` gives the span in this example.
+Each admitted decision gives one fact, in receipt order. Repeated admitted decisions remain
+separate. An export with no admissions has an empty `facts` array. The field, key, canonical
+value and unit are those of the decision. Each shown member is present.
+
+- `packet_sha256` is the `packet@1` store key. Pass it to `groundgate verify --store DIR`
+  to verify the receipt. `citation.receipt_sha256` is the receipt digest in §5.
+- For `source: "document"`, `source_sha256` is the `source@1` key of the original file from
+  the packet's reading or the run's saved document. It is null for a text-only packet with no
+  reading. `text_sha256` is the receipt's document digest (§2.1). `url` is the packet's
+  document source and `ref` is null.
+- For `source: "reference"`, `ref` names the receipt's reference, `text_sha256` is its digest
+  (§2.1), `url` is its source and `source_sha256` is null.
+- For both of these sources, `span` is the receipt's evidence span in the cited NFC text (§2.2).
+- For `source: "external"` or `source: "knowledge"`, the fact was admitted by policy.
+  `source_sha256`, `text_sha256`, `span` and `ref` are null. `url` is the external item's
+  URL, or null for knowledge. Use the packet key to see the recorded evidence.
+
 ## 6. Canonical JSON and digests
 
 Canonical JSON is RFC 8785 (JCS): keys sorted by UTF-16 code units, no insignificant whitespace,

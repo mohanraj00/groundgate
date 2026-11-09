@@ -1,0 +1,118 @@
+{
+ "name": "export-citation-sources",
+ "description": "A reference span belongs to the reference. Policy admissions can have no text span.",
+ "document": "Stock ledger",
+ "schema": {
+  "fields": {
+   "crates": {
+    "type": "integer"
+   },
+   "pallets": {
+    "type": "integer"
+   },
+   "shelves": {
+    "type": "integer"
+   }
+  }
+ },
+ "policy": {
+  "sources": {
+   "external": {
+    "allow": [
+     "https://example.org/stock"
+    ]
+   },
+   "knowledge": "admit"
+  }
+ },
+ "references": [
+  {
+   "id": "stock",
+   "text": "Crates: 5"
+  }
+ ],
+ "candidates": [
+  {
+   "id": "a",
+   "field": "crates",
+   "value": 5,
+   "evidence": {
+    "source": "reference",
+    "ref": "stock",
+    "text": "5"
+   }
+  },
+  {
+   "id": "b",
+   "field": "pallets",
+   "value": 6,
+   "evidence": {
+    "source": "external",
+    "url": "https://example.org/stock",
+    "retrieved": "2026-10-01",
+    "text": "Pallets: 6"
+   }
+  },
+  {
+   "id": "c",
+   "field": "shelves",
+   "value": 7,
+   "evidence": {
+    "source": "knowledge",
+    "text": "Shelves: 7"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "ADMITTED_BY_POLICY"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "ADMITTED_BY_POLICY"
+    ]
+   }
+  ],
+  "coverage": [],
+  "export": [
+   {
+    "field": "crates",
+    "value": "5",
+    "key": null,
+    "unit": null,
+    "source": "reference",
+    "ref": "stock",
+    "span": {
+     "start": 8,
+     "end": 9
+    }
+   },
+   {
+    "field": "pallets",
+    "value": "6",
+    "key": null,
+    "unit": null,
+    "source": "external",
+    "url": "https://example.org/stock",
+    "span": null
+   },
+   {
+    "field": "shelves",
+    "value": "7",
+    "key": null,
+    "unit": null,
+    "source": "knowledge",
+    "span": null
+   }
+  ]
+ }
+}

@@ -1,0 +1,111 @@
+{
+ "name": "export-invoice",
+ "description": "Only the two admitted facts appear. Spans count UTF-8 bytes after a non-ASCII character.",
+ "document": "Café invoice\nItems: 2\nBoxes: 3\nEstimate: up to 4\n",
+ "schema": {
+  "fields": {
+   "items": {
+    "type": "integer"
+   },
+   "boxes": {
+    "type": "integer"
+   },
+   "estimate": {
+    "type": "integer"
+   },
+   "weight": {
+    "type": "integer"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "a",
+   "field": "items",
+   "value": 2,
+   "evidence": {
+    "start": 21,
+    "end": 22,
+    "text": "2"
+   }
+  },
+  {
+   "id": "b",
+   "field": "boxes",
+   "value": 3,
+   "evidence": {
+    "text": "3"
+   }
+  },
+  {
+   "id": "c",
+   "field": "estimate",
+   "value": 4,
+   "evidence": {
+    "start": 48,
+    "end": 49,
+    "text": "4"
+   }
+  },
+  {
+   "id": "d",
+   "field": "weight",
+   "value": 8,
+   "evidence": {
+    "start": 21,
+    "end": 22,
+    "text": "2"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   }
+  ],
+  "coverage": [],
+  "export": [
+   {
+    "field": "items",
+    "value": "2",
+    "key": null,
+    "unit": null,
+    "source": "document",
+    "span": {
+     "start": 21,
+     "end": 22
+    }
+   },
+   {
+    "field": "boxes",
+    "value": "3",
+    "key": null,
+    "unit": null,
+    "source": "document",
+    "span": {
+     "start": 30,
+     "end": 31
+    }
+   }
+  ]
+ }
+}
