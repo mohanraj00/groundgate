@@ -1,0 +1,88 @@
+{
+ "name": "154-signed-evidence-start",
+ "description": "A citation that starts inside a signed token reads no number (SPEC §4.1, #621).",
+ "document": "Balance: -100 USD",
+ "schema": {
+  "fields": {
+   "balance": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "change": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  }
+ },
+ "policy": {
+  "reanchor": false
+ },
+ "candidates": [
+  {
+   "id": "a",
+   "field": "balance",
+   "value": "100",
+   "unit": "USD",
+   "evidence": {
+    "text": "-100 USD"
+   }
+  },
+  {
+   "id": "b",
+   "field": "balance",
+   "value": "100",
+   "unit": "USD",
+   "evidence": {
+    "text": "100 USD"
+   }
+  },
+  {
+   "id": "c",
+   "field": "balance",
+   "value": "100",
+   "unit": "USD",
+   "evidence": {
+    "start": 10,
+    "end": 17
+   }
+  },
+  {
+   "id": "d",
+   "field": "change",
+   "value": "-100",
+   "unit": "USD",
+   "evidence": {
+    "start": 9,
+    "end": 17,
+    "text": "-100 USD"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SIGN_DROPPED"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

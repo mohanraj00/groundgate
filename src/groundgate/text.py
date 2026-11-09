@@ -104,6 +104,14 @@ def _tokens(text: str, start: int, end: int) -> Iterator[Token]:
             s, tok = s + 1, tok[1:]
         if s > 0 and (_letter_or_number(text[s - 1]) or text[s - 1] in ".,"):
             continue
+        if (
+            s == start
+            and s > 0
+            and _digit(text, s)
+            and text[s - 1] in "-\u2212"
+            and (s == 1 or not _letter_or_number(text[s - 2]))
+        ):
+            continue  # the span starts after the sign of a number
         if _next_to_group_space(text, s, m.end()):
             grouped = _grouped_at(text, s)
             if grouped is not None:

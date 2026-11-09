@@ -854,7 +854,7 @@ class Review:
                 out.append({"part": "sign", "text": (
                     f"The value is {_sign(value)}, but value {n} of the task is "
                     f"{_sign(other)}: {c['shown']}. Read the sign that the field description "
-                    "asks for. For a positive amount, select the number without its sign."
+                    "asks for. Keep the sign in the selection and type the value you mean."
                 )})  # fmt: skip
         return out
 
