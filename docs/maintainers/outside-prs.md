@@ -6,8 +6,8 @@ This is how I handle a pull request from a fork. The rules for the author are in
 
 The maintainer or the milestone runner does each step, except a step that the Governance section
 of [CONSTITUTION.md](../../CONSTITUTION.md) or [docs/STANDARD.md](../STANDARD.md) gives only to the
-owner. For example, an agent never adds the label `accepted`. The milestone runner is the agent
-that the maintainer named for the current milestone.
+owner. For example, an agent never adds the label `accepted` to an issue. The milestone runner
+is the agent that the maintainer named for the current milestone.
 
 ## 1. Triage
 
@@ -76,11 +76,11 @@ that fixes a finding, read the new diff again before you approve the run.
 
 ## 5. Disposition
 
-Each outside PR ends with one of these labels:
+Each outside PR ends in one of these ways:
 
 - `changes-requested`: the PR waits for its author. The comment lists each change as a specific
   item, with the file and the line.
-- `accepted`: the maintainer or the milestone runner merges the PR with squash when the required
+- The merge: the maintainer or the milestone runner merges the PR with squash when the required
   checks pass and the review of the head commit has no open finding. The release PR copies the
   line from the `## Changelog` section of the PR body into `CHANGELOG.md`, and credits the
   author, as in "(#123, thanks @author)".
@@ -92,5 +92,5 @@ Each outside PR ends with one of these labels:
 Remove `changes-requested` when the author pushes the changes. Keep `external` on the PR.
 
 Each of these label changes runs `outside-pr-paths` again without the approval. On a PR that
-needs `maintainer-approved`, set `accepted` first, and add `maintainer-approved` last. Merge only
-after the run of the last label change passes. Before that, GitHub blocks the merge.
+needs `maintainer-approved`, add `maintainer-approved` last. Merge only after the run of the last
+label change passes. Before that, GitHub blocks the merge.
