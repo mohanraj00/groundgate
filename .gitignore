@@ -41,3 +41,6 @@ bench/acfr2/runs
 bench/requested/.labels-*.tmp
 bench/requested2/.labels-*.tmp
 bench/requested3/.labels-*.tmp
+
+# local tool logs can hold account data
+error.log
