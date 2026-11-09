@@ -10,6 +10,10 @@ from typing import Any
 import pytest
 
 import groundgate as gg
+from groundgate.cli import main
+from groundgate.store import FolderStore
+from groundgate.store import key as store_key
+from groundgate.store.packets import admit_packet, put_reading
 
 ROOT = Path(__file__).parent.parent / "conformance"
 VECTORS = sorted((ROOT / "vectors").glob("*.json"))
@@ -81,6 +85,78 @@ def test_invalid_packet(path: Path) -> None:
             v["document"], v["schema"], v["candidates"], v["policy"], None, v.get("judgments"),
             **_extra(v),
         )  # fmt: skip
+
+
+@pytest.mark.parametrize(
+    "path", sorted((ROOT / "vectors").glob("export-*.json")), ids=lambda p: p.stem
+)
+def test_export_vector(path: Path, tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    v = _load(path)
+    source = tmp_path / "source.txt"
+    source.write_bytes(v["document"].encode("utf-8"))
+    folder = tmp_path / "store"
+    with FolderStore(folder) as store:
+        reading, _ = put_reading(store, source)
+        packet, receipt = admit_packet(
+            store,
+            v["document"],
+            v["schema"],
+            v["candidates"],
+            v["policy"],
+            reading=reading,
+            references=v.get("references"),
+        )
+    assert main(["export", "--store", str(folder), packet]) == 0
+    exported = json.loads(capsys.readouterr().out)
+    assert main(["verify", "--store", str(folder), exported["packet_sha256"]]) == 0
+    assert capsys.readouterr().out == "receipt verified\n"
+
+    saved = receipt.to_dict()
+    order = [d["field"] for d in saved["decisions"] if d["outcome"] == "admitted"]
+    refs = {r["id"]: r for r in v.get("references", [])}
+    expected = []
+    for fact in sorted(v["expected"]["export"], key=lambda f: order.index(f["field"])):
+        origin = fact["source"]
+        source_sha256 = text_sha256 = None
+        if origin == "document":
+            source_sha256 = store_key("source@1", source.read_bytes())
+            text_sha256 = gg.digest("document", {"text": v["document"]})
+        elif origin == "reference":
+            text_sha256 = gg.digest("reference", {"text": refs[fact["ref"]]["text"]})
+        expected.append(
+            {k: fact[k] for k in ("field", "key", "value", "unit")}
+            | {
+                "citation": {
+                    "source": origin,
+                    "ref": fact.get("ref"),
+                    "url": fact.get("url"),
+                    "source_sha256": source_sha256,
+                    "text_sha256": text_sha256,
+                    "span": fact["span"],
+                    "receipt_sha256": saved["receipt_sha256"],
+                }
+            }
+        )
+    assert exported == {"format": "facts@1", "packet_sha256": packet, "facts": expected}
+
+
+def test_export_refuses_a_receipt_that_does_not_rederive(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    v = _load(ROOT / "vectors" / "export-invoice.json")
+    with FolderStore(tmp_path) as store:
+        packet, receipt = admit_packet(store, v["document"], v["schema"], v["candidates"])
+        body = receipt.to_dict()
+        body["decisions"][0]["value"] = "999"
+        body.pop("receipt_sha256")
+        body["receipt_sha256"] = gg.digest("receipt", body)
+        forged = json.loads(store.get("packet@1", packet))
+        forged["receipt"] = store.put("receipt@1", gg.jcs(body).encode("utf-8"))
+        forged_key = store.put("packet@1", gg.jcs(forged).encode("utf-8"))
+    assert main(["export", "--store", str(tmp_path), forged_key]) == 1
+    captured = capsys.readouterr()
+    assert captured.out == ""
+    assert "differs" in captured.err
 
 
 def test_description_changes_digest_only() -> None:

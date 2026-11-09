@@ -7,6 +7,7 @@
   groundgate admit    --docs D --candidates C --schema S --out R [--store DIR]
   groundgate verify   RECEIPT DOC SCHEMA CANDIDATES [--pack-dir DIR]
   groundgate verify   --store DIR PACKET
+  groundgate export   --store DIR PACKET               > facts.json
   groundgate report   RECEIPT DOC SCHEMA CANDIDATES [--pack-dir DIR] -o report.html
   groundgate report   --store DIR PACKET -o report.html
   groundgate review   tasks --store DIR PACKET          > task keys
@@ -207,6 +208,12 @@ def _parser() -> argparse.ArgumentParser:
     inputs(v)
     pack_dir(v)
     store_option(v, "get the receipt and each input of the packet PACKET")
+
+    e = sub.add_parser("export", help="verify a stored receipt and export its admitted facts")
+    e.add_argument("packet", metavar="PACKET", help="the store key of the packet")
+    e.add_argument("--store", metavar="DIR", required=True, help="the store folder")
+    e.add_argument("-o", "--output", help="write the facts here instead of stdout")
+    pack_dir(e)
 
     r = sub.add_parser("report", help="verify a receipt, then render an HTML review page")
     r.add_argument("receipt", help="the receipt JSON, or the packet key with --store")
@@ -442,6 +449,8 @@ def main(argv: list[str] | None = None) -> int:
             return _read(args)
         if args.command == "schema":
             return _schema(args)
+        if args.command == "export":
+            return _export(args)
         if args.command == "review" and args.step == "resolve":
             return _review_resolve(args)
         if args.command == "review" and args.step == "serve":
@@ -598,6 +607,29 @@ def _from_store(args: argparse.Namespace) -> int:
     layout = _json(args.layout) if args.layout else packet.layout
     extra["schema"] = packet.schema
     return _report(args, packet.receipt, packet.text, packet.candidates, extra, layout, None)
+
+
+def _export(args: argparse.Namespace) -> int:
+    from .store.export import admitted_facts
+    from .store.packets import load_packet, printable
+
+    with _store(args.store, make=False) as store:
+        packet = load_packet(store, args.packet)
+        result = verify(
+            packet.receipt,
+            packet.text,
+            packet.schema,
+            packet.candidates,
+            **packet.inputs(),
+            pack_dir=args.pack_dir,
+        )
+        for problem in result.problems:
+            print(f"mismatch: {printable(problem, limit=None)}", file=sys.stderr)
+        if not result.ok:
+            return 1
+        facts = admitted_facts(store, packet)
+    _write(_dumps(facts), args.output)
+    return 0
 
 
 def _review_tasks(args: argparse.Namespace) -> int:
