@@ -6267,6 +6267,34 @@ vector(
 )
 
 
+vector(
+    "157-sign-at-field-boundary",
+    "A signed number still blocks a field item that ends after its minus sign (SPEC §4.6).",
+    "Revenue -100 compared with expenses 200 USD.\n\n"
+    "Revenue \u2212100 compared with expenses 300 USD.",
+    {"fields": {"revenue": USD | {"aliases": ["Revenue"], "multiple": True}}},
+    [
+        c("a", "revenue", 200, "USD", [q("200 USD"), row("Revenue -")],
+          (REVIEW, ["FIELD_CITATION_INVALID"])),
+        c("b", "revenue", 300, "USD", [q("300 USD"), row("Revenue \u2212")],
+          (REVIEW, ["FIELD_CITATION_INVALID"])),
+    ],
+)  # fmt: skip
+
+vector(
+    "158-sign-at-loss-boundary",
+    "A signed number still blocks a loss item that starts after its minus sign (SPEC §4.6).",
+    "-100 loss on other items 200 USD.\n\n\u2212100 loss on other items 300 USD.",
+    {"fields": {"amount": AMOUNT}, "packs": [FINANCE]},
+    [
+        c("a", "amount", -200, "USD", [q("200 USD"), q("100 loss", role="sign")],
+          (REVIEW, ["SIGN_CITATION_INVALID", "VALUE_DERIVED"])),
+        c("b", "amount", -300, "USD", [q("300 USD"), q("100 loss", 2, role="sign")],
+          (REVIEW, ["SIGN_CITATION_INVALID", "VALUE_DERIVED"])),
+    ],
+)  # fmt: skip
+
+
 # ---------------------------------------------------------------- the digit limit (spec 0.12, #580)
 BIG = "9" * 999990
 

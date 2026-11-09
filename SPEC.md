@@ -641,6 +641,8 @@ Indian way, the last three digits and then pairs (`\d{1,2}(,\d{2})*,\d{3}`, so `
 the commas, so a string valid under both groupings, such as `25,000`, has one value. A token must
 fit wholly inside the span that reads it. This includes its leading minus sign. For example, a
 span of `100` inside `-100` reads no number (spec 0.12, #621).
+When a field, sign or key check scans for intervening numbers (§4.5, §4.6), a token whose
+leading minus sign is immediately before the scan still counts as a number in the scan.
 The `000` of a currency scale (below) is no token, so `£000` and `£'000` are never an
 amount of zero (spec 0.10, #313).
 

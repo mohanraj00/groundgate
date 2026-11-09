@@ -699,7 +699,7 @@ class Review:
                 between = text[a : tok.start]
                 if (
                     a >= sentence(text, tok.start)[0]
-                    and not tokens(text, a, tok.start)
+                    and not tokens(text, a, tok.start, include_starting_sign=True)
                     and "\n" not in between
                     and "\t" not in between
                     and not gain_word(text, a, tok.start)
