@@ -1,7 +1,8 @@
 # Review rules
 
 [AGENTS.md](../AGENTS.md) owns the general workflow and the Review guidelines. This file gives
-the exact review requests and the design of the Claude review workflow.
+the exact review requests and the design of the Claude review workflow. The rules for who reviews
+a change, the review cap and the security review trigger are in [STANDARD.md](STANDARD.md).
 
 [STANDARD.md](STANDARD.md) is a byte copy of the shared standard. It names required checks, for
 example `cross-review`, `security-review` and `acceptance`. The
@@ -11,8 +12,8 @@ file.
 
 ## Cross-harness review
 
-A harness does not review its own change. The reviews run on GitHub. No harness reviews a PR by
-default, so the PR author asks in a PR comment.
+The reviews run on GitHub. No harness reviews a PR by default, so the PR author asks in a PR
+comment.
 
 | Builder | Code review comment | Security review comment |
 |---|---|---|
@@ -28,12 +29,12 @@ Follow these rules for each request:
    reviewed.
 3. Write a security review request as the exact text in the table, with no other text in the
    comment. If the comment has other text, for example a `Head:` line, Codex does a code review
-   and no security review. AGENTS.md says when a PR needs a security review.
+   and no security review. The Security review trigger section of [STANDARD.md](STANDARD.md)
+   says when a PR needs a security review.
 4. Ask one time for each head commit. Before you ask, read the PR comments. If a request names
    the current head, or comes after the last push, do not ask again.
-5. If you push fixes after a review, ask again for the new head. Ask at most 3 times for each
-   PR. After that, ask the maintainer to review. The `gate` job of the Claude workflow stops a
-   second Claude review of one kind for a head, and a Claude review after 3 of one kind.
+5. If you push fixes after a review, ask again for the new head. The review cap, and what to do
+   at the cap, are in the Reviews section of [STANDARD.md](STANDARD.md).
 6. Fix each real finding, or write on the PR why it is not a defect. For a finding in the gates,
    use the stop rule in [STANDARD.md](STANDARD.md). The gates include the files that this project
    copies from `mohanraj00/.github`: `docs/STANDARD.md`, `tools/claude_review.py` and
@@ -127,7 +128,6 @@ The script reads these signals in NFKC form with no format characters, so a full
 zero-width character cannot hide one. A change of the base branch makes a new merge base, so the old marker stops.
 The gates do not accept a `v1` marker, because it has no base.
 
-A Claude security review is advisory. The `security-review` gate does not accept it. The owner
-reads the review, then adds the `security-reviewed` label. A person still reads the text of each
-review. The review has no inline comments and no conversation. A push makes a new head, so ask again as the request rules say.
+The use of a Claude security review is in the Reviews section of [STANDARD.md](STANDARD.md). A
+person still reads the text of each review. The review has no inline comments and no conversation. A push makes a new head, so ask again as the request rules say.
 The OAuth token is a static secret. If you suspect a leak, revoke it and make a new one.

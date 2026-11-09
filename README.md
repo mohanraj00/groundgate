@@ -30,10 +30,8 @@ back with one of three outcomes:
 
 Every run writes a receipt with hashes of every input. Anyone can re-derive it byte for byte.
 
-The goal is to admit as many fields as possible with the right value, while wrong values almost
-never get in. I judge every rule by two numbers: the facts admitted with a right value, and the
-wrong extractions admitted (escapes). Reviews are the cost between them: each one is a value that
-a person confirms by hand.
+The goal of the project, and the two numbers that judge each rule, are in
+[CONSTITUTION.md](CONSTITUTION.md#purpose).
 
 ![The groundgate review page for IRS Publication 590-A. Left: a Roth IRA limit flagged QUALIFIED_VALUE because the model cited the spousal-deduction sentence ("more than $236,000"). Right: the source text, with that citation outlined in amber and the correct Roth sentence, admitted, highlighted in green below it.](docs/report.png)
 
