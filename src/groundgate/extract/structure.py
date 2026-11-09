@@ -15,6 +15,7 @@ than no row.
 
 from __future__ import annotations
 
+import heapq
 import re
 from bisect import bisect_right
 from collections.abc import Iterable
@@ -114,6 +115,24 @@ def _in_row(grid: _Grid, cells: list[Node], spanned: list[Node], label: Node) ->
     return full[0] if full[0].header is False else None
 
 
+def _least_columns(blockers: list[Node], rows: Iterable[int]) -> dict[int, int]:
+    """For each row in ``rows``, the least column of a cell in ``blockers`` that covers the row."""
+    order = sorted(blockers, key=lambda c: _place(c)[0])
+    active: list[tuple[int, int]] = []  # (column, the first row after the cell)
+    least: dict[int, int] = {}
+    at = 0
+    for row in sorted(set(rows)):
+        while at < len(order) and _place(order[at])[0] <= row:
+            top, column = _place(order[at])
+            heapq.heappush(active, (column, top + (order[at].rows or 1)))
+            at += 1
+        while active and active[0][1] <= row:
+            heapq.heappop(active)
+        if active:
+            least[row] = active[0][0]
+    return least
+
+
 def _candidate(
     field: Field, key: str | None, text: str, places: dict[str, tuple[int, int]], bases: Json
 ) -> Json | None:
@@ -166,9 +185,13 @@ def _table(
         return  # two cells at one place: a loaded object can say this, and no cell is clear
     spanned = [c for c in cells if _spanned(c)]
     texts: dict[str, list[Node]] = {}
+    blockers: list[Node] = []
     for cell in cells:
         if cell.start < cell.end:
-            texts.setdefault(_name(data[cell.start : cell.end].decode("utf-8")), []).append(cell)
+            form = _name(data[cell.start : cell.end].decode("utf-8"))
+            texts.setdefault(form, []).append(cell)
+            if cell.header is True or form in names:
+                blockers.append(cell)
 
     def add(
         field: Field, key: str | None, label: Node, header: Node | None, value: Node | None
@@ -191,10 +214,16 @@ def _table(
         who = names.get(form)
         if who is not None and len(who) == 1:
             found_labels.setdefault(next(iter(who)), []).extend(held)
+    # A label is the row label only if no header and no other label comes before it in its row:
+    # in "Cost | Revenue | 5", "Revenue" is a data cell of the row of "Cost".
+    least = _least_columns(blockers, (_place(c)[0] for held in found_labels.values() for c in held))
     for name, labels in found_labels.items():
         field = schema.fields[name]
+        inner = any(least[_place(c)[0]] < _place(c)[1] for c in labels)
         if field.keys is None:
-            one = _in_row(grid, cells, spanned, labels[0]) if len(labels) == 1 else None
+            one = None
+            if len(labels) == 1 and not inner:
+                one = _in_row(grid, cells, spanned, labels[0])
             add(field, None, labels[0], None, one)
             continue
         wanted = [_name(k) for k in field.keys]
@@ -202,7 +231,7 @@ def _table(
             headers = texts.get(form, ())
             if not headers:
                 continue
-            if wanted.count(form) > 1 or len(labels) * len(headers) > 1:
+            if inner or wanted.count(form) > 1 or len(labels) * len(headers) > 1:
                 found.setdefault((name, key), []).append(None)
                 continue
             value = _at_header(grid, len(cells), labels[0], headers[0])

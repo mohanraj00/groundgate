@@ -391,3 +391,42 @@ def test_the_candidates_count_against_the_candidate_limit(tmp_path: Path) -> Non
     )
     assert not result.complete and result.candidates == []
     assert any(e.get("status") == "aggregate_candidate_limit" for e in result.record)
+
+
+ROW_HEADER = "<tr><th>Metric</th><th>Related metric</th><th>2024</th></tr>"
+
+
+@pytest.mark.parametrize(
+    "row",
+    [
+        "<tr><th>Cost</th><td>Revenue</td><td>5</td></tr>",
+        "<tr><td>Cost</td><td>Revenue</td><td>5</td></tr>",
+        "<tr><th>Note</th><td>Revenue</td><td>5</td></tr>",
+    ],
+)
+def test_a_label_after_a_row_header_or_a_label_is_a_data_cell(tmp_path: Path, row: str) -> None:
+    """A cell that names a field after a header or a label in its row is a value, not the row
+    label, so the reader proposes nothing for that field. Keyed and keyless fields both."""
+    keyed = {
+        "fields": {
+            "revenue": {"type": "integer", "aliases": ["Revenue"], "keys": ["2024"]},
+            "cost": {"type": "integer", "aliases": ["Cost"], "keys": ["2024"]},
+        }
+    }
+    plain = {
+        "fields": {
+            "revenue": PLAIN["fields"]["revenue"],
+            "cost": {"type": "integer", "aliases": ["Cost"]},
+        }
+    }
+    keyed_found = found(tmp_path, f"<table>{ROW_HEADER}{row}</table>", keyed)
+    assert "revenue" not in [c["field"] for c in keyed_found]
+    assert "revenue" not in [c["field"] for c in found(tmp_path, f"<table>{row}</table>", plain)]
+    result = extract(
+        document(tmp_path, f"<table>{ROW_HEADER}{row}</table>"),
+        keyed,
+        client=quiet,
+        model_id="fixed-1",
+        policy={"proposers": {"structure": "admit"}},
+    )
+    assert "revenue" not in [c["field"] for c in result.candidates]
