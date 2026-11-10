@@ -6230,6 +6230,73 @@ vector(
 )  # fmt: skip
 
 
+vector(
+    "154-signed-evidence-start",
+    "A citation that starts inside a signed token reads no number (SPEC §4.1, #621).",
+    "Balance: -100 USD",
+    {"fields": {"balance": USD, "change": USD}},
+    [
+        c("a", "balance", "100", "USD", {"text": "-100 USD"}, SIGN_DROPPED),
+        c("b", "balance", "100", "USD", {"text": "100 USD"}, ("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
+        c("c", "balance", "100", "USD", q("100 USD", text=NO_TEXT), ("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
+        c("d", "change", "-100", "USD", q("-100 USD")),
+    ],
+    policy={"reanchor": False},
+)  # fmt: skip
+
+vector(
+    "155-signed-evidence-reference",
+    "The Unicode minus belongs to the number in a reference, with or without re-anchoring (#621).",
+    "See the balance sheet.",
+    {"fields": {"balance": USD}},
+    [
+        c("a", "balance", "100", "USD", q("100 USD", source="reference", ref="balance"),
+          ("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
+        c("b", "balance", "-100", "USD", q("\u2212100 USD", source="reference", ref="balance")),
+    ],
+    references=[{"id": "balance", "text": "Balance: \u2212100 USD"}],
+)  # fmt: skip
+
+vector(
+    "156-hyphen-number-boundary",
+    "A minus after a letter or number is separate from the next number (SPEC §4.1, #621).",
+    "Code X-100 USD\n\nRange 2-100 USD",
+    {"fields": {"amount": USD, "range_max": USD | {"comparator": "range"}}},
+    [
+        c("a", "amount", "100", "USD", q("100 USD")),
+        c("b", "range_max", "100", "USD", q("100 USD", 2)),
+    ],
+)
+
+
+vector(
+    "157-sign-at-field-boundary",
+    "A signed number still blocks a field item that ends after its minus sign (SPEC §4.6).",
+    "Revenue -100 compared with expenses 200 USD.\n\n"
+    "Revenue \u2212100 compared with expenses 300 USD.",
+    {"fields": {"revenue": USD | {"aliases": ["Revenue"], "multiple": True}}},
+    [
+        c("a", "revenue", 200, "USD", [q("200 USD"), row("Revenue -")],
+          (REVIEW, ["FIELD_CITATION_INVALID"])),
+        c("b", "revenue", 300, "USD", [q("300 USD"), row("Revenue \u2212")],
+          (REVIEW, ["FIELD_CITATION_INVALID"])),
+    ],
+)  # fmt: skip
+
+vector(
+    "158-sign-at-loss-boundary",
+    "A signed number still blocks a loss item that starts after its minus sign (SPEC §4.6).",
+    "-100 loss on other items 200 USD.\n\n\u2212100 loss on other items 300 USD.",
+    {"fields": {"amount": AMOUNT}, "packs": [FINANCE]},
+    [
+        c("a", "amount", -200, "USD", [q("200 USD"), q("100 loss", role="sign")],
+          (REVIEW, ["SIGN_CITATION_INVALID", "VALUE_DERIVED"])),
+        c("b", "amount", -300, "USD", [q("300 USD"), q("100 loss", 2, role="sign")],
+          (REVIEW, ["SIGN_CITATION_INVALID", "VALUE_DERIVED"])),
+    ],
+)  # fmt: skip
+
+
 # ---------------------------------------------------------------- the digit limit (spec 0.12, #580)
 BIG = "9" * 999990
 

@@ -638,9 +638,12 @@ ungrouped (`\d+`), grouped in threes after the first group (`\d{1,3}(,\d{3})+`),
 Indian way, the last three digits and then pairs (`\d{1,2}(,\d{2})*,\d{3}`, so `2,00,000` is
 200000 and `1,00,00,000` is 10000000); otherwise it has **no** value (`252,0000` never equals
 252000 or 2520000, and `1,23,456,789` mixes the two groupings). The value is the digits without
-the commas, so a string valid under both groupings, such as `25,000`, has one value. When tokens are read inside a span, a
-token that continues past the span's end is ignored, so a span can never read a prefix of a longer
-number. The `000` of a currency scale (below) is no token, so `£000` and `£'000` are never an
+the commas, so a string valid under both groupings, such as `25,000`, has one value. A token must
+fit wholly inside the span that reads it. This includes its leading minus sign. For example, a
+span of `100` inside `-100` reads no number (spec 0.12, #621).
+When a field, sign or key check scans for intervening numbers (§4.5, §4.6), a token whose
+leading minus sign is immediately before the scan still counts as a number in the scan.
+The `000` of a currency scale (below) is no token, so `£000` and `£'000` are never an
 amount of zero (spec 0.10, #313).
 
 **Space groups (spec 0.12, #427).** On a line that holds a tab, a number token can also group its

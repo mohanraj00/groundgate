@@ -1,0 +1,56 @@
+{
+ "name": "156-hyphen-number-boundary",
+ "description": "A minus after a letter or number is separate from the next number (SPEC §4.1, #621).",
+ "document": "Code X-100 USD\n\nRange 2-100 USD",
+ "schema": {
+  "fields": {
+   "amount": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "range_max": {
+    "type": "integer",
+    "unit": "USD",
+    "comparator": "range"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "a",
+   "field": "amount",
+   "value": "100",
+   "unit": "USD",
+   "evidence": {
+    "start": 7,
+    "end": 14,
+    "text": "100 USD"
+   }
+  },
+  {
+   "id": "b",
+   "field": "range_max",
+   "value": "100",
+   "unit": "USD",
+   "evidence": {
+    "start": 24,
+    "end": 31,
+    "text": "100 USD"
+   }
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

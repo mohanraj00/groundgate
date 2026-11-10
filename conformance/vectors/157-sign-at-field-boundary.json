@@ -1,0 +1,71 @@
+{
+ "name": "157-sign-at-field-boundary",
+ "description": "A signed number still blocks a field item that ends after its minus sign (SPEC §4.6).",
+ "document": "Revenue -100 compared with expenses 200 USD.\n\nRevenue −100 compared with expenses 300 USD.",
+ "schema": {
+  "fields": {
+   "revenue": {
+    "type": "integer",
+    "unit": "USD",
+    "aliases": [
+     "Revenue"
+    ],
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "a",
+   "field": "revenue",
+   "value": 200,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 36,
+     "end": 43,
+     "text": "200 USD"
+    },
+    {
+     "role": "field",
+     "text": "Revenue -"
+    }
+   ]
+  },
+  {
+   "id": "b",
+   "field": "revenue",
+   "value": 300,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 84,
+     "end": 91,
+     "text": "300 USD"
+    },
+    {
+     "role": "field",
+     "text": "Revenue −"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

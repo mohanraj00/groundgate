@@ -1,0 +1,80 @@
+{
+ "name": "158-sign-at-loss-boundary",
+ "description": "A signed number still blocks a loss item that starts after its minus sign (SPEC §4.6).",
+ "document": "-100 loss on other items 200 USD.\n\n−100 loss on other items 300 USD.",
+ "schema": {
+  "fields": {
+   "amount": {
+    "type": "integer",
+    "unit": "USD",
+    "multiple": true
+   }
+  },
+  "packs": [
+   {
+    "id": "finance",
+    "version": "1.0.0"
+   }
+  ]
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "a",
+   "field": "amount",
+   "value": -200,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 25,
+     "end": 32,
+     "text": "200 USD"
+    },
+    {
+     "role": "sign",
+     "start": 1,
+     "end": 9,
+     "text": "100 loss"
+    }
+   ]
+  },
+  {
+   "id": "b",
+   "field": "amount",
+   "value": -300,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 62,
+     "end": 69,
+     "text": "300 USD"
+    },
+    {
+     "role": "sign",
+     "start": 38,
+     "end": 46,
+     "text": "100 loss"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SIGN_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SIGN_CITATION_INVALID",
+     "VALUE_DERIVED"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}
