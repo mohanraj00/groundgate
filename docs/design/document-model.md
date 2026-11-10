@@ -235,7 +235,8 @@ candidate also records the basis of the cells that it used, so the measure can s
 The reader proposes nothing when a cell is not clear: two cells match, a cell comes before the
 label in its row (also an empty cell), the path from the label to the value crosses a cell with
 `rows` or `columns` above 1, a header cell is between the header and the value or between the
-label and the value, or the header is null. A loaded object can put a spanned cell over another
+label and the value, the row of the header has a data cell with text, or the header is null.
+The document keeps no `scope`, so a header in a row with data cells can be a row header. A loaded object can put a spanned cell over another
 cell, or give the cells places that do not follow the text: a row node with cells in two rows,
 rows out of the order of the row nodes, or columns out of the order of the cells. The reader
 then proposes nothing from that table. A wrong row is worse than no row, as

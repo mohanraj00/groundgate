@@ -305,6 +305,13 @@ def _table(
     for cell in cells:
         by_row.setdefault(_place(cell)[0], []).append(cell)
     rows = {row: _Row(held) for row, held in by_row.items()}
+    # A header is a column header only in a row of headers. The document keeps no scope, so in
+    # "Cost | <th scope=row>2024</th> | 5" the 2024 can be a row header for Cost alone.
+    head_rows = {
+        row
+        for row, held in by_row.items()
+        if all(c.header is True for c in held if c.start < c.end)
+    }
     for name, labels in found_labels.items():
         field = schema.fields[name]
         inner = any(least[_place(c)[0]] < _place(c)[1] for c in labels)
@@ -324,7 +331,12 @@ def _table(
         )
         for form in matched:
             keys, headers = forms[form], texts[form]
-            if inner or len(keys) > 1 or len(labels) * len(headers) > 1:
+            if (
+                inner
+                or len(keys) > 1
+                or len(labels) * len(headers) > 1
+                or _place(headers[0])[0] not in head_rows
+            ):
                 for key in keys:
                     found.setdefault((name, key), []).append(None)
                 continue

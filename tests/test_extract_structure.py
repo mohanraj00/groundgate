@@ -590,3 +590,22 @@ def test_loaded_places_that_do_not_follow_the_text_give_nothing(
     assert propose(loaded.text, loaded, Schema.from_dict(KEYED)) == []
     result = run(loaded, policy=ADMIT)
     assert not any(c.get("proposer") == "structure" for c in result.candidates)
+
+
+@pytest.mark.parametrize(
+    "row",
+    [
+        "<tr><td>Cost</td><th scope='row'>2024</th><td>5</td></tr>",
+        "<tr><td>Item</td><th>2024</th></tr>",
+    ],
+)
+def test_a_header_in_a_row_with_data_cells_is_not_a_column_header(tmp_path: Path, row: str) -> None:
+    """The document keeps no scope, so only a row of headers gives column headers."""
+    html = f"<table>{row}<tr><td>Revenue</td><td>999</td><td>7</td></tr></table>"
+    schema = {"fields": {"revenue": {"type": "integer", "aliases": ["Revenue"], "keys": ["2024"]}}}
+    assert found(tmp_path, html, schema) == []
+    result = run(document(tmp_path, html), schema, policy=ADMIT)
+    assert not any(c.get("proposer") == "structure" for c in result.candidates)
+    if "Item" in row:  # an empty corner cell keeps a row of headers
+        heads = html.replace("<td>Item</td>", "<td></td>")
+        assert [c["value"] for c in found(tmp_path, heads, schema)] == ["999"]
