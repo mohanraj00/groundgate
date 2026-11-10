@@ -440,3 +440,37 @@ def test_the_keys_keep_the_schema_order_across_tables(tmp_path: Path) -> None:
         "<table><tr><th>Item</th><th>2024</th></tr><tr><td>Revenue</td><td>5</td></tr></table>"
     )
     assert [c["key"] for c in found(tmp_path, html)] == ["2024", "2023"]
+
+
+@pytest.mark.parametrize("first", ["Cost", "1"])
+def test_a_label_after_any_cell_with_text_is_a_data_cell(tmp_path: Path, first: str) -> None:
+    """The cell before the alias names no field, so only its text shows that the alias is not
+    the row label. Keyed and keyless fields both."""
+    row = f"<tr><td>{first}</td><td>Revenue</td><td>5</td></tr>"
+    keyed = {"fields": {"revenue": {**KEYED["fields"]["revenue"], "keys": ["2024"]}}}
+    assert found(tmp_path, f"<table>{ROW_HEADER}{row}</table>", keyed) == []
+    assert found(tmp_path, f"<table>{row}</table>", PLAIN) == []
+    result = extract(
+        document(tmp_path, f"<table>{ROW_HEADER}{row}</table>"),
+        keyed,
+        client=quiet,
+        model_id="fixed-1",
+        policy={"proposers": {"structure": "admit"}},
+    )
+    assert result.candidates == []
+
+
+def test_the_reader_batch_is_bound_as_one_reply(tmp_path: Path) -> None:
+    """A table with more matches than one reply may hold stops the run before admission."""
+    doc = document(tmp_path, TABLE)
+    result = extract(
+        doc,
+        KEYED,
+        client=quiet,
+        model_id="fixed-1",
+        policy=CORROBORATE,
+        run_policy=RunPolicy(max_candidates_per_reply=1),
+    )
+    assert not result.complete and result.candidates == []
+    assert any(e.get("status") == "structure_candidate_limit" for e in result.record)
+    assert not any(e.get("kind") == "admission" for e in result.record)

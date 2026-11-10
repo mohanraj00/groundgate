@@ -1521,6 +1521,12 @@ class _Engine:
         found = propose(self.text, self.document, self.schema)
         if not found:
             return True
+        # One batch of the reader is bound as one model reply is, so a wide table cannot ask
+        # for more admission work than a reply can.
+        if len(found) > self.settings.max_candidates_per_reply:
+            self.complete = False
+            self.event(kind="limit", phase=_STRUCTURE, status="structure_candidate_limit")
+            return False
         pending = {
             f"s{i}": {**c, "id": f"s{i}", "proposer": _STRUCTURE}
             for i, c in enumerate(found, start=1)

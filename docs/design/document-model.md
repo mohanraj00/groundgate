@@ -232,8 +232,9 @@ The candidate cites the value cell as its value item, the row label cell as its 
 the column header as its key item. Each item has offsets, so the gate checks plain spans. The
 candidate also records the basis of the cells that it used, so the measure can split by basis.
 
-The reader proposes nothing when a cell is not clear: two cells match, the path from the label to
-the value crosses a cell with `rows` or `columns` above 1, or the header is null. A wrong row is
+The reader proposes nothing when a cell is not clear: two cells match, a cell with text comes
+before the label in its row, the path from the label to the value crosses a cell with `rows` or
+`columns` above 1, or the header is null. A wrong row is
 worse than no row, as `grid` says.
 
 ## 9. The agreement rule

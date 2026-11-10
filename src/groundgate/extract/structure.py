@@ -198,8 +198,7 @@ def _table(
         if cell.start < cell.end:
             form = _name(data[cell.start : cell.end].decode("utf-8"))
             texts.setdefault(form, []).append(cell)
-            if cell.header is True or form in names:
-                blockers.append(cell)
+            blockers.append(cell)
 
     def add(
         field: Field, key: str | None, label: Node, header: Node | None, value: Node | None
@@ -222,8 +221,9 @@ def _table(
         who = names.get(form)
         if who is not None and len(who) == 1:
             found_labels.setdefault(next(iter(who)), []).extend(held)
-    # A label is the row label only if no header and no other label comes before it in its row:
-    # in "Cost | Revenue | 5", "Revenue" is a data cell of the row of "Cost".
+    # A label is the row label only if no cell with text comes before it in its row: in
+    # "Cost | Revenue | 5", "Revenue" is a data cell of the row of "Cost", also when no field
+    # names "Cost".
     label_rows = [_place(c)[0] for held in found_labels.values() for c in held]
     least = _least_columns(blockers, label_rows)
     covered = _least_columns(spanned, label_rows)  # the rows that a spanned cell covers
