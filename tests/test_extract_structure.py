@@ -442,10 +442,10 @@ def test_the_keys_keep_the_schema_order_across_tables(tmp_path: Path) -> None:
     assert [c["key"] for c in found(tmp_path, html)] == ["2024", "2023"]
 
 
-@pytest.mark.parametrize("first", ["Cost", "1"])
-def test_a_label_after_any_cell_with_text_is_a_data_cell(tmp_path: Path, first: str) -> None:
-    """The cell before the alias names no field, so only its text shows that the alias is not
-    the row label. Keyed and keyless fields both."""
+@pytest.mark.parametrize("first", ["Cost", "1", "", " "])
+def test_a_label_after_any_cell_is_a_data_cell(tmp_path: Path, first: str) -> None:
+    """The cell before the alias names no field or is empty, so only its place shows that the
+    alias is not the row label. Keyed and keyless fields both."""
     row = f"<tr><td>{first}</td><td>Revenue</td><td>5</td></tr>"
     keyed = {"fields": {"revenue": {**KEYED["fields"]["revenue"], "keys": ["2024"]}}}
     assert found(tmp_path, f"<table>{ROW_HEADER}{row}</table>", keyed) == []
@@ -474,3 +474,21 @@ def test_the_reader_batch_is_bound_as_one_reply(tmp_path: Path) -> None:
     assert not result.complete and result.candidates == []
     assert any(e.get("status") == "structure_candidate_limit" for e in result.record)
     assert not any(e.get("kind") == "admission" for e in result.record)
+
+
+def test_many_keyed_rows_under_one_header_each_find_their_value(tmp_path: Path) -> None:
+    """The column runs give each row its value with no walk up the header column."""
+    count = 300
+    rows = "".join(f"<tr><td>F{i}</td><td>{i}</td></tr>" for i in range(count))
+    html = f"<table><tr><th>Item</th><th>2024</th></tr>{rows}</table>"
+    schema = {
+        "fields": {
+            f"f{i}": {"type": "integer", "aliases": [f"F{i}"], "keys": ["2024", "2023"]}
+            for i in range(count)
+        }
+    }
+    got = {c["field"]: (c["key"], c["value"]) for c in found(tmp_path, html, schema)}
+    assert got == {f"f{i}": ("2024", str(i)) for i in range(count)}
+    gap = html.replace("<tr><td>F5</td><td>5</td></tr>", "<tr><td>F5</td></tr>", 1)
+    # A gap in the header column cuts the path for its row and each row below it.
+    assert {c["field"] for c in found(tmp_path, gap, schema)} == {f"f{i}" for i in range(5)}

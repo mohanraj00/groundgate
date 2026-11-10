@@ -75,23 +75,36 @@ def _spanned(cell: Node) -> bool:
     return cell.rows != 1 or cell.columns != 1
 
 
-def _whole(grid: _Grid, places: Iterable[tuple[int, int]]) -> bool:
-    return all(place in grid for place in places)
+class _Runs:
+    """For each place of the grid, the first column of its run of places to the left and the
+    first row of its run of places above. One pass over the grid gives both, so a check of a
+    path costs no walk."""
+
+    def __init__(self, grid: _Grid) -> None:
+        self.left: dict[tuple[int, int], int] = {}
+        self.top: dict[tuple[int, int], int] = {}
+        for row, column in sorted(grid):
+            self.left[row, column] = self.left.get((row, column - 1), column)
+        for row, column in sorted(grid, key=lambda p: (p[1], p[0])):
+            self.top[row, column] = self.top.get((row - 1, column), row)
+
+    def across(self, row: int, left: int, column: int) -> bool:
+        """True if the grid holds each place of ``row`` from ``left`` to ``column``."""
+        return self.left.get((row, column), column + 1) <= left
+
+    def down(self, column: int, top: int, row: int) -> bool:
+        """True if the grid holds each place of ``column`` from ``top`` to ``row``."""
+        return self.top.get((row, column), row + 1) <= top
 
 
-def _at_header(grid: _Grid, count: int, label: Node, header: Node) -> Node | None:
+def _at_header(grid: _Grid, runs: _Runs, label: Node, header: Node) -> Node | None:
     """The value cell at the row of ``label`` and the column of ``header``."""
     row, left = _place(label)
     top, column = _place(header)
-    # A path longer than the cells of the table holds a gap, so it stops before the walk.
     if header.header is not True or column <= left or row <= top:
         return None
-    if column - left + row - top > count:
-        return None
     # The grid has no spanned cell, so a spanned cell on either path is a gap in the path.
-    across = ((row, c) for c in range(left, column + 1))
-    down = ((r, column) for r in range(top, row + 1))
-    if not (_whole(grid, across) and _whole(grid, down)):
+    if not (runs.across(row, left, column) and runs.down(column, top, row)):
         return None
     value = grid[row, column]
     return None if value.header is True else value
@@ -102,23 +115,19 @@ class _Row:
 
     def __init__(self, cells: list[Node]) -> None:
         cells.sort(key=lambda c: _place(c)[1])
-        self.columns = [_place(c)[1] for c in cells]
         self.full = [c for c in cells if c.start < c.end]
         self.full_columns = [_place(c)[1] for c in self.full]
 
 
-def _in_row(grid: _Grid, row_of: _Row, label: Node) -> Node | None:
+def _in_row(runs: _Runs, row_of: _Row, label: Node) -> Node | None:
     """The one data cell with text after ``label`` in its row."""
     row, left = _place(label)
     # A bisect on the sorted columns, so a row with many labels costs no more than its cells.
-    after = len(row_of.columns) - bisect_right(row_of.columns, left)
     first = bisect_right(row_of.full_columns, left)
     if len(row_of.full) - first != 1:
         return None
     value = row_of.full[first]
-    column = _place(value)[1]
-    # One cell with text follows the label, so the walks of a row cover each cell once at most.
-    if column - left > after or not _whole(grid, ((row, c) for c in range(left, column + 1))):
+    if not runs.across(row, left, _place(value)[1]):
         return None
     return value if value.header is False else None
 
@@ -177,6 +186,7 @@ def _table(
     table: Node,
     data: bytes,
     names: dict[str, set[str]],
+    keys_of: dict[str, dict[str, list[str]]],
     nested: set[int],
     found: _Found,
     schema: Schema,
@@ -192,13 +202,12 @@ def _table(
     if len(grid) != len(single):
         return  # two cells at one place: a loaded object can say this, and no cell is clear
     spanned = [c for c in cells if _spanned(c)]
+    runs = _Runs(grid)
     texts: dict[str, list[Node]] = {}
-    blockers: list[Node] = []
     for cell in cells:
         if cell.start < cell.end:
             form = _name(data[cell.start : cell.end].decode("utf-8"))
             texts.setdefault(form, []).append(cell)
-            blockers.append(cell)
 
     def add(
         field: Field, key: str | None, label: Node, header: Node | None, value: Node | None
@@ -221,11 +230,11 @@ def _table(
         who = names.get(form)
         if who is not None and len(who) == 1:
             found_labels.setdefault(next(iter(who)), []).extend(held)
-    # A label is the row label only if no cell with text comes before it in its row: in
-    # "Cost | Revenue | 5", "Revenue" is a data cell of the row of "Cost", also when no field
-    # names "Cost".
+    # A label is the row label only if no cell comes before it in its row: in "Cost | Revenue |
+    # 5", "Revenue" is a data cell of the row of "Cost", also when no field names "Cost". An
+    # empty cell counts too, because the text of the row does not show it.
     label_rows = [_place(c)[0] for held in found_labels.values() for c in held]
-    least = _least_columns(blockers, label_rows)
+    least = _least_columns(cells, label_rows)
     covered = _least_columns(spanned, label_rows)  # the rows that a spanned cell covers
     by_row: dict[int, list[Node]] = {}
     for cell in cells:
@@ -237,19 +246,25 @@ def _table(
         if field.keys is None:
             one = None
             if len(labels) == 1 and not inner and _place(labels[0])[0] not in covered:
-                one = _in_row(grid, rows[_place(labels[0])[0]], labels[0])
+                one = _in_row(runs, rows[_place(labels[0])[0]], labels[0])
             add(field, None, labels[0], None, one)
             continue
-        wanted = [_name(k) for k in field.keys]
-        for key, form in zip(field.keys, wanted, strict=True):
-            headers = texts.get(form, ())
-            if not headers:
+        # Scan the smaller of the cell texts and the keys, so a large key list costs a table
+        # no more than its cells.
+        forms = keys_of.get(name, {})
+        matched = (
+            [f for f in forms if f in texts]
+            if len(forms) < len(texts)
+            else [f for f in texts if f in forms]
+        )
+        for form in matched:
+            keys, headers = forms[form], texts[form]
+            if inner or len(keys) > 1 or len(labels) * len(headers) > 1:
+                for key in keys:
+                    found.setdefault((name, key), []).append(None)
                 continue
-            if inner or wanted.count(form) > 1 or len(labels) * len(headers) > 1:
-                found.setdefault((name, key), []).append(None)
-                continue
-            value = _at_header(grid, len(cells), labels[0], headers[0])
-            add(field, key, labels[0], headers[0], value)
+            value = _at_header(grid, runs, labels[0], headers[0])
+            add(field, keys[0], labels[0], headers[0], value)
 
 
 def _lines(
@@ -294,16 +309,19 @@ def propose(text: str, document: Document | None, schema: Schema) -> list[Json]:
     match, and the basis of a line is always ``layout``. The candidates are in the order of
     their field name, then in the order of the keys of the field."""
     names: dict[str, set[str]] = {}
+    keys_of: dict[str, dict[str, list[str]]] = {}  # field -> key form -> keys, in schema order
     for name, field in schema.fields.items():
         for alias in field.aliases or ():
             names.setdefault(_name(alias), set()).add(name)
+        for key in field.keys or ():
+            keys_of.setdefault(name, {}).setdefault(_name(key), []).append(key)
     data = text.encode("utf-8")
     found: _Found = {}
     tables = [] if document is None else document.of_kind("table")
     if document is not None:
         nested = _nested(document)
         for table in tables:
-            _table(document, table, data, names, nested, found, schema)
+            _table(document, table, data, names, keys_of, nested, found, schema)
     _lines(data, tables, names, found, schema)
 
     # Sort by field name, not by schema order: a saved schema is canonical JSON, so its fields
