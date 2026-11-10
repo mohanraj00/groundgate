@@ -17,7 +17,7 @@ from __future__ import annotations
 
 import heapq
 import re
-from bisect import bisect_right
+from bisect import bisect_left, bisect_right
 from collections.abc import Iterable
 from typing import TYPE_CHECKING, Any
 
@@ -77,16 +77,23 @@ def _spanned(cell: Node) -> bool:
 
 class _Runs:
     """For each place of the grid, the first column of its run of places to the left and the
-    first row of its run of places above. One pass over the grid gives both, so a check of a
-    path costs no walk."""
+    first row of its run of places above. The pass also keeps the last header cell of each run
+    up to the place. One pass over the grid gives all of them, so a check of a path costs no
+    walk."""
 
     def __init__(self, grid: _Grid) -> None:
         self.left: dict[tuple[int, int], int] = {}
         self.top: dict[tuple[int, int], int] = {}
+        self.head_column: dict[tuple[int, int], int] = {}  # -1 when the run has no header
+        self.head_row: dict[tuple[int, int], int] = {}
         for row, column in sorted(grid):
             self.left[row, column] = self.left.get((row, column - 1), column)
+            last = self.head_column.get((row, column - 1), -1)
+            self.head_column[row, column] = column if grid[row, column].header is True else last
         for row, column in sorted(grid, key=lambda p: (p[1], p[0])):
             self.top[row, column] = self.top.get((row - 1, column), row)
+            last = self.head_row.get((row - 1, column), -1)
+            self.head_row[row, column] = row if grid[row, column].header is True else last
 
     def across(self, row: int, left: int, column: int) -> bool:
         """True if the grid holds each place of ``row`` from ``left`` to ``column``."""
@@ -105,6 +112,11 @@ def _at_header(grid: _Grid, runs: _Runs, label: Node, header: Node) -> Node | No
         return None
     # The grid has no spanned cell, so a spanned cell on either path is a gap in the path.
     if not (runs.across(row, left, column) and runs.down(column, top, row)):
+        return None
+    # A header cell between the header and the value starts a new header: in "Item | 2024;
+    # Cost | 5; Item | 2023; Revenue | 4", the 4 is under 2023. A header cell between the
+    # label and the value is not clear either.
+    if runs.head_row[row - 1, column] != top or runs.head_column[row, column - 1] > left:
         return None
     value = grid[row, column]
     return None if value.header is True else value
@@ -130,6 +142,45 @@ def _in_row(runs: _Runs, row_of: _Row, label: Node) -> Node | None:
     if not runs.across(row, left, _place(value)[1]):
         return None
     return value if value.header is False else None
+
+
+def _covers_a_place(grid: _Grid, spanned: list[Node]) -> bool:
+    """True if a cell in ``spanned`` covers a place of ``grid``. A loaded object can say this.
+
+    A sweep over the rows with a Fenwick tree over the columns counts the places in each
+    rectangle, so a large span costs no walk of its area."""
+    columns = sorted({c for _, c in grid})
+    points = sorted(grid)
+    # (row, sign, cell, first index, index after the last): the places above ``row`` in the
+    # columns of the cell. The two queries of a cell give the places of the cell together.
+    queries: list[tuple[int, int, int, int, int]] = []
+    for at, cell in enumerate(spanned):
+        top, left = _place(cell)
+        low = bisect_left(columns, left)
+        high = bisect_left(columns, left + (cell.columns or 1))
+        if low < high:
+            queries.append((top, -1, at, low, high))
+            queries.append((top + (cell.rows or 1), 1, at, low, high))
+    tree = [0] * (len(columns) + 1)
+
+    def count(index: int) -> int:  # the added places in the first ``index`` columns
+        total = 0
+        while index > 0:
+            total += tree[index]
+            index -= index & -index
+        return total
+
+    places = [0] * len(spanned)
+    added = 0
+    for row, sign, at, low, high in sorted(queries):
+        while added < len(points) and points[added][0] < row:
+            index = bisect_left(columns, points[added][1]) + 1
+            while index <= len(columns):
+                tree[index] += 1
+                index += index & -index
+            added += 1
+        places[at] += sign * (count(high) - count(low))
+    return any(places)
 
 
 def _least_columns(blockers: list[Node], rows: Iterable[int]) -> dict[int, int]:
@@ -202,6 +253,8 @@ def _table(
     if len(grid) != len(single):
         return  # two cells at one place: a loaded object can say this, and no cell is clear
     spanned = [c for c in cells if _spanned(c)]
+    if _covers_a_place(grid, spanned):
+        return  # a spanned cell over a place of the grid: no path through it is clear
     runs = _Runs(grid)
     texts: dict[str, list[Node]] = {}
     for cell in cells:
@@ -327,10 +380,15 @@ def propose(text: str, document: Document | None, schema: Schema) -> list[Json]:
     # Sort by field name, not by schema order: a saved schema is canonical JSON, so its fields
     # load in sorted order, and replay must give the same candidate IDs (#510). The keys of a
     # field are a list, so the key order is the schema order, in all tables.
+    # The rank of each key, so the sort costs no scan of the keys for each candidate.
+    ranks: dict[str, dict[str, int]] = {}
+    for name, field in schema.fields.items():
+        for rank, key in enumerate(field.keys or ()):
+            ranks.setdefault(name, {}).setdefault(key, rank)
+
     def place(item: tuple[tuple[str, str | None], list[Json | None]]) -> tuple[str, int]:
         (name, key), _ = item
-        keys = schema.fields[name].keys
-        return name, -1 if key is None or keys is None else keys.index(key)
+        return name, -1 if key is None else ranks[name][key]
 
     ordered = sorted(found.items(), key=place)
     return [m[0] for _, m in ordered if len(m) == 1 and m[0] is not None]

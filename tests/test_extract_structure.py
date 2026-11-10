@@ -492,3 +492,70 @@ def test_many_keyed_rows_under_one_header_each_find_their_value(tmp_path: Path) 
     gap = html.replace("<tr><td>F5</td><td>5</td></tr>", "<tr><td>F5</td></tr>", 1)
     # A gap in the header column cuts the path for its row and each row below it.
     assert {c["field"] for c in found(tmp_path, gap, schema)} == {f"f{i}" for i in range(5)}
+
+
+ADMIT = {"proposers": {"structure": "admit"}}
+
+
+def test_a_loaded_span_over_the_path_gives_nothing(tmp_path: Path) -> None:
+    """A loaded object can put a spanned cell over a place of the grid. No path is clear."""
+    html = (
+        "<table><tr><th>Item</th><th>2024</th></tr><tr><td>Revenue</td><td>5</td></tr>"
+        "<tr><td>Note</td><td>other</td></tr></table>"
+    )
+    doc = document(tmp_path, html)
+    assert [c["value"] for c in propose(doc.text, doc, Schema.from_dict(KEYED))] == ["5"]
+    obj = doc.to_dict()
+    for node in obj["nodes"]:
+        if node["kind"] == "cell" and node["row"] == 2 and node["column"] == 1:
+            node.update(row=0, rows=3)
+    loaded = Document.from_dict(obj, doc.text)
+    assert propose(loaded.text, loaded, Schema.from_dict(KEYED)) == []
+    result = run(loaded, policy=ADMIT)
+    assert not any(c.get("proposer") == "structure" for c in result.candidates)
+
+
+def test_a_span_beside_the_path_keeps_the_value(tmp_path: Path) -> None:
+    """A spanned title above the header and a spanned cell after the value stop no path."""
+    html = (
+        "<table><tr><th colspan='3'>Results</th></tr>"
+        "<tr><th>Item</th><th>2024</th><th rowspan='2'>Note</th></tr>"
+        "<tr><td>Revenue</td><td>5</td></tr></table>"
+    )
+    assert [(c["key"], c["value"]) for c in found(tmp_path, html)] == [("2024", "5")]
+
+
+@pytest.mark.parametrize("cell", ["<th>2023</th>", "<th></th>", "<th>Restated</th>"])
+def test_a_header_between_the_header_and_the_value_gives_nothing(tmp_path: Path, cell: str) -> None:
+    """A later header row starts a new header, also when the schema does not name it."""
+    html = (
+        "<table><tr><th>Item</th><th>2024</th></tr><tr><td>Cost</td><td>5</td></tr>"
+        f"<tr><th>Item</th>{cell}</tr><tr><td>Revenue</td><td>4</td></tr></table>"
+    )
+    schema = {"fields": {"revenue": {"type": "integer", "aliases": ["Revenue"], "keys": ["2024"]}}}
+    assert found(tmp_path, html, schema) == []
+    result = run(document(tmp_path, html), schema, policy=ADMIT)
+    assert result.receipt.decisions == [] or all(
+        d.outcome != "admitted" for d in result.receipt.decisions
+    )
+
+
+def test_a_header_between_the_label_and_the_value_gives_nothing(tmp_path: Path) -> None:
+    html = (
+        "<table><tr><th>Item</th><th>Part</th><th>2024</th></tr>"
+        "<tr><td>Revenue</td><th>Restated</th><td>5</td></tr></table>"
+    )
+    assert found(tmp_path, html) == []
+    row_header = html.replace("<td>Revenue</td><th>Restated</th>", "<th>Revenue</th><td>x</td>")
+    assert [(c["key"], c["value"]) for c in found(tmp_path, row_header)] == [("2024", "5")]
+
+
+def test_many_keys_of_one_field_sort_with_no_scan(tmp_path: Path) -> None:
+    """The sort reads the rank of each key, so a long key list costs no scan per candidate."""
+    count = 3000
+    head = "".join(f"<th>K{i}</th>" for i in range(count))
+    cells = "".join(f"<td>{i}</td>" for i in range(count))
+    html = f"<table><tr><th>Item</th>{head}</tr><tr><td>Revenue</td>{cells}</tr></table>"
+    keys = [f"K{i}" for i in reversed(range(count))]
+    schema = {"fields": {"revenue": {"type": "integer", "aliases": ["Revenue"], "keys": keys}}}
+    assert [c["key"] for c in found(tmp_path, html, schema)] == keys
