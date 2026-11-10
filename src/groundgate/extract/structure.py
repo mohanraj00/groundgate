@@ -19,6 +19,7 @@ import heapq
 import re
 from bisect import bisect_left, bisect_right
 from collections.abc import Iterable
+from itertools import pairwise
 from typing import TYPE_CHECKING, Any
 
 from ..read.document import Document, Node
@@ -139,7 +140,9 @@ def _in_row(runs: _Runs, row_of: _Row, label: Node) -> Node | None:
     if len(row_of.full) - first != 1:
         return None
     value = row_of.full[first]
-    if not runs.across(row, left, _place(value)[1]):
+    column = _place(value)[1]
+    # An empty cell has no text, so the row text does not show a header cell between them.
+    if not runs.across(row, left, column) or runs.head_column[row, column - 1] > left:
         return None
     return value if value.header is False else None
 
@@ -242,12 +245,21 @@ def _table(
     found: _Found,
     schema: Schema,
 ) -> None:
-    cells = [
-        cell
-        for row in document.children(table.id)
-        for cell in document.children(row.id)
-        if cell.kind == "cell"
-    ]
+    cells: list[Node] = []
+    last = -1
+    for row in document.children(table.id):
+        held = [c for c in document.children(row.id) if c.kind == "cell"]
+        # A loaded object can give the cells any place. The places must follow the text: one
+        # row for each row node, rows in the order of the nodes, columns in the order of the
+        # cells. Else a swap of two values gives each the header of the other.
+        places = [_place(c) for c in held]
+        if any(r != places[0][0] for r, _ in places) or (places and places[0][0] <= last):
+            return
+        if any(a[1] >= b[1] for a, b in pairwise(places)):
+            return
+        if places:
+            last = places[0][0]
+        cells.extend(held)
     single = [c for c in cells if not _spanned(c)]
     grid = {_place(c): c for c in single}
     if len(grid) != len(single):

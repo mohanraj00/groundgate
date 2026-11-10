@@ -236,7 +236,9 @@ The reader proposes nothing when a cell is not clear: two cells match, a cell co
 label in its row (also an empty cell), the path from the label to the value crosses a cell with
 `rows` or `columns` above 1, a header cell is between the header and the value or between the
 label and the value, or the header is null. A loaded object can put a spanned cell over another
-cell. The reader then proposes nothing from that table. A wrong row is worse than no row, as
+cell, or give the cells places that do not follow the text: a row node with cells in two rows,
+rows out of the order of the row nodes, or columns out of the order of the cells. The reader
+then proposes nothing from that table. A wrong row is worse than no row, as
 `grid` says.
 
 ## 9. The agreement rule

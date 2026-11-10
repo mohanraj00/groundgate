@@ -559,3 +559,34 @@ def test_many_keys_of_one_field_sort_with_no_scan(tmp_path: Path) -> None:
     keys = [f"K{i}" for i in reversed(range(count))]
     schema = {"fields": {"revenue": {"type": "integer", "aliases": ["Revenue"], "keys": keys}}}
     assert [c["key"] for c in found(tmp_path, html, schema)] == keys
+
+
+def test_a_header_between_the_label_and_a_keyless_value_gives_nothing(tmp_path: Path) -> None:
+    html = "<table><tr><td>Revenue</td><th></th><td>5</td></tr></table>"
+    assert found(tmp_path, html, PLAIN) == []
+    result = run(document(tmp_path, html), PLAIN, policy=ADMIT)
+    assert not any(c.get("proposer") == "structure" for c in result.candidates)
+    empty = html.replace("<th></th>", "<td></td>")
+    assert [c["value"] for c in found(tmp_path, empty, PLAIN)] == ["5"]
+
+
+@pytest.mark.parametrize("change", ["columns", "rows", "row in a node"])
+def test_loaded_places_that_do_not_follow_the_text_give_nothing(
+    tmp_path: Path, change: str
+) -> None:
+    """A swap of two places makes each value cite the header of the other. No cell is clear."""
+    doc = document(tmp_path, TABLE.replace(">4<", ">999<"))
+    obj = doc.to_dict()
+    cells = [n for n in obj["nodes"] if n["kind"] == "cell"]
+    by = {(n["row"], n["column"]): n for n in cells}
+    if change == "columns":
+        by[1, 1]["column"], by[1, 2]["column"] = 2, 1
+    elif change == "rows":
+        for column in range(3):
+            by[1, column]["row"], by[2, column]["row"] = 2, 1
+    else:
+        by[1, 2]["row"] = 3
+    loaded = Document.from_dict(obj, doc.text)
+    assert propose(loaded.text, loaded, Schema.from_dict(KEYED)) == []
+    result = run(loaded, policy=ADMIT)
+    assert not any(c.get("proposer") == "structure" for c in result.candidates)
