@@ -229,7 +229,7 @@ def _xml(data: bytes, nodes: Tracker | None, w: _Writer | None = None) -> _Write
                     e.attrib.get("rowspan"),
                     e.attrib.get("colspan"),
                     e.attrib.get("scope"),
-                    e.attrib.get("headers"),
+                    "headers" in e.attrib,
                 )
             nodes.open(tag, role, "markup", members)
         if tag == "section":
@@ -280,7 +280,7 @@ def _cell_members(
     rowspan: str | None,
     colspan: str | None,
     scope: str | None,
-    headers: str | None,
+    headers: bool,
     twice: bool = False,
 ) -> dict[str, object]:
     """The members of a cell. The document keeps no ``scope`` and no ``headers``, so a cell gets
@@ -288,7 +288,7 @@ def _cell_members(
     than ``col``, any ``headers`` attribute, or a table attribute that the tag gives twice.
     ``rowspan="0"`` spans the rest of the row group, so it counts as the largest span."""
     header: bool | None = tag == "th"
-    if (scope or "").strip().lower() not in ("", "col") or headers is not None or twice:
+    if (scope or "").strip().lower() not in ("", "col") or headers or twice:
         header = None
     rows = span_number(rowspan)
     zero = (rowspan or "").strip()
@@ -328,7 +328,7 @@ def _open_html(nodes: Tracker, tag: str, attrs: list[tuple[str, str | None]]) ->
             values.get("rowspan"),
             values.get("colspan"),
             values.get("scope"),
-            values.get("headers"),
+            "headers" in values,
             len(names) != len(set(names)),
         )
     nodes.open(tag, role, "markup", members)

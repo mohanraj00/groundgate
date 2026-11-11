@@ -110,8 +110,11 @@ in an evidence item and a chunk plan entry (runner.md §8).
    header cell, false for a data cell, and null when the source does not say. The markup
    reader gives null when the cell can be under other headers than its column, because the
    document keeps no `scope` and no `headers`: a `scope` other than `col`, any `headers`
-   attribute, or a table attribute that the tag gives twice. `rowspan="0"` spans the rest of
-   the row group, so the reader stores the largest span. Other members make the object invalid.
+   attribute (also one with no value), or a table attribute that the tag gives twice.
+   `rowspan="0"` spans the rest of the row group, so the reader stores the largest span, 1000.
+   If a table has a row past the end of a span of 1000 rows, the source span can go past it,
+   so the structure reader proposes nothing from that table. Other members make the object
+   invalid.
 6. **The text stays.** The nodes never change the text. A reader version that adds nodes gives
    the same text bytes as the version before it.
 7. **Gaps.** Not every byte is in a node. A page break, a running head or a blank line can stay

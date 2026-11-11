@@ -24,6 +24,7 @@ from itertools import pairwise
 from typing import TYPE_CHECKING, Any
 
 from ..read.document import Document, Node
+from ..read.nodes import MAX_SPAN
 
 if TYPE_CHECKING:
     from ..model import Field, Schema
@@ -300,6 +301,8 @@ def _table(
     if len(grid) != len(single):
         return  # two cells at one place: a loaded object can say this, and no cell is clear
     spanned = [c for c in cells if _spanned(c)]
+    if any(c.rows == MAX_SPAN and _place(c)[0] + MAX_SPAN <= last for c in spanned):
+        return  # the reader caps a span at MAX_SPAN rows, and the source span can go past it
     if _covers_a_place(grid, spanned):
         return  # a spanned cell over a place of the grid: no path through it is clear
     runs = _Runs(grid)

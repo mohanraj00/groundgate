@@ -757,8 +757,23 @@ def test_a_cell_with_a_headers_attribute_gives_nothing(tmp_path: Path, on: str) 
         "<tr><td>Revenue</td><td>999</td></tr></table>",
         "<table><tr><th>Item</th><th id='y'>Year</th></tr>"
         "<tr><td>Revenue</td><td headers='z' headers=''>999</td></tr></table>",
+        # A headers attribute with no value is still a headers attribute.
+        "<table><tr><th>Item</th><th>Year</th></tr>"
+        "<tr><td>Revenue</td><td headers>999</td></tr></table>",
+        # rowspan="0" past the cap of the reader: Group still covers the row of Revenue.
+        "<table><tr><th>Item</th><th>2024</th><th>2023</th></tr>"
+        "<tr><td rowspan='0'>Group</td><td>7</td><td>8</td></tr>"
+        + "<tr><td>1</td><td>2</td></tr>" * 999
+        + "<tr><td>Revenue</td><td>5</td></tr></table>",
     ],
-    ids=["rowspan zero", "colgroup", "scope twice", "headers twice"],
+    ids=[
+        "rowspan zero",
+        "colgroup",
+        "scope twice",
+        "headers twice",
+        "headers no value",
+        "rowspan zero long",
+    ],
 )
 def test_a_cell_attribute_that_the_document_cannot_keep_gives_nothing(
     tmp_path: Path, html: str
