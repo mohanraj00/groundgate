@@ -107,8 +107,20 @@ in an evidence item and a chunk plan entry (runner.md §8).
 5. **Members by kind.** Only a `heading` has `level`, 1 to 6. Only a `cell` has `row`, `column`,
    `rows`, `columns` and `header`. `row` and `column` count from 0 in the grid of the table, after
    spanned cells. `rows` and `columns` are the cell span, 1 or more. `header` is true for a
-   header cell, false for a data cell, and null when the source does not say. Other members make
-   the object invalid.
+   header cell, false for a data cell, and null when the source does not say. The markup
+   reader gives null when the cell can be under other headers than its column, because the
+   document keeps no `scope` and no `headers`: a `scope` other than `row` or `col`, any
+   `headers` attribute (also one with no value), or a table attribute that the tag gives twice.
+   A `th` with `scope="row"` or `scope="col"` gets its header from its row. In a row with a cell
+   that is not a header, `row` gives true and `col` gives null. In a row of headers, `col`
+   gives true and `row` gives null. The structure reader does not use a cell with a null header
+   as a row label. Of two equal attributes, the reader uses the first, as HTML does. `rowspan="0"` spans the rest of
+   the row group, so the reader stores the largest span, 1000. If a table has a row past the
+   end of a span of 1000 rows, the source span can go past it, so the structure reader
+   proposes nothing from that table. A hidden cell, row or row group can keep its place in the
+   grid, so the markup reader gives no rows and no cells for its table, or for a table that
+   holds it. The table node stays, so the table text does not read as lines outside a table. Other members make the object
+   invalid.
 6. **The text stays.** The nodes never change the text. A reader version that adds nodes gives
    the same text bytes as the version before it.
 7. **Gaps.** Not every byte is in a node. A page break, a running head or a blank line can stay
@@ -232,9 +244,28 @@ The candidate cites the value cell as its value item, the row label cell as its 
 the column header as its key item. Each item has offsets, so the gate checks plain spans. The
 candidate also records the basis of the cells that it used, so the measure can split by basis.
 
-The reader proposes nothing when a cell is not clear: two cells match, the path from the label to
-the value crosses a cell with `rows` or `columns` above 1, or the header is null. A wrong row is
-worse than no row, as `grid` says.
+The reader proposes nothing when a cell is not clear: two cells match, a cell comes before the
+label in its row (also an empty cell), the path from the label to the value crosses a cell with
+`rows` or `columns` above 1, a header cell is between the header and the value or between the
+label and the value, the row of the header has a data cell with text, the header is null, or
+the value cell is not a data cell. A table with a table in one of its cells gives nothing, but
+the inner table is a table of its own. A cell with a null header counts as a header cell on a path,
+so a table whose cells have null headers gives nothing. The document keeps no `scope`, so
+a header in a row with data cells can be a row header. A loaded object can put a spanned cell
+over another cell, or give the cells places that do not follow the text: a row node with cells in two rows,
+rows out of the order of the row nodes, or columns out of the order of the cells. It can also
+leave text out of the cells: a byte of the table outside its cells that is not whitespace. The
+check covers the table from its start to its end, so a row cannot leave out text at an edge. The reader then proposes nothing from that table. A wrong row is worse than no row,
+as `grid` says.
+
+A `label: value` line gives nothing when the value has a second colon, or when a letter comes
+before the number of a number field. In "Revenue: N/A, Cost: 5", the 5 is the value of Cost.
+The same rule applies to a value cell of a number field: "N/A, Cost: 5" gives nothing.
+A dash or a minus outside the number of a number field gives nothing too. In "-$5" the sign
+is not in the number, and 5 is the wrong value. A bracket of any script, `<` or `>` gives
+nothing too. In "[5]" the 5 can be a footnote mark, and in "(5)" it can be a negative number.
+A line with a tab gives nothing, because a tab can split the line into cells. Such a line
+still counts as a match of its field, so another line of that field gives nothing too.
 
 ## 9. The agreement rule
 
@@ -333,6 +364,12 @@ checks a layout, and it refuses the object at the first fault:
 
 The lookup uses sorted starts and `bisect`, so a large document costs time in proportion to its
 nodes, not to their square.
+
+These checks do not prove that the reader made the nodes. A loaded object can describe a valid
+table that the reader would not make from the source, for example a table that starts after a
+cell of text. The structure reader trusts the table nodes of each `document@1` that it gets. If
+a host loads an object from a party that it does not trust, do not configure `structure` as
+`admit` for that run. #628 adds a check of a loaded object against its source.
 
 ## 13. The measure
 

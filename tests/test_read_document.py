@@ -181,6 +181,27 @@ def test_html_colspan_and_rowspan_give_grid_positions(tmp_path: Path) -> None:
     assert [at(0, 1), at(2, 2), at(1, 3), at(2, 3), at(9, 0)] == ["a", "b", "f", None, None]
 
 
+@pytest.mark.parametrize("name", ["a.html", "a.xhtml"])
+def test_a_scoped_header_cell_gets_its_header_from_the_row(tmp_path: Path, name: str) -> None:
+    """The document keeps no scope. In a row with a cell that is not a header, a th with
+    scope="row" labels its row, and a th with scope="col" heads the cells below it."""
+    table = (
+        '<table><tr><th scope="row">a</th>'
+        '<th scope=" RowGroup ">b</th><th scope="col">c</th><th>d</th><td scope="row">e</td>'
+        "</tr></table>"
+    )
+    doc = _doc(tmp_path, name, table)
+    assert [c.header for c in doc.of_kind("cell")] == [True, None, None, True, None]
+
+
+@pytest.mark.parametrize("name", ["a.html", "a.xhtml"])
+def test_a_row_scoped_cell_in_a_row_of_headers_has_a_null_header(tmp_path: Path, name: str) -> None:
+    """In a row of headers, a th with scope="row" is not a column header."""
+    table = '<table><tr><th scope="row">a</th><th scope="col">b</th><th>c</th></tr></table>'
+    doc = _doc(tmp_path, name, table)
+    assert [c.header for c in doc.of_kind("cell")] == [None, True, True]
+
+
 def test_xhtml_empty_cells_and_spans_with_leading_zeros(tmp_path: Path) -> None:
     source = (
         "<table><tr><td/><td>x</td></tr>"

@@ -62,6 +62,7 @@ class Tracker:
         self.tables: dict[int, _Grid] = {}
         self.budget = GRID_BUDGET
         self.stopped = False
+        self.emptied: set[int] = set()  # tables that keep no rows and no cells
 
     def open(self, tag: str, role: str, basis: str, members: dict[str, Any] | None = None) -> None:
         if self.stopped:
@@ -84,6 +85,14 @@ class Tracker:
             self._place(node)
         self.nodes.append(node)
         self.stack.append((tag, n))
+
+    def drop_table(self) -> None:
+        """Drop the rows and cells of each open table, and all nodes in them. The table nodes
+        stay, so the text of a table never reads as lines outside a table. An outer table loses
+        its cells too: else its cell loses the inner table that marks it as no single value."""
+        for _, n in self.stack:
+            if self.nodes[n].kind == "table":
+                self.emptied.add(n)
 
     def _nearest(self, role: str) -> int | None:
         for _, n in reversed(self.stack):
@@ -136,7 +145,28 @@ class Tracker:
         element stays open, so ``finish`` drops it."""
         while self.stack and not self.stopped:
             self.close(self.stack[-1][0])
+        # The document keeps no scope. A th with scope="row" in a row of data cells is the
+        # label of its row, so it is a header. A th with scope="col" there heads the cells
+        # below it, not its row, so it gets null. In a row of headers, each is the reverse.
+        mixed = {
+            node.parent
+            for node in self.nodes
+            if node.kind == "cell"
+            and node.members
+            and "scope" not in node.members
+            and node.members.get("header") is not True
+        }
+        inside: set[int] = set()  # the nodes in an emptied table; a parent comes first
         for n, node in enumerate(self.nodes):
+            if node.parent is not None and (node.parent in inside or node.parent in self.emptied):
+                inside.add(n)
+                node.keep = False
+        for n, node in enumerate(self.nodes):
+            scope = (node.members or {}).pop("scope", None) if node.kind == "cell" else None
+            if scope is not None and node.members is not None:
+                node.members["header"] = (
+                    True if (scope == "row") == (node.parent in mixed) else None
+                )
             if node.kind == "block":
                 node.kind = "paragraph"
                 node.keep = node.keep and n not in self.inner

@@ -558,6 +558,16 @@ credentials or random ids in this deterministic content. An app may keep times s
 chain detects a changed or removed line when checked against the saved run digest; it is not a
 signature or proof of the model's identity.
 
+A run with `structure` in `policy.proposers` adds one `admission` line with `phase: "structure"`
+before the first call, when the structure reader proposes at least one candidate (#510). Its
+admission object holds the exact candidates. The runner gives them the ids `s1`, `s2` and so on,
+and it sets `proposer` itself. It starts no repair for them, and they do not stop the targeted
+search for their field, because such a candidate needs another proposer. Replay runs the reader
+again and compares the line, as it compares a prompt. If the reader proposes more candidates
+than `max_candidates_per_reply`, the run writes a `limit` line with the status
+`structure_candidate_limit` and stops incomplete before admission. So a change to what the reader proposes
+needs a new runner version. A run with no such policy has the same record as before.
+
 `RunResult.write(folder)` checks every key and refuses an existing log before it writes. It
 writes each object to `folder/objects/<hex>` first and the log to `folder/run.jsonl` last. Each
 file goes to a temporary name and moves into place, and an existing object with other bytes is

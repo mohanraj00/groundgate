@@ -8,7 +8,8 @@ the same on every Python version.
   never ``109``.
 - HTML elements hidden with the ``hidden`` attribute or an inline ``display:none`` or
   ``visibility:hidden`` style are dropped: text a reader cannot see is not evidence. Stylesheets
-  are not evaluated.
+  are not evaluated. A hidden cell, row or row group can keep its place in the grid, so its
+  table, and each table that holds it, gives no rows and no cells.
 
 ``html_nodes`` and ``xml_nodes`` also give the nodes of the document model (``document.py``).
 They use the same writer, so the text is the text of ``html_text`` and ``xml_text``.
@@ -20,7 +21,7 @@ import re
 import xml.etree.ElementTree as ET
 from html.parser import HTMLParser
 
-from .nodes import Kept, Raw, Tracker, nfc_map, span_number
+from .nodes import MAX_SPAN, Kept, Raw, Tracker, nfc_map, span_number
 
 SKIP = {"script", "style", "noscript", "template"}
 HEAD = {"head", "title", "meta", "link", "style", "script", "base", "noscript", "template"}
@@ -124,6 +125,8 @@ class _HTML(HTMLParser):
         if self.in_head and tag not in HEAD:
             self.in_head = False  # </head> is optional in HTML
         if self.hide or (_hidden(attrs) and tag not in VOID):
+            if not self.hide and tag in GRID_TAGS and self.nodes is not None:
+                self.nodes.drop_table()  # the hidden part can keep its place in the grid
             if tag not in VOID:
                 self.hide.append(tag)
             return
@@ -140,6 +143,8 @@ class _HTML(HTMLParser):
 
     def handle_startendtag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         if self.hide or self.in_head or _hidden(attrs):
+            if not self.hide and tag in GRID_TAGS and self.nodes is not None and _hidden(attrs):
+                self.nodes.drop_table()
             return
         if self.nodes is not None and not self.skip and tag in HTML_ROLES:
             _close_implied(self.nodes, tag)
@@ -224,7 +229,13 @@ def _xml(data: bytes, nodes: Tracker | None, w: _Writer | None = None) -> _Write
             if role == "heading":
                 members["level"] = min(max(sections, 1), 6)
             elif role == "cell":
-                members = _cell_members(tag, e.attrib.get("rowspan"), e.attrib.get("colspan"))
+                members = _cell_members(
+                    tag,
+                    e.attrib.get("rowspan"),
+                    e.attrib.get("colspan"),
+                    e.attrib.get("scope"),
+                    "headers" in e.attrib,
+                )
             nodes.open(tag, role, "markup", members)
         if tag == "section":
             sections += 1
@@ -265,12 +276,38 @@ CLOSES_P = HTML_BLOCKS - {"caption"} | {
     "h1", "h2", "h3", "h4", "h5", "h6", "ul", "ol", "li", "table", "hr", "form", "fieldset",
     "details", "dialog", "hgroup", "menu",
 }  # fmt: skip
+# A hidden element of these can keep its place in the grid (``visibility:hidden``), so the
+# reader cannot place the cells after it.
+GRID_TAGS = {"td", "th", "tr", "thead", "tbody", "tfoot"}
 P_SCOPE = {"table", "td", "th", "caption", "html", "button", "object", "template"}
 HEADINGS = {f"h{n}" for n in range(1, 7)}
 
 
-def _cell_members(tag: str, rowspan: str | None, colspan: str | None) -> dict[str, object]:
-    return {"rows": span_number(rowspan), "columns": span_number(colspan), "header": tag == "th"}
+def _cell_members(
+    tag: str,
+    rowspan: str | None,
+    colspan: str | None,
+    scope: str | None,
+    headers: bool,
+    twice: bool = False,
+) -> dict[str, object]:
+    """The members of a cell. The document keeps no ``scope`` and no ``headers``, so a cell gets
+    a null header when they can put it under other headers than its column: a ``scope`` other
+    than ``row`` or ``col``, any ``headers`` attribute, or a table attribute that the tag gives
+    twice. A ``th`` with ``scope="row"`` or ``scope="col"`` gets its header from its row.
+    ``rowspan="0"`` spans the rest of the row group, so it counts as the largest span."""
+    header: bool | None = tag == "th"
+    if (scope or "").strip().lower() not in ("", "col") or headers or twice:
+        header = None
+    rows = span_number(rowspan)
+    zero = (rowspan or "").strip()
+    if zero and zero.isascii() and zero.isdigit() and not zero.strip("0"):
+        rows = MAX_SPAN
+    members: dict[str, object] = {"rows": rows, "columns": span_number(colspan), "header": header}
+    named = (scope or "").strip().lower()
+    if tag == "th" and named in ("row", "col") and headers is False and not twice:
+        members["scope"] = named  # ``Tracker.done`` sets the header from the row
+    return members
 
 
 def _close_implied(nodes: Tracker, tag: str) -> None:
@@ -288,14 +325,27 @@ def _close_implied(nodes: Tracker, tag: str) -> None:
         nodes.close_any({"tr"}, {"table"})
 
 
+_CELL_ATTRIBUTES = frozenset({"rowspan", "colspan", "scope", "headers"})
+
+
 def _open_html(nodes: Tracker, tag: str, attrs: list[tuple[str, str | None]]) -> None:
     role = HTML_ROLES[tag]
     members: dict[str, object] = {}
     if role == "heading":
         members["level"] = int(tag[1])
     elif role == "cell":
-        values = dict(attrs)
-        members = _cell_members(tag, values.get("rowspan"), values.get("colspan"))
+        values: dict[str, str | None] = {}
+        for name, value in attrs:
+            values.setdefault(name, value)  # HTML keeps the first of two equal attributes
+        names = [name for name, _ in attrs if name in _CELL_ATTRIBUTES]
+        members = _cell_members(
+            tag,
+            values.get("rowspan"),
+            values.get("colspan"),
+            values.get("scope"),
+            "headers" in values,
+            len(names) != len(set(names)),
+        )
     nodes.open(tag, role, "markup", members)
 
 
