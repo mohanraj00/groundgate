@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import heapq
 import re
+import unicodedata
 from bisect import bisect_left, bisect_right
 from collections.abc import Iterable
 from itertools import pairwise
@@ -41,16 +42,21 @@ def _name(text: str) -> str:
     return " ".join(text.split()).casefold().removesuffix(":").rstrip()
 
 
+def _dash(c: str) -> bool:
+    return c in ("-", _MINUS) or unicodedata.category(c) == "Pd"
+
+
 def _value(field: Field, text: str) -> str | None:
     """The value in ``text``. A number field needs exactly one number with no brackets, no
-    colon, and no letter before the number. In "N/A, Cost: 5" the 5 is the value of Cost."""
+    colon, and no letter before the number. In "N/A, Cost: 5" the 5 is the value of Cost.
+    A dash or a minus outside the number can be a sign, as in "-$5", so it gives nothing."""
     if field.type == "string":
         return text
     found = _NUMBER.search(text)
     if found is None or ":" in text or any(c.isalpha() for c in text[: found.start()]):
         return None
     rest = text[: found.start()] + text[found.end() :]
-    if any(c.isnumeric() or c in "()" for c in rest):
+    if any(c.isnumeric() or c in "()" or _dash(c) for c in rest):
         return None
     return found.group().replace(",", "").replace(_MINUS, "-")
 

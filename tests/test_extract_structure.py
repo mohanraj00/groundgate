@@ -698,6 +698,24 @@ def test_a_cell_with_a_second_label_gives_nothing(tmp_path: Path, value: str) ->
     assert not any(c.get("proposer") == "structure" for c in result.candidates)
 
 
+@pytest.mark.parametrize("value", ["-$5", "\u2212$5", "- 5 USD", "$5-", "\u2013 5"])
+def test_a_sign_outside_the_number_gives_nothing(tmp_path: Path, value: str) -> None:
+    """The sign of "-$5" is not in the number. A positive 5 is the wrong value."""
+    schema = {"fields": {"revenue": {"type": "integer", "aliases": ["Revenue"], "unit": "USD"}}}
+    assert propose(f"Revenue: {value}\n", None, Schema.from_dict(schema)) == []
+    html = f"<table><tr><td>Revenue</td><td>{value}</td></tr></table>"
+    assert found(tmp_path, html, schema) == []
+    result = run(f"Revenue: {value}\n", schema, policy=ADMIT)
+    assert not any(c.get("proposer") == "structure" for c in result.candidates)
+
+
+def test_a_sign_inside_the_number_keeps_its_value(tmp_path: Path) -> None:
+    schema = {"fields": {"revenue": {"type": "integer", "aliases": ["Revenue"], "unit": "USD"}}}
+    assert [c["value"] for c in propose("Revenue: $-5\n", None, Schema.from_dict(schema))] == ["-5"]
+    html = "<table><tr><td>Revenue</td><td>\u22125</td></tr></table>"
+    assert [c["value"] for c in found(tmp_path, html, schema)] == ["-5"]
+
+
 @pytest.mark.parametrize("change", ["columns", "rows", "row in a node"])
 def test_loaded_places_that_do_not_follow_the_text_give_nothing(
     tmp_path: Path, change: str
