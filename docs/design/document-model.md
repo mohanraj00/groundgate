@@ -238,7 +238,8 @@ The reader proposes nothing when a cell is not clear: two cells match, a cell co
 label in its row (also an empty cell), the path from the label to the value crosses a cell with
 `rows` or `columns` above 1, a header cell is between the header and the value or between the
 label and the value, the row of the header has a data cell with text, the header is null, or
-the value cell is not a data cell. A cell with a null header counts as a header cell on a path,
+the value cell is not a data cell. A table with a table in one of its cells gives nothing, but
+the inner table is a table of its own. A cell with a null header counts as a header cell on a path,
 so a table whose cells have null headers gives nothing. The document keeps no `scope`, so
 a header in a row with data cells can be a row header. A loaded object can put a spanned cell
 over another cell, or give the cells places that do not follow the text: a row node with cells in two rows,

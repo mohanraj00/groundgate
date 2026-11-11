@@ -263,6 +263,8 @@ def _table(
         if places:
             last = places[0][0]
         cells.extend(held)
+    if any(c.id in nested for c in cells):
+        return  # the text of a cell with a table is not one label, header or value
     single = [c for c in cells if not _spanned(c)]
     grid = {_place(c): c for c in single}
     if len(grid) != len(single):
@@ -281,7 +283,7 @@ def _table(
         field: Field, key: str | None, label: Node, header: Node | None, value: Node | None
     ) -> None:
         target = found.setdefault((field.name, key), [])
-        if value is None or value.start == value.end or value.id in nested:
+        if value is None or value.start == value.end:
             target.append(None)
             return
         places = {"value": (value.start, value.end), "field": (label.start, label.end)}

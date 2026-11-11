@@ -577,6 +577,21 @@ def test_a_row_header_between_the_label_and_a_keyless_value_gives_nothing(tmp_pa
     assert not any(c.get("proposer") == "structure" for c in result.candidates)
 
 
+@pytest.mark.parametrize(
+    "label",
+    ["<table><tr><td>Revenue</td></tr></table>", "Revenue<table><tr><td>x</td></tr></table>"],
+)
+def test_a_table_with_a_table_in_a_cell_gives_nothing(tmp_path: Path, label: str) -> None:
+    """The text of a cell with a table is not one label, so the outer table gives nothing."""
+    html = (
+        f"<table><tr><th>Item</th><th>2024</th></tr><tr><td>{label}</td><td>999</td></tr></table>"
+    )
+    schema = {"fields": {"revenue": {"type": "integer", "aliases": ["Revenue"], "keys": ["2024"]}}}
+    assert found(tmp_path, html, schema) == []
+    result = run(document(tmp_path, html), schema, policy=ADMIT)
+    assert not any(c.get("proposer") == "structure" for c in result.candidates)
+
+
 def test_a_row_header_value_gives_nothing(tmp_path: Path) -> None:
     html = (
         "<table><tr><th>Item</th><th>2024</th></tr>"
