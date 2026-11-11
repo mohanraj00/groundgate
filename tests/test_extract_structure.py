@@ -296,6 +296,15 @@ def test_a_refused_line_still_counts_as_a_second_match(first: str) -> None:
         assert not any(c.get("proposer") == "structure" for c in result.candidates)
 
 
+@pytest.mark.parametrize("tabbed", ["Revenue:\t7", "\tRevenue: 7"])
+def test_a_tabbed_line_still_counts_as_a_second_match(tabbed: str) -> None:
+    for text in (f"Revenue: 5\n{tabbed}\n", f"{tabbed}\nRevenue: 5\n"):
+        assert propose(text, None, Schema.from_dict(PLAIN)) == []
+        result = run(text, PLAIN, policy=ADMIT)
+        assert not any(c.get("proposer") == "structure" for c in result.candidates)
+    assert propose(f"{tabbed}\n", None, Schema.from_dict(PLAIN)) == []
+
+
 def test_a_line_value_with_a_unit_after_it_keeps_its_value() -> None:
     found = propose("Revenue: 5 million, net\n", None, Schema.from_dict(PLAIN))
     assert [c["value"] for c in found] == ["5"]

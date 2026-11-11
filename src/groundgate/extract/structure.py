@@ -390,7 +390,7 @@ def _lines(
     for line in data.split(b"\n"):
         start, at = at, at + len(line) + 1
         colon = line.find(b":")
-        if colon < 0 or b"\t" in line:
+        if colon < 0:
             continue
         before = bisect_right(starts, start + len(line)) - 1
         if before >= 0 and ends[before] > start:
@@ -409,8 +409,9 @@ def _lines(
         # In "Revenue: N/A, Cost: 5" the 5 is the value of Cost. A second colon can be a second
         # label; _value refuses a letter before a number. A refused line still counts as a
         # match, so a second line of the same field does not become the only match.
+        # A tab can split the line into cells that the text does not mark. The line still counts.
         target = found.setdefault((field.name, None), [])
-        if ":" in text:
+        if ":" in text or b"\t" in line:
             target.append(None)
             continue
         places = {"value": value, "field": label}

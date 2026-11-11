@@ -254,7 +254,8 @@ before the number of a number field. In "Revenue: N/A, Cost: 5", the 5 is the va
 The same rule applies to a value cell of a number field: "N/A, Cost: 5" gives nothing.
 A dash or a minus outside the number of a number field gives nothing too. In "-$5" the sign
 is not in the number, and 5 is the wrong value.
-Such a line still counts as a match of its field, so another line of that field gives nothing too.
+A line with a tab gives nothing, because a tab can split the line into cells. Such a line
+still counts as a match of its field, so another line of that field gives nothing too.
 
 ## 9. The agreement rule
 
