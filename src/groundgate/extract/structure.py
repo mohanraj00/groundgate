@@ -47,6 +47,12 @@ def _dash(c: str) -> bool:
     return c in ("-", _MINUS) or unicodedata.category(c) == "Pd"
 
 
+def _bracket(c: str) -> bool:
+    """An open or a close bracket of any script, or ``<`` and ``>``. In "[5]" the 5 can be a
+    footnote mark, and in "(5)" it can be a negative number."""
+    return c in "<>" or unicodedata.category(c) in ("Ps", "Pe")
+
+
 def _value(field: Field, text: str) -> str | None:
     """The value in ``text``. A number field needs exactly one number with no brackets, no
     colon, and no letter before the number. In "N/A, Cost: 5" the 5 is the value of Cost.
@@ -57,7 +63,7 @@ def _value(field: Field, text: str) -> str | None:
     if found is None or ":" in text or any(c.isalpha() for c in text[: found.start()]):
         return None
     rest = text[: found.start()] + text[found.end() :]
-    if any(c.isnumeric() or c in "()" or _dash(c) for c in rest):
+    if any(c.isnumeric() or _bracket(c) or _dash(c) for c in rest):
         return None
     return found.group().replace(",", "").replace(_MINUS, "-")
 

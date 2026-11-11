@@ -718,6 +718,17 @@ def test_a_sign_outside_the_number_gives_nothing(tmp_path: Path, value: str) -> 
     assert not any(c.get("proposer") == "structure" for c in result.candidates)
 
 
+@pytest.mark.parametrize("value", ["[5]", "{5}", "\u30105\u3011", "5 [1]", "<5", "\uff085\uff09"])
+def test_a_bracket_gives_nothing(tmp_path: Path, value: str) -> None:
+    """In "[5]" the 5 can be a footnote mark, and in "(5)" it can be a negative number."""
+    schema = {"fields": {"revenue": {"type": "integer", "aliases": ["Revenue"]}}}
+    assert propose(f"Revenue: {value}\n", None, Schema.from_dict(schema)) == []
+    html = f"<table><tr><td>Revenue</td><td>{value}</td></tr></table>"
+    assert found(tmp_path, html, schema) == []
+    result = run(f"Revenue: {value}\n", schema, policy=ADMIT)
+    assert not any(c.get("proposer") == "structure" for c in result.candidates)
+
+
 def test_a_sign_inside_the_number_keeps_its_value(tmp_path: Path) -> None:
     schema = {"fields": {"revenue": {"type": "integer", "aliases": ["Revenue"], "unit": "USD"}}}
     assert [c["value"] for c in propose("Revenue: $-5\n", None, Schema.from_dict(schema))] == ["-5"]
