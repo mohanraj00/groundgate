@@ -765,6 +765,22 @@ def test_a_cell_with_a_headers_attribute_gives_nothing(tmp_path: Path, on: str) 
         "<tr><td rowspan='0'>Group</td><td>7</td><td>8</td></tr>"
         + "<tr><td>1</td><td>2</td></tr>" * 999
         + "<tr><td>Revenue</td><td>5</td></tr></table>",
+        # A legal rowspan past the cap of the reader.
+        "<table><tr><th>Item</th><th>2024</th><th>2023</th></tr>"
+        "<tr><td rowspan='1001'>Group</td><td>7</td><td>8</td></tr>"
+        + "<tr><td>1</td><td>2</td></tr>" * 999
+        + "<tr><td>Revenue</td><td>5</td></tr></table>",
+        # HTML keeps the first rowspan, so Group covers the row of Revenue.
+        "<table><tr><th>Item</th><th>2024</th><th>2023</th></tr>"
+        "<tr><td rowspan='2' rowspan='1'>Group</td><td>7</td><td>8</td></tr>"
+        "<tr><td>Revenue</td><td>5</td></tr></table>",
+        # A hidden cell keeps its place, so 5 is under 2023.
+        "<table><tr><th>Item</th><th>2024</th><th>2023</th></tr>"
+        "<tr><td>Revenue</td><td style='visibility:hidden'>999</td><td>5</td></tr></table>",
+        # A hidden row keeps its place, so its Group cell covers the row of Revenue.
+        "<table><tr><th>Item</th><th>2024</th><th>2023</th></tr>"
+        "<tr style='visibility:hidden'><td rowspan='2'>Group</td><td>7</td><td>8</td></tr>"
+        "<tr><td>Revenue</td><td>5</td></tr></table>",
     ],
     ids=[
         "rowspan zero",
@@ -773,6 +789,10 @@ def test_a_cell_with_a_headers_attribute_gives_nothing(tmp_path: Path, on: str) 
         "headers twice",
         "headers no value",
         "rowspan zero long",
+        "rowspan 1001",
+        "rowspan twice",
+        "hidden cell",
+        "hidden row",
     ],
 )
 def test_a_cell_attribute_that_the_document_cannot_keep_gives_nothing(

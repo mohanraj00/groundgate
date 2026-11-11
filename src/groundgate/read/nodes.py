@@ -85,6 +85,14 @@ class Tracker:
         self.nodes.append(node)
         self.stack.append((tag, n))
 
+    def drop_table(self) -> None:
+        """Drop the innermost open table. Its rows and cells then break the parent kinds of
+        §4.2, so ``finish`` drops them too, and the table text stays as text."""
+        for _, n in reversed(self.stack):
+            if self.nodes[n].kind == "table":
+                self.nodes[n].keep = False
+                return
+
     def _nearest(self, role: str) -> int | None:
         for _, n in reversed(self.stack):
             if self.nodes[n].kind == role:

@@ -8,7 +8,8 @@ the same on every Python version.
   never ``109``.
 - HTML elements hidden with the ``hidden`` attribute or an inline ``display:none`` or
   ``visibility:hidden`` style are dropped: text a reader cannot see is not evidence. Stylesheets
-  are not evaluated.
+  are not evaluated. A hidden cell, row or row group can keep its place in the grid, so its
+  table gives no table nodes.
 
 ``html_nodes`` and ``xml_nodes`` also give the nodes of the document model (``document.py``).
 They use the same writer, so the text is the text of ``html_text`` and ``xml_text``.
@@ -124,6 +125,8 @@ class _HTML(HTMLParser):
         if self.in_head and tag not in HEAD:
             self.in_head = False  # </head> is optional in HTML
         if self.hide or (_hidden(attrs) and tag not in VOID):
+            if not self.hide and tag in GRID_TAGS and self.nodes is not None:
+                self.nodes.drop_table()  # the hidden part can keep its place in the grid
             if tag not in VOID:
                 self.hide.append(tag)
             return
@@ -140,6 +143,8 @@ class _HTML(HTMLParser):
 
     def handle_startendtag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         if self.hide or self.in_head or _hidden(attrs):
+            if not self.hide and tag in GRID_TAGS and self.nodes is not None and _hidden(attrs):
+                self.nodes.drop_table()
             return
         if self.nodes is not None and not self.skip and tag in HTML_ROLES:
             _close_implied(self.nodes, tag)
@@ -271,6 +276,9 @@ CLOSES_P = HTML_BLOCKS - {"caption"} | {
     "h1", "h2", "h3", "h4", "h5", "h6", "ul", "ol", "li", "table", "hr", "form", "fieldset",
     "details", "dialog", "hgroup", "menu",
 }  # fmt: skip
+# A hidden element of these can keep its place in the grid (``visibility:hidden``), so the
+# reader cannot place the cells after it.
+GRID_TAGS = {"td", "th", "tr", "thead", "tbody", "tfoot"}
 P_SCOPE = {"table", "td", "th", "caption", "html", "button", "object", "template"}
 HEADINGS = {f"h{n}" for n in range(1, 7)}
 
@@ -321,7 +329,9 @@ def _open_html(nodes: Tracker, tag: str, attrs: list[tuple[str, str | None]]) ->
     if role == "heading":
         members["level"] = int(tag[1])
     elif role == "cell":
-        values = dict(attrs)
+        values: dict[str, str | None] = {}
+        for name, value in attrs:
+            values.setdefault(name, value)  # HTML keeps the first of two equal attributes
         names = [name for name, _ in attrs if name in _CELL_ATTRIBUTES]
         members = _cell_members(
             tag,
