@@ -121,8 +121,9 @@ def _at_header(grid: _Grid, runs: _Runs, label: Node, header: Node) -> Node | No
     # label and the value is not clear either.
     if runs.head_row[row - 1, column] != top or runs.head_column[row, column - 1] > left:
         return None
+    # A value with a null header can be a row header, as a ``th`` with the scope ``row``.
     value = grid[row, column]
-    return None if value.header is True else value
+    return value if value.header is False else None
 
 
 class _Row:

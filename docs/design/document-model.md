@@ -237,8 +237,9 @@ candidate also records the basis of the cells that it used, so the measure can s
 The reader proposes nothing when a cell is not clear: two cells match, a cell comes before the
 label in its row (also an empty cell), the path from the label to the value crosses a cell with
 `rows` or `columns` above 1, a header cell is between the header and the value or between the
-label and the value, the row of the header has a data cell with text, or the header is null.
-A cell with a null header counts as a header cell on a path. The document keeps no `scope`, so
+label and the value, the row of the header has a data cell with text, the header is null, or
+the value cell is not a data cell. A cell with a null header counts as a header cell on a path,
+so a table whose cells have null headers gives nothing. The document keeps no `scope`, so
 a header in a row with data cells can be a row header. A loaded object can put a spanned cell
 over another cell, or give the cells places that do not follow the text: a row node with cells in two rows,
 rows out of the order of the row nodes, or columns out of the order of the cells. The reader

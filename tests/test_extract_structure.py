@@ -577,6 +577,17 @@ def test_a_row_header_between_the_label_and_a_keyless_value_gives_nothing(tmp_pa
     assert not any(c.get("proposer") == "structure" for c in result.candidates)
 
 
+def test_a_row_header_value_gives_nothing(tmp_path: Path) -> None:
+    html = (
+        "<table><tr><th>Item</th><th>2024</th></tr>"
+        "<tr><td>Revenue</td><th scope='row'>999</th></tr></table>"
+    )
+    schema = {"fields": {"revenue": {"type": "integer", "aliases": ["Revenue"], "keys": ["2024"]}}}
+    assert found(tmp_path, html, schema) == []
+    result = run(document(tmp_path, html), schema, policy=ADMIT)
+    assert not any(c.get("proposer") == "structure" for c in result.candidates)
+
+
 def test_a_row_header_label_keeps_its_value(tmp_path: Path) -> None:
     """A row header is the usual label cell, so its scope does not stop the reader."""
     row = "<tr><th scope='row'>Revenue</th><td>5</td></tr>"
