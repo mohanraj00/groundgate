@@ -243,9 +243,13 @@ the inner table is a table of its own. A cell with a null header counts as a hea
 so a table whose cells have null headers gives nothing. The document keeps no `scope`, so
 a header in a row with data cells can be a row header. A loaded object can put a spanned cell
 over another cell, or give the cells places that do not follow the text: a row node with cells in two rows,
-rows out of the order of the row nodes, or columns out of the order of the cells. The reader
-then proposes nothing from that table. A wrong row is worse than no row, as
-`grid` says.
+rows out of the order of the row nodes, or columns out of the order of the cells. It can also
+leave text out of the cells: a byte of a row outside its cells, or between two rows, that is not
+whitespace. The reader then proposes nothing from that table. A wrong row is worse than no row,
+as `grid` says.
+
+A `label: value` line gives nothing when the value has a second colon, or when a letter comes
+before the number of a number field. In "Revenue: N/A, Cost: 5", the 5 is the value of Cost.
 
 ## 9. The agreement rule
 

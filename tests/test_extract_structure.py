@@ -278,6 +278,20 @@ def test_a_lone_candidate_needs_verification_under_corroborate(tmp_path: Path) -
         assert decision.codes == ("NOT_CORROBORATED", "KEY_CITED")
 
 
+@pytest.mark.parametrize(
+    "line", ["Revenue: N/A, Cost: 5", "Revenue: N/A, Cost 5", "Revenue: 5, Cost: 4"]
+)
+def test_a_line_with_a_second_label_gives_nothing(line: str) -> None:
+    assert propose(f"{line}\n", None, Schema.from_dict(PLAIN)) == []
+    result = run(f"{line}\n", PLAIN, policy=ADMIT)
+    assert not any(c.get("proposer") == "structure" for c in result.candidates)
+
+
+def test_a_line_value_with_a_unit_after_it_keeps_its_value() -> None:
+    found = propose("Revenue: 5 million, net\n", None, Schema.from_dict(PLAIN))
+    assert [c["value"] for c in found] == ["5"]
+
+
 def test_a_line_candidate_needs_verification_under_corroborate() -> None:
     result = run("Revenue: 5\n", PLAIN)
     assert [(d.outcome, d.codes) for d in result.receipt.decisions] == [
@@ -610,6 +624,32 @@ def test_a_row_header_label_keeps_its_value(tmp_path: Path) -> None:
     keyed = f"<table><tr><th>Item</th><th scope='col'>2024</th></tr>{row}</table>"
     schema = {"fields": {"revenue": {"type": "integer", "aliases": ["Revenue"], "keys": ["2024"]}}}
     assert [c["value"] for c in found(tmp_path, keyed, schema)] == ["5"]
+
+
+@pytest.mark.parametrize("row_start", [False, True])
+def test_a_loaded_table_with_text_outside_its_cells_gives_nothing(
+    tmp_path: Path, row_start: bool
+) -> None:
+    """With no node for Cost, Revenue takes its place and 5 comes under 2024."""
+    html = (
+        "<table><tr><th>Item</th><th>2024</th></tr>"
+        "<tr><td>Cost</td><td>Revenue</td><td>5</td></tr></table>"
+    )
+    obj = document(tmp_path, html).to_dict()
+    cost = next(n for n in obj["nodes"] if n["kind"] == "cell" and n["row"] == 1)
+    obj["nodes"] = [n for n in obj["nodes"] if n is not cost]
+    for node in obj["nodes"]:
+        if node["id"] > cost["id"]:
+            node["id"] -= 1
+        if node["kind"] == "cell" and node["row"] == 1:
+            node["column"] -= 1
+        if row_start and node["kind"] == "row" and node["start"] == cost["start"]:
+            node["start"] = cost["end"] + 1
+    loaded = Document.from_dict(obj, document(tmp_path, html).text)
+    schema = {"fields": {"revenue": {"type": "integer", "aliases": ["Revenue"], "keys": ["2024"]}}}
+    assert propose(loaded.text, loaded, Schema.from_dict(schema)) == []
+    result = run(loaded, schema, policy=ADMIT)
+    assert not any(c.get("proposer") == "structure" for c in result.candidates)
 
 
 @pytest.mark.parametrize("change", ["columns", "rows", "row in a node"])

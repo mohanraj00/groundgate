@@ -238,6 +238,25 @@ def _nested(document: Document) -> set[int]:
     return out
 
 
+def _cells_hold_the_text(data: bytes, rows: list[tuple[Node, list[Node]]]) -> bool:
+    """True if the cells hold all the text of the rows. A byte outside the cells must be
+    whitespace, from the start of the first row to the end of the last row. A loaded object
+    can leave out a cell, and its text then shifts the cells after it."""
+    at = rows[0][0].start if rows else 0
+    for row, held in rows:
+        if row.start < at or data[at : row.start].strip():
+            return False
+        at = row.start
+        for cell in held:
+            if cell.start < at or data[at : cell.start].strip():
+                return False
+            at = cell.end
+        if row.end < at or data[at : row.end].strip():
+            return False
+        at = row.end
+    return True
+
+
 def _table(
     document: Document,
     table: Node,
@@ -250,8 +269,10 @@ def _table(
 ) -> None:
     cells: list[Node] = []
     last = -1
+    row_cells: list[tuple[Node, list[Node]]] = []
     for row in document.children(table.id):
         held = [c for c in document.children(row.id) if c.kind == "cell"]
+        row_cells.append((row, held))
         # A loaded object can give the cells any place. The places must follow the text: one
         # row for each row node, rows in the order of the nodes, columns in the order of the
         # cells. Else a swap of two values gives each the header of the other.
@@ -265,6 +286,8 @@ def _table(
         cells.extend(held)
     if any(c.id in nested for c in cells):
         return  # the text of a cell with a table is not one label, header or value
+    if not _cells_hold_the_text(data, row_cells):
+        return
     single = [c for c in cells if not _spanned(c)]
     grid = {_place(c): c for c in single}
     if len(grid) != len(single):
@@ -376,6 +399,13 @@ def _lines(
         if value[0] == value[1]:
             continue
         text = data[value[0] : value[1]].decode("utf-8")
+        # In "Revenue: N/A, Cost: 5" the 5 is the value of Cost. A second colon, or a letter
+        # before the number, can be a second label.
+        if ":" in text:
+            continue
+        number = _NUMBER.search(text) if field.type != "string" else None
+        if number is not None and any(c.isalpha() for c in text[: number.start()]):
+            continue
         places = {"value": value, "field": label}
         bases = {"value": "layout", "field": "layout"}
         found.setdefault((field.name, None), []).append(
