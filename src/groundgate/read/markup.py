@@ -224,7 +224,9 @@ def _xml(data: bytes, nodes: Tracker | None, w: _Writer | None = None) -> _Write
             if role == "heading":
                 members["level"] = min(max(sections, 1), 6)
             elif role == "cell":
-                members = _cell_members(tag, e.attrib.get("rowspan"), e.attrib.get("colspan"))
+                members = _cell_members(
+                    tag, e.attrib.get("rowspan"), e.attrib.get("colspan"), e.attrib.get("scope")
+                )
             nodes.open(tag, role, "markup", members)
         if tag == "section":
             sections += 1
@@ -269,8 +271,15 @@ P_SCOPE = {"table", "td", "th", "caption", "html", "button", "object", "template
 HEADINGS = {f"h{n}" for n in range(1, 7)}
 
 
-def _cell_members(tag: str, rowspan: str | None, colspan: str | None) -> dict[str, object]:
-    return {"rows": span_number(rowspan), "columns": span_number(colspan), "header": tag == "th"}
+def _cell_members(
+    tag: str, rowspan: str | None, colspan: str | None, scope: str | None
+) -> dict[str, object]:
+    """The members of a cell. A ``th`` with the scope ``row`` or ``rowgroup`` gets a null
+    header: it is a header for its row, and the document keeps no scope."""
+    header: bool | None = tag == "th"
+    if header and (scope or "").strip().lower() in ("row", "rowgroup"):
+        header = None
+    return {"rows": span_number(rowspan), "columns": span_number(colspan), "header": header}
 
 
 def _close_implied(nodes: Tracker, tag: str) -> None:
@@ -295,7 +304,9 @@ def _open_html(nodes: Tracker, tag: str, attrs: list[tuple[str, str | None]]) ->
         members["level"] = int(tag[1])
     elif role == "cell":
         values = dict(attrs)
-        members = _cell_members(tag, values.get("rowspan"), values.get("colspan"))
+        members = _cell_members(
+            tag, values.get("rowspan"), values.get("colspan"), values.get("scope")
+        )
     nodes.open(tag, role, "markup", members)
 
 

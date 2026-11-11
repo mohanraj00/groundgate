@@ -107,7 +107,9 @@ in an evidence item and a chunk plan entry (runner.md §8).
 5. **Members by kind.** Only a `heading` has `level`, 1 to 6. Only a `cell` has `row`, `column`,
    `rows`, `columns` and `header`. `row` and `column` count from 0 in the grid of the table, after
    spanned cells. `rows` and `columns` are the cell span, 1 or more. `header` is true for a
-   header cell, false for a data cell, and null when the source does not say. Other members make
+   header cell, false for a data cell, and null when the source does not say. The markup
+   reader gives null to a `th` with the scope `row` or `rowgroup`, because it is a header for
+   its row only. Other members make
    the object invalid.
 6. **The text stays.** The nodes never change the text. A reader version that adds nodes gives
    the same text bytes as the version before it.
@@ -236,8 +238,9 @@ The reader proposes nothing when a cell is not clear: two cells match, a cell co
 label in its row (also an empty cell), the path from the label to the value crosses a cell with
 `rows` or `columns` above 1, a header cell is between the header and the value or between the
 label and the value, the row of the header has a data cell with text, or the header is null.
-The document keeps no `scope`, so a header in a row with data cells can be a row header. A loaded object can put a spanned cell over another
-cell, or give the cells places that do not follow the text: a row node with cells in two rows,
+A cell with a null header counts as a header cell on a path. The document keeps no `scope`, so
+a header in a row with data cells can be a row header. A loaded object can put a spanned cell
+over another cell, or give the cells places that do not follow the text: a row node with cells in two rows,
 rows out of the order of the row nodes, or columns out of the order of the cells. The reader
 then proposes nothing from that table. A wrong row is worse than no row, as
 `grid` says.

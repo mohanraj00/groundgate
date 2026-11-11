@@ -570,6 +570,22 @@ def test_a_header_between_the_label_and_a_keyless_value_gives_nothing(tmp_path: 
     assert [c["value"] for c in found(tmp_path, empty, PLAIN)] == ["5"]
 
 
+def test_a_row_header_between_the_label_and_a_keyless_value_gives_nothing(tmp_path: Path) -> None:
+    html = "<table><tr><td>Revenue</td><th scope='row'>Q1</th><td>5</td></tr></table>"
+    assert found(tmp_path, html, PLAIN) == []
+    result = run(document(tmp_path, html), PLAIN, policy=ADMIT)
+    assert not any(c.get("proposer") == "structure" for c in result.candidates)
+
+
+def test_a_row_header_label_keeps_its_value(tmp_path: Path) -> None:
+    """A row header is the usual label cell, so its scope does not stop the reader."""
+    row = "<tr><th scope='row'>Revenue</th><td>5</td></tr>"
+    assert [c["value"] for c in found(tmp_path, f"<table>{row}</table>", PLAIN)] == ["5"]
+    keyed = f"<table><tr><th>Item</th><th scope='col'>2024</th></tr>{row}</table>"
+    schema = {"fields": {"revenue": {"type": "integer", "aliases": ["Revenue"], "keys": ["2024"]}}}
+    assert [c["value"] for c in found(tmp_path, keyed, schema)] == ["5"]
+
+
 @pytest.mark.parametrize("change", ["columns", "rows", "row in a node"])
 def test_loaded_places_that_do_not_follow_the_text_give_nothing(
     tmp_path: Path, change: str
@@ -596,11 +612,14 @@ def test_loaded_places_that_do_not_follow_the_text_give_nothing(
     "row",
     [
         "<tr><td>Cost</td><th scope='row'>2024</th><td>5</td></tr>",
+        "<tr><td>Cost</td><th>2024</th><td>5</td></tr>",
+        "<tr><th scope='row'>Cost</th><th scope='row'>2024</th></tr>",
         "<tr><td>Item</td><th>2024</th></tr>",
     ],
 )
 def test_a_header_in_a_row_with_data_cells_is_not_a_column_header(tmp_path: Path, row: str) -> None:
-    """The document keeps no scope, so only a row of headers gives column headers."""
+    """Only a row of column headers gives column headers. A header for its row only has a null
+    header, and the document keeps no scope."""
     html = f"<table>{row}<tr><td>Revenue</td><td>999</td><td>7</td></tr></table>"
     schema = {"fields": {"revenue": {"type": "integer", "aliases": ["Revenue"], "keys": ["2024"]}}}
     assert found(tmp_path, html, schema) == []

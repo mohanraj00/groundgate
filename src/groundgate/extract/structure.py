@@ -79,8 +79,8 @@ def _spanned(cell: Node) -> bool:
 class _Runs:
     """For each place of the grid, the first column of its run of places to the left and the
     first row of its run of places above. The pass also keeps the last header cell of each run
-    up to the place. One pass over the grid gives all of them, so a check of a path costs no
-    walk."""
+    up to the place, and a cell with a null header counts as a header there, because it can be
+    one. One pass over the grid gives all of them, so a check of a path costs no walk."""
 
     def __init__(self, grid: _Grid) -> None:
         self.left: dict[tuple[int, int], int] = {}
@@ -90,11 +90,13 @@ class _Runs:
         for row, column in sorted(grid):
             self.left[row, column] = self.left.get((row, column - 1), column)
             last = self.head_column.get((row, column - 1), -1)
-            self.head_column[row, column] = column if grid[row, column].header is True else last
+            head = grid[row, column].header is not False
+            self.head_column[row, column] = column if head else last
         for row, column in sorted(grid, key=lambda p: (p[1], p[0])):
             self.top[row, column] = self.top.get((row - 1, column), row)
             last = self.head_row.get((row - 1, column), -1)
-            self.head_row[row, column] = row if grid[row, column].header is True else last
+            head = grid[row, column].header is not False
+            self.head_row[row, column] = row if head else last
 
     def across(self, row: int, left: int, column: int) -> bool:
         """True if the grid holds each place of ``row`` from ``left`` to ``column``."""

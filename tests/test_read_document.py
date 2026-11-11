@@ -181,6 +181,18 @@ def test_html_colspan_and_rowspan_give_grid_positions(tmp_path: Path) -> None:
     assert [at(0, 1), at(2, 2), at(1, 3), at(2, 3), at(9, 0)] == ["a", "b", "f", None, None]
 
 
+@pytest.mark.parametrize("name", ["a.html", "a.xhtml"])
+def test_a_row_scoped_header_cell_has_a_null_header(tmp_path: Path, name: str) -> None:
+    """The document keeps no scope, so a header for its row only is not a column header."""
+    table = (
+        '<table><tr><th scope="row">a</th>'
+        '<th scope=" RowGroup ">b</th><th scope="col">c</th><th>d</th><td scope="row">e</td>'
+        "</tr></table>"
+    )
+    doc = _doc(tmp_path, name, table)
+    assert [c.header for c in doc.of_kind("cell")] == [None, None, True, True, False]
+
+
 def test_xhtml_empty_cells_and_spans_with_leading_zeros(tmp_path: Path) -> None:
     source = (
         "<table><tr><td/><td>x</td></tr>"
