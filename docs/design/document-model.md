@@ -354,6 +354,12 @@ checks a layout, and it refuses the object at the first fault:
 The lookup uses sorted starts and `bisect`, so a large document costs time in proportion to its
 nodes, not to their square.
 
+These checks do not prove that the reader made the nodes. A loaded object can describe a valid
+table that the reader would not make from the source, for example a table that starts after a
+cell of text. The structure reader trusts the table nodes of each `document@1` that it gets. If
+a host loads an object from a party that it does not trust, do not configure `structure` as
+`admit` for that run. #628 adds a check of a loaded object against its source.
+
 ## 13. The measure
 
 The 1.0 measure (#277) gives the admitted error rate for each proposer and for agreement, on
