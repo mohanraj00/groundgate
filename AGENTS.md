@@ -1,73 +1,48 @@
 # Working on groundgate
 
-[CONTRIBUTING.md](CONTRIBUTING.md) has the setup and the rules. [SPEC.md](SPEC.md) defines every
-decision. This file covers how work is run.
+[CONSTITUTION.md](CONSTITUTION.md) has the purpose, the principles, the evidence rules, the
+contribution rules and the governance. [docs/STANDARD.md](docs/STANDARD.md) has the rules for
+builds, reviews, approvals and CI. [CONTRIBUTING.md](CONTRIBUTING.md) has the setup.
+[SPEC.md](SPEC.md) defines every decision. This file covers how work is run in this project.
 
 ## Work starts from an issue
 
 - Pick up work with `gh issue list` and `gh issue view N`. If there is no issue, open one first.
 - One branch per issue, named `N-short-slug`. The PR body says `Fixes #N`.
-- CI must be green before a PR is ready. The agent that opened the PR merges it (see Two agents).
+- CI must be green before a PR is ready.
 - Something out of scope turns up: open an issue for it instead of widening the PR.
 - Labels: `spec` changes a decision, `benchmark` touches `bench/`, plus the usual `bug`,
   `documentation` and `enhancement`. The next spec version gets its own milestone.
 
 ## Two agents
 
-Claude Code and Codex both work on this repository. This file is the one copy of the rules:
-`CLAUDE.md` imports it.
+Claude Code and Codex both work on this repository. `CLAUDE.md` imports `CONSTITUTION.md` and
+this file.
 
 - Before you start an issue, add the label `agent:claude` or `agent:codex`. Do not take an issue
   that has the other label or an open PR.
 - Claude Code branches are `N-short-slug`. Codex branches are `codex/N-short-slug`.
-- Codex reviews Claude Code PRs, and Claude Code reviews Codex PRs. No review runs by itself:
-  the agent that opened the PR asks for it in a separate comment.
-  [docs/REVIEW.md](docs/REVIEW.md) has the exact texts and the rules for each request.
-  - A Claude Code PR: `@codex review`, with `Head: <short SHA>` on the next line.
-  - A Codex PR: `@claude review this PR. Use the Review guidelines in AGENTS.md.` and no other
-    text. The Claude review workflow starts only for this exact text.
-
-  Ask again after each push that fixes a finding. Answer each finding on its comment: the fix and
-  its commit, or why it does not apply. Never write `@codex` or `@claude` in a PR body, an issue or
-  a commit message: each mention is a request.
-- The agent that opened the PR decides if the PR needs a deeper security review:
-  - If the review ends with `Security review: needed` or `Security review: not needed`, follow
-    that line.
-  - A review whose format allows only findings has no such line. If the line is not there,
-    apply the list in Review guidelines yourself. Never take a missing line as "not needed".
-  - If the PR needs one, post a separate comment that holds only `@codex security review`. Post
-    it once for each PR, and not when a security review of the PR is already asked or done. Read
-    the PR comments first.
-  - A fix after the security review gets a normal review. Ask for a second security review only
-    when a reviewer asks for one again, for a new reason.
-- An agent merges its own PR with squash when the required checks pass and the other agent's
-  review of the head commit has no open finding. The macOS jobs are not required.
+- The reviewer of each PR, the review requests and the security review trigger are in
+  [docs/STANDARD.md](docs/STANDARD.md). [docs/REVIEW.md](docs/REVIEW.md) has the exact request
+  texts. `.github/gates.json` names the boundary files of this project.
+- Answer each finding on its comment: the fix and its commit, or why it does not apply. Never
+  write `@codex` or `@claude` in a PR body, an issue or a commit message: each mention is a
+  request.
+- Who merges a PR is in the Approvals section of [docs/STANDARD.md](docs/STANDARD.md). The macOS
+  jobs are not required.
 - Outside PRs (from forks) follow [docs/maintainers/outside-prs.md](docs/maintainers/outside-prs.md).
 - An agent never adds or removes the label `maintainer-approved`.
 - One agent runs each milestone: it gives each issue to an agent, keeps the milestone's plan issue
   current, and finishes what is left. The maintainer names the runner.
-- Only the maintainer tags a release.
 - `CLAUDE.local.md` holds local rules that are not in git. If it is there, read it before you
   start, and follow it. Never commit it or quote it.
-
-## Rules that are easy to break
-
-- A change to a decision is a new spec version. Write the vectors by hand in
-  `conformance/build.py` before the code, and never generate expectations by running groundgate.
-- A new rule is measured on documents it was not written from. Never tune a rule on the v0.1 set
-  in `bench/` or set 2 in `bench/set2/`, and never change their published numbers.
-- Every benchmark number in the README, a `RESULTS.md`, the changelog or an issue must match its
-  set's `results.json`. Rescore with `bench/score.py` and `bench/report.py`; don't type numbers.
-- The core stays dependency-free. No model runs inside the decision: a model's answer enters
-  only as a recorded input (#66).
-- Tags publish to PyPI and can't be undone. Only the maintainer tags a release.
 
 ## Writing
 
 Docs, issues, PR descriptions and commit messages sound like the maintainer: first person,
 plain, confident, specific numbers instead of adjectives, short sentences. No em-dashes, no
-emoji, no filler ("seamless", "robust", "leverage", "delve", "comprehensive"). Keep product,
-employer and client names out of the repository, including commit messages.
+emoji, no filler ("seamless", "robust", "leverage", "delve", "comprehensive"). The names that a
+contribution must not add are in [CONSTITUTION.md](CONSTITUTION.md#contributions).
 
 ## Before every commit
 
@@ -79,7 +54,8 @@ make check
 
 ## Review guidelines
 
-A review checks the PR against this file, its issue and [SPEC.md](SPEC.md). Report these first:
+A review checks the PR against this file, [CONSTITUTION.md](CONSTITUTION.md), its issue and
+[SPEC.md](SPEC.md). Report these first:
 
 - A decision changes without a new spec version, or without vectors written by hand in
   `conformance/build.py` before the code.

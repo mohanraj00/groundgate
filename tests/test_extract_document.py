@@ -11,6 +11,7 @@ import pytest
 
 import groundgate as gg
 from groundgate.canonical import jcs
+from groundgate.cli import main
 from groundgate.extract import ExtractInputError, RunPolicy, RunResult, extract, replay
 from groundgate.extract.runner import _WORD_NODE_INSTRUCTIONS
 from groundgate.read.document import Document, read_document
@@ -245,7 +246,9 @@ def test_the_same_cut_on_text_keeps_its_window(tmp_path: Path) -> None:
     assert cut["kept_end"] - cut["kept_start"] == 100
 
 
-def test_the_record_names_the_document_and_the_store_keeps_it(tmp_path: Path) -> None:
+def test_the_record_names_the_document_and_the_store_keeps_it(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
     doc = document(tmp_path, TABLE)
     result = run(doc, Client(cited(node(doc.find("5")[0].node.id))))  # type: ignore[union-attr]
     named = result.record[0]["inputs"]["document"]
@@ -262,6 +265,9 @@ def test_the_record_names_the_document_and_the_store_keeps_it(tmp_path: Path) ->
         loaded = RunResult.load(store, packet)
         assert loaded.run_sha256 == result.run_sha256
         assert loaded.candidates == result.candidates
+        assert main(["export", "--store", str(tmp_path / "store"), packet]) == 0
+        (fact,) = json.loads(capsys.readouterr().out)["facts"]
+        assert fact["citation"]["source_sha256"] == doc.source
         done = forget_packet(store, packet, "the owner asked")
         assert ("document@1", named["document_key"], "deleted", 0) in done
 

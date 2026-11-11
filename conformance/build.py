@@ -40,6 +40,7 @@ def vector(
     relations: list[tuple[str, str | None, bool, str | None, str | None]] | None = None,
     packs: list[dict[str, Any]] | None = None,
     doubt: list[dict[str, Any]] | None = None,
+    export: list[dict[str, Any]] | None = None,
 ) -> None:
     """``relations`` is the receipt's relation results (SPEC §5), each as (id, key, holds,
     difference, allowance), in receipt order; None when the schema has no relations. ``doubt``
@@ -64,6 +65,7 @@ def vector(
             ],
             "packs": packs,
             "doubt": doubt,
+            "export": export,
         }
     )
 
@@ -6228,6 +6230,73 @@ vector(
 )  # fmt: skip
 
 
+vector(
+    "154-signed-evidence-start",
+    "A citation that starts inside a signed token reads no number (SPEC §4.1, #621).",
+    "Balance: -100 USD",
+    {"fields": {"balance": USD, "change": USD}},
+    [
+        c("a", "balance", "100", "USD", {"text": "-100 USD"}, SIGN_DROPPED),
+        c("b", "balance", "100", "USD", {"text": "100 USD"}, ("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
+        c("c", "balance", "100", "USD", q("100 USD", text=NO_TEXT), ("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
+        c("d", "change", "-100", "USD", q("-100 USD")),
+    ],
+    policy={"reanchor": False},
+)  # fmt: skip
+
+vector(
+    "155-signed-evidence-reference",
+    "The Unicode minus belongs to the number in a reference, with or without re-anchoring (#621).",
+    "See the balance sheet.",
+    {"fields": {"balance": USD}},
+    [
+        c("a", "balance", "100", "USD", q("100 USD", source="reference", ref="balance"),
+          ("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
+        c("b", "balance", "-100", "USD", q("\u2212100 USD", source="reference", ref="balance")),
+    ],
+    references=[{"id": "balance", "text": "Balance: \u2212100 USD"}],
+)  # fmt: skip
+
+vector(
+    "156-hyphen-number-boundary",
+    "A minus after a letter or number is separate from the next number (SPEC §4.1, #621).",
+    "Code X-100 USD\n\nRange 2-100 USD",
+    {"fields": {"amount": USD, "range_max": USD | {"comparator": "range"}}},
+    [
+        c("a", "amount", "100", "USD", q("100 USD")),
+        c("b", "range_max", "100", "USD", q("100 USD", 2)),
+    ],
+)
+
+
+vector(
+    "157-sign-at-field-boundary",
+    "A signed number still blocks a field item that ends after its minus sign (SPEC §4.6).",
+    "Revenue -100 compared with expenses 200 USD.\n\n"
+    "Revenue \u2212100 compared with expenses 300 USD.",
+    {"fields": {"revenue": USD | {"aliases": ["Revenue"], "multiple": True}}},
+    [
+        c("a", "revenue", 200, "USD", [q("200 USD"), row("Revenue -")],
+          (REVIEW, ["FIELD_CITATION_INVALID"])),
+        c("b", "revenue", 300, "USD", [q("300 USD"), row("Revenue \u2212")],
+          (REVIEW, ["FIELD_CITATION_INVALID"])),
+    ],
+)  # fmt: skip
+
+vector(
+    "158-sign-at-loss-boundary",
+    "A signed number still blocks a loss item that starts after its minus sign (SPEC §4.6).",
+    "-100 loss on other items 200 USD.\n\n\u2212100 loss on other items 300 USD.",
+    {"fields": {"amount": AMOUNT}, "packs": [FINANCE]},
+    [
+        c("a", "amount", -200, "USD", [q("200 USD"), q("100 loss", role="sign")],
+          (REVIEW, ["SIGN_CITATION_INVALID", "VALUE_DERIVED"])),
+        c("b", "amount", -300, "USD", [q("300 USD"), q("100 loss", 2, role="sign")],
+          (REVIEW, ["SIGN_CITATION_INVALID", "VALUE_DERIVED"])),
+    ],
+)  # fmt: skip
+
+
 # ---------------------------------------------------------------- the digit limit (spec 0.12, #580)
 BIG = "9" * 999990
 
@@ -6448,6 +6517,100 @@ INVALID.extend(
     ]
 )  # fmt: skip
 
+# ---------------------------------------------------------------- a minus in the next cell (spec 0.12, #586)
+vector(
+    "149-tab-minus-both",
+    "A tab, then a minus directly before a digit, is the sign of the next table cell, not a range "
+    "dash. So neither negative value is a range (SPEC §4.2, spec 0.12, #586).",
+    "Loss\t-3415\t-2980",
+    {"fields": {"a": {"type": "integer"}, "b": {"type": "integer"}}},
+    [
+        c("tm1", "a", -3415, None, [q("-3415")], ADMIT),
+        c("tm2", "b", -2980, None, [q("-2980")], ADMIT),
+    ],
+)  # fmt: skip
+
+vector(
+    "150-tab-minus-after-positive",
+    "A positive value before a tab and a negative next cell is not a range "
+    "(SPEC §4.2, spec 0.12, #586).",
+    "Loss\t3415\t-2980",
+    {"fields": {"a": {"type": "integer"}}},
+    [c("tm3", "a", 3415, None, [q("3415")], ADMIT)],
+)  # fmt: skip
+
+vector(
+    "151-tab-dash-cell-range",
+    "A dash with whitespace after it is still a connector after a tab "
+    "(SPEC §4.2, spec 0.12, #586).",
+    "Loss\t10\t-\t20",
+    {"fields": {"a": {"type": "integer"}}},
+    [c("tm4", "a", 10, None, [q("10")], (REVIEW, ["QUALIFIED_VALUE"]))],
+)  # fmt: skip
+
+vector(
+    "152-space-minus-range",
+    "A minus directly before a digit is still a connector when no tab stands before it "
+    "(SPEC §4.2, spec 0.12, #586).",
+    "Loss 10 -20",
+    {"fields": {"a": {"type": "integer"}}},
+    [c("tm5", "a", 10, None, [q("10")], (REVIEW, ["QUALIFIED_VALUE"]))],
+)  # fmt: skip
+
+vector(
+    "153-tab-minus-currency-range",
+    "A minus before a currency sign is still a connector after a tab, because no digit directly "
+    "follows it (SPEC §4.2, spec 0.12, #586).",
+    "Loss\t-$3,415\t-$2,980",
+    {"fields": {"a": USD}},
+    [c("tm6", "a", 3415, "USD", [q("$3,415")], (REVIEW, ["QUALIFIED_VALUE"]))],
+)  # fmt: skip
+
+
+vector(
+    "export-invoice",
+    "Only the two admitted facts appear. Spans count UTF-8 bytes after a non-ASCII character.",
+    "Café invoice\nItems: 2\nBoxes: 3\nEstimate: up to 4\n",
+    {"fields": {name: {"type": "integer"} for name in ("items", "boxes", "estimate", "weight")}},
+    [
+        c("a", "items", 2, evidence=q("2")),
+        c("b", "boxes", 3, evidence={"text": "3"}),
+        c("c", "estimate", 4, evidence=q("4"), expect=(REVIEW, ["QUALIFIED_VALUE"])),
+        c("d", "weight", 8, evidence=q("2"), expect=("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
+    ],
+    export=[
+        {"field": "items", "value": "2", "key": None, "unit": None, "source": "document",
+         "span": {"start": 21, "end": 22}},
+        {"field": "boxes", "value": "3", "key": None, "unit": None, "source": "document",
+         "span": {"start": 30, "end": 31}},
+    ],
+)  # fmt: skip
+
+EXPORT_URL = "https://example.org/stock"
+vector(
+    "export-citation-sources",
+    "A reference span belongs to the reference. Policy admissions can have no text span.",
+    "Stock ledger",
+    {"fields": {name: {"type": "integer"} for name in ("crates", "pallets", "shelves")}},
+    [
+        c("a", "crates", 5, evidence={"source": "reference", "ref": "stock", "text": "5"}),
+        c("b", "pallets", 6, evidence=ext("Pallets: 6", EXPORT_URL),
+          expect=("admitted", ["ADMITTED_BY_POLICY"])),
+        c("c", "shelves", 7, evidence=know("Shelves: 7"),
+          expect=("admitted", ["ADMITTED_BY_POLICY"])),
+    ],
+    policy={"sources": {"external": {"allow": [EXPORT_URL]}, "knowledge": "admit"}},
+    references=[{"id": "stock", "text": "Crates: 5"}],
+    export=[
+        {"field": "crates", "value": "5", "key": None, "unit": None, "source": "reference",
+         "ref": "stock", "span": {"start": 8, "end": 9}},
+        {"field": "pallets", "value": "6", "key": None, "unit": None, "source": "external",
+         "url": EXPORT_URL, "span": None},
+        {"field": "shelves", "value": "7", "key": None, "unit": None, "source": "knowledge",
+         "span": None},
+    ],
+)  # fmt: skip
+
 
 def main() -> None:
     out_dir = HERE / "vectors"
@@ -6483,6 +6646,7 @@ def main() -> None:
                 "decisions": expected,
                 "coverage": v["coverage"],
                 **({"relations": v["relations"]} if v["relations"] is not None else {}),
+                **({"export": v["export"]} if v["export"] is not None else {}),
             },
         }
         (out_dir / f"{v['name']}.json").write_text(

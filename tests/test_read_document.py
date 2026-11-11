@@ -51,7 +51,7 @@ def _fixtures(tmp_path: Path) -> list[tuple[Path, list[int] | None]]:
     out += [(label, None), (label, [2])]
     out += [(ROOT / "examples/irs-590a/document.txt", None)]
     out += [(ROOT / "examples/irs-590a/report.html", None)]
-    out += [(path, pages) for path, pages, _ in test_read._pinned_bench_texts()]
+    out += [(path, pages) for path, pages, _ in test_read._cached_bench_sources()]
     return out
 
 

@@ -699,7 +699,7 @@ class Review:
                 between = text[a : tok.start]
                 if (
                     a >= sentence(text, tok.start)[0]
-                    and not tokens(text, a, tok.start)
+                    and not tokens(text, a, tok.start, include_starting_sign=True)
                     and "\n" not in between
                     and "\t" not in between
                     and not gain_word(text, a, tok.start)
@@ -854,7 +854,7 @@ class Review:
                 out.append({"part": "sign", "text": (
                     f"The value is {_sign(value)}, but value {n} of the task is "
                     f"{_sign(other)}: {c['shown']}. Read the sign that the field description "
-                    "asks for. For a positive amount, select the number without its sign."
+                    "asks for. Keep the sign in the selection and type the value you mean."
                 )})  # fmt: skip
         return out
 

@@ -283,9 +283,9 @@ class _Text:
         return self.letters[pos]
 
     def token_after(self, pos: int) -> int | None:
-        """The end of the first number token at or after ``pos``, or None."""
+        """The end of the first number in the context scan from ``pos``, or None."""
         if pos not in self.numbers:
-            self.numbers[pos] = first_token_end(self.text, pos)
+            self.numbers[pos] = first_token_end(self.text, pos, include_starting_sign=True)
         return self.numbers[pos]
 
 
@@ -1223,7 +1223,7 @@ def _roles(
                     between = t.text[a : tok.start]
                     ok = (
                         a >= s0
-                        and not tokens(t.text, a, tok.start)
+                        and not tokens(t.text, a, tok.start, include_starting_sign=True)
                         and "\n" not in between
                         and "\t" not in between
                         and not gain_word(t.text, a, tok.start)
@@ -1312,7 +1312,10 @@ def _roles(
         fa, fb = found["field"]
         line_end = t.text.find("\n", fb, pos)
         line_end = pos if line_end < 0 else line_end
-        note = any("\t" not in t.text[fb : k.start] for k in tokens(t.text, fb, line_end))
+        note = any(
+            "\t" not in t.text[fb : k.start]
+            for k in tokens(t.text, fb, line_end, include_starting_sign=True)
+        )
         prior = cells(t.text, fb, pos, prefixes)
         same_line = "\n" not in t.text[fb:pos]
         if (

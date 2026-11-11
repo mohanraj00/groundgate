@@ -4,8 +4,10 @@ This is how I handle a pull request from a fork. The rules for the author are in
 [CONTRIBUTING.md](../../CONTRIBUTING.md#outside-pull-requests). The rules for the two agents are in
 [AGENTS.md](../../AGENTS.md).
 
-The maintainer or the milestone runner does each step. The milestone runner is the agent that
-the maintainer named for the current milestone.
+The maintainer or the milestone runner does each step, except a step that the Governance section
+of [CONSTITUTION.md](../../CONSTITUTION.md) or [docs/STANDARD.md](../STANDARD.md) gives only to the
+owner. For example, an agent never adds the label `accepted` to an issue. The milestone runner
+is the agent that the maintainer named for the current milestone.
 
 ## 1. Triage
 
@@ -67,30 +69,18 @@ Residual risks:
 
 ## 4. Review
 
-AGENTS.md says that the agent that opened a PR asks for its review. No agent opens an outside
-PR, so the milestone runner asks.
-
-Nobody asks an agent to review an outside PR before the maintainer has read the whole diff. The
-review agents run on a checkout of the PR with their own credentials. They read the agent files
-of section 3 from it, and an agent that runs the tests also runs the PR's `conftest.py` and
-tests. The protected paths guard only the configuration, so this read is the only control on
-the code.
-
-1. The milestone runner asks for the review in a separate comment that holds only:
-   `@claude review this PR. Use the Review guidelines in CLAUDE.md.`
-   If Codex reviews, the comment holds only `@codex review`.
-2. Decide the security review under the rule in AGENTS.md. If it is needed, ask for it once in
-   a separate comment that holds only the request.
-3. After each push that fixes a finding, read the new diff again before you approve the run.
-   Then ask for the review again.
+The rules for the review of a fork PR are in the Fork PRs and Review requests sections of
+[docs/STANDARD.md](../STANDARD.md). [docs/REVIEW.md](../REVIEW.md) has the exact request texts.
+The milestone runner asks for the review, because no agent opens an outside PR. After each push
+that fixes a finding, read the new diff again before you approve the run.
 
 ## 5. Disposition
 
-Each outside PR ends with one of these labels:
+Each outside PR ends in one of these ways:
 
 - `changes-requested`: the PR waits for its author. The comment lists each change as a specific
   item, with the file and the line.
-- `accepted`: the maintainer or the milestone runner merges the PR with squash when the required
+- The merge: the maintainer or the milestone runner merges the PR with squash when the required
   checks pass and the review of the head commit has no open finding. The release PR copies the
   line from the `## Changelog` section of the PR body into `CHANGELOG.md`, and credits the
   author, as in "(#123, thanks @author)".
@@ -102,5 +92,5 @@ Each outside PR ends with one of these labels:
 Remove `changes-requested` when the author pushes the changes. Keep `external` on the PR.
 
 Each of these label changes runs `outside-pr-paths` again without the approval. On a PR that
-needs `maintainer-approved`, set `accepted` first, and add `maintainer-approved` last. Merge only
-after the run of the last label change passes. Before that, GitHub blocks the merge.
+needs `maintainer-approved`, add `maintainer-approved` last. Merge only after the run of the last
+label change passes. Before that, GitHub blocks the merge.

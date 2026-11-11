@@ -1,4 +1,4 @@
-"""Packaging rules from CONTRIBUTING: no core dependencies, permissive extras, and two modules
+"""Packaging rules from CONSTITUTION.md: no core dependencies, permissive extras, and two modules
 that start a process: the OCR reader, which runs the tesseract program (#7), and the OCR crop,
 which runs ``python -I`` (#537)."""
 

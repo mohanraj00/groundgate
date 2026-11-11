@@ -26,6 +26,9 @@ _VALID = re.compile(
 # a token grouped in threes with group spaces, on a line that holds a tab (SPEC §4.1, #427)
 _GROUP_SPACES = " \u00a0\u2009\u202f"
 _GROUPED = re.compile(r"[-\u2212]?[0-9]{1,3}(?:[ \u00a0\u2009\u202f][0-9]{3})+(?:\.[0-9]+)?")
+# the sign of the number in the next table cell, not a range dash (SPEC §4.2, #586). After
+# whitespace, the token of that number holds the "-", so only the text after a value needs this.
+_NEXT_CELL_SIGN = re.compile(r"[^\S\t]*\t\s*-\d")
 _SENTENCE_END = re.compile(r"\.\s|;\s|•|\n[ \t\r]*\n")
 _BLANK_LINE = re.compile(r"\n[ \t\r]*\n")
 _WS_RUN = re.compile(r"\s*")
@@ -82,21 +85,32 @@ def _other_digits_follow(text: str, i: int) -> bool:
     return i + 1 < len(text) and text[i] in ".," and _other_number_char(text[i + 1])
 
 
-def tokens(text: str, start: int = 0, end: int | None = None) -> list[Token]:
-    """Number tokens whose characters lie within text[start:end] (SPEC §4.1)."""
-    return list(_tokens(text, start, len(text) if end is None else end))
+def tokens(
+    text: str, start: int = 0, end: int | None = None, *, include_starting_sign: bool = False
+) -> list[Token]:
+    """Number tokens in text[start:end] (SPEC §4.1). A context scan can include the
+    token whose leading sign is immediately before start."""
+    stop = len(text) if end is None else end
+    return list(_tokens(text, start, stop, include_starting_sign=include_starting_sign))
 
 
-def first_token_end(text: str, start: int) -> int | None:
-    """The end of the first number token at or after ``start``, or None. ``tokens(text, start,
-    end)`` is empty exactly when this is None or after ``end``: a token found before ``end`` is
-    the same token when the text reads on."""
-    return next((t.end for t in _tokens(text, start, len(text))), None)
+def first_token_end(text: str, start: int, *, include_starting_sign: bool = False) -> int | None:
+    """The end of the first token read from start with the same rules as ``tokens``, or None."""
+    found = _tokens(text, start, len(text), include_starting_sign=include_starting_sign)
+    return next((t.end for t in found), None)
 
 
-def _tokens(text: str, start: int, end: int) -> Iterator[Token]:
-    skip = start  # the end of the last space-grouped token: the tokens inside it are not read
-    for m in _TOKEN.finditer(text, start, end):
+def _tokens(text: str, start: int, end: int, *, include_starting_sign: bool) -> Iterator[Token]:
+    scan = start
+    if (
+        start > 0
+        and _digit(text, start)
+        and text[start - 1] in "-\u2212"
+        and (start == 1 or not _letter_or_number(text[start - 2]))
+    ):
+        scan -= 1  # start at the sign, so a scan never reads its digits as positive
+    skip = scan if include_starting_sign else start  # also skips past any space-grouped token
+    for m in _TOKEN.finditer(text, scan, end):
         s, tok = m.start(), m.group()
         if s < skip:
             continue
@@ -383,7 +397,7 @@ def qualifiers(text: str, tok: Token) -> set[str]:
     prev = [t for t in nearby if t.end <= tok.start and t.end >= prev_end]
     between_before = bool(voc._BETWEEN_END.search(before.rstrip()))
     if (
-        voc._RANGE_NEXT.match(rest)
+        (voc._RANGE_NEXT.match(rest) and not _NEXT_CELL_SIGN.match(rest))
         or (between_before and voc._AND_NEXT.match(rest))
         or (voc._AND_NEXT.match(rest) and _between_words_before(text, tok.start))
         or (

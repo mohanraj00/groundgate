@@ -638,9 +638,12 @@ ungrouped (`\d+`), grouped in threes after the first group (`\d{1,3}(,\d{3})+`),
 Indian way, the last three digits and then pairs (`\d{1,2}(,\d{2})*,\d{3}`, so `2,00,000` is
 200000 and `1,00,00,000` is 10000000); otherwise it has **no** value (`252,0000` never equals
 252000 or 2520000, and `1,23,456,789` mixes the two groupings). The value is the digits without
-the commas, so a string valid under both groupings, such as `25,000`, has one value. When tokens are read inside a span, a
-token that continues past the span's end is ignored, so a span can never read a prefix of a longer
-number. The `000` of a currency scale (below) is no token, so `£000` and `£'000` are never an
+the commas, so a string valid under both groupings, such as `25,000`, has one value. A token must
+fit wholly inside the span that reads it. This includes its leading minus sign. For example, a
+span of `100` inside `-100` reads no number (spec 0.12, #621).
+When a field, sign or key check scans for intervening numbers (§4.5, §4.6), a token whose
+leading minus sign is immediately before the scan still counts as a number in the scan.
+The `000` of a currency scale (below) is no token, so `£000` and `£'000` are never an
 amount of zero (spec 0.10, #313).
 
 **Space groups (spec 0.12, #427).** On a line that holds a tab, a number token can also group its
@@ -746,7 +749,7 @@ words, letter by letter by the rule at the start of §4, so `U.ſ.` is the abbre
 | `lt` | less than, fewer than, below, under, < | |
 | `ge` | at least, minimum of, no less than, ≥ | or more, or greater, or older, or higher, or above |
 | `le` | up to, maximum of, at most, no more than, ≤ | or less, or fewer, or younger, or lower, or below |
-| `range` | between | the value is followed by `to`, `through`, `thru`, `-` or `–` and then another number token, or is preceded by such a connector and a number token; between a connector and the next number token stand optional whitespace and then at most 4 characters that are not whitespace, such as `$`, so "30 to $45" is a range and "30 to US $ 45" is not; `and` counts as a connector when `between` stands before the first number in the same sentence (§4.5) with only whitespace and at most six words between them, each word a run of letters and combining marks (general categories L and M) of any length that starts with a letter, and each `between` of the sentence is tried, or when `between`, optional whitespace and at most 4 characters that are not whitespace stand directly before the first number; so "between the ages of 18 and 65" and "between $18 and $65" are ranges, and "between the minimum and maximum permitted adult ages 18 and 65" (seven words) is not; one word of up to 12 characters with no digits (a unit or scale word) may stand between the first number and `to`, `through`, `thru` or `and`, so both ends of "30 mg to 45 mg" and "$1 million to $2 million" are a range |
+| `range` | between | the value is followed by `to`, `through`, `thru`, `-` or `–` and then another number token, or is preceded by such a connector and a number token; between a connector and the next number token stand optional whitespace and then at most 4 characters that are not whitespace, such as `$`, so "30 to $45" is a range and "30 to US $ 45" is not; `and` counts as a connector when `between` stands before the first number in the same sentence (§4.5) with only whitespace and at most six words between them, each word a run of letters and combining marks (general categories L and M) of any length that starts with a letter, and each `between` of the sentence is tried, or when `between`, optional whitespace and at most 4 characters that are not whitespace stand directly before the first number; so "between the ages of 18 and 65" and "between $18 and $65" are ranges, and "between the minimum and maximum permitted adult ages 18 and 65" (seven words) is not; one word of up to 12 characters with no digits (a unit or scale word) may stand between the first number and `to`, `through`, `thru` or `and`, so both ends of "30 mg to 45 mg" and "$1 million to $2 million" are a range; a `-` is not a connector when the whitespace before it holds a tab and a digit directly follows it, because it is the sign of the number in the next table cell, so with `\t` for a tab "-3415\t-2980" is not a range, and "10\t-\t20", "10\t- 20", "10 -20" and "$10\t-$20" are ranges (spec 0.12, #586) |
 
 Where two qualifiers overlap in the text, only the longer one applies: "no more than" is `le`,
 not also `gt`, and "no less than" is `ge`, not also `lt`.
@@ -1506,6 +1509,40 @@ when the relation fails at the digit limit (§3.4). A relation that did not appl
 so the list can be empty. A receipt of a schema without relations
 has no `relations` member. `receipt_sha256` is the digest of kind `receipt` over the receipt without its
 `receipt_sha256` key.
+
+### 5.1 Admitted facts export
+
+`groundgate export --store DIR PACKET` writes one `facts@1` JSON object for a stored packet.
+It re-derives the receipt as `groundgate verify --store DIR PACKET` does. A mismatch exits 1
+with no export. Invalid input or a missing store object exits 2. Use `-o FILE` to write the
+export to a file.
+
+```json
+{"format": "facts@1", "packet_sha256": "sha256:...",
+ "facts": [{"field": "items", "key": null, "value": "2", "unit": null,
+            "citation": {"source": "document", "ref": null, "url": null,
+                         "source_sha256": "sha256:...", "text_sha256": "sha256:...",
+                         "span": {"start": 21, "end": 22},
+                         "receipt_sha256": "sha256:..."}}]}
+```
+
+An invoice with the NFC text `Café invoice\nItems: 2\n` gives the span in this example.
+Each admitted decision gives one fact, in receipt order. Repeated admitted decisions remain
+separate. An export with no admissions has an empty `facts` array. The field, key, canonical
+value and unit are those of the decision. Each shown member is present.
+
+- `packet_sha256` is the `packet@1` store key. Pass it to `groundgate verify --store DIR`
+  to verify the receipt. `citation.receipt_sha256` is the receipt digest in §5.
+- For `source: "document"`, `source_sha256` is the `source@1` key of the original file from
+  the packet's reading or the run's saved document. It is null for a text-only packet with no
+  reading. `text_sha256` is the receipt's document digest (§2.1). `url` is the packet's
+  document source and `ref` is null.
+- For `source: "reference"`, `ref` names the receipt's reference, `text_sha256` is its digest
+  (§2.1), `url` is its source and `source_sha256` is null.
+- For both of these sources, `span` is the receipt's evidence span in the cited NFC text (§2.2).
+- For `source: "external"` or `source: "knowledge"`, the fact was admitted by policy.
+  `source_sha256`, `text_sha256`, `span` and `ref` are null. `url` is the external item's
+  URL, or null for knowledge. Use the packet key to see the recorded evidence.
 
 ## 6. Canonical JSON and digests
 

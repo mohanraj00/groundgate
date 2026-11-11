@@ -194,6 +194,36 @@ def test_qualifiers(text: str, target: str, expected: set[str]) -> None:
     assert qualifiers(text, tok) == expected
 
 
+@pytest.mark.parametrize(
+    ("text", "target", "expected"),
+    [
+        # the sign of the next cell: a tab in the whitespace, and a digit directly after the minus
+        ("-3415\t-2980", "-3415", set()),
+        ("-3415\t-2980", "-2980", set()),
+        ("3415\t-2980", "3415", set()),
+        ("3415 \t -2980", "3415", set()),
+        ("3,415.50\t\t-2,980", "3,415.50", set()),
+        # a connector: whitespace or a sign after the dash, or no tab before it
+        ("10\t-\t20", "10", {"range"}),
+        ("10\t-\t20", "20", {"range"}),
+        ("10\t- 20", "10", {"range"}),
+        ("10\t- 20", "20", {"range"}),
+        ("10 -20", "10", {"range"}),
+        ("$10\t-$20", "10", {"range"}),
+        ("$10\t-$20", "20", {"range"}),
+        ("10\t- -20", "10", {"range"}),
+        ("10\t- -20", "-20", {"range"}),
+        # the rule reads only an ASCII minus
+        ("10\t\u201320", "10", {"range"}),
+        ("10\t\u201320", "20", {"range"}),
+        ("10\tto -20", "10", {"range"}),
+    ],
+)
+def test_a_tab_and_a_minus_are_the_next_cell(text: str, target: str, expected: set[str]) -> None:
+    tok = next(t for t in tokens(text) if text[t.start : t.end] == target)
+    assert qualifiers(text, tok) == expected
+
+
 def test_verbatim_equal() -> None:
     assert verbatim_equal("mar-\nried  couple", "married couple")
     assert not verbatim_equal("2,000 mg", "2000 mg")

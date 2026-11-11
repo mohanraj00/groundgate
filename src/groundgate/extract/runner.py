@@ -31,6 +31,7 @@ from .structure import propose
 
 if TYPE_CHECKING:
     from ..store import Store
+    from ..store.packets import Packet
 
 Json = dict[str, Any]
 # groundgate-run/6 (#554): the runner accepts column and marker items, and the prompt asks for
@@ -555,6 +556,30 @@ def _saved_document(named: Json, artifacts: Mapping[str, str], text: str) -> Doc
     if named["kind"] != "document":
         return None
     return Document.from_dict(_strict_json(artifacts[named["document_sha256"]]), text)
+
+
+def _load_run_document(store: Store, packet: Packet) -> Document | None:
+    """Read the saved document for a packet without loading the model replies."""
+    from ..store import StoreError
+    from ..store.packets import _get
+
+    if packet.run is None:
+        return None
+    run = _get(store, "run@" + _VERSION.rsplit("/", 1)[1], packet.run)
+    try:
+        header = _strict_json(run.partition(b"\n")[0].decode("utf-8"))
+        _same_inputs([header], packet)
+        named = header["inputs"]["document"]
+        if header["runner"] != _VERSION or named["kind"] not in ("document", "text"):
+            raise ValueError("unknown run or document kind")
+        if named["kind"] == "text":
+            return None
+        body = _get(store, "document@1", named["document_key"]).decode("utf-8")
+        if _hash("document", body) != named["document_sha256"]:
+            raise ValueError("the document does not match its run key")
+        return _saved_document(named, {named["document_sha256"]: body}, packet.text)
+    except (KeyError, TypeError, ValueError, RecursionError) as exc:
+        raise StoreError(f"cannot read the document of run {packet.run}: {exc}") from exc
 
 
 def _checked(document: Document) -> Document:

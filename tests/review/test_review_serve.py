@@ -576,7 +576,7 @@ def test_a_correction_whose_parts_do_not_agree_asks_again(tmp_path: Path) -> Non
     at = text.index("-3,266.2")
     scale = text.index("EUR million")
     candidates = [{"id": "c1", "field": "cost_of_sales", "value": "3266200000", "unit": "EUR",
-                   "evidence": [{"start": at + 1, "end": at + 8},
+                   "evidence": [{"start": at, "end": at + 8},
                                 {"role": "scale", "start": scale, "end": scale + 11}]}]  # fmt: skip
     store = FolderStore(tmp_path / "store")
     k, _ = admit_packet(store, text, schema, candidates, None, None, None)
@@ -601,14 +601,15 @@ def test_a_correction_whose_parts_do_not_agree_asks_again(tmp_path: Path) -> Non
     assert check["shown"].startswith("-3,266,200,000 EUR")
     assert [a["part"] for a in check["ask"]] == ["sign"]
     # a positive value under a negative written number is a question too
-    check = review.check({**selection, "parts": [part], "value": "3266200000"})
+    positive = {**selection, "parts": [part], "value": "3266200000"}
+    check = review.check(positive)
     sign = "The value is positive, but the text writes the number -3,266.2 as negative."
     assert check["ask"] == [{"part": "sign", "text": sign}]
-    # the number without its sign, with the scale: the parts agree, and the answer saves
+    # The sign belongs to the selected number. The person can keep the positive value after review.
     unsigned = {**selection, "start": at + 1, "parts": [part]}
-    check = review.check(unsigned)
-    assert check["ask"] == [] and check["shown"].startswith("3,266,200,000 EUR")
-    review.answer({**plain, **unsigned, "codes_kept": check["keep"]})
+    with pytest.raises(Refused, match="selection has no number"):
+        review.check(unsigned)
+    review.answer({**plain, **positive, "codes_kept": check["keep"], "parts_seen": True})
     (record,) = log(store, k)
     assert record["candidate"]["value"] == "3266200000" and "parts_seen" not in record
     # a person who saw the parts can save a value that does not agree
@@ -641,11 +642,12 @@ def test_a_cited_scale_gives_the_value_in_full_with_no_rounding(tmp_path: Path) 
 
 def test_a_crore_value_with_the_other_sign_asks_again(tmp_path: Path) -> None:
     """#496: the sign question knows each scale of the reader, also a crore (10^7)."""
-    text = "Revenue was -1 crore in 2025.\n"
+    text = "Revenue was -1 crore in 2025.\nAnother total was 1 crore.\n"
     schema = {"fields": {"revenue": {"type": "number"}}}
     at = text.index("-1")
+    prior = text.rindex("1 crore")
     candidates = [{"id": "c1", "field": "revenue", "value": "10000000",
-                   "evidence": {"start": at + 1, "end": at + 8}}]  # fmt: skip
+                   "evidence": {"start": prior, "end": prior + 7}}]  # fmt: skip
     store = FolderStore(tmp_path / "store")
     k, _ = admit_packet(store, text, schema, candidates, None, None, None)
     ((tk, _),) = write_tasks(store, k, EVERY).tasks

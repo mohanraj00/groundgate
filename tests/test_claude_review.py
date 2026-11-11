@@ -177,6 +177,19 @@ class CommentTest(unittest.TestCase):
                         [(kind, HEAD, BASE, count, "42")],
                     )
 
+    def test_a_count_that_the_text_does_not_agree_with_is_unknown(self):
+        for text, count in (
+            ("Findings: 1\n\n1. P1 src/a.py:3: A.\n\nINCOMPLETE REVIEW", "unknown"),
+            ("Findings: 0\nThe incomplete-review rule does not apply.", "unknown"),
+            ("Findings: 0\n\nFindings: 2", "unknown"),
+            ("Findings: 2\n\n1. A.\n2. B.\n\nFindings: 2", "2"),
+            ("Findings: 0\n\uff30\uff11 a defect.", "unknown"),
+            ("Findings: 0\nP\u200b1 a defect.", "unknown"),
+            ("Findings: 0\nNo defect.", "0"),
+        ):
+            with self.subTest(text=text):
+                self.assertEqual(claude_review.findings(text), count)
+
     def test_a_review_with_a_kind_and_no_valid_run_or_base_fails(self):
         for run in (None, "", "0", "01", "4x", "1" * 21):
             with self.subTest(run=run):
@@ -380,6 +393,42 @@ class PromptTest(unittest.TestCase):
 
 
 class WorkflowTest(unittest.TestCase):
+    def test_a_stopped_request_posts_the_reason_and_no_marker(self):
+        with tempfile.TemporaryDirectory() as folder:
+            env = {"GITHUB_RUN_ID": "42", "GATE_REASON": "A review of this head is done. @codex"}
+            with mock.patch.dict(os.environ, env):
+                status, out = run(
+                    "comment",
+                    "--status",
+                    "skipped",
+                    "--kind",
+                    "code",
+                    "--gate",
+                    "failure",
+                    "--output-dir",
+                    folder,
+                )
+        self.assertEqual(status, 0)
+        self.assertTrue(out.startswith(claude_review.STOPPED))
+        self.assertIn("A review of this head is done.", out)
+        self.assertNotIn("@codex", out)
+        self.assertEqual(claude_review.MARKER.findall(out), [])
+        self.assertIn("Read the log of the gate job.", claude_review.stop_body(""))
+
+    def test_each_change_to_the_gate_job_gives_an_error(self):
+        for old, new in (
+            ("    needs: gate\n", ""),
+            ("    needs: [gate, review]\n", "    needs: review\n"),
+            ("          check: claude-review\n", "          check: acceptance\n"),
+            ("      actions: read\n", "      actions: write\n"),
+            ("      merge_base: ${{ steps.gate.outputs.merge_base }}\n", ""),
+            ('          test "$base" = "$GATE_BASE"\n', ""),
+            ("  cancel-in-progress: false\n", "  cancel-in-progress: true\n"),
+        ):
+            with self.subTest(old=old, new=new):
+                self.assertIn(old, WORKFLOW)
+                self.assertNotEqual(claude_review.workflow_errors(WORKFLOW.replace(old, new)), [])
+
     def test_the_workflow_has_no_error(self):
         self.assertEqual(claude_review.workflow_errors(WORKFLOW), [])
 
