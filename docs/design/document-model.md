@@ -250,6 +250,7 @@ as `grid` says.
 
 A `label: value` line gives nothing when the value has a second colon, or when a letter comes
 before the number of a number field. In "Revenue: N/A, Cost: 5", the 5 is the value of Cost.
+Such a line still counts as a match of its field, so another line of that field gives nothing too.
 
 ## 9. The agreement rule
 

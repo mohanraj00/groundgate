@@ -400,17 +400,16 @@ def _lines(
             continue
         text = data[value[0] : value[1]].decode("utf-8")
         # In "Revenue: N/A, Cost: 5" the 5 is the value of Cost. A second colon, or a letter
-        # before the number, can be a second label.
-        if ":" in text:
-            continue
+        # before the number, can be a second label. The line still counts as a match, so a
+        # second line of the same field does not become the only match.
+        target = found.setdefault((field.name, None), [])
         number = _NUMBER.search(text) if field.type != "string" else None
-        if number is not None and any(c.isalpha() for c in text[: number.start()]):
+        if ":" in text or (number is not None and any(c.isalpha() for c in text[: number.start()])):
+            target.append(None)
             continue
         places = {"value": value, "field": label}
         bases = {"value": "layout", "field": "layout"}
-        found.setdefault((field.name, None), []).append(
-            _candidate(field, None, text, places, bases)
-        )
+        target.append(_candidate(field, None, text, places, bases))
 
 
 def propose(text: str, document: Document | None, schema: Schema) -> list[Json]:

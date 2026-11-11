@@ -287,6 +287,15 @@ def test_a_line_with_a_second_label_gives_nothing(line: str) -> None:
     assert not any(c.get("proposer") == "structure" for c in result.candidates)
 
 
+@pytest.mark.parametrize("first", ["Revenue: USD 7", "Revenue: N/A, Cost: 5"])
+def test_a_refused_line_still_counts_as_a_second_match(first: str) -> None:
+    schema = {"fields": {"revenue": {"type": "integer", "aliases": ["Revenue"], "unit": "USD"}}}
+    for text in (f"{first}\nRevenue: 5 USD\n", f"Revenue: 5 USD\n{first}\n"):
+        assert propose(text, None, Schema.from_dict(schema)) == []
+        result = run(text, schema, policy=ADMIT)
+        assert not any(c.get("proposer") == "structure" for c in result.candidates)
+
+
 def test_a_line_value_with_a_unit_after_it_keeps_its_value() -> None:
     found = propose("Revenue: 5 million, net\n", None, Schema.from_dict(PLAIN))
     assert [c["value"] for c in found] == ["5"]
