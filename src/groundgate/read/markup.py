@@ -225,7 +225,11 @@ def _xml(data: bytes, nodes: Tracker | None, w: _Writer | None = None) -> _Write
                 members["level"] = min(max(sections, 1), 6)
             elif role == "cell":
                 members = _cell_members(
-                    tag, e.attrib.get("rowspan"), e.attrib.get("colspan"), e.attrib.get("scope")
+                    tag,
+                    e.attrib.get("rowspan"),
+                    e.attrib.get("colspan"),
+                    e.attrib.get("scope"),
+                    e.attrib.get("headers"),
                 )
             nodes.open(tag, role, "markup", members)
         if tag == "section":
@@ -272,12 +276,16 @@ HEADINGS = {f"h{n}" for n in range(1, 7)}
 
 
 def _cell_members(
-    tag: str, rowspan: str | None, colspan: str | None, scope: str | None
+    tag: str, rowspan: str | None, colspan: str | None, scope: str | None, headers: str | None
 ) -> dict[str, object]:
     """The members of a cell. A ``th`` with the scope ``row`` or ``rowgroup`` gets a null
-    header: it is a header for its row, and the document keeps no scope."""
+    header: it is a header for its row, and the document keeps no scope. A cell with a
+    ``headers`` attribute gets a null header too: it names its own headers, which can be in
+    other columns, and the document keeps no ``headers``."""
     header: bool | None = tag == "th"
     if header and (scope or "").strip().lower() in ("row", "rowgroup"):
+        header = None
+    if headers is not None and headers.strip():
         header = None
     return {"rows": span_number(rowspan), "columns": span_number(colspan), "header": header}
 
@@ -305,7 +313,11 @@ def _open_html(nodes: Tracker, tag: str, attrs: list[tuple[str, str | None]]) ->
     elif role == "cell":
         values = dict(attrs)
         members = _cell_members(
-            tag, values.get("rowspan"), values.get("colspan"), values.get("scope")
+            tag,
+            values.get("rowspan"),
+            values.get("colspan"),
+            values.get("scope"),
+            values.get("headers"),
         )
     nodes.open(tag, role, "markup", members)
 

@@ -716,6 +716,22 @@ def test_a_sign_inside_the_number_keeps_its_value(tmp_path: Path) -> None:
     assert [c["value"] for c in found(tmp_path, html, schema)] == ["-5"]
 
 
+@pytest.mark.parametrize("on", ["td", "th"])
+def test_a_cell_with_a_headers_attribute_gives_nothing(tmp_path: Path, on: str) -> None:
+    """The headers attribute puts 999 under 2023 and 5 under 2024, against the grid."""
+    head = '<th id="y24">2024</th><th id="y23">2023</th>'
+    if on == "th":
+        head = '<th id="y24" headers="y23">2024</th><th id="y23">2023</th>'
+        row = "<td>5</td><td>999</td>"
+    else:
+        row = '<td headers="y23">999</td><td headers="y24">5</td>'
+    html = f"<table><tr><th>Item</th>{head}</tr><tr><td>Revenue</td>{row}</tr></table>"
+    schema = {"fields": {"revenue": {"type": "integer", "aliases": ["Revenue"], "keys": ["2024"]}}}
+    assert found(tmp_path, html, schema) == []
+    result = run(document(tmp_path, html), schema, policy=ADMIT)
+    assert not any(c.get("proposer") == "structure" for c in result.candidates)
+
+
 @pytest.mark.parametrize("change", ["columns", "rows", "row in a node"])
 def test_loaded_places_that_do_not_follow_the_text_give_nothing(
     tmp_path: Path, change: str
