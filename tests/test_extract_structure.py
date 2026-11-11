@@ -686,6 +686,18 @@ def test_a_loaded_row_that_leaves_out_text_of_the_table_gives_nothing(
     assert not any(c.get("proposer") == "structure" for c in result.candidates)
 
 
+@pytest.mark.parametrize("value", ["N/A, Cost: 5", "N/A, Cost 5", "Cost: 5"])
+def test_a_cell_with_a_second_label_gives_nothing(tmp_path: Path, value: str) -> None:
+    html = (
+        "<table><tr><th>Item</th><th>2024</th></tr>"
+        f"<tr><td>Revenue</td><td>{value}</td></tr></table>"
+    )
+    schema = {"fields": {"revenue": {"type": "integer", "aliases": ["Revenue"], "keys": ["2024"]}}}
+    assert found(tmp_path, html, schema) == []
+    result = run(document(tmp_path, html), schema, policy=ADMIT)
+    assert not any(c.get("proposer") == "structure" for c in result.candidates)
+
+
 @pytest.mark.parametrize("change", ["columns", "rows", "row in a node"])
 def test_loaded_places_that_do_not_follow_the_text_give_nothing(
     tmp_path: Path, change: str

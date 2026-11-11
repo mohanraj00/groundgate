@@ -42,11 +42,12 @@ def _name(text: str) -> str:
 
 
 def _value(field: Field, text: str) -> str | None:
-    """The value in ``text``. A number field needs exactly one number with no brackets."""
+    """The value in ``text``. A number field needs exactly one number with no brackets, no
+    colon, and no letter before the number. In "N/A, Cost: 5" the 5 is the value of Cost."""
     if field.type == "string":
         return text
     found = _NUMBER.search(text)
-    if found is None:
+    if found is None or ":" in text or any(c.isalpha() for c in text[: found.start()]):
         return None
     rest = text[: found.start()] + text[found.end() :]
     if any(c.isnumeric() or c in "()" for c in rest):
@@ -399,12 +400,11 @@ def _lines(
         if value[0] == value[1]:
             continue
         text = data[value[0] : value[1]].decode("utf-8")
-        # In "Revenue: N/A, Cost: 5" the 5 is the value of Cost. A second colon, or a letter
-        # before the number, can be a second label. The line still counts as a match, so a
-        # second line of the same field does not become the only match.
+        # In "Revenue: N/A, Cost: 5" the 5 is the value of Cost. A second colon can be a second
+        # label; _value refuses a letter before a number. A refused line still counts as a
+        # match, so a second line of the same field does not become the only match.
         target = found.setdefault((field.name, None), [])
-        number = _NUMBER.search(text) if field.type != "string" else None
-        if ":" in text or (number is not None and any(c.isalpha() for c in text[: number.start()])):
+        if ":" in text:
             target.append(None)
             continue
         places = {"value": value, "field": label}
