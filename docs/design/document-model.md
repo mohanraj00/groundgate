@@ -118,7 +118,8 @@ in an evidence item and a chunk plan entry (runner.md §8).
    the row group, so the reader stores the largest span, 1000. If a table has a row past the
    end of a span of 1000 rows, the source span can go past it, so the structure reader
    proposes nothing from that table. A hidden cell, row or row group can keep its place in the
-   grid, so the markup reader gives no table nodes for its table, or for a table that holds it. Other members make the object
+   grid, so the markup reader gives no rows and no cells for its table, or for a table that
+   holds it. The table node stays, so the table text does not read as lines outside a table. Other members make the object
    invalid.
 6. **The text stays.** The nodes never change the text. A reader version that adds nodes gives
    the same text bytes as the version before it.

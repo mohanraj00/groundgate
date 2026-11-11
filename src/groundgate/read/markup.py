@@ -9,7 +9,7 @@ the same on every Python version.
 - HTML elements hidden with the ``hidden`` attribute or an inline ``display:none`` or
   ``visibility:hidden`` style are dropped: text a reader cannot see is not evidence. Stylesheets
   are not evaluated. A hidden cell, row or row group can keep its place in the grid, so its
-  table, and each table that holds it, gives no table nodes.
+  table, and each table that holds it, gives no rows and no cells.
 
 ``html_nodes`` and ``xml_nodes`` also give the nodes of the document model (``document.py``).
 They use the same writer, so the text is the text of ``html_text`` and ``xml_text``.

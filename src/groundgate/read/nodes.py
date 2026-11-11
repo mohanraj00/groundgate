@@ -62,6 +62,7 @@ class Tracker:
         self.tables: dict[int, _Grid] = {}
         self.budget = GRID_BUDGET
         self.stopped = False
+        self.emptied: set[int] = set()  # tables that keep no rows and no cells
 
     def open(self, tag: str, role: str, basis: str, members: dict[str, Any] | None = None) -> None:
         if self.stopped:
@@ -86,12 +87,12 @@ class Tracker:
         self.stack.append((tag, n))
 
     def drop_table(self) -> None:
-        """Drop each open table. Their rows and cells then break the parent kinds of §4.2, so
-        ``finish`` drops them too, and the table text stays as text. An outer table goes too:
-        else its cell loses the inner table that marks the cell as no single value."""
+        """Drop the rows and cells of each open table, and all nodes in them. The table nodes
+        stay, so the text of a table never reads as lines outside a table. An outer table loses
+        its cells too: else its cell loses the inner table that marks it as no single value."""
         for _, n in self.stack:
             if self.nodes[n].kind == "table":
-                self.nodes[n].keep = False
+                self.emptied.add(n)
 
     def _nearest(self, role: str) -> int | None:
         for _, n in reversed(self.stack):
@@ -155,6 +156,11 @@ class Tracker:
             and "scope" not in node.members
             and node.members.get("header") is not True
         }
+        inside: set[int] = set()  # the nodes in an emptied table; a parent comes first
+        for n, node in enumerate(self.nodes):
+            if node.parent is not None and (node.parent in inside or node.parent in self.emptied):
+                inside.add(n)
+                node.keep = False
         for n, node in enumerate(self.nodes):
             scope = (node.members or {}).pop("scope", None) if node.kind == "cell" else None
             if scope is not None and node.members is not None:

@@ -817,6 +817,19 @@ def test_a_cell_attribute_that_the_document_cannot_keep_gives_nothing(
     assert not any(c.get("proposer") == "structure" for c in result.candidates)
 
 
+@pytest.mark.parametrize(
+    "hidden",
+    ["<tr style='visibility:hidden'><td>x</td></tr>", "<tr><td hidden>x</td></tr>"],
+    ids=["row", "cell"],
+)
+def test_the_text_of_a_dropped_table_is_not_a_line(tmp_path: Path, hidden: str) -> None:
+    """A hidden part drops the cells of its table, and the table text stays in the table."""
+    html = f"<table><tr><th>Revenue: 999</th></tr>{hidden}</table>"
+    assert found(tmp_path, html, PLAIN) == []
+    result = run(document(tmp_path, html), PLAIN, policy=ADMIT)
+    assert not any(c.get("proposer") == "structure" for c in result.candidates)
+
+
 @pytest.mark.parametrize("change", ["columns", "rows", "row in a node"])
 def test_loaded_places_that_do_not_follow_the_text_give_nothing(
     tmp_path: Path, change: str
