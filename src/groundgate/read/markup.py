@@ -20,7 +20,7 @@ import re
 import xml.etree.ElementTree as ET
 from html.parser import HTMLParser
 
-from .nodes import Kept, Raw, Tracker, nfc_map, span_number
+from .nodes import MAX_SPAN, Kept, Raw, Tracker, nfc_map, span_number
 
 SKIP = {"script", "style", "noscript", "template"}
 HEAD = {"head", "title", "meta", "link", "style", "script", "base", "noscript", "template"}
@@ -276,18 +276,25 @@ HEADINGS = {f"h{n}" for n in range(1, 7)}
 
 
 def _cell_members(
-    tag: str, rowspan: str | None, colspan: str | None, scope: str | None, headers: str | None
+    tag: str,
+    rowspan: str | None,
+    colspan: str | None,
+    scope: str | None,
+    headers: str | None,
+    twice: bool = False,
 ) -> dict[str, object]:
-    """The members of a cell. A ``th`` with the scope ``row`` or ``rowgroup`` gets a null
-    header: it is a header for its row, and the document keeps no scope. A cell with a
-    ``headers`` attribute gets a null header too: it names its own headers, which can be in
-    other columns, and the document keeps no ``headers``."""
+    """The members of a cell. The document keeps no ``scope`` and no ``headers``, so a cell gets
+    a null header when they can put it under other headers than its column: a ``scope`` other
+    than ``col``, any ``headers`` attribute, or a table attribute that the tag gives twice.
+    ``rowspan="0"`` spans the rest of the row group, so it counts as the largest span."""
     header: bool | None = tag == "th"
-    if header and (scope or "").strip().lower() in ("row", "rowgroup"):
+    if (scope or "").strip().lower() not in ("", "col") or headers is not None or twice:
         header = None
-    if headers is not None and headers.strip():
-        header = None
-    return {"rows": span_number(rowspan), "columns": span_number(colspan), "header": header}
+    rows = span_number(rowspan)
+    zero = (rowspan or "").strip()
+    if zero and zero.isascii() and zero.isdigit() and not zero.strip("0"):
+        rows = MAX_SPAN
+    return {"rows": rows, "columns": span_number(colspan), "header": header}
 
 
 def _close_implied(nodes: Tracker, tag: str) -> None:
@@ -305,6 +312,9 @@ def _close_implied(nodes: Tracker, tag: str) -> None:
         nodes.close_any({"tr"}, {"table"})
 
 
+_CELL_ATTRIBUTES = frozenset({"rowspan", "colspan", "scope", "headers"})
+
+
 def _open_html(nodes: Tracker, tag: str, attrs: list[tuple[str, str | None]]) -> None:
     role = HTML_ROLES[tag]
     members: dict[str, object] = {}
@@ -312,12 +322,14 @@ def _open_html(nodes: Tracker, tag: str, attrs: list[tuple[str, str | None]]) ->
         members["level"] = int(tag[1])
     elif role == "cell":
         values = dict(attrs)
+        names = [name for name, _ in attrs if name in _CELL_ATTRIBUTES]
         members = _cell_members(
             tag,
             values.get("rowspan"),
             values.get("colspan"),
             values.get("scope"),
             values.get("headers"),
+            len(names) != len(set(names)),
         )
     nodes.open(tag, role, "markup", members)
 

@@ -190,7 +190,7 @@ def test_a_row_scoped_header_cell_has_a_null_header(tmp_path: Path, name: str) -
         "</tr></table>"
     )
     doc = _doc(tmp_path, name, table)
-    assert [c.header for c in doc.of_kind("cell")] == [None, None, True, True, False]
+    assert [c.header for c in doc.of_kind("cell")] == [None, None, True, True, None]
 
 
 def test_xhtml_empty_cells_and_spans_with_leading_zeros(tmp_path: Path) -> None:

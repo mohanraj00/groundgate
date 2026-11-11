@@ -741,6 +741,36 @@ def test_a_cell_with_a_headers_attribute_gives_nothing(tmp_path: Path, on: str) 
     assert not any(c.get("proposer") == "structure" for c in result.candidates)
 
 
+@pytest.mark.parametrize(
+    "html",
+    [
+        # rowspan="0" spans the rest of the group, so Revenue is under 2024 and 5 is under 2023.
+        "<table><tr><th>Item</th><th>2024</th><th>2023</th></tr>"
+        "<tr><td rowspan='0'>Group</td><td>7</td><td>8</td></tr>"
+        "<tr><td>Revenue</td><td>5</td></tr></table>",
+        # Year is over both columns of its group.
+        "<table><colgroup span='2'></colgroup><tr><th>Item</th>"
+        "<th scope='colgroup'>Year</th><th></th></tr>"
+        "<tr><td>Revenue</td><td>999</td><td>5</td></tr></table>",
+        # The parser gives both attributes. A dict keeps only the last one.
+        "<table><tr><th>Item</th><th scope='row' scope='col'>Year</th></tr>"
+        "<tr><td>Revenue</td><td>999</td></tr></table>",
+        "<table><tr><th>Item</th><th id='y'>Year</th></tr>"
+        "<tr><td>Revenue</td><td headers='z' headers=''>999</td></tr></table>",
+    ],
+    ids=["rowspan zero", "colgroup", "scope twice", "headers twice"],
+)
+def test_a_cell_attribute_that_the_document_cannot_keep_gives_nothing(
+    tmp_path: Path, html: str
+) -> None:
+    schema = {
+        "fields": {"revenue": {"type": "integer", "aliases": ["Revenue"], "keys": ["Year", "2024"]}}
+    }
+    assert found(tmp_path, html, schema) == []
+    result = run(document(tmp_path, html), schema, policy=ADMIT)
+    assert not any(c.get("proposer") == "structure" for c in result.candidates)
+
+
 @pytest.mark.parametrize("change", ["columns", "rows", "row in a node"])
 def test_loaded_places_that_do_not_follow_the_text_give_nothing(
     tmp_path: Path, change: str
