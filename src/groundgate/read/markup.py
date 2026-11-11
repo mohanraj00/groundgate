@@ -9,7 +9,7 @@ the same on every Python version.
 - HTML elements hidden with the ``hidden`` attribute or an inline ``display:none`` or
   ``visibility:hidden`` style are dropped: text a reader cannot see is not evidence. Stylesheets
   are not evaluated. A hidden cell, row or row group can keep its place in the grid, so its
-  table gives no table nodes.
+  table, and each table that holds it, gives no table nodes.
 
 ``html_nodes`` and ``xml_nodes`` also give the nodes of the document model (``document.py``).
 They use the same writer, so the text is the text of ``html_text`` and ``xml_text``.
@@ -293,7 +293,8 @@ def _cell_members(
 ) -> dict[str, object]:
     """The members of a cell. The document keeps no ``scope`` and no ``headers``, so a cell gets
     a null header when they can put it under other headers than its column: a ``scope`` other
-    than ``col``, any ``headers`` attribute, or a table attribute that the tag gives twice.
+    than ``row`` or ``col``, any ``headers`` attribute, or a table attribute that the tag gives
+    twice. A ``th`` with ``scope="row"`` or ``scope="col"`` gets its header from its row.
     ``rowspan="0"`` spans the rest of the row group, so it counts as the largest span."""
     header: bool | None = tag == "th"
     if (scope or "").strip().lower() not in ("", "col") or headers or twice:
@@ -302,7 +303,11 @@ def _cell_members(
     zero = (rowspan or "").strip()
     if zero and zero.isascii() and zero.isdigit() and not zero.strip("0"):
         rows = MAX_SPAN
-    return {"rows": rows, "columns": span_number(colspan), "header": header}
+    members: dict[str, object] = {"rows": rows, "columns": span_number(colspan), "header": header}
+    named = (scope or "").strip().lower()
+    if tag == "th" and named in ("row", "col") and headers is False and not twice:
+        members["scope"] = named  # ``Tracker.done`` sets the header from the row
+    return members
 
 
 def _close_implied(nodes: Tracker, tag: str) -> None:

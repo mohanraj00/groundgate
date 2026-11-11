@@ -353,6 +353,8 @@ def _table(
     for name, labels in found_labels.items():
         field = schema.fields[name]
         inner = any(least[_place(c)[0]] < _place(c)[1] for c in labels)
+        # A label with a null header can head a column, not its row.
+        inner = inner or any(c.header is None for c in labels)
         if field.keys is None:
             one = None
             if len(labels) == 1 and not inner and _place(labels[0])[0] not in covered:

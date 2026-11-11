@@ -86,12 +86,12 @@ class Tracker:
         self.stack.append((tag, n))
 
     def drop_table(self) -> None:
-        """Drop the innermost open table. Its rows and cells then break the parent kinds of
-        §4.2, so ``finish`` drops them too, and the table text stays as text."""
-        for _, n in reversed(self.stack):
+        """Drop each open table. Their rows and cells then break the parent kinds of §4.2, so
+        ``finish`` drops them too, and the table text stays as text. An outer table goes too:
+        else its cell loses the inner table that marks the cell as no single value."""
+        for _, n in self.stack:
             if self.nodes[n].kind == "table":
                 self.nodes[n].keep = False
-                return
 
     def _nearest(self, role: str) -> int | None:
         for _, n in reversed(self.stack):
@@ -144,7 +144,23 @@ class Tracker:
         element stays open, so ``finish`` drops it."""
         while self.stack and not self.stopped:
             self.close(self.stack[-1][0])
+        # The document keeps no scope. A th with scope="row" in a row of data cells is the
+        # label of its row, so it is a header. A th with scope="col" there heads the cells
+        # below it, not its row, so it gets null. In a row of headers, each is the reverse.
+        mixed = {
+            node.parent
+            for node in self.nodes
+            if node.kind == "cell"
+            and node.members
+            and "scope" not in node.members
+            and node.members.get("header") is not True
+        }
         for n, node in enumerate(self.nodes):
+            scope = (node.members or {}).pop("scope", None) if node.kind == "cell" else None
+            if scope is not None and node.members is not None:
+                node.members["header"] = (
+                    True if (scope == "row") == (node.parent in mixed) else None
+                )
             if node.kind == "block":
                 node.kind = "paragraph"
                 node.keep = node.keep and n not in self.inner

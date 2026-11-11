@@ -781,6 +781,15 @@ def test_a_cell_with_a_headers_attribute_gives_nothing(tmp_path: Path, on: str) 
         "<table><tr><th>Item</th><th>2024</th><th>2023</th></tr>"
         "<tr style='visibility:hidden'><td rowspan='2'>Group</td><td>7</td><td>8</td></tr>"
         "<tr><td>Revenue</td><td>5</td></tr></table>",
+        # Revenue heads the first column, so it is not the label of 999.
+        "<table><tr><th>Item</th><th>2024</th></tr>"
+        "<tr><th scope='col'>Revenue</th><td>999</td></tr>"
+        "<tr><td>Cost</td><td>5</td></tr></table>",
+        # The hidden cell drops the inner table. The outer table must go too, else its first
+        # cell no longer holds a table.
+        "<table><tr><th>Item</th><th>2024</th></tr>"
+        "<tr><td><table><tr><td>Revenue</td><td style='visibility:hidden'>x</td></tr></table>"
+        "</td><td>999</td></tr></table>",
     ],
     ids=[
         "rowspan zero",
@@ -793,6 +802,8 @@ def test_a_cell_with_a_headers_attribute_gives_nothing(tmp_path: Path, on: str) 
         "rowspan twice",
         "hidden cell",
         "hidden row",
+        "column scope label",
+        "hidden inner cell",
     ],
 )
 def test_a_cell_attribute_that_the_document_cannot_keep_gives_nothing(

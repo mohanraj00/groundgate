@@ -109,13 +109,16 @@ in an evidence item and a chunk plan entry (runner.md §8).
    spanned cells. `rows` and `columns` are the cell span, 1 or more. `header` is true for a
    header cell, false for a data cell, and null when the source does not say. The markup
    reader gives null when the cell can be under other headers than its column, because the
-   document keeps no `scope` and no `headers`: a `scope` other than `col`, any `headers`
-   attribute (also one with no value), or a table attribute that the tag gives twice. Of two
-   equal attributes, the reader uses the first, as HTML does. `rowspan="0"` spans the rest of
+   document keeps no `scope` and no `headers`: a `scope` other than `row` or `col`, any
+   `headers` attribute (also one with no value), or a table attribute that the tag gives twice.
+   A `th` with `scope="row"` or `scope="col"` gets its header from its row. In a row with a cell
+   that is not a header, `row` gives true and `col` gives null. In a row of headers, `col`
+   gives true and `row` gives null. The structure reader does not use a cell with a null header
+   as a row label. Of two equal attributes, the reader uses the first, as HTML does. `rowspan="0"` spans the rest of
    the row group, so the reader stores the largest span, 1000. If a table has a row past the
    end of a span of 1000 rows, the source span can go past it, so the structure reader
    proposes nothing from that table. A hidden cell, row or row group can keep its place in the
-   grid, so the markup reader gives no table nodes for its table. Other members make the object
+   grid, so the markup reader gives no table nodes for its table, or for a table that holds it. Other members make the object
    invalid.
 6. **The text stays.** The nodes never change the text. A reader version that adds nodes gives
    the same text bytes as the version before it.
