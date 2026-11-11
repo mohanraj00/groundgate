@@ -661,6 +661,31 @@ def test_a_loaded_table_with_text_outside_its_cells_gives_nothing(
     assert not any(c.get("proposer") == "structure" for c in result.candidates)
 
 
+@pytest.mark.parametrize("drop", [0, 2])
+def test_a_loaded_row_that_leaves_out_text_of_the_table_gives_nothing(
+    tmp_path: Path, drop: int
+) -> None:
+    """With no node for a cell at an edge, and a row that does not hold its text, the rest of
+    the row reads as "Revenue | 5"."""
+    cells = ["Cost", "Revenue", "5"] if drop == 0 else ["Revenue", "5", "7"]
+    html = "<table><tr>" + "".join(f"<td>{c}</td>" for c in cells) + "</tr></table>"
+    obj = document(tmp_path, html).to_dict()
+    gone = [n for n in obj["nodes"] if n["kind"] == "cell"][drop]
+    obj["nodes"] = [n for n in obj["nodes"] if n is not gone]
+    for node in obj["nodes"]:
+        if node["id"] > gone["id"]:
+            node["id"] -= 1
+        if node["kind"] == "cell" and drop == 0:
+            node["column"] -= 1
+        if node["kind"] == "row":
+            kept = [n for n in obj["nodes"] if n["kind"] == "cell"]
+            node["start"], node["end"] = kept[0]["start"], kept[-1]["end"]
+    loaded = Document.from_dict(obj, document(tmp_path, html).text)
+    assert propose(loaded.text, loaded, Schema.from_dict(PLAIN)) == []
+    result = run(loaded, PLAIN, policy=ADMIT)
+    assert not any(c.get("proposer") == "structure" for c in result.candidates)
+
+
 @pytest.mark.parametrize("change", ["columns", "rows", "row in a node"])
 def test_loaded_places_that_do_not_follow_the_text_give_nothing(
     tmp_path: Path, change: str

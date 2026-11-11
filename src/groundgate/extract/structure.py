@@ -238,11 +238,11 @@ def _nested(document: Document) -> set[int]:
     return out
 
 
-def _cells_hold_the_text(data: bytes, rows: list[tuple[Node, list[Node]]]) -> bool:
-    """True if the cells hold all the text of the rows. A byte outside the cells must be
-    whitespace, from the start of the first row to the end of the last row. A loaded object
-    can leave out a cell, and its text then shifts the cells after it."""
-    at = rows[0][0].start if rows else 0
+def _cells_hold_the_text(data: bytes, table: Node, rows: list[tuple[Node, list[Node]]]) -> bool:
+    """True if the cells hold all the text of the table. A byte outside the cells must be
+    whitespace, from the start of the table to its end. A loaded object can leave out a cell,
+    or a row, and its text then shifts the cells after it."""
+    at = table.start
     for row, held in rows:
         if row.start < at or data[at : row.start].strip():
             return False
@@ -254,7 +254,7 @@ def _cells_hold_the_text(data: bytes, rows: list[tuple[Node, list[Node]]]) -> bo
         if row.end < at or data[at : row.end].strip():
             return False
         at = row.end
-    return True
+    return table.end >= at and not data[at : table.end].strip()
 
 
 def _table(
@@ -286,7 +286,7 @@ def _table(
         cells.extend(held)
     if any(c.id in nested for c in cells):
         return  # the text of a cell with a table is not one label, header or value
-    if not _cells_hold_the_text(data, row_cells):
+    if not _cells_hold_the_text(data, table, row_cells):
         return
     single = [c for c in cells if not _spanned(c)]
     grid = {_place(c): c for c in single}

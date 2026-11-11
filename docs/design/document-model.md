@@ -244,8 +244,8 @@ so a table whose cells have null headers gives nothing. The document keeps no `s
 a header in a row with data cells can be a row header. A loaded object can put a spanned cell
 over another cell, or give the cells places that do not follow the text: a row node with cells in two rows,
 rows out of the order of the row nodes, or columns out of the order of the cells. It can also
-leave text out of the cells: a byte of a row outside its cells, or between two rows, that is not
-whitespace. The reader then proposes nothing from that table. A wrong row is worse than no row,
+leave text out of the cells: a byte of the table outside its cells that is not whitespace. The
+check covers the table from its start to its end, so a row cannot leave out text at an edge. The reader then proposes nothing from that table. A wrong row is worse than no row,
 as `grid` says.
 
 A `label: value` line gives nothing when the value has a second colon, or when a letter comes
