@@ -44,7 +44,7 @@ def bare(text: str, doubt: list[Any] | None = None) -> Document:
     obj = {
         "format": "document@1",
         "source": key("source@1", text.encode()),
-        "reader": {"name": "groundgate.read", "version": "0.13.0"},
+        "reader": {"name": "groundgate.read", "version": "0.14.0"},
         "options": {"pages": None},
         "text": key("text@1", text.encode()),
         "nodes": [],
@@ -146,7 +146,7 @@ def test_a_document_with_no_nodes_gives_the_prompts_of_its_text() -> None:
     named = b.record[0]["inputs"]["document"]
     assert a.record[0]["inputs"]["document"]["kind"] == "text"
     assert named["kind"] == "document"
-    assert named["reader"] == {"name": "groundgate.read", "version": "0.13.0"}
+    assert named["reader"] == {"name": "groundgate.read", "version": "0.14.0"}
     assert replay(b.record, b.artifacts, bare(text), SCHEMA).ok
     # A run on a document replays with its document, not its text.
     assert not replay(b.record, b.artifacts, text, SCHEMA).ok

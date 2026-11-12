@@ -508,11 +508,19 @@ a changed document, schema, policy, candidate or outcome.
   clear on 10-K filings (#120). `groundgate calibrate` (#112, experimental) measures the
   thresholds on your own documents.
   [How to measure a judge's thresholds](docs/howto/calibrate.md) runs it from start to end.
+- **Too many reviews on requested fields.** On the development split of `bench/requested4`,
+  0.14 admits no wrong value (0 escapes) and rejects 2 right values, but it sends 69 of the 122
+  stated values to review against a target of 35 or fewer. Its miss rate is 60.66% (74 of 122)
+  against a target of 40% or less
+  ([bench/requested4/development-646/RESULTS.md](bench/requested4/development-646/RESULTS.md)).
+  The 0.15 document-family profiles (#639, #640) are the planned work to lower both numbers.
 
 ## Status
 
-Alpha. groundgate 0.13.0 implements spec v0.11. [CHANGELOG.md](CHANGELOG.md) lists what each version
-changes, with its measure. 0.11 adds the store (#288, #402 to #405), the review step and its local
+Alpha. groundgate 0.14.0 implements spec v0.12. [CHANGELOG.md](CHANGELOG.md) lists what each version
+changes, with its measure. 0.14 adds the structure reader as a second proposer (#510) and
+agreement between proposers (#509), column and marker words (#540), `SIGN_DROPPED` (#569),
+`READ_DOUBT` (#535), DOCX and XLSX reading (#529), and `groundgate export` (#584). 0.11 adds the store (#288, #402 to #405), the review step and its local
 page (#287, #408 to #412), and `groundgate calibrate` inside groundgate (#385). It reads currency
 headings and currency names (#367, #368, #423), refuses a bad field name (#359), and cuts large
 search regions in the extraction loop (#382). 0.10 adds vocabulary and kind packs (#333 to #339),

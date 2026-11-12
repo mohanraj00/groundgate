@@ -361,7 +361,7 @@ def _good() -> tuple[dict[str, Any], str]:
         {
             "format": "document@1",
             "source": "sha256:" + "0" * 64,
-            "reader": {"name": "groundgate.read", "version": "0.13.0"},
+            "reader": {"name": "groundgate.read", "version": "0.14.0"},
             "options": {"pages": None},
             "text": key("text@1", GOOD_TEXT.encode()),
             "nodes": GOOD_NODES,
@@ -482,7 +482,7 @@ def test_the_loader_refuses_a_deep_chain_of_nodes() -> None:
     obj = {
         "format": "document@1",
         "source": "sha256:" + "0" * 64,
-        "reader": {"name": "groundgate.read", "version": "0.13.0"},
+        "reader": {"name": "groundgate.read", "version": "0.14.0"},
         "options": {"pages": None},
         "text": key("text@1", text.encode()),
         "nodes": chain[:MAX_DEPTH],
@@ -508,7 +508,7 @@ def test_the_loader_refuses_a_node_out_of_tree_order() -> None:
     obj = {
         "format": "document@1",
         "source": "sha256:" + "0" * 64,
-        "reader": {"name": "groundgate.read", "version": "0.13.0"},
+        "reader": {"name": "groundgate.read", "version": "0.14.0"},
         "options": {"pages": None},
         "text": key("text@1", text.encode()),
         "nodes": nodes,
