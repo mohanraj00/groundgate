@@ -613,6 +613,34 @@ alternative presentation in note 2.5, and the label is 9,157 from the income sta
 has the largest loss: its miss rate is 94.29% (33 of 35), and 30 of its silent misses have no
 right candidate. In #556 it was 57.14% (20 of 35).
 
+## The runner after the node quote repair (#650)
+
+I ran the 32 development documents again on 2026-11-12, on origin/main 2c44665, after the fix of
+#645. The prompt now says that a quote inside a node must be once in that node, and a quote that
+is more than once gets a repair round. The configuration is the one of #636 with the new
+`code_sha256`. The prompt changed, so no recorded reply matched, and the run made 254 new model
+calls with the owner's yes. All 32 documents are complete, with no transport error and no
+`search_limit`. The projection and the scores are in `development-646/`.
+`development-646/COMPARE.md` puts the run beside `development-556`.
+
+```bash
+uv run python bench/score.py --requested --set bench/requested4 --split development \
+    --runs bench/requested4/development-646/runs --out bench/requested4/development-646
+```
+
+| Run | Right admits | Reviews | Rejected right | Escapes | Miss rate |
+|---|---:|---:|---:|---:|---:|
+| #556 (`development-556`) | 43 | 64 | 14 | 0 | 64.75% (79 of 122) |
+| #636 (`development-635`) | 32 | 57 | 2 | 1 | 73.77% (90 of 122) |
+| this run (`development-646`) | 48 | 69 | 2 | 0 | 60.66% (74 of 122) |
+
+The run meets 2 of the 4 lane 2 targets of #539: rejected right is 2 (target 4 or fewer) and
+escapes are 0 (target 0). It misses reviews, 69 (target 35 or fewer), and the miss rate, 60.66%
+(target 40% or less). sbc is back at 20 misses of 35, the same as #556, and no sbc field is left
+with no right candidate. Only 4 node quote failures are left after the repair. The annual
+escape of #636 is gone, and annual has 22 right admits. Most misses are now reviews: the right
+value goes to review for 69 of 122 present values (56.56%), and only 5 are silent misses.
+
 ## What comes next
 
 The learning loop runs on the development split only (`bench/requested/loop.py`). It writes one
