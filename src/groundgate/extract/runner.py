@@ -112,7 +112,9 @@ _MARK = re.compile("\u27e6[0-9]+\u27e7")
 _NODE_INSTRUCTIONS = (
     " A marker such as \u27e612\u27e7 before the text of a table cell gives the node id of "
     'the cell. Cite the cell as {"source": "document", "role": ..., "node": 12}, or add "text" '
-    "to quote a part of it. A marker is not part of the text, so do not copy it into a quote."
+    "to quote a part of it. A marker is not part of the text, so do not copy it into a quote. "
+    "A quote inside a node must be once in that node. If a short text is more than once in the "
+    "node, quote a longer part of the node that is once."
 )
 # The column words and marker words of the requested fields (SPEC §2.3, §4.6, #554). The prompt
 # has these only when a requested field has columns or markers.
@@ -1006,6 +1008,13 @@ class _Citations:
 
         return located
 
+    def count(self, item: Json) -> int:
+        """How many times the quote of a node item is in its node, with the quote rules of
+        SPEC §4.6 (#645)."""
+        node = self.nodes[item["node"]]
+        body = self.data[node.start : node.end].decode("utf-8")
+        return sum(1 for _ in quote_pattern(_unmark(item["text"], body)).finditer(body))
+
 
 def _shape(
     candidate: Any,
@@ -1515,18 +1524,23 @@ class _Engine:
 
     def proposals(self, parsed: Json, regions: list[Json], phase: str) -> bool:
         pending = []
+        failed: list[tuple[str, Json]] = []
         try:
             for i, raw in enumerate(parsed["candidates"]):
                 try:
                     candidate = self.adapt(raw, regions, phase == "targeted")
                 except _QuoteCount:
                     # Only this candidate fails. The other candidates of the reply stay (#632).
+                    # It gets a quote repair after the reply is admitted (#645).
+                    cid = f"c{self.calls}-{i + 1}"
+                    failed.append((cid, raw))
                     self.states[raw["field"]].append("protocol_failure")
                     self.event(
                         kind="protocol_failure",
                         phase=phase,
                         field=raw["field"],
                         reason="node_quote",
+                        candidate_id=cid,
                     )
                     continue
                 cid = f"c{self.calls}-{i + 1}"
@@ -1561,7 +1575,112 @@ class _Engine:
                 field=name,
                 regions=[{k: v for k, v in r.items() if k != "text"} for r in regions],
             )
-        return self.decide(phase)
+        if not self.decide(phase):
+            return False
+        return all(self.quote_repair(cid, raw, regions, phase) for cid, raw in failed)
+
+    def quote_faults(self, raw: Json) -> list[tuple[int, int]]:
+        """The node items of a candidate whose quote is not once in its node (#645): the index
+        of each item and the count of its quote."""
+        assert self.citations is not None
+        faults = []
+        for i, item in enumerate(raw["evidence"]):
+            if "node" in item and "text" in item:
+                count = self.citations.count({**item, "text": _unmark(item["text"], self.text)})
+                if count != 1:
+                    faults.append((i, count))
+        return faults
+
+    def quote_repair(self, cid: str, raw: Json, regions: list[Json], phase: str) -> bool:
+        """Ask again for a candidate whose node quote is not once in its node (#645). Each round
+        names the node, the quote and its count, and asks for a part of the node that is once.
+        The reply may change only the text of those items. The runner never takes the first
+        match of a repeated quote. If no round gives a quote that is once, only this candidate
+        fails, as in #632. False stops the run."""
+        old = raw
+        for round_number in range(1, self.settings.max_repair_rounds + 1):
+            faults = self.quote_faults(old)
+            evidence = old["evidence"]
+            lines = []
+            for i, count in faults:
+                item = evidence[i]
+                lines.append(
+                    f"\n- The {item['role']} quote {jcs(item['text'])} is {count} times in node "
+                    f"{item['node']}. Quote a longer part of node {item['node']} that is once "
+                    "in it."
+                )
+            feedback = (
+                "A quote inside a node must be once in that node. Keep the node id of each item "
+                "and every other member of the candidate." + "".join(lines)
+            )
+            prompt = self.prompt(
+                "repair",
+                [old["field"]],
+                regions,
+                candidate_id=cid,
+                candidate=old,
+                allowed_roles=sorted({evidence[i]["role"] for i, _ in faults}),
+                feedback=feedback,
+            )
+            reply = self.call(
+                "repair",
+                [old["field"]],
+                prompt,
+                candidate_id=cid,
+                round=round_number,
+                reason="node_quote",
+            )
+            if reply is None:
+                return False
+            if _repair_not_found(reply):
+                self.event(kind="repair", candidate_id=cid, status="repair_not_found")
+                return True
+            fixed = {i for i, _ in faults}
+            new = reply["evidence"]
+
+            def bare(item: Json) -> Json:
+                return {k: v for k, v in item.items() if k != "text"}
+
+            valid = (
+                set(reply) == set(old)
+                and all(reply[k] == old[k] for k in old if k != "evidence")
+                and len(new) == len(evidence)
+                and all(new[i] == evidence[i] for i in range(len(new)) if i not in fixed)
+                and all("text" in new[i] and bare(new[i]) == bare(evidence[i]) for i in fixed)
+            )
+            if not valid or new == evidence:
+                status = "protocol_failure" if not valid else "no_op"
+                self.event(kind="repair", candidate_id=cid, status=status, reason="node_quote")
+                return True
+            try:
+                adapted = self.adapt(reply, regions, phase == "targeted")
+            except _QuoteCount:
+                self.event(
+                    kind="repair", candidate_id=cid, status="protocol_failure", reason="node_quote"
+                )
+                old = reply
+                continue
+            except ValueError:
+                self.event(kind="repair", candidate_id=cid, status="protocol_failure")
+                return True
+            if not self.candidate_room([*self.tips.values(), adapted], 1):
+                return False
+            adapted["id"] = cid
+            self.raw[cid] = copy.deepcopy(reply)
+            self.tips[cid] = adapted
+            self.contexts[cid] = copy.deepcopy(regions)
+            self.states[reply["field"]].append("proposed")
+            if phase == "targeted":
+                self.targeted.add(cid)
+            self.event(kind="repair", candidate_id=cid, status="quote_repair")
+            if not self.decide("repair"):
+                return False
+            # The rounds of the quote repair count in the repair budget of its group.
+            group = self.groups[cid]
+            used = self.budgets.get(group, 0) + round_number
+            self.budgets[group] = min(used, self.settings.max_repair_rounds)
+            return True
+        return True
 
     def structure(self) -> bool:
         """Add the candidates of the structure reader when the policy names it (#510). The
