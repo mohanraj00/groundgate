@@ -1560,3 +1560,59 @@ def test_image_only_needs_the_scanned_kind(tmp_path):
 
     with pytest.raises(harness.CacheError, match="scanned documents only"):
         fixture(tmp_path, mutate=change, pdf=b"x")
+
+
+def _text_document(text):
+    """A document@1 model for a synthetic source: the reader of a text file (#630)."""
+
+    def model(path, body):
+        from groundgate.read.document import read_document
+
+        plain = path.with_name(path.stem + ".document.txt")
+        plain.write_text(text, encoding="utf-8")
+        return read_document(plain)[1]
+
+    return model
+
+
+def _on_document(manifest, labels, config):
+    config["document"] = "document@1"
+    config["policy"] = {"proposers": {"structure": "corroborate"}}
+
+
+@requires_runner
+def test_a_document_run_gives_the_runner_the_document_model(tmp_path, monkeypatch):
+    monkeypatch.setattr(harness, "_document", _text_document("Amount 5."))
+    session, _ = fixture(tmp_path, mutate=_on_document)
+    client = Client(runner_envelope(candidate()))
+    result = session.run("runner", client)
+    folder = tmp_path / "cache" / session.binding.removeprefix("sha256:") / "runner" / "heldout"
+    local = json.loads((folder / "doc" / "result.json").read_text())
+    named = local["record"][0]["inputs"]["document"]
+    assert named["kind"] == "document" and named["document_sha256"] in local["artifacts"]
+    model = session.models["doc"]
+    assert local["document_sha256"] == harness.digest(harness.encoded(model.to_dict()))
+    assert session.run("runner") == result
+
+
+@requires_runner
+def test_a_run_without_the_document_member_reads_the_text(tmp_path):
+    session, _ = fixture(tmp_path)
+    assert session.models == {}
+    client = Client(runner_envelope(candidate()))
+    session.run("runner", client)
+    folder = tmp_path / "cache" / session.binding.removeprefix("sha256:") / "runner" / "heldout"
+    local = json.loads((folder / "doc" / "result.json").read_text())
+    assert "document_sha256" not in local
+    assert local["record"][0]["inputs"]["document"]["kind"] == "text"
+
+
+def test_a_document_with_other_text_stops_the_run(tmp_path, monkeypatch):
+    monkeypatch.setattr(harness, "_document", _text_document("Amount 6."))
+    with pytest.raises(harness.CacheError, match="document@1 text differs"):
+        fixture(tmp_path, mutate=_on_document)
+
+
+def test_an_unknown_document_format_stops_the_run(tmp_path):
+    with pytest.raises(harness.CacheError, match="document must be document@1"):
+        fixture(tmp_path, mutate=lambda m, labels, c: c.update(document="document@2"))
