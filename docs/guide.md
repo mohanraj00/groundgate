@@ -60,7 +60,7 @@ the program itself, with no shell and a timeout of 120 seconds for each page, in
 gives the words and boxes of the engine, one line of words on each line and a blank line between
 two paragraphs. It gives no tables. `Extracted.ocr` is the tesseract version. The reader of the
 reading is `groundgate.read+tesseract`, and its version holds both versions, for example
-`0.13.0+tesseract.5.5.2`, so a new tesseract version gives a new reading key. A page with no text
+`0.14.0+tesseract.5.5.2`, so a new tesseract version gives a new reading key. A page with no text
 layer and no image keeps the warning to OCR the PDF first. `read --store --ocr` does not use the
 reading cache.
 

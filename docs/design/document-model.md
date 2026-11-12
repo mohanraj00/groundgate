@@ -70,7 +70,7 @@ in an evidence item and a chunk plan entry (runner.md §8).
 ```json
 {"format": "document@1",
  "source": "sha256:...",
- "reader": {"name": "groundgate.read", "version": "0.13.0"},
+ "reader": {"name": "groundgate.read", "version": "0.14.0"},
  "options": {"pages": null},
  "text": "sha256:...",
  "nodes": [

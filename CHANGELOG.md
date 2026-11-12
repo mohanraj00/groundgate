@@ -3,6 +3,87 @@
 Versions follow [SemVer](https://semver.org). A change to how any candidate is decided is a new
 spec version, and receipts name the spec version they were decided under.
 
+## 0.14.0 (2026-11-12)
+
+Spec 0.12. The core reading rules freeze at this version: later versions add only value kinds,
+and a new layout need goes into a document-family profile or the structure reader. 0.14 adds a
+second proposer, the structure reader, and the policy rules that let two proposers agree. It
+adds column and marker words, sends a dropped sign and a doubted OCR word to review, and exports
+the admitted facts of a verified packet. The extract run record is `groundgate-run/6`, so a
+record from 0.13.0 does not replay.
+
+Known limits. On the development split of `bench/requested4`, 0.14 meets two of the four targets
+of plan #539 and misses two
+([bench/requested4/development-646/RESULTS.md](bench/requested4/development-646/RESULTS.md)):
+
+| Target | Goal | 0.14 | Result |
+|---|---|---:|---|
+| Escapes | 0 | 0 | met |
+| Rejected right values | 4 or fewer | 2 | met |
+| Reviews | 35 or fewer | 69 | not met |
+| Miss rate | 40% or less | 60.66% (74 of 122) | not met |
+
+The runner admits 48 right values, the most of any development run. Most misses are reviews: 69
+of the 122 stated values go to review with the right value, and 5 are silent misses. The 0.15
+document-family profiles (#639, #640) are the planned work to lower the reviews and the miss
+rate. I did not run the held-out split for 0.14.
+
+Spec 0.12 decisions:
+
+- A candidate can name its `proposer`, and each decision records it. The policy member
+  `proposers` maps a proposer id to `admit` or `corroborate`. A `corroborate` candidate gets
+  `NOT_CORROBORATED` when no candidate of another proposer agrees with it: the other candidate
+  passed with the same field, key and value, and its span shares a byte in the same text (#509).
+- The schema members `columns` and `markers` name the column header words and the words next to
+  a value for a field. The new roles `column` and `marker` cite them, and the new flags
+  `COLUMN_NOT_AT_VALUE` and `MARKER_OTHER_FIELD` catch a wrong column or a marker of another
+  field (#540, #542). A schema with neither member decides as in spec 0.11.
+- On a field with a currency unit, a positive value at a token with a leading minus goes to
+  review with `SIGN_DROPPED` (#569).
+- A packet can carry `doubt`, the spans that a reader read with low confidence. With the policy
+  member `min_read_confidence`, evidence on a doubted span gets the flag `READ_DOUBT`, so the
+  value goes to review. The receipt names the doubt list with `document.doubt_sha256` (#535).
+- On a line with a tab, a number can group its digits in threes with one space, as in
+  `36 428 426`. A code scale such as `SEKm` or `R'000` is read in a scale item (#427, #568).
+- A `-` after a tab and directly before a digit is a minus sign in the next table cell, not a
+  range connector (#586).
+- A number token must fit wholly inside the span that reads it, with its leading minus sign. A
+  span of `100` inside `-100` reads no number (#621).
+- A scaled value, a relation factor and a relation tolerance have at most 1,000,000 digits
+  before the decimal point. Before, such a value made `admit` raise an error (#580, #582).
+- The sign and scale checks keep every digit. Before, a value of 29 digits or more was rounded
+  to 28 digits, so an exact value failed and a rounded value passed (#578).
+
+The structure reader and the extraction loop:
+
+- `groundgate.extract` can run the structure reader, a second proposer, when the policy names
+  `structure` in `proposers`. It finds a table cell by its row label and column header, or a
+  `label: value` line, and proposes nothing when a cell is not clear (#510).
+- Breaking: the extract run record is `groundgate-run/6`. The prompt asks for column items and
+  marker items when a requested field has `columns` or `markers` (#554).
+- On a `document@1` run, a node quote that is not exactly once in its node fails only its
+  candidate, with `protocol_failure` and the reason `node_quote`. Before, it made the whole
+  reply invalid (#632). The prompt says that a quote must be once in its node, and a failed
+  quote gets up to `max_repair_rounds` repair rounds (#645).
+
+Readers, the store and review:
+
+- `groundgate read` reads DOCX and XLSX with the standard library, with no new dependency (#529).
+- `groundgate export --store DIR PACKET` verifies a stored receipt and writes its admitted facts
+  and their citations as `facts@1`. A mismatch exits 1 with no export (#584).
+- `read --store` writes `reading@2`, which keeps the read warnings, so a cache hit gives them
+  again (#523).
+- A stored packet keeps its doubt, and `extract` sends the doubt of a document to `admit` (#573).
+- `store rebuild` writes three views: the review queue (#513), the latest resolution (#514) and
+  the measures (#515).
+- `store forget` removes the candidates of the correction packets of a packet (#524).
+  `forget --all` reports a correction of an earlier spec version as unchecked (#525). `store
+  check` reports a prompt, a reply or an admission that no run record names (#499).
+- The store refuses a reviewer name or a set name that is not NFC (#418).
+- The review page shows the OCR crop of the scan at each place of a task (#537).
+- `verify`, `report` and `store` escape each control character in a mismatch line, an error line
+  and the report page (#440, #544).
+
 ## 0.13.0 (2026-10-24)
 
 Spec 0.11, unchanged: every decision and receipt is the same as in 0.12.0. 0.13 adds the

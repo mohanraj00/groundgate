@@ -60,7 +60,7 @@ sends at most 200 pages to OCR. For a longer scan, read fewer pages with `--page
 The reader in `doc.json` names both versions, for example:
 
 ```json
-{"name": "groundgate.read+tesseract", "version": "0.13.0+tesseract.5.5.2"}
+{"name": "groundgate.read+tesseract", "version": "0.14.0+tesseract.5.5.2"}
 ```
 
 So a new tesseract version gives a new reading key in a store. `read --store --ocr` does not use
