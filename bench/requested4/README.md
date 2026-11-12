@@ -553,6 +553,37 @@ part of each move is run noise. The field moves come from `by_kind_field` of the
 `results.json` files. I counted the item roles in the cached records with a script outside the
 repository.
 
+## The runner on document@1 with the structure reader (#633)
+
+This is the development proof of lane 2 of #539, not the 0.14 claim. I ran the runner arm again
+on the 32 development documents on 2026-11-12, on origin/main e329ed4 (`groundgate-run/6`).
+The harness gives the runner the `document@1` model of each document (#631), and the policy
+names the structure reader (`{"proposers": {"structure": "corroborate"}}`). The model,
+transport, run limits and terms are the same as in #556. A replay of #556 cannot measure this,
+because the runner chunks a document by whole nodes, and the chunk plan is the same for only 3
+of 32 documents. The runner made 170 calls. No document had a transport error or stopped at
+`search_limit`, but 15 documents are incomplete. The projection and the scores are in
+`development-630/`. `development-630/COMPARE.md` puts the run beside `development-556`
+(`bench/report.py --compare`).
+
+```bash
+uv run python bench/score.py --requested --set bench/requested4 --split development \
+    --runs bench/requested4/development-630/runs --out bench/requested4/development-630
+```
+
+| Run | Right admits | Reviews | Rejected right | Escapes | Miss rate |
+|---|---:|---:|---:|---:|---:|
+| #556 (`development-556`) | 43 | 64 | 14 | 0 | 64.75% (79 of 122) |
+| this run (`development-630`) | 22 | 45 | 0 | 0 | 81.97% (100 of 122) |
+
+The run is not a fair measure of the structure reader. All 15 incomplete documents have one
+cause (#632): a reply cites a node with a quote that is in the node two times, such as `$3,000`
+in an sbc cell that gives `FAM $3,000` for in-network and for out-of-network. The runner then
+drops the whole reply as `invalid_reply`, with its other candidates. All 8 sbc documents stop
+after 1 call, and 3 annual and 4 component documents stop early. So the fewer reviews and
+rejected right values come from lost candidates, not from better decisions. The run has no
+escape. I counted the quotes in the cached replies with a script outside the repository.
+
 ## What comes next
 
 The learning loop runs on the development split only (`bench/requested/loop.py`). It writes one
