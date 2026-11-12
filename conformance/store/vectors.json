@@ -1,0 +1,1052 @@
+{
+ "format": "groundgate-store-vectors@1",
+ "vectors": [
+  {
+   "id": "put-get/three-kinds",
+   "check": "check_put_get",
+   "about": "put returns the store key, equal bytes give the same key, and get gives the bytes back",
+   "steps": [
+    {
+     "op": "put",
+     "kind": "text@1",
+     "data": {
+      "utf8": "The rent is 1,200 dollars."
+     },
+     "result": "sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175"
+    },
+    {
+     "op": "put",
+     "kind": "text@1",
+     "data": {
+      "utf8": "The rent is 1,200 dollars."
+     },
+     "result": "sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175"
+    },
+    {
+     "op": "get",
+     "kind": "text@1",
+     "key": "sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175",
+     "result": {
+      "utf8": "The rent is 1,200 dollars."
+     }
+    },
+    {
+     "op": "put",
+     "kind": "schema@1",
+     "data": {
+      "utf8": "{\"fields\":[{\"name\":\"rent\",\"type\":\"money\"}]}"
+     },
+     "result": "sha256:1f828fc16d1059559d7ca5a065081c951e4563bd7f3322b0b47cf8c5e813ccd0"
+    },
+    {
+     "op": "put",
+     "kind": "schema@1",
+     "data": {
+      "utf8": "{\"fields\":[{\"name\":\"rent\",\"type\":\"money\"}]}"
+     },
+     "result": "sha256:1f828fc16d1059559d7ca5a065081c951e4563bd7f3322b0b47cf8c5e813ccd0"
+    },
+    {
+     "op": "get",
+     "kind": "schema@1",
+     "key": "sha256:1f828fc16d1059559d7ca5a065081c951e4563bd7f3322b0b47cf8c5e813ccd0",
+     "result": {
+      "utf8": "{\"fields\":[{\"name\":\"rent\",\"type\":\"money\"}]}"
+     }
+    },
+    {
+     "op": "put",
+     "kind": "source@1",
+     "data": {
+      "hex": "ff00"
+     },
+     "result": "sha256:d7890fee2bf8cd2480300a0a93045fb7c1b748d3da4f0d83e13479abf608cc50"
+    },
+    {
+     "op": "put",
+     "kind": "source@1",
+     "data": {
+      "hex": "ff00"
+     },
+     "result": "sha256:d7890fee2bf8cd2480300a0a93045fb7c1b748d3da4f0d83e13479abf608cc50"
+    },
+    {
+     "op": "get",
+     "kind": "source@1",
+     "key": "sha256:d7890fee2bf8cd2480300a0a93045fb7c1b748d3da4f0d83e13479abf608cc50",
+     "result": {
+      "hex": "ff00"
+     }
+    }
+   ]
+  },
+  {
+   "id": "put-refuses/schema-members-not-in-order",
+   "check": "check_put_refuses",
+   "about": "put refuses JSON that is not canonical",
+   "steps": [
+    {
+     "op": "put",
+     "kind": "schema@1",
+     "data": {
+      "utf8": "{\"b\":1,\"a\":2}"
+     },
+     "error": "invalid"
+    }
+   ]
+  },
+  {
+   "id": "put-refuses/schema-a-space",
+   "check": "check_put_refuses",
+   "about": "put refuses JSON that is not canonical",
+   "steps": [
+    {
+     "op": "put",
+     "kind": "schema@1",
+     "data": {
+      "utf8": "{\"a\": 1}"
+     },
+     "error": "invalid"
+    }
+   ]
+  },
+  {
+   "id": "put-refuses/schema-a-duplicate-member",
+   "check": "check_put_refuses",
+   "about": "put refuses JSON that is not canonical",
+   "steps": [
+    {
+     "op": "put",
+     "kind": "schema@1",
+     "data": {
+      "utf8": "{\"a\":1,\"a\":1}"
+     },
+     "error": "invalid"
+    }
+   ]
+  },
+  {
+   "id": "put-refuses/schema-not-the-shortest-number",
+   "check": "check_put_refuses",
+   "about": "put refuses JSON that is not canonical",
+   "steps": [
+    {
+     "op": "put",
+     "kind": "schema@1",
+     "data": {
+      "utf8": "{\"a\":1.0}"
+     },
+     "error": "invalid"
+    }
+   ]
+  },
+  {
+   "id": "put-refuses/schema-nan",
+   "check": "check_put_refuses",
+   "about": "put refuses JSON that is not canonical",
+   "steps": [
+    {
+     "op": "put",
+     "kind": "schema@1",
+     "data": {
+      "utf8": "{\"a\":NaN}"
+     },
+     "error": "invalid"
+    }
+   ]
+  },
+  {
+   "id": "put-refuses/schema-a-line-break-at-the-end",
+   "check": "check_put_refuses",
+   "about": "put refuses JSON that is not canonical",
+   "steps": [
+    {
+     "op": "put",
+     "kind": "schema@1",
+     "data": {
+      "utf8": "{\"a\":1}\n"
+     },
+     "error": "invalid"
+    }
+   ]
+  },
+  {
+   "id": "put-refuses/schema-not-utf-8",
+   "check": "check_put_refuses",
+   "about": "put refuses JSON that is not canonical",
+   "steps": [
+    {
+     "op": "put",
+     "kind": "schema@1",
+     "data": {
+      "hex": "ff"
+     },
+     "error": "invalid"
+    }
+   ]
+  },
+  {
+   "id": "put-refuses/text-not-nfc",
+   "check": "check_put_refuses",
+   "about": "put refuses text that is not NFC",
+   "steps": [
+    {
+     "op": "put",
+     "kind": "text@1",
+     "data": {
+      "utf8": "e\u0301"
+     },
+     "error": "invalid"
+    }
+   ]
+  },
+  {
+   "id": "put-refuses/text-not-utf-8",
+   "check": "check_put_refuses",
+   "about": "put refuses text that is not UTF-8",
+   "steps": [
+    {
+     "op": "put",
+     "kind": "text@1",
+     "data": {
+      "hex": "ff"
+     },
+     "error": "invalid"
+    }
+   ]
+  },
+  {
+   "id": "put-refuses/run-torn-line",
+   "check": "check_put_refuses",
+   "about": "put refuses a run with no line break at the end",
+   "steps": [
+    {
+     "op": "put",
+     "kind": "run@3",
+     "data": {
+      "utf8": "{\"a\":1}"
+     },
+     "error": "invalid"
+    }
+   ]
+  },
+  {
+   "id": "put-refuses/kind-upper-case",
+   "check": "check_put_refuses",
+   "about": "put refuses a kind that is not such as text@1",
+   "steps": [
+    {
+     "op": "put",
+     "kind": "Text@1",
+     "data": {
+      "utf8": "x"
+     },
+     "error": "invalid"
+    }
+   ]
+  },
+  {
+   "id": "put-refuses/kind-no-version",
+   "check": "check_put_refuses",
+   "about": "put refuses a kind that is not such as text@1",
+   "steps": [
+    {
+     "op": "put",
+     "kind": "text",
+     "data": {
+      "utf8": "x"
+     },
+     "error": "invalid"
+    }
+   ]
+  },
+  {
+   "id": "put-refuses/kind-a-parent-path",
+   "check": "check_put_refuses",
+   "about": "put refuses a kind that is not such as text@1",
+   "steps": [
+    {
+     "op": "put",
+     "kind": "../text@1",
+     "data": {
+      "utf8": "x"
+     },
+     "error": "invalid"
+    }
+   ]
+  },
+  {
+   "id": "put-refuses/kind-a-slash",
+   "check": "check_put_refuses",
+   "about": "put refuses a kind that is not such as text@1",
+   "steps": [
+    {
+     "op": "put",
+     "kind": "text@1/x",
+     "data": {
+      "utf8": "x"
+     },
+     "error": "invalid"
+    }
+   ]
+  },
+  {
+   "id": "put-refuses/kind-version-0",
+   "check": "check_put_refuses",
+   "about": "put refuses a kind that is not such as text@1",
+   "steps": [
+    {
+     "op": "put",
+     "kind": "text@0",
+     "data": {
+      "utf8": "x"
+     },
+     "error": "invalid"
+    }
+   ]
+  },
+  {
+   "id": "put-refuses/kind-empty",
+   "check": "check_put_refuses",
+   "about": "put refuses a kind that is not such as text@1",
+   "steps": [
+    {
+     "op": "put",
+     "kind": "",
+     "data": {
+      "utf8": "x"
+     },
+     "error": "invalid"
+    }
+   ]
+  },
+  {
+   "id": "get-missing/absent",
+   "check": "check_get_missing",
+   "about": "get of an absent key raises not-found",
+   "steps": [
+    {
+     "op": "get",
+     "kind": "text@1",
+     "key": "sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175",
+     "error": "not-found"
+    }
+   ]
+  },
+  {
+   "id": "get-missing/another-kind",
+   "check": "check_get_missing",
+   "about": "get with another kind fails",
+   "steps": [
+    {
+     "op": "put",
+     "kind": "text@1",
+     "data": {
+      "utf8": "The rent is 1,200 dollars."
+     },
+     "result": "sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175"
+    },
+    {
+     "op": "get",
+     "kind": "prompt@1",
+     "key": "sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175",
+     "error": "store-error"
+    }
+   ]
+  },
+  {
+   "id": "bad-keys/a-path",
+   "check": "check_bad_keys",
+   "about": "a key that does not match sha256:[0-9a-f]{64} is invalid",
+   "steps": [
+    {
+     "op": "get",
+     "kind": "text@1",
+     "key": "sha256:../../etc/passwd",
+     "error": "invalid"
+    },
+    {
+     "op": "forget",
+     "key": "sha256:../../etc/passwd",
+     "reason": "test",
+     "error": "invalid"
+    }
+   ]
+  },
+  {
+   "id": "bad-keys/upper-case",
+   "check": "check_bad_keys",
+   "about": "a key that does not match sha256:[0-9a-f]{64} is invalid",
+   "steps": [
+    {
+     "op": "get",
+     "kind": "text@1",
+     "key": "sha256:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+     "error": "invalid"
+    },
+    {
+     "op": "forget",
+     "key": "sha256:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+     "reason": "test",
+     "error": "invalid"
+    }
+   ]
+  },
+  {
+   "id": "bad-keys/63-digits",
+   "check": "check_bad_keys",
+   "about": "a key that does not match sha256:[0-9a-f]{64} is invalid",
+   "steps": [
+    {
+     "op": "get",
+     "kind": "text@1",
+     "key": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "error": "invalid"
+    },
+    {
+     "op": "forget",
+     "key": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "reason": "test",
+     "error": "invalid"
+    }
+   ]
+  },
+  {
+   "id": "bad-keys/a-line-break",
+   "check": "check_bad_keys",
+   "about": "a key that does not match sha256:[0-9a-f]{64} is invalid",
+   "steps": [
+    {
+     "op": "get",
+     "kind": "text@1",
+     "key": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n",
+     "error": "invalid"
+    },
+    {
+     "op": "forget",
+     "key": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n",
+     "reason": "test",
+     "error": "invalid"
+    }
+   ]
+  },
+  {
+   "id": "bad-keys/a-parent-path",
+   "check": "check_bad_keys",
+   "about": "a key that does not match sha256:[0-9a-f]{64} is invalid",
+   "steps": [
+    {
+     "op": "get",
+     "kind": "text@1",
+     "key": "../aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "error": "invalid"
+    },
+    {
+     "op": "forget",
+     "key": "../aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "reason": "test",
+     "error": "invalid"
+    }
+   ]
+  },
+  {
+   "id": "bad-keys/no-prefix",
+   "check": "check_bad_keys",
+   "about": "a key that does not match sha256:[0-9a-f]{64} is invalid",
+   "steps": [
+    {
+     "op": "get",
+     "kind": "text@1",
+     "key": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "error": "invalid"
+    },
+    {
+     "op": "forget",
+     "key": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "reason": "test",
+     "error": "invalid"
+    }
+   ]
+  },
+  {
+   "id": "bad-keys/empty",
+   "check": "check_bad_keys",
+   "about": "a key that does not match sha256:[0-9a-f]{64} is invalid",
+   "steps": [
+    {
+     "op": "get",
+     "kind": "text@1",
+     "key": "",
+     "error": "invalid"
+    },
+    {
+     "op": "forget",
+     "key": "",
+     "reason": "test",
+     "error": "invalid"
+    }
+   ]
+  },
+  {
+   "id": "bad-logs/empty",
+   "check": "check_bad_logs",
+   "about": "a log name that is not a fixed word and its keys is invalid",
+   "steps": [
+    {
+     "op": "read",
+     "log": [],
+     "error": "invalid"
+    },
+    {
+     "op": "append",
+     "log": [],
+     "record": {
+      "a": 1
+     },
+     "error": "invalid"
+    }
+   ]
+  },
+  {
+   "id": "bad-logs/answers-no-keys",
+   "check": "check_bad_logs",
+   "about": "a log name that is not a fixed word and its keys is invalid",
+   "steps": [
+    {
+     "op": "read",
+     "log": [
+      "answers"
+     ],
+     "error": "invalid"
+    },
+    {
+     "op": "append",
+     "log": [
+      "answers"
+     ],
+     "record": {
+      "a": 1
+     },
+     "error": "invalid"
+    }
+   ]
+  },
+  {
+   "id": "bad-logs/answers-one-key",
+   "check": "check_bad_logs",
+   "about": "a log name that is not a fixed word and its keys is invalid",
+   "steps": [
+    {
+     "op": "read",
+     "log": [
+      "answers",
+      "sha256:6cea534bb1c3c01472bc5fdc5645a2707e80c963310efdf127c743f4098c5fe5"
+     ],
+     "error": "invalid"
+    },
+    {
+     "op": "append",
+     "log": [
+      "answers",
+      "sha256:6cea534bb1c3c01472bc5fdc5645a2707e80c963310efdf127c743f4098c5fe5"
+     ],
+     "record": {
+      "a": 1
+     },
+     "error": "invalid"
+    }
+   ]
+  },
+  {
+   "id": "bad-logs/answers-a-name",
+   "check": "check_bad_logs",
+   "about": "a log name that is not a fixed word and its keys is invalid",
+   "steps": [
+    {
+     "op": "read",
+     "log": [
+      "answers",
+      "sha256:6cea534bb1c3c01472bc5fdc5645a2707e80c963310efdf127c743f4098c5fe5",
+      "ana"
+     ],
+     "error": "invalid"
+    },
+    {
+     "op": "append",
+     "log": [
+      "answers",
+      "sha256:6cea534bb1c3c01472bc5fdc5645a2707e80c963310efdf127c743f4098c5fe5",
+      "ana"
+     ],
+     "record": {
+      "a": 1
+     },
+     "error": "invalid"
+    }
+   ]
+  },
+  {
+   "id": "bad-logs/answers-a-path",
+   "check": "check_bad_logs",
+   "about": "a log name that is not a fixed word and its keys is invalid",
+   "steps": [
+    {
+     "op": "read",
+     "log": [
+      "answers",
+      "../x",
+      "sha256:303789f3415bc7149bcb9f15a0dd98435cb0c4476ecba27a335d0ae7369b4b6b"
+     ],
+     "error": "invalid"
+    },
+    {
+     "op": "append",
+     "log": [
+      "answers",
+      "../x",
+      "sha256:303789f3415bc7149bcb9f15a0dd98435cb0c4476ecba27a335d0ae7369b4b6b"
+     ],
+     "record": {
+      "a": 1
+     },
+     "error": "invalid"
+    }
+   ]
+  },
+  {
+   "id": "bad-logs/splits-a-name",
+   "check": "check_bad_logs",
+   "about": "a log name that is not a fixed word and its keys is invalid",
+   "steps": [
+    {
+     "op": "read",
+     "log": [
+      "splits",
+      "requested4"
+     ],
+     "error": "invalid"
+    },
+    {
+     "op": "append",
+     "log": [
+      "splits",
+      "requested4"
+     ],
+     "record": {
+      "a": 1
+     },
+     "error": "invalid"
+    }
+   ]
+  },
+  {
+   "id": "bad-logs/a-parent-path",
+   "check": "check_bad_logs",
+   "about": "a log name that is not a fixed word and its keys is invalid",
+   "steps": [
+    {
+     "op": "read",
+     "log": [
+      "../answers",
+      "sha256:6cea534bb1c3c01472bc5fdc5645a2707e80c963310efdf127c743f4098c5fe5",
+      "sha256:303789f3415bc7149bcb9f15a0dd98435cb0c4476ecba27a335d0ae7369b4b6b"
+     ],
+     "error": "invalid"
+    },
+    {
+     "op": "append",
+     "log": [
+      "../answers",
+      "sha256:6cea534bb1c3c01472bc5fdc5645a2707e80c963310efdf127c743f4098c5fe5",
+      "sha256:303789f3415bc7149bcb9f15a0dd98435cb0c4476ecba27a335d0ae7369b4b6b"
+     ],
+     "record": {
+      "a": 1
+     },
+     "error": "invalid"
+    }
+   ]
+  },
+  {
+   "id": "bad-logs/deleted-a-key",
+   "check": "check_bad_logs",
+   "about": "a log name that is not a fixed word and its keys is invalid",
+   "steps": [
+    {
+     "op": "read",
+     "log": [
+      "deleted",
+      "sha256:303789f3415bc7149bcb9f15a0dd98435cb0c4476ecba27a335d0ae7369b4b6b"
+     ],
+     "error": "invalid"
+    },
+    {
+     "op": "append",
+     "log": [
+      "deleted",
+      "sha256:303789f3415bc7149bcb9f15a0dd98435cb0c4476ecba27a335d0ae7369b4b6b"
+     ],
+     "record": {
+      "a": 1
+     },
+     "error": "invalid"
+    }
+   ]
+  },
+  {
+   "id": "bad-logs/a-nested-word",
+   "check": "check_bad_logs",
+   "about": "a log name that is not a fixed word and its keys is invalid",
+   "steps": [
+    {
+     "op": "read",
+     "log": [
+      [
+       "answers"
+      ],
+      "sha256:6cea534bb1c3c01472bc5fdc5645a2707e80c963310efdf127c743f4098c5fe5",
+      "sha256:303789f3415bc7149bcb9f15a0dd98435cb0c4476ecba27a335d0ae7369b4b6b"
+     ],
+     "error": "invalid"
+    },
+    {
+     "op": "append",
+     "log": [
+      [
+       "answers"
+      ],
+      "sha256:6cea534bb1c3c01472bc5fdc5645a2707e80c963310efdf127c743f4098c5fe5",
+      "sha256:303789f3415bc7149bcb9f15a0dd98435cb0c4476ecba27a335d0ae7369b4b6b"
+     ],
+     "record": {
+      "a": 1
+     },
+     "error": "invalid"
+    }
+   ]
+  },
+  {
+   "id": "bad-logs/a-string",
+   "check": "check_bad_logs",
+   "about": "a log name that is not a fixed word and its keys is invalid",
+   "steps": [
+    {
+     "op": "read",
+     "log": "answers",
+     "error": "invalid"
+    },
+    {
+     "op": "append",
+     "log": "answers",
+     "record": {
+      "a": 1
+     },
+     "error": "invalid"
+    }
+   ]
+  },
+  {
+   "id": "chain/two-reviewers",
+   "check": "check_chain",
+   "about": "append sets sequence, previous and entry_sha256, read gives the records in order, the log only grows, and two reviewers write two logs",
+   "steps": [
+    {
+     "op": "read",
+     "log": [
+      "answers",
+      "sha256:6cea534bb1c3c01472bc5fdc5645a2707e80c963310efdf127c743f4098c5fe5",
+      "sha256:303789f3415bc7149bcb9f15a0dd98435cb0c4476ecba27a335d0ae7369b4b6b"
+     ],
+     "result": []
+    },
+    {
+     "op": "append",
+     "log": [
+      "answers",
+      "sha256:6cea534bb1c3c01472bc5fdc5645a2707e80c963310efdf127c743f4098c5fe5",
+      "sha256:303789f3415bc7149bcb9f15a0dd98435cb0c4476ecba27a335d0ae7369b4b6b"
+     ],
+     "record": {
+      "answer": "yes"
+     },
+     "result": "sha256:8ca2c0812f32d55ba614c5623c828fb4aa907f2dea2d9692cab23287d108849f"
+    },
+    {
+     "op": "read",
+     "log": [
+      "answers",
+      "sha256:6cea534bb1c3c01472bc5fdc5645a2707e80c963310efdf127c743f4098c5fe5",
+      "sha256:303789f3415bc7149bcb9f15a0dd98435cb0c4476ecba27a335d0ae7369b4b6b"
+     ],
+     "result": [
+      {
+       "answer": "yes",
+       "sequence": 1,
+       "previous": null,
+       "entry_sha256": "sha256:8ca2c0812f32d55ba614c5623c828fb4aa907f2dea2d9692cab23287d108849f"
+      }
+     ]
+    },
+    {
+     "op": "append",
+     "log": [
+      "answers",
+      "sha256:6cea534bb1c3c01472bc5fdc5645a2707e80c963310efdf127c743f4098c5fe5",
+      "sha256:303789f3415bc7149bcb9f15a0dd98435cb0c4476ecba27a335d0ae7369b4b6b"
+     ],
+     "record": {
+      "answer": "no"
+     },
+     "result": "sha256:170f9423f5e1e3d232d1b102fc57759d2891c0df4f9ff1d4705dbd19d4182549"
+    },
+    {
+     "op": "append",
+     "log": [
+      "answers",
+      "sha256:6cea534bb1c3c01472bc5fdc5645a2707e80c963310efdf127c743f4098c5fe5",
+      "sha256:30a59624410f1008fd431875f19b8e9fc189a5b10631c5892de610928e5a613b"
+     ],
+     "record": {
+      "answer": "yes"
+     },
+     "result": "sha256:8ca2c0812f32d55ba614c5623c828fb4aa907f2dea2d9692cab23287d108849f"
+    },
+    {
+     "op": "read",
+     "log": [
+      "answers",
+      "sha256:6cea534bb1c3c01472bc5fdc5645a2707e80c963310efdf127c743f4098c5fe5",
+      "sha256:303789f3415bc7149bcb9f15a0dd98435cb0c4476ecba27a335d0ae7369b4b6b"
+     ],
+     "result": [
+      {
+       "answer": "yes",
+       "sequence": 1,
+       "previous": null,
+       "entry_sha256": "sha256:8ca2c0812f32d55ba614c5623c828fb4aa907f2dea2d9692cab23287d108849f"
+      },
+      {
+       "answer": "no",
+       "sequence": 2,
+       "previous": "sha256:8ca2c0812f32d55ba614c5623c828fb4aa907f2dea2d9692cab23287d108849f",
+       "entry_sha256": "sha256:170f9423f5e1e3d232d1b102fc57759d2891c0df4f9ff1d4705dbd19d4182549"
+      }
+     ]
+    },
+    {
+     "op": "read",
+     "log": [
+      "answers",
+      "sha256:6cea534bb1c3c01472bc5fdc5645a2707e80c963310efdf127c743f4098c5fe5",
+      "sha256:30a59624410f1008fd431875f19b8e9fc189a5b10631c5892de610928e5a613b"
+     ],
+     "result": [
+      {
+       "answer": "yes",
+       "sequence": 1,
+       "previous": null,
+       "entry_sha256": "sha256:8ca2c0812f32d55ba614c5623c828fb4aa907f2dea2d9692cab23287d108849f"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "append-refuses/with-sequence",
+   "check": "check_append_refuses",
+   "about": "append refuses a record with a chain member",
+   "steps": [
+    {
+     "op": "append",
+     "log": [
+      "splits",
+      "sha256:22c7bf8df7263a704c84373866039fc932932ac3d6c530a45bfc06ddb467de13"
+     ],
+     "record": {
+      "sequence": 1
+     },
+     "error": "invalid"
+    },
+    {
+     "op": "read",
+     "log": [
+      "splits",
+      "sha256:22c7bf8df7263a704c84373866039fc932932ac3d6c530a45bfc06ddb467de13"
+     ],
+     "result": []
+    }
+   ]
+  },
+  {
+   "id": "append-refuses/with-previous",
+   "check": "check_append_refuses",
+   "about": "append refuses a record with a chain member",
+   "steps": [
+    {
+     "op": "append",
+     "log": [
+      "splits",
+      "sha256:22c7bf8df7263a704c84373866039fc932932ac3d6c530a45bfc06ddb467de13"
+     ],
+     "record": {
+      "previous": 1
+     },
+     "error": "invalid"
+    },
+    {
+     "op": "read",
+     "log": [
+      "splits",
+      "sha256:22c7bf8df7263a704c84373866039fc932932ac3d6c530a45bfc06ddb467de13"
+     ],
+     "result": []
+    }
+   ]
+  },
+  {
+   "id": "append-refuses/with-entry-sha256",
+   "check": "check_append_refuses",
+   "about": "append refuses a record with a chain member",
+   "steps": [
+    {
+     "op": "append",
+     "log": [
+      "splits",
+      "sha256:22c7bf8df7263a704c84373866039fc932932ac3d6c530a45bfc06ddb467de13"
+     ],
+     "record": {
+      "entry_sha256": 1
+     },
+     "error": "invalid"
+    },
+    {
+     "op": "read",
+     "log": [
+      "splits",
+      "sha256:22c7bf8df7263a704c84373866039fc932932ac3d6c530a45bfc06ddb467de13"
+     ],
+     "result": []
+    }
+   ]
+  },
+  {
+   "id": "append-refuses/a-list",
+   "check": "check_append_refuses",
+   "about": "append refuses a record that is not an object",
+   "steps": [
+    {
+     "op": "append",
+     "log": [
+      "splits",
+      "sha256:22c7bf8df7263a704c84373866039fc932932ac3d6c530a45bfc06ddb467de13"
+     ],
+     "record": [
+      1
+     ],
+     "error": "invalid"
+    },
+    {
+     "op": "read",
+     "log": [
+      "splits",
+      "sha256:22c7bf8df7263a704c84373866039fc932932ac3d6c530a45bfc06ddb467de13"
+     ],
+     "result": []
+    }
+   ]
+  },
+  {
+   "id": "append-refuses/deleted",
+   "check": "check_append_refuses",
+   "about": "append refuses the deleted log",
+   "steps": [
+    {
+     "op": "append",
+     "log": [
+      "deleted"
+     ],
+     "record": {
+      "key": "sha256:6cea534bb1c3c01472bc5fdc5645a2707e80c963310efdf127c743f4098c5fe5"
+     },
+     "error": "invalid"
+    },
+    {
+     "op": "read",
+     "log": [
+      "deleted"
+     ],
+     "result": []
+    }
+   ]
+  },
+  {
+   "id": "forget/one-object",
+   "check": "check_forget",
+   "about": "forget removes an object and records the key, the time and the reason",
+   "steps": [
+    {
+     "op": "put",
+     "kind": "text@1",
+     "data": {
+      "utf8": "The rent is 1,200 dollars."
+     },
+     "result": "sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175"
+    },
+    {
+     "op": "put",
+     "kind": "schema@1",
+     "data": {
+      "utf8": "{\"fields\":[{\"name\":\"rent\",\"type\":\"money\"}]}"
+     },
+     "result": "sha256:1f828fc16d1059559d7ca5a065081c951e4563bd7f3322b0b47cf8c5e813ccd0"
+    },
+    {
+     "op": "forget",
+     "key": "sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175",
+     "reason": "the tenant asked",
+     "result": null
+    },
+    {
+     "op": "get",
+     "kind": "text@1",
+     "key": "sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175",
+     "error": "not-found"
+    },
+    {
+     "op": "get",
+     "kind": "schema@1",
+     "key": "sha256:1f828fc16d1059559d7ca5a065081c951e4563bd7f3322b0b47cf8c5e813ccd0",
+     "result": {
+      "utf8": "{\"fields\":[{\"name\":\"rent\",\"type\":\"money\"}]}"
+     }
+    },
+    {
+     "op": "read",
+     "log": [
+      "deleted"
+     ],
+     "result": [
+      {
+       "key": "sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175",
+       "reason": "the tenant asked",
+       "time": {
+        "$": "string"
+       },
+       "sequence": 1,
+       "previous": null,
+       "entry_sha256": {
+        "$": "string"
+       }
+      }
+     ]
+    },
+    {
+     "op": "forget",
+     "key": "sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175",
+     "reason": "again",
+     "error": "not-found"
+    }
+   ]
+  }
+ ]
+}
