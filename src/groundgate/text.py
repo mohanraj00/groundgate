@@ -280,6 +280,11 @@ _SENTENCES: ContextVar[dict[int, tuple[str, list[int], list[int]]] | None] = Con
 _MIXED_HEADERS: ContextVar[
     dict[tuple[int, int], tuple[str, list[tuple[int, int, str]], set[int]]] | None
 ] = ContextVar("mixed_headers", default=None)
+# the number tokens of each qualifier window, read once while an index is open: the tokens, then
+# their starts and their ends in order (#346)
+_WINDOW_TOKENS: ContextVar[
+    dict[tuple[int, int, int], tuple[str, list[Token], list[int], list[int]]] | None
+] = ContextVar("window_tokens", default=None)
 
 
 @contextlib.contextmanager
@@ -287,9 +292,11 @@ def sentence_index() -> Iterator[None]:
     """Read sentence ends and mixed header blocks once, until the block ends."""
     token = _SENTENCES.set({})
     headers = _MIXED_HEADERS.set({})
+    windows = _WINDOW_TOKENS.set({})
     try:
         yield
     finally:
+        _WINDOW_TOKENS.reset(windows)
         _MIXED_HEADERS.reset(headers)
         _SENTENCES.reset(token)
 
@@ -387,14 +394,17 @@ def qualifiers(text: str, tok: Token) -> set[str]:
     """Comparators that apply to the value at ``tok`` (SPEC §4.2)."""
     voc = _VOCAB.get()
     s0, s1 = sentence(text, tok.start, qualifiers=True)
-    nearby = tokens(text, s0, s1)
-    prev_end = max([t.end for t in nearby if t.end <= tok.start] + [s0, tok.start - _WINDOW])
-    next_start = min([t.start for t in nearby if t.start >= tok.end] + [s1, tok.end + _WINDOW])
+    nearby, starts, ends = _window_tokens(text, s0, s1)
+    i = bisect.bisect_right(ends, tok.start)  # nearby[:i] end at or before the value
+    j = bisect.bisect_left(starts, tok.end)  # nearby[j:] start at or after its end
+    prev_end = max([s0, tok.start - _WINDOW] + ([ends[i - 1]] if i else []))
+    next_start = min([s1, tok.end + _WINDOW] + ([starts[j]] if j < len(starts) else []))
     before, after = text[prev_end : tok.start], text[tok.end : next_start]
     found = _before_qualifiers(text, s0, prev_end, tok.start)
     found |= {c for c, rx in voc._AFTER_RE.items() if rx.search(after)}
     rest = _strip_unit_suffix(text[tok.end : s1])
-    prev = [t for t in nearby if t.end <= tok.start and t.end >= prev_end]
+    # the tokens end in order, so only the last one before the value can end at prev_end
+    prev = [nearby[i - 1]] if i and ends[i - 1] >= prev_end else []
     between_before = bool(voc._BETWEEN_END.search(before.rstrip()))
     if (
         (voc._RANGE_NEXT.match(rest) and not _NEXT_CELL_SIGN.match(rest))
@@ -418,6 +428,21 @@ def qualifiers(text: str, tok: Token) -> set[str]:
     ):
         found.add("range")
     return found
+
+
+def _window_tokens(text: str, s0: int, s1: int) -> tuple[list[Token], list[int], list[int]]:
+    """The number tokens of text[s0:s1] with their starts and their ends. While an index is open,
+    each window is read once, so many values in one long sentence cost one read (#346). The
+    tokens do not overlap, so the starts and the ends are both in order."""
+    index = _WINDOW_TOKENS.get()
+    key = (id(text), s0, s1)
+    held = None if index is None else index.get(key)
+    if held is None or held[0] is not text:
+        found = tokens(text, s0, s1)
+        held = (text, found, [t.start for t in found], [t.end for t in found])
+        if index is not None:
+            index[key] = held
+    return held[1], held[2], held[3]
 
 
 def _between_words_before(text: str, start: int) -> bool:

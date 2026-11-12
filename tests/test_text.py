@@ -13,6 +13,7 @@ import groundgate as gg
 from groundgate.text import (
     _MIXED_HEADERS,
     _SENTENCE_END,
+    _WINDOW_TOKENS,
     HeadingIndex,
     _grouped,
     _label_line_in,
@@ -301,6 +302,42 @@ def test_mixed_header_index_keeps_key_sets_separate_and_expires() -> None:
             assert _mixed_header_lines(text, both, 17)
         assert _MIXED_HEADERS.get() is outer
     assert _MIXED_HEADERS.get() is None
+
+
+def test_key_mentions_drop_inner_mentions_in_linear_time() -> None:
+    """The input of #346: the alias on every row of a long table. The check that drops a mention
+    inside a longer mention is one sweep, so four times the rows take less than eight times as
+    long, and the inner mentions still go."""
+
+    keys = ("Revenue", "Total revenue")
+
+    def prepare(rows: int) -> Callable[[], None]:
+        text = "Revenue\t1\t$3m\nTotal revenue\t2\n" * rows
+
+        def run() -> None:
+            mentions = key_mentions(text, keys)
+            assert len(mentions) == 2 * rows
+            assert sum(k == "Total revenue" for _, _, k in mentions) == rows
+
+        return run
+
+    assert_linear(prepare, 2000, 8000)
+
+
+def test_qualifier_window_tokens_match_a_fresh_read() -> None:
+    """With an open index, each qualifier window is read once (#346). The comparators stay the
+    same as a fresh read of the window for each value, and the index expires with the block."""
+    voc = "Cost\tless than 5\t5 to 10\tbetween 2 and 4\tno more than 7\t1 000 000\tup to 3\n"
+    text = voc * 3
+    toks = tokens(text)
+    fresh = [qualifiers(text, t) for t in toks]
+    assert _WINDOW_TOKENS.get() is None
+    with sentence_index():
+        assert [qualifiers(text, t) for t in toks] == fresh
+        held = _WINDOW_TOKENS.get()
+        assert held is not None and len(held) == 1
+    assert _WINDOW_TOKENS.get() is None
+    assert {"lt", "range", "le"} <= set().union(*fresh)
 
 
 def test_two_blank_lines_break_a_prose_heading() -> None:

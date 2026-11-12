@@ -913,6 +913,35 @@ def test_heading_scale_reads_a_wide_row_once() -> None:
     assert_linear(prepare, 20_000, 80_000)
 
 
+def test_qualifiers_read_a_long_table_sentence_once() -> None:
+    """The input of #346: a table with no sentence end, the alias on every row, and a candidate
+    on every 20th row. The qualifier window reads the tokens of the one sentence once, so four
+    times the rows (and the candidates) take less than eight times as long."""
+
+    schema = {"fields": {"rev": {"type": "integer", "unit": "USD", "aliases": ["Revenue"]}}}
+
+    def prepare(rows: int) -> Callable[[], None]:
+        text = "".join(f"Revenue\t{k}\t${k * 3}m\n" for k in range(rows))
+        cands = [
+            {
+                "id": f"c{k}",
+                "field": "rev",
+                "value": k * 3,
+                "unit": "USD",
+                "evidence": [{"text": f"${k * 3}m"}, {"role": "field", "text": "Revenue"}],
+            }
+            for k in range(0, rows, 20)
+        ]
+
+        def run() -> None:
+            r = gg.admit(text, schema, cands)
+            assert len(r.decisions) == len(cands)
+
+        return run
+
+    assert_linear(prepare, 500, 2000)
+
+
 def test_unit_places_read_a_long_table_once() -> None:
     """A unit quote with many occurrences in a long table stays linear (#164): four times the
     rows take less than eight times as long."""
