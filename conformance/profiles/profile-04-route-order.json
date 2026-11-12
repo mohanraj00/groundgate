@@ -1,0 +1,67 @@
+{
+ "name": "profile-04-route-order",
+ "description": "The digest reads the route rows sorted by field, then by route.",
+ "document": "Fee\t$90\n",
+ "profile": {
+  "groundgate_profile": 1,
+  "id": "fees-test",
+  "version": "1.0.0",
+  "schema": {
+   "fields": {
+    "fee": {
+     "type": "integer",
+     "unit": "USD",
+     "aliases": [
+      "Fee"
+     ]
+    }
+   }
+  },
+  "routes": [
+   {
+    "field": "fee",
+    "route": "cleared",
+    "status": "draft"
+   },
+   {
+    "field": "fee",
+    "route": "checked",
+    "status": "draft"
+   }
+  ]
+ },
+ "candidates": [
+  {
+   "id": "p1",
+   "field": "fee",
+   "value": 90,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4,
+     "end": 7,
+     "text": "$90"
+    },
+    {
+     "role": "field",
+     "start": 0,
+     "end": 3,
+     "text": "Fee"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "profile": {
+   "id": "fees-test",
+   "version": "1.0.0",
+   "sha256": "sha256:b48d13c76de25ffb12e2a5676db1127d6afdaaf4cbf9a71ec35a6e6dee01b2fa"
+  }
+ }
+}

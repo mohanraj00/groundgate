@@ -1,0 +1,22 @@
+{
+ "name": "profile-bad-schema",
+ "description": "A profile with a schema that breaks SPEC 2.3 (P4) is invalid (SPEC §4.10). The packet gets no receipt.",
+ "document": "Fee\t$90\n",
+ "profile": {
+  "groundgate_profile": 1,
+  "id": "fees-test",
+  "version": "1.0.0",
+  "schema": {
+   "fields": {
+    "Fee": {
+     "type": "integer",
+     "unit": "USD"
+    }
+   }
+  }
+ },
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

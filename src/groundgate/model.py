@@ -750,6 +750,7 @@ class Receipt:
     relations: tuple[RelationResult, ...] | None = None  # None when the schema has no relations
     packs: tuple[dict[str, str], ...] = ()  # the packs that applied, sorted by id (SPEC §5)
     doubt_sha256: str | None = None  # None when the packet has no doubt span (SPEC §5)
+    profile: dict[str, str] | None = None  # None when the packet gives no profile (SPEC §5)
 
     def body(self) -> dict[str, Any]:
         counts = {"admitted": 0, "needs_verification": 0, "rejected": 0}
@@ -765,6 +766,7 @@ class Receipt:
             },
             "references": [{"id": i, "sha256": h, "source": s} for i, h, s in self.references],
             "packs": [dict(p) for p in self.packs],
+            **({} if self.profile is None else {"profile": dict(self.profile)}),
             "schema_sha256": self.schema_sha256,
             "policy_sha256": self.policy_sha256,
             "decisions": [d.to_dict() for d in self.decisions],

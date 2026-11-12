@@ -1393,6 +1393,88 @@ more limit. The packet is also invalid when a kind pack fails one of these check
 | L9 kind pack | a `needs` that is not a list of objects with only `id` and `version`; a `needs` entry that names the base pack, the pack itself, an id twice, a kind pack or a pack that is not given or built in; a `fields` that is not an object; a template name that breaks the field name rule of §2.3; a template member other than the five above; a template that breaks a rule of §2.3 |
 | L10 schema | a `template` that breaks a rule of §2.3, or a field that breaks a rule of §2.3 after it takes its template |
 
+### 4.10 Document-family profiles
+
+A **profile** (#639) holds the terms, the policy and the route status of one document family. It
+is the unit of calibration: a measure qualifies one version of one profile. A profile adds no
+reading rule and changes no decision. The rules of §3 and §4 stay as they are, and the gate reads
+the profile's schema, policy and packs as if the packet gave them.
+
+A profile is one JSON object in format 1:
+
+```json
+{"groundgate_profile": 1, "id": "invoice", "version": "1.0.0", "description": "...",
+ "kind": {"id": "invoice-x-example", "version": "1.0.0"},
+ "packs": [],
+ "schema": {"packs": [{"id": "invoice-x-example", "version": "1.0.0"}], "fields": {}},
+ "policy": {"judge": {"id": "j", "digest": "j-1", "clear": {"KEY_NOT_AT_VALUE": 0.95}}},
+ "routes": [{"field": "total", "route": "checked", "status": "measured",
+             "date": "2026-11-12", "documents": 60, "bound": "0.0605"}],
+ "gold_sha256": "sha256:..."}
+```
+
+| Member | Meaning |
+|---|---|
+| `groundgate_profile` | The profile format, `1`. |
+| `id` | Lowercase letters and digits, with single `-` between them, at most 64 characters. |
+| `version` | `MAJOR.MINOR.PATCH`, as the version of a pack (§4.8). |
+| `description` | Optional text. It is in the digest and has no effect on a decision. |
+| `kind` | Optional. Null, or `{"id", "version"}` of the kind pack of the family. |
+| `packs` | Optional. The pack objects that the schema names or needs and that are not built in (§2.1). |
+| `schema` | The terms: a schema of §2.3. |
+| `policy` | Optional. The admission policy and the judge thresholds: a policy of §2.4. |
+| `routes` | Optional. The route table. |
+| `gold_sha256` | Optional. Null, or the digest of the gold set of the last measure. |
+
+After defaults, `description` is `""`, `kind` is null, `packs` is `[]`, `policy` is `{}`,
+`routes` is `[]` and `gold_sha256` is null.
+
+A **route** is one way that a field gets admitted: `checked`, when the checks of §3.1 admit the
+value, or `cleared`, when a judge clears `KEY_NOT_AT_VALUE` (§3.3). A route row is
+`{"field", "route", "status", "date", "documents", "bound"}`. `status` is `draft` or `measured`.
+`date` is the day of the last measure, as `YYYY-MM-DD`. `documents` is the count of gold
+documents of that measure. `bound` is the one-sided 95% upper bound of the admitted error rate on
+that route, as a decimal string in [0, 1]. A draft row can give the last measure, and a measured
+row must give it. A route with no row is `draft`. The status has no effect on a decision in this
+spec version. It records which routes a measure qualified.
+
+The gold set digest names the documents and labels of the last measure. The measure tool defines
+how it reads the gold set (#640). groundgate checks only the form of the digest.
+
+A packet can give a profile in place of its schema, its policy and its packs. A packet that
+gives a profile and also a schema, a policy or a pack is invalid. The packet is also invalid when
+its profile fails one of these checks:
+
+| Check | The packet is invalid with |
+|---|---|
+| P1 closed format | a profile that is not an object or is not JSON data, a member that the format does not list, a `groundgate_profile` other than `1`, or no `schema` |
+| P2 id and version | an id or a version with the wrong form |
+| P3 description | a description that is not a string |
+| P4 terms | a `packs` that is not a list, a `policy` that is not an object, or a schema, a policy or a pack that breaks a rule of §2.3, §2.4, §4.8 or §4.9 |
+| P5 kind | a `kind` that is not null or an object with only `id` and `version`, or that names no kind pack that the schema names |
+| P6 routes | a `routes` that is not a list; a row that is not an object or has another member; a `field` that the schema does not have; a `route` other than `checked` or `cleared`; a `status` other than `draft` or `measured`; two rows for one field and route; a `date` that is not a real day as `YYYY-MM-DD`; a `documents` that is not an integer in [1, 2^53]; a `bound` that is not a decimal string in [0, 1]; a `measured` row with no `date`, `documents` or `bound` |
+| P7 gold set | a `gold_sha256` that is not null or `sha256:` and 64 lowercase hex digits, or a `measured` row with a null `gold_sha256` |
+| P8 size | a profile file of more than 4 MiB, before it is parsed; a JSON nesting depth of more than 32, where the profile object has depth 1; more than 4 MiB as canonical JSON; more than 2,000 route rows |
+
+The digest of a profile is
+
+`profile_sha256 = "sha256:" + hex(SHA-256("groundgate-profile/1:" + JCS(body)))`
+
+where `body` is the profile after defaults with `schema`, `policy` and `packs` replaced by
+`schema_sha256` (§2.3) and `policy_sha256` (§2.4), and with the route rows sorted by `field`,
+then by `route`. A row keeps only the members that it gives. The schema digest holds the digest
+of each pack (§2.3). So a new term, threshold, pack, route row or gold set gives a new profile
+digest, and a new spec version gives one too. The prefix names the profile format.
+
+A built-in kind pack (§4.8) loads as an example profile: one field for each template, with the
+template, and no route row. Its id and version are the pack's, and its description says that no
+route is measured. `groundgate.profile.built_in_profile(id)` in the reference implementation
+gives it.
+
+An implementation that reads profiles also gives the receipt `profile` member and the outcome and
+codes of each decision in every vector under `conformance/profiles/`, and refuses every packet
+there that expects an error.
+
 ## 5. Receipt
 
 ```json
@@ -1400,6 +1482,7 @@ more limit. The packet is also invalid when a kind pack fails one of these check
  "document": {"id": null, "sha256": "sha256:...", "source": null, "doubt_sha256": null},
  "references": [],
  "packs": [],
+ "profile": {"id": "invoice", "version": "1.0.0", "sha256": "sha256:..."},
  "schema_sha256": "sha256:...", "policy_sha256": "sha256:...",
  "decisions": [{"candidate_id": "c1", "candidate_sha256": "sha256:...", "field": "...",
                 "key": null, "proposer": null, "outcome": "admitted", "codes": [], "value": "2000", "unit": "mg",
@@ -1419,6 +1502,10 @@ its decisions read (spec 0.12, #535). `references` lists each reference as
 each pack that a named kind pack needs, as `{"id", "type", "version", "sha256"}`, sorted by `id`.
 `type` is `vocabulary` or `kind`. It lists a named built-in pack such as `finance`, but never the
 base pack.
+
+`profile` names the packet's profile (§4.10) as `{"id", "version", "sha256"}`, with the digest of
+§4.10. So each admitted fact shows which profile version admitted it. A receipt of a packet with
+no profile has no `profile` member.
 
 Decisions are sorted by `candidate_sha256`, then by input position. `codes` lists the rejecting
 code, or the flag codes in the order of the table in §3.3, followed by `EVIDENCE_REANCHORED`,

@@ -17,6 +17,10 @@ Each file in `vectors/` is a complete, language-agnostic test case:
 - `expected.relations` (optional): the receipt's relation results (SPEC §5), in receipt order.
   A vector without it has a schema with no relations.
 
+Files in `profiles/` are profile vectors (SPEC §4.10). Each one has a `profile` in place of
+`schema`, `policy` and `packs`. `expected.profile` is the receipt's `profile` member, with the
+digest written by hand in `build.py`, and `expected.error` true marks an invalid packet.
+
 Files in `invalid/` are invalid packets. An implementation must refuse them (SPEC §2) and emit no
 receipt.
 

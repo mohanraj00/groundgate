@@ -1,0 +1,96 @@
+{
+  "groundgate_profile": 1,
+  "id": "invoice",
+  "version": "1.0.0",
+  "description": "Synthetic invoices that build.py makes. The measured route is a claim about these synthetic invoices only.",
+  "kind": {
+    "id": "invoice-x-example",
+    "version": "1.0.0"
+  },
+  "packs": [
+    {
+      "groundgate_pack": 1,
+      "type": "kind",
+      "id": "invoice-x-example",
+      "version": "1.0.0",
+      "description": "Field templates for the synthetic invoices of examples/profiles.",
+      "fields": {
+        "total": {
+          "type": "number",
+          "unit": "USD",
+          "aliases": [
+            "Total due"
+          ]
+        },
+        "subtotal": {
+          "type": "number",
+          "unit": "USD",
+          "aliases": [
+            "Subtotal"
+          ]
+        },
+        "tax": {
+          "type": "number",
+          "unit": "USD",
+          "aliases": [
+            "Sales tax"
+          ]
+        },
+        "invoice_number": {
+          "type": "string",
+          "aliases": [
+            "Invoice number"
+          ]
+        }
+      }
+    }
+  ],
+  "schema": {
+    "packs": [
+      {
+        "id": "invoice-x-example",
+        "version": "1.0.0"
+      }
+    ],
+    "fields": {
+      "total": {
+        "template": "invoice-x-example/total",
+        "minimum": "0",
+        "required": true
+      },
+      "subtotal": {
+        "template": "invoice-x-example/subtotal",
+        "minimum": "0"
+      },
+      "tax": {
+        "template": "invoice-x-example/tax",
+        "minimum": "0"
+      },
+      "invoice_number": {
+        "template": "invoice-x-example/invoice_number",
+        "required": true
+      }
+    }
+  },
+  "policy": {
+    "unit_window": 24,
+    "judge": {
+      "id": "invoice-judge",
+      "digest": "example-1",
+      "clear": {
+        "KEY_NOT_AT_VALUE": 0.95
+      }
+    }
+  },
+  "routes": [
+    {
+      "field": "total",
+      "route": "checked",
+      "status": "measured",
+      "date": "2026-11-12",
+      "documents": 60,
+      "bound": "0.0605"
+    }
+  ],
+  "gold_sha256": "sha256:4367bb5e1215864b29e1f93b14507e53766185a2d3245b306bd16be66e412f21"
+}

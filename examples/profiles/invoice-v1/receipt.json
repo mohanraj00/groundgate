@@ -1,0 +1,155 @@
+{
+  "groundgate": "0.12",
+  "document": {
+    "id": "INV-1000",
+    "sha256": "sha256:6f470b7c781da65cd484f15d4e55ff6f0de82a946f7289d2bee6712f0ff1a407",
+    "source": null,
+    "doubt_sha256": null
+  },
+  "references": [],
+  "packs": [
+    {
+      "id": "invoice-x-example",
+      "type": "kind",
+      "version": "1.0.0",
+      "sha256": "sha256:e14e37a41f3d2e6b90bf6c2b6f94b7344eedcc61af10f0d6a8b0abc5a53dde4b"
+    }
+  ],
+  "profile": {
+    "id": "invoice",
+    "version": "1.0.0",
+    "sha256": "sha256:9075e2f872f7daf99352518893a0f223a174f4e54106f3ae3bab5241f6ec6d4e"
+  },
+  "schema_sha256": "sha256:abc08e7250ff54c8e14886e39aaa3caef7cc061dfc37e90085e63cdba187d74e",
+  "policy_sha256": "sha256:e5b8aa520bfc0c63a89cf6849d599b3446f082e7aaf457d2f9c5f64ba5531d46",
+  "decisions": [
+    {
+      "candidate_id": "INV-1000/tax",
+      "candidate_sha256": "sha256:6dac310393d6a8a38a05414b2e2bc5032e8facead6dbf9da977de75b9dc830ee",
+      "field": "tax",
+      "key": null,
+      "proposer": null,
+      "outcome": "admitted",
+      "codes": [],
+      "value": "400.16",
+      "unit": "USD",
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 253,
+        "end": 260
+      },
+      "parts": [
+        {
+          "role": "field",
+          "start": 237,
+          "end": 246,
+          "passed": true
+        }
+      ],
+      "missing": [],
+      "packs": [
+        "invoice-x-example"
+      ]
+    },
+    {
+      "candidate_id": "INV-1000/total",
+      "candidate_sha256": "sha256:85e05bb724ffba4c2de030dcfc87bdf5587ef6b3dec5c24ace583c0caca1e499",
+      "field": "total",
+      "key": null,
+      "proposer": null,
+      "outcome": "admitted",
+      "codes": [],
+      "value": "5402.16",
+      "unit": "USD",
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 272,
+        "end": 281
+      },
+      "parts": [
+        {
+          "role": "field",
+          "start": 261,
+          "end": 270,
+          "passed": true
+        }
+      ],
+      "missing": [],
+      "packs": [
+        "invoice-x-example"
+      ]
+    },
+    {
+      "candidate_id": "INV-1000/invoice_number",
+      "candidate_sha256": "sha256:a2f643d37ce7c4f0fb85d0637efac5af7fc1487a55df7eb000b6d411249abb4c",
+      "field": "invoice_number",
+      "key": null,
+      "proposer": null,
+      "outcome": "admitted",
+      "codes": [],
+      "value": "INV-1000",
+      "unit": null,
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 24,
+        "end": 32
+      },
+      "parts": [
+        {
+          "role": "field",
+          "start": 8,
+          "end": 22,
+          "passed": true
+        }
+      ],
+      "missing": [],
+      "packs": [
+        "invoice-x-example"
+      ]
+    },
+    {
+      "candidate_id": "INV-1000/subtotal",
+      "candidate_sha256": "sha256:e1f25ac26c6498f13e10ff289ca1f785e6529cba446d72a197d2f1ba2361d4f5",
+      "field": "subtotal",
+      "key": null,
+      "proposer": null,
+      "outcome": "admitted",
+      "codes": [],
+      "value": "5002",
+      "unit": "USD",
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 227,
+        "end": 236
+      },
+      "parts": [
+        {
+          "role": "field",
+          "start": 217,
+          "end": 225,
+          "passed": true
+        }
+      ],
+      "missing": [],
+      "packs": [
+        "invoice-x-example"
+      ]
+    }
+  ],
+  "coverage": [],
+  "judgments": [],
+  "summary": {
+    "admitted": 4,
+    "needs_verification": 0,
+    "rejected": 0
+  },
+  "receipt_sha256": "sha256:12c11966e4d537add2224244d9e9715c42cea170aec2f739df77835de474f1c2"
+}

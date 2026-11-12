@@ -1,0 +1,166 @@
+{
+  "groundgate": "0.12",
+  "document": {
+    "id": "fr-2026-07250-appendix-a",
+    "sha256": "sha256:796020e32bec9e30f867e994d9d61cf3349e240c4a805681fb29b6fa7c240c7a",
+    "source": null,
+    "doubt_sha256": null
+  },
+  "references": [],
+  "packs": [],
+  "profile": {
+    "id": "fee-schedule",
+    "version": "1.0.0",
+    "sha256": "sha256:e688001255373cda0eaf4064da1b0f34e36a8c8720720bc61e9037220cbdce33"
+  },
+  "schema_sha256": "sha256:c9fb9b857d48de2f49ddb5efc3689f9352f25e70499bfd253d1d44af17891257",
+  "policy_sha256": "sha256:c105b3bb73f01e4c8b983392380899c24bb7ce1faaf95798fa966bdb0e8bf607",
+  "decisions": [
+    {
+      "candidate_id": "certification_fee/New fee",
+      "candidate_sha256": "sha256:404e13ad4f1d9a2ec1ab955608fa3aea19d3b76625e4cc972bf7c133b7c4c400",
+      "field": "certification_fee",
+      "key": "New fee",
+      "proposer": null,
+      "outcome": "admitted",
+      "codes": [],
+      "value": "170",
+      "unit": null,
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 630,
+        "end": 637
+      },
+      "parts": [
+        {
+          "role": "field",
+          "start": 565,
+          "end": 601,
+          "passed": true
+        },
+        {
+          "role": "key",
+          "start": 417,
+          "end": 424,
+          "passed": true
+        }
+      ],
+      "missing": [],
+      "packs": []
+    },
+    {
+      "candidate_id": "data_poster_fee/New fee",
+      "candidate_sha256": "sha256:78215465e38f34adda5a2f99bb4df2dd3756f3c934424ffa8d14fbc91f1031df",
+      "field": "data_poster_fee",
+      "key": "New fee",
+      "proposer": null,
+      "outcome": "admitted",
+      "codes": [],
+      "value": "25",
+      "unit": null,
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 851,
+        "end": 856
+      },
+      "parts": [
+        {
+          "role": "field",
+          "start": 784,
+          "end": 795,
+          "passed": true
+        },
+        {
+          "role": "key",
+          "start": 417,
+          "end": 424,
+          "passed": true
+        }
+      ],
+      "missing": [],
+      "packs": []
+    },
+    {
+      "candidate_id": "geomagnetic_model_fee/New fee",
+      "candidate_sha256": "sha256:97d10d483bf9b9e441448be2bccb0817ac295bc3044e52fc7cc43c75a2551dd1",
+      "field": "geomagnetic_model_fee",
+      "key": "New fee",
+      "proposer": null,
+      "outcome": "admitted",
+      "codes": [],
+      "value": "29539",
+      "unit": null,
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 2468,
+        "end": 2477
+      },
+      "parts": [
+        {
+          "role": "field",
+          "start": 2405,
+          "end": 2438,
+          "passed": true
+        },
+        {
+          "role": "key",
+          "start": 417,
+          "end": 424,
+          "passed": true
+        }
+      ],
+      "missing": [],
+      "packs": []
+    },
+    {
+      "candidate_id": "certification_fee/Current fee",
+      "candidate_sha256": "sha256:ed768930c881fb108cb6204b89b3d5f498f370b0207a821230613170be91c4e7",
+      "field": "certification_fee",
+      "key": "Current fee",
+      "proposer": null,
+      "outcome": "needs_verification",
+      "codes": [
+        "KEY_NOT_AT_VALUE"
+      ],
+      "value": "168",
+      "unit": null,
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 614,
+        "end": 621
+      },
+      "parts": [
+        {
+          "role": "field",
+          "start": 565,
+          "end": 601,
+          "passed": true
+        },
+        {
+          "role": "key",
+          "start": 399,
+          "end": 410,
+          "passed": true
+        }
+      ],
+      "missing": [],
+      "packs": []
+    }
+  ],
+  "coverage": [],
+  "judgments": [],
+  "summary": {
+    "admitted": 3,
+    "needs_verification": 1,
+    "rejected": 0
+  },
+  "receipt_sha256": "sha256:a55717eea197877a0a8622df200a15d148db18e6b6ffca82444a0597f16f8ce5"
+}

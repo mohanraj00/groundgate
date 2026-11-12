@@ -1,0 +1,36 @@
+{
+ "name": "profile-bad-date",
+ "description": "A profile with the date 2026-02-30 (P6) is invalid (SPEC §4.10). The packet gets no receipt.",
+ "document": "Fee\t$90\n",
+ "profile": {
+  "groundgate_profile": 1,
+  "id": "fees-test",
+  "version": "1.0.0",
+  "schema": {
+   "fields": {
+    "fee": {
+     "type": "integer",
+     "unit": "USD",
+     "aliases": [
+      "Fee"
+     ]
+    }
+   }
+  },
+  "routes": [
+   {
+    "field": "fee",
+    "route": "checked",
+    "status": "measured",
+    "date": "2026-02-30",
+    "documents": 60,
+    "bound": "0.0605"
+   }
+  ],
+  "gold_sha256": "sha256:abababababababababababababababababababababababababababababababab"
+ },
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

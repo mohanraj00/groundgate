@@ -1,0 +1,55 @@
+{
+ "name": "profile-01-receipt",
+ "description": "The receipt names the profile by id, version and digest. The profile gives the schema and the policy, and the decision is the decision without a profile.",
+ "document": "Fee\t$90\n",
+ "profile": {
+  "groundgate_profile": 1,
+  "id": "fees-test",
+  "version": "1.0.0",
+  "schema": {
+   "fields": {
+    "fee": {
+     "type": "integer",
+     "unit": "USD",
+     "aliases": [
+      "Fee"
+     ]
+    }
+   }
+  }
+ },
+ "candidates": [
+  {
+   "id": "p1",
+   "field": "fee",
+   "value": 90,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4,
+     "end": 7,
+     "text": "$90"
+    },
+    {
+     "role": "field",
+     "start": 0,
+     "end": 3,
+     "text": "Fee"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "profile": {
+   "id": "fees-test",
+   "version": "1.0.0",
+   "sha256": "sha256:b5d757dc89507b249c824b49cc696ae63f3139012571021abe9bf179a9eb2af7"
+  }
+ }
+}

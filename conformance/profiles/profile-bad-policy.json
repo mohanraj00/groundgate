@@ -1,0 +1,28 @@
+{
+ "name": "profile-bad-policy",
+ "description": "A profile with a policy that breaks SPEC 2.4 (P4) is invalid (SPEC §4.10). The packet gets no receipt.",
+ "document": "Fee\t$90\n",
+ "profile": {
+  "groundgate_profile": 1,
+  "id": "fees-test",
+  "version": "1.0.0",
+  "schema": {
+   "fields": {
+    "fee": {
+     "type": "integer",
+     "unit": "USD",
+     "aliases": [
+      "Fee"
+     ]
+    }
+   }
+  },
+  "policy": {
+   "unit_window": -1
+  }
+ },
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

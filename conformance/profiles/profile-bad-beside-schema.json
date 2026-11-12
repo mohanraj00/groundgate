@@ -1,0 +1,33 @@
+{
+ "name": "profile-bad-beside-schema",
+ "description": "A profile with a schema beside it in the packet is invalid (SPEC §4.10). The packet gets no receipt.",
+ "document": "Fee\t$90\n",
+ "profile": {
+  "groundgate_profile": 1,
+  "id": "fees-test",
+  "version": "1.0.0",
+  "schema": {
+   "fields": {
+    "fee": {
+     "type": "integer",
+     "unit": "USD",
+     "aliases": [
+      "Fee"
+     ]
+    }
+   }
+  }
+ },
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  }
+ },
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}
