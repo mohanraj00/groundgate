@@ -1454,7 +1454,7 @@ its profile fails one of these checks:
 | P5 kind | a `kind` that is not null or an object with only `id` and `version`, or that names no kind pack that the schema names |
 | P6 routes | a `routes` that is not a list; a row that is not an object or has another member; a `field` that the schema does not have; a `route` other than `checked` or `cleared`; a `status` other than `draft` or `measured`; two rows for one field and route; a `date` that is not a real day as `YYYY-MM-DD`; a `documents` that is not an integer in [1, 2^53]; a `bound` that is not a decimal string in [0, 1]; a `measured` row with no `date`, `documents` or `bound` |
 | P7 gold set | a `gold_sha256` that is not null or `sha256:` and 64 lowercase hex digits, or a `measured` row with a null `gold_sha256` |
-| P8 size | a profile file of more than 4 MiB, before it is parsed; more than 4 MiB as canonical JSON; more than 2,000 route rows |
+| P8 size | a profile file of more than 4 MiB, before it is parsed; a JSON nesting depth of more than 32, where the profile object has depth 1; more than 4 MiB as canonical JSON; more than 2,000 route rows |
 
 The digest of a profile is
 

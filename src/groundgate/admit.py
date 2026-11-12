@@ -1596,8 +1596,8 @@ def admit(
     if profile is not None:
         if schema is not None or policy is not None or packs:
             raise PacketError("give the schema, the policy and the packs in the profile")
+        checked = check_profile(profile)  # P8 bounds the depth before the recursive check
         _check_integers(profile, "profile")
-        checked = check_profile(profile)
         schema, policy, entry = checked.schema, checked.policy, checked.entry()
     if schema is None:
         raise PacketError("schema must be an object with a 'fields' object")

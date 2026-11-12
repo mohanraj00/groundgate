@@ -34,6 +34,7 @@ PREFIX = "groundgate-profile/1:"  # names the profile format, not the spec versi
 MAX_FILE = 4 << 20  # bytes of a profile file, before it is parsed (P8)
 MAX_CANONICAL = 4 << 20  # bytes of a profile as canonical JSON (P8)
 MAX_ROUTES = 2000  # the rows of one route table (P8)
+MAX_DEPTH = 32  # the JSON nesting depth: the profile object is depth 1 (P8)
 ROUTES = ("checked", "cleared")
 STATUSES = ("draft", "measured")
 MEMBERS = frozenset(
@@ -116,11 +117,27 @@ def _check_routes(rows: object, fields: Mapping[str, object]) -> list[dict[str, 
     return sorted(rows, key=lambda r: (r["field"], r["route"]))
 
 
+def _depth_ok(obj: object) -> bool:
+    """True when no list or object is deeper than MAX_DEPTH. A loop, not recursion, so that a
+    deep profile cannot exhaust the stack."""
+    todo: list[tuple[object, int]] = [(obj, 1)]
+    while todo:
+        node, depth = todo.pop()
+        if isinstance(node, (dict, list)):
+            if depth > MAX_DEPTH:
+                return False
+            items = node.values() if isinstance(node, dict) else node
+            todo.extend((v, depth + 1) for v in items)
+    return True
+
+
 def check_profile(profile: object) -> Profile:
     """Run the checks P1 to P8 on one profile (SPEC §4.10), and return the checked profile.
     Raises ``PacketError``. The digest is computed, never read from the profile."""
     if not isinstance(profile, dict):
         raise _fail("a profile must be a JSON object (P1)")
+    if not _depth_ok(profile):
+        raise _fail(f"the profile is nested deeper than {MAX_DEPTH} (P8)")
     try:
         size = len(jcs(profile).encode("utf-8", "surrogatepass"))
     except (TypeError, ValueError) as e:

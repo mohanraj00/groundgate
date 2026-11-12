@@ -109,6 +109,17 @@ def test_load_profile(tmp_path: Path) -> None:
     big.write_bytes(b" " * ((4 << 20) + 1))
     with pytest.raises(gg.PacketError, match="P8"):
         load_profile(big)
+    deep = tmp_path / "deep.json"
+    nested = "[" * 500 + "]" * 500
+    deep.write_text(
+        f'{{"groundgate_profile": 1, "id": "a", "version": "1.0.0", "description": {nested},'
+        ' "schema": {"fields": {}}}',
+        encoding="utf-8",
+    )
+    with pytest.raises(gg.PacketError, match="P8"):
+        load_profile(deep)
+    with pytest.raises(gg.PacketError, match="P8"):
+        gg.admit("x", None, [], profile=json.loads(deep.read_text(encoding="utf-8")))
     with pytest.raises(gg.PacketError, match="not a file"):
         load_profile(tmp_path / "none.json")
 
