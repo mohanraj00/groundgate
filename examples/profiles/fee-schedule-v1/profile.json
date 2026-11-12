@@ -1,0 +1,37 @@
+{
+  "groundgate_profile": 1,
+  "id": "fee-schedule",
+  "version": "1.0.0",
+  "description": "A public fee table: the NOAA schedule of user fees (Federal Register 2026-07250). Each fee has the keys Current fee and New fee. No route is measured.",
+  "kind": null,
+  "schema": {
+    "fields": {
+      "certification_fee": {
+        "type": "number",
+        "minimum": "0",
+        "aliases": ["Department of Commerce Certification"],
+        "keys": ["Current fee", "New fee"]
+      },
+      "data_poster_fee": {
+        "type": "number",
+        "minimum": "0",
+        "aliases": ["Data Poster"],
+        "keys": ["Current fee", "New fee"]
+      },
+      "geomagnetic_model_fee": {
+        "type": "number",
+        "minimum": "0",
+        "aliases": ["High Definition Geomagnetic Model"],
+        "keys": ["Current fee", "New fee"]
+      }
+    }
+  },
+  "policy": {
+    "unit_window": 40,
+    "judge": {"id": "fee-judge", "digest": "example-1", "doubt": {"field_match": 0.3}}
+  },
+  "routes": [
+    {"field": "certification_fee", "route": "checked", "status": "draft"}
+  ],
+  "gold_sha256": null
+}

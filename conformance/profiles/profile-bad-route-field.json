@@ -1,0 +1,32 @@
+{
+ "name": "profile-bad-route-field",
+ "description": "A profile with a route row for a field that the schema has not (P6) is invalid (SPEC §4.10). The packet gets no receipt.",
+ "document": "Fee\t$90\n",
+ "profile": {
+  "groundgate_profile": 1,
+  "id": "fees-test",
+  "version": "1.0.0",
+  "schema": {
+   "fields": {
+    "fee": {
+     "type": "integer",
+     "unit": "USD",
+     "aliases": [
+      "Fee"
+     ]
+    }
+   }
+  },
+  "routes": [
+   {
+    "field": "tax",
+    "route": "checked",
+    "status": "draft"
+   }
+  ]
+ },
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

@@ -33,6 +33,7 @@ from .model import (
     Schema,
 )
 from .pack import BASE, checked_copy, reading_retired, receipt_packs, schema_named
+from .profile import check_profile
 from .text import (
     SCALED_DIGITS,
     HeadingIndex,
@@ -1549,7 +1550,7 @@ def _check_integers(value: object, path: str) -> None:
 
 def admit(
     text: str,
-    schema: Schema | Mapping[str, Any],
+    schema: Schema | Mapping[str, Any] | None,
     candidates: Sequence[object],
     policy: Policy | Mapping[str, Any] | None = None,
     document_id: str | None = None,
@@ -1559,6 +1560,7 @@ def admit(
     document_source: str | None = None,
     packs: Sequence[object] = (),
     doubt: Sequence[object] | None = None,
+    profile: Mapping[str, Any] | None = None,
 ) -> Receipt:
     """Decide every candidate and return the receipt.
 
@@ -1572,10 +1574,13 @@ def admit(
     ``document_source`` is the URL of the document (SPEC §2.1). ``packs`` are the vocabulary
     packs that the schema names, as pack objects (SPEC §4.8). ``doubt`` is the list of spans that
     a reader read with a low confidence, as the ``doubt`` member of ``document@1`` (SPEC §2.1).
+    ``profile`` is a document-family profile (SPEC §4.10). It gives the schema, the policy and
+    the packs, so then ``schema`` and ``policy`` are None and ``packs`` is empty. The receipt
+    names the profile digest.
 
     Raises ``PacketError`` when the text is not NFC, ``candidates`` is not a list, or the schema,
-    policy, judgments, references, document source, packs or doubt are invalid. Then no receipt
-    is made.
+    policy, judgments, references, document source, packs, doubt or profile are invalid. Then no
+    receipt is made.
     """
     if not isinstance(text, str) or not is_nfc(text):
         raise PacketError("document text must be a string in Unicode NFC")
@@ -1587,6 +1592,15 @@ def admit(
     _check_integers(judgments, "judgments")
     _check_integers(doubt, "doubt")
     _check_integers(policy.to_dict() if isinstance(policy, Policy) else policy, "policy")
+    entry = None
+    if profile is not None:
+        if schema is not None or policy is not None or packs:
+            raise PacketError("give the schema, the policy and the packs in the profile")
+        _check_integers(profile, "profile")
+        checked = check_profile(profile)
+        schema, policy, entry = checked.schema, checked.policy, checked.entry()
+    if schema is None:
+        raise PacketError("schema must be an object with a 'fields' object")
     if not isinstance(schema, Schema):
         schema = Schema.from_dict(schema, packs)
     elif packs:
@@ -1601,9 +1615,13 @@ def admit(
     spans = _doubt(doubt, Offsets(text))
     by_cand = _judgments(judgments, candidates)
     with using(schema.vocabulary):
-        return _admit(
+        receipt = _admit(
             text, schema, candidates, policy, document_id, refs, by_cand, document_source, spans
         )
+    if entry is None:
+        return receipt
+    draft = dataclasses.replace(receipt, profile=entry, receipt_sha256="")
+    return dataclasses.replace(draft, receipt_sha256=digest("receipt", draft.body()))
 
 
 def _admit(
@@ -2012,7 +2030,7 @@ class Verification:
 def verify(
     receipt: Mapping[str, Any],
     text: str,
-    schema: Schema | Mapping[str, Any],
+    schema: Schema | Mapping[str, Any] | None,
     candidates: Sequence[object],
     policy: Policy | Mapping[str, Any] | None = None,
     judgments: Sequence[object] | None = None,
@@ -2022,6 +2040,7 @@ def verify(
     packs: Sequence[object] = (),
     pack_dir: str | os.PathLike[str] | None = None,
     doubt: Sequence[object] | None = None,
+    profile: Mapping[str, Any] | None = None,
 ) -> Verification:
     """Re-derive the receipt from its inputs and compare it with ``receipt``.
 
@@ -2038,6 +2057,9 @@ def verify(
     when its computed digest is the digest in the receipt. A pack that is not found, or a pack
     with another digest, gives a problem and no further checks (docs/design/packs.md §11).
     ``verify`` also reads a retired built-in version, which ``admit`` refuses.
+
+    With ``profile``, give no ``schema``, ``policy``, ``packs`` or ``pack_dir``: the profile
+    gives them (SPEC §4.10), and ``verify`` compares the receipt's ``profile`` member.
     """
     if not isinstance(receipt, Mapping):
         raise PacketError("receipt must be a JSON object")
@@ -2049,15 +2071,21 @@ def verify(
     body = {k: v for k, v in receipt.items() if k != "receipt_sha256"}
     if digest("receipt", body) != receipt.get("receipt_sha256"):
         problems.append("receipt_sha256 does not match the receipt body")
-    if isinstance(schema, Schema):
+    if profile is not None:
+        if schema is not None or policy is not None or packs or pack_dir is not None:
+            raise PacketError("give the schema, the policy and the packs in the profile")
+        given: list[dict[str, Any]] = []
+    elif isinstance(schema, Schema):
         if pack_dir is not None:
             raise PacketError("give the schema as a dict when you give a pack folder")
-        given: list[dict[str, Any]] = list(schema.given)
+        given = list(schema.given)
     else:
         if isinstance(packs, (str, bytes, dict)) or not isinstance(packs, Sequence):
             raise PacketError("packs must be a list of pack objects")
         given = [checked_copy(p) for p in packs]
-    found, pack_problems = receipt_packs(receipt.get("packs"), given, pack_dir)
+    found, pack_problems = (
+        ([], []) if profile is not None else receipt_packs(receipt.get("packs"), given, pack_dir)
+    )
     if pack_problems:
         return Verification(False, (*problems, *pack_problems))
     if found and isinstance(schema, Mapping):
@@ -2080,11 +2108,13 @@ def verify(
             document_source=document_source,
             packs=[*packs, *found],
             doubt=doubt,
+            profile=profile,
         ).to_dict()
     for key in (
         "document",
         "references",
         "packs",
+        "profile",
         "schema_sha256",
         "policy_sha256",
         "coverage",

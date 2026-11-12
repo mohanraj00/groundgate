@@ -1,0 +1,78 @@
+[
+  {
+    "id": "certification_fee/New fee",
+    "field": "certification_fee",
+    "key": "New fee",
+    "value": "170.00",
+    "evidence": [
+      {
+        "text": "$170.00"
+      },
+      {
+        "role": "field",
+        "text": "Department of Commerce Certification"
+      },
+      {
+        "role": "key",
+        "text": "New fee"
+      }
+    ]
+  },
+  {
+    "id": "certification_fee/Current fee",
+    "field": "certification_fee",
+    "key": "Current fee",
+    "value": "168.00",
+    "evidence": [
+      {
+        "text": "$168.00"
+      },
+      {
+        "role": "field",
+        "text": "Department of Commerce Certification"
+      },
+      {
+        "role": "key",
+        "text": "Current fee"
+      }
+    ]
+  },
+  {
+    "id": "data_poster_fee/New fee",
+    "field": "data_poster_fee",
+    "key": "New fee",
+    "value": "25.00",
+    "evidence": [
+      {
+        "text": "25.00"
+      },
+      {
+        "role": "field",
+        "text": "Data Poster"
+      },
+      {
+        "role": "key",
+        "text": "New fee"
+      }
+    ]
+  },
+  {
+    "id": "geomagnetic_model_fee/New fee",
+    "field": "geomagnetic_model_fee",
+    "key": "New fee",
+    "value": "29539.00",
+    "evidence": [
+      {
+        "text": "29,539.00"
+      },
+      {
+        "role": "field",
+        "text": "High Definition Geomagnetic Model"
+      },
+      {
+        "role": "key",
+        "text": "New fee"
+      }
+    ]
+  }
+]

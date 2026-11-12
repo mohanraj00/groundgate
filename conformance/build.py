@@ -7,6 +7,7 @@ Run it after editing a vector; commit the output.
 
 from __future__ import annotations
 
+import hashlib
 import json
 from pathlib import Path
 from typing import Any
@@ -6612,6 +6613,139 @@ vector(
 )  # fmt: skip
 
 
+# ------------------------------------------------------------- profiles (SPEC §4.10, #639)
+# A profile vector has a `profile` in place of `schema`, `policy` and `packs`. The expected
+# digest is written by hand: the schema and the policy after defaults, and the profile body of
+# SPEC §4.10. This script only hashes them with hashlib and canonical JSON. The data is ASCII
+# with integers and short decimals, so sorted json.dumps is JCS here.
+
+PROFILES: list[dict[str, Any]] = []
+PROFILE_FIELD = {"aliases": ["Fee"], "columns": None, "comparator": "eq", "keys": None,
+                 "markers": None, "maximum": None, "minimum": None, "multiple": False,
+                 "required": False, "type": "integer", "unit": "USD"}  # fmt: skip
+PROFILE_POLICY = {"judge": None, "min_confidence": None, "min_read_confidence": 1,
+                  "proposers": {}, "reanchor": True,
+                  "sources": {"external": {"allow": [], "other": "review"},
+                              "knowledge": "review"},
+                  "unit_window": 24}  # fmt: skip
+GOLD = "sha256:" + "ab" * 32
+
+
+def _sha(prefix: str, obj: Any) -> str:
+    text = json.dumps(obj, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    return "sha256:" + hashlib.sha256((prefix + text).encode("utf-8")).hexdigest()
+
+
+def spec_digest(kind: str, obj: Any) -> str:
+    """The digest of SPEC §6."""
+    return _sha(f"groundgate/0.12:{kind}\0", obj)
+
+
+def profile(**members: Any) -> dict[str, Any]:
+    """A profile with one field ``fee`` and the members that ``members`` gives or replaces."""
+    return {"groundgate_profile": 1, "id": "fees-test", "version": "1.0.0",
+            "schema": {"fields": {"fee": {**USD, "aliases": ["Fee"]}}}, **members}  # fmt: skip
+
+
+def profile_vector(name: str, description: str, prof: dict[str, Any], body: dict[str, Any],
+                   expect: tuple[Any, ...] = ADMIT) -> None:  # fmt: skip
+    """``body`` is the profile body of SPEC §4.10 after defaults, written by hand."""
+    PROFILES.append({
+        "name": name, "description": description, "document": "Fee\t$90\n", "profile": prof,
+        "candidates": [c("p1", "fee", 90, "USD", [q("$90"), q("Fee", role="field")], expect)],
+        "receipt_profile": {"id": prof["id"], "version": prof["version"],
+                            "sha256": _sha("groundgate-profile/1:", body)},
+    })  # fmt: skip
+
+
+def profile_body(**members: Any) -> dict[str, Any]:
+    schema = {"fields": {"fee": PROFILE_FIELD}, "units": {}}
+    return {"groundgate_profile": 1, "id": "fees-test", "version": "1.0.0", "description": "",
+            "kind": None, "routes": [], "gold_sha256": None,
+            "schema_sha256": spec_digest("schema", schema),
+            "policy_sha256": spec_digest("policy", PROFILE_POLICY), **members}  # fmt: skip
+
+
+profile_vector(
+    "profile-01-receipt",
+    "The receipt names the profile by id, version and digest. The profile gives the schema and "
+    "the policy, and the decision is the decision without a profile.",
+    profile(),
+    profile_body(),
+)
+MEASURED = {"field": "fee", "route": "checked", "status": "measured", "date": "2026-11-12",
+            "documents": 60, "bound": "0.0605"}  # fmt: skip
+profile_vector(
+    "profile-02-measured-route",
+    "A measured route row and the gold set digest change the profile digest, and change no "
+    "decision.",
+    profile(routes=[MEASURED], gold_sha256=GOLD, description="Fees."),
+    profile_body(routes=[MEASURED], gold_sha256=GOLD, description="Fees."),
+)
+JUDGE = {"id": "j", "digest": "j-1", "clear": {"KEY_NOT_AT_VALUE": 0.9}, "doubt": {}}
+profile_vector(
+    "profile-03-judge-thresholds",
+    "The judge thresholds are in the policy digest, so they change the profile digest. With no "
+    "judgment, the decision does not change.",
+    profile(policy={"judge": {"id": "j", "digest": "j-1", "clear": {"KEY_NOT_AT_VALUE": 0.9}}}),
+    profile_body(policy_sha256=spec_digest("policy", {**PROFILE_POLICY, "judge": JUDGE})),
+)
+ROWS = [{"field": "fee", "route": "cleared", "status": "draft"},
+        {"field": "fee", "route": "checked", "status": "draft"}]  # fmt: skip
+profile_vector(
+    "profile-04-route-order",
+    "The digest reads the route rows sorted by field, then by route.",
+    profile(routes=ROWS),
+    profile_body(routes=[ROWS[1], ROWS[0]]),
+)
+
+
+def bad_profile(name: str, why: str, prof: Any, **packet: Any) -> None:
+    PROFILES.append({"name": name, "description": f"A profile with {why} is invalid (SPEC "
+                     "§4.10). The packet gets no receipt.", "document": "Fee\t$90\n",
+                     "profile": prof, **packet, "candidates": [], "error": True})  # fmt: skip
+
+
+bad_profile("profile-bad-format", "groundgate_profile 2 (P1)", profile(groundgate_profile=2))
+bad_profile("profile-bad-member", "a member that the format does not list (P1)",
+            profile(status="measured"))  # fmt: skip
+bad_profile("profile-bad-no-schema", "no schema (P1)",
+            {k: v for k, v in profile().items() if k != "schema"})  # fmt: skip
+bad_profile("profile-bad-id", "an id with a capital letter (P2)", profile(id="Fees"))
+bad_profile("profile-bad-version", "the version 1.0 (P2)", profile(version="1.0"))
+bad_profile("profile-bad-description", "a description that is not a text (P3)",
+            profile(description=["Fees"]))  # fmt: skip
+bad_profile("profile-bad-schema", "a schema that breaks SPEC 2.3 (P4)",
+            profile(schema={"fields": {"Fee": USD}}))  # fmt: skip
+bad_profile("profile-bad-policy", "a policy that breaks SPEC 2.4 (P4)",
+            profile(policy={"unit_window": -1}))  # fmt: skip
+bad_profile("profile-bad-kind", "a kind pack that the schema does not name (P5)",
+            profile(kind={"id": "filings-x-test", "version": "1.0.0"}))  # fmt: skip
+bad_profile("profile-bad-route-field", "a route row for a field that the schema has not (P6)",
+            profile(routes=[{"field": "tax", "route": "checked", "status": "draft"}]))  # fmt: skip
+bad_profile("profile-bad-route-name", "a route that is not checked or cleared (P6)",
+            profile(routes=[{"field": "fee", "route": "judge", "status": "draft"}]))  # fmt: skip
+bad_profile("profile-bad-route-twice", "two rows for one route (P6)",
+            profile(routes=[ROWS[1], ROWS[1]]))  # fmt: skip
+bad_profile("profile-bad-route-status", "the status retired (P6)",
+            profile(routes=[{**ROWS[1], "status": "retired"}]))  # fmt: skip
+bad_profile("profile-bad-measured-bound", "a measured row with no bound (P6)",
+            profile(routes=[{k: v for k, v in MEASURED.items() if k != "bound"}],
+                    gold_sha256=GOLD))  # fmt: skip
+bad_profile("profile-bad-bound", "a bound above 1 (P6)",
+            profile(routes=[{**MEASURED, "bound": "1.5"}], gold_sha256=GOLD))  # fmt: skip
+bad_profile("profile-bad-date", "the date 2026-02-30 (P6)",
+            profile(routes=[{**MEASURED, "date": "2026-02-30"}], gold_sha256=GOLD))  # fmt: skip
+bad_profile("profile-bad-documents", "documents 0 (P6)",
+            profile(routes=[{**MEASURED, "documents": 0}], gold_sha256=GOLD))  # fmt: skip
+bad_profile("profile-bad-no-gold", "a measured row and no gold set digest (P7)",
+            profile(routes=[MEASURED]))  # fmt: skip
+bad_profile("profile-bad-gold", "a gold set digest that is not a digest (P7)",
+            profile(gold_sha256="sha256:abc"))  # fmt: skip
+bad_profile("profile-bad-beside-schema", "a schema beside it in the packet",
+            profile(), schema={"fields": {"fee": USD}})  # fmt: skip
+
+
 def main() -> None:
     out_dir = HERE / "vectors"
     out_dir.mkdir(exist_ok=True)
@@ -6663,7 +6797,30 @@ def main() -> None:
             )
             + "\n"
         )
-    print(f"wrote {len(VECTORS)} vectors and {len(INVALID)} invalid packets")
+    prof_dir = HERE / "profiles"
+    prof_dir.mkdir(exist_ok=True)
+    for old in prof_dir.glob("*.json"):
+        old.unlink()
+    for p in PROFILES:
+        doc = p["document"]
+        if p.get("error"):
+            out = {k: v for k, v in p.items() if k != "error"} | {"expected": {"error": True}}
+        else:
+            cands = [{k: resolve(doc, val) if k == "evidence" else val
+                      for k, val in item["candidate"].items()} for item in p["candidates"]]  # fmt: skip
+            out = {
+                "name": p["name"], "description": p["description"], "document": doc,
+                "profile": p["profile"], "candidates": cands,
+                "expected": {"decisions": [item["expect"] for item in p["candidates"]],
+                             "profile": p["receipt_profile"]},
+            }  # fmt: skip
+        (prof_dir / f"{p['name']}.json").write_text(
+            json.dumps(out, indent=1, ensure_ascii=False) + "\n"
+        )
+    print(
+        f"wrote {len(VECTORS)} vectors, {len(INVALID)} invalid packets and "
+        f"{len(PROFILES)} profile vectors"
+    )
 
 
 if __name__ == "__main__":

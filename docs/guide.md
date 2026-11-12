@@ -698,7 +698,7 @@ wins, also `aliases`. If the field gives a `type` or a `unit` that differs from 
 the packet is invalid. Give each vocabulary pack in the kind pack's `needs` too. The schema does
 not have to name it.
 
-Five kind packs are built in, all 1.0.0 and all `draft`. Their templates come from the bench
+Five kind packs are built in, all 1.0.0 and all `draft`. They are examples: no route is measured ([Profiles](#profiles)). Their templates come from the bench
 schemas. Name one in the schema, and do not give it. The packs that it needs load with it.
 
 | Kind pack | Documents | Needs |
@@ -732,6 +732,42 @@ most 256, each at most 1 MiB. It does not follow a link, and it runs the loader 
 file. A file that fails is not used. A built-in version can be retired: then `admit` refuses it,
 and `verify` still reads it, so an old receipt still verifies. No version is retired in 0.10.
 [Keep pack files with receipts](howto/keep-packs.md) shows a folder layout.
+
+### Profiles
+
+A profile (SPEC §4.10) holds everything that you calibrate for one document family: the kind
+pack, the vocabulary packs, the schema terms, the policy with the judge thresholds, the status
+of each route and the digest of the gold set. It is one JSON file with a version. A profile adds
+no reading rule. Give it to `admit` in place of the schema, the policy and the packs:
+
+```python
+from groundgate.profile import load_profile
+
+profile = load_profile("examples/profiles/invoice-v1/profile.json")
+receipt = gg.admit(text, None, candidates, profile=profile)
+receipt.profile  # {"id": "invoice", "version": "1.0.0", "sha256": "sha256:..."}
+gg.verify(receipt.to_dict(), text, None, candidates, profile=profile).ok
+```
+
+The receipt names the profile digest, so each admitted fact shows which profile version admitted
+it. The digest reads the schema digest, the policy digest, the kind, the route rows and the gold
+set digest. If you change an alias, a threshold, a pack or a route row, the digest changes. Give
+the profile a new version for each change. If you give a profile and also a schema, a policy or
+packs, the packet is invalid.
+
+A route is `checked` (the checks admit the value) or `cleared` (a judge clears
+`KEY_NOT_AT_VALUE`), for one field. A route with no row is `draft`. A `measured` row gives the
+day, the count of gold documents and the 95% upper bound of the admitted error rate, and the
+profile then gives `gold_sha256`. The status has no effect on a decision: it records what a
+measure found.
+
+[`examples/profiles/`](../examples/profiles/) has two profiles that run through the same gate
+with different terms and thresholds. `invoice-v1` reads synthetic invoices and has one measured
+route. `fee-schedule-v1` reads a public fee table and has no measured route.
+
+The five built-in kind packs are examples. `groundgate.profile.built_in_profile("us-10k")` gives
+one as a profile with one field for each template and no route row, so each route is `draft`.
+Copy it, measure it on your own documents, and give your copy a new id.
 
 ### LangExtract
 

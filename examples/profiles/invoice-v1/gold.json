@@ -1,0 +1,604 @@
+{
+  "documents": [
+    {
+      "id": "INV-1000",
+      "text": "INVOICE\nInvoice number: INV-1000\nBill to: Harbor Tools\n\nItem             Qty   Amount\nBrackets           2   $272.00\nService hours     23   $1,012.00\nFreight           13   $2,522.00\nCable             26   $1,196.00\n\nSubtotal: $5,002.00\nSales tax (8%): $400.16\nTotal due: $5,402.16\n",
+      "labels": {
+        "invoice_number": "INV-1000",
+        "subtotal": "5002.00",
+        "tax": "400.16",
+        "total": "5402.16"
+      }
+    },
+    {
+      "id": "INV-1001",
+      "text": "INVOICE\nInvoice number: INV-1001\nBill to: Elm Street Bakery\n\nItem             Qty   Amount\nFreight           14   $1,568.00\nCable             19   $2,527.00\n\nSubtotal: $4,095.00\nSales tax (8%): $327.60\nTotal due: $4,422.60\n",
+      "labels": {
+        "invoice_number": "INV-1001",
+        "subtotal": "4095.00",
+        "tax": "327.60",
+        "total": "4422.60"
+      }
+    },
+    {
+      "id": "INV-1002",
+      "text": "INVOICE\nInvoice number: INV-1002\nBill to: Harbor Tools\n\nItem             Qty   Amount\nWidgets            8   $624.00\nFreight           36   $7,956.00\nService hours     31   $7,409.00\n\nSubtotal: $15,989.00\nSales tax (8%): $1,279.12\nTotal due: $17,268.12\n",
+      "labels": {
+        "invoice_number": "INV-1002",
+        "subtotal": "15989.00",
+        "tax": "1279.12",
+        "total": "17268.12"
+      }
+    },
+    {
+      "id": "INV-1003",
+      "text": "INVOICE\nInvoice number: INV-1003\nBill to: Harbor Tools\n\nItem             Qty   Amount\nBolts             14   $1,120.00\nBrackets          10   $950.00\n\nSubtotal: $2,070.00\nSales tax (8%): $165.60\nTotal due: $2,235.60\n",
+      "labels": {
+        "invoice_number": "INV-1003",
+        "subtotal": "2070.00",
+        "tax": "165.60",
+        "total": "2235.60"
+      }
+    },
+    {
+      "id": "INV-1004",
+      "text": "INVOICE\nInvoice number: INV-1004\nBill to: Gray Fox Labs\n\nItem             Qty   Amount\nBolts              2   $270.00\nWidgets            1   $232.00\n\nSubtotal: $502.00\nSales tax (8%): $40.16\nTotal due: $542.16\n",
+      "labels": {
+        "invoice_number": "INV-1004",
+        "subtotal": "502.00",
+        "tax": "40.16",
+        "total": "542.16"
+      }
+    },
+    {
+      "id": "INV-1005",
+      "text": "INVOICE\nInvoice number: INV-1005\nBill to: Harbor Tools\n\nItem             Qty   Amount\nBolts             14   $714.00\nService hours      2   $156.00\nCable             20   $380.00\nWidgets           13   $2,665.00\n\nSubtotal: $3,915.00\nSales tax (8%): $313.20\nTotal due: $4,228.20\n",
+      "labels": {
+        "invoice_number": "INV-1005",
+        "subtotal": "3915.00",
+        "tax": "313.20",
+        "total": "4228.20"
+      }
+    },
+    {
+      "id": "INV-1006",
+      "text": "INVOICE\nInvoice number: INV-1006\nBill to: Gray Fox Labs\n\nItem             Qty   Amount\nBrackets          21   $1,575.00\nCable              8   $384.00\nBolts             21   $4,389.00\nFreight            8   $1,128.00\n\nSubtotal: $7,476.00\nSales tax (8%): $598.08\nTotal due: $8,074.08\n",
+      "labels": {
+        "invoice_number": "INV-1006",
+        "subtotal": "7476.00",
+        "tax": "598.08",
+        "total": "8074.08"
+      }
+    },
+    {
+      "id": "INV-1007",
+      "text": "INVOICE\nInvoice number: INV-1007\nBill to: Elm Street Bakery\n\nItem             Qty   Amount\nBrackets          22   $1,980.00\nBolts             13   $1,612.00\nFreight            3   $135.00\nCable             26   $6,370.00\n\nSubtotal: $10,097.00\nSales tax (8%): $807.76\nTotal due: $10,904.76\n",
+      "labels": {
+        "invoice_number": "INV-1007",
+        "subtotal": "10097.00",
+        "tax": "807.76",
+        "total": "10904.76"
+      }
+    },
+    {
+      "id": "INV-1008",
+      "text": "INVOICE\nInvoice number: INV-1008\nBill to: Elm Street Bakery\n\nItem             Qty   Amount\nService hours      9   $2,223.00\nBrackets          38   $2,242.00\nFreight           37   $8,325.00\nWidgets            3   $594.00\n\nSubtotal: $13,384.00\nSales tax (8%): $1,070.72\nTotal due: $14,454.72\n",
+      "labels": {
+        "invoice_number": "INV-1008",
+        "subtotal": "13384.00",
+        "tax": "1070.72",
+        "total": "14454.72"
+      }
+    },
+    {
+      "id": "INV-1009",
+      "text": "INVOICE\nInvoice number: INV-1009\nBill to: Gray Fox Labs\n\nItem             Qty   Amount\nBrackets          37   $8,843.00\nWidgets           10   $220.00\nBolts             10   $2,050.00\nCable             16   $3,536.00\n\nSubtotal: $14,649.00\nSales tax (8%): $1,171.92\nTotal due: $15,820.92\n",
+      "labels": {
+        "invoice_number": "INV-1009",
+        "subtotal": "14649.00",
+        "tax": "1171.92",
+        "total": "15820.92"
+      }
+    },
+    {
+      "id": "INV-1010",
+      "text": "INVOICE\nInvoice number: INV-1010\nBill to: Harbor Tools\n\nItem             Qty   Amount\nService hours      3   $387.00\nFreight           13   $780.00\nCable             37   $2,220.00\nWidgets           21   $3,801.00\n\nSubtotal: $7,188.00\nSales tax (8%): $575.04\nTotal due: $7,763.04\n",
+      "labels": {
+        "invoice_number": "INV-1010",
+        "subtotal": "7188.00",
+        "tax": "575.04",
+        "total": "7763.04"
+      }
+    },
+    {
+      "id": "INV-1011",
+      "text": "INVOICE\nInvoice number: INV-1011\nBill to: Gray Fox Labs\n\nItem             Qty   Amount\nFreight           35   $7,560.00\nBolts              3   $612.00\n\nSubtotal: $8,172.00\nSales tax (8%): $653.76\nTotal due: $8,825.76\n",
+      "labels": {
+        "invoice_number": "INV-1011",
+        "subtotal": "8172.00",
+        "tax": "653.76",
+        "total": "8825.76"
+      }
+    },
+    {
+      "id": "INV-1012",
+      "text": "INVOICE\nInvoice number: INV-1012\nBill to: Elm Street Bakery\n\nItem             Qty   Amount\nBrackets           8   $1,488.00\nService hours     15   $720.00\nBolts             25   $4,625.00\n\nSubtotal: $6,833.00\nSales tax (8%): $546.64\nTotal due: $7,379.64\n",
+      "labels": {
+        "invoice_number": "INV-1012",
+        "subtotal": "6833.00",
+        "tax": "546.64",
+        "total": "7379.64"
+      }
+    },
+    {
+      "id": "INV-1013",
+      "text": "INVOICE\nInvoice number: INV-1013\nBill to: Elm Street Bakery\n\nItem             Qty   Amount\nBrackets          31   $6,541.00\nBolts             32   $4,992.00\n\nSubtotal: $11,533.00\nSales tax (8%): $922.64\nTotal due: $12,455.64\n",
+      "labels": {
+        "invoice_number": "INV-1013",
+        "subtotal": "11533.00",
+        "tax": "922.64",
+        "total": "12455.64"
+      }
+    },
+    {
+      "id": "INV-1014",
+      "text": "INVOICE\nInvoice number: INV-1014\nBill to: Elm Street Bakery\n\nItem             Qty   Amount\nCable             32   $3,072.00\nService hours     37   $8,399.00\nWidgets            8   $1,152.00\n\nSubtotal: $12,623.00\nSales tax (8%): $1,009.84\nTotal due: $13,632.84\n",
+      "labels": {
+        "invoice_number": "INV-1014",
+        "subtotal": "12623.00",
+        "tax": "1009.84",
+        "total": "13632.84"
+      }
+    },
+    {
+      "id": "INV-1015",
+      "text": "INVOICE\nInvoice number: INV-1015\nBill to: Elm Street Bakery\n\nItem             Qty   Amount\nBrackets          13   $1,495.00\nFreight           36   $3,240.00\nWidgets           24   $5,520.00\nService hours     39   $2,808.00\n\nSubtotal: $13,063.00\nSales tax (8%): $1,045.04\nTotal due: $14,108.04\n",
+      "labels": {
+        "invoice_number": "INV-1015",
+        "subtotal": "13063.00",
+        "tax": "1045.04",
+        "total": "14108.04"
+      }
+    },
+    {
+      "id": "INV-1016",
+      "text": "INVOICE\nInvoice number: INV-1016\nBill to: Gray Fox Labs\n\nItem             Qty   Amount\nBrackets           2   $120.00\nService hours     35   $4,270.00\nFreight           21   $1,029.00\nBolts             20   $120.00\n\nSubtotal: $5,539.00\nSales tax (8%): $443.12\nTotal due: $5,982.12\n",
+      "labels": {
+        "invoice_number": "INV-1016",
+        "subtotal": "5539.00",
+        "tax": "443.12",
+        "total": "5982.12"
+      }
+    },
+    {
+      "id": "INV-1017",
+      "text": "INVOICE\nInvoice number: INV-1017\nBill to: Northwind Supply\n\nItem             Qty   Amount\nFreight           25   $3,950.00\nWidgets           27   $6,669.00\n\nSubtotal: $10,619.00\nSales tax (8%): $849.52\nTotal due: $11,468.52\n",
+      "labels": {
+        "invoice_number": "INV-1017",
+        "subtotal": "10619.00",
+        "tax": "849.52",
+        "total": "11468.52"
+      }
+    },
+    {
+      "id": "INV-1018",
+      "text": "INVOICE\nInvoice number: INV-1018\nBill to: Harbor Tools\n\nItem             Qty   Amount\nBolts             22   $110.00\nService hours     20   $3,400.00\n\nSubtotal: $3,510.00\nSales tax (8%): $280.80\nTotal due: $3,790.80\n",
+      "labels": {
+        "invoice_number": "INV-1018",
+        "subtotal": "3510.00",
+        "tax": "280.80",
+        "total": "3790.80"
+      }
+    },
+    {
+      "id": "INV-1019",
+      "text": "INVOICE\nInvoice number: INV-1019\nBill to: Elm Street Bakery\n\nItem             Qty   Amount\nBrackets          39   $195.00\nCable             34   $5,780.00\n\nSubtotal: $5,975.00\nSales tax (8%): $478.00\nTotal due: $6,453.00\n",
+      "labels": {
+        "invoice_number": "INV-1019",
+        "subtotal": "5975.00",
+        "tax": "478.00",
+        "total": "6453.00"
+      }
+    },
+    {
+      "id": "INV-1020",
+      "text": "INVOICE\nInvoice number: INV-1020\nBill to: Gray Fox Labs\n\nItem             Qty   Amount\nBolts             25   $3,150.00\nWidgets            2   $444.00\nService hours     18   $3,582.00\nFreight           30   $1,590.00\n\nSubtotal: $8,766.00\nSales tax (8%): $701.28\nTotal due: $9,467.28\n",
+      "labels": {
+        "invoice_number": "INV-1020",
+        "subtotal": "8766.00",
+        "tax": "701.28",
+        "total": "9467.28"
+      }
+    },
+    {
+      "id": "INV-1021",
+      "text": "INVOICE\nInvoice number: INV-1021\nBill to: Elm Street Bakery\n\nItem             Qty   Amount\nService hours     22   $1,980.00\nBrackets          25   $5,925.00\nWidgets           26   $3,666.00\nFreight            9   $2,196.00\n\nSubtotal: $13,767.00\nSales tax (8%): $1,101.36\nTotal due: $14,868.36\n",
+      "labels": {
+        "invoice_number": "INV-1021",
+        "subtotal": "13767.00",
+        "tax": "1101.36",
+        "total": "14868.36"
+      }
+    },
+    {
+      "id": "INV-1022",
+      "text": "INVOICE\nInvoice number: INV-1022\nBill to: Elm Street Bakery\n\nItem             Qty   Amount\nService hours     28   $2,968.00\nBolts             33   $4,554.00\nFreight           10   $450.00\n\nSubtotal: $7,972.00\nSales tax (8%): $637.76\nTotal due: $8,609.76\n",
+      "labels": {
+        "invoice_number": "INV-1022",
+        "subtotal": "7972.00",
+        "tax": "637.76",
+        "total": "8609.76"
+      }
+    },
+    {
+      "id": "INV-1023",
+      "text": "INVOICE\nInvoice number: INV-1023\nBill to: Harbor Tools\n\nItem             Qty   Amount\nFreight           19   $2,660.00\nBrackets          17   $3,689.00\nCable             32   $3,712.00\nBolts             19   $3,629.00\n\nSubtotal: $13,690.00\nSales tax (8%): $1,095.20\nTotal due: $14,785.20\n",
+      "labels": {
+        "invoice_number": "INV-1023",
+        "subtotal": "13690.00",
+        "tax": "1095.20",
+        "total": "14785.20"
+      }
+    },
+    {
+      "id": "INV-1024",
+      "text": "INVOICE\nInvoice number: INV-1024\nBill to: Gray Fox Labs\n\nItem             Qty   Amount\nService hours      3   $432.00\nBolts             19   $4,047.00\n\nSubtotal: $4,479.00\nSales tax (8%): $358.32\nTotal due: $4,837.32\n",
+      "labels": {
+        "invoice_number": "INV-1024",
+        "subtotal": "4479.00",
+        "tax": "358.32",
+        "total": "4837.32"
+      }
+    },
+    {
+      "id": "INV-1025",
+      "text": "INVOICE\nInvoice number: INV-1025\nBill to: Gray Fox Labs\n\nItem             Qty   Amount\nBolts             31   $1,767.00\nFreight           10   $900.00\nWidgets            4   $560.00\nService hours     14   $266.00\n\nSubtotal: $3,493.00\nSales tax (8%): $279.44\nTotal due: $3,772.44\n",
+      "labels": {
+        "invoice_number": "INV-1025",
+        "subtotal": "3493.00",
+        "tax": "279.44",
+        "total": "3772.44"
+      }
+    },
+    {
+      "id": "INV-1026",
+      "text": "INVOICE\nInvoice number: INV-1026\nBill to: Gray Fox Labs\n\nItem             Qty   Amount\nBrackets          27   $3,321.00\nCable             18   $1,728.00\n\nSubtotal: $5,049.00\nSales tax (8%): $403.92\nTotal due: $5,452.92\n",
+      "labels": {
+        "invoice_number": "INV-1026",
+        "subtotal": "5049.00",
+        "tax": "403.92",
+        "total": "5452.92"
+      }
+    },
+    {
+      "id": "INV-1027",
+      "text": "INVOICE\nInvoice number: INV-1027\nBill to: Northwind Supply\n\nItem             Qty   Amount\nWidgets           32   $7,232.00\nService hours      7   $70.00\nBolts             14   $2,576.00\nCable             19   $1,254.00\n\nSubtotal: $11,132.00\nSales tax (8%): $890.56\nTotal due: $12,022.56\n",
+      "labels": {
+        "invoice_number": "INV-1027",
+        "subtotal": "11132.00",
+        "tax": "890.56",
+        "total": "12022.56"
+      }
+    },
+    {
+      "id": "INV-1028",
+      "text": "INVOICE\nInvoice number: INV-1028\nBill to: Northwind Supply\n\nItem             Qty   Amount\nWidgets           27   $5,238.00\nService hours     19   $2,527.00\nBolts              5   $565.00\n\nSubtotal: $8,330.00\nSales tax (8%): $666.40\nTotal due: $8,996.40\n",
+      "labels": {
+        "invoice_number": "INV-1028",
+        "subtotal": "8330.00",
+        "tax": "666.40",
+        "total": "8996.40"
+      }
+    },
+    {
+      "id": "INV-1029",
+      "text": "INVOICE\nInvoice number: INV-1029\nBill to: Northwind Supply\n\nItem             Qty   Amount\nService hours      6   $1,236.00\nCable              7   $1,491.00\nWidgets           38   $6,954.00\n\nSubtotal: $9,681.00\nSales tax (8%): $774.48\nTotal due: $10,455.48\n",
+      "labels": {
+        "invoice_number": "INV-1029",
+        "subtotal": "9681.00",
+        "tax": "774.48",
+        "total": "10455.48"
+      }
+    },
+    {
+      "id": "INV-1030",
+      "text": "INVOICE\nInvoice number: INV-1030\nBill to: Elm Street Bakery\n\nItem             Qty   Amount\nBolts              9   $1,233.00\nFreight            1   $132.00\n\nSubtotal: $1,365.00\nSales tax (8%): $109.20\nTotal due: $1,474.20\n",
+      "labels": {
+        "invoice_number": "INV-1030",
+        "subtotal": "1365.00",
+        "tax": "109.20",
+        "total": "1474.20"
+      }
+    },
+    {
+      "id": "INV-1031",
+      "text": "INVOICE\nInvoice number: INV-1031\nBill to: Northwind Supply\n\nItem             Qty   Amount\nWidgets            6   $234.00\nBolts             30   $660.00\nCable             35   $1,260.00\nService hours     39   $1,014.00\n\nSubtotal: $3,168.00\nSales tax (8%): $253.44\nTotal due: $3,421.44\n",
+      "labels": {
+        "invoice_number": "INV-1031",
+        "subtotal": "3168.00",
+        "tax": "253.44",
+        "total": "3421.44"
+      }
+    },
+    {
+      "id": "INV-1032",
+      "text": "INVOICE\nInvoice number: INV-1032\nBill to: Harbor Tools\n\nItem             Qty   Amount\nService hours     15   $585.00\nBolts              5   $600.00\nBrackets          36   $1,332.00\n\nSubtotal: $2,517.00\nSales tax (8%): $201.36\nTotal due: $2,718.36\n",
+      "labels": {
+        "invoice_number": "INV-1032",
+        "subtotal": "2517.00",
+        "tax": "201.36",
+        "total": "2718.36"
+      }
+    },
+    {
+      "id": "INV-1033",
+      "text": "INVOICE\nInvoice number: INV-1033\nBill to: Northwind Supply\n\nItem             Qty   Amount\nFreight            6   $564.00\nWidgets           39   $9,555.00\nCable             24   $240.00\n\nSubtotal: $10,359.00\nSales tax (8%): $828.72\nTotal due: $11,187.72\n",
+      "labels": {
+        "invoice_number": "INV-1033",
+        "subtotal": "10359.00",
+        "tax": "828.72",
+        "total": "11187.72"
+      }
+    },
+    {
+      "id": "INV-1034",
+      "text": "INVOICE\nInvoice number: INV-1034\nBill to: Harbor Tools\n\nItem             Qty   Amount\nBolts             16   $2,560.00\nService hours     32   $2,912.00\nCable              8   $344.00\nFreight           14   $854.00\n\nSubtotal: $6,670.00\nSales tax (8%): $533.60\nTotal due: $7,203.60\n",
+      "labels": {
+        "invoice_number": "INV-1034",
+        "subtotal": "6670.00",
+        "tax": "533.60",
+        "total": "7203.60"
+      }
+    },
+    {
+      "id": "INV-1035",
+      "text": "INVOICE\nInvoice number: INV-1035\nBill to: Elm Street Bakery\n\nItem             Qty   Amount\nBrackets          28   $3,024.00\nBolts              1   $41.00\nService hours     13   $1,417.00\nFreight           26   $2,704.00\n\nSubtotal: $7,186.00\nSales tax (8%): $574.88\nTotal due: $7,760.88\n",
+      "labels": {
+        "invoice_number": "INV-1035",
+        "subtotal": "7186.00",
+        "tax": "574.88",
+        "total": "7760.88"
+      }
+    },
+    {
+      "id": "INV-1036",
+      "text": "INVOICE\nInvoice number: INV-1036\nBill to: Harbor Tools\n\nItem             Qty   Amount\nService hours     10   $1,690.00\nBrackets          22   $3,938.00\nBolts              2   $488.00\n\nSubtotal: $6,116.00\nSales tax (8%): $489.28\nTotal due: $6,605.28\n",
+      "labels": {
+        "invoice_number": "INV-1036",
+        "subtotal": "6116.00",
+        "tax": "489.28",
+        "total": "6605.28"
+      }
+    },
+    {
+      "id": "INV-1037",
+      "text": "INVOICE\nInvoice number: INV-1037\nBill to: Gray Fox Labs\n\nItem             Qty   Amount\nWidgets           31   $1,364.00\nFreight           34   $1,122.00\n\nSubtotal: $2,486.00\nSales tax (8%): $198.88\nTotal due: $2,684.88\n",
+      "labels": {
+        "invoice_number": "INV-1037",
+        "subtotal": "2486.00",
+        "tax": "198.88",
+        "total": "2684.88"
+      }
+    },
+    {
+      "id": "INV-1038",
+      "text": "INVOICE\nInvoice number: INV-1038\nBill to: Gray Fox Labs\n\nItem             Qty   Amount\nCable              9   $585.00\nBrackets           4   $308.00\n\nSubtotal: $893.00\nSales tax (8%): $71.44\nTotal due: $964.44\n",
+      "labels": {
+        "invoice_number": "INV-1038",
+        "subtotal": "893.00",
+        "tax": "71.44",
+        "total": "964.44"
+      }
+    },
+    {
+      "id": "INV-1039",
+      "text": "INVOICE\nInvoice number: INV-1039\nBill to: Harbor Tools\n\nItem             Qty   Amount\nBolts             40   $9,240.00\nWidgets           27   $4,563.00\nCable             16   $4,000.00\nFreight           12   $1,428.00\n\nSubtotal: $19,231.00\nSales tax (8%): $1,538.48\nTotal due: $20,769.48\n",
+      "labels": {
+        "invoice_number": "INV-1039",
+        "subtotal": "19231.00",
+        "tax": "1538.48",
+        "total": "20769.48"
+      }
+    },
+    {
+      "id": "INV-1040",
+      "text": "INVOICE\nInvoice number: INV-1040\nBill to: Elm Street Bakery\n\nItem             Qty   Amount\nService hours     28   $6,804.00\nBrackets          25   $6,000.00\n\nSubtotal: $12,804.00\nSales tax (8%): $1,024.32\nTotal due: $13,828.32\n",
+      "labels": {
+        "invoice_number": "INV-1040",
+        "subtotal": "12804.00",
+        "tax": "1024.32",
+        "total": "13828.32"
+      }
+    },
+    {
+      "id": "INV-1041",
+      "text": "INVOICE\nInvoice number: INV-1041\nBill to: Harbor Tools\n\nItem             Qty   Amount\nBrackets          32   $1,504.00\nWidgets           11   $1,122.00\nCable              1   $113.00\n\nSubtotal: $2,739.00\nSales tax (8%): $219.12\nTotal due: $2,958.12\n",
+      "labels": {
+        "invoice_number": "INV-1041",
+        "subtotal": "2739.00",
+        "tax": "219.12",
+        "total": "2958.12"
+      }
+    },
+    {
+      "id": "INV-1042",
+      "text": "INVOICE\nInvoice number: INV-1042\nBill to: Gray Fox Labs\n\nItem             Qty   Amount\nBolts             26   $2,600.00\nService hours     29   $1,073.00\nWidgets           40   $6,360.00\n\nSubtotal: $10,033.00\nSales tax (8%): $802.64\nTotal due: $10,835.64\n",
+      "labels": {
+        "invoice_number": "INV-1042",
+        "subtotal": "10033.00",
+        "tax": "802.64",
+        "total": "10835.64"
+      }
+    },
+    {
+      "id": "INV-1043",
+      "text": "INVOICE\nInvoice number: INV-1043\nBill to: Harbor Tools\n\nItem             Qty   Amount\nBrackets           8   $1,640.00\nService hours     35   $385.00\nFreight           11   $1,089.00\nBolts              4   $756.00\n\nSubtotal: $3,870.00\nSales tax (8%): $309.60\nTotal due: $4,179.60\n",
+      "labels": {
+        "invoice_number": "INV-1043",
+        "subtotal": "3870.00",
+        "tax": "309.60",
+        "total": "4179.60"
+      }
+    },
+    {
+      "id": "INV-1044",
+      "text": "INVOICE\nInvoice number: INV-1044\nBill to: Gray Fox Labs\n\nItem             Qty   Amount\nWidgets           22   $880.00\nCable             19   $171.00\n\nSubtotal: $1,051.00\nSales tax (8%): $84.08\nTotal due: $1,135.08\n",
+      "labels": {
+        "invoice_number": "INV-1044",
+        "subtotal": "1051.00",
+        "tax": "84.08",
+        "total": "1135.08"
+      }
+    },
+    {
+      "id": "INV-1045",
+      "text": "INVOICE\nInvoice number: INV-1045\nBill to: Gray Fox Labs\n\nItem             Qty   Amount\nWidgets           11   $396.00\nCable             20   $2,340.00\n\nSubtotal: $2,736.00\nSales tax (8%): $218.88\nTotal due: $2,954.88\n",
+      "labels": {
+        "invoice_number": "INV-1045",
+        "subtotal": "2736.00",
+        "tax": "218.88",
+        "total": "2954.88"
+      }
+    },
+    {
+      "id": "INV-1046",
+      "text": "INVOICE\nInvoice number: INV-1046\nBill to: Elm Street Bakery\n\nItem             Qty   Amount\nWidgets            5   $1,020.00\nCable             33   $4,620.00\nBrackets          15   $2,805.00\nService hours     31   $713.00\n\nSubtotal: $9,158.00\nSales tax (8%): $732.64\nTotal due: $9,890.64\n",
+      "labels": {
+        "invoice_number": "INV-1046",
+        "subtotal": "9158.00",
+        "tax": "732.64",
+        "total": "9890.64"
+      }
+    },
+    {
+      "id": "INV-1047",
+      "text": "INVOICE\nInvoice number: INV-1047\nBill to: Elm Street Bakery\n\nItem             Qty   Amount\nService hours      3   $504.00\nFreight           39   $3,510.00\nWidgets           30   $3,570.00\n\nSubtotal: $7,584.00\nSales tax (8%): $606.72\nTotal due: $8,190.72\n",
+      "labels": {
+        "invoice_number": "INV-1047",
+        "subtotal": "7584.00",
+        "tax": "606.72",
+        "total": "8190.72"
+      }
+    },
+    {
+      "id": "INV-1048",
+      "text": "INVOICE\nInvoice number: INV-1048\nBill to: Northwind Supply\n\nItem             Qty   Amount\nFreight           17   $867.00\nService hours     22   $1,056.00\nCable             11   $1,331.00\n\nSubtotal: $3,254.00\nSales tax (8%): $260.32\nTotal due: $3,514.32\n",
+      "labels": {
+        "invoice_number": "INV-1048",
+        "subtotal": "3254.00",
+        "tax": "260.32",
+        "total": "3514.32"
+      }
+    },
+    {
+      "id": "INV-1049",
+      "text": "INVOICE\nInvoice number: INV-1049\nBill to: Elm Street Bakery\n\nItem             Qty   Amount\nBrackets           9   $927.00\nCable             18   $2,898.00\nService hours     20   $2,160.00\n\nSubtotal: $5,985.00\nSales tax (8%): $478.80\nTotal due: $6,463.80\n",
+      "labels": {
+        "invoice_number": "INV-1049",
+        "subtotal": "5985.00",
+        "tax": "478.80",
+        "total": "6463.80"
+      }
+    },
+    {
+      "id": "INV-1050",
+      "text": "INVOICE\nInvoice number: INV-1050\nBill to: Elm Street Bakery\n\nItem             Qty   Amount\nBrackets          12   $120.00\nBolts             24   $5,688.00\nWidgets           35   $2,520.00\nCable             22   $1,012.00\n\nSubtotal: $9,340.00\nSales tax (8%): $747.20\nTotal due: $10,087.20\n",
+      "labels": {
+        "invoice_number": "INV-1050",
+        "subtotal": "9340.00",
+        "tax": "747.20",
+        "total": "10087.20"
+      }
+    },
+    {
+      "id": "INV-1051",
+      "text": "INVOICE\nInvoice number: INV-1051\nBill to: Gray Fox Labs\n\nItem             Qty   Amount\nBrackets          31   $3,255.00\nService hours     15   $570.00\n\nSubtotal: $3,825.00\nSales tax (8%): $306.00\nTotal due: $4,131.00\n",
+      "labels": {
+        "invoice_number": "INV-1051",
+        "subtotal": "3825.00",
+        "tax": "306.00",
+        "total": "4131.00"
+      }
+    },
+    {
+      "id": "INV-1052",
+      "text": "INVOICE\nInvoice number: INV-1052\nBill to: Gray Fox Labs\n\nItem             Qty   Amount\nBolts             21   $3,213.00\nService hours     18   $1,674.00\n\nSubtotal: $4,887.00\nSales tax (8%): $390.96\nTotal due: $5,277.96\n",
+      "labels": {
+        "invoice_number": "INV-1052",
+        "subtotal": "4887.00",
+        "tax": "390.96",
+        "total": "5277.96"
+      }
+    },
+    {
+      "id": "INV-1053",
+      "text": "INVOICE\nInvoice number: INV-1053\nBill to: Harbor Tools\n\nItem             Qty   Amount\nWidgets           12   $2,652.00\nCable             16   $1,648.00\nService hours     33   $2,970.00\n\nSubtotal: $7,270.00\nSales tax (8%): $581.60\nTotal due: $7,851.60\n",
+      "labels": {
+        "invoice_number": "INV-1053",
+        "subtotal": "7270.00",
+        "tax": "581.60",
+        "total": "7851.60"
+      }
+    },
+    {
+      "id": "INV-1054",
+      "text": "INVOICE\nInvoice number: INV-1054\nBill to: Elm Street Bakery\n\nItem             Qty   Amount\nBolts             10   $640.00\nCable              4   $204.00\nFreight           38   $6,954.00\n\nSubtotal: $7,798.00\nSales tax (8%): $623.84\nTotal due: $8,421.84\n",
+      "labels": {
+        "invoice_number": "INV-1054",
+        "subtotal": "7798.00",
+        "tax": "623.84",
+        "total": "8421.84"
+      }
+    },
+    {
+      "id": "INV-1055",
+      "text": "INVOICE\nInvoice number: INV-1055\nBill to: Gray Fox Labs\n\nItem             Qty   Amount\nCable              4   $724.00\nWidgets           10   $1,660.00\nBolts             11   $1,804.00\nFreight           16   $3,792.00\n\nSubtotal: $7,980.00\nSales tax (8%): $638.40\nTotal due: $8,618.40\n",
+      "labels": {
+        "invoice_number": "INV-1055",
+        "subtotal": "7980.00",
+        "tax": "638.40",
+        "total": "8618.40"
+      }
+    },
+    {
+      "id": "INV-1056",
+      "text": "INVOICE\nInvoice number: INV-1056\nBill to: Harbor Tools\n\nItem             Qty   Amount\nBrackets          11   $1,969.00\nFreight           40   $640.00\nService hours      6   $1,272.00\n\nSubtotal: $3,881.00\nSales tax (8%): $310.48\nTotal due: $4,191.48\n",
+      "labels": {
+        "invoice_number": "INV-1056",
+        "subtotal": "3881.00",
+        "tax": "310.48",
+        "total": "4191.48"
+      }
+    },
+    {
+      "id": "INV-1057",
+      "text": "INVOICE\nInvoice number: INV-1057\nBill to: Gray Fox Labs\n\nItem             Qty   Amount\nFreight           12   $1,536.00\nBrackets          19   $4,712.00\n\nSubtotal: $6,248.00\nSales tax (8%): $499.84\nTotal due: $6,747.84\n",
+      "labels": {
+        "invoice_number": "INV-1057",
+        "subtotal": "6248.00",
+        "tax": "499.84",
+        "total": "6747.84"
+      }
+    },
+    {
+      "id": "INV-1058",
+      "text": "INVOICE\nInvoice number: INV-1058\nBill to: Gray Fox Labs\n\nItem             Qty   Amount\nBrackets          16   $1,760.00\nBolts             12   $120.00\nCable             15   $1,755.00\n\nSubtotal: $3,635.00\nSales tax (8%): $290.80\nTotal due: $3,925.80\n",
+      "labels": {
+        "invoice_number": "INV-1058",
+        "subtotal": "3635.00",
+        "tax": "290.80",
+        "total": "3925.80"
+      }
+    },
+    {
+      "id": "INV-1059",
+      "text": "INVOICE\nInvoice number: INV-1059\nBill to: Northwind Supply\n\nItem             Qty   Amount\nCable              7   $1,701.00\nService hours     30   $2,790.00\n\nSubtotal: $4,491.00\nSales tax (8%): $359.28\nTotal due: $4,850.28\n",
+      "labels": {
+        "invoice_number": "INV-1059",
+        "subtotal": "4491.00",
+        "tax": "359.28",
+        "total": "4850.28"
+      }
+    }
+  ]
+}

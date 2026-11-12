@@ -1,0 +1,67 @@
+{
+ "name": "profile-02-measured-route",
+ "description": "A measured route row and the gold set digest change the profile digest, and change no decision.",
+ "document": "Fee\t$90\n",
+ "profile": {
+  "groundgate_profile": 1,
+  "id": "fees-test",
+  "version": "1.0.0",
+  "schema": {
+   "fields": {
+    "fee": {
+     "type": "integer",
+     "unit": "USD",
+     "aliases": [
+      "Fee"
+     ]
+    }
+   }
+  },
+  "routes": [
+   {
+    "field": "fee",
+    "route": "checked",
+    "status": "measured",
+    "date": "2026-11-12",
+    "documents": 60,
+    "bound": "0.0605"
+   }
+  ],
+  "gold_sha256": "sha256:abababababababababababababababababababababababababababababababab",
+  "description": "Fees."
+ },
+ "candidates": [
+  {
+   "id": "p1",
+   "field": "fee",
+   "value": 90,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4,
+     "end": 7,
+     "text": "$90"
+    },
+    {
+     "role": "field",
+     "start": 0,
+     "end": 3,
+     "text": "Fee"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "profile": {
+   "id": "fees-test",
+   "version": "1.0.0",
+   "sha256": "sha256:50ea1da90762218eebe351a7b74835aa0afffead0022cd5a0b4c519dca4dfcc0"
+  }
+ }
+}

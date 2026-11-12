@@ -1,0 +1,64 @@
+{
+ "name": "profile-03-judge-thresholds",
+ "description": "The judge thresholds are in the policy digest, so they change the profile digest. With no judgment, the decision does not change.",
+ "document": "Fee\t$90\n",
+ "profile": {
+  "groundgate_profile": 1,
+  "id": "fees-test",
+  "version": "1.0.0",
+  "schema": {
+   "fields": {
+    "fee": {
+     "type": "integer",
+     "unit": "USD",
+     "aliases": [
+      "Fee"
+     ]
+    }
+   }
+  },
+  "policy": {
+   "judge": {
+    "id": "j",
+    "digest": "j-1",
+    "clear": {
+     "KEY_NOT_AT_VALUE": 0.9
+    }
+   }
+  }
+ },
+ "candidates": [
+  {
+   "id": "p1",
+   "field": "fee",
+   "value": 90,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4,
+     "end": 7,
+     "text": "$90"
+    },
+    {
+     "role": "field",
+     "start": 0,
+     "end": 3,
+     "text": "Fee"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "profile": {
+   "id": "fees-test",
+   "version": "1.0.0",
+   "sha256": "sha256:d2897587ceb835fc9dc9a4dfda524a591150af78d9048228f94f5a5fb338f515"
+  }
+ }
+}

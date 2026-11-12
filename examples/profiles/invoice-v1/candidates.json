@@ -1,0 +1,61 @@
+[
+  {
+    "id": "INV-1000/invoice_number",
+    "field": "invoice_number",
+    "value": "INV-1000",
+    "evidence": [
+      {
+        "text": "INV-1000"
+      },
+      {
+        "role": "field",
+        "text": "Invoice number"
+      }
+    ]
+  },
+  {
+    "id": "INV-1000/subtotal",
+    "field": "subtotal",
+    "value": "5002.00",
+    "unit": "USD",
+    "evidence": [
+      {
+        "text": "$5,002.00"
+      },
+      {
+        "role": "field",
+        "text": "Subtotal"
+      }
+    ]
+  },
+  {
+    "id": "INV-1000/tax",
+    "field": "tax",
+    "value": "400.16",
+    "unit": "USD",
+    "evidence": [
+      {
+        "text": "$400.16"
+      },
+      {
+        "role": "field",
+        "text": "Sales tax"
+      }
+    ]
+  },
+  {
+    "id": "INV-1000/total",
+    "field": "total",
+    "value": "5402.16",
+    "unit": "USD",
+    "evidence": [
+      {
+        "text": "$5,402.16"
+      },
+      {
+        "role": "field",
+        "text": "Total due"
+      }
+    ]
+  }
+]

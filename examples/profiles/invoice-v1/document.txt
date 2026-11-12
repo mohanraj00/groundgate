@@ -1,0 +1,13 @@
+INVOICE
+Invoice number: INV-1000
+Bill to: Harbor Tools
+
+Item             Qty   Amount
+Brackets           2   $272.00
+Service hours     23   $1,012.00
+Freight           13   $2,522.00
+Cable             26   $1,196.00
+
+Subtotal: $5,002.00
+Sales tax (8%): $400.16
+Total due: $5,402.16

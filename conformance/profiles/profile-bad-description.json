@@ -1,0 +1,28 @@
+{
+ "name": "profile-bad-description",
+ "description": "A profile with a description that is not a text (P3) is invalid (SPEC §4.10). The packet gets no receipt.",
+ "document": "Fee\t$90\n",
+ "profile": {
+  "groundgate_profile": 1,
+  "id": "fees-test",
+  "version": "1.0.0",
+  "schema": {
+   "fields": {
+    "fee": {
+     "type": "integer",
+     "unit": "USD",
+     "aliases": [
+      "Fee"
+     ]
+    }
+   }
+  },
+  "description": [
+   "Fees"
+  ]
+ },
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}
