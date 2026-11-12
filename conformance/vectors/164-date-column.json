@@ -1,0 +1,105 @@
+{
+ "name": "164-date-column",
+ "description": "A column item names the column of the field at the date mention. A date in another column, or a candidate with no column item and no field item, gets COLUMN_NOT_AT_VALUE (SPEC 4.6, 4.11, #612).",
+ "document": "Item\tTyp.\tMax.\nLaunch\t1 July 2025\t9 July 2025\n",
+ "schema": {
+  "fields": {
+   "typ": {
+    "type": "date",
+    "formats": [
+     "D Month YYYY"
+    ],
+    "columns": [
+     "Typ."
+    ],
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "k1",
+   "field": "typ",
+   "value": "2025-07-01",
+   "evidence": [
+    {
+     "start": 22,
+     "end": 33,
+     "text": "1 July 2025"
+    },
+    {
+     "role": "column",
+     "start": 5,
+     "end": 9,
+     "text": "Typ."
+    }
+   ]
+  },
+  {
+   "id": "k2",
+   "field": "typ",
+   "value": "2025-07-09",
+   "evidence": [
+    {
+     "start": 34,
+     "end": 45,
+     "text": "9 July 2025"
+    },
+    {
+     "role": "column",
+     "start": 5,
+     "end": 9,
+     "text": "Typ."
+    }
+   ]
+  },
+  {
+   "id": "k3",
+   "field": "typ",
+   "value": "2025-07-01",
+   "evidence": [
+    {
+     "start": 22,
+     "end": 33,
+     "text": "1 July 2025"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "missing": [],
+    "parts": [
+     {
+      "role": "column",
+      "passed": true
+     }
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "COLUMN_NOT_AT_VALUE"
+    ],
+    "missing": [],
+    "parts": [
+     {
+      "role": "column",
+      "passed": false
+     }
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "COLUMN_NOT_AT_VALUE"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

@@ -331,8 +331,9 @@ def test_flag_order_and_code_descriptions_are_pinned() -> None:
     from groundgate.admit import FLAG_ORDER, INFO_ORDER
 
     assert FLAG_ORDER == (
-        "NON_VERBATIM_EVIDENCE", "QUALIFIED_VALUE", "SCALE_WORD", "PART_MISSING",
-        "SIGN_DROPPED", "SIGN_CITATION_INVALID", "SCALE_CITATION_INVALID", "UNIT_CITATION_INVALID",
+        "NON_VERBATIM_EVIDENCE", "QUALIFIED_VALUE", "SCALE_WORD", "DATE_AMBIGUOUS",
+        "PART_MISSING", "SIGN_DROPPED", "SIGN_CITATION_INVALID", "SCALE_CITATION_INVALID",
+        "UNIT_CITATION_INVALID",
         "FIELD_CITATION_INVALID", "KEY_NOT_AT_VALUE", "KEY_CITATION_INVALID",
         "COLUMN_NOT_AT_VALUE", "MARKER_OTHER_FIELD", "READ_DOUBT", "EVIDENCE_QUOTED",
         "EVIDENCE_STATED", "LOW_CONFIDENCE", "CONFLICTING_CANDIDATES", "NOT_CORROBORATED",
@@ -341,7 +342,7 @@ def test_flag_order_and_code_descriptions_are_pinned() -> None:
     )  # fmt: skip
     assert tuple(codes.FLAG) == FLAG_ORDER
     assert tuple(codes.INFO) == INFO_ORDER
-    assert len(codes.REJECT) == 13
+    assert len(codes.REJECT) == 15
     assert set(codes.COVERAGE) == {"REQUIRED_FIELD_MISSING"}
 
 

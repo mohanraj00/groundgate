@@ -1,0 +1,17 @@
+{
+ "name": "date-no-formats",
+ "description": "The schema has a date field with no formats (SPEC §4.11, #612).",
+ "document": "Signed 2025-06-15.",
+ "schema": {
+  "fields": {
+   "day": {
+    "type": "date"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

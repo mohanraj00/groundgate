@@ -1,0 +1,21 @@
+{
+ "name": "date-format-twice",
+ "description": "The schema has a format listed twice (SPEC §4.11, #612).",
+ "document": "Signed 2025-06-15.",
+ "schema": {
+  "fields": {
+   "day": {
+    "type": "date",
+    "formats": [
+     "D/M/YYYY",
+     "D/M/YYYY"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

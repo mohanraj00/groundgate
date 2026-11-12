@@ -8,6 +8,7 @@ REJECT = {
     "NULL_STRING_LITERAL": 'The value is a string like "null" where no value was found.',
     "TYPE_INVALID": "The value does not parse as the field's type.",
     "RANGE_INVALID": "The value is outside the field's allowed range.",
+    "DATE_OUT_OF_RANGE": "The date is before the field's minimum or after its maximum.",
     "UNIT_INVALID": "The unit is not the field's unit.",
     "KEY_INVALID": "The field has keys, and the key is missing or not one of them.",
     "NO_EVIDENCE": "The candidate gives no value item and no outside evidence.",
@@ -15,6 +16,9 @@ REJECT = {
     "QUOTE_NOT_FOUND": "The quoted value text does not occur in the document or reference.",
     "VALUE_NOT_IN_EVIDENCE": "The value cannot be read from the cited text.",
     "UNIT_NOT_IN_EVIDENCE": "The value is in the cited text, but not with the field's unit.",
+    "DATE_FORMAT_UNDECLARED": (
+        "The text gives the date only in a format that the field does not accept."
+    ),
     "SOURCE_REJECTED": "Only outside evidence supports the value, and the policy rejects it.",
 }
 
@@ -26,6 +30,7 @@ FLAG = {
     "SCALE_WORD": (
         'A scale word such as "million" follows the value, and the value was given unscaled.'
     ),
+    "DATE_AMBIGUOUS": "Two formats of the field read the cited date as two dates, as 03/04/2025.",
     "PART_MISSING": "The value needs a sign, a scale or a unit that no evidence item supports.",
     "SIGN_DROPPED": "The value is positive, and the document prints it with a minus sign.",
     "SIGN_CITATION_INVALID": "The sign item does not make the value negative.",

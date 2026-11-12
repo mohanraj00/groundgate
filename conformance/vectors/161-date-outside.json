@@ -1,0 +1,132 @@
+{
+ "name": "161-date-outside",
+ "description": "On the outside path, an external item holds a date value when step 10 passes in its text. DATE_AMBIGUOUS reads the text of the deciding item. A mention in a format that the field does not list holds no value, so no item holds it (#612).",
+ "document": "Issued 03/04/2025, that is 3 April 2025. Renewed 03/03/2025. Expires 13/04/2025.\n",
+ "schema": {
+  "fields": {
+   "both": {
+    "type": "date",
+    "formats": [
+     "D/M/YYYY",
+     "M/D/YYYY"
+    ],
+    "multiple": true
+   },
+   "dmy": {
+    "type": "date",
+    "formats": [
+     "D/M/YYYY"
+    ],
+    "multiple": true
+   },
+   "iso": {
+    "type": "date",
+    "formats": [
+     "YYYY-MM-DD"
+    ],
+    "multiple": true
+   },
+   "mix": {
+    "type": "date",
+    "formats": [
+     "D/M/YYYY",
+     "M/D/YYYY",
+     "D Month YYYY"
+    ],
+    "multiple": true
+   }
+  }
+ },
+ "policy": {
+  "sources": {
+   "external": {
+    "allow": [
+     "https://www.irs.gov/publications/p970"
+    ]
+   }
+  }
+ },
+ "candidates": [
+  {
+   "id": "x1",
+   "field": "both",
+   "value": "2025-04-03",
+   "evidence": {
+    "source": "external",
+    "url": "https://www.irs.gov/publications/p970",
+    "retrieved": "2026-10-01",
+    "text": "Issued 03/04/2025."
+   }
+  },
+  {
+   "id": "x2",
+   "field": "dmy",
+   "value": "2025-04-03",
+   "evidence": {
+    "source": "external",
+    "url": "https://www.irs.gov/publications/p970",
+    "retrieved": "2026-10-01",
+    "text": "Issued 03/04/2025."
+   }
+  },
+  {
+   "id": "x3",
+   "field": "dmy",
+   "value": "2025-03-04",
+   "evidence": {
+    "source": "external",
+    "url": "https://www.irs.gov/publications/p970",
+    "retrieved": "2026-10-01",
+    "text": "Issued 03/04/2025."
+   }
+  },
+  {
+   "id": "x4",
+   "field": "both",
+   "value": "2025-04-03",
+   "evidence": [
+    {
+     "start": 7,
+     "end": 17,
+     "text": "03/04/2025"
+    },
+    {
+     "source": "external",
+     "url": "https://www.irs.gov/publications/p970",
+     "retrieved": "2026-10-01",
+     "text": "Issued 3 April 2025."
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "DATE_AMBIGUOUS",
+     "ADMITTED_BY_POLICY"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": [
+     "ADMITTED_BY_POLICY"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "DATE_AMBIGUOUS"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

@@ -1,0 +1,206 @@
+{
+ "name": "162-date-range",
+ "description": "minimum and maximum of a date field are dates in the normal form, and both are inclusive. A value outside them is DATE_OUT_OF_RANGE, before the text is read. A field item names the field at the mention. A sign item on a date field fails, as on a string field (#612).",
+ "document": "Effective date: 1 July 2025\nLapse date: 31 December 2101\nStart: 1 January 1989\nFloor: 1 January 1990\nCeiling: 31 December 2100\n",
+ "schema": {
+  "fields": {
+   "effective": {
+    "type": "date",
+    "formats": [
+     "D Month YYYY"
+    ],
+    "minimum": "1990-01-01",
+    "maximum": "2100-12-31",
+    "aliases": [
+     "Effective date"
+    ],
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "r1",
+   "field": "effective",
+   "value": "2025-07-01",
+   "evidence": [
+    {
+     "start": 16,
+     "end": 27,
+     "text": "1 July 2025"
+    },
+    {
+     "role": "field",
+     "start": 0,
+     "end": 14,
+     "text": "Effective date"
+    }
+   ]
+  },
+  {
+   "id": "r2",
+   "field": "effective",
+   "value": "2101-12-31",
+   "evidence": [
+    {
+     "start": 40,
+     "end": 56,
+     "text": "31 December 2101"
+    }
+   ]
+  },
+  {
+   "id": "r3",
+   "field": "effective",
+   "value": "1989-01-01",
+   "evidence": [
+    {
+     "start": 64,
+     "end": 78,
+     "text": "1 January 1989"
+    }
+   ]
+  },
+  {
+   "id": "r4",
+   "field": "effective",
+   "value": "2101-12-31",
+   "evidence": [
+    {
+     "start": 16,
+     "end": 27,
+     "text": "1 July 2025"
+    }
+   ]
+  },
+  {
+   "id": "r5",
+   "field": "effective",
+   "value": "1990-01-01",
+   "evidence": [
+    {
+     "start": 86,
+     "end": 100,
+     "text": "1 January 1990"
+    }
+   ]
+  },
+  {
+   "id": "r6",
+   "field": "effective",
+   "value": "2100-12-31",
+   "evidence": [
+    {
+     "start": 110,
+     "end": 126,
+     "text": "31 December 2100"
+    }
+   ]
+  },
+  {
+   "id": "r7",
+   "field": "effective",
+   "value": "2025-07-01",
+   "evidence": [
+    {
+     "start": 16,
+     "end": 27,
+     "text": "1 July 2025"
+    },
+    {
+     "role": "field",
+     "start": 28,
+     "end": 38,
+     "text": "Lapse date"
+    }
+   ]
+  },
+  {
+   "id": "r8",
+   "field": "effective",
+   "value": "2025-07-01",
+   "evidence": [
+    {
+     "start": 16,
+     "end": 27,
+     "text": "1 July 2025"
+    },
+    {
+     "role": "sign",
+     "start": 0,
+     "end": 9,
+     "text": "Effective"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": true
+     }
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "DATE_OUT_OF_RANGE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "DATE_OUT_OF_RANGE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "DATE_OUT_OF_RANGE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "FIELD_CITATION_INVALID"
+    ],
+    "missing": [],
+    "parts": [
+     {
+      "role": "field",
+      "passed": false
+     }
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "SIGN_CITATION_INVALID"
+    ],
+    "missing": [],
+    "parts": [
+     {
+      "role": "sign",
+      "passed": false
+     }
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

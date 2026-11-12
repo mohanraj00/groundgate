@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import copy
+import datetime
 import json
 import re
 from collections.abc import Sequence
@@ -28,12 +29,42 @@ from .pack import (
 from .pack import PacketError as PacketError
 from .text import BASE_VOCABULARY, SCALED_DIGITS, Vocabulary, normalize_ws, parse_value
 
-FieldType = Literal["number", "integer", "string"]
+FieldType = Literal["number", "integer", "string", "date"]
 Comparator = Literal["eq", "gt", "ge", "lt", "le", "approx", "range"]
 Outcome = Literal["admitted", "needs_verification", "rejected"]
 Action = Literal["admit", "review", "reject"]
 
-_TYPES = ("number", "integer", "string")
+_TYPES = ("number", "integer", "string", "date")
+# the date formats of SPEC §4.11 (#612), in the order of its table
+DATE_FORMATS = ("YYYY-MM-DD", "D/M/YYYY", "M/D/YYYY", "D.M.YYYY", "D Month YYYY", "Month D, YYYY")
+_NORMAL_DATE = re.compile(r"[0-9]{4}-[0-9]{2}-[0-9]{2}\Z")
+
+
+def normal_date(raw: object) -> str | None:
+    """``raw`` when it is a real date in the normal form ``YYYY-MM-DD`` (SPEC §4.11), else None."""
+    if not isinstance(raw, str) or _NORMAL_DATE.match(raw) is None:
+        return None
+    try:
+        datetime.date(int(raw[:4]), int(raw[5:7]), int(raw[8:]))
+    except ValueError:  # not a real date, or the year 0000
+        return None
+    return raw
+
+
+def _formats(name: str, raw: object) -> list[str]:
+    """The ``formats`` of a date field: a non-empty list of distinct names of SPEC §4.11."""
+    if (
+        not isinstance(raw, list)
+        or not raw
+        or not all(isinstance(x, str) and x in DATE_FORMATS for x in raw)
+        or len(set(raw)) != len(raw)
+    ):
+        raise PacketError(
+            f"field {name!r} formats must be a non-empty list of distinct names of SPEC §4.11"
+        )
+    return list(raw)
+
+
 _COMPARATORS = ("eq", "gt", "ge", "lt", "le", "approx", "range")
 
 
@@ -75,6 +106,9 @@ class Field:
     columns: tuple[str, ...] | None = None  # the column words of the field (SPEC §2.3, spec 0.12)
     markers: tuple[str, ...] | None = None  # the marker words of the field (spec 0.12)
     description: str | None = None
+    formats: tuple[str, ...] | None = None  # the date formats of a date field (SPEC §4.11)
+    date_minimum: str | None = None  # the bounds of a date field, in the normal form
+    date_maximum: str | None = None
     _raw: dict[str, Any] = field(default_factory=dict, compare=False, repr=False)
     template: str | None = None  # "<pack id>/<field name>" of a kind pack (SPEC §2.3, §4.9)
 
@@ -96,6 +130,7 @@ class Field:
             "markers",
             "description",
             "template",
+            "formats",
         }
         if unknown:
             raise PacketError(f"field {name!r} has unknown keys {sorted(unknown)}")
@@ -127,6 +162,18 @@ class Field:
             raise PacketError(f"field {name!r} has unknown comparator {raw['comparator']!r}")
         if raw["unit"] is not None and not isinstance(raw["unit"], str):
             raise PacketError(f"field {name!r} unit must be a string or null")
+        is_date = raw["type"] == "date"
+        if is_date:  # SPEC §4.11 (#612)
+            raw["formats"] = _formats(name, d.get("formats"))
+            if raw["unit"] is not None:
+                raise PacketError(f"field {name!r} is a date field: its unit must be null")
+            if raw["comparator"] != "eq":
+                raise PacketError(f"field {name!r} is a date field: its comparator must be eq")
+            for bound in ("minimum", "maximum"):
+                if raw[bound] is not None and normal_date(raw[bound]) is None:
+                    raise PacketError(f"field {name!r} {bound} must be a date as YYYY-MM-DD")
+        elif "formats" in d:
+            raise PacketError(f"field {name!r} has formats, and only a date field has them")
         for flag in ("required", "multiple"):
             if not isinstance(raw[flag], bool):
                 raise PacketError(f"field {name!r} {flag} must be a boolean")
@@ -141,8 +188,8 @@ class Field:
             type=raw["type"],
             unit=raw["unit"],
             comparator=raw["comparator"],
-            minimum=_bound(f"{name}.minimum", raw["minimum"]),
-            maximum=_bound(f"{name}.maximum", raw["maximum"]),
+            minimum=None if is_date else _bound(f"{name}.minimum", raw["minimum"]),
+            maximum=None if is_date else _bound(f"{name}.maximum", raw["maximum"]),
             required=raw["required"],
             multiple=raw["multiple"],
             keys=None if keys is None else tuple(keys),
@@ -150,6 +197,9 @@ class Field:
             columns=None if columns is None else tuple(columns),
             markers=None if markers is None else tuple(markers),
             description=raw.get("description"),
+            formats=tuple(raw["formats"]) if is_date else None,
+            date_minimum=raw["minimum"] if is_date else None,
+            date_maximum=raw["maximum"] if is_date else None,
             _raw=raw,
             template=raw.get("template"),
         )
@@ -174,8 +224,8 @@ def _relation_field(where: str, name: object, fields: dict[str, Field]) -> Field
     if not isinstance(name, str) or name not in fields:
         raise PacketError(f"{where} names {name!r}, which is not a field of the schema")
     f = fields[name]
-    if f.type == "string" or f.multiple:
-        raise PacketError(f"{where}: field {name!r} is a string field or a multiple field")
+    if f.type in ("string", "date") or f.multiple:
+        raise PacketError(f"{where}: field {name!r} is a string, date or multiple field")
     return f
 
 
@@ -896,6 +946,8 @@ def extractor_schema(
     for f in s.fields.values():
         if f.type == "string":
             value = {"type": "string", "description": "The value as the text states it."}
+        elif f.type == "date":
+            value = {"type": "string", "description": "The date as YYYY-MM-DD."}
         else:
             value = {
                 "type": "string",

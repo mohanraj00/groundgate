@@ -1,0 +1,20 @@
+{
+ "name": "formats-on-integer",
+ "description": "The schema has formats on an integer field (SPEC §4.11, #612).",
+ "document": "Signed 2025-06-15.",
+ "schema": {
+  "fields": {
+   "day": {
+    "type": "integer",
+    "formats": [
+     "YYYY-MM-DD"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

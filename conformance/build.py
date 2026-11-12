@@ -6613,6 +6613,224 @@ vector(
 )  # fmt: skip
 
 
+# ---------------------------------------------------------------- dates (SPEC §4.11, #612)
+ALL_FORMATS = ["YYYY-MM-DD", "D/M/YYYY", "M/D/YYYY", "D.M.YYYY", "D Month YYYY", "Month D, YYYY"]
+NOT_IN_DATE = ("rejected", ["VALUE_NOT_IN_EVIDENCE"])
+
+
+def date(*formats: str, **members: Any) -> dict[str, Any]:
+    """A date field with these formats (SPEC §4.11)."""
+    return {"type": "date", "formats": list(formats), **members}
+
+
+vector(
+    "159-date-formats",
+    "A date field reads a date mention in each format of SPEC 4.11 and admits the value in the "
+    "normal form. A one-digit day or month, an ordinal suffix, an abbreviated month name with a "
+    "dot, a month name in capitals and a line break in a mention are allowed. A wrong ordinal "
+    "suffix, a mention with no year, and a mention next to a digit or a letter give no date. A "
+    "value that is not in the normal form, or is not a real date, is TYPE_INVALID. A date in a "
+    "format that the field does not list is DATE_FORMAT_UNDECLARED, and a date after the "
+    "maximum is DATE_OUT_OF_RANGE (#612).",
+    "In force from 1 July 2025. Signed 2025-06-15. Filed on 15/06/2025, posted 6/20/2025 and "
+    "stamped 21.6.2025. The board met on June 2, 2025 and again on 3rd Jul. 2025. "
+    "Reviewed 9 AUGUST 2025. Due by 30\nSeptember 2025. Paid Sept 5 2025. Closed 1th May 2025. "
+    "Ref 12025-07-01 and 2025-07-01T10:00.\n",
+    {"fields": {"day": date(*ALL_FORMATS, multiple=True),
+                "iso": date("YYYY-MM-DD", maximum="2025-06-30", multiple=True)}},
+    [
+        c("d1", "day", "2025-07-01", None, [q("1 July 2025")]),
+        c("d2", "day", "2025-06-15", None, [q("2025-06-15")]),
+        c("d3", "day", "2025-06-15", None, [q("15/06/2025")]),
+        c("d4", "day", "2025-06-20", None, [q("6/20/2025")]),
+        c("d5", "day", "2025-06-21", None, [q("21.6.2025")]),
+        c("d6", "day", "2025-06-02", None, [q("June 2, 2025")]),
+        c("d7", "day", "2025-07-03", None, [q("3rd Jul. 2025")]),
+        c("d8", "day", "2025-07-01", None, [q("In force from 1 July 2025.")]),
+        c("d9", "day", "2025-08-09", None, [q("9 AUGUST 2025")]),
+        c("d10", "day", "2025-09-30", None, [q("30\nSeptember 2025")]),
+        c("d11", "day", "2025-09-05", None, [q("Sept 5 2025")]),
+        # the value is not a date in the normal form
+        c("d12", "day", "2025-7-1", None, [q("1 July 2025")], ("rejected", ["TYPE_INVALID"])),
+        c("d13", "day", "2025-02-29", None, [q("1 July 2025")], ("rejected", ["TYPE_INVALID"])),
+        c("d14", "day", 20250701, None, [q("1 July 2025")], ("rejected", ["TYPE_INVALID"])),
+        # the text gives another date, or no date
+        c("d15", "day", "2025-01-07", None, [q("1 July 2025")], NOT_IN_DATE),
+        c("d16", "day", "2025-07-01", None, [q("1 July")], NOT_IN_DATE),
+        c("d17", "day", "2025-05-01", None, [q("1th May 2025")], NOT_IN_DATE),
+        # a digit before the mention, and a letter after it
+        c("d18", "day", "2025-07-01", None, [q("2025-07-01")], NOT_IN_DATE),
+        c("d19", "day", "2025-07-01", None, [q("2025-07-01", 2)], NOT_IN_DATE),
+        # a field with one format: the date in another format, and a date after the maximum
+        c("d20", "iso", "2025-06-15", None, [q("2025-06-15")]),
+        c("d21", "iso", "2025-06-15", None, [q("15/06/2025")],
+          ("rejected", ["DATE_FORMAT_UNDECLARED"])),
+        c("d22", "iso", "2025-07-01", None, [q("1 July 2025")],
+          ("rejected", ["DATE_OUT_OF_RANGE"])),
+    ],
+)  # fmt: skip
+
+ORDER_DOC = "Issued 03/04/2025, that is 3 April 2025. Renewed 03/03/2025. Expires 13/04/2025.\n"
+ORDER_SCHEMA = {
+    "fields": {
+        "both": date("D/M/YYYY", "M/D/YYYY", multiple=True),
+        "dmy": date("D/M/YYYY", multiple=True),
+        "iso": date("YYYY-MM-DD", multiple=True),
+        "mix": date("D/M/YYYY", "M/D/YYYY", "D Month YYYY", multiple=True),
+    }
+}
+AMBIGUOUS = (REVIEW, ["DATE_AMBIGUOUS"])
+UNDECLARED = ("rejected", ["DATE_FORMAT_UNDECLARED"])
+vector(
+    "160-date-order",
+    "With D/M/YYYY and M/D/YYYY, a mention whose day and month are both 12 or less, and differ, "
+    "reads as two dates. The value is then at an ambiguous mention, and the decision gets "
+    "DATE_AMBIGUOUS. A mention with one reading, or another mention in the span that gives the "
+    "value, admits. A mention that gives the value only in a format that the field does not list "
+    "is DATE_FORMAT_UNDECLARED (#612).",
+    ORDER_DOC,
+    ORDER_SCHEMA,
+    [
+        c("o1", "both", "2025-04-03", None, [q("03/04/2025")], AMBIGUOUS),
+        c("o2", "both", "2025-03-04", None, [q("03/04/2025")], AMBIGUOUS),
+        c("o3", "both", "2025-03-03", None, [q("03/03/2025")]),
+        c("o4", "both", "2025-04-13", None, [q("13/04/2025")]),
+        c("o5", "dmy", "2025-04-03", None, [q("03/04/2025")]),
+        c("o6", "dmy", "2025-03-04", None, [q("03/04/2025")], UNDECLARED),
+        c("o7", "iso", "2025-04-13", None, [q("13/04/2025")], UNDECLARED),
+        c("o8", "iso", "2025-04-14", None, [q("13/04/2025")], NOT_IN_DATE),
+        c("o9", "mix", "2025-04-03", None, [q("03/04/2025, that is 3 April 2025")]),
+        c("o10", "mix", "2025-04-03", None, [q("03/04/2025")], AMBIGUOUS),
+        c("o11", "mix", "2025-03-04", None, [q("03/04/2025, that is 3 April 2025")], AMBIGUOUS),
+    ],
+)  # fmt: skip
+
+vector(
+    "161-date-outside",
+    "On the outside path, an external item holds a date value when step 10 passes in its text. "
+    "DATE_AMBIGUOUS reads the text of the deciding item. A mention in a format that the field "
+    "does not list holds no value, so no item holds it (#612).",
+    ORDER_DOC,
+    ORDER_SCHEMA,
+    [
+        c("x1", "both", "2025-04-03", None, ext("Issued 03/04/2025."),
+          (REVIEW, ["DATE_AMBIGUOUS", "ADMITTED_BY_POLICY"])),
+        c("x2", "dmy", "2025-04-03", None, ext("Issued 03/04/2025."),
+          ("admitted", ["ADMITTED_BY_POLICY"])),
+        c("x3", "dmy", "2025-03-04", None, ext("Issued 03/04/2025."), NOT_IN_DATE),
+        c("x4", "both", "2025-04-03", None, [q("03/04/2025"), ext("Issued 3 April 2025.")],
+          AMBIGUOUS),
+    ],
+    policy={"sources": {"external": {"allow": [URL]}}},
+)  # fmt: skip
+
+RANGE_DOC = (
+    "Effective date: 1 July 2025\nLapse date: 31 December 2101\nStart: 1 January 1989\n"
+    "Floor: 1 January 1990\nCeiling: 31 December 2100\n"
+)
+OUT_OF_RANGE = ("rejected", ["DATE_OUT_OF_RANGE"])
+vector(
+    "162-date-range",
+    "minimum and maximum of a date field are dates in the normal form, and both are inclusive. A "
+    "value outside them is DATE_OUT_OF_RANGE, before the text is read. A field item names the "
+    "field at the mention. A sign item on a date field fails, as on a string field (#612).",
+    RANGE_DOC,
+    {"fields": {"effective": date("D Month YYYY", minimum="1990-01-01", maximum="2100-12-31",
+                                  aliases=["Effective date"], multiple=True)}},
+    [
+        c("r1", "effective", "2025-07-01", None,
+          [q("1 July 2025"), q("Effective date", role="field")], ("admitted", [], [], [FT])),
+        c("r2", "effective", "2101-12-31", None, [q("31 December 2101")], OUT_OF_RANGE),
+        c("r3", "effective", "1989-01-01", None, [q("1 January 1989")], OUT_OF_RANGE),
+        c("r4", "effective", "2101-12-31", None, [q("1 July 2025")], OUT_OF_RANGE),
+        c("r5", "effective", "1990-01-01", None, [q("1 January 1990")]),
+        c("r6", "effective", "2100-12-31", None, [q("31 December 2100")]),
+        c("r7", "effective", "2025-07-01", None,
+          [q("1 July 2025"), q("Lapse date", role="field")],
+          (REVIEW, ["FIELD_CITATION_INVALID"], [], [FF])),
+        c("r8", "effective", "2025-07-01", None,
+          [q("1 July 2025"), q("Effective", role="sign")],
+          (REVIEW, ["SIGN_CITATION_INVALID"], [], [("sign", False)])),
+    ],
+)  # fmt: skip
+
+vector(
+    "163-date-marker",
+    "A marker item names the field at the date mention, and a marker word of another field "
+    "next to the mention gives MARKER_OTHER_FIELD, as at a number token (SPEC 4.6, 4.11, #612).",
+    "Renewal\tperson 1 July 2025\tfamily 2 July 2025\n",
+    {"fields": {"person": date("D Month YYYY", markers=["person"], multiple=True),
+                "family": date("D Month YYYY", markers=["family"], multiple=True)}},
+    [
+        c("m1", "person", "2025-07-01", None, [q("1 July 2025"), mk("person")],
+          ("admitted", [], [], [("marker", True)])),
+        c("m2", "person", "2025-07-01", None, [q("1 July 2025")]),
+        c("m3", "person", "2025-07-02", None, [q("2 July 2025")],
+          (REVIEW, ["MARKER_OTHER_FIELD"])),
+        c("m4", "person", "2025-07-02", None, [q("2 July 2025"), mk("family")],
+          (REVIEW, ["MARKER_OTHER_FIELD"], [], [("marker", False)])),
+        c("m5", "family", "2025-07-02", None, [q("2 July 2025")]),
+    ],
+)  # fmt: skip
+
+vector(
+    "164-date-column",
+    "A column item names the column of the field at the date mention. A date in another column, "
+    "or a candidate with no column item and no field item, gets COLUMN_NOT_AT_VALUE "
+    "(SPEC 4.6, 4.11, #612).",
+    "Item\tTyp.\tMax.\nLaunch\t1 July 2025\t9 July 2025\n",
+    {"fields": {"typ": date("D Month YYYY", columns=["Typ."], multiple=True)}},
+    [
+        c("k1", "typ", "2025-07-01", None, [q("1 July 2025"), col("Typ.")],
+          ("admitted", [], [], [("column", True)])),
+        c("k2", "typ", "2025-07-09", None, [q("9 July 2025"), col("Typ.")],
+          (REVIEW, ["COLUMN_NOT_AT_VALUE"], [], [("column", False)])),
+        c("k3", "typ", "2025-07-01", None, [q("1 July 2025")],
+          (REVIEW, ["COLUMN_NOT_AT_VALUE"])),
+    ],
+)  # fmt: skip
+
+for name, why, field in [
+    ("date-no-formats", "a date field with no formats", {"type": "date"}),
+    ("date-formats-empty", "an empty formats list", date()),
+    ("date-formats-string", "formats that is a string",
+     {"type": "date", "formats": "D/M/YYYY"}),
+    ("date-format-unknown", "a format that the table does not list", date("DD/MM/YY")),
+    ("date-format-twice", "a format listed twice", date("D/M/YYYY", "D/M/YYYY")),
+    ("date-bound-short", "a bound that is not in the normal form",
+     date("YYYY-MM-DD", minimum="2025-7-1")),
+    ("date-bound-not-real", "a bound that is not a real date",
+     date("YYYY-MM-DD", maximum="2025-02-30")),
+    ("date-bound-number", "a bound that is a number", date("YYYY-MM-DD", maximum=2100)),
+    ("date-unit", "a date field with a unit", date("YYYY-MM-DD", unit="d")),
+    ("date-comparator", "a date field with the comparator ge",
+     date("YYYY-MM-DD", comparator="ge")),
+    ("formats-on-integer", "formats on an integer field",
+     {"type": "integer", "formats": ["YYYY-MM-DD"]}),
+]:  # fmt: skip
+    INVALID.append(
+        {
+            "name": name,
+            "description": f"The schema has {why} (SPEC §4.11, #612).",
+            "document": "Signed 2025-06-15.",
+            "schema": {"fields": {"day": field}},
+            "policy": None,
+        }
+    )
+INVALID.append(
+    {
+        "name": "date-relation",
+        "description": "A relation names a date field (SPEC §2.3, §4.11, #612).",
+        "document": "Signed 2025-06-15.",
+        "schema": {
+            "fields": {"day": date("YYYY-MM-DD"), "n": {"type": "integer"}},
+            "relations": [{"id": "r", "total": "n", "parts": [{"field": "day"}]}],
+        },
+        "policy": None,
+    }
+)
+
+
 # ------------------------------------------------------------- profiles (SPEC §4.10, #639)
 # A profile vector has a `profile` in place of `schema`, `policy` and `packs`. The expected
 # digest is written by hand: the schema and the policy after defaults, and the profile body of

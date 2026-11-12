@@ -1,0 +1,21 @@
+{
+ "name": "date-comparator",
+ "description": "The schema has a date field with the comparator ge (SPEC §4.11, #612).",
+ "document": "Signed 2025-06-15.",
+ "schema": {
+  "fields": {
+   "day": {
+    "type": "date",
+    "formats": [
+     "YYYY-MM-DD"
+    ],
+    "comparator": "ge"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

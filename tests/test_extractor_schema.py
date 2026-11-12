@@ -20,7 +20,7 @@ KEYWORDS = {
 }  # fmt: skip
 BEFORE_STEP_8 = {
     "CANDIDATE_INVALID", "FIELD_UNKNOWN", "NULL_STRING_LITERAL", "TYPE_INVALID", "RANGE_INVALID",
-    "UNIT_INVALID", "KEY_INVALID",
+    "UNIT_INVALID", "KEY_INVALID", "DATE_OUT_OF_RANGE",
 }  # fmt: skip
 
 
@@ -57,6 +57,8 @@ def _keywords(node: object, out: set[str]) -> set[str]:
 def _value(f: gg.Field) -> str:
     if f.type == "string":
         return "x"
+    if f.type == "date":  # a date in the normal form and in range (SPEC §4.11)
+        return f.date_minimum or f.date_maximum or "2000-01-01"
     return str(f.minimum if f.minimum is not None else f.maximum if f.maximum is not None else 1)
 
 
