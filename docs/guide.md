@@ -951,7 +951,8 @@ operations on a new, empty store, with the expected result or error of each one.
   Python has.
 - In another language, write a small runner that reads the file and runs each vector.
   [conformance/store/README.md](../conformance/store/README.md) gives the format, the steps of
-  the runner and the report that it writes.
+  the runner and the report that it writes. It also gives the formulas of the keys and the
+  log chain. `python -m groundgate.store.contract` writes the file of the installed version.
 
 `groundgate.store.contract.report(make, backend)` gives the same report in Python. A backend
 passes when the report has `"failed": 0` for the current file.

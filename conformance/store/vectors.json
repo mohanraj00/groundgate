@@ -1030,7 +1030,7 @@
        "key": "sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175",
        "reason": "the tenant asked",
        "time": {
-        "$": "string"
+        "$": "time"
        },
        "sequence": 1,
        "previous": null,
@@ -1045,6 +1045,192 @@
      "key": "sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175",
      "reason": "again",
      "error": "not-found"
+    }
+   ]
+  },
+  {
+   "id": "forget/empty-reason",
+   "check": "check_forget",
+   "about": "forget refuses an empty reason, and the object and the deleted log do not change",
+   "steps": [
+    {
+     "op": "put",
+     "kind": "text@1",
+     "data": {
+      "utf8": "The rent is 1,200 dollars."
+     },
+     "result": "sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175"
+    },
+    {
+     "op": "forget",
+     "key": "sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175",
+     "reason": "",
+     "error": "invalid"
+    },
+    {
+     "op": "get",
+     "kind": "text@1",
+     "key": "sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175",
+     "result": {
+      "utf8": "The rent is 1,200 dollars."
+     }
+    },
+    {
+     "op": "read",
+     "log": [
+      "deleted"
+     ],
+     "result": []
+    }
+   ]
+  },
+  {
+   "id": "forget/twice",
+   "check": "check_forget",
+   "about": "a second forget of a key is not-found and adds no deletion record",
+   "steps": [
+    {
+     "op": "put",
+     "kind": "text@1",
+     "data": {
+      "utf8": "The rent is 1,200 dollars."
+     },
+     "result": "sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175"
+    },
+    {
+     "op": "forget",
+     "key": "sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175",
+     "reason": "the tenant asked",
+     "result": null
+    },
+    {
+     "op": "forget",
+     "key": "sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175",
+     "reason": "the tenant asked",
+     "error": "not-found"
+    },
+    {
+     "op": "read",
+     "log": [
+      "deleted"
+     ],
+     "result": [
+      {
+       "key": "sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175",
+       "reason": "the tenant asked",
+       "time": {
+        "$": "time"
+       },
+       "sequence": 1,
+       "previous": null,
+       "entry_sha256": {
+        "$": "string"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "forget/put-again",
+   "check": "check_forget",
+   "about": "put accepts an object after forget, get gives it, and the deletion record stays",
+   "steps": [
+    {
+     "op": "put",
+     "kind": "text@1",
+     "data": {
+      "utf8": "The rent is 1,200 dollars."
+     },
+     "result": "sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175"
+    },
+    {
+     "op": "forget",
+     "key": "sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175",
+     "reason": "the tenant asked",
+     "result": null
+    },
+    {
+     "op": "put",
+     "kind": "text@1",
+     "data": {
+      "utf8": "The rent is 1,200 dollars."
+     },
+     "result": "sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175"
+    },
+    {
+     "op": "get",
+     "kind": "text@1",
+     "key": "sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175",
+     "result": {
+      "utf8": "The rent is 1,200 dollars."
+     }
+    },
+    {
+     "op": "read",
+     "log": [
+      "deleted"
+     ],
+     "result": [
+      {
+       "key": "sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175",
+       "reason": "the tenant asked",
+       "time": {
+        "$": "time"
+       },
+       "sequence": 1,
+       "previous": null,
+       "entry_sha256": {
+        "$": "string"
+       }
+      }
+     ]
+    },
+    {
+     "op": "forget",
+     "key": "sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175",
+     "reason": "the tenant asked",
+     "result": null
+    },
+    {
+     "op": "get",
+     "kind": "text@1",
+     "key": "sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175",
+     "error": "not-found"
+    },
+    {
+     "op": "read",
+     "log": [
+      "deleted"
+     ],
+     "result": [
+      {
+       "key": "sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175",
+       "reason": "the tenant asked",
+       "time": {
+        "$": "time"
+       },
+       "sequence": 1,
+       "previous": null,
+       "entry_sha256": {
+        "$": "string"
+       }
+      },
+      {
+       "key": "sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175",
+       "reason": "the tenant asked",
+       "time": {
+        "$": "time"
+       },
+       "sequence": 2,
+       "previous": {
+        "$": "string"
+       },
+       "entry_sha256": {
+        "$": "string"
+       }
+      }
+     ]
     }
    ]
   }

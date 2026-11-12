@@ -18,12 +18,18 @@ pytest::
 
 ``run(make)`` runs all the checks in order. ``report(make, backend)`` runs each vector and gives
 the report object of the runner contract. The checks need only the standard library.
+
+``python -m groundgate.store.contract`` writes the vectors of the installed version to stdout.
+The bytes are equal to ``conformance/store/vectors.json`` of the same version.
 """
 
 from __future__ import annotations
 
+import copy
 import hashlib
 import json
+import re
+import sys
 from collections.abc import Callable, Iterable
 from typing import Any
 
@@ -32,6 +38,7 @@ from . import NotFound, Store, StoreError, key
 
 __all__ = [
     "ANY_STRING",
+    "ANY_TIME",
     "CHECKS",
     "FORMAT",
     "VectorFailed",
@@ -51,6 +58,8 @@ JcsOf = Callable[[Any], str]
 FORMAT = "groundgate-store-vectors@1"
 REPORT = "store-report@1"
 ANY_STRING: dict[str, str] = {"$": "string"}  # in a read result, it matches any string
+ANY_TIME: dict[str, str] = {"$": "time"}  # it matches a UTC time such as 2026-10-20T09:30:00Z
+_TIME = re.compile(r"[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z")
 ERRORS: dict[str, type[Exception]] = {
     "invalid": ValueError,
     "not-found": NotFound,
@@ -272,7 +281,7 @@ def vectors(key_of: KeyOf = key, jcs_of: JcsOf = jcs) -> list[Vector]:
     gone = {
         "key": k,
         "reason": "the tenant asked",
-        "time": ANY_STRING,
+        "time": ANY_TIME,
         "sequence": 1,
         "previous": None,
         "entry_sha256": ANY_STRING,
@@ -288,6 +297,38 @@ def vectors(key_of: KeyOf = key, jcs_of: JcsOf = jcs) -> list[Vector]:
         get("schema@1", kept, result=_SCHEMA),
         read(["deleted"], result=[gone]),
         forget(k, "again", error="not-found"),
+    )
+    add(
+        "check_forget",
+        "empty-reason",
+        "forget refuses an empty reason, and the object and the deleted log do not change",
+        put("text@1", _TEXT, result=k),
+        forget(k, "", error="invalid"),
+        get("text@1", k, result=_TEXT),
+        read(["deleted"], result=[]),
+    )
+    add(
+        "check_forget",
+        "twice",
+        "a second forget of a key is not-found and adds no deletion record",
+        put("text@1", _TEXT, result=k),
+        forget(k, "the tenant asked", result=None),
+        forget(k, "the tenant asked", error="not-found"),
+        read(["deleted"], result=[gone]),
+    )
+    again = {**gone, "sequence": 2, "previous": ANY_STRING}
+    add(
+        "check_forget",
+        "put-again",
+        "put accepts an object after forget, get gives it, and the deletion record stays",
+        put("text@1", _TEXT, result=k),
+        forget(k, "the tenant asked", result=None),
+        put("text@1", _TEXT, result=k),
+        get("text@1", k, result=_TEXT),
+        read(["deleted"], result=[gone]),
+        forget(k, "the tenant asked", result=None),
+        get("text@1", k, error="not-found"),
+        read(["deleted"], result=[gone, again]),
     )
     return out
 
@@ -341,6 +382,8 @@ def _bytes(data: dict[str, str]) -> bytes:
 def _match(got: Any, want: Any) -> bool:
     if want == ANY_STRING:
         return isinstance(got, str)
+    if want == ANY_TIME:
+        return isinstance(got, str) and _TIME.fullmatch(got) is not None
     if isinstance(want, dict):
         return (
             isinstance(got, dict)
@@ -364,7 +407,7 @@ def _call(store: Store, step: dict[str, Any]) -> Any:
     if op == "get":
         return store.get(step["kind"], step["key"])
     if op == "append":
-        return store.append(log, step["record"])
+        return store.append(log, copy.deepcopy(step["record"]))  # the vector does not change
     if op == "read":
         return store.read(log)
     if op == "forget":
@@ -510,6 +553,7 @@ def report(make: Make, backend: str, vecs: list[Vector] | None = None) -> dict[s
     """Run each vector on a new store from ``make``, and give the report object of the runner
     contract (``conformance/store/README.md``). A failed vector does not stop the others."""
     vecs = vectors() if vecs is None else vecs
+    digest = hashlib.sha256(dump(vecs).encode("ascii")).hexdigest()  # before the backend runs
     results: list[dict[str, Any]] = []
     for vector in vecs:
         try:
@@ -523,9 +567,13 @@ def report(make: Make, backend: str, vecs: list[Vector] | None = None) -> dict[s
     passed = sum(r["passed"] for r in results)
     return {
         "format": REPORT,
-        "vectors_sha256": hashlib.sha256(dump(vecs).encode("ascii")).hexdigest(),
+        "vectors_sha256": digest,
         "backend": backend,
         "passed": passed,
         "failed": len(results) - passed,
         "results": results,
     }
+
+
+if __name__ == "__main__":
+    sys.stdout.buffer.write(dump().encode("ascii"))

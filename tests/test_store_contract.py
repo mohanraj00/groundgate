@@ -2,8 +2,11 @@
 
 from __future__ import annotations
 
+import hashlib
 import importlib.util
 import json
+import subprocess
+import sys
 from collections.abc import Callable
 from pathlib import Path
 from typing import Any
@@ -71,6 +74,8 @@ class MemoryStore:
 
     def forget(self, k: str, reason: str) -> None:
         _check_key(k)
+        if not reason:
+            raise ValueError("forget needs a reason")
         if k not in self.objects:
             raise NotFound(f"object {k} is not in the store")
         self._append(("deleted",), {"key": k, "reason": reason, "time": "2026-11-12T00:00:00Z"})
@@ -130,7 +135,7 @@ def test_the_report_of_the_folder_store(tmp_path: Path) -> None:
     assert got["format"] == "store-report@1"
     assert got["failed"] == 0
     assert got["passed"] == len(contract.vectors()) == len(got["results"])
-    assert got["vectors_sha256"] == __import__("hashlib").sha256(FILE.read_bytes()).hexdigest()
+    assert got["vectors_sha256"] == hashlib.sha256(FILE.read_bytes()).hexdigest()
     json.dumps(got)
 
 
@@ -155,9 +160,50 @@ class _Lax(MemoryStore):
 def test_the_report_names_the_failed_vectors() -> None:
     got = contract.report(_NoChain, "no chain")
     failed = {r["id"]: r for r in got["results"] if not r["passed"]}
-    assert set(failed) == {"chain/two-reviewers"}
+    assert set(failed) == {"chain/two-reviewers", "forget/put-again"}
     assert failed["chain/two-reviewers"]["step"] == 2
-    assert got["failed"] == 1
+    assert failed["forget/put-again"]["step"] == 8  # the sequence of the second record
+    assert got["failed"] == 2
+
+
+class _Changes(MemoryStore):
+    """A store that adds members to the record that it gets."""
+
+    def append(self, log: Any, record: Any) -> str:
+        head = super().append(log, record)
+        record["sequence"] = 99
+        return head
+
+
+def test_the_report_digest_is_of_the_vectors_before_the_run() -> None:
+    got = contract.report(_Changes, "changes the input")
+    assert got["failed"] == 0
+    assert got["vectors_sha256"] == hashlib.sha256(FILE.read_bytes()).hexdigest()
+
+
+class _LocalTime(MemoryStore):
+    """A store that writes the time with an offset, not in UTC with Z."""
+
+    def _append(self, log: Any, record: dict[str, Any]) -> str:
+        if "time" in record:
+            record = {**record, "time": "2026-11-12T01:00:00+01:00"}
+        return super()._append(log, record)
+
+
+def test_the_time_of_a_deletion_record_has_one_form() -> None:
+    got = contract.report(_LocalTime, "local time")
+    assert {r["id"] for r in got["results"] if not r["passed"]} == {
+        "forget/one-object",
+        "forget/twice",
+        "forget/put-again",
+    }
+
+
+def test_the_module_writes_the_file() -> None:
+    out = subprocess.run(
+        [sys.executable, "-m", "groundgate.store.contract"], capture_output=True, check=True
+    ).stdout
+    assert out == FILE.read_bytes()
 
 
 def test_a_check_finds_a_store_that_breaks_it() -> None:
