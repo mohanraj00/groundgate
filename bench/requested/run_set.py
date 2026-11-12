@@ -105,6 +105,13 @@ def _read(path: Path, cap: int = _MAX_FILE) -> bytes:
     return raw
 
 
+def _document(path: Path, body: bytes) -> Any:
+    """The ``document@1`` model of a source PDF (#630). It needs the ``[pdf]`` extra."""
+    from groundgate.read.document import read_document
+
+    return read_document(path, data=body)[1]
+
+
 def source_code_digest() -> str:
     """Hash the actual imported package code/data and this harness, including dirty edits."""
     root = Path(gg.__file__).parent
@@ -673,7 +680,7 @@ class FrozenSet:
             raise CacheError("request_context check needs a valid manifest") from exc
         del gold
         self.config = _json(raw[_unlinked(configuration.absolute())])
-        if set(self.config) - {"terms_sha256"} != {
+        if set(self.config) - {"terms_sha256", "document"} != {
             "model_id",
             "transport",
             "policy",
@@ -698,6 +705,10 @@ class FrozenSet:
                 or any(not isinstance(v, str) or not v.strip() for v in value.values())
             ):
                 raise CacheError("incomplete provenance: " + name)
+        # A run on document@1 gives the runner the document model of each PDF (#630). A
+        # configuration without the member gives it the reader text, as earlier runs did.
+        if self.config.get("document", "document@1") != "document@1":
+            raise CacheError("document must be document@1")
         self.settings = _settings(self.config["run_policy"])
         self.policy = gg.Policy.from_dict(self.config["policy"]).to_dict()
         if self.policy["sources"] != gg.Policy.from_dict({}).to_dict()["sources"]:
@@ -725,6 +736,7 @@ class FrozenSet:
             raise CacheError("manifest has no documents")
         self.documents: dict[str, Json] = {}
         self.texts: dict[str, str] = {}
+        self.models: dict[str, Any] = {}
         total = 0
         for doc in documents:
             ident = doc.get("id")
@@ -763,6 +775,18 @@ class FrozenSet:
                     if total > _MAX_FILE:
                         raise CacheError("set text exceeds processing limit")
                     self.texts[ident] = text
+            if "document" in self.config:
+                if copy_of is not None:
+                    raise CacheError("a document@1 run needs the text PDF: " + ident)
+                pdf = _unlinked(self.sources / (ident + ".pdf"))
+                body = _read(pdf, _MAX_FILE)
+                if digest(body) != doc.get("source_sha256"):
+                    raise CacheError("source digest differs: " + ident)
+                model = _document(pdf, body)
+                # The core checks spans on this text, so it must be the frozen reader text.
+                if model.text != self.texts[ident]:
+                    raise CacheError("document@1 text differs from the reader text: " + ident)
+                self.models[ident] = model
             schema = self.schema(doc)
             gg.admit(self.texts[ident], schema, [], self.policy)
             self.documents[ident] = copy.deepcopy(doc)
@@ -1125,8 +1149,9 @@ class FrozenSet:
             else:
                 assert runner_api is not None
                 settings_type, replay_runner, run_runner = runner_api
+                source_input = self.models.get(ident, self.texts[ident])
                 result = run_runner(
-                    self.texts[ident],
+                    source_input,
                     self.schema(doc),
                     client=calls,
                     model_id=self.config["model_id"],
@@ -1138,7 +1163,7 @@ class FrozenSet:
                 if not replay_runner(
                     result.record,
                     result.artifacts,
-                    self.texts[ident],
+                    source_input,
                     self.schema(doc),
                     self.policy,
                 ).ok:
@@ -1189,6 +1214,8 @@ class FrozenSet:
                 "schema_sha256": digest(encoded(self.schema(doc))),
                 "policy_sha256": digest(encoded(self.policy)),
             }
+            if ident in self.models:
+                local["document_sha256"] = digest(encoded(self.models[ident].to_dict()))
             _same_or_publish(folder / ident / "result.json", local, replay_only)
             outputs.append(
                 local["output"]
