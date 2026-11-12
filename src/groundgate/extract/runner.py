@@ -944,6 +944,10 @@ def _unmark(quote: str, body: str) -> str:
     return _MARK.sub("", quote)
 
 
+class _QuoteCount(ValueError):
+    """A node quote that is not exactly once in its node. It fails only its candidate (#632)."""
+
+
 class _Citations:
     """The node citations of a run on a document (docs/design/document-model.md §10)."""
 
@@ -966,7 +970,13 @@ class _Citations:
         that the prompt marked (#526). With ``text``, the one place of the quote in the node,
         with the quote rules of SPEC §4.6, after the markers are removed from the quote. Without
         it, the span of the cell. Raises ``ValueError`` for an id that the prompt did not mark,
-        or a quote that is not exactly once in the node."""
+        and ``_QuoteCount`` for a quote that is not exactly once in the node."""
+        return self.check(item, marked)()
+
+    def check(self, item: Json, marked: frozenset[int]) -> Callable[[], tuple[int, int]]:
+        """Check the form of an evidence item with ``node``, as ``span`` does. Return a function
+        that gives its span, or raises ``_QuoteCount``. A reply check accepts a quote that is
+        not exactly once: only the adapter of its candidate fails (#632)."""
         number = item["node"]
         if isinstance(number, bool) or not isinstance(number, int):
             raise ValueError("a node id is an integer")
@@ -976,7 +986,7 @@ class _Citations:
         if "text" not in item:
             if node.kind != "cell" or node.start == node.end:
                 raise ValueError("a node with no quote must be a cell with text")
-            return node.start, node.end
+            return lambda: (node.start, node.end)
         quote = item["text"]
         if not isinstance(quote, str):
             raise ValueError("evidence text")
@@ -984,12 +994,17 @@ class _Citations:
         quote = _unmark(quote, body)
         if not quote.strip():
             raise ValueError("evidence text")
-        found = list(islice(quote_pattern(quote).finditer(body), 2))
-        if len(found) != 1:
-            raise ValueError("the quote is not exactly once in the node")
-        match = found[0]
-        start = node.start + len(body[: match.start()].encode("utf-8"))
-        return start, start + len(match[0].encode("utf-8"))
+        pattern = quote_pattern(quote)
+
+        def located() -> tuple[int, int]:
+            found = list(islice(pattern.finditer(body), 2))
+            if len(found) != 1:
+                raise _QuoteCount("the quote is not exactly once in the node")
+            match = found[0]
+            start = node.start + len(body[: match.start()].encode("utf-8"))
+            return start, start + len(match[0].encode("utf-8"))
+
+        return located
 
 
 def _shape(
@@ -1031,7 +1046,7 @@ def _shape(
             raise ValueError("evidence text")
         if "node" in item:
             assert citations is not None
-            citations.span(item, marked)
+            citations.check(item, marked)
         if source == "reference" and (not isinstance(item["ref"], str) or item["ref"] not in refs):
             raise ValueError("unknown reference")
 
@@ -1502,7 +1517,18 @@ class _Engine:
         pending = []
         try:
             for i, raw in enumerate(parsed["candidates"]):
-                candidate = self.adapt(raw, regions, phase == "targeted")
+                try:
+                    candidate = self.adapt(raw, regions, phase == "targeted")
+                except _QuoteCount:
+                    # Only this candidate fails. The other candidates of the reply stay (#632).
+                    self.states[raw["field"]].append("protocol_failure")
+                    self.event(
+                        kind="protocol_failure",
+                        phase=phase,
+                        field=raw["field"],
+                        reason="node_quote",
+                    )
+                    continue
                 cid = f"c{self.calls}-{i + 1}"
                 candidate["id"] = cid
                 pending.append((cid, raw, candidate))

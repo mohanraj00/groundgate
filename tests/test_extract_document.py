@@ -178,8 +178,6 @@ def test_a_node_citation_becomes_a_span(tmp_path: Path) -> None:
         node("9", "5"),
         node(9.0, "5"),
         node(None),
-        node(3, "7"),  # the quote is not in the node
-        node(3, "e"),  # the quote is in the node two or more times
         node(3, "  "),  # a blank quote
         node(3),  # a node alone that is not a cell
         node(4),  # a row
@@ -196,6 +194,63 @@ def test_an_invalid_node_citation_makes_the_reply_invalid(tmp_path: Path, eviden
     call = next(e for e in result.record if e["kind"] == "call")
     assert call["status"] == "invalid_reply"
     assert not result.complete and not result.candidates
+
+
+@pytest.mark.parametrize("quote", ["7", "e"])
+def test_a_quote_not_once_in_its_node_fails_only_its_candidate(tmp_path: Path, quote: str) -> None:
+    # A quote that is in its node zero times, or two or more times, drops only its candidate.
+    # The other candidates of the reply stay, and the run stays complete (#632).
+    doc = document(tmp_path, TABLE)
+    revenue, five, three = (doc.find(t)[0].node for t in ("Revenue", "5", "3"))
+    assert revenue is not None and five is not None and three is not None
+    schema = {"fields": {"amount": {"type": "integer"}, "cost": {"type": "integer"}}}
+    reply = {
+        "candidates": [
+            {
+                "field": "amount",
+                "value": "5",
+                "unit": None,
+                "key": None,
+                "evidence": [node(revenue.id, quote)],
+            },
+            {
+                "field": "cost",
+                "value": "3",
+                "unit": None,
+                "key": None,
+                "evidence": [node(three.id, "3")],
+            },
+        ],
+        "not_found": [],
+    }
+    result = run(doc, Client(reply), schema, targeted=False)
+    call = next(e for e in result.record if e["kind"] == "call")
+    assert call["status"] == "ok"
+    assert result.complete
+    assert [c["field"] for c in result.candidates] == ["cost"]
+    assert result.receipt.decisions[0].outcome == "admitted"
+    failure = next(e for e in result.record if e["kind"] == "protocol_failure")
+    assert (failure["phase"], failure["field"], failure["reason"]) == (
+        "initial",
+        "amount",
+        "node_quote",
+    )
+    assert replay(result.record, result.artifacts, doc, schema).ok
+
+
+def test_a_repair_quote_not_once_in_its_node_fails_only_its_candidate(tmp_path: Path) -> None:
+    doc = document(tmp_path, TABLE)
+    revenue = doc.find("Revenue")[0].node
+    assert revenue is not None
+    first = cited()  # no evidence: the repair may add a value item
+    repair = cited(node(revenue.id, "e"))["candidates"][0]
+    result = run(doc, Client(first, repair), targeted=False)
+    calls = [e for e in result.record if e["kind"] == "call"]
+    assert [c["phase"] for c in calls] == ["initial", "repair"]
+    assert all(c["status"] == "ok" for c in calls)
+    assert result.complete
+    assert any(e["kind"] == "repair" and e["status"] == "protocol_failure" for e in result.record)
+    assert replay(result.record, result.artifacts, doc, SCHEMA).ok
 
 
 def test_a_node_citation_on_a_run_on_text_is_invalid() -> None:
