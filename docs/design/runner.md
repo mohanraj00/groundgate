@@ -474,6 +474,21 @@ with a repair `protocol_failure`. Before #632, one such quote made the whole rep
 changed the runner before a release wrote `groundgate-run/6`, so the version stays. A run/6
 development record with such a reply does not replay in this runner.
 
+The prompt states the rule (#645): a quote inside a node must be once in that node, and a short
+text that is more than once needs a longer quote. A `node_quote` failure in an initial or a
+targeted reply also gets a quote repair, with at most `max_repair_rounds` rounds. Each round names
+the candidate id, the node id, the quote and its count, and asks for a longer part of the node
+that is once. The reply may change only the text of those items. Every other member and every
+other item stays fixed, and each item keeps its node and role. A quote that is once gives the
+candidate, with the id that the failed candidate had, and the repair records `quote_repair`. Its
+rounds count in the repair budget of its group. A reply that changes anything else stops the
+repair with `protocol_failure`, an unchanged reply with `no_op`, and `{"not_found": true}` with
+`repair_not_found`. If the last round still gives a quote that is not once, only that candidate
+fails, as in #632. The runner never takes the first match of a repeated quote: in a table cell
+with two amounts, the first match can be either amount. The prompt and the record changed before
+a release wrote `groundgate-run/6`, so the version stays. The run/6 development records from
+before #645, such as development-635, do not replay in this runner.
+
 The prompt gives the ids (#526, document-model.md §10). The runner puts a `⟦N⟧` marker directly
 before the text of each cell with text inside a document region of the prompt. Only cells get
 ids. If a region already holds U+27E6 or U+27E7, it gets no markers and says

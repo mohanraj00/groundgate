@@ -199,7 +199,8 @@ def test_an_invalid_node_citation_makes_the_reply_invalid(tmp_path: Path, eviden
 @pytest.mark.parametrize("quote", ["7", "e"])
 def test_a_quote_not_once_in_its_node_fails_only_its_candidate(tmp_path: Path, quote: str) -> None:
     # A quote that is in its node zero times, or two or more times, drops only its candidate.
-    # The other candidates of the reply stay, and the run stays complete (#632).
+    # The other candidates of the reply stay, and the run stays complete (#632). With no repair
+    # round, the candidate gets no quote repair (#645).
     doc = document(tmp_path, TABLE)
     revenue, five, three = (doc.find(t)[0].node for t in ("Revenue", "5", "3"))
     assert revenue is not None and five is not None and three is not None
@@ -223,7 +224,7 @@ def test_a_quote_not_once_in_its_node_fails_only_its_candidate(tmp_path: Path, q
         ],
         "not_found": [],
     }
-    result = run(doc, Client(reply), schema, targeted=False)
+    result = run(doc, Client(reply), schema, targeted=False, max_repair_rounds=0)
     call = next(e for e in result.record if e["kind"] == "call")
     assert call["status"] == "ok"
     assert result.complete
@@ -251,6 +252,90 @@ def test_a_repair_quote_not_once_in_its_node_fails_only_its_candidate(tmp_path: 
     assert result.complete
     assert any(e["kind"] == "repair" and e["status"] == "protocol_failure" for e in result.record)
     assert replay(result.record, result.artifacts, doc, SCHEMA).ok
+
+
+REPEATED = "<table><tr><td>Deductible</td><td>5 single 5 family 5 single</td></tr></table>"
+
+
+def test_the_prompt_asks_for_a_node_quote_that_is_once(tmp_path: Path) -> None:
+    client = Client()
+    run(document(tmp_path, TABLE), client, targeted=False)
+    assert "A quote inside a node must be once in that node." in client.prompts[0]
+
+
+def repeated(tmp_path: Path) -> tuple[Document, int]:
+    doc = document(tmp_path, REPEATED)
+    cell = doc.find("5 family")[0].node
+    assert cell is not None
+    return doc, cell.id
+
+
+def test_a_repeated_node_quote_gets_a_quote_repair(tmp_path: Path) -> None:
+    # A quote that is 3 times in its node gets a repair round. A quote that is once in the
+    # repair gives the candidate, and the targeted search does not run (#645).
+    doc, cell = repeated(tmp_path)
+    repair = cited(node(cell, "5 family"))["candidates"][0]
+    client = Client(cited(node(cell, "5")), repair)
+    result = run(doc, client)
+    calls = [e for e in result.record if e["kind"] == "call"]
+    assert [(c["phase"], c.get("reason")) for c in calls] == [
+        ("initial", None),
+        ("repair", "node_quote"),
+    ]
+    sent = body(client.prompts[1])
+    assert sent["candidate_id"] == "c1-1" and sent["allowed_roles"] == ["value"]
+    assert f'quote "5" is 3 times in node {cell}.' in sent["feedback"]
+    assert result.complete
+    [candidate] = result.candidates
+    start = doc.text.encode().index(b"5 family")
+    assert candidate["id"] == "c1-1"
+    assert candidate["evidence"][0] == {
+        "source": "document",
+        "role": "value",
+        "start": start,
+        "end": start + len("5 family"),
+    }
+    assert result.receipt.decisions[0].outcome == "admitted"
+    assert any(e.get("status") == "quote_repair" for e in result.record)
+    assert replay(result.record, result.artifacts, doc, SCHEMA).ok
+
+
+def test_a_quote_repair_that_repeats_the_quote_fails_only_its_candidate(tmp_path: Path) -> None:
+    # The runner never takes the first match. After the last round, the candidate fails (#632).
+    doc, cell = repeated(tmp_path)
+    first = cited(node(cell, "5"))
+    client = Client(first, *(cited(node(cell, t))["candidates"][0] for t in ("5 single", "single")))
+    result = run(doc, client, targeted=False)
+    calls = [e for e in result.record if e["kind"] == "call"]
+    assert [c["phase"] for c in calls] == ["initial", "repair", "repair"]
+    assert [c["round"] for c in calls[1:]] == [1, 2]
+    assert result.complete and not result.candidates
+    repairs = [e["status"] for e in result.record if e["kind"] == "repair"]
+    assert repairs == ["protocol_failure", "protocol_failure"]
+    assert '"5 single" is 2 times' in body(client.prompts[2])["feedback"]
+    assert replay(result.record, result.artifacts, doc, SCHEMA).ok
+
+
+@pytest.mark.parametrize(
+    "change",
+    [
+        {"value": "6"},  # a changed value
+        {"evidence": [node("other", "Deductible")]},  # another node
+        {"evidence": [node("cell", "5 family"), node("cell", "single", role="sign")]},
+    ],
+)
+def test_a_quote_repair_changes_only_the_quote(tmp_path: Path, change: Any) -> None:
+    doc, cell = repeated(tmp_path)
+    other = doc.find("Deductible")[0].node
+    assert other is not None
+    ids = {"cell": cell, "other": other.id}
+    for item in change.get("evidence", []):
+        item["node"] = ids[item["node"]]
+    repair = {**cited(node(cell, "5 family"))["candidates"][0], **change}
+    result = run(doc, Client(cited(node(cell, "5")), repair), targeted=False)
+    assert result.complete and not result.candidates
+    repairs = [e for e in result.record if e["kind"] == "repair"]
+    assert [(e["status"], e["reason"]) for e in repairs] == [("protocol_failure", "node_quote")]
 
 
 def test_a_node_citation_on_a_run_on_text_is_invalid() -> None:
