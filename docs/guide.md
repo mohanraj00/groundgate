@@ -934,3 +934,25 @@ version it implements. A groundgate that implements spec 0.11 reports a 0.10 rec
 and checks nothing more. So pin the groundgate version where you keep receipts. To verify an old
 receipt, install the release for its spec version in a separate environment, for example
 `pip install groundgate==0.2.0` for spec 0.2.
+
+## Store
+
+A store keeps the objects and the logs of groundgate: documents, packets, receipts, review
+answers and deletions. `groundgate.store.FolderStore` keeps them in a folder. An app with other
+storage can write its own backend with the five operations of the `Store` protocol: `put`,
+`get`, `append`, `read` and `forget`. [docs/design/store.md](design/store.md) gives the design.
+
+A backend proves that it meets the store contract with the vectors in
+[conformance/store/vectors.json](../conformance/store/vectors.json). Each vector is a sequence of
+operations on a new, empty store, with the expected result or error of each one.
+
+- In Python, run `groundgate.store.contract.CHECKS` against the backend, as the docstring of
+  `groundgate.store.contract` shows. The checks run the vectors, plus two cases that only
+  Python has.
+- In another language, write a small runner that reads the file and runs each vector.
+  [conformance/store/README.md](../conformance/store/README.md) gives the format, the steps of
+  the runner and the report that it writes. It also gives the formulas of the keys and the
+  log chain. `python -m groundgate.store.contract` writes the file of the installed version.
+
+`groundgate.store.contract.report(make, backend)` gives the same report in Python. A backend
+passes when the report has `"failed": 0` for the current file.
