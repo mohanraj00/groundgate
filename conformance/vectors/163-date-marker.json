@@ -1,0 +1,147 @@
+{
+ "name": "163-date-marker",
+ "description": "A marker item names the field at the date mention, and a marker word of another field next to the mention gives MARKER_OTHER_FIELD, as at a number token (SPEC 4.6, 4.11, #612).",
+ "document": "Renewal\tperson 1 July 2025\tfamily 2 July 2025\n",
+ "schema": {
+  "fields": {
+   "person": {
+    "type": "date",
+    "formats": [
+     "D Month YYYY"
+    ],
+    "markers": [
+     "person"
+    ],
+    "multiple": true
+   },
+   "family": {
+    "type": "date",
+    "formats": [
+     "D Month YYYY"
+    ],
+    "markers": [
+     "family"
+    ],
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "m1",
+   "field": "person",
+   "value": "2025-07-01",
+   "evidence": [
+    {
+     "start": 15,
+     "end": 26,
+     "text": "1 July 2025"
+    },
+    {
+     "role": "marker",
+     "start": 8,
+     "end": 14,
+     "text": "person"
+    }
+   ]
+  },
+  {
+   "id": "m2",
+   "field": "person",
+   "value": "2025-07-01",
+   "evidence": [
+    {
+     "start": 15,
+     "end": 26,
+     "text": "1 July 2025"
+    }
+   ]
+  },
+  {
+   "id": "m3",
+   "field": "person",
+   "value": "2025-07-02",
+   "evidence": [
+    {
+     "start": 34,
+     "end": 45,
+     "text": "2 July 2025"
+    }
+   ]
+  },
+  {
+   "id": "m4",
+   "field": "person",
+   "value": "2025-07-02",
+   "evidence": [
+    {
+     "start": 34,
+     "end": 45,
+     "text": "2 July 2025"
+    },
+    {
+     "role": "marker",
+     "start": 27,
+     "end": 33,
+     "text": "family"
+    }
+   ]
+  },
+  {
+   "id": "m5",
+   "field": "family",
+   "value": "2025-07-02",
+   "evidence": [
+    {
+     "start": 34,
+     "end": 45,
+     "text": "2 July 2025"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "missing": [],
+    "parts": [
+     {
+      "role": "marker",
+      "passed": true
+     }
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "MARKER_OTHER_FIELD"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "MARKER_OTHER_FIELD"
+    ],
+    "missing": [],
+    "parts": [
+     {
+      "role": "marker",
+      "passed": false
+     }
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": []
+ }
+}

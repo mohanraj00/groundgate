@@ -6754,6 +6754,42 @@ vector(
     ],
 )  # fmt: skip
 
+vector(
+    "163-date-marker",
+    "A marker item names the field at the date mention, and a marker word of another field "
+    "next to the mention gives MARKER_OTHER_FIELD, as at a number token (SPEC 4.6, 4.11, #612).",
+    "Renewal\tperson 1 July 2025\tfamily 2 July 2025\n",
+    {"fields": {"person": date("D Month YYYY", markers=["person"], multiple=True),
+                "family": date("D Month YYYY", markers=["family"], multiple=True)}},
+    [
+        c("m1", "person", "2025-07-01", None, [q("1 July 2025"), mk("person")],
+          ("admitted", [], [], [("marker", True)])),
+        c("m2", "person", "2025-07-01", None, [q("1 July 2025")]),
+        c("m3", "person", "2025-07-02", None, [q("2 July 2025")],
+          (REVIEW, ["MARKER_OTHER_FIELD"])),
+        c("m4", "person", "2025-07-02", None, [q("2 July 2025"), mk("family")],
+          (REVIEW, ["MARKER_OTHER_FIELD"], [], [("marker", False)])),
+        c("m5", "family", "2025-07-02", None, [q("2 July 2025")]),
+    ],
+)  # fmt: skip
+
+vector(
+    "164-date-column",
+    "A column item names the column of the field at the date mention. A date in another column, "
+    "or a candidate with no column item and no field item, gets COLUMN_NOT_AT_VALUE "
+    "(SPEC 4.6, 4.11, #612).",
+    "Item\tTyp.\tMax.\nLaunch\t1 July 2025\t9 July 2025\n",
+    {"fields": {"typ": date("D Month YYYY", columns=["Typ."], multiple=True)}},
+    [
+        c("k1", "typ", "2025-07-01", None, [q("1 July 2025"), col("Typ.")],
+          ("admitted", [], [], [("column", True)])),
+        c("k2", "typ", "2025-07-09", None, [q("9 July 2025"), col("Typ.")],
+          (REVIEW, ["COLUMN_NOT_AT_VALUE"], [], [("column", False)])),
+        c("k3", "typ", "2025-07-01", None, [q("1 July 2025")],
+          (REVIEW, ["COLUMN_NOT_AT_VALUE"])),
+    ],
+)  # fmt: skip
+
 for name, why, field in [
     ("date-no-formats", "a date field with no formats", {"type": "date"}),
     ("date-formats-empty", "an empty formats list", date()),

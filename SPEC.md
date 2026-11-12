@@ -1548,7 +1548,8 @@ inclusive. A `value` before `minimum` or after `maximum` is rejected with `DATE_
 3. Otherwise, the candidate is rejected with `VALUE_NOT_IN_EVIDENCE`.
 
 The value is at its mention: the mention is the place of the value for a key, a field item, a
-column item and a marker item (§4.5, §4.6). A `date` field has no unit, so step 11 passes. A
+column item and a marker item (§4.5, §4.6). The column rules, the marker rules and
+`MARKER_OTHER_FIELD` read the mention as the token. A `date` field has no unit, so step 11 passes. A
 sign, scale or unit item on a `date` field fails its check, as on a `string` field. No
 qualifier and no scale word applies to a date, so `QUALIFIED_VALUE` and `SCALE_WORD` do not
 apply. On the outside path (§3.2), an external item holds a date value when step 10 passes in

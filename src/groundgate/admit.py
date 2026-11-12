@@ -578,15 +578,14 @@ def _date_place(
             return "DATE_FORMAT_UNDECLARED"
         return "VALUE_NOT_IN_EVIDENCE"
 
-    def ambiguous(a: int, b: int, fmt: str) -> bool:
-        return any(
-            (a2, b2) == (a, b) and v != value
-            for other in formats
-            if other != fmt
-            for a2, b2, v in read[other]
-        )
-
-    clear = [(a, b) for a, b, fmt in own if not ambiguous(a, b, fmt)]
+    other_dates: dict[tuple[int, int], set[str]] = defaultdict(set)  # each mention by its span
+    for fmt in formats:
+        for a, b, v in read[fmt]:
+            if v != value:
+                other_dates[a, b].add(v)
+    # a mention that gives the value in one format is ambiguous when another format of the
+    # field reads its span as another date; one format reads one span as one date at most
+    clear = [(a, b) for a, b, _ in own if (a, b) not in other_dates]
     if clear:
         return clear[0][0], clear[0][1], False
     return own[0][0], own[0][1], True
@@ -1226,11 +1225,21 @@ def _marker_ok(ctx: _Ctx, t: _Text, f: Field, span: tuple[int, int], tok: Token)
     )
 
 
+def _place_token(f: Field, at: _At) -> Token | None:
+    """The token that the column and marker checks read: the number token, or on a date field
+    the date mention as a token with no value (SPEC §4.11). A string value has none."""
+    if at.token is not None:
+        return at.token
+    if f.type == "date" and at.start is not None and at.end is not None:
+        return Token(at.start, at.end, None)
+    return None
+
+
 def _relief(
     ctx: _Ctx, t: _Text, f: Field, at: _At, roles: Mapping[str, _Item], region: tuple[int, int]
 ) -> tuple[bool, bool]:
     """Whether the column item and the marker item pass at this place of the value."""
-    tok = at.token
+    tok = _place_token(f, at)
     out = []
     for role, check in (("column", _column_ok), ("marker", _marker_ok)):
         item = roles.get(role)
@@ -1403,8 +1412,9 @@ def _roles(
     if f.columns is not None and not column and not in_column:
         p.flags.append("COLUMN_NOT_AT_VALUE")  # the value is not in a column of the field
     competing = ctx.competing.get(f.name, ())
-    other = f.markers is not None and tok is not None and _near(ctx, t, f, competing, tok)
-    if other and tok is not None and not _near(ctx, t, f, f.markers or (), tok):
+    near = _place_token(f, at)  # a number token, or a date mention (SPEC §4.11)
+    other = f.markers is not None and near is not None and _near(ctx, t, f, competing, near)
+    if other and near is not None and not _near(ctx, t, f, f.markers or (), near):
         p.flags.append("MARKER_OTHER_FIELD")  # a marker word of another field at the value
     if (
         "unit" in p.missing
