@@ -1,6 +1,6 @@
 # Groundgate constitution
 
-Version 1, 2026-11-09.
+Version 2, 2026-11-12.
 
 ## Purpose
 
@@ -13,7 +13,11 @@ never get in.
 
 ## Boundaries
 
-No project text yet.
+- The core reading rules are fixed at spec 0.12. The core adds only value kinds: date, record and passage. A new layout need goes into a document-family profile, or into the structure reader as a second proposer.
+- A versioned document-family profile is the unit of calibration. Each receipt names the profile digest.
+- Review answers and the decisions of an outside approver are suggestions. Only blind audit labels and gold set labels set an error bound.
+- Groundgate admits and records. It does not decide approval or activation, and it does not write the content that an application serves.
+- One gate and one profile format serve source texts and the documents of a user.
 
 ## Principles
 
@@ -80,6 +84,10 @@ Change this constitution when the owner changes direction or evidence changes a 
 Change the governance block only with a new version of the template in `mohanraj00/.github`.
 
 ## Version log
+
+### Version 2, 2026-11-12
+
+The Boundaries section gets project text: fixed core reading rules, the profile as the unit of calibration, and two feedback channels. Reason: twelve spec versions added reading rules from the failures of each bench set, and the held-out miss rate stayed above 60%. The tracking issues are #639, #640, #642 and #643.
 
 ### Version 1, 2026-11-09
 
