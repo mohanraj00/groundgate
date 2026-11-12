@@ -462,9 +462,17 @@ It rejects model ids, source ids or offsets that the runner did not permit.
 On a document, a document evidence item can cite a node in place of a quote (#508): `node` with
 `text`, or `node` alone for a cell. The runner finds the quote inside the node with the quote
 rules of SPEC §4.6 and gives the item the offsets of that one match, with no `text`. `node`
-alone gives the span of the cell. An id that is not an integer of the document, a quote that is
-not exactly once in the node, a blank quote, `node` alone on a node that is not a cell or on an
-empty cell, and `node` on a reference item or on a run on text make the reply invalid.
+alone gives the span of the cell. An id that is not an integer of the document, a blank quote,
+`node` alone on a node that is not a cell or on an empty cell, and `node` on a reference item or
+on a run on text make the reply invalid.
+
+A quote that is not exactly once in its node fails only its candidate (#632). The runner admits
+no candidate from that item. It records `protocol_failure` with the reason `node_quote` for that
+field, and the other candidates of the reply stay. The run stays complete, and the targeted
+search can look for the field again. In a repair reply, the same quote stops only that candidate
+with a repair `protocol_failure`. Before #632, one such quote made the whole reply invalid. This
+changed the runner before a release wrote `groundgate-run/6`, so the version stays. A run/6
+development record with such a reply does not replay in this runner.
 
 The prompt gives the ids (#526, document-model.md §10). The runner puts a `⟦N⟧` marker directly
 before the text of each cell with text inside a document region of the prompt. Only cells get
