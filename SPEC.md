@@ -85,11 +85,12 @@ boundaries. Heuristic windows in §4 are measured in Unicode code points.
 
 ```text
 {"fields": {"<name>": {
-  "type": "number" | "integer" | "string",
+  "type": "number" | "integer" | "string" | "date",
   "unit": "<unit code>" | null,
   "comparator": "eq" | "gt" | "ge" | "lt" | "le" | "approx" | "range",
-  "minimum": "<decimal>" | null,
-  "maximum": "<decimal>" | null,
+  "minimum": "<decimal>" | "<date>" | null,
+  "maximum": "<decimal>" | "<date>" | null,
+  "formats": ["<date format>"],
   "required": false,
   "multiple": false,
   "keys": ["<key>"] | null,
@@ -113,6 +114,10 @@ A field name (spec 0.11, #359) has 1 to 64 characters. Each character is a lower
 letter, a digit or `_`, and the first character is a letter. So `net_sales` and `e` are names,
 and `""`, `Net_sales`, `net sales`, `net-sales` and `2024_revenue` are not. The same rule
 applies to the name of a field template in a kind pack (§4.9).
+
+A `date` field (#612) holds a calendar date. Its rules are in §4.11: `formats` lists the
+date formats that the field accepts, and `minimum` and `maximum` are dates in the normal form.
+Only a `date` field has `formats`, and it must have it.
 
 `description` is optional; when present, it must be a non-blank string, with no length limit.
 It has no effect on a decision, but is part of the schema digest.
@@ -175,7 +180,7 @@ A relation is an object with only these members:
 
 The packet is also invalid when `relations` is not a list, a relation breaks the rules above, or:
 
-- a field of the relation has the type `string`, or `multiple` true;
+- a field of the relation has the type `string` or `date`, or `multiple` true;
 - the total is also a part, or two parts name the same field;
 - the field of a part has a `unit` other than the unit of the total's field, and the part gives no
   `factor`. Null counts as a unit here, so a part without a unit under a total in USD needs a
@@ -191,7 +196,8 @@ than `fields`, `units`, `relations` and `packs`, or a field has a field name tha
 rule above, is not an object, has other keys, has a `type` or `comparator` not listed above, a
 `unit` that is not a string or null, a bound that is not a decimal string or an integer that
 reads as a number (§4.1, so `"1,000"` is accepted), or a `required` or `multiple` that is not a
-boolean.
+boolean. A `date` field has its own rules for `formats`, the bounds, `unit` and `comparator`
+(§4.11).
 
 ### 2.4 Policy
 
@@ -349,8 +355,9 @@ later check runs. `value` means the candidate's value parsed per its field type.
 | 1 | `CANDIDATE_INVALID` | The candidate is malformed (below). |
 | 2 | `FIELD_UNKNOWN` | `field` is not in the schema. |
 | 3 | `NULL_STRING_LITERAL` | `value`, trimmed and lower-cased, is `null`, `none`, `nil` or `n/a`. |
-| 4 | `TYPE_INVALID` | `value` does not parse as the field type (§4.1). For a `string` field: `value` is not a string, or is blank after whitespace normalisation (§4.4). |
-| 5 | `RANGE_INVALID` | `value` is below `minimum` or above `maximum`. |
+| 4 | `TYPE_INVALID` | `value` does not parse as the field type (§4.1). For a `string` field: `value` is not a string, or is blank after whitespace normalisation (§4.4). For a `date` field: `value` is not a date in the normal form (§4.11). |
+| 5 | `RANGE_INVALID` | `value` is below `minimum` or above `maximum`. Not on a `date` field. |
+| 5 | `DATE_OUT_OF_RANGE` | On a `date` field, `value` is before `minimum` or after `maximum` (§4.11). |
 | 6 | `UNIT_INVALID` | The candidate's `unit` differs from the field's `unit` (both absent is a match). |
 | 7 | `KEY_INVALID` | The field has `keys`, and the candidate's `key` is absent or not exactly one of them. |
 | 8 | `NO_EVIDENCE` | The candidate has no value item and no outside item. |
@@ -389,7 +396,8 @@ The value item's **text** is the document, or its reference. The checks read tha
 |---:|---|---|
 | 9 | `SPAN_INVALID` | The value item's span, or `search_region`, is not a valid span (§2.2). |
 | 9a | `QUOTE_NOT_FOUND` | The value item is a quote, and it does not occur in the text (§4.6). |
-| 10 | `VALUE_NOT_IN_EVIDENCE` | No number token (§4.1) in the span equals `value` by one of its derived values (§4.6), and no part is missing (below), and the sign is not dropped (below). For `string` fields: the whitespace-normalised value is not a substring of the whitespace-normalised span text. |
+| 10 | `VALUE_NOT_IN_EVIDENCE` | No number token (§4.1) in the span equals `value` by one of its derived values (§4.6), and no part is missing (below), and the sign is not dropped (below). For `string` fields: the whitespace-normalised value is not a substring of the whitespace-normalised span text. For `date` fields: no date mention in the span gives `value` in any format of §4.11. |
+| 10 | `DATE_FORMAT_UNDECLARED` | On a `date` field, no date mention in the span gives `value` in a format of the field, and a mention gives `value` in another format of §4.11. |
 | 11 | `UNIT_NOT_IN_EVIDENCE` | The field has a unit, and no matching number token in the span has that unit at its location (§4.3). |
 
 `search_region` limits the search for a quote and for re-anchoring in the document. It does not
@@ -441,7 +449,8 @@ the one other occurrence that passes without one. At the cited span, a unit form
 can make the unit present (step 11); at another occurrence it does not, as in the choice of a
 quote occurrence (§4.6, #249).
 
-The value is at its supporting number token. For a `string` field, it is at the first occurrence
+The value is at its supporting number token. For a `date` field, it is at its date mention
+(§4.11). For a `string` field, it is at the first occurrence
 of the value in the evidence span, where a whitespace run in the value matches any whitespace run
 in the text (#140). The role items are then checked at the value (§4.6).
 
@@ -470,8 +479,8 @@ lists `unit` in `missing` and gets `PART_MISSING`. The action does not change. S
 deciding item is chosen as if no heading unit reaches a token. groundgate does not read the text
 of a knowledge item, so a knowledge item has no heading conflict.
 
-When the deciding item is external, the flags `QUALIFIED_VALUE`, `SCALE_WORD` and
-`KEY_NOT_AT_VALUE` read its text as the text. When it is knowledge, they do not apply.
+When the deciding item is external, the flags `QUALIFIED_VALUE`, `SCALE_WORD`,
+`DATE_AMBIGUOUS` and `KEY_NOT_AT_VALUE` read its text as the text. When it is knowledge, they do not apply.
 `NON_VERBATIM_EVIDENCE`, `VALUE_DERIVED` and the role flags do not apply on the outside path.
 
 ### 3.3 Flags
@@ -485,6 +494,7 @@ rejected by steps 1–11 or on the outside path.
 | `NON_VERBATIM_EVIDENCE` | The value item has offsets and a `text` that differs from the span's text after whitespace normalisation and joining of line-break hyphenation (§4.4). |
 | `QUALIFIED_VALUE` | A qualifier (§4.2) applies to the value in the text and its comparator differs from the field's `comparator`. Not on a `string` field. |
 | `SCALE_WORD` | A scale word or a scale suffix (§4.1) follows the value, and the candidate's `value` is the number as written, not its scaled value. Not on a `string` field. |
+| `DATE_AMBIGUOUS` | On a `date` field, the value is at an ambiguous date mention (§4.11): two formats of the field read the mention as two different dates, as `03/04/2025` with `D/M/YYYY` and `M/D/YYYY` (#612). |
 | `PART_MISSING` | The decision lists a part in `missing` (§3.1). |
 | `SIGN_DROPPED` | The sign is dropped (§3.1): a positive value on a field with a currency unit matches a token printed with a minus sign. A dropped sign adds no `sign` to `missing` (spec 0.12, #569). |
 | `SIGN_CITATION_INVALID` | The sign item fails its check (§4.6). |
@@ -1475,6 +1485,90 @@ An implementation that reads profiles also gives the receipt `profile` member an
 codes of each decision in every vector under `conformance/profiles/`, and refuses every packet
 there that expects an error.
 
+### 4.11 Dates
+
+A `date` field (#612) holds a calendar date. The date kind adds no reading rule for numbers: the
+rules of §4.1 to §4.9 do not read a date mention, and a `date` field reads no number token.
+
+**The normal form** of a date is `YYYY-MM-DD`: four digits of the year, `-`, two digits of the
+month, `-`, two digits of the day. It names a real date of the Gregorian calendar, from
+`0001-01-01` to `9999-12-31`. So `2024-02-29` is a date, and `2025-02-29`, `2025-7-1` and
+`0000-01-01` are not. A candidate `value` on a `date` field is a string in the normal form, and
+the canonical value is that string.
+
+**Formats.** `formats` is a non-empty list of distinct format names from this table:
+
+| Name | Example | The mention |
+|---|---|---|
+| `YYYY-MM-DD` | `2025-07-01` | The normal form. |
+| `D/M/YYYY` | `1/7/2025`, `01/07/2025` | The day, `/`, the month, `/`, the year. |
+| `M/D/YYYY` | `7/1/2025` | The month, `/`, the day, `/`, the year. |
+| `D.M.YYYY` | `1.7.2025` | The day, `.`, the month, `.`, the year. |
+| `D Month YYYY` | `1 July 2025`, `1st Jul. 2025` | The day, whitespace, the month name, whitespace, the year. |
+| `Month D, YYYY` | `July 1, 2025`, `Jul 1 2025` | The month name, whitespace, the day, an optional `,`, whitespace, the year. |
+
+In these formats, the year is four digits. The day is one or two digits, and the month in a
+numeric format is one or two digits, so `01` and `1` are the same. The digits are 0 to 9 only.
+Whitespace is a run of one or more whitespace code points (§4.4), so a mention can cross a
+line break. In the two named formats, the day can have its English ordinal suffix directly
+after it: `st` for 1, 21 and 31, `nd` for 2 and 22, `rd` for 3 and 23, and `th` for each other
+day. A wrong suffix, as in `1th`, makes no mention. The **month name** is the English name of
+the month (`January` to `December`) or its abbreviation (`Jan`, `Feb`, `Mar`, `Apr`, `May`,
+`Jun`, `Jul`, `Aug`, `Sep`, `Sept`, `Oct`, `Nov`, `Dec`), and an abbreviation can have a `.`
+directly after it. The month name and the ordinal suffix match case-insensitively (§4).
+
+**Mentions.** A **date mention** is a part of the text that matches a format of the table and
+names a real date, as the normal form does. So `31/02/2025` is no mention in `D/M/YYYY`. At the
+start and at the end of a mention, the next code point outside it is not a letter or a number:
+a code point of the Unicode general category L or N. Also, the mention does not follow a number
+and then a `-`, `/` or `.`, and it is not followed by a `-`, `/` or `.` and then a number. So `2025-07-01` is no mention in `12025-07-01`, in
+`2025-07-01T10:00` or in `2025-07-01-2`. These code points are read in the whole text, also
+outside the span. A mention is **in the span** when it starts and ends in the span. One part of
+the text can be a mention in several formats: `03/04/2025` is 3 April in `D/M/YYYY` and 4 March
+in `M/D/YYYY`. A mention **gives** the date that its format names.
+
+A mention in a format of the field is **ambiguous** when another format of the field reads the
+same part of the text as a mention of another date. So with `D/M/YYYY` and `M/D/YYYY`,
+`03/04/2025` is ambiguous, and `03/03/2025` and `13/04/2025` are not. With one of them only, no
+mention is ambiguous.
+
+**Step 4.** A `value` that is not a string in the normal form is `TYPE_INVALID`.
+
+**Step 5.** `minimum` and `maximum` are null or a date in the normal form, and they are
+inclusive. A `value` before `minimum` or after `maximum` is rejected with `DATE_OUT_OF_RANGE`.
+`RANGE_INVALID` does not apply to a `date` field.
+
+**Step 10.** The step reads the date mentions in the span:
+
+1. When a mention in a format of the field gives `value`, the step passes. The value is at the
+   first such mention, by its start, that is not ambiguous. When each one is ambiguous, the value
+   is at the first one, and the decision gets `DATE_AMBIGUOUS` (§3.3).
+2. Otherwise, when a mention in a format of the table that the field does not list gives
+   `value`, the candidate is rejected with `DATE_FORMAT_UNDECLARED`.
+3. Otherwise, the candidate is rejected with `VALUE_NOT_IN_EVIDENCE`.
+
+The value is at its mention: the mention is the place of the value for a key, a field item, a
+column item and a marker item (§4.5, §4.6). A `date` field has no unit, so step 11 passes. A
+sign, scale or unit item on a `date` field fails its check, as on a `string` field. No
+qualifier and no scale word applies to a date, so `QUALIFIED_VALUE` and `SCALE_WORD` do not
+apply. On the outside path (§3.2), an external item holds a date value when step 10 passes in
+its text, and `DATE_AMBIGUOUS` reads the text of the deciding item.
+
+**The schema.** The packet is invalid when a `date` field has no `formats`, `formats` is not a
+non-empty list of distinct names of the table, a bound is not null or a date in the normal
+form, `unit` is not null, or `comparator` is not `eq`. It is also invalid when a field of
+another type has `formats`. After defaults, a `date` field has `formats` as given, and a field
+of another type has no `formats` member, so its digest does not change.
+
+```json
+{"fields": {"effective_from": {"type": "date", "formats": ["YYYY-MM-DD", "D Month YYYY"],
+                               "minimum": "1990-01-01", "maximum": "2100-12-31"}}}
+```
+
+With the text "in force from 1 July 2025", the candidate value `2025-07-01` with the value item
+`1 July 2025` is admitted. The value `2025-01-07` is rejected with `VALUE_NOT_IN_EVIDENCE`, and
+the value `2101-01-01` with `DATE_OUT_OF_RANGE`.
+
 ## 5. Receipt
 
 ```json
@@ -1645,7 +1739,8 @@ the prefix is ASCII and `JCS(obj)` is UTF-8.
 
 Semantic correctness (whether the sentence describes the field) by groundgate itself: a recorded
 `field_match` judgment can only add doubt, and a field item checks only the field's own aliases.
-Calling a model, fetching a URL, dates, arrays of records, arithmetic over several numbers (a
+Calling a model, fetching a URL, times of day and dates in formats other than those of §4.11,
+arrays of records, arithmetic over several numbers (a
 relation of §3.4 is the one exception, and it never admits a value), the
 subject of the document (groundgate assumes one subject per document), and PDF geometry (page and
 bounding box) as evidence. Adapters may convert richer evidence into spans. Number formats other

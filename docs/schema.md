@@ -567,6 +567,65 @@ t4  rejected            -             TYPE_INVALID
 t5  rejected            -             TYPE_INVALID
 ```
 
+## Date fields
+
+A `date` field holds a calendar date, such as an effective date or a filing date. The candidate
+value is the date in the normal form `YYYY-MM-DD`. The field lists the formats that the text can
+use in `formats`, and `minimum` and `maximum` are optional dates in the normal form. These are
+the formats ([SPEC §4.11](../SPEC.md)):
+
+| Format | Example |
+|---|---|
+| `YYYY-MM-DD` | `2025-07-01` |
+| `D/M/YYYY` | `1/7/2025`, `01/07/2025` |
+| `M/D/YYYY` | `7/1/2025` |
+| `D.M.YYYY` | `1.7.2025` |
+| `D Month YYYY` | `1 July 2025`, `1st Jul. 2025` |
+| `Month D, YYYY` | `July 1, 2025`, `Jul 1 2025` |
+
+groundgate admits a date only when the cited text gives the same date in a format of the field.
+A date in another format of the table is rejected `DATE_FORMAT_UNDECLARED`, and a date outside
+the bounds `DATE_OUT_OF_RANGE`. When the field lists `D/M/YYYY` and `M/D/YYYY`, a date such as
+`03/04/2025` reads as 3 April and as 4 March. The decision then gets `DATE_AMBIGUOUS`, and a
+person checks it. List one of the two orders when the documents use one.
+
+```python
+text = "The rule is in force from 1 July 2025. It was issued on 03/04/2025."
+schema = {
+    "fields": {
+        "effective_from": {
+            "type": "date",
+            "formats": ["YYYY-MM-DD", "D Month YYYY"],
+            "minimum": "1990-01-01",
+            "maximum": "2100-12-31",
+        },
+        "issued": {"type": "date", "formats": ["D/M/YYYY", "M/D/YYYY"]},
+    }
+}
+candidates = [
+    cite("e1", "effective_from", "2025-07-01", "1 July 2025"),
+    cite("e2", "effective_from", "1 July 2025", "1 July 2025"),
+    cite("e3", "effective_from", "2025-01-07", "1 July 2025"),
+    cite("e4", "effective_from", "2101-07-01", "1 July 2025"),
+    cite("e5", "effective_from", "2025-04-03", "03/04/2025"),
+    cite("i1", "issued", "2025-04-03", "03/04/2025"),
+]
+show(gg.admit(text, schema, candidates))
+```
+
+```text
+e1  admitted            2025-07-01
+e2  rejected            -             TYPE_INVALID
+e3  rejected            2025-01-07    VALUE_NOT_IN_EVIDENCE
+e4  rejected            2101-07-01    DATE_OUT_OF_RANGE
+e5  rejected            2025-04-03    DATE_FORMAT_UNDECLARED
+i1  needs_verification  2025-04-03    DATE_AMBIGUOUS
+```
+
+`e2` is not in the normal form. `e3` reads the day as the month. `e5` cites a format that
+`effective_from` does not list. A `date` field has no unit, and it reads no qualifier and no
+scale word. A relation cannot name a `date` field.
+
 ## Relations
 
 A value can be in the document and still belong to another field. A relation between fields is a

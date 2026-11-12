@@ -8,6 +8,7 @@ import heapq
 import itertools
 import os
 import re
+import unicodedata
 from array import array
 from collections import defaultdict
 from collections.abc import Callable, Mapping, Sequence
@@ -18,6 +19,7 @@ from typing import Any
 from .canonical import SPEC_VERSION, Offsets, digest, is_nfc
 from .fold import fold_text, mark_fold
 from .model import (
+    DATE_FORMATS,
     Action,
     Decision,
     EvidenceUnits,
@@ -31,6 +33,7 @@ from .model import (
     Relation,
     RelationResult,
     Schema,
+    normal_date,
 )
 from .pack import BASE, checked_copy, reading_retired, receipt_packs, schema_named
 from .profile import check_profile
@@ -85,6 +88,7 @@ FLAG_ORDER = (  # SPEC §3.3 table order; it is part of every receipt hash
     "NON_VERBATIM_EVIDENCE",
     "QUALIFIED_VALUE",
     "SCALE_WORD",
+    "DATE_AMBIGUOUS",
     "PART_MISSING",
     "SIGN_DROPPED",
     "SIGN_CITATION_INVALID",
@@ -365,6 +369,7 @@ class _At:
     dropped: bool = False  # the sign is dropped (SPEC §3.1, #569)
     start: int | None = None  # a string value's first occurrence in the span (#140)
     end: int | None = None  # the end of that occurrence
+    ambiguous: bool = False  # the value is at an ambiguous date mention (SPEC §4.11)
 
     @property
     def pos(self) -> int:
@@ -489,6 +494,104 @@ def _missing(
     return None
 
 
+# the date mentions of SPEC §4.11 (#612). Each pattern is in a lookahead, so that a mention can
+# start at each code point; a month name has at most 9 letters, so each try is bounded.
+_DAY, _MONTH, _YEAR = r"(?P<d>[0-9]{1,2})", r"(?P<m>[0-9]{1,2})", r"(?P<y>[0-9]{4})"
+_NAME, _ORD = r"(?P<name>[^\W\d_]{3,9})(?P<dot>\.)?", r"(?P<ord>[^\W\d_]{2})?"
+_DATE_RE = {
+    fmt: re.compile(rf"(?=({body}))")
+    for fmt, body in {
+        "YYYY-MM-DD": rf"{_YEAR}-(?P<m>[0-9]{{2}})-(?P<d>[0-9]{{2}})",
+        "D/M/YYYY": rf"{_DAY}/{_MONTH}/{_YEAR}",
+        "M/D/YYYY": rf"{_MONTH}/{_DAY}/{_YEAR}",
+        "D.M.YYYY": rf"{_DAY}\.{_MONTH}\.{_YEAR}",
+        "D Month YYYY": rf"{_DAY}{_ORD}\s+{_NAME}\s+{_YEAR}",
+        "Month D, YYYY": rf"{_NAME}\s+{_DAY}{_ORD},?\s+{_YEAR}",
+    }.items()
+}
+_MONTHS = ("january", "february", "march", "april", "may", "june", "july", "august",
+           "september", "october", "november", "december")  # fmt: skip
+_MONTH_ABBREVIATIONS = {m[:3]: n for n, m in enumerate(_MONTHS, 1)} | {"sept": 9}
+_MONTH_NAMES = {m: n for n, m in enumerate(_MONTHS, 1)}
+
+
+def _ordinal(day: int) -> str:
+    """The English ordinal suffix of a day of the month."""
+    if day % 10 in (1, 2, 3) and day not in (11, 12, 13):
+        return ("st", "nd", "rd")[day % 10 - 1]
+    return "th"
+
+
+def _letter_or_number(ch: str) -> bool:
+    return unicodedata.category(ch)[0] in "LN"
+
+
+def _date_edge(text: str, a: int, b: int) -> bool:
+    """Whether nothing joins the mention [a, b) to the text next to it (SPEC §4.11)."""
+    if a > 0 and _letter_or_number(text[a - 1]):
+        return False
+    if b < len(text) and _letter_or_number(text[b]):
+        return False
+    if a > 1 and text[a - 1] in "-/." and unicodedata.category(text[a - 2])[0] == "N":
+        return False
+    return not (
+        b + 1 < len(text) and text[b] in "-/." and unicodedata.category(text[b + 1])[0] == "N"
+    )
+
+
+def _dates(text: str, span: tuple[int, int], fmt: str) -> list[tuple[int, int, str]]:
+    """Each date mention in one format that starts and ends in the span, as (start, end, the
+    date in the normal form), in text order (SPEC §4.11)."""
+    out = []
+    for m in _DATE_RE[fmt].finditer(text, *span):
+        a, b = m.start(1), m.end(1)
+        if not _date_edge(text, a, b):
+            continue
+        day = int(m["d"])
+        if "name" in m.groupdict():
+            name = fold_text(m["name"])
+            month = _MONTH_ABBREVIATIONS.get(name) if m["dot"] else None
+            if month is None and not m["dot"]:
+                month = _MONTH_NAMES.get(name, _MONTH_ABBREVIATIONS.get(name))
+            if month is None or (m["ord"] is not None and fold_text(m["ord"]) != _ordinal(day)):
+                continue
+        else:
+            month = int(m["m"])
+        value = f"{m['y']}-{month:02d}-{day:02d}"
+        if normal_date(value) is not None:
+            out.append((a, b, value))
+    return out
+
+
+def _date_place(
+    f: Field, value: str, text: str, span: tuple[int, int]
+) -> tuple[int, int, bool] | str:
+    """Step 10 on a date field (SPEC §4.11): the mention that the value is at, as (start, end,
+    ambiguous), or the code that rejects."""
+    formats = f.formats
+    assert formats is not None
+    read = {fmt: _dates(text, span, fmt) for fmt in DATE_FORMATS}
+    own = sorted((a, b, fmt) for fmt in formats for a, b, v in read[fmt] if v == value)
+    if not own:
+        other = (fmt for fmt in DATE_FORMATS if fmt not in formats)
+        if any(v == value for fmt in other for _, _, v in read[fmt]):
+            return "DATE_FORMAT_UNDECLARED"
+        return "VALUE_NOT_IN_EVIDENCE"
+
+    def ambiguous(a: int, b: int, fmt: str) -> bool:
+        return any(
+            (a2, b2) == (a, b) and v != value
+            for other in formats
+            if other != fmt
+            for a2, b2, v in read[other]
+        )
+
+    clear = [(a, b) for a, b, fmt in own if not ambiguous(a, b, fmt)]
+    if clear:
+        return clear[0][0], clear[0][1], False
+    return own[0][0], own[0][1], True
+
+
 def _value_at(
     ctx: _Ctx,
     item: _Item,
@@ -504,6 +607,12 @@ def _value_at(
     be missing (SPEC §3.1). On ``UNIT_NOT_IN_EVIDENCE``, the first token that step 10 matched
     is added to ``failed``, for the receipt's ``evidence_units`` (SPEC §5, #362)."""
     s, e = span
+    if f.type == "date":
+        assert isinstance(value, str)
+        place = _date_place(f, value, t.text, span)
+        if isinstance(place, str):
+            return None, place
+        return _At(item, t, span, None, start=place[0], end=place[1], ambiguous=place[2]), None
     if f.type == "string":
         assert isinstance(value, str)
         if normalize_ws(value) not in normalize_ws(t.text[s:e]):
@@ -680,7 +789,16 @@ def _check(ctx: _Ctx, cand: object) -> _Passed:
     if text_value.strip().lower() in vocabulary().null_literals:
         raise _Reject("NULL_STRING_LITERAL")
     value: Decimal | str
-    if f.type == "string":
+    if f.type == "date":  # SPEC §4.11 (#612)
+        date = normal_date(raw)
+        if date is None:
+            raise _Reject("TYPE_INVALID")
+        value = date
+        if (f.date_minimum is not None and date < f.date_minimum) or (
+            f.date_maximum is not None and date > f.date_maximum
+        ):  # the normal form sorts in date order
+            raise _Reject("DATE_OUT_OF_RANGE")
+    elif f.type == "string":
         if not isinstance(raw, str) or not normalize_ws(raw):
             raise _Reject("TYPE_INVALID")
         value = normalize_ws(raw)
@@ -832,6 +950,8 @@ def _checked(
             flags.append("QUALIFIED_VALUE")
         if scale_word(t.text, token) and _unscaled(token, value):  # written, not scaled
             flags.append("SCALE_WORD")
+    if at.ambiguous:
+        flags.append("DATE_AMBIGUOUS")
     if at.missing:
         flags.append("PART_MISSING")
     if at.dropped:
@@ -1386,6 +1506,8 @@ def _outside(
             p.flags.append("QUALIFIED_VALUE")
         if scale_word(at.t.text, tok) and _unscaled(tok, value):
             p.flags.append("SCALE_WORD")
+    if at is not None and at.ambiguous:
+        p.flags.append("DATE_AMBIGUOUS")
     if (
         at is not None
         and f.keys is not None
@@ -1979,7 +2101,9 @@ def _decision(ctx: _Ctx, sha: str, cand: object, cid: object, p: _Passed | _Reje
             key = cand["key"]
         raw = cand.get("value")
         if f is not None and isinstance(raw, (str, int)) and not isinstance(raw, bool):
-            if f.type == "string" and isinstance(raw, str) and normalize_ws(raw):
+            if f.type == "date":
+                value = normal_date(raw)
+            elif f.type == "string" and isinstance(raw, str) and normalize_ws(raw):
                 value = normalize_ws(raw)
             elif f.type != "string" and (parsed := parse_value(str(raw))) is not None:
                 value = canonical(parsed)

@@ -1,0 +1,20 @@
+{
+ "name": "date-format-unknown",
+ "description": "The schema has a format that the table does not list (SPEC §4.11, #612).",
+ "document": "Signed 2025-06-15.",
+ "schema": {
+  "fields": {
+   "day": {
+    "type": "date",
+    "formats": [
+     "DD/MM/YY"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

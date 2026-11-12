@@ -1,0 +1,238 @@
+{
+ "name": "160-date-order",
+ "description": "With D/M/YYYY and M/D/YYYY, a mention whose day and month are both 12 or less, and differ, reads as two dates. The value is then at an ambiguous mention, and the decision gets DATE_AMBIGUOUS. A mention with one reading, or another mention in the span that gives the value, admits. A mention that gives the value only in a format that the field does not list is DATE_FORMAT_UNDECLARED (#612).",
+ "document": "Issued 03/04/2025, that is 3 April 2025. Renewed 03/03/2025. Expires 13/04/2025.\n",
+ "schema": {
+  "fields": {
+   "both": {
+    "type": "date",
+    "formats": [
+     "D/M/YYYY",
+     "M/D/YYYY"
+    ],
+    "multiple": true
+   },
+   "dmy": {
+    "type": "date",
+    "formats": [
+     "D/M/YYYY"
+    ],
+    "multiple": true
+   },
+   "iso": {
+    "type": "date",
+    "formats": [
+     "YYYY-MM-DD"
+    ],
+    "multiple": true
+   },
+   "mix": {
+    "type": "date",
+    "formats": [
+     "D/M/YYYY",
+     "M/D/YYYY",
+     "D Month YYYY"
+    ],
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "o1",
+   "field": "both",
+   "value": "2025-04-03",
+   "evidence": [
+    {
+     "start": 7,
+     "end": 17,
+     "text": "03/04/2025"
+    }
+   ]
+  },
+  {
+   "id": "o2",
+   "field": "both",
+   "value": "2025-03-04",
+   "evidence": [
+    {
+     "start": 7,
+     "end": 17,
+     "text": "03/04/2025"
+    }
+   ]
+  },
+  {
+   "id": "o3",
+   "field": "both",
+   "value": "2025-03-03",
+   "evidence": [
+    {
+     "start": 49,
+     "end": 59,
+     "text": "03/03/2025"
+    }
+   ]
+  },
+  {
+   "id": "o4",
+   "field": "both",
+   "value": "2025-04-13",
+   "evidence": [
+    {
+     "start": 69,
+     "end": 79,
+     "text": "13/04/2025"
+    }
+   ]
+  },
+  {
+   "id": "o5",
+   "field": "dmy",
+   "value": "2025-04-03",
+   "evidence": [
+    {
+     "start": 7,
+     "end": 17,
+     "text": "03/04/2025"
+    }
+   ]
+  },
+  {
+   "id": "o6",
+   "field": "dmy",
+   "value": "2025-03-04",
+   "evidence": [
+    {
+     "start": 7,
+     "end": 17,
+     "text": "03/04/2025"
+    }
+   ]
+  },
+  {
+   "id": "o7",
+   "field": "iso",
+   "value": "2025-04-13",
+   "evidence": [
+    {
+     "start": 69,
+     "end": 79,
+     "text": "13/04/2025"
+    }
+   ]
+  },
+  {
+   "id": "o8",
+   "field": "iso",
+   "value": "2025-04-14",
+   "evidence": [
+    {
+     "start": 69,
+     "end": 79,
+     "text": "13/04/2025"
+    }
+   ]
+  },
+  {
+   "id": "o9",
+   "field": "mix",
+   "value": "2025-04-03",
+   "evidence": [
+    {
+     "start": 7,
+     "end": 39,
+     "text": "03/04/2025, that is 3 April 2025"
+    }
+   ]
+  },
+  {
+   "id": "o10",
+   "field": "mix",
+   "value": "2025-04-03",
+   "evidence": [
+    {
+     "start": 7,
+     "end": 17,
+     "text": "03/04/2025"
+    }
+   ]
+  },
+  {
+   "id": "o11",
+   "field": "mix",
+   "value": "2025-03-04",
+   "evidence": [
+    {
+     "start": 7,
+     "end": 39,
+     "text": "03/04/2025, that is 3 April 2025"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "DATE_AMBIGUOUS"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "DATE_AMBIGUOUS"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "DATE_FORMAT_UNDECLARED"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "DATE_FORMAT_UNDECLARED"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "DATE_AMBIGUOUS"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "DATE_AMBIGUOUS"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

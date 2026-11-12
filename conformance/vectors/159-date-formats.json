@@ -1,0 +1,409 @@
+{
+ "name": "159-date-formats",
+ "description": "A date field reads a date mention in each format of SPEC 4.11 and admits the value in the normal form. A one-digit day or month, an ordinal suffix, an abbreviated month name with a dot, a month name in capitals and a line break in a mention are allowed. A wrong ordinal suffix, a mention with no year, and a mention next to a digit or a letter give no date. A value that is not in the normal form, or is not a real date, is TYPE_INVALID. A date in a format that the field does not list is DATE_FORMAT_UNDECLARED, and a date after the maximum is DATE_OUT_OF_RANGE (#612).",
+ "document": "In force from 1 July 2025. Signed 2025-06-15. Filed on 15/06/2025, posted 6/20/2025 and stamped 21.6.2025. The board met on June 2, 2025 and again on 3rd Jul. 2025. Reviewed 9 AUGUST 2025. Due by 30\nSeptember 2025. Paid Sept 5 2025. Closed 1th May 2025. Ref 12025-07-01 and 2025-07-01T10:00.\n",
+ "schema": {
+  "fields": {
+   "day": {
+    "type": "date",
+    "formats": [
+     "YYYY-MM-DD",
+     "D/M/YYYY",
+     "M/D/YYYY",
+     "D.M.YYYY",
+     "D Month YYYY",
+     "Month D, YYYY"
+    ],
+    "multiple": true
+   },
+   "iso": {
+    "type": "date",
+    "formats": [
+     "YYYY-MM-DD"
+    ],
+    "maximum": "2025-06-30",
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "d1",
+   "field": "day",
+   "value": "2025-07-01",
+   "evidence": [
+    {
+     "start": 14,
+     "end": 25,
+     "text": "1 July 2025"
+    }
+   ]
+  },
+  {
+   "id": "d2",
+   "field": "day",
+   "value": "2025-06-15",
+   "evidence": [
+    {
+     "start": 34,
+     "end": 44,
+     "text": "2025-06-15"
+    }
+   ]
+  },
+  {
+   "id": "d3",
+   "field": "day",
+   "value": "2025-06-15",
+   "evidence": [
+    {
+     "start": 55,
+     "end": 65,
+     "text": "15/06/2025"
+    }
+   ]
+  },
+  {
+   "id": "d4",
+   "field": "day",
+   "value": "2025-06-20",
+   "evidence": [
+    {
+     "start": 74,
+     "end": 83,
+     "text": "6/20/2025"
+    }
+   ]
+  },
+  {
+   "id": "d5",
+   "field": "day",
+   "value": "2025-06-21",
+   "evidence": [
+    {
+     "start": 96,
+     "end": 105,
+     "text": "21.6.2025"
+    }
+   ]
+  },
+  {
+   "id": "d6",
+   "field": "day",
+   "value": "2025-06-02",
+   "evidence": [
+    {
+     "start": 124,
+     "end": 136,
+     "text": "June 2, 2025"
+    }
+   ]
+  },
+  {
+   "id": "d7",
+   "field": "day",
+   "value": "2025-07-03",
+   "evidence": [
+    {
+     "start": 150,
+     "end": 163,
+     "text": "3rd Jul. 2025"
+    }
+   ]
+  },
+  {
+   "id": "d8",
+   "field": "day",
+   "value": "2025-07-01",
+   "evidence": [
+    {
+     "start": 0,
+     "end": 26,
+     "text": "In force from 1 July 2025."
+    }
+   ]
+  },
+  {
+   "id": "d9",
+   "field": "day",
+   "value": "2025-08-09",
+   "evidence": [
+    {
+     "start": 174,
+     "end": 187,
+     "text": "9 AUGUST 2025"
+    }
+   ]
+  },
+  {
+   "id": "d10",
+   "field": "day",
+   "value": "2025-09-30",
+   "evidence": [
+    {
+     "start": 196,
+     "end": 213,
+     "text": "30\nSeptember 2025"
+    }
+   ]
+  },
+  {
+   "id": "d11",
+   "field": "day",
+   "value": "2025-09-05",
+   "evidence": [
+    {
+     "start": 220,
+     "end": 231,
+     "text": "Sept 5 2025"
+    }
+   ]
+  },
+  {
+   "id": "d12",
+   "field": "day",
+   "value": "2025-7-1",
+   "evidence": [
+    {
+     "start": 14,
+     "end": 25,
+     "text": "1 July 2025"
+    }
+   ]
+  },
+  {
+   "id": "d13",
+   "field": "day",
+   "value": "2025-02-29",
+   "evidence": [
+    {
+     "start": 14,
+     "end": 25,
+     "text": "1 July 2025"
+    }
+   ]
+  },
+  {
+   "id": "d14",
+   "field": "day",
+   "value": 20250701,
+   "evidence": [
+    {
+     "start": 14,
+     "end": 25,
+     "text": "1 July 2025"
+    }
+   ]
+  },
+  {
+   "id": "d15",
+   "field": "day",
+   "value": "2025-01-07",
+   "evidence": [
+    {
+     "start": 14,
+     "end": 25,
+     "text": "1 July 2025"
+    }
+   ]
+  },
+  {
+   "id": "d16",
+   "field": "day",
+   "value": "2025-07-01",
+   "evidence": [
+    {
+     "start": 14,
+     "end": 20,
+     "text": "1 July"
+    }
+   ]
+  },
+  {
+   "id": "d17",
+   "field": "day",
+   "value": "2025-05-01",
+   "evidence": [
+    {
+     "start": 240,
+     "end": 252,
+     "text": "1th May 2025"
+    }
+   ]
+  },
+  {
+   "id": "d18",
+   "field": "day",
+   "value": "2025-07-01",
+   "evidence": [
+    {
+     "start": 259,
+     "end": 269,
+     "text": "2025-07-01"
+    }
+   ]
+  },
+  {
+   "id": "d19",
+   "field": "day",
+   "value": "2025-07-01",
+   "evidence": [
+    {
+     "start": 274,
+     "end": 284,
+     "text": "2025-07-01"
+    }
+   ]
+  },
+  {
+   "id": "d20",
+   "field": "iso",
+   "value": "2025-06-15",
+   "evidence": [
+    {
+     "start": 34,
+     "end": 44,
+     "text": "2025-06-15"
+    }
+   ]
+  },
+  {
+   "id": "d21",
+   "field": "iso",
+   "value": "2025-06-15",
+   "evidence": [
+    {
+     "start": 55,
+     "end": 65,
+     "text": "15/06/2025"
+    }
+   ]
+  },
+  {
+   "id": "d22",
+   "field": "iso",
+   "value": "2025-07-01",
+   "evidence": [
+    {
+     "start": 14,
+     "end": 25,
+     "text": "1 July 2025"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "TYPE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "TYPE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "TYPE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "DATE_FORMAT_UNDECLARED"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "DATE_OUT_OF_RANGE"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}
