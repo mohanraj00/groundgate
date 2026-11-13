@@ -800,6 +800,10 @@ class Decision:
     evidence_units: EvidenceUnits | None = None  # only after a failed unit check (SPEC §5)
     proposer: str | None = None  # the candidate's non-blank proposer (SPEC §5, #509)
     record: str | None = None  # the record of a member field (SPEC §4.12, #613)
+    # With places in the packet (SPEC §4.15, #614), ``located`` is True and ``locator`` is the
+    # page and the box of the value span in hundredths of a point, or None.
+    located: bool = False
+    locator: tuple[int, tuple[int, int, int, int]] | None = None
 
     def to_dict(self) -> dict[str, Any]:
         out: dict[str, Any] = {
@@ -826,6 +830,12 @@ class Decision:
             out["evidence_units"] = self.evidence_units.to_dict()
         if self.record is not None:  # other decisions keep their bytes (#613)
             out["record"] = self.record
+        if self.located:  # a receipt of a packet with no places keeps its bytes (#614)
+            out["locator"] = (
+                None
+                if self.locator is None
+                else {"page": self.locator[0], "box": list(self.locator[1])}
+            )
         return out
 
 
@@ -958,6 +968,7 @@ class Receipt:
     doubt_sha256: str | None = None  # None when the packet has no doubt span (SPEC §5)
     profile: dict[str, str] | None = None  # None when the packet gives no profile (SPEC §5)
     pin: dict[str, Any] | None = None  # None when the packet gives no pin (SPEC §4.14, §5)
+    places_sha256: str | None = None  # None when the packet gives no places (SPEC §4.15, §5)
     set_positions: tuple[tuple[str, int], ...] = ()  # (reference id, set) (SPEC §4.13)
     records: tuple[RecordLine, ...] | None = None  # None when the schema has no record field
     checks: tuple[CheckResult, ...] | None = None  # None when the schema has no checks
@@ -982,6 +993,7 @@ class Receipt:
             "packs": [dict(p) for p in self.packs],
             **({} if self.profile is None else {"profile": dict(self.profile)}),
             **({} if self.pin is None else {"pin": dict(self.pin)}),
+            **({} if self.places_sha256 is None else {"places_sha256": self.places_sha256}),
             "schema_sha256": self.schema_sha256,
             "policy_sha256": self.policy_sha256,
             "decisions": [d.to_dict() for d in self.decisions],

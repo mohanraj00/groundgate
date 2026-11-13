@@ -1,0 +1,148 @@
+{
+ "name": "places-02-page-break",
+ "description": "The words Holdings and Ltd are on page 2. The locator of the lessor is the box of its words on the first page of the value: the word Example.",
+ "document": "Lessor: Example\nHoldings Ltd\nFee\t$90\n",
+ "schema": {
+  "fields": {
+   "lessor": {
+    "type": "string",
+    "aliases": [
+     "Lessor"
+    ]
+   },
+   "fee": {
+    "type": "integer",
+    "unit": "USD",
+    "aliases": [
+     "Fee"
+    ]
+   }
+  }
+ },
+ "places": [
+  [
+   0,
+   7,
+   1,
+   7200,
+   7200,
+   11400,
+   8400
+  ],
+  [
+   8,
+   15,
+   1,
+   11800,
+   7200,
+   16950,
+   8400
+  ],
+  [
+   16,
+   24,
+   2,
+   7200,
+   7200,
+   12300,
+   8400
+  ],
+  [
+   25,
+   28,
+   2,
+   12700,
+   7200,
+   14525,
+   8400
+  ],
+  [
+   29,
+   32,
+   2,
+   7200,
+   8600,
+   9000,
+   9800
+  ],
+  [
+   33,
+   36,
+   2,
+   10000,
+   8600,
+   12050,
+   9800
+  ]
+ ],
+ "candidates": [
+  {
+   "id": "l1",
+   "field": "lessor",
+   "value": "Example Holdings Ltd",
+   "evidence": [
+    {
+     "start": 8,
+     "end": 28,
+     "text": "Example\nHoldings Ltd"
+    },
+    {
+     "role": "field",
+     "start": 0,
+     "end": 6,
+     "text": "Lessor"
+    }
+   ]
+  },
+  {
+   "id": "f1",
+   "field": "fee",
+   "value": 90,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 33,
+     "end": 36,
+     "text": "$90"
+    },
+    {
+     "role": "field",
+     "start": 29,
+     "end": 32,
+     "text": "Fee"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "locator": {
+     "page": 1,
+     "box": [
+      11800,
+      7200,
+      16950,
+      8400
+     ]
+    }
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "locator": {
+     "page": 2,
+     "box": [
+      10000,
+      8600,
+      12050,
+      9800
+     ]
+    }
+   }
+  ],
+  "places_sha256": "sha256:b428572fc6a071131d1ef181bca89d8f241717f5843a765649c9557eea746e07"
+ }
+}

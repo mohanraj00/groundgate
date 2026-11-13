@@ -25,6 +25,11 @@ Files in `pins/` are source pin vectors (SPEC §4.14). Each one has a `pin` besi
 inputs. `expected.pin` is the receipt's `pin` member, with the digest written by hand in
 `build.py`, and `expected.error` true marks an invalid packet.
 
+Files in `places/` are places vectors (SPEC §4.15). Each one has a `places` list beside the
+other inputs. Each expected decision has its `locator`, and `expected.places_sha256` is the
+digest of the places, both written by hand in `build.py`. `expected.error` true marks an
+invalid packet.
+
 Files in `invalid/` are invalid packets. An implementation must refuse them (SPEC §2) and emit no
 receipt.
 

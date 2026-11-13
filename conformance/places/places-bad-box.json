@@ -1,0 +1,37 @@
+{
+ "name": "places-bad-box",
+ "description": "Places with x0 after x1 are invalid (SPEC §4.15).",
+ "document": "Lessor: Example\nHoldings Ltd\nFee\t$90\n",
+ "schema": {
+  "fields": {
+   "lessor": {
+    "type": "string",
+    "aliases": [
+     "Lessor"
+    ]
+   },
+   "fee": {
+    "type": "integer",
+    "unit": "USD",
+    "aliases": [
+     "Fee"
+    ]
+   }
+  }
+ },
+ "places": [
+  [
+   0,
+   7,
+   1,
+   11400,
+   7200,
+   7200,
+   8400
+  ]
+ ],
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

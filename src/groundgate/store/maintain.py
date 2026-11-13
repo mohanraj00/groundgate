@@ -52,6 +52,7 @@ KINDS = (
     "source@1",
     "model-text@1",
     "pin@1",
+    "places@1",
 )
 # §8 rule 3: the kinds that ``forget`` removes. The run record goes too if a line holds text.
 REMOVED = frozenset(
@@ -66,6 +67,7 @@ REMOVED = frozenset(
         "reply@1",
         "admission@1",
         "model-text@1",
+        "places@1",
     }
 )
 # The objects of a run record: the member of a line, and the kind in the record and the store.
@@ -330,6 +332,7 @@ def _named(packet: Mapping[str, Any]) -> list[tuple[str, str]]:
         ("judgments", "judgments@1"),
         ("doubt", "doubt@1"),
         ("pin", "pin@1"),
+        ("places", "places@1"),
         ("receipt", "receipt@1"),
     ):
         named.extend((kind, k) for k in _keys(packet.get(name)))
@@ -755,7 +758,7 @@ def _named_by_rest(objects: _Objects, gone: set[str]) -> set[str]:
 
 # The members that a correction packet of ``review resolve`` shares with its packet (#516).
 _SAME_INPUTS = ("spec", "document", "reading", "schema", "policy", "references", "packs", "doubt",
-                "pin")  # fmt: skip
+                "pin", "places")  # fmt: skip
 _CORRECTIONS = frozenset({"correct", "adjust_span"})
 _RECORDS = frozenset({"task@1", "resolution@1"})  # the review records of a packet
 # The members of a receipt that record the inputs of ``admit`` other than the candidates.
@@ -763,7 +766,7 @@ _RECEIPT_INPUTS = ("groundgate", "document", "references", "packs", "schema_sha2
                    "policy_sha256")  # fmt: skip
 # The members that a receipt has only when the packet gives that input (SPEC §5). A receipt
 # with another pin or profile, or with none, is the receipt of other inputs (#616).
-_RECEIPT_OPTIONAL = ("profile", "pin")
+_RECEIPT_OPTIONAL = ("profile", "pin", "places_sha256")
 
 
 def _receipt_inputs(receipt: Mapping[str, Any]) -> list[Any]:

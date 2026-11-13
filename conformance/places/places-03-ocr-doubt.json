@@ -1,0 +1,126 @@
+{
+ "name": "places-03-ocr-doubt",
+ "description": "OCR text: the reader gives a low confidence for $90, so the value goes to review with READ_DOUBT. The decision still has its locator, so the person sees the place on the scan.",
+ "document": "Lessor: Example\nHoldings Ltd\nFee\t$90\n",
+ "schema": {
+  "fields": {
+   "lessor": {
+    "type": "string",
+    "aliases": [
+     "Lessor"
+    ]
+   },
+   "fee": {
+    "type": "integer",
+    "unit": "USD",
+    "aliases": [
+     "Fee"
+    ]
+   }
+  }
+ },
+ "doubt": [
+  {
+   "start": 33,
+   "end": 36,
+   "confidence": 0.4
+  }
+ ],
+ "places": [
+  [
+   0,
+   7,
+   1,
+   7200,
+   7200,
+   11400,
+   8400
+  ],
+  [
+   8,
+   15,
+   1,
+   11800,
+   7200,
+   16950,
+   8400
+  ],
+  [
+   16,
+   24,
+   1,
+   7200,
+   8600,
+   12300,
+   9800
+  ],
+  [
+   25,
+   28,
+   1,
+   12700,
+   8600,
+   14525,
+   9800
+  ],
+  [
+   29,
+   32,
+   1,
+   7200,
+   10000,
+   9000,
+   11200
+  ],
+  [
+   33,
+   36,
+   1,
+   10000,
+   10000,
+   12050,
+   11200
+  ]
+ ],
+ "candidates": [
+  {
+   "id": "f1",
+   "field": "fee",
+   "value": 90,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 33,
+     "end": 36,
+     "text": "$90"
+    },
+    {
+     "role": "field",
+     "start": 29,
+     "end": 32,
+     "text": "Fee"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "READ_DOUBT"
+    ],
+    "locator": {
+     "page": 1,
+     "box": [
+      10000,
+      10000,
+      12050,
+      11200
+     ]
+    }
+   }
+  ],
+  "places_sha256": "sha256:ce16042204012ca236fb0a38a3476c1a40a4efcf766377c78c31fa3f7ec37f9e"
+ }
+}

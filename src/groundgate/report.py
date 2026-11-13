@@ -102,13 +102,14 @@ def render(
     pack_dir: str | os.PathLike[str] | None = None,
     doubt: Sequence[object] | None = None,
     pin: Mapping[str, Any] | None = None,
+    places: Sequence[object] | None = None,
 ) -> str:
     """Render ``receipt`` over ``text``. ``candidates`` supply the quotes shown on each card.
 
-    With ``schema`` (and ``policy``, ``judgments``, ``references``, ``document_source``,
-    ``packs``, ``doubt`` and ``pin`` if they were used), the receipt is re-derived first and the
-    page says whether it matched. Without them the page says it is unverified. ``pack_dir`` is a
-    folder of pack files, and ``verify`` reads it with the same rules (docs/design/packs.md
+    With ``schema`` (and ``policy``, ``judgments``, ``references``, ``document_source``, ``packs``,
+    ``doubt``, ``pin`` and ``places`` if they were used), the receipt is re-derived first and
+    the page says whether it matched. Without them the page says it is unverified. ``pack_dir``
+    is a folder of pack files, and ``verify`` reads it with the same rules (docs/design/packs.md
     §11). The page shows the cited text of a reference decision only when ``references`` holds
     that reference.
     """
@@ -128,6 +129,7 @@ def render(
             pack_dir=pack_dir,
             doubt=doubt,
             pin=pin,
+            places=places,
         ).ok
     )
     texts: dict[str, tuple[str, Offsets]] = {}
@@ -433,8 +435,11 @@ def _card(item: _Item, layout: Layout | None) -> str:
     missing = d.get("missing")
     if isinstance(missing, list) and missing:
         out.append(f'<p class="missing">missing: {_e(", ".join(map(str, missing)))}</p>')
+    located = _locator(d.get("locator"))
     if item.in_document and item.span is not None:
-        if layout is not None and isinstance(d.get("evidence"), Mapping):
+        if located is not None:
+            where.append(located)
+        elif layout is not None and isinstance(d.get("evidence"), Mapping):
             page = layout.page_at(d["evidence"]["start"])
             if page is not None:
                 where.append(f"page {page}")
@@ -452,6 +457,19 @@ def _card(item: _Item, layout: Layout | None) -> str:
         out.append(f'<p class="where">{" · ".join(proposer)}</p>')
     out.append("</div>")
     return "".join(out)
+
+
+def _locator(obj: object) -> str | None:
+    """The page and the box of a locator (SPEC §4.15) in PDF points, or None."""
+    if not isinstance(obj, Mapping):
+        return None
+    page, box = obj.get("page"), obj.get("box")
+    if type(page) is not int or not isinstance(box, list) or len(box) != 4:
+        return None
+    if any(type(v) is not int or v < 0 for v in box):
+        return None
+    points = ", ".join(f"{v // 100}.{v % 100:02d}" for v in box)
+    return f"page {page} · box {points} pt"
 
 
 def _clip(s: str, n: int = 120) -> str:
