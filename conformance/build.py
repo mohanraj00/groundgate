@@ -456,12 +456,12 @@ vector(
     "of their own in SPEC §4. The letter é is not one of them, so mg/kgé is a per-unit and mg is not at the "
     "10. The letter x and the long s end the per-unit reading, so mg is at the 20 and at the "
     "30 (SPEC §4.3, #363).",
-    "Give 10 mg/kgé daily. Give 20 mg/kgx daily. Give 30 mg/kgſ daily.",
+    "Give 10 mg/kgé daily. Give 20 mg/kgx daily. Give 30 mg/kg\u017f daily.",
     {"fields": {"dose": {"type": "number", "unit": "mg", "multiple": True}}},
     [
         c("u1", "dose", "10", "mg", q("10 mg/kgé"), ("rejected", ["UNIT_NOT_IN_EVIDENCE"])),
         c("u2", "dose", "20", "mg", q("20 mg/kgx")),
-        c("u3", "dose", "30", "mg", q("30 mg/kgſ")),
+        c("u3", "dose", "30", "mg", q("30 mg/kg\u017f")),
     ],
 )
 
