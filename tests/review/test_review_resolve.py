@@ -289,7 +289,7 @@ def test_the_id_of_a_correction_differs_from_each_candidate_id(tmp_path: Path) -
         ({"verdict": "maybe"}, "not an answer@1 verdict"),
         ({"decision": 0}, "a confirm answer has no decision"),
         ({"codes_kept": ["SCALE_WORD"]}, "only a correction keeps codes"),
-        ({"nodes": []}, "null in format 1"),
+        ({"nodes": []}, "only for a model text or a structure task"),
         ({"ms": -1}, "ms is not an integer"),
         ({"extra": 1}, "members of answer@1"),
     ],

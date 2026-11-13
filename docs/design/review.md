@@ -17,7 +17,7 @@ notes go together. The last section lists the code issues.
 | The formats | Four store kinds: `review-policy@1`, `task@1`, `answer@1` (and `answer@2`) and `resolution@1`. | 5 |
 | `unsure` | It never settles a task. The task stays open for another reviewer. | 6.1 |
 | Two reviewers who disagree | The slot is `disputed`, and the app gets no value. Only a reviewer that the review policy names as a lead settles it. | 6.1 |
-| The six item kinds | One question template and one view for each. Format 1 builds number, text and long span. Closed set, model text and structure wait for their inputs. | 7 |
+| The six item kinds | One question template and one view for each. Format 1 builds number, text and long span. Model text has its input since 0.15 (#531). Closed set and structure wait for their inputs. | 7 |
 | The UI | A local server, `groundgate review serve`, with the standard library only and no script from another host. | 8, 9 |
 | Answers as labels | An audit answer is a blind label. A review answer is not blind. It counts as a label for a measure only after #234 shows agreement for its kind. | 10 |
 
@@ -178,8 +178,9 @@ each packet.
 - `candidate` is a normal candidate (SPEC §2.5). The checks ignore `proposer`, but the candidate
   digest covers it.
 - `codes_kept` lists each code of a correction that the person saw and kept (section 6.2).
-- `statements` and `nodes` are for model text and structure (section 7). They are null in
-  format 1.
+- `statements` is for a model text task (section 7): one verdict for each statement, in the
+  order of the statements. Such an answer has the verdict `confirm`. In each other answer,
+  `statements` is null. `nodes` is for structure, and it is null.
 - `reason_seen`, `keys`, `ms` and `time` are for the measures. The resolution never reads them.
 
 `answer@2` is `answer@1` with the verdict `wrong` and the member `field_keys` (#406). A calibrate
@@ -334,7 +335,7 @@ break.
 | `text` | the entity and its role: "Is 'Example Holdings Ltd' the lessor, not the lessee?" | the full sentence, with a mark at each end of the span | all six verdicts | yes |
 | `span` | the start and the end | the start and the end with their context, and the middle closed | all six verdicts; the arrow keys move an end | yes |
 | `closed_set` | the option, and that no other option fits | the quote and the option list; one key chooses another option | `confirm`, `choose`, `not_in_document`, `unsure` | no |
-| `model_text` | each statement | the model text beside the source; each statement next to its cited span, with the words that differ marked | `statements`: `supported`, `unsupported` or `unsure` for each | no |
+| `model_text` | each statement | the model text beside the source; each statement next to its cited span, with the words that differ marked | `statements`: `supported`, `unsupported` or `unsure` for each | from an input (#531) |
 | `structure` | each node of a page | the page with the nodes in boxes; accept or correct in bulk | `nodes`: the nodes accepted and corrected | no |
 
 Format 1 reserves the kind names and the members `statements` and `nodes`. A later kind adds a
@@ -353,9 +354,55 @@ so each place of that document gets a crop. The crop comes from the source in th
   so a spec issue comes first.
 - A **model text** task comes from an input that the app gives: the model text and its
   statements, each with a cited span. The core never admits model text (#285). A statement is
-  not a candidate. The resolution gives the verdict of each statement, not a value.
+  not a candidate. The resolution gives the verdict of each statement, not a value. Section
+  7.1 gives the input and its rules.
 - A **structure** task is only for a node that the app uses, for example a node that a field
   cites (#285).
+
+### 7.1 The model text input
+
+An app gives one `model-text@1` object for each model text of a packet (#531):
+
+```json
+{"format": "model-text@1", "packet": "sha256:...", "name": "summary",
+ "text": "Revenue was $4.2 million. The lease ends in 2030.",
+ "statements": [{"start": 0, "end": 25, "cites": [{"start": 18120, "end": 18160}]},
+                {"start": 26, "end": 49, "cites": []}]}
+```
+
+- `name` has the form of a field name. It is not a field of the schema of the packet.
+- `text` is the model text, in NFC, at most 64 KiB as UTF-8.
+- A statement is a span of `text` in UTF-8 bytes. There are 1 to 200 statements, in order,
+  and no two overlap.
+- `cites` holds 0 to 8 spans of the document text of the packet, in UTF-8 bytes. A cite cannot
+  name a reference. A statement with no cite is permitted, and the page says that it cites
+  no text.
+- Each span starts and ends at the start of a character.
+
+`groundgate review tasks --store DIR PACKET --model-text FILE` checks the object, writes it to
+the store and writes its task. A bad object writes nothing. The task has these members:
+
+- `item` is `model_text`, `template` is `model_text@1` and `mode` is `review`. The review
+  policy does not select it: each model text of the store gives a task.
+- `slot` is `{"field": name, "key": null, "decisions": []}`. `choices` and `codes` are empty.
+- `places` has each cited span.
+- `model_text` is `{"key", "statements"}`: the store key of the input and the count of its
+  statements. Only a model text task has this member, so each other task keeps its bytes.
+- The task holds no model text. The page reads the text from the store.
+
+The page shows each statement next to the start of each cited span. A word of the statement
+that no cited span has gets a mark. A word is a run of letters, digits and `_`, and case does
+not count. The keys `y`, `w` and `u` give `supported`, `unsupported` and `unsure` for the
+current statement, and Enter saves when each statement has a verdict.
+
+The resolution has one slot for each model text, after the slots of the receipt, in the order
+of the name and then of the task key. Two answers agree when each statement has the same
+verdict. Rules 2, 5 and 6 of section 6.1 apply to the whole answer. An answer with only
+`unsure` does not count. The status is `open`, `disputed` or `confirmed`. A confirmed slot
+gives `statements`, and its value is null.
+
+The input holds text that can quote the document. So `forget` removes each `model-text@1`
+that names the packet, and keeps the task, the answers and the resolution (store.md §8).
 
 ## 8. The page
 
@@ -535,4 +582,5 @@ issues 1 and 2. No issue changes a decision.
 6. **Calibrate labels through the review server.** After #385. Calibrate items become blind
    tasks, and `labels.json` becomes a view. Needs a security review.
 7. **Later kinds.** `structure` with #414 in 0.14. `closed_set` after a spec issue for the
-   options. `model_text` after an issue for its input. The OCR crop is a view (section 7, #537).
+   options. `model_text` has its input in 0.15 (#531, section 7.1). The OCR crop is a view
+   (section 7, #537).

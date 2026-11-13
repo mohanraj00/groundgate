@@ -240,6 +240,11 @@ def _parser() -> argparse.ArgumentParser:
         metavar="FILE",
         help="a review-policy@1 JSON file; without it, no audit and no task for a rejected slot",
     )
+    t.add_argument(
+        "--model-text",
+        metavar="FILE",
+        help="a model-text@1 JSON file of the app: put it in the store and write its task",
+    )
     rs = steps.add_parser(
         "resolve",
         help="resolve the answers to the tasks of one packet; print one line for each field",
@@ -638,7 +643,8 @@ def _review_tasks(args: argparse.Namespace) -> int:
 
     policy = _json(args.policy) if args.policy else None
     with _store(args.store, make=False) as store:
-        written = write_tasks(store, args.packet, policy)
+        model_text = _json(args.model_text) if args.model_text else None
+        written = write_tasks(store, args.packet, policy, model_text)
     for problem in written.problems:  # a problem can quote store data: escape each control
         shown = escape(problem)
         print(f"mismatch: {shown}", file=sys.stderr)

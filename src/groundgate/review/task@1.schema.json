@@ -28,7 +28,7 @@
       }
     },
     "item": {
-      "description": "The item kind (section 7). Format 1 builds number, text and span. closed_set, model_text and structure are reserved for later kinds.",
+      "description": "The item kind (section 7). The field type gives number, text or span. model_text is the kind of a model text input (#531). closed_set and structure are reserved for later kinds.",
       "enum": ["number", "text", "span", "closed_set", "model_text", "structure"]
     },
     "mode": {
@@ -95,6 +95,16 @@
             ]
           }
         }
+      }
+    },
+    "model_text": {
+      "description": "Only in a model_text task (section 7): the store key of its model-text@1 object, and the count of its statements. The task holds no model text.",
+      "type": "object",
+      "required": ["key", "statements"],
+      "additionalProperties": false,
+      "properties": {
+        "key": { "$ref": "#/$defs/key" },
+        "statements": { "type": "integer", "minimum": 1 }
       }
     }
   },

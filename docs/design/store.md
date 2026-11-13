@@ -81,6 +81,7 @@ new key. The store prefix changes only when the key scheme changes.
 | `run@N` | the run record, one canonical JSON line for each entry. `N` is the record version. | `extract` |
 | `packet@1` | section 5.2 | `extract`, `admit` |
 | `review-policy@1`, `task@1`, `resolution@1` | review.md §5 | `review` |
+| `model-text@1` | canonical JSON of a model text input, review.md §7.1, in 0.15 | `review` |
 | `document@1` | the document model of #285, in 0.13 | `read` |
 
 - `put` refuses JSON bytes that are not canonical, so one object has one key.
@@ -304,10 +305,12 @@ also if it changes during the build.
 
    | Removed | Kept |
    |---|---|
-   | `source@1`, `text@1`, `layout@1`, `document@1`, `reference@1`, `candidates@1`, `prompt@1`, `reply@1`, `admission@1` | `packet@1`, `reading@1`, `reading@2`, `receipt@1`, `schema@1`, `policy@1`, `pack@1`, `judgments@1`, `doubt@1`, `run@N`, `task@1`, `resolution@1`, the answer logs |
+   | `source@1`, `text@1`, `layout@1`, `document@1`, `reference@1`, `candidates@1`, `prompt@1`, `reply@1`, `admission@1`, `model-text@1` | `packet@1`, `reading@1`, `reading@2`, `receipt@1`, `schema@1`, `policy@1`, `pack@1`, `judgments@1`, `doubt@1`, `run@N`, `task@1`, `resolution@1`, the answer logs |
 
    The kept objects hold digests, values, offsets, codes and questions, and no document text
    other than the values. A review question and its choices can quote a value.
+   No packet names a `model-text@1` object. `forget` finds each one that names the packet in
+   the list of store objects, and removes it (#531).
    `forget` also removes the `candidates@1` of each correction packet that `review resolve`
    wrote for the packet (#524). They hold the value that a person typed in review, and that
    value comes from the document. The correction packet, its judgments and its receipt stay,

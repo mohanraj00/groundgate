@@ -37,7 +37,8 @@ let busy = false; // a task loads or an answer goes to the server: keys wait
 
 function fresh() {
   return { keys: 0, start: performance.now(), reasonSeen: false, mode: null, sel: null,
-    parts: [], need: null, check: null, typed: null, again: false, picked: [] };
+    parts: [], need: null, check: null, typed: null, again: false, picked: [],
+    verdicts: [], at: 0 };
 }
 
 function status(text) { $("status").textContent = text || ""; }
@@ -106,6 +107,7 @@ async function open(k) {
     list.append(li);
   }
   if (task.label) drawLabel();
+  if (task.statements) drawStatements();
   $("correct").hidden = true;
   $("reason").hidden = true;
   $("reason").replaceChildren();
@@ -164,6 +166,58 @@ function labelKey(k) {
     pickKey(Number(k) - 1);
   } else if (k === "Enter") {
     save("confirm", { field_keys: keys.filter((x) => st.picked.includes(x)) });
+  }
+}
+
+// A model text task (review.md section 7): one verdict for each statement
+
+const VERDICT_KEYS = { y: "supported", w: "unsupported", u: "unsure" };
+
+function drawStatements() {
+  $("parts").textContent = "For each statement, press y if the source supports it, w if it " +
+    "does not, u if you are not sure. A marked word is not in the cited text. Press a " +
+    "number to go to a statement. Press Enter to save when each statement has a verdict.";
+  const list = $("choices");
+  list.replaceChildren();
+  task.statements.forEach((s, i) => {
+    const li = el("li", i === st.at ? "statement picked" : "statement");
+    const text = el("span", "said");
+    let end = 0;
+    for (const [a, b] of s.marks) {
+      text.append(s.text.slice(end, a), el("mark", "differs", s.text.slice(a, b)));
+      end = b;
+    }
+    text.append(s.text.slice(end));
+    li.append(text);
+    if (!s.cites.length) li.append(el("span", "quote", "The statement cites no text."));
+    for (const c of s.cites) li.append(el("span", "quote", "Cited text: " + c));
+    li.append(el("span", "verdict", st.verdicts[i] || "no verdict yet"));
+    list.append(li);
+  });
+  const now = list.children[st.at];
+  if (now) now.scrollIntoView({ block: "nearest" });
+}
+
+function statementKey(k) {
+  const n = task.statements.length;
+  if (VERDICT_KEYS[k]) {
+    st.verdicts[st.at] = VERDICT_KEYS[k];
+    const open = st.verdicts.findIndex((v, i) => i > st.at && !v);
+    if (open >= 0) st.at = open;
+    else if (st.at < n - 1) st.at += 1;
+    drawStatements();
+  } else if (/^[1-9]$/.test(k) && Number(k) <= n) {
+    st.at = Number(k) - 1;
+    drawStatements();
+  } else if (k === "Enter") {
+    const missing = st.verdicts.findIndex((v) => !v);
+    if (missing >= 0 || st.verdicts.length < n) {
+      st.at = missing >= 0 ? missing : st.verdicts.length;
+      drawStatements();
+      status("Statement " + (st.at + 1) + " has no verdict.");
+      return;
+    }
+    save("confirm", { statements: st.verdicts.map((v, i) => ({ statement: i, verdict: v })) });
   }
 }
 
@@ -485,7 +539,8 @@ document.addEventListener("keydown", (ev) => {
   if (!KEYS.test(k)) return;
   ev.preventDefault();
   st.keys += 1; // before the answer, so that the answer counts its own key
-  if (task.label && !/^(r|ArrowLeft|ArrowRight)$/.test(k)) labelKey(k);
+  if (task.statements && !/^(ArrowLeft|ArrowRight)$/.test(k)) statementKey(k);
+  else if (task.label && !/^(r|ArrowLeft|ArrowRight)$/.test(k)) labelKey(k);
   else if (k === "y" && n === 1) save("confirm", {});
   else if (/^[1-9]$/.test(k) && Number(k) <= n) {
     const c = task.choices[Number(k) - 1];
