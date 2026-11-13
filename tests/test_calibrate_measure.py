@@ -161,3 +161,21 @@ def test_bad_arguments_are_refused(tmp_path: Path, over: dict[str, str], message
 
 def test_a_table_cell_escapes_a_pipe() -> None:
     assert measure._cell("a|b\nc") == "a\\|b c"
+
+
+def test_a_linked_gold_folder_is_refused(tmp_path: Path) -> None:
+    src = _copy(CASES[0], tmp_path)
+    moved = tmp_path / "elsewhere"
+    (src / "gold" / "docs").rename(moved)
+    (src / "gold" / "docs").symlink_to(moved, target_is_directory=True)
+    with pytest.raises(SystemExit, match="is a link"):
+        _run(src, tmp_path / "out")
+
+
+def test_many_thresholds_are_rounded_up(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(measure, "MAX_THRESHOLDS", 2)
+    judge = {"id": "j", "digest": "j-1"}
+    js = [{"question": "key", "judge": judge, "p": p} for p in (0.611, 0.612, 0.7)]
+    gold = measure.Gold({"d": measure.GoldDoc("d", "", [], js, {})}, "sha256:0")
+    profile = {"policy": {"judge": judge}}
+    assert measure._thresholds(profile, gold, ["d"]) == [0.62, 0.7]

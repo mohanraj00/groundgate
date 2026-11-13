@@ -30,6 +30,7 @@ import copy
 import datetime
 import hashlib
 import json
+import math
 import re
 import unicodedata
 from collections.abc import Mapping, Sequence
@@ -54,6 +55,7 @@ SPLIT_PREFIX = "groundgate-split/1:"
 PARTS = ("calibration", "test")
 MAX_FILE = 16 << 20  # bytes of one gold set file, before it is parsed
 MAX_DOCUMENTS = 10_000
+MAX_THRESHOLDS = 100  # the thresholds that the operating point tries at full precision
 _NAME = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]{0,127}\Z")
 _DATE = re.compile(r"[0-9]{4}-[0-9]{2}-[0-9]{2}\Z")
 _VERSION = re.compile(r"(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\Z")
@@ -108,6 +110,9 @@ def read_gold(root: Path) -> Gold:
     """Read and check a gold set of format 1, and compute its digest."""
     if root.is_symlink() or not root.is_dir():
         raise MeasureError(f"{root} is not a directory")
+    for sub in ("docs", "candidates", "judgments"):
+        if (root / sub).is_symlink():
+            raise MeasureError(f"{root / sub} is a link; a gold set holds its own files")
     lab = _read_json(root / "labels.json")
     if not isinstance(lab, dict) or set(lab) != {"groundgate_gold", "labels"}:
         raise MeasureError("labels.json must be an object with groundgate_gold and labels only")
@@ -302,6 +307,10 @@ def _thresholds(profile: Mapping[str, Any], gold: Gold, docs: Sequence[str]) -> 
                 and 0 <= j["p"] <= 1
             ):
                 ps.add(float(j["p"]))
+    if len(ps) > MAX_THRESHOLDS:
+        # each threshold is one pass over the calibration part, so the count has a limit: two
+        # decimal places, rounded up, so that a tried threshold never clears more than its p
+        ps = {min(1.0, math.ceil(p * 100) / 100) for p in ps}
     return sorted(ps)
 
 

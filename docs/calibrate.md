@@ -286,6 +286,7 @@ calibration part. It tries each `p` of the `key` judgments of that judge as
 `clear.KEY_NOT_AT_VALUE`. For each threshold it counts the `cleared` values of all fields
 together. It picks the lowest threshold whose bound is below the target. If no threshold
 passes, the draft profile has no clear threshold, and no value is cleared.
+With more than 100 different `p`, it rounds each `p` up to two decimal places first.
 
 ### The output
 
