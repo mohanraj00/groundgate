@@ -6,7 +6,7 @@ admits a right value and sends a doubtful one to a person. This page shows how t
 [SPEC.md](../SPEC.md) §2.3 and §4 are the normative rules, and the
 [guide](guide.md#schema) has the short reference table.
 
-A schema is an object with `fields` and, optionally, `units` and `relations`. This is a minimal
+A schema is an object with `fields` and, optionally, `units`, `relations` and `checks`. This is a minimal
 one, with one candidate that quotes its evidence:
 
 ```python
@@ -698,6 +698,89 @@ A factor or a tolerance has at most 1,000,000 digits before the decimal point, o
 invalid. The same limit applies to the difference and the allowance. If one of them has more
 digits, the relation fails, its values go to review, and the receipt gives `difference` and
 `allowance` as null. So a document with a total of 1,000,001 nines gets a decision, not an error.
+
+## Records and document sets
+
+A `record` field holds an array of records, such as the rows of a price list (#613). Its
+`members` are fields with the usual rules. A member with `required` true must have a value in
+each record. A candidate for a member names the field as `<record field>.<member>`, and gives
+`record`: the id of its row, which the extractor chooses. Each member value is decided as the
+value of a field. Then the receipt gets one line for each record in `records`
+([SPEC §4.12](../SPEC.md)).
+
+A record is admitted only when each required member has an admitted value. A row without a
+required value is rejected `RECORD_MEMBER_MISSING`. A member with two values is
+`RECORD_MEMBER_CONFLICT`, and values from two texts are `RECORD_SOURCE_MIXED`. Each value of a
+record that is not admitted gets `RECORD_NOT_ADMITTED`, so it does not go to the export alone.
+
+A later document that amends the document, such as a corrigendum, is a reference with `set`: its
+position in the document set ([SPEC §4.13](../SPEC.md)). The schema member `checks` compares the
+records of the set. There are three kinds:
+
+| Check | What it does | Code when it fails |
+|---|---|---|
+| `replace` | A record of a later document replaces each earlier record with the same `member` value. | `SET_REPLACES_NOTHING`: the later record replaces nothing. |
+| `unique` | After the replacements, no two records have the same `member` value. | `SET_DUPLICATE` |
+| `agree` | After the replacements, records of two documents with the same `member` value have equal values for each member in `compare`. | `SET_CONFLICT` |
+
+```python
+text = "Price list 2026\nA-100 Hinge $4.20\nB-200 Bracket $12.50\nC-300 Latch $7.75\n"
+corrigendum = "Corrigendum 1.\nB-200 Bracket: read $14.00.\nD-400 Clamp: read $3.10.\n"
+schema = {
+    "fields": {
+        "items": {
+            "type": "record",
+            "members": {
+                "code": {"type": "string", "required": True},
+                "unit_price": {"type": "number", "unit": "USD", "required": True},
+            },
+        }
+    },
+    "checks": [
+        {"id": "corrigendum", "check": "replace", "field": "items", "member": "code"},
+        {"id": "one_code", "check": "unique", "field": "items", "member": "code"},
+    ],
+}
+
+
+def row(cid, record, code, price, ref=None):
+    """The two member candidates of one row. ``ref`` cites the corrigendum."""
+    where = {} if ref is None else {"source": "reference", "ref": ref}
+    return [
+        cite(f"{cid}a", "items.code", code, code, record=record, evidence=[{"text": code, **where}]),
+        cite(f"{cid}b", "items.unit_price", price, f"${price}", "USD", record=record,
+             evidence=[{"text": f"${price}", **where}]),
+    ]  # fmt: skip
+
+
+candidates = [
+    *row("p1", "p1", "A-100", "4.20"),
+    *row("p2", "p2", "B-200", "12.50"),
+    cite("p3", "items.code", "C-300", "C-300", record="p3"),
+    *row("k1", "k1", "B-200", "14.00", "corr-1"),
+    *row("k2", "k2", "D-400", "3.10", "corr-1"),
+]
+references = [{"id": "corr-1", "text": corrigendum, "set": 1}]
+receipt = gg.admit(text, schema, candidates, references=references)
+for r in receipt.records:
+    line = f"{r.record:<4}{r.outcome:<20}{'replaced ' if r.replaced else ''}{' '.join(r.codes)}"
+    print(line.rstrip())
+print([c.to_dict() for c in receipt.checks])
+```
+
+```text
+k1  admitted
+k2  needs_verification  SET_REPLACES_NOTHING
+p1  admitted
+p2  admitted            replaced
+p3  rejected            RECORD_MEMBER_MISSING
+[{'id': 'corrigendum', 'holds': False, 'records': ['k2']}, {'id': 'one_code', 'holds': True, 'records': []}]
+```
+
+`p2` is the old row of B-200: the corrigendum row `k1` replaces it, so `one_code` finds B-200
+one time. `p3` has no price. `k2` changes a row that the price list does not have, so a person
+checks it. A replaced row keeps its outcome, because it is a true row of the price list. A
+member field cannot be in a relation, and a record field takes no candidate of its own.
 
 ## When the schema is invalid
 

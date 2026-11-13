@@ -1,0 +1,343 @@
+{
+ "name": "168-record-amend-twice",
+ "description": "Two corrigenda at set positions 1 and 2 change the price of A-100. The row of the second corrigendum replaces the rows of the price list and of the first corrigendum. The second corrigendum also gives G-700, which no earlier document has: SET_REPLACES_NOTHING. A row with two prices is RECORD_MEMBER_CONFLICT, and a blank record is RECORD_INVALID (#613).",
+ "document": "Price list 2026\nA-100 Hinge $4.20\nF-600 Spring $0.80\n",
+ "schema": {
+  "fields": {
+   "items": {
+    "type": "record",
+    "required": false,
+    "members": {
+     "code": {
+      "type": "string",
+      "required": true
+     },
+     "description": {
+      "type": "string"
+     },
+     "unit_price": {
+      "type": "number",
+      "unit": "USD",
+      "required": true
+     }
+    }
+   }
+  },
+  "checks": [
+   {
+    "id": "amend",
+    "check": "replace",
+    "field": "items",
+    "member": "code"
+   }
+  ]
+ },
+ "policy": null,
+ "references": [
+  {
+   "id": "corr-2",
+   "text": "Corrigendum 2.\nA-100 Hinge: read $4.40.\nG-700 Pin: read $0.15.\n",
+   "set": 2
+  },
+  {
+   "id": "corr-1",
+   "text": "Corrigendum 1.\nA-100 Hinge: read $4.30.\n",
+   "set": 1
+  }
+ ],
+ "candidates": [
+  {
+   "id": "d1",
+   "field": "items.code",
+   "value": "A-100",
+   "evidence": [
+    {
+     "start": 16,
+     "end": 21,
+     "text": "A-100"
+    }
+   ],
+   "record": "p1"
+  },
+  {
+   "id": "d2",
+   "field": "items.unit_price",
+   "value": "4.20",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 28,
+     "end": 33,
+     "text": "$4.20"
+    }
+   ],
+   "record": "p1"
+  },
+  {
+   "id": "d3",
+   "field": "items.code",
+   "value": "A-100",
+   "evidence": [
+    {
+     "source": "reference",
+     "ref": "corr-1",
+     "start": 15,
+     "end": 20,
+     "text": "A-100"
+    }
+   ],
+   "record": "k1"
+  },
+  {
+   "id": "d4",
+   "field": "items.unit_price",
+   "value": "4.30",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "reference",
+     "ref": "corr-1",
+     "start": 33,
+     "end": 38,
+     "text": "$4.30"
+    }
+   ],
+   "record": "k1"
+  },
+  {
+   "id": "d5",
+   "field": "items.code",
+   "value": "A-100",
+   "evidence": [
+    {
+     "source": "reference",
+     "ref": "corr-2",
+     "start": 15,
+     "end": 20,
+     "text": "A-100"
+    }
+   ],
+   "record": "j1"
+  },
+  {
+   "id": "d6",
+   "field": "items.unit_price",
+   "value": "4.40",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "reference",
+     "ref": "corr-2",
+     "start": 33,
+     "end": 38,
+     "text": "$4.40"
+    }
+   ],
+   "record": "j1"
+  },
+  {
+   "id": "d7",
+   "field": "items.code",
+   "value": "G-700",
+   "evidence": [
+    {
+     "source": "reference",
+     "ref": "corr-2",
+     "start": 40,
+     "end": 45,
+     "text": "G-700"
+    }
+   ],
+   "record": "j2"
+  },
+  {
+   "id": "d8",
+   "field": "items.unit_price",
+   "value": "0.15",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "reference",
+     "ref": "corr-2",
+     "start": 56,
+     "end": 61,
+     "text": "$0.15"
+    }
+   ],
+   "record": "j2"
+  },
+  {
+   "id": "d9",
+   "field": "items.code",
+   "value": "F-600",
+   "evidence": [
+    {
+     "start": 34,
+     "end": 39,
+     "text": "F-600"
+    }
+   ],
+   "record": "p2"
+  },
+  {
+   "id": "d10",
+   "field": "items.unit_price",
+   "value": "0.80",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 47,
+     "end": 52,
+     "text": "$0.80"
+    }
+   ],
+   "record": "p2"
+  },
+  {
+   "id": "d11",
+   "field": "items.unit_price",
+   "value": "4.20",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 28,
+     "end": 33,
+     "text": "$4.20"
+    }
+   ],
+   "record": "p2"
+  },
+  {
+   "id": "d12",
+   "field": "items.code",
+   "value": "F-600",
+   "evidence": [
+    {
+     "start": 34,
+     "end": 39,
+     "text": "F-600"
+    }
+   ],
+   "record": "  "
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "RECORD_NOT_ADMITTED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "RECORD_NOT_ADMITTED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "RECORD_NOT_ADMITTED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "RECORD_NOT_ADMITTED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "RECORD_NOT_ADMITTED"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "RECORD_INVALID"
+    ]
+   }
+  ],
+  "coverage": [],
+  "records": [
+   {
+    "field": "items",
+    "record": "j1",
+    "outcome": "admitted",
+    "codes": [],
+    "replaced": false
+   },
+   {
+    "field": "items",
+    "record": "j2",
+    "outcome": "needs_verification",
+    "codes": [
+     "SET_REPLACES_NOTHING"
+    ]
+   },
+   {
+    "field": "items",
+    "record": "k1",
+    "outcome": "admitted",
+    "codes": [],
+    "replaced": true
+   },
+   {
+    "field": "items",
+    "record": "p1",
+    "outcome": "admitted",
+    "codes": [],
+    "replaced": true
+   },
+   {
+    "field": "items",
+    "record": "p2",
+    "outcome": "needs_verification",
+    "codes": [
+     "RECORD_MEMBER_CONFLICT"
+    ],
+    "replaced": false,
+    "members": {
+     "code": "F-600",
+     "description": null,
+     "unit_price": null
+    }
+   }
+  ],
+  "checks": [
+   {
+    "id": "amend",
+    "holds": false,
+    "records": [
+     "j2"
+    ]
+   }
+  ]
+ }
+}

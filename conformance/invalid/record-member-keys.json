@@ -1,0 +1,35 @@
+{
+ "name": "record-member-keys",
+ "description": "The packet has a member with keys (SPEC §4.12, §4.13, #613).",
+ "document": "Price list 2026\nA-100 Hinge $4.20\nB-200 Bracket $12.50\nC-300 Latch $7.75\nFee: delivery $9.00\n",
+ "schema": {
+  "fields": {
+   "items": {
+    "type": "record",
+    "required": false,
+    "members": {
+     "code": {
+      "type": "string",
+      "required": true,
+      "keys": [
+       "2026"
+      ]
+     },
+     "description": {
+      "type": "string"
+     },
+     "unit_price": {
+      "type": "number",
+      "unit": "USD",
+      "required": true
+     }
+    }
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

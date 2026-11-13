@@ -14,13 +14,14 @@ from collections import defaultdict
 from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass, field
 from decimal import MAX_EMAX, MAX_PREC, MIN_EMIN, Context, Decimal, Inexact
-from typing import Any
+from typing import Any, cast
 
 from .canonical import SPEC_VERSION, Offsets, digest, is_nfc
 from .fold import fold_text, mark_fold
 from .model import (
     DATE_FORMATS,
     Action,
+    CheckResult,
     Decision,
     EvidenceUnits,
     Field,
@@ -30,6 +31,7 @@ from .model import (
     Part,
     Policy,
     Receipt,
+    RecordLine,
     Relation,
     RelationResult,
     Schema,
@@ -37,6 +39,8 @@ from .model import (
 )
 from .pack import BASE, checked_copy, reading_retired, receipt_packs, schema_named
 from .profile import check_profile
+from .records import Value
+from .records import decide as decide_records
 from .text import (
     SCALED_DIGITS,
     HeadingIndex,
@@ -108,6 +112,7 @@ FLAG_ORDER = (  # SPEC §3.3 table order; it is part of every receipt hash
     "OTHER_SPAN",
     "RELATION_FAILED",
     "MODEL_DOUBT",
+    "RECORD_NOT_ADMITTED",
 )
 INFO_ORDER = (
     "EVIDENCE_REANCHORED",
@@ -396,6 +401,7 @@ class _Passed:
     missing: set[str] = dataclasses.field(default_factory=set)
     cleared: bool = False  # a recorded judgment removed KEY_NOT_AT_VALUE (step 12)
     cited: bool = False  # a key item removed KEY_NOT_AT_VALUE (KEY_CITED)
+    record: str | None = None  # the record of a member field (SPEC §4.12)
 
 
 def _items(ev: object, refs: Mapping[str, _Text]) -> list[_Item]:
@@ -754,6 +760,18 @@ def _proposer(cand: object) -> str | None:
     return who if isinstance(who, str) and normalize_ws(who) else None
 
 
+def _record_id(ctx: _Ctx, cand: object) -> str | None:
+    """The candidate's ``record`` when its field is a member field and the record is a
+    non-blank string, else None (SPEC §4.12)."""
+    if not isinstance(cand, Mapping) or not isinstance(cand.get("field"), str):
+        return None
+    f = ctx.schema.fields.get(cand["field"])
+    rid = cand.get("record")
+    if f is None or f.record is None or not isinstance(rid, str) or not normalize_ws(rid):
+        return None
+    return rid
+
+
 def _check(ctx: _Ctx, cand: object) -> _Passed:
     """Steps 1-11, the outside path and per-candidate flags. Raises _Reject."""
     # 1. structure
@@ -817,6 +835,8 @@ def _check(ctx: _Ctx, cand: object) -> _Passed:
         key = None
     elif key not in f.keys:
         raise _Reject("KEY_INVALID")
+    if f.record is not None and _record_id(ctx, cand) is None:
+        raise _Reject("RECORD_INVALID")  # SPEC §4.12
     # 8. evidence
     inside = [i for i in items if i.source in ("document", "reference")]
     checked = {i.role or "value": i for i in inside if i.role != "field"}
@@ -1622,6 +1642,25 @@ def _judge(policy: Policy, p: _Passed, js: dict[str, _Judgment]) -> list[_Judgme
     return applied
 
 
+_MAX_SET = 1_000_000  # the highest position in a document set (SPEC §4.13)
+
+
+def _set_positions(raw: object) -> dict[str, int]:
+    """The position of each reference in the document set (SPEC §4.13), or PacketError. Call
+    it after ``_references``."""
+    out: dict[str, int] = {}
+    for r in cast(Sequence[Mapping[str, Any]], raw or ()):
+        if "set" not in r:
+            continue
+        at = r["set"]
+        if isinstance(at, bool) or not isinstance(at, int) or not 1 <= at <= _MAX_SET:
+            raise PacketError(f"reference {r['id']!r}: set must be an integer from 1 to 1000000")
+        if at in out.values():
+            raise PacketError(f"reference {r['id']!r}: another reference has the same set")
+        out[r["id"]] = at
+    return out
+
+
 def _references(raw: object) -> dict[str, tuple[_Text, str | None]]:
     """The packet's references (SPEC §2.1), or PacketError."""
     if raw is None:
@@ -1631,8 +1670,8 @@ def _references(raw: object) -> dict[str, tuple[_Text, str | None]]:
     out: dict[str, tuple[_Text, str | None]] = {}
     for n, r in enumerate(raw):
         where = f"reference {n}"
-        if not isinstance(r, Mapping) or set(r) - {"id", "text", "source"}:
-            raise PacketError(f"{where} must be an object with id, text and source")
+        if not isinstance(r, Mapping) or set(r) - {"id", "text", "source", "set"}:
+            raise PacketError(f"{where} must be an object with id, text, source and set")
         rid, text, source = r.get("id"), r.get("text"), r.get("source")
         if not isinstance(rid, str) or not rid.strip() or rid in out:
             raise PacketError(f"{where}: id must be a unique non-blank string")
@@ -1744,12 +1783,14 @@ def admit(
     ):
         raise PacketError("document source must be a non-blank string or null")
     refs = _references(references)
+    positions = _set_positions(references)
     spans = _doubt(doubt, Offsets(text))
     by_cand = _judgments(judgments, candidates)
     with using(schema.vocabulary):
         receipt = _admit(
-            text, schema, candidates, policy, document_id, refs, by_cand, document_source, spans
-        )
+            text, schema, candidates, policy, document_id, refs, by_cand, document_source, spans,
+            positions,
+        )  # fmt: skip
     if entry is None:
         return receipt
     draft = dataclasses.replace(receipt, profile=entry, receipt_sha256="")
@@ -1766,6 +1807,7 @@ def _admit(
     by_cand: dict[int, dict[str, Any]],
     document_source: str | None,
     doubt: list[dict[str, Any]],
+    positions: dict[str, int],
 ) -> Receipt:
     table = frozenset(x for _, suffixes in schema.units.values() for x in suffixes)
     ctx = _Ctx(
@@ -1792,11 +1834,13 @@ def _admit(
                 outcome: _Passed | _Reject = _check(ctx, cand)
             except _Reject as r:
                 outcome = r
+            if isinstance(outcome, _Passed):
+                outcome.record = _record_id(ctx, cand)
             results.append((digest("candidate", cand), i, cand, outcome))
 
     by_key: dict[tuple[str, str | None], set[tuple[str, str | None]]] = defaultdict(set)
     for *_, p in results:
-        if isinstance(p, _Passed) and not p.field.multiple:
+        if isinstance(p, _Passed) and not p.field.multiple and p.field.record is None:
             by_key[p.field.name, p.key].add((p.value, p.unit))
     for *_, p in results:
         if isinstance(p, _Passed) and len(by_key.get((p.field.name, p.key), ())) > 1:
@@ -1805,22 +1849,30 @@ def _admit(
 
     relations = _relate(schema.relations, [p for *_, p in results if isinstance(p, _Passed)])
 
-    decisions: list[Decision] = []
+    results.sort(key=lambda r: (r[0], r[1]))
     applied: list[Judgment] = []
-    read = _PackMarks(schema, [text, *(t.text for t, _ in refs.values())])
-    for sha, i, cand, p in sorted(results, key=lambda r: (r[0], r[1])):
+    for sha, i, _, p in results:
         if isinstance(p, _Passed):
             for j in sorted(_judge(policy, p, by_cand.get(i, {})), key=lambda j: j.question):
                 applied.append(Judgment(sha, j.question, j.answer, j.p))
+
+    records, checks = _records(ctx, results, positions) if schema.records else ((), ())
+
+    decisions: list[Decision] = []
+    read = _PackMarks(schema, [text, *(t.text for t, _ in refs.values())])
+    for sha, _, cand, p in results:
         cid = cand.get("id") if isinstance(cand, Mapping) else None
-        d = _decision(ctx, sha, cand, cid, p)
+        d = dataclasses.replace(_decision(ctx, sha, cand, cid, p), record=_record_id(ctx, cand))
         decisions.append(dataclasses.replace(d, packs=read.packs(cand)) if schema.packs else d)
 
     live = {d.field for d in decisions if d.outcome != "rejected"}
+    live |= {r.field for r in records if r.outcome != "rejected"}
+    required = {n: f.required for n, f in schema.fields.items() if f.record is None}
+    required.update((n, r.required) for n, r in schema.records.items())  # SPEC §4.12
     coverage = tuple(
         (name, "REQUIRED_FIELD_MISSING")
-        for name in sorted(schema.fields)
-        if schema.fields[name].required and name not in live
+        for name in sorted(required)
+        if required[name] and name not in live
     )
     draft = Receipt(
         document_id,
@@ -1839,8 +1891,42 @@ def _admit(
         relations if schema.relations else None,
         packs=schema.packs,
         doubt_sha256=digest("doubt", {"doubt": doubt}) if doubt else None,
+        set_positions=tuple(sorted(positions.items())),
+        records=records if schema.records else None,
+        checks=checks if schema.checks else None,
     )
     return Receipt(**{**draft.__dict__, "receipt_sha256": digest("receipt", draft.body())})
+
+
+def _records(
+    ctx: _Ctx, results: list[tuple[str, int, object, _Passed | _Reject]], positions: dict[str, int]
+) -> tuple[tuple[RecordLine, ...], tuple[CheckResult, ...]]:
+    """Steps 14 and 15 (SPEC §4.12, §4.13). Each value that passed, of a record that is not
+    admitted, gets RECORD_NOT_ADMITTED."""
+    ids: list[tuple[str, str]] = []
+    values: dict[tuple[str, str], list[Value]] = defaultdict(list)
+    passed: dict[tuple[str, str], list[_Passed]] = defaultdict(list)
+    for _, _, cand, p in results:
+        rid = _record_id(ctx, cand)
+        if rid is None:
+            continue
+        assert isinstance(cand, Mapping)
+        f = ctx.schema.fields[cand["field"]]
+        assert f.record is not None
+        ids.append((f.record, rid))
+        if isinstance(p, _Passed):
+            ref = None if p.at is None else p.at.item.ref
+            member = f.name.split(".", 1)[1]
+            doubtful = any(code in FLAG_ORDER for code in p.flags)
+            text = (p.source, ref)
+            values[f.record, rid].append(Value(member, p.value, text, p.source, ref, doubtful))
+            passed[f.record, rid].append(p)
+    lines, checks = decide_records(ctx.schema, ids, values, positions)
+    for line in lines:
+        if line.outcome != "admitted":
+            for p in passed[line.field, line.record]:
+                p.flags.append("RECORD_NOT_ADMITTED")
+    return lines, checks
 
 
 _Far = list[tuple[int, str | None]]  # the furthest edges of the two proposers that reach furthest
@@ -1887,7 +1973,7 @@ def _agreement(policy: Policy, passed: list[tuple[_Passed, str | None]]) -> None
             near = _other(reach[bisect.bisect_left(starts, end)], who)
             if firm and (near is None or near <= start):
                 p.flags.append("NOT_CORROBORATED")
-            if p.field.multiple:
+            if p.field.multiple or p.field.record is not None:
                 continue
             after = _other(latest if firm else latest_firm, who)
             before = _other(earliest if firm else earliest_firm, who)
@@ -2254,6 +2340,8 @@ def verify(
         "coverage",
         "judgments",
         "relations",
+        "records",
+        "checks",
         "summary",
     ):
         if receipt.get(key) != fresh.get(key):
