@@ -162,6 +162,7 @@ def test_the_packet_names_each_input(tmp_path: Path) -> None:
             "document_source": "https://example.org/grant",
             "packs": [LAC],
             "doubt": None,
+            "pin": None,
         }
         check = gg.verify(
             found.receipt, found.text, found.schema, found.candidates, **found.inputs()

@@ -38,6 +38,7 @@ from .model import (
     normal_date,
 )
 from .pack import BASE, checked_copy, reading_retired, receipt_packs, schema_named
+from .pin import pin_entry
 from .profile import check_profile
 from .records import Value
 from .records import decide as decide_records
@@ -1732,6 +1733,7 @@ def admit(
     packs: Sequence[object] = (),
     doubt: Sequence[object] | None = None,
     profile: Mapping[str, Any] | None = None,
+    pin: Mapping[str, Any] | None = None,
 ) -> Receipt:
     """Decide every candidate and return the receipt.
 
@@ -1747,11 +1749,12 @@ def admit(
     a reader read with a low confidence, as the ``doubt`` member of ``document@1`` (SPEC §2.1).
     ``profile`` is a document-family profile (SPEC §4.10). It gives the schema, the policy and
     the packs, so then ``schema`` and ``policy`` are None and ``packs`` is empty. The receipt
-    names the profile digest.
+    names the profile digest. ``pin`` is the source pin of the document (SPEC §4.14). It
+    changes no decision, and the receipt holds it with its digest.
 
     Raises ``PacketError`` when the text is not NFC, ``candidates`` is not a list, or the schema,
-    policy, judgments, references, document source, packs, doubt or profile are invalid. Then no
-    receipt is made.
+    policy, judgments, references, document source, packs, doubt, profile or pin are invalid.
+    Then no receipt is made.
     """
     if not isinstance(text, str) or not is_nfc(text):
         raise PacketError("document text must be a string in Unicode NFC")
@@ -1763,6 +1766,7 @@ def admit(
     _check_integers(judgments, "judgments")
     _check_integers(doubt, "doubt")
     _check_integers(policy.to_dict() if isinstance(policy, Policy) else policy, "policy")
+    _check_integers(pin, "pin")
     entry = None
     if profile is not None:
         if schema is not None or policy is not None or packs:
@@ -1782,6 +1786,7 @@ def admit(
         isinstance(document_source, str) and document_source.strip()
     ):
         raise PacketError("document source must be a non-blank string or null")
+    pinned = None if pin is None else pin_entry(pin, document_source)
     refs = _references(references)
     positions = _set_positions(references)
     spans = _doubt(doubt, Offsets(text))
@@ -1791,9 +1796,9 @@ def admit(
             text, schema, candidates, policy, document_id, refs, by_cand, document_source, spans,
             positions,
         )  # fmt: skip
-    if entry is None:
+    if entry is None and pinned is None:
         return receipt
-    draft = dataclasses.replace(receipt, profile=entry, receipt_sha256="")
+    draft = dataclasses.replace(receipt, profile=entry, pin=pinned, receipt_sha256="")
     return dataclasses.replace(draft, receipt_sha256=digest("receipt", draft.body()))
 
 
@@ -2261,6 +2266,7 @@ def verify(
     pack_dir: str | os.PathLike[str] | None = None,
     doubt: Sequence[object] | None = None,
     profile: Mapping[str, Any] | None = None,
+    pin: Mapping[str, Any] | None = None,
 ) -> Verification:
     """Re-derive the receipt from its inputs and compare it with ``receipt``.
 
@@ -2280,6 +2286,8 @@ def verify(
 
     With ``profile``, give no ``schema``, ``policy``, ``packs`` or ``pack_dir``: the profile
     gives them (SPEC §4.10), and ``verify`` compares the receipt's ``profile`` member.
+    ``pin`` is the source pin that ``admit`` got (SPEC §4.14), and ``verify`` compares the
+    receipt's ``pin`` member.
     """
     if not isinstance(receipt, Mapping):
         raise PacketError("receipt must be a JSON object")
@@ -2329,12 +2337,14 @@ def verify(
             packs=[*packs, *found],
             doubt=doubt,
             profile=profile,
+            pin=pin,
         ).to_dict()
     for key in (
         "document",
         "references",
         "packs",
         "profile",
+        "pin",
         "schema_sha256",
         "policy_sha256",
         "coverage",

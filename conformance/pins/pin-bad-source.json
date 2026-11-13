@@ -1,0 +1,29 @@
+{
+ "name": "pin-bad-source",
+ "description": "A pin with a url that is not the document source of the packet (S6) is invalid (SPEC §4.14).",
+ "document": "Fee\t$90\n",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD",
+    "aliases": [
+     "Fee"
+    ]
+   }
+  }
+ },
+ "pin": {
+  "groundgate_pin": 1,
+  "source_sha256": "sha256:0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a",
+  "url": "https://example.org/standard.pdf",
+  "retrieved": "2026-11-09",
+  "edition": "2024 revision 2",
+  "origin": "fetched"
+ },
+ "document_source": "https://example.org/other.pdf",
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

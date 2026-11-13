@@ -170,6 +170,7 @@ def _parser() -> argparse.ArgumentParser:
         )
         p.add_argument("--references", help="JSON array of references (SPEC §2.1)")
         p.add_argument("--document-source", help="the URL of the document (SPEC §2.1)")
+        p.add_argument("--pin", metavar="FILE", help="the source pin of the document (SPEC §4.14)")
         p.add_argument(
             "--pack",
             action="append",
@@ -369,6 +370,20 @@ def _store_parser() -> argparse.ArgumentParser:
         "8 or more characters that is in the text. That check is not a proof. If forget "
         "cannot read an object, it prints 'unchecked', removes the rest and exits 1.",
     )
+    p = sub.add_parser(
+        "pin",
+        help="write a source file to the store and print its source pin",
+        description="Write the bytes of FILE to the store as a source@1 object, calculate "
+        "their digest and print the source pin (SPEC section 4.14) as JSON. Give the printed "
+        "pin to admit with --pin.",
+    )
+    p.add_argument("--store", metavar="DIR", required=True, help="the store folder")
+    p.add_argument("file", metavar="FILE", help="the source file")
+    p.add_argument("--origin", required=True, choices=("fetched", "supplied"))
+    p.add_argument("--retrieved", required=True, metavar="YYYY-MM-DD", help="the retrieval day")
+    p.add_argument("--url", help="the URL of the source; a fetched pin needs it")
+    p.add_argument("--edition", help='an edition marker, for example "2024 revision 2"')
+    p.add_argument("--label", help='for a supplied copy, for example "unofficial copy"')
     f.add_argument("--store", metavar="DIR", required=True, help="the store folder")
     f.add_argument("packet", metavar="PACKET", help="the packet key")
     f.add_argument("--reason", required=True, help="the reason, for the deleted log")
@@ -383,9 +398,27 @@ def _store_parser() -> argparse.ArgumentParser:
     return ap
 
 
+def _store_pin(args: argparse.Namespace) -> int:
+    from .pin import check_pin, source_digest
+
+    data = Path(args.file).read_bytes()
+    pin = check_pin(
+        {"groundgate_pin": 1, "source_sha256": source_digest(data), "url": args.url,
+         "retrieved": args.retrieved, "edition": args.edition, "origin": args.origin,
+         "label": args.label}
+    )  # fmt: skip
+    with _store(args.store, make=True) as store:  # after the checks, so a bad pin writes nothing
+        store.put("source@1", data)
+    sys.stdout.write(_dumps(pin))
+    return 0
+
+
 def _store_command(args: argparse.Namespace) -> int:
     from .store.maintain import check, forget_packet, rebuild
     from .store.packets import printable
+
+    if args.action == "pin":
+        return _store_pin(args)
 
     with _store(args.store, make=False) as store:
         if args.action == "rebuild":
@@ -476,6 +509,7 @@ def main(argv: list[str] | None = None) -> int:
             "references": _json(args.references) if args.references else None,
             "document_source": args.document_source,
             "packs": [load_pack(f) for f in args.pack],
+            "pin": _json(args.pin) if args.pin else None,
         }
         if args.command == "admit" and args.store is not None:
             return _admit_store(args, text, schema, candidates, policy, judgments, extra)
@@ -517,6 +551,8 @@ def _admit_inputs(parser: argparse.ArgumentParser, args: argparse.Namespace) -> 
             parser.error("batch admit cannot use positional inputs, --output or --document-id")
         if args.reading is not None:
             parser.error("batch admit cannot use --reading")
+        if args.pin is not None:
+            parser.error("batch admit cannot use --pin: a pin is for one document")
     elif not all(value is not None for value in single):
         parser.error("admit requires DOC SCHEMA CANDIDATES, or the batch options")
 
@@ -537,6 +573,7 @@ def _verify_inputs(parser: argparse.ArgumentParser, args: argparse.Namespace) ->
             ("--judgments", args.judgments is not None),
             ("--references", args.references is not None),
             ("--document-source", args.document_source is not None),
+            ("--pin", args.pin is not None),
             ("--pack", bool(args.pack)),
         )
         if value

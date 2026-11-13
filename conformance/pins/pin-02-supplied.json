@@ -1,0 +1,61 @@
+{
+ "name": "pin-02-supplied",
+ "description": "A copy that a person supplied, with a label because it is not the official copy. It has no url and no edition.",
+ "document": "Fee\t$90\n",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD",
+    "aliases": [
+     "Fee"
+    ]
+   }
+  }
+ },
+ "pin": {
+  "groundgate_pin": 1,
+  "source_sha256": "sha256:0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b",
+  "retrieved": "2026-11-10",
+  "origin": "supplied",
+  "label": "unofficial copy"
+ },
+ "candidates": [
+  {
+   "id": "p1",
+   "field": "fee",
+   "value": 90,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4,
+     "end": 7,
+     "text": "$90"
+    },
+    {
+     "role": "field",
+     "start": 0,
+     "end": 3,
+     "text": "Fee"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "pin": {
+   "source_sha256": "sha256:0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b",
+   "url": null,
+   "retrieved": "2026-11-10",
+   "edition": null,
+   "origin": "supplied",
+   "label": "unofficial copy",
+   "sha256": "sha256:eb91501ce23f7de96a345371efd31195b115e78bc7f5bd1c1e67ddc69b4107f6"
+  }
+ }
+}

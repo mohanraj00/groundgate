@@ -1,0 +1,63 @@
+{
+ "name": "pin-04-document-source",
+ "description": "A packet with a document source and a pin with the same url.",
+ "document": "Fee\t$90\n",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD",
+    "aliases": [
+     "Fee"
+    ]
+   }
+  }
+ },
+ "pin": {
+  "groundgate_pin": 1,
+  "source_sha256": "sha256:0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a",
+  "url": "https://example.org/standard.pdf",
+  "retrieved": "2026-11-09",
+  "edition": "2024 revision 2",
+  "origin": "fetched"
+ },
+ "document_source": "https://example.org/standard.pdf",
+ "candidates": [
+  {
+   "id": "p1",
+   "field": "fee",
+   "value": 90,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4,
+     "end": 7,
+     "text": "$90"
+    },
+    {
+     "role": "field",
+     "start": 0,
+     "end": 3,
+     "text": "Fee"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "pin": {
+   "source_sha256": "sha256:0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a",
+   "url": "https://example.org/standard.pdf",
+   "retrieved": "2026-11-09",
+   "edition": "2024 revision 2",
+   "origin": "fetched",
+   "label": null,
+   "sha256": "sha256:802727e1d933e09b712987759451632b7282807afe04ad92563a99f0bfcce54e"
+  }
+ }
+}

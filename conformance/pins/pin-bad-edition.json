@@ -1,0 +1,28 @@
+{
+ "name": "pin-bad-edition",
+ "description": "A pin with a blank edition (S5) is invalid (SPEC §4.14).",
+ "document": "Fee\t$90\n",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD",
+    "aliases": [
+     "Fee"
+    ]
+   }
+  }
+ },
+ "pin": {
+  "groundgate_pin": 1,
+  "source_sha256": "sha256:0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a",
+  "url": "https://example.org/standard.pdf",
+  "retrieved": "2026-11-09",
+  "edition": " ",
+  "origin": "fetched"
+ },
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}
