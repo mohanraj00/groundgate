@@ -1,0 +1,148 @@
+{
+ "name": "places-01-one-line",
+ "description": "Digital text: the value $90 is one word, and its locator is the box of that word. The value of the lessor goes over a line break: one box covers its three words on two lines.",
+ "document": "Lessor: Example\nHoldings Ltd\nFee\t$90\n",
+ "schema": {
+  "fields": {
+   "lessor": {
+    "type": "string",
+    "aliases": [
+     "Lessor"
+    ]
+   },
+   "fee": {
+    "type": "integer",
+    "unit": "USD",
+    "aliases": [
+     "Fee"
+    ]
+   }
+  }
+ },
+ "places": [
+  [
+   0,
+   7,
+   1,
+   7200,
+   7200,
+   11400,
+   8400
+  ],
+  [
+   8,
+   15,
+   1,
+   11800,
+   7200,
+   16950,
+   8400
+  ],
+  [
+   16,
+   24,
+   1,
+   7200,
+   8600,
+   12300,
+   9800
+  ],
+  [
+   25,
+   28,
+   1,
+   12700,
+   8600,
+   14525,
+   9800
+  ],
+  [
+   29,
+   32,
+   1,
+   7200,
+   10000,
+   9000,
+   11200
+  ],
+  [
+   33,
+   36,
+   1,
+   10000,
+   10000,
+   12050,
+   11200
+  ]
+ ],
+ "candidates": [
+  {
+   "id": "l1",
+   "field": "lessor",
+   "value": "Example Holdings Ltd",
+   "evidence": [
+    {
+     "start": 8,
+     "end": 28,
+     "text": "Example\nHoldings Ltd"
+    },
+    {
+     "role": "field",
+     "start": 0,
+     "end": 6,
+     "text": "Lessor"
+    }
+   ]
+  },
+  {
+   "id": "f1",
+   "field": "fee",
+   "value": 90,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 33,
+     "end": 36,
+     "text": "$90"
+    },
+    {
+     "role": "field",
+     "start": 29,
+     "end": 32,
+     "text": "Fee"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "locator": {
+     "page": 1,
+     "box": [
+      7200,
+      7200,
+      16950,
+      9800
+     ]
+    }
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "locator": {
+     "page": 1,
+     "box": [
+      10000,
+      10000,
+      12050,
+      11200
+     ]
+    }
+   }
+  ],
+  "places_sha256": "sha256:ce16042204012ca236fb0a38a3476c1a40a4efcf766377c78c31fa3f7ec37f9e"
+ }
+}

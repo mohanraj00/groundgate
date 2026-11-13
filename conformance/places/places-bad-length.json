@@ -1,0 +1,36 @@
+{
+ "name": "places-bad-length",
+ "description": "Places with an entry of 6 integers are invalid (SPEC §4.15).",
+ "document": "Lessor: Example\nHoldings Ltd\nFee\t$90\n",
+ "schema": {
+  "fields": {
+   "lessor": {
+    "type": "string",
+    "aliases": [
+     "Lessor"
+    ]
+   },
+   "fee": {
+    "type": "integer",
+    "unit": "USD",
+    "aliases": [
+     "Fee"
+    ]
+   }
+  }
+ },
+ "places": [
+  [
+   0,
+   7,
+   1,
+   7200,
+   7200,
+   11400
+  ]
+ ],
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

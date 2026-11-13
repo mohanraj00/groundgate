@@ -39,6 +39,7 @@ from .model import (
 )
 from .pack import BASE, checked_copy, reading_retired, receipt_packs, schema_named
 from .pin import pin_entry
+from .places import Places, check_places
 from .profile import check_profile
 from .records import Value
 from .records import decide as decide_records
@@ -1734,6 +1735,7 @@ def admit(
     doubt: Sequence[object] | None = None,
     profile: Mapping[str, Any] | None = None,
     pin: Mapping[str, Any] | None = None,
+    places: Sequence[object] | None = None,
 ) -> Receipt:
     """Decide every candidate and return the receipt.
 
@@ -1750,11 +1752,13 @@ def admit(
     ``profile`` is a document-family profile (SPEC §4.10). It gives the schema, the policy and
     the packs, so then ``schema`` and ``policy`` are None and ``packs`` is empty. The receipt
     names the profile digest. ``pin`` is the source pin of the document (SPEC §4.14). It
-    changes no decision, and the receipt holds it with its digest.
+    changes no decision, and the receipt holds it with its digest. ``places`` is the page and
+    the box of each word of the document, from a reader (SPEC §4.15). With it, each decision
+    whose value span is in the document gets a ``locator``. It changes no outcome and no code.
 
     Raises ``PacketError`` when the text is not NFC, ``candidates`` is not a list, or the schema,
-    policy, judgments, references, document source, packs, doubt, profile or pin are invalid.
-    Then no receipt is made.
+    policy, judgments, references, document source, packs, doubt, profile, pin or places are
+    invalid. Then no receipt is made.
     """
     if not isinstance(text, str) or not is_nfc(text):
         raise PacketError("document text must be a string in Unicode NFC")
@@ -1787,6 +1791,7 @@ def admit(
     ):
         raise PacketError("document source must be a non-blank string or null")
     pinned = None if pin is None else pin_entry(pin, document_source)
+    placed = None if places is None else check_places(places, Offsets(text))
     refs = _references(references)
     positions = _set_positions(references)
     spans = _doubt(doubt, Offsets(text))
@@ -1796,9 +1801,26 @@ def admit(
             text, schema, candidates, policy, document_id, refs, by_cand, document_source, spans,
             positions,
         )  # fmt: skip
-    if entry is None and pinned is None:
+    if entry is None and pinned is None and placed is None:
         return receipt
     draft = dataclasses.replace(receipt, profile=entry, pin=pinned, receipt_sha256="")
+    if placed is not None:
+        index = Places(placed)
+        draft = dataclasses.replace(
+            draft,
+            places_sha256=digest("places", {"places": placed}),
+            decisions=tuple(
+                dataclasses.replace(
+                    d,
+                    located=True,
+                    # only a span of the document has a place: a reference has no page
+                    locator=index.locate(*d.evidence)
+                    if d.source == "document" and d.evidence is not None
+                    else None,
+                )
+                for d in draft.decisions
+            ),
+        )
     return dataclasses.replace(draft, receipt_sha256=digest("receipt", draft.body()))
 
 
@@ -2267,6 +2289,7 @@ def verify(
     doubt: Sequence[object] | None = None,
     profile: Mapping[str, Any] | None = None,
     pin: Mapping[str, Any] | None = None,
+    places: Sequence[object] | None = None,
 ) -> Verification:
     """Re-derive the receipt from its inputs and compare it with ``receipt``.
 
@@ -2287,7 +2310,7 @@ def verify(
     With ``profile``, give no ``schema``, ``policy``, ``packs`` or ``pack_dir``: the profile
     gives them (SPEC §4.10), and ``verify`` compares the receipt's ``profile`` member.
     ``pin`` is the source pin that ``admit`` got (SPEC §4.14), and ``verify`` compares the
-    receipt's ``pin`` member.
+    receipt's ``pin`` member. ``places`` is the places list that ``admit`` got (SPEC §4.15).
     """
     if not isinstance(receipt, Mapping):
         raise PacketError("receipt must be a JSON object")
@@ -2338,6 +2361,7 @@ def verify(
             doubt=doubt,
             profile=profile,
             pin=pin,
+            places=places,
         ).to_dict()
     for key in (
         "document",
@@ -2345,6 +2369,7 @@ def verify(
         "packs",
         "profile",
         "pin",
+        "places_sha256",
         "schema_sha256",
         "policy_sha256",
         "coverage",

@@ -7419,6 +7419,98 @@ bad_pin("pin-bad-source", "a url that is not the document source of the packet (
         document_source="https://example.org/other.pdf")  # fmt: skip
 
 
+# ----------------------------------------------------- places and locators (SPEC §4.15, #614)
+# A places vector has a `places` list beside the schema. Each entry is written by hand as
+# (word, page, x0, y0, x1, y1): `main` only converts the word to its byte offsets, as it does
+# for a quote. Each expected locator is written by hand. The digest is hashlib over canonical
+# JSON of integers.
+
+PLACES: list[dict[str, Any]] = []
+PLACE_DOC = "Lessor: Example\nHoldings Ltd\nFee\t$90\n"
+PLACE_SCHEMA = {"fields": {"lessor": {"type": "string", "aliases": ["Lessor"]},
+                           "fee": {**USD, "aliases": ["Fee"]}}}  # fmt: skip
+# One page of 612 by 792 points. "Example" is at the end of line 1, and "Holdings Ltd" is on
+# line 2. The fee line is line 3.
+WORDS_1 = [("Lessor:", 1, 7200, 7200, 11400, 8400), ("Example", 1, 11800, 7200, 16950, 8400),
+           ("Holdings", 1, 7200, 8600, 12300, 9800), ("Ltd", 1, 12700, 8600, 14525, 9800),
+           ("Fee", 1, 7200, 10000, 9000, 11200), ("$90", 1, 10000, 10000, 12050, 11200)]  # fmt: skip
+LESSOR = c("l1", "lessor", "Example Holdings Ltd", None,
+           [q("Example\nHoldings Ltd"), q("Lessor", role="field")], ADMIT)  # fmt: skip
+FEE = c("f1", "fee", 90, "USD", [q("$90"), q("Fee", role="field")], ADMIT)
+
+
+def places_vector(name: str, description: str, words: list[tuple[Any, ...]],
+                  candidates: list[Any], locators: list[Any], **packet: Any) -> None:  # fmt: skip
+    """``locators`` is the expected locator of each candidate, in candidate order."""
+    PLACES.append({"name": name, "description": description, "words": words,
+                   "candidates": candidates, "locators": locators, **packet})  # fmt: skip
+
+
+places_vector(
+    "places-01-one-line",
+    "Digital text: the value $90 is one word, and its locator is the box of that word. The "
+    "value of the lessor goes over a line break: one box covers its three words on two lines.",
+    WORDS_1,
+    [LESSOR, FEE],
+    [{"page": 1, "box": [7200, 7200, 16950, 9800]},
+     {"page": 1, "box": [10000, 10000, 12050, 11200]}],
+)  # fmt: skip
+places_vector(
+    "places-02-page-break",
+    "The words Holdings and Ltd are on page 2. The locator of the lessor is the box of its "
+    "words on the first page of the value: the word Example.",
+    [*WORDS_1[:2], ("Holdings", 2, 7200, 7200, 12300, 8400), ("Ltd", 2, 12700, 7200, 14525, 8400),
+     ("Fee", 2, 7200, 8600, 9000, 9800), ("$90", 2, 10000, 8600, 12050, 9800)],
+    [LESSOR, FEE],
+    [{"page": 1, "box": [11800, 7200, 16950, 8400]},
+     {"page": 2, "box": [10000, 8600, 12050, 9800]}],
+)  # fmt: skip
+places_vector(
+    "places-03-ocr-doubt",
+    "OCR text: the reader gives a low confidence for $90, so the value goes to review with "
+    "READ_DOUBT. The decision still has its locator, so the person sees the place on the scan.",
+    WORDS_1,
+    [c("f1", "fee", 90, "USD", [q("$90"), q("Fee", role="field")],
+       ("needs_verification", ["READ_DOUBT"]))],
+    [{"page": 1, "box": [10000, 10000, 12050, 11200]}],
+    doubt=[{"start": 33, "end": 36, "confidence": 0.4}],
+)  # fmt: skip
+places_vector(
+    "places-04-no-word",
+    "The places have no word at the value $90, and the rejected candidate has no evidence "
+    "span. Each locator is null, and the receipt still names the places digest.",
+    WORDS_1[:5],
+    [FEE, c("f2", "fee", 95, "USD", [{"text": "$95"}], ("rejected", ["QUOTE_NOT_FOUND"]))],
+    [None, None],
+)  # fmt: skip
+places_vector(
+    "places-05-empty",
+    "An empty places list is valid. Each locator is null.",
+    [],
+    [FEE],
+    [None],
+)
+
+
+def bad_places(name: str, why: str, places: Any) -> None:
+    PLACES.append({"name": name, "description": f"Places with {why} are invalid (SPEC §4.15).",
+                   "places": places, "error": True})  # fmt: skip
+
+
+bad_places("places-bad-float", "a coordinate that is not an integer",
+           [[0, 7, 1, 72.5, 7200, 11400, 8400]])  # fmt: skip
+bad_places("places-bad-order", "an entry that starts before the end of the entry before it",
+           [[8, 15, 1, 11800, 7200, 16950, 8400], [0, 7, 1, 7200, 7200, 11400, 8400]])  # fmt: skip
+bad_places("places-bad-page", "the page 0", [[0, 7, 0, 7200, 7200, 11400, 8400]])
+bad_places("places-bad-span", "a span that ends after the document",
+           [[0, 999, 1, 7200, 7200, 11400, 8400]])  # fmt: skip
+bad_places("places-bad-box", "x0 after x1", [[0, 7, 1, 11400, 7200, 7200, 8400]])
+bad_places("places-bad-length", "an entry of 6 integers", [[0, 7, 1, 7200, 7200, 11400]])
+bad_places("places-bad-boolean", "a boolean in place of the page",
+           [[0, 7, True, 7200, 7200, 11400, 8400]])  # fmt: skip
+bad_places("places-bad-list", "an object in place of the list", {"words": []})
+
+
 def main() -> None:
     out_dir = HERE / "vectors"
     out_dir.mkdir(exist_ok=True)
@@ -7514,9 +7606,38 @@ def main() -> None:
         (pin_dir / f"{p['name']}.json").write_text(
             json.dumps(out, indent=1, ensure_ascii=False) + "\n"
         )
+    places_dir = HERE / "places"
+    places_dir.mkdir(exist_ok=True)
+    for old in places_dir.glob("*.json"):
+        old.unlink()
+    for p in PLACES:
+        given = {"name": p["name"], "description": p["description"], "document": PLACE_DOC,
+                 "schema": PLACE_SCHEMA}  # fmt: skip
+        if p.get("error"):
+            out = given | {"places": p["places"], "candidates": [], "expected": {"error": True}}
+        else:
+            places = []
+            for word, *box in p["words"]:
+                at = len(PLACE_DOC[: PLACE_DOC.index(word)].encode("utf-8"))
+                places.append([at, at + len(word.encode("utf-8")), *box])
+            if "doubt" in p:
+                given["doubt"] = resolve(PLACE_DOC, p["doubt"])
+            cands = [{k: resolve(PLACE_DOC, val) if k == "evidence" else val
+                      for k, val in item["candidate"].items()} for item in p["candidates"]]  # fmt: skip
+            decisions = [{**item["expect"], "locator": loc}
+                         for item, loc in zip(p["candidates"], p["locators"], strict=True)]  # fmt: skip
+            out = given | {
+                "places": places, "candidates": cands,
+                "expected": {"decisions": decisions,
+                             "places_sha256": spec_digest("places", {"places": places})},
+            }  # fmt: skip
+        (places_dir / f"{p['name']}.json").write_text(
+            json.dumps(out, indent=1, ensure_ascii=False) + "\n"
+        )
     print(
         f"wrote {len(VECTORS)} vectors, {len(INVALID)} invalid packets, "
-        f"{len(PROFILES)} profile vectors and {len(PINS)} pin vectors"
+        f"{len(PROFILES)} profile vectors, {len(PINS)} pin vectors and "
+        f"{len(PLACES)} places vectors"
     )
 
 

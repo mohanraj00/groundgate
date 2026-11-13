@@ -1,0 +1,54 @@
+{
+ "name": "places-05-empty",
+ "description": "An empty places list is valid. Each locator is null.",
+ "document": "Lessor: Example\nHoldings Ltd\nFee\t$90\n",
+ "schema": {
+  "fields": {
+   "lessor": {
+    "type": "string",
+    "aliases": [
+     "Lessor"
+    ]
+   },
+   "fee": {
+    "type": "integer",
+    "unit": "USD",
+    "aliases": [
+     "Fee"
+    ]
+   }
+  }
+ },
+ "places": [],
+ "candidates": [
+  {
+   "id": "f1",
+   "field": "fee",
+   "value": 90,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 33,
+     "end": 36,
+     "text": "$90"
+    },
+    {
+     "role": "field",
+     "start": 29,
+     "end": 32,
+     "text": "Fee"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "locator": null
+   }
+  ],
+  "places_sha256": "sha256:3b29accd61298ecbe3abd2899d7a2e351ee816576e1abbba7cdc80f4e48209e7"
+ }
+}

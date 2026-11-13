@@ -1,0 +1,118 @@
+{
+ "name": "places-04-no-word",
+ "description": "The places have no word at the value $90, and the rejected candidate has no evidence span. Each locator is null, and the receipt still names the places digest.",
+ "document": "Lessor: Example\nHoldings Ltd\nFee\t$90\n",
+ "schema": {
+  "fields": {
+   "lessor": {
+    "type": "string",
+    "aliases": [
+     "Lessor"
+    ]
+   },
+   "fee": {
+    "type": "integer",
+    "unit": "USD",
+    "aliases": [
+     "Fee"
+    ]
+   }
+  }
+ },
+ "places": [
+  [
+   0,
+   7,
+   1,
+   7200,
+   7200,
+   11400,
+   8400
+  ],
+  [
+   8,
+   15,
+   1,
+   11800,
+   7200,
+   16950,
+   8400
+  ],
+  [
+   16,
+   24,
+   1,
+   7200,
+   8600,
+   12300,
+   9800
+  ],
+  [
+   25,
+   28,
+   1,
+   12700,
+   8600,
+   14525,
+   9800
+  ],
+  [
+   29,
+   32,
+   1,
+   7200,
+   10000,
+   9000,
+   11200
+  ]
+ ],
+ "candidates": [
+  {
+   "id": "f1",
+   "field": "fee",
+   "value": 90,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 33,
+     "end": 36,
+     "text": "$90"
+    },
+    {
+     "role": "field",
+     "start": 29,
+     "end": 32,
+     "text": "Fee"
+    }
+   ]
+  },
+  {
+   "id": "f2",
+   "field": "fee",
+   "value": 95,
+   "unit": "USD",
+   "evidence": [
+    {
+     "text": "$95"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "locator": null
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "QUOTE_NOT_FOUND"
+    ],
+    "locator": null
+   }
+  ],
+  "places_sha256": "sha256:422679856db20a8f261033073e3114778269272c2e04bdebb11081472be3000b"
+ }
+}

@@ -163,6 +163,7 @@ def test_the_packet_names_each_input(tmp_path: Path) -> None:
             "packs": [LAC],
             "doubt": None,
             "pin": None,
+            "places": None,
         }
         check = gg.verify(
             found.receipt, found.text, found.schema, found.candidates, **found.inputs()

@@ -1,0 +1,29 @@
+{
+ "name": "places-bad-list",
+ "description": "Places with an object in place of the list are invalid (SPEC §4.15).",
+ "document": "Lessor: Example\nHoldings Ltd\nFee\t$90\n",
+ "schema": {
+  "fields": {
+   "lessor": {
+    "type": "string",
+    "aliases": [
+     "Lessor"
+    ]
+   },
+   "fee": {
+    "type": "integer",
+    "unit": "USD",
+    "aliases": [
+     "Fee"
+    ]
+   }
+  }
+ },
+ "places": {
+  "words": []
+ },
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

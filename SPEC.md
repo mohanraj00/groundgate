@@ -55,6 +55,9 @@ its domain (§2.4).
 A packet may also give a **source pin** (§4.14, #616): where the bytes of the document came
 from. It goes into the receipt and changes no decision.
 
+A packet may also carry **places** (§4.15, #614): the page and the box of each word of the
+document, from a reader. With them, the receipt gives the page and the box of each value.
+
 A packet may also carry **references**: other source texts that the app, not the extractor,
 supplies. A reference can hold only the part of its source that matters.
 
@@ -1752,6 +1755,49 @@ digest gives another pin digest. The prefix names the pin format.
 An implementation that reads pins also gives the receipt `pin` member of each vector under
 `conformance/pins/`, and refuses every packet there that expects an error.
 
+### 4.15 Places and locators
+
+**Places** (#614) give the page and the box of each word of the document, as a reader of a PDF
+gives them, also after OCR. They change no outcome and no code. With places, the receipt gives a
+**locator** for each decision, so a reviewer or an app can show the exact place on the page.
+
+Places are a list. Each entry is a list of 7 integers:
+
+`[start, end, page, x0, y0, x1, y1]`
+
+| Member | Meaning |
+|---|---|
+| `start`, `end` | The span of the word in the document: UTF-8 byte offsets, as a span of §2.2. |
+| `page` | The page number, from 1 to 1,000,000. |
+| `x0`, `y0`, `x1`, `y1` | The box of the word on the page, in hundredths of a PDF point, from the top left corner of the page. `x0` is at most `x1`, and `y0` is at most `y1`. Each is from 0 to 2^31 - 1. |
+
+A coordinate is an integer, never a number with a fraction: 72.5 points is `7250`. The list is
+in text order with no overlap: each entry starts at or after the end of the entry before it. It
+has at most 2,000,000 entries. A list that is empty is valid.
+
+The packet is invalid when its places are not a list, have more than 2,000,000 entries, or have
+an entry that is not a list of exactly 7 integers, whose span is not a valid span of the
+document, that starts before the end of the entry before it, whose page is not from 1 to
+1,000,000, or whose box breaks a rule of the table. A boolean is not an integer.
+
+`places_sha256` is the digest (§6) of kind `places` over `{"places": <list>}`.
+
+**The locator** of a decision is `{"page": p, "box": [x0, y0, x1, y1]}`, or null. A decision has
+a locator that is not null when its `source` is `document`, its `evidence` is not null, and one
+or more entries share a byte with the evidence span. Then:
+
+1. `page` is the page of the first of those entries, in list order.
+2. `box` covers each of those entries that is on that page: the lowest `x0`, the lowest `y0`,
+   the highest `x1` and the highest `y1`.
+
+So a value that goes over a line break gets one box that covers both lines. A value that goes
+over a page break gets the box of its words on the first page. A decision of a reference or of
+an outside source has a null locator, because the places are of the document.
+
+An implementation that reads places also gives the `locator` of each decision and the
+`places_sha256` of each vector under `conformance/places/`, and refuses every packet there that
+expects an error.
+
 ## 5. Receipt
 
 ```json
@@ -1790,6 +1836,10 @@ no profile has no `profile` member.
 
 `pin` holds the source pin of the packet (§4.14) after defaults, without `groundgate_pin`, and
 `sha256`, the pin digest of §4.14. A receipt of a packet with no pin has no `pin` member.
+
+`places_sha256` is the digest of the places of the packet (§4.15), after `pin`. With places,
+each decision also has the member `locator` (§4.15) as its last member. A receipt of a packet
+with no places has no `places_sha256` member, and its decisions have no `locator` member.
 
 Decisions are sorted by `candidate_sha256`, then by input position. `codes` lists the rejecting
 code, or the flag codes in the order of the table in §3.3, followed by `EVIDENCE_REANCHORED`,
@@ -1933,6 +1983,9 @@ value and unit are those of the decision. Each shown member is present.
 - For `source: "reference"`, `ref` names the receipt's reference, `text_sha256` is its digest
   (§2.1), `url` is its source and `source_sha256` is null.
 - For both of these sources, `span` is the receipt's evidence span in the cited NFC text (§2.2).
+- `citation.locator` is optional. A fact has it only when its decision has a locator that is
+  not null (§4.15): `{"page": 3, "box": [7200, 41020, 11850, 42200]}`, with the box in
+  hundredths of a PDF point. A fact with no locator has no `locator` member.
 - For `source: "external"` or `source: "knowledge"`, the fact was admitted by policy.
   `source_sha256`, `text_sha256`, `span` and `ref` are null. `url` is the external item's
   URL, or null for knowledge. Use the packet key to see the recorded evidence.

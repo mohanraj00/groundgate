@@ -54,7 +54,8 @@ _PACKET = (
 # A packet with no doubt has no member, so its key stays the key of an older packet.
 # A packet with a source pin has the member ``pin`` too: the key of a ``pin@1`` object (#616).
 # A packet with no pin has no member, for the same reason.
-_OPTIONAL = ("doubt", "pin")
+# A packet with places has the member ``places``: the key of a ``places@1`` object (#614).
+_OPTIONAL = ("doubt", "pin", "places")
 _READING = ("document", "format", "layout", "options", "reader", "source", "text")
 _READING2 = (*_READING, "warnings")
 # The reading kinds. ``put_reading`` writes ``reading@2``, which keeps the warnings of ``read``.
@@ -103,6 +104,7 @@ class Packet:
     run: str | None = None
     doubt: list[Any] | None = None
     pin: dict[str, Any] | None = None  # the source pin of ``admit``, or None (SPEC §4.14)
+    places: list[Any] | None = None  # the places of ``admit``, or None (SPEC §4.15)
 
     def inputs(self) -> dict[str, Any]:
         """The keyword arguments of ``verify`` and ``render`` after the first four."""
@@ -114,6 +116,7 @@ class Packet:
             "packs": self.packs,
             "doubt": self.doubt,
             "pin": self.pin,
+            "places": self.places,
         }
 
 
@@ -366,6 +369,7 @@ def check_packet(
     packs: Sequence[object] = (),
     doubt: Sequence[object] | None = None,
     pin: Mapping[str, Any] | None = None,
+    places: Sequence[object] | None = None,
 ) -> Receipt:
     """Do the checks of ``admit_packet`` and return the receipt, but write nothing. If
     ``check_packet`` raises no error, ``admit_packet`` with the same inputs gives the same
@@ -382,6 +386,7 @@ def check_packet(
         packs=packs,
         doubt=doubt,
         pin=pin,
+        places=places,
     )[0]
 
 
@@ -398,6 +403,7 @@ def _checked(
     packs: Sequence[object],
     doubt: Sequence[object] | None,
     pin: Mapping[str, Any] | None = None,
+    places: Sequence[object] | None = None,
 ) -> tuple[Receipt, dict[str, Any]]:
     for value, what in ((schema, "schema"), (policy, "policy")):
         if value is not None and not isinstance(value, Mapping):
@@ -414,6 +420,7 @@ def _checked(
         packs=packs,
         doubt=doubt,
         pin=pin,
+        places=places,
     )
     given: dict[str, Any] = {
         "schema": schema,
@@ -425,6 +432,7 @@ def _checked(
         "document_id": document_id,
         "doubt": list(doubt) if doubt else None,
         "pin": None if pin is None else dict(pin),
+        "places": None if places is None else list(places),
     }
     back = json.loads(_json(given, "inputs"))
     if not _same(given, back):
@@ -440,6 +448,7 @@ def _checked(
             packs=back["packs"],
             doubt=back["doubt"],
             pin=back["pin"],
+            places=back["places"],
         )
         if again.to_dict() != receipt.to_dict():
             raise PacketError(
@@ -464,6 +473,7 @@ def admit_packet(
     reading: str | None = None,
     doubt: Sequence[object] | None = None,
     pin: Mapping[str, Any] | None = None,
+    places: Sequence[object] | None = None,
 ) -> tuple[str, Receipt]:
     """Run ``admit``, then write the text, the schema, the policy, each reference, each pack,
     the candidates, the judgments, the doubt spans, the receipt and a ``packet@1`` object.
@@ -473,9 +483,10 @@ def admit_packet(
     ``packs`` as the packs of the app. ``reading`` is the key of a reading of the same text.
     ``doubt`` is the ``doubt`` of ``admit``: a packet with doubt spans names a ``doubt@1``
     object. ``pin`` is the source pin of ``admit`` (SPEC §4.14): a packet with a pin names a
-    ``pin@1`` object. The store keeps canonical JSON, where the number 5.0 is 5. If that
-    change gives another receipt, ``admit_packet`` raises ``PacketError`` and writes nothing,
-    because ``verify`` from the store would then fail."""
+    ``pin@1`` object. ``places`` is the places list of ``admit`` (SPEC §4.15): a packet with
+    places names a ``places@1`` object. The store keeps canonical JSON, where the number 5.0 is
+    5. If that change gives another receipt, ``admit_packet`` raises ``PacketError`` and writes
+    nothing, because ``verify`` from the store would then fail."""
     receipt, given = _checked(
         text,
         schema,
@@ -488,6 +499,7 @@ def admit_packet(
         packs=packs,
         doubt=doubt,
         pin=pin,
+        places=places,
     )
     if reading is not None:
         if not isinstance(reading, str) or not KEY.fullmatch(reading):
@@ -536,6 +548,8 @@ def _put_packet(
         packet["doubt"] = put("doubt@1", given["doubt"])
     if given.get("pin") is not None:
         packet["pin"] = put("pin@1", given["pin"])
+    if given.get("places") is not None:
+        packet["places"] = put("places@1", given["places"])
     return put("packet@1", packet)
 
 
@@ -565,6 +579,7 @@ def load_packet(store: Store, k: str, *, layout: bool = False) -> Packet:
         _key_or_none(obj, name, "packet")
     doubt_key = _key_or_none(obj, "doubt", "packet") if "doubt" in obj else None
     pin_key = _key_or_none(obj, "pin", "packet") if "pin" in obj else None
+    places_key = _key_or_none(obj, "places", "packet") if "places" in obj else None
     references = _key_list(obj, "references", "packet")
     packs = _key_list(obj, "packs", "packet")
     if not isinstance(obj["spec"], str):
@@ -607,4 +622,5 @@ def load_packet(store: Store, k: str, *, layout: bool = False) -> Packet:
         run=obj["run"],
         doubt=None if doubt_key is None else _get_json(store, "doubt@1", doubt_key),
         pin=None if pin_key is None else _get_json(store, "pin@1", pin_key),
+        places=None if places_key is None else _get_json(store, "places@1", places_key),
     )

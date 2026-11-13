@@ -195,6 +195,18 @@ def _parser() -> argparse.ArgumentParser:
     a.add_argument(
         "--reading", metavar="KEY", help="with --store: the key of the reading of DOC from read"
     )
+    a.add_argument(
+        "--layout",
+        metavar="FILE",
+        help="layout JSON from read: give each decision the page and the box of its value "
+        "(SPEC §4.15)",
+    )
+    a.add_argument(
+        "--locate",
+        action="store_true",
+        help="with --store and --reading: take the page and the box of each value from the "
+        "layout of the reading",
+    )
 
     def pack_dir(p: argparse.ArgumentParser) -> None:
         p.add_argument(
@@ -208,6 +220,7 @@ def _parser() -> argparse.ArgumentParser:
     v.add_argument("receipt", help="the receipt JSON, or the packet key with --store")
     inputs(v)
     pack_dir(v)
+    v.add_argument("--layout", metavar="FILE", help="the layout JSON that admit got")
     store_option(v, "get the receipt and each input of the packet PACKET")
 
     e = sub.add_parser("export", help="verify a stored receipt and export its admitted facts")
@@ -511,6 +524,8 @@ def main(argv: list[str] | None = None) -> int:
             "packs": [load_pack(f) for f in args.pack],
             "pin": _json(args.pin) if args.pin else None,
         }
+        if args.layout and args.command in ("admit", "verify"):
+            extra["places"] = _layout_places(_json(args.layout), text)
         if args.command == "admit" and args.store is not None:
             return _admit_store(args, text, schema, candidates, policy, judgments, extra)
         if args.command == "admit":
@@ -518,6 +533,8 @@ def main(argv: list[str] | None = None) -> int:
             _write(_dumps(receipt.to_dict()), args.output)
             return 0
         stored = _json(args.receipt)
+        if args.layout and isinstance(stored, dict) and "places_sha256" in stored:
+            extra["places"] = _layout_places(_json(args.layout), text)  # report: as admit got
         extra["pack_dir"] = args.pack_dir  # verify and report read the folder in the same way
         result = verify(stored, text, schema, candidates, policy, judgments, **extra)
         for problem in result.problems:  # a problem can quote a candidate: escape each control
@@ -553,8 +570,14 @@ def _admit_inputs(parser: argparse.ArgumentParser, args: argparse.Namespace) -> 
             parser.error("batch admit cannot use --reading")
         if args.pin is not None:
             parser.error("batch admit cannot use --pin: a pin is for one document")
+        if args.layout is not None or args.locate:
+            parser.error("batch admit cannot use --layout or --locate")
     elif not all(value is not None for value in single):
         parser.error("admit requires DOC SCHEMA CANDIDATES, or the batch options")
+    if args.locate and args.reading is None:
+        parser.error("--locate needs --store and --reading")
+    if args.locate and args.layout is not None:
+        parser.error("give --layout or --locate, not both")
 
 
 def _verify_inputs(parser: argparse.ArgumentParser, args: argparse.Namespace) -> None:
@@ -574,6 +597,7 @@ def _verify_inputs(parser: argparse.ArgumentParser, args: argparse.Namespace) ->
             ("--references", args.references is not None),
             ("--document-source", args.document_source is not None),
             ("--pin", args.pin is not None),
+            ("--layout", args.command == "verify" and args.layout is not None),
             ("--pack", bool(args.pack)),
         )
         if value
@@ -583,6 +607,18 @@ def _verify_inputs(parser: argparse.ArgumentParser, args: argparse.Namespace) ->
             f"with --store, {args.command} gets each input from the packet: remove "
             + ", ".join(given)
         )
+
+
+def _layout_places(layout_dict: Any, text: str) -> list[list[int]]:
+    """The places of SPEC §4.15 from a layout JSON of ``read``, which must be of ``text``."""
+    from .canonical import digest
+    from .places import layout_places
+    from .read import Layout
+
+    layout = Layout.from_dict(layout_dict)
+    if layout.document_sha256 != digest("document", {"text": text}):
+        raise PacketError("the layout was extracted from a different document")
+    return layout_places(layout)
 
 
 @contextlib.contextmanager
@@ -613,6 +649,17 @@ def _admit_store(
     from .store.packets import admit_packet
 
     with _store(args.store, make=True) as store:
+        if args.locate:
+            from .places import layout_places
+            from .read import Layout
+            from .store.packets import load_reading
+
+            found = load_reading(store, args.reading)["layout"]
+            if found is None:
+                raise PacketError("--locate needs a reading with a layout: a reading of a PDF")
+            extra = {**extra, "places": layout_places(
+                Layout.from_dict(json.loads(store.get("layout@1", found)))
+            )}  # fmt: skip
         packet, receipt = admit_packet(
             store,
             text,

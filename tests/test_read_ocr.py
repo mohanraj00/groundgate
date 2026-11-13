@@ -15,6 +15,7 @@ from pathlib import Path
 
 import pytest
 
+import groundgate as gg
 from groundgate.cli import main
 from groundgate.read import ReadError, read, reader
 from groundgate.read import ocr as ocr_module
@@ -193,6 +194,22 @@ def test_a_fake_program_gives_words_boxes_reader_and_doubt(
     ]
     assert extracted.layout is not None
     assert [w.box.page for w in extracted.layout.words] == [2, 2, 2, 2]
+    # the places of the OCR words give the locator of an admitted value (SPEC §4.15, #614)
+    from groundgate.places import layout_places
+
+    places = layout_places(extracted.layout)
+    assert [p[:3] for p in places] == [[0, 4, 2], [5, 9, 2], [10, 17, 2], [19, 25, 2]]
+    assert all(type(v) is int for p in places for v in p)
+    schema = {"fields": {"fee": {"type": "integer", "unit": "USD", "aliases": ["Fee"]}}}
+    cand = {"id": "c", "field": "fee", "value": 500, "unit": "USD",
+            "evidence": [{"start": 5, "end": 9, "text": "$500"},
+                         {"role": "field", "start": 0, "end": 3, "text": "Fee"}]}  # fmt: skip
+    (decision,) = gg.admit(extracted.text, schema, [cand], places=places).to_dict()["decisions"]
+    word = extracted.layout.words[1].box
+    assert decision["locator"] == {
+        "page": 2,
+        "box": [round(v * 100) for v in (word.x0, word.top, word.x1, word.bottom)],
+    }
 
 
 @POSIX
