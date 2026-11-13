@@ -6900,11 +6900,13 @@ vector(
     "a record that is not admitted, gets RECORD_NOT_ADMITTED. A member candidate with no record is "
     "RECORD_INVALID, and a candidate for the record field itself is FIELD_UNKNOWN. A required "
     "record field with no record that is not rejected is in coverage. A record that is not a "
-    "string is RECORD_INVALID on a member field, and ignored on another field (#613).",
+    "string is RECORD_INVALID on a member field, and ignored on another field. A record with no "
+    "value that passed is RECORD_MEMBER_MISSING, also when no member is required (#613).",
     PRICE_DOC,
     {"fields": {
         "items": items(required=True),
         "fees_note": {"type": "string"},
+        "notes": {"type": "record", "required": True, "members": {"text": {"type": "string"}}},
         "fees": {"type": "record", "required": True, "members": {
             "name": {"type": "string", "required": True}, "amount": PRICE}},
     }},
@@ -6928,13 +6930,17 @@ vector(
         m("a13", "code", 5, "C-300", "C-300", expect=("rejected", ["RECORD_INVALID"])),
         # a record that is not a string, on a field that is not a member field: ignored
         c("a16", "fees_note", "delivery", None, [q("delivery")], record=7),
+        # a record with only optional members and no value that passed
+        c("a17", "notes.text", "rush", None, [q("Hinge")], ("rejected", ["VALUE_NOT_IN_EVIDENCE"]),
+          record="n1"),
         # a record whose one value is rejected
         m("a14", "unit_price", "r5", "4.25", "$4.20",
           expect=("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
         # a fee without its amount
         c("a15", "fees.name", "delivery", None, [q("delivery")], RNA, record="f1"),
     ],
-    coverage=[{"field": "fees", "code": "REQUIRED_FIELD_MISSING"}],
+    coverage=[{"field": "fees", "code": "REQUIRED_FIELD_MISSING"},
+              {"field": "notes", "code": "REQUIRED_FIELD_MISSING"}],
     records=[
         rec("f1", "rejected", ["RECORD_MEMBER_MISSING"], field="fees",
             members={"name": "delivery", "amount": None}),
@@ -6947,6 +6953,7 @@ vector(
             members={"code": None, "description": None, "unit_price": "7.75"}),
         rec("r5", "rejected", ["RECORD_MEMBER_MISSING"], source=None, ref=None,
             members={"code": None, "description": None, "unit_price": None}),
+        rec("n1", "rejected", ["RECORD_MEMBER_MISSING"], field="notes", members={"text": None}),
     ],
 )  # fmt: skip
 

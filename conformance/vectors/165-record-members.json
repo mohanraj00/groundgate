@@ -1,6 +1,6 @@
 {
  "name": "165-record-members",
- "description": "A record field holds the rows of a price list. Each member candidate names its record and is decided as the value of a field. A record with each required member admitted is admitted, also when an optional member has no value. A row without its code is RECORD_MEMBER_MISSING and rejected, and a row with two codes is RECORD_MEMBER_CONFLICT. Each value that passed, of a record that is not admitted, gets RECORD_NOT_ADMITTED. A member candidate with no record is RECORD_INVALID, and a candidate for the record field itself is FIELD_UNKNOWN. A required record field with no record that is not rejected is in coverage. A record that is not a string is RECORD_INVALID on a member field, and ignored on another field (#613).",
+ "description": "A record field holds the rows of a price list. Each member candidate names its record and is decided as the value of a field. A record with each required member admitted is admitted, also when an optional member has no value. A row without its code is RECORD_MEMBER_MISSING and rejected, and a row with two codes is RECORD_MEMBER_CONFLICT. Each value that passed, of a record that is not admitted, gets RECORD_NOT_ADMITTED. A member candidate with no record is RECORD_INVALID, and a candidate for the record field itself is FIELD_UNKNOWN. A required record field with no record that is not rejected is in coverage. A record that is not a string is RECORD_INVALID on a member field, and ignored on another field. A record with no value that passed is RECORD_MEMBER_MISSING, also when no member is required (#613).",
  "document": "Price list 2026\nA-100 Hinge $4.20\nB-200 Bracket $12.50\nC-300 Latch $7.75\nFee: delivery $9.00\n",
  "schema": {
   "fields": {
@@ -24,6 +24,15 @@
    },
    "fees_note": {
     "type": "string"
+   },
+   "notes": {
+    "type": "record",
+    "required": true,
+    "members": {
+     "text": {
+      "type": "string"
+     }
+    }
    },
    "fees": {
     "type": "record",
@@ -230,6 +239,19 @@
    "record": 7
   },
   {
+   "id": "a17",
+   "field": "notes.text",
+   "value": "rush",
+   "evidence": [
+    {
+     "start": 22,
+     "end": 27,
+     "text": "Hinge"
+    }
+   ],
+   "record": "n1"
+  },
+  {
    "id": "a14",
    "field": "items.unit_price",
    "value": "4.25",
@@ -338,6 +360,12 @@
     ]
    },
    {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
     "outcome": "needs_verification",
     "codes": [
      "RECORD_NOT_ADMITTED"
@@ -347,6 +375,10 @@
   "coverage": [
    {
     "field": "fees",
+    "code": "REQUIRED_FIELD_MISSING"
+   },
+   {
+    "field": "notes",
     "code": "REQUIRED_FIELD_MISSING"
    }
   ],
@@ -427,6 +459,17 @@
      "code": null,
      "description": null,
      "unit_price": null
+    }
+   },
+   {
+    "field": "notes",
+    "record": "n1",
+    "outcome": "rejected",
+    "codes": [
+     "RECORD_MEMBER_MISSING"
+    ],
+    "members": {
+     "text": null
     }
    }
   ]

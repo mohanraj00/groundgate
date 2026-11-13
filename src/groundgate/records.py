@@ -72,6 +72,8 @@ def decide(
                 r.codes.add("RECORD_MEMBER_MISSING")
             if len(seen) > 1:
                 r.codes.add("RECORD_MEMBER_CONFLICT")
+        if not got:  # a record with no value that passed (SPEC §4.12)
+            r.codes.add("RECORD_MEMBER_MISSING")
         texts = {id(v) if v.source in ("external", "knowledge") else v.text for v in got}
         if len(texts) > 1:
             r.codes.add("RECORD_SOURCE_MIXED")

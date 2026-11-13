@@ -1627,7 +1627,7 @@ are, in this order:
 
 | Code | When |
 |---|---|
-| `RECORD_MEMBER_MISSING` | A required member has no decision that passed. |
+| `RECORD_MEMBER_MISSING` | A required member has no decision that passed, or the record has no decision that passed. |
 | `RECORD_MEMBER_CONFLICT` | Two decisions of one member passed with two canonical values. |
 | `RECORD_SOURCE_MIXED` | The decisions that passed are in two or more texts. |
 
