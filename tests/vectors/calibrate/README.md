@@ -18,4 +18,4 @@ JSON data. [docs/calibrate.md](../../../docs/calibrate.md) defines the formats a
 I wrote the counts, the rates and the bounds of each expected report by hand, from the labels
 and the decisions of the gate. `two-routes` has 4 calibration documents and 6 test documents. It
 shows a threshold that fails, the threshold that the command picks, one measured route, an
-admitted error on each route, one review and a label with no value.
+admitted error on each route, one review, a label with no value and a value that is admitted under the wrong key.

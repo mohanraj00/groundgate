@@ -236,14 +236,18 @@ groundgate calibrate measure --profile P --gold G --split S --out DIR \
 
 ```json
 {"groundgate_gold": 1,
- "labels": {"inv-001": {"total": "90", "due_date": "2026-12-01", "rate": null}}}
+ "labels": {"inv-001": {"total": "90", "due_date": "2026-12-01", "discount": null,
+                        "rate": {"standard": "10", "express": null}}}}
 ```
 
 A label is the right value of a field in one document, in the canonical form of the receipt
 `value`, as a string. For a `number` or `integer` field, two numbers are equal when they have
 the same value, so `40` and `40.0` are equal. For each other field type, the texts must be
-equal. Null says that the document has no value for the field. A field that a document does not
-list is not scored. Each label must come from a person who did not see the decisions.
+equal. Null says that the document has no value for the field. For a field with `keys`, the
+label is an object from a key of the schema to a value or null. A value is right only under its
+own key, so the value of `express` under the key `standard` is an error. A field or a key that a
+document does not list is not scored. The report counts each admitted value under a key with no
+label as `unscored_admitted`. Each label must come from a person who did not see the decisions.
 
 A document name starts with a letter or a digit, and then has only letters, digits, `.`, `_`
 and `-`, at most 128 characters. `labels.json` lists each document of `docs/` and no other. The
@@ -266,7 +270,8 @@ At least one document must be in the test part.
 
 ### What the command measures
 
-The gate decides each document with the profile. Then, for each field, on the test part:
+The gate decides each document with the profile. For a field with keys, each key with a label
+is one scored label. Then, for each field, on the test part:
 
 - A **route** is `cleared` when the admitted decision has `MODEL_CLEARED`, and `checked`
   when it has not.
@@ -308,7 +313,7 @@ With more than 100 different `p`, it rounds each `p` up to two decimal places fi
  "operating_point": {"judge": {"id": "j", "digest": "j-1"}, "KEY_NOT_AT_VALUE": 0.7,
   "tried": [{"threshold": 0.6, "admitted": 4, "errors": 1, "bound": "0.7514", "passes": false}]},
  "fields": {"total": {"scored": 6, "with_value": 6, "review": 0, "review_share": "0",
-   "missed": 2, "miss_rate": "0.3333",
+   "missed": 2, "miss_rate": "0.3333", "unscored_admitted": 0,
    "routes": {"checked": {"admitted": 5, "errors": 1, "error_rate": "0.2", "bound": "0.6574",
                           "status": "measured"},
               "cleared": {"admitted": 0, "errors": 0, "error_rate": null, "bound": "1",

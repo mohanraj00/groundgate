@@ -194,3 +194,35 @@ def test_number_equality_is_only_for_number_fields(tmp_path: Path) -> None:
     gold = measure.Gold({"d": measure.GoldDoc("d", text, [cand], None, {"code": "1"})}, "sha256:0")
     s = measure.score(profile, gold, ["d"])["code"]
     assert (s.routes["checked"].admitted, s.routes["checked"].errors, s.missed) == (1, 1, 1)
+
+
+def test_a_value_is_right_only_under_its_own_key(tmp_path: Path) -> None:
+    """t5 of the vector admits the express value 25 under the key standard. The label of
+    standard is 10, so the value is an error, although 25 is the label of express."""
+    src = _copy(CASES[0], tmp_path)
+    labels = json.loads((src / "gold" / "labels.json").read_text(encoding="utf-8"))["labels"]
+    assert labels["t5"]["rate"] == {"express": "25", "standard": "10"}
+    _run(src, tmp_path / "out")
+    report = json.loads((tmp_path / "out" / "report.json").read_text(encoding="utf-8"))
+    assert report["fields"]["rate"]["routes"]["cleared"]["errors"] == 1
+
+
+@pytest.mark.parametrize(
+    ("label", "message"),
+    [("10", "has keys"), ({"overnight": "10"}, "names the key"),
+     ({"Standard": "10", "standard": "10"}, "names the key")],
+    ids=["plain", "unknown-key", "twice"],
+)  # fmt: skip
+def test_a_bad_keyed_label_is_refused(tmp_path: Path, label: Any, message: str) -> None:
+    src = _copy(CASES[0], tmp_path)
+    _edit(src / "gold" / "labels.json", lambda o: o["labels"]["t1"].update(rate=label))
+    with pytest.raises(SystemExit, match=message):
+        _run(src, tmp_path / "out")
+
+
+def test_an_admitted_value_under_a_key_with_no_label_is_counted(tmp_path: Path) -> None:
+    src = _copy(CASES[0], tmp_path)
+    _edit(src / "gold" / "labels.json", lambda o: o["labels"]["t6"].update(rate={"standard": None}))
+    _run(src, tmp_path / "out")
+    report = json.loads((tmp_path / "out" / "report.json").read_text(encoding="utf-8"))
+    assert report["fields"]["rate"]["unscored_admitted"] == 1

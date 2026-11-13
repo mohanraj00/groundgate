@@ -415,7 +415,7 @@ It calls no model.
 3. Run your extractor one time. Record its candidates in `gold/candidates/<doc>.json`, and the
    judgments of your judge in `gold/judgments/<doc>.json`.
 4. Label each field of each document by hand, before you look at a decision. Write the labels
-   to `gold/labels.json`.
+   to `gold/labels.json`. For a field with keys, give one label for each key.
 5. Write a split file that puts each document in the `calibration` part or the `test` part.
 6. Run the measure:
 

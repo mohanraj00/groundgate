@@ -1,6 +1,6 @@
 {
  "description": "A synthetic profile for the calibrate measure vector.",
- "gold_sha256": "sha256:d434a73b41817fc23e922624b755fa347afa262030aa2cc6ef9c7a0608147680",
+ "gold_sha256": "sha256:75e22d1f780fa0ef7023454bc15272b41b96e1e82794ecaaf11dc7f6db7ae32d",
  "groundgate_profile": 1,
  "id": "rates-test",
  "policy": {

@@ -12,10 +12,12 @@ The gold set (format 1) is a directory:
     G/docs/<doc>.txt          the document text, in Unicode NFC
     G/candidates/<doc>.json   the recorded candidates of the extractor
     G/judgments/<doc>.json    optional: the recorded judgments
-    G/labels.json             {"groundgate_gold": 1, "labels": {doc: {field: value or null}}}
+    G/labels.json             {"groundgate_gold": 1, "labels": {doc: {field: label}}}
 
 A label value is the canonical value of the receipt, as a string. Null says that the document
-has no value for the field. A field that a document does not list is not scored.
+has no value for the field. For a field with keys, the label is an object {key: value or null},
+and a value is right only under its own key. A field or a key that a document does not list is
+not scored.
 
 The split file (format 1) is {"groundgate_split": 1, "documents": {doc: part}}, where a part is
 "calibration" or "test". The calibration part picks the judge threshold, and the test part gives
@@ -93,13 +95,26 @@ class GoldDoc:
     text: str
     candidates: list[Any]
     judgments: list[Any] | None
-    labels: dict[str, str | None]
+    labels: dict[str, Any]  # field: a value or null, or {key: a value or null}
 
 
 @dataclass(frozen=True)
 class Gold:
     docs: dict[str, GoldDoc]
     sha256: str
+
+
+def _is_value(v: object) -> bool:
+    return v is None or isinstance(v, str)
+
+
+def _is_keyed(v: object) -> bool:
+    return isinstance(v, dict) and bool(v) and all(_is_value(x) for x in v.values())
+
+
+def _key(k: str) -> str:
+    """A key as the gate compares it: casefolded, with each whitespace run as one space."""
+    return " ".join(k.split()).casefold()
 
 
 def _sha(data: bytes) -> str:
@@ -133,9 +148,12 @@ def read_gold(root: Path) -> Gold:
             raise MeasureError(f"the document name {name!r} has a character that is not allowed")
         row = labels[name]
         if not isinstance(row, dict) or not all(
-            isinstance(k, str) and (v is None or isinstance(v, str)) for k, v in row.items()
+            isinstance(k, str) and (_is_value(v) or _is_keyed(v)) for k, v in row.items()
         ):
-            raise MeasureError(f"the labels of {name} must map a field to a string or null")
+            raise MeasureError(
+                f"the labels of {name} must map a field to a string or null, or to an object "
+                "from a key to a string or null"
+            )
         raw = _read_bytes(root / "docs" / f"{name}.txt")
         try:
             text = raw.decode("utf-8")
@@ -221,6 +239,7 @@ class FieldScore:
     with_value: int = 0
     review: int = 0
     missed: int = 0
+    unscored_admitted: int = 0
     routes: dict[str, Route] = field(default_factory=lambda: {r: Route() for r in ROUTES})
 
 
@@ -234,48 +253,78 @@ def _decimal(x: float) -> str:
     return s or "0"
 
 
+def _units(doc: str, name: str, label: Any, keys: tuple[str, ...] | None) -> dict[str | None, Any]:
+    """The scored labels of one field in one document: one for each key of a field with keys,
+    and one, under None, for a field with no keys."""
+    if keys is None:
+        if not _is_value(label):
+            raise MeasureError(f"{doc}: {name!r} has no keys, so its label is a string or null")
+        return {None: label}
+    if not _is_keyed(label):
+        raise MeasureError(
+            f"{doc}: {name!r} has keys, so its label is an object from a key to a string or null"
+        )
+    allowed = {_key(k) for k in keys}
+    out: dict[str | None, Any] = {}
+    for k, v in label.items():
+        if _key(k) not in allowed or _key(k) in out:
+            raise MeasureError(
+                f"{doc}: the label of {name!r} names the key {k!r} (not a key, or twice)"
+            )
+        out[_key(k)] = v
+    return out
+
+
 def score(profile: Mapping[str, Any], gold: Gold, docs: Sequence[str]) -> dict[str, FieldScore]:
-    """Decide each document of ``docs`` with ``profile`` and score it against its labels."""
-    fields = profile["schema"]["fields"]
-    # the resolved schema: it gives the type of a field that comes from a template
+    """Decide each document of ``docs`` with ``profile`` and score it against its labels. A
+    field with keys is scored for each key: a value is right only under its own key."""
+    # the resolved schema: it gives the type and the keys of a field that comes from a template
     resolved = check_profile(profile).schema.fields
     numeric = {n for n, f in resolved.items() if f.type in ("number", "integer")}
-    out = {name: FieldScore() for name in sorted(fields)}
+    out = {name: FieldScore() for name in sorted(resolved)}
     for name in docs:
         g = gold.docs[name]
         for f in g.labels:
-            if f not in fields:
+            if f not in resolved:
                 raise MeasureError(f"the labels of {name} name {f!r}, which the profile has not")
+        units = {f: _units(name, f, g.labels[f], resolved[f].keys) for f in sorted(g.labels)}
         try:
             receipt = admit(g.text, None, g.candidates, None, name, g.judgments, profile=profile)
         except PacketError as e:
             raise MeasureError(f"{name}: the gate refused the packet: {e}") from None
-        by_field: dict[str, list[Any]] = {}
+        by_unit: dict[tuple[str, str | None], list[Any]] = {}
         for d in receipt.decisions:
-            if d.field in g.labels and d.record is None:
-                by_field.setdefault(d.field, []).append(d)
-        for f, label in sorted(g.labels.items()):
+            if d.field not in units or d.record is not None:
+                continue
+            keyed = resolved[d.field].keys is not None
+            k = (_key(d.key) if isinstance(d.key, str) else "") if keyed else None
+            if k in units[d.field]:
+                by_unit.setdefault((d.field, k), []).append(d)
+            elif d.outcome == "admitted":
+                out[d.field].unscored_admitted += 1  # a key that the labels do not list
+        for f, by_key in units.items():
             s = out[f]
-            s.scored += 1
-            s.with_value += label is not None
-            ds = by_field.get(f, [])
-            seen: set[tuple[str, str | None]] = set()
-            right = False
-            for d in ds:
-                if d.outcome != "admitted":
-                    continue
-                route = "cleared" if "MODEL_CLEARED" in d.codes else "checked"
-                if (route, d.value) in seen:
-                    continue  # one fact is one value, however many candidates propose it
-                seen.add((route, d.value))
-                ok = label is not None and _same(d.value, label, f in numeric)
-                s.routes[route].admitted += 1
-                s.routes[route].errors += not ok
-                right = right or ok
-            if not seen and any(d.outcome == "needs_verification" for d in ds):
-                s.review += 1
-            if label is not None and not right:
-                s.missed += 1
+            for k, label in by_key.items():
+                s.scored += 1
+                s.with_value += label is not None
+                ds = by_unit.get((f, k), [])
+                seen: set[tuple[str, str | None]] = set()
+                right = False
+                for d in ds:
+                    if d.outcome != "admitted":
+                        continue
+                    route = "cleared" if "MODEL_CLEARED" in d.codes else "checked"
+                    if (route, d.value) in seen:
+                        continue  # one fact is one value, however many candidates propose it
+                    seen.add((route, d.value))
+                    ok = label is not None and _same(d.value, label, f in numeric)
+                    s.routes[route].admitted += 1
+                    s.routes[route].errors += not ok
+                    right = right or ok
+                if not seen and any(d.outcome == "needs_verification" for d in ds):
+                    s.review += 1
+                if label is not None and not right:
+                    s.missed += 1
     return out
 
 
@@ -383,6 +432,7 @@ def measure(
             "review_share": _rate(s.review, s.scored),
             "missed": s.missed,
             "miss_rate": _rate(s.missed, s.with_value),
+            "unscored_admitted": s.unscored_admitted,
             "routes": routes,
         }
         for r, sm in routes.items():
