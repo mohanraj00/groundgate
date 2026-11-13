@@ -265,8 +265,10 @@ def _count(
                     t.statements += len(verdicts)
                     t.unsupported += verdicts.count("unsupported")
                 if item == "closed_set" and s.record["verdict"] == "choose":  # §10
-                    first = s.task["choices"][0]["decision"] if s.task["choices"] else None
-                    t.other_option += s.record["decision"] != first
+                    # by value: two candidates can propose the same option
+                    option = {c["decision"]: c["value"] for c in s.task["choices"]}
+                    first = s.task["choices"][0]["value"] if s.task["choices"] else None
+                    t.other_option += option.get(s.record["decision"]) != first
                 if ocr:
                     group = "doubt" if "READ_DOUBT" in s.task["codes"] else "other"
                     t.ocr.setdefault(group, []).append(
