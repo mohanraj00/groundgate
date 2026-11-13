@@ -1,0 +1,12 @@
+[
+ {
+  "answer": "standard",
+  "candidate_id": "r",
+  "judge": {
+   "digest": "j-1",
+   "id": "j"
+  },
+  "p": 0.6,
+  "question": "key"
+ }
+]
