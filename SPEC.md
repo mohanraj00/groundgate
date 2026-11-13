@@ -1885,9 +1885,11 @@ as `4.2`.
 ```
 
 A passage field has only `type`, `required`, `multiple` and `description`. The packet is
-invalid when a passage field has another member, also `unit`, `comparator`, a bound, `keys`,
-`aliases`, `columns`, `markers`, `formats` or `template`, with any value. The packet is also
-invalid when a passage field is a member of a record (§4.12) or a field of a relation (§3.4).
+invalid when a passage field has `formats` or `template`, or has `unit`, a bound, `keys`,
+`aliases`, `columns` or `markers` with a value that is not null, or has a `comparator` that is
+not `eq`. Null and `eq` are the defaults that the schema with defaults has (§2.3), so that schema
+stays valid. The packet is also invalid when a passage field is a member of a record (§4.12)
+or a field of a relation (§3.4).
 
 **The outline.** The gate does not find headings in the text. A reader gives them in the packet
 member `outline`, a list with one entry for each heading:
