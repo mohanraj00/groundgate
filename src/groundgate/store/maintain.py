@@ -761,6 +761,13 @@ _RECORDS = frozenset({"task@1", "resolution@1"})  # the review records of a pack
 # The members of a receipt that record the inputs of ``admit`` other than the candidates.
 _RECEIPT_INPUTS = ("groundgate", "document", "references", "packs", "schema_sha256",
                    "policy_sha256")  # fmt: skip
+# The members that a receipt has only when the packet gives that input (SPEC §5). A receipt
+# with another pin or profile, or with none, is the receipt of other inputs (#616).
+_RECEIPT_OPTIONAL = ("profile", "pin")
+
+
+def _receipt_inputs(receipt: Mapping[str, Any]) -> list[Any]:
+    return [receipt[m] for m in _RECEIPT_INPUTS] + [receipt.get(m) for m in _RECEIPT_OPTIONAL]
 
 
 def _review_plan(
@@ -888,7 +895,7 @@ def _orphans(
             stops.append(("packet@1", k))
     try:
         mine = objects.json("receipt@1", obj["receipt"])
-        inputs = [mine[m] for m in _RECEIPT_INPUTS]
+        inputs = _receipt_inputs(mine)
     except (StoreError, ValueError, TypeError, KeyError, RecursionError):
         stops.append(("receipt@1", str(obj["receipt"])))
     if stops:
@@ -899,7 +906,7 @@ def _orphans(
             continue
         try:
             receipt = objects.json("receipt@1", k)
-            if [receipt[m] for m in _RECEIPT_INPUTS] != inputs:
+            if _receipt_inputs(receipt) != inputs:
                 continue
             hashes = Counter(d["candidate_sha256"] for d in receipt["decisions"])
             if not any(hashes == digests + Counter([c]) for digests, _, _, c in wanted):

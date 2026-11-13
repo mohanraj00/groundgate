@@ -841,6 +841,28 @@ def test_forget_all_finishes_after_a_stop_at_the_correction_packet(
     assert not {k, tk, rk, receipt} & set(left)
 
 
+def test_forget_all_keeps_a_receipt_of_the_same_correction_with_another_pin(
+    tmp_path: Path,
+) -> None:
+    # A receipt that no packet names, with the candidates of the correction and the inputs of
+    # the packet, but with a source pin (#616): it is the receipt of another source, so it
+    # stays when forget --all removes the packet with no pin.
+    root, k, _, _, receipt, fixed = _one_correction(tmp_path, judged=False)
+    pin = {"groundgate_pin": 1, "source_sha256": "sha256:" + "0a" * 32,
+           "retrieved": "2026-11-09", "origin": "supplied"}  # fmt: skip
+    with FolderStore(root) as store:
+        found = load_packet(store, fixed)
+        more = {**found.inputs(), "pin": pin}
+        policy_, judgments = more.pop("policy"), more.pop("judgments")
+        pinned = admit(found.text, found.schema, found.candidates, policy_,
+                       found.receipt["document"]["id"], judgments, **more).to_dict()  # fmt: skip
+        other = store.put("receipt@1", jcs(pinned).encode("utf-8"))
+        done = forget_packet(store, k, "all", everything=True)
+        left, _ = store.object_keys()
+    assert other != receipt and other in left
+    assert ("receipt@1", receipt, "deleted", 0) in done and k not in left
+
+
 def test_forget_all_keeps_a_receipt_with_no_packet_that_it_cannot_prove(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
