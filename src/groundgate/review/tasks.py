@@ -487,11 +487,21 @@ def checked_packet(
     return packet, Schema.from_dict(packet.schema, packet.packs), layout, ()
 
 
-def write_tasks(store: Any, packet_key: str, policy: Mapping[str, Any] | None = None) -> Written:
+def write_tasks(
+    store: Any,
+    packet_key: str,
+    policy: Mapping[str, Any] | None = None,
+    model_text: object = None,
+) -> Written:
     """Get the packet ``packet_key`` from ``store``, decide it again, and write a ``task@1``
     object for each task. Return each task key with its task, in slot order. Without
-    ``policy``, the default policy gives no audit and no task for a rejected slot."""
+    ``policy``, the default policy gives no audit and no task for a rejected slot.
+
+    ``model_text`` is a ``model-text@1`` object of the app that names the packet (§7). It is
+    checked and written to the store, and its task comes last. A bad object raises
+    ``PacketError`` before a write."""
     from ..store import MAX_BYTES, check_bytes
+    from .model_text import FORMAT, check_model_text, model_text_task, stored_model_texts
 
     checked = check_policy(DEFAULT_POLICY if policy is None else policy)
     packet, schema, layout, problems = checked_packet(store, packet_key)
@@ -507,6 +517,23 @@ def write_tasks(store: Any, packet_key: str, policy: Mapping[str, Any] | None = 
         layout=layout,
     )
     limit = getattr(store, "max_bytes", MAX_BYTES)
+    from ..store import key
+
+    given: bytes | None = None
+    texts = dict(stored_model_texts(store, packet_key))  # each model text that the store has
+    if model_text is not None:
+        mt = check_model_text(model_text, packet_key, packet.text, schema)
+        given = jcs(mt).encode("utf-8")
+        if len(given) > limit:
+            raise ValueError("a model-text@1 object is larger than max_bytes")
+        check_bytes(FORMAT, given)
+        texts[key(FORMAT, given)] = mt
+    found = [
+        (mkey, check_model_text(obj, packet_key, packet.text, schema))
+        for mkey, obj in texts.items()
+    ]
+    for mkey, mt in sorted(found, key=lambda x: (x[1]["name"], x[0])):
+        tasks.append(model_text_task(packet_key, mkey, mt, layout))
     encoded = []
     for t in tasks:  # each check of put, before any write
         data = jcs(t).encode("utf-8")
@@ -514,4 +541,6 @@ def write_tasks(store: Any, packet_key: str, policy: Mapping[str, Any] | None = 
             raise ValueError("a task@1 object is larger than max_bytes")
         check_bytes("task@1", data)
         encoded.append((data, t))
+    if given is not None:
+        store.put(FORMAT, given)
     return Written([(store.put("task@1", data), t) for data, t in encoded])

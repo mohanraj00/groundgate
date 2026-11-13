@@ -74,6 +74,7 @@ from ..text import (
     using,
 )
 from .labels import QUESTIONS, label_tasks
+from .model_text import all_model_texts, check_model_text, model_text_task, statement_views
 from .resolve import (
     CORRECTIONS,
     EVERY_TASK,
@@ -217,6 +218,9 @@ class _Doc:
     open: list[str] = field(default_factory=list)  # the tasks in the queue
     words: dict[int, list[Any]] = field(default_factory=dict)  # PDF words by page
     scan: str | None = None  # the source key when a reading read the document with OCR (§7)
+    # the model-text@1 objects of the packet with their keys, and each one by its task key (§7)
+    inputs: list[tuple[str, dict[str, Any]]] = field(default_factory=list)
+    texts: dict[str, dict[str, Any]] = field(default_factory=dict)
 
 
 def _named(record: Mapping[str, Any]) -> bool:
@@ -271,6 +275,7 @@ class Review:
         from ..store import StoreError, key
 
         keys, _ = self.store.object_keys()
+        self._inputs = all_model_texts(self.store)
         found: dict[str, list[str]] = {}
         for k in keys:
             try:
@@ -316,6 +321,13 @@ class Review:
             slot = by_slot.get((s["field"], s["key"], tuple(s["decisions"])))
             if slot is not None:
                 by_key[_task_key(t)] = (slot, t)
+        texts: dict[str, dict[str, Any]] = {}
+        inputs = self._inputs.get(pk, [])
+        for mkey, obj in inputs:  # a bad input raises: the packet gives no task (§9)
+            mt = check_model_text(obj, pk, packet.text, schema)
+            t = model_text_task(pk, mkey, mt, layout)
+            by_key[_task_key(t)] = (Slot(mt["name"], None, ()), t)
+            texts[_task_key(t)] = mt
         labels: dict[str, tuple[Slot, dict[str, Any]]] = {}
         if set(stored) - set(by_key):  # a calibrate task must come from this packet too
             labels = label_tasks(pk, packet.receipt, packet.text, schema,
@@ -333,6 +345,8 @@ class Review:
             tasks=sorted(k for k in set(stored) if k in by_key or k in labels),
             ids=[c.get("id") for c in packet.candidates if isinstance(c, Mapping)],
             document="" if document is None else _printable(document),
+            inputs=inputs,
+            texts=texts,
         )
         if layout is not None:
             doc.kind = "pdf"
@@ -406,7 +420,7 @@ class Review:
         settled: set[str] = set()
         try:  # an answer to a calibrate task settles no slot
             resolution, _ = resolve(pk, doc.packet, doc.schema, policy, logs,
-                                    layout=doc.layout)  # fmt: skip
+                                    layout=doc.layout, model_texts=doc.inputs)  # fmt: skip
         except (AnswerError, PacketError, ValueError):
             resolution = {"slots": []}  # a bad log settles nothing; resolve names it
         for s in resolution["slots"]:
@@ -480,11 +494,15 @@ class Review:
             "item": task["item"],
             "question": task["question"],
             # the question of a calibrate task holds the description already
-            "definition": None if label else doc.schema.fields[slot.field].description,
+            "definition": None
+            if label or tk in doc.texts
+            else doc.schema.fields[slot.field].description,
             "parts": task["parts"],
             "choices": choices,
             "answered": mine[-1].get("verdict") if mine else None,
             "label": label,
+            # a model text task (§7): each statement with its cited text and its marks
+            "statements": statement_views(doc.texts[tk], u.text) if tk in doc.texts else None,
             "view": self._source(doc, task, places),
         }
 
@@ -865,6 +883,8 @@ class Review:
         verdict = body.get("verdict")
         if tk in doc.labels:
             raise Refused(400, "a calibrate task takes no correction")
+        if tk in doc.texts:
+            raise Refused(400, "a model text task takes no correction")
         if not isinstance(verdict, str) or verdict not in CORRECTIONS:
             raise Refused(400, "the verdict must be correct or adjust_span")
         candidate = self._candidate(doc, slot, task, body)
@@ -905,6 +925,8 @@ class Review:
             raise Refused(400, "the verdict is not an answer verdict")
         if tk in doc.labels and verdict in CORRECTIONS:
             raise Refused(400, "a calibrate task takes no correction")
+        if tk in doc.texts and verdict != "confirm":
+            raise Refused(400, "an answer to a model text task has the verdict confirm")
         candidate = None
         kept = body.get("codes_kept") or []
         for name in ("keys", "ms"):
@@ -920,7 +942,7 @@ class Review:
             "decision": body.get("decision"),
             "candidate": candidate,
             "codes_kept": kept,
-            "statements": None,
+            "statements": body.get("statements") if tk in doc.texts else None,
             "nodes": None,
             "reason_seen": body.get("reason_seen"),
             "keys": body.get("keys"),

@@ -50,6 +50,7 @@ KINDS = (
     "resolution@1",
     "document@1",
     "source@1",
+    "model-text@1",
 )
 # §8 rule 3: the kinds that ``forget`` removes. The run record goes too if a line holds text.
 REMOVED = frozenset(
@@ -63,6 +64,7 @@ REMOVED = frozenset(
         "prompt@1",
         "reply@1",
         "admission@1",
+        "model-text@1",
     }
 )
 # The objects of a run record: the member of a line, and the kind in the record and the store.
@@ -1103,6 +1105,14 @@ def forget_packet(
             # The objects that cannot be read are "unchecked", so the user can see them.
             unchecked += [(kind or "object", n) for n, kind in objects.unread()]
     plan += [(kind, k, False) for kind, k in named]
+    # A model text of the packet can quote the document (review.md §7, #531), so it goes in
+    # each mode, as a text kind does. Only the object itself names its packet, so the keys
+    # come from the list of store objects.
+    for k in sorted(objects.of("model-text@1")):
+        with suppress(StoreError, ValueError, RecursionError):
+            given = objects.json("model-text@1", k)
+            if isinstance(given, dict) and given.get("packet") == packet:
+                plan.append(("model-text@1", k, True))
     for k in _keys(obj["reading"]):
         plan.append((_reading_kind(objects, k), k, False))
         if objects.kinds.get(k) in READINGS:

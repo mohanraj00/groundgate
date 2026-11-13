@@ -35,6 +35,7 @@ from typing import Any
 
 from ..escape import escape
 from ..model import PacketError
+from .model_text import all_model_texts
 from .resolve import Seen, resolve
 from .tasks import DEFAULT_POLICY, check_policy, checked_packet
 
@@ -55,6 +56,9 @@ class _Tally:
     moved: int = 0
     moves: list[int] = field(default_factory=list)
     ocr: dict[str, list[tuple[int, bool]]] = field(default_factory=dict)  # group -> ms, correct
+    statement_ms: list[float] = field(default_factory=list)  # model text: ms for one statement
+    unsupported: int = 0
+    statements: int = 0
 
     def out(self, item: str) -> dict[str, Any]:
         n = len(self.ms)
@@ -65,6 +69,9 @@ class _Tally:
             "agreement": [self.agree, self.pairs],
             "escapes": [self.escapes, self.audited],
         }
+        if item == "model_text":
+            found["statement_ms_median"] = _median(self.statement_ms)
+            found["unsupported"] = [self.unsupported, self.statements]
         if item in _SPANS:
             found["span_moved"] = [self.moved, n]
             found["span_move_median"] = _median(self.moves)
@@ -105,7 +112,7 @@ class Measured:
         }
 
 
-def _median(values: Sequence[int]) -> int | float | None:
+def _median(values: Sequence[float]) -> int | float | None:
     if not values:
         return None
     m = statistics.median(values)
@@ -191,6 +198,7 @@ def measures(
         raise ValueError("give the set and the split together")
     splits = read_split(store, set_name) if set_name is not None else None
     logs, skipped = _logs(store)
+    model_texts = all_model_texts(store)
     tallies: dict[str, _Tally] = {}
     by_field: dict[str, dict[str, _Tally]] = {}
     packets = other_split = no_split = 0
@@ -208,7 +216,7 @@ def measures(
                 skipped.append(f"packet {pk}: the receipt does not match its inputs")
                 continue
             resolution, _ = resolve(pk, packet, schema, checked, logs[pk], layout=layout,
-                                    seen=seen)  # fmt: skip
+                                    seen=seen, model_texts=model_texts.get(pk, ()))  # fmt: skip
             ocr = _ocr(store, packet)
         except (PacketError, StoreError, ValueError) as exc:  # untrusted input: name it
             skipped.append(f"packet {pk}: {_printable(str(exc))}")
@@ -248,6 +256,11 @@ def _count(
                       by_field.setdefault(item, {}).setdefault(name, _Tally())):  # fmt: skip
                 t.ms.append(s.record["ms"])
                 t.one_key += s.record["keys"] == 1
+                if item == "model_text":  # §10: the time for each statement
+                    verdicts = [v["verdict"] for v in s.record["statements"]]
+                    t.statement_ms.append(s.record["ms"] / len(verdicts))
+                    t.statements += len(verdicts)
+                    t.unsupported += verdicts.count("unsupported")
                 if ocr:
                     group = "doubt" if "READ_DOUBT" in s.task["codes"] else "other"
                     t.ocr.setdefault(group, []).append(
@@ -316,6 +329,11 @@ def lines(measured: Measured) -> list[str]:
             f"agreement with blind labels {_ratio(m['agreement'])}",
             f"escapes {_ratio(m['escapes'])} audit slots",
         ]
+        if "unsupported" in m:
+            each = m["statement_ms_median"]
+            parts.append("median time for a statement "
+                         + ("none" if each is None else f"{each:.0f} ms"))  # fmt: skip
+            parts.append(f"unsupported {_ratio(m['unsupported'])} statements")
         if "span_moved" in m:
             move = m["span_move_median"]
             parts.append(f"span moved {_ratio(m['span_moved'])}")

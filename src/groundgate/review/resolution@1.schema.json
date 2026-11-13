@@ -58,7 +58,7 @@
           "items": { "type": "integer", "minimum": 0 }
         },
         "status": {
-          "description": "admitted: the value of the gate, with no task or with an audit that does not remove it. confirmed, chosen, corrected: the value of the person. not_in_document, rejected, open, disputed: no value.",
+          "description": "admitted: the value of the gate, with no task or with an audit that does not remove it. confirmed, chosen, corrected: the value of the person. not_in_document, rejected, open, disputed: no value. The slot of a model text is open, disputed or confirmed: confirmed gives statements and no value.",
           "enum": [
             "admitted", "confirmed", "chosen", "corrected", "not_in_document", "rejected", "open",
             "disputed"
@@ -79,7 +79,7 @@
           "anyOf": [{ "type": "null" }, { "$ref": "#/$defs/key" }]
         },
         "statements": {
-          "description": "Reserved for the model_text kind (section 7). null in format 1.",
+          "description": "For the slot of a model text (section 7) with the status confirmed: the verdict of each statement. Otherwise null.",
           "anyOf": [
             { "type": "null" },
             {
@@ -118,7 +118,10 @@
       "allOf": [
         {
           "if": {
-            "properties": { "status": { "enum": ["admitted", "confirmed", "chosen", "corrected"] } }
+            "properties": {
+              "status": { "enum": ["admitted", "confirmed", "chosen", "corrected"] },
+              "statements": { "type": "null" }
+            }
           },
           "then": { "properties": { "value": { "type": "string" } } },
           "else": {

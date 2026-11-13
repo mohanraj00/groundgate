@@ -22,6 +22,12 @@ from ..escape import escape
 from ..model import PacketError, Schema
 from ..read.layout import Layout
 from .labels import TEMPLATES, label_tasks
+from .model_text import (
+    STATEMENT_VERDICTS,
+    check_model_text,
+    model_text_task,
+    stored_model_texts,
+)
 from .tasks import DEFAULT_POLICY, Slot, check_policy, checked_packet, make_tasks, slots
 
 __all__ = [
@@ -156,6 +162,7 @@ def resolve(
     layout: Layout | None = None,
     correct: Correct | None = None,
     seen: list[Seen] | None = None,
+    model_texts: Sequence[tuple[str, Mapping[str, Any]]] = (),
 ) -> tuple[dict[str, Any], dict[str, dict[str, Any]]]:
     """The ``resolution@1`` object of the packet, and each task that it names by key.
 
@@ -164,7 +171,9 @@ def resolve(
     log, in log order. ``correct`` runs ``admit`` for a correction and gives the receipt and
     its store key. Without it, ``resolve`` runs ``admit`` and keeps nothing. If ``seen`` is a
     list, ``resolve`` adds a ``Seen`` for each record, in code point order of the reviewer
-    name and then in log order (``review measures`` reads them).
+    name and then in log order (``review measures`` reads them). ``model_texts`` holds each
+    ``model-text@1`` object of the packet with its store key: each one gives a task and a
+    slot after the slots of the receipt (§7).
     """
     policy = check_policy(policy)
     receipt = packet.receipt
@@ -186,6 +195,15 @@ def resolve(
         found = by_slot.get((slot.field, slot.key, slot.decisions))
         if found is not None:
             by_key[found[0]] = (slot, found[1])
+
+    texts_: list[tuple[str, Slot, dict[str, Any]]] = []  # the model text tasks
+    for mkey, obj in model_texts:
+        mt = check_model_text(obj, packet_key, packet.text, schema)
+        task_ = model_text_task(packet_key, mkey, mt, layout)
+        slot_ = Slot(mt["name"], None, ())
+        tkey_ = _store_key("task@1", task_)
+        by_key[tkey_] = (slot_, task_)
+        texts_.append((tkey_, slot_, task_))
 
     ids = [c.get("id") for c in packet.candidates if isinstance(c, Mapping)]
     latest: dict[str, dict[str, _Answer]] = {}  # task key -> reviewer -> latest answer
@@ -238,6 +256,18 @@ def resolve(
              "status": status, **value, "receipt": rkey, "task": tkey,
              "statements": None, "nodes": None}
         )  # fmt: skip
+    for tkey_, slot_, task_ in sorted(texts_, key=lambda x: (x[1].field, x[0])):
+        named[tkey_] = task_
+        status, first = _agreed(latest.get(tkey_, {}), policy)
+        verdicts = None
+        if first is not None and first.target is not None:
+            status = "confirmed"
+            verdicts = [{"statement": n, "verdict": v} for n, v in enumerate(first.target[1])]
+        out_slots.append(
+            {"field": slot_.field, "key": None, "decisions": [], "status": status,
+             "value": None, "unit": None, "evidence": None, "receipt": packet_receipt,
+             "task": tkey_, "statements": verdicts, "nodes": None}
+        )  # fmt: skip
     resolution = {
         "format": "resolution@1",
         "packet": packet_key,
@@ -276,6 +306,24 @@ def _settle(
     audit = task["mode"] == "audit"
     if audit and all(a.keeps for a in answers.values()):  # rule 7
         return "admitted", passed[0]
+    state, first = _agreed(answers, policy)
+    if first is None:
+        return state, None
+    if first.verdict in CORRECTIONS:
+        return "corrected", first.correction
+    if first.verdict == "not_in_document":
+        return "not_in_document", None
+    if audit:  # §6.3 point 3
+        return "admitted", first.decision
+    return ("confirmed" if len(task["choices"]) == 1 else "chosen"), first.decision
+
+
+def _agreed(
+    answers: Mapping[str, _Answer], policy: Mapping[str, Any]
+) -> tuple[str, _Answer | None]:
+    """The answer that settles a task under rules 2, 5 and 6 of §6.1: the first answer, in
+    reviewer order, with the target that the reviewers agree on. With no such answer, the
+    status is ``open`` or ``disputed``."""
     counted = {r: a for r, a in answers.items() if a.target is not None}  # rule 2, §6.3 point 7
     targets = {a.target for a in counted.values()}
     if not targets:
@@ -290,13 +338,41 @@ def _settle(
             return "disputed", None
         (target,) = leads
     first = next(a for r, a in sorted(counted.items()) if a.target == target)  # §6.3 point 6
-    if first.verdict in CORRECTIONS:
-        return "corrected", first.correction
-    if first.verdict == "not_in_document":
-        return "not_in_document", None
-    if audit:  # §6.3 point 3
-        return "admitted", first.decision
-    return ("confirmed" if len(task["choices"]) == 1 else "chosen"), first.decision
+    return "", first
+
+
+def _statements(
+    name: str,
+    sequence: object,
+    task_key: str,
+    slot: Slot,
+    task: dict[str, Any],
+    record: Mapping[str, Any],
+    fail: Callable[[str], AnswerError],
+) -> _Checked:
+    """Check the answer to a model text task (§7): the verdict ``confirm``, and one verdict
+    for each statement of the task, in order. An answer with only ``unsure`` does not count."""
+    if record["verdict"] != "confirm" or record["decision"] is not None:
+        raise fail("an answer to a model text task has the verdict confirm and no decision")
+    if record["candidate"] is not None or record["codes_kept"] or record["nodes"] is not None:
+        raise fail("an answer to a model text task has no candidate, code or node")
+    if record.get("field_keys") is not None:
+        raise fail("only a calibrate key task takes field_keys")
+    given = record["statements"]
+    count = task["model_text"]["statements"]
+    if not isinstance(given, list) or len(given) != count:
+        raise fail(f"the answer needs one verdict for each of the {count} statements")
+    verdicts = []
+    for n, s in enumerate(given):
+        if not isinstance(s, Mapping) or set(s) != {"statement", "verdict"}:
+            raise fail("a statement verdict has the members statement and verdict")
+        if type(s["statement"]) is not int or s["statement"] != n:
+            raise fail("the statement verdicts are not in the order of the statements")
+        if s["verdict"] not in STATEMENT_VERDICTS:
+            raise fail("a statement verdict is supported, unsupported or unsure")
+        verdicts.append(s["verdict"])
+    target = None if set(verdicts) == {"unsure"} else ("statements", tuple(verdicts))
+    return _Checked(name, sequence, task_key, slot, task, _Answer(name, "confirm", target, False))
 
 
 def _check(
@@ -336,8 +412,6 @@ def _check(
     if verdict == "wrong" and form == "answer@1":
         raise fail("the verdict wrong needs answer@2")
     field_keys = record.get("field_keys")
-    if record["statements"] is not None or record["nodes"] is not None:
-        raise fail("statements and nodes must be null in format 1")
     kept = record["codes_kept"]
     if not isinstance(kept, list) or not all(isinstance(c, str) for c in kept):
         raise fail("codes_kept is not a list of codes")
@@ -350,6 +424,10 @@ def _check(
             raise fail(f"{name_} is not an integer of 0 or more")
     if not isinstance(record["reason_seen"], bool) or not isinstance(record["time"], str):
         raise fail("reason_seen or time has the wrong type")
+    if task["item"] == "model_text":
+        return _statements(name, sequence, task_key, slot, task, record, fail)
+    if record["statements"] is not None or record["nodes"] is not None:
+        raise fail("statements and nodes are only for a model text or a structure task")
     choices = [c["decision"] for c in task["choices"]]
     decision = record["decision"]
     if verdict == "choose":
@@ -584,8 +662,9 @@ def write_resolution(
         return receipt, rkey
 
     resolution, tasks = resolve(
-        packet_key, packet, schema, checked, logs, layout=layout, correct=run
-    )
+        packet_key, packet, schema, checked, logs, layout=layout, correct=run,
+        model_texts=stored_model_texts(store, packet_key),
+    )  # fmt: skip
     for candidates, judgments, rkey in corrections:  # only after the resolution succeeds
         _, receipt = admit_packet(
             store,
@@ -621,7 +700,13 @@ def lines(resolution: Mapping[str, Any]) -> list[str]:
         name = s["field"] if s["key"] is None else f"{s['field']} [{s['key']}]"
         if seen[s["field"], s["key"]] > 1:
             name += " #" + ",".join(str(i) for i in s["decisions"])
-        if s["value"] is None:
+        if s.get("statements") is not None:
+            verdicts = [v["verdict"] for v in s["statements"]]
+            out.append(
+                f"{name}: {verdicts.count('supported')} of {len(verdicts)} statements "
+                f"supported, {verdicts.count('unsupported')} unsupported ({s['status']})"
+            )
+        elif s["value"] is None:
             out.append(f"{name}: no value ({s['status']}: {_REASONS[s['status']]})")
         else:
             unit = "" if s["unit"] is None else f" {s['unit']}"

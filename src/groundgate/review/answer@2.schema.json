@@ -84,7 +84,7 @@
       }
     },
     "statements": {
-      "description": "Reserved for the model_text kind (section 7): a verdict for each statement of the task. null in format 1.",
+      "description": "For a model_text task (section 7): a verdict for each statement of the task, in the order of the statements, with the verdict confirm. null for each other task.",
       "anyOf": [
         {
           "type": "null"

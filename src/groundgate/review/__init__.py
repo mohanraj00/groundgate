@@ -15,7 +15,7 @@ from typing import Any
 
 __all__ = ["FORMATS", "format_schema"]
 
-FORMATS = ("review-policy@1", "task@1", "answer@1", "answer@2", "resolution@1")
+FORMATS = ("review-policy@1", "task@1", "answer@1", "answer@2", "resolution@1", "model-text@1")
 
 
 def format_schema(name: str) -> dict[str, Any]:
