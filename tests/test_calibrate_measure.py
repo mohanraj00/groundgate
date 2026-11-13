@@ -209,9 +209,9 @@ def test_a_value_is_right_only_under_its_own_key(tmp_path: Path) -> None:
 
 @pytest.mark.parametrize(
     ("label", "message"),
-    [("10", "has keys"), ({"overnight": "10"}, "names the key"),
-     ({"Standard": "10", "standard": "10"}, "names the key")],
-    ids=["plain", "unknown-key", "twice"],
+    [("10", "has keys"), ({"overnight": "10"}, "is not a key"),
+     ({"Standard": "10"}, "is not a key")],
+    ids=["plain", "unknown-key", "other-case"],
 )  # fmt: skip
 def test_a_bad_keyed_label_is_refused(tmp_path: Path, label: Any, message: str) -> None:
     src = _copy(CASES[0], tmp_path)
@@ -220,9 +220,45 @@ def test_a_bad_keyed_label_is_refused(tmp_path: Path, label: Any, message: str) 
         _run(src, tmp_path / "out")
 
 
-def test_an_admitted_value_under_a_key_with_no_label_is_counted(tmp_path: Path) -> None:
+def test_an_admitted_value_with_no_label_stops_a_measured_route(tmp_path: Path) -> None:
+    """t6 admits a rate under express. With no label for express, nothing says that the value
+    is right, so the route is not measured, at any bound."""
     src = _copy(CASES[0], tmp_path)
     _edit(src / "gold" / "labels.json", lambda o: o["labels"]["t6"].update(rate={"standard": None}))
-    _run(src, tmp_path / "out")
+    _run(src, tmp_path / "out", target="1")
     report = json.loads((tmp_path / "out" / "report.json").read_text(encoding="utf-8"))
-    assert report["fields"]["rate"]["unscored_admitted"] == 1
+    checked = report["fields"]["rate"]["routes"]["checked"]
+    assert (checked["admitted"], checked["unscored"], checked["status"]) == (1, 1, "draft")
+    assert report["fields"]["total"]["routes"]["checked"]["status"] == "measured"
+
+
+def test_a_threshold_that_clears_a_value_with_no_label_does_not_pass(tmp_path: Path) -> None:
+    """Without the standard label of c1, the threshold 0.7 has 2 cleared values, no error and
+    the bound 0.7764. It also clears the value of c1, which no label covers. So it fails."""
+    src = _copy(CASES[0], tmp_path)
+    _edit(src / "gold" / "labels.json", lambda o: o["labels"]["c1"].update(rate={"express": None}))
+    _run(src, tmp_path / "out", target="0.8")
+    point = json.loads((tmp_path / "out" / "report.json").read_text(encoding="utf-8"))[
+        "operating_point"
+    ]
+    row = next(t for t in point["tried"] if t["threshold"] == 0.7)
+    assert (row["admitted"], row["errors"], row["bound"], row["unscored"]) == (2, 0, "0.7764", 1)
+    assert not row["passes"] and point["KEY_NOT_AT_VALUE"] is None
+
+
+def test_two_schema_keys_with_one_fold_stay_apart() -> None:
+    """The gate keeps the keys Maße and Masse apart, so the measure does too."""
+    assert measure._units("d", "f", {"Maße": "20"}, ("Maße", "Masse")) == {"Maße": "20"}
+    both = {"Maße": "20", "Masse": "30"}
+    assert measure._units("d", "f", both, ("Maße", "Masse")) == both
+    text = "Masse\nThe size is 20 mm.\n"
+    cand = {"id": "c", "field": "size", "value": 20, "unit": "mm", "key": "Masse",
+            "evidence": [{"start": 18, "end": 23, "text": "20 mm"}]}  # fmt: skip
+    profile = {"groundgate_profile": 1, "id": "sizes-test", "version": "1.0.0",
+               "schema": {"fields": {"size": {"type": "integer", "unit": "mm",
+                                              "keys": ["Maße", "Masse"]}}}}  # fmt: skip
+    gold = measure.Gold(
+        {"d": measure.GoldDoc("d", text, [cand], None, {"size": {"Maße": "20"}})}, "sha256:0"
+    )
+    s = measure.score(profile, gold, ["d"])["size"]
+    assert (s.routes["checked"].admitted, s.routes["checked"].unscored, s.missed) == (0, 1, 1)

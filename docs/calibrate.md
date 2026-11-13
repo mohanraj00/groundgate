@@ -246,8 +246,8 @@ the same value, so `40` and `40.0` are equal. For each other field type, the tex
 equal. Null says that the document has no value for the field. For a field with `keys`, the
 label is an object from a key of the schema to a value or null. A value is right only under its
 own key, so the value of `express` under the key `standard` is an error. A field or a key that a
-document does not list is not scored. The report counts each admitted value under a key with no
-label as `unscored_admitted`. Each label must come from a person who did not see the decisions.
+document does not list is not scored. A label key must be equal to a key of the schema, with no
+change of case. Each label must come from a person who did not see the decisions.
 
 A document name starts with a letter or a digit, and then has only letters, digits, `.`, `_`
 and `-`, at most 128 characters. `labels.json` lists each document of `docs/` and no other. The
@@ -281,8 +281,10 @@ is one scored label. Then, for each field, on the test part:
   null label is an error.
 - **bound** is the one-sided 95% upper bound of the admitted error rate (Clopper-Pearson).
   With no admitted value, the bound is 1.
-- **status** is `measured` only when the route has an admitted value and the bound is below
-  the target. If not, it is `draft`.
+- **unscored** is the count of admitted values on the route that no label covers: a field or
+  a key that the labels of the document do not list, or a member field of a record.
+- **status** is `measured` only when the route has an admitted value, `unscored` is 0 and the
+  bound is below the target. If not, it is `draft`.
 - **review share** is the share of the scored labels with no admitted value and one or more
   `needs_verification` decisions.
 - **miss rate** is the share of the labels with a value that get no admitted right value.
@@ -290,7 +292,9 @@ is one scored label. Then, for each field, on the test part:
 If the policy of the profile names a judge, the command picks the operating point on the
 calibration part. It tries each `p` of the `key` judgments of that judge as
 `clear.KEY_NOT_AT_VALUE`. For each threshold it counts the `cleared` values of all fields
-together. It picks the lowest threshold whose bound is below the target. If no threshold
+together. It picks the lowest threshold whose bound is below the target.
+A threshold that clears a value with no label does not pass, so label each key that your
+extractor can propose. If no threshold
 passes, the draft profile has no clear threshold, and no value is cleared.
 With more than 100 different `p`, it rounds each `p` up to two decimal places first.
 
@@ -311,13 +315,14 @@ With more than 100 different `p`, it rounds each `p` up to two decimal places fi
  "gold_sha256": "sha256:...", "split_sha256": "sha256:...",
  "documents": {"calibration": 4, "test": 6}, "target": "0.7",
  "operating_point": {"judge": {"id": "j", "digest": "j-1"}, "KEY_NOT_AT_VALUE": 0.7,
-  "tried": [{"threshold": 0.6, "admitted": 4, "errors": 1, "bound": "0.7514", "passes": false}]},
+  "tried": [{"threshold": 0.6, "admitted": 4, "errors": 1, "bound": "0.7514",
+             "unscored": 0, "passes": false}]},
  "fields": {"total": {"scored": 6, "with_value": 6, "review": 0, "review_share": "0",
-   "missed": 2, "miss_rate": "0.3333", "unscored_admitted": 0,
+   "missed": 2, "miss_rate": "0.3333",
    "routes": {"checked": {"admitted": 5, "errors": 1, "error_rate": "0.2", "bound": "0.6574",
-                          "status": "measured"},
+                          "unscored": 0, "status": "measured"},
               "cleared": {"admitted": 0, "errors": 0, "error_rate": null, "bound": "1",
-                          "status": "draft"}}}},
+                          "unscored": 0, "status": "draft"}}}},
  "draft_profile": {"id": "rates-test", "version": "1.0.1", "sha256": "sha256:..."}}
 ```
 
@@ -328,7 +333,8 @@ The vectors of this format are in
 
 ### Limits
 
-- The measure scores the fields of the schema. It does not score the member fields of a record.
+- The measure does not score the member fields of a record. It counts each admitted member
+  value as `unscored`.
 - The operating point is only `clear.KEY_NOT_AT_VALUE`. The command does not pick
   `doubt.field_match`.
 - A small test part gives a high bound. With no error, a bound below 0.05 needs 59 admitted

@@ -21,18 +21,19 @@
      "bound": "0.7764",
      "error_rate": "0",
      "errors": 0,
-     "status": "draft"
+     "status": "draft",
+     "unscored": 0
     },
     "cleared": {
      "admitted": 2,
      "bound": "0.9747",
      "error_rate": "0.5",
      "errors": 1,
-     "status": "draft"
+     "status": "draft",
+     "unscored": 0
     }
    },
    "scored": 7,
-   "unscored_admitted": 0,
    "with_value": 6
   },
   "total": {
@@ -46,18 +47,19 @@
      "bound": "0.6574",
      "error_rate": "0.2",
      "errors": 1,
-     "status": "measured"
+     "status": "measured",
+     "unscored": 0
     },
     "cleared": {
      "admitted": 0,
      "bound": "1",
      "error_rate": null,
      "errors": 0,
-     "status": "draft"
+     "status": "draft",
+     "unscored": 0
     }
    },
    "scored": 6,
-   "unscored_admitted": 0,
    "with_value": 6
   }
  },
@@ -75,28 +77,32 @@
     "bound": "0.7514",
     "errors": 1,
     "passes": false,
-    "threshold": 0.6
+    "threshold": 0.6,
+    "unscored": 0
    },
    {
     "admitted": 3,
     "bound": "0.6316",
     "errors": 0,
     "passes": true,
-    "threshold": 0.7
+    "threshold": 0.7,
+    "unscored": 0
    },
    {
     "admitted": 2,
     "bound": "0.7764",
     "errors": 0,
     "passes": false,
-    "threshold": 0.9
+    "threshold": 0.9,
+    "unscored": 0
    },
    {
     "admitted": 1,
     "bound": "0.95",
     "errors": 0,
     "passes": false,
-    "threshold": 0.95
+    "threshold": 0.95,
+    "unscored": 0
    }
   ]
  },

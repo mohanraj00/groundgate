@@ -17,7 +17,7 @@ The gold set (format 1) is a directory:
 A label value is the canonical value of the receipt, as a string. Null says that the document
 has no value for the field. For a field with keys, the label is an object {key: value or null},
 and a value is right only under its own key. A field or a key that a document does not list is
-not scored.
+not scored. A route or a threshold with an admitted value that has no label is not measured.
 
 The split file (format 1) is {"groundgate_split": 1, "documents": {doc: part}}, where a part is
 "calibration" or "test". The calibration part picks the judge threshold, and the test part gives
@@ -110,11 +110,6 @@ def _is_value(v: object) -> bool:
 
 def _is_keyed(v: object) -> bool:
     return isinstance(v, dict) and bool(v) and all(_is_value(x) for x in v.values())
-
-
-def _key(k: str) -> str:
-    """A key as the gate compares it: casefolded, with each whitespace run as one space."""
-    return " ".join(k.split()).casefold()
 
 
 def _sha(data: bytes) -> str:
@@ -221,6 +216,13 @@ def _same(value: str | None, label: str, numeric: bool) -> bool:
 class Route:
     admitted: int = 0
     errors: int = 0
+    unscored: int = 0  # admitted values that no label covers
+
+    def passes(self, target: Decimal) -> bool:
+        """True when the route has an admitted value, each admitted value has a label, and the
+        bound is below the target."""
+        bound = Decimal(str(upper_95(self.errors, self.admitted)))
+        return self.admitted > 0 and self.unscored == 0 and bound < target
 
     def summary(self, target: Decimal) -> dict[str, Any]:
         bound = upper_95(self.errors, self.admitted)
@@ -229,7 +231,8 @@ class Route:
             "errors": self.errors,
             "error_rate": _rate(self.errors, self.admitted),
             "bound": _decimal(bound),
-            "status": "measured" if self.admitted and Decimal(str(bound)) < target else "draft",
+            "unscored": self.unscored,
+            "status": "measured" if self.passes(target) else "draft",
         }
 
 
@@ -239,7 +242,6 @@ class FieldScore:
     with_value: int = 0
     review: int = 0
     missed: int = 0
-    unscored_admitted: int = 0
     routes: dict[str, Route] = field(default_factory=lambda: {r: Route() for r in ROUTES})
 
 
@@ -264,15 +266,12 @@ def _units(doc: str, name: str, label: Any, keys: tuple[str, ...] | None) -> dic
         raise MeasureError(
             f"{doc}: {name!r} has keys, so its label is an object from a key to a string or null"
         )
-    allowed = {_key(k) for k in keys}
-    out: dict[str | None, Any] = {}
-    for k, v in label.items():
-        if _key(k) not in allowed or _key(k) in out:
-            raise MeasureError(
-                f"{doc}: the label of {name!r} names the key {k!r} (not a key, or twice)"
-            )
-        out[_key(k)] = v
-    return out
+    for k in label:
+        # the gate admits a candidate only with a key that is equal to a schema key (SPEC §3.1),
+        # so a label key is compared in the same way: with no fold
+        if k not in keys:
+            raise MeasureError(f"{doc}: the label of {name!r} names {k!r}, which is not a key")
+    return dict(label)
 
 
 def score(profile: Mapping[str, Any], gold: Gold, docs: Sequence[str]) -> dict[str, FieldScore]:
@@ -294,14 +293,16 @@ def score(profile: Mapping[str, Any], gold: Gold, docs: Sequence[str]) -> dict[s
             raise MeasureError(f"{name}: the gate refused the packet: {e}") from None
         by_unit: dict[tuple[str, str | None], list[Any]] = {}
         for d in receipt.decisions:
-            if d.field not in units or d.record is not None:
+            if d.field not in out:
                 continue
-            keyed = resolved[d.field].keys is not None
-            k = (_key(d.key) if isinstance(d.key, str) else "") if keyed else None
-            if k in units[d.field]:
+            k = d.key if resolved[d.field].keys is not None else None
+            if d.record is None and d.field in units and k in units[d.field]:
                 by_unit.setdefault((d.field, k), []).append(d)
             elif d.outcome == "admitted":
-                out[d.field].unscored_admitted += 1  # a key that the labels do not list
+                # no label can say if this value is right: a field or a key that the labels of
+                # the document do not list, or a member field of a record
+                route = "cleared" if "MODEL_CLEARED" in d.codes else "checked"
+                out[d.field].routes[route].unscored += 1
         for f, by_key in units.items():
             s = out[f]
             for k, label in by_key.items():
@@ -371,18 +372,22 @@ def operating_point(
     profile: Mapping[str, Any], gold: Gold, docs: Sequence[str], target: Decimal
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     """Pick the lowest clear.KEY_NOT_AT_VALUE whose pooled ``cleared`` bound on ``docs`` is
-    below ``target``. Give the profile at that point and the row of each threshold tried."""
+    below ``target``. A threshold that clears a value with no label does not pass. Give the
+    profile at that point and the row of each threshold tried."""
     tried: list[dict[str, Any]] = []
     chosen: float | None = None
     for t in _thresholds(profile, gold, docs):
         scores = score(_clear(profile, t), gold, docs)
-        admitted = sum(s.routes["cleared"].admitted for s in scores.values())
-        errors = sum(s.routes["cleared"].errors for s in scores.values())
-        bound = upper_95(errors, admitted)
-        ok = admitted > 0 and Decimal(str(bound)) < target
+        pooled = Route(
+            sum(s.routes["cleared"].admitted for s in scores.values()),
+            sum(s.routes["cleared"].errors for s in scores.values()),
+            sum(s.routes["cleared"].unscored for s in scores.values()),
+        )
+        ok = pooled.passes(target)
         tried.append(
-            {"threshold": t, "admitted": admitted, "errors": errors, "bound": _decimal(bound),
-             "passes": ok}
+            {"threshold": t, "admitted": pooled.admitted, "errors": pooled.errors,
+             "bound": _decimal(upper_95(pooled.errors, pooled.admitted)),
+             "unscored": pooled.unscored, "passes": ok}
         )  # fmt: skip
         if ok and chosen is None:
             chosen = t
@@ -432,7 +437,6 @@ def measure(
             "review_share": _rate(s.review, s.scored),
             "missed": s.missed,
             "miss_rate": _rate(s.missed, s.with_value),
-            "unscored_admitted": s.unscored_admitted,
             "routes": routes,
         }
         for r, sm in routes.items():
