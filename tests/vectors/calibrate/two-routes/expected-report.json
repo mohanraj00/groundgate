@@ -1,0 +1,109 @@
+{
+ "date": "2026-11-13",
+ "documents": {
+  "calibration": 4,
+  "test": 6
+ },
+ "draft_profile": {
+  "id": "rates-test",
+  "sha256": "sha256:d2515c67f01083a2731d1ebc41d605b865336a6ef622e07b7d6b4713ffa35b3e",
+  "version": "1.0.1"
+ },
+ "fields": {
+  "rate": {
+   "miss_rate": "0.4",
+   "missed": 2,
+   "review": 1,
+   "review_share": "0.1667",
+   "routes": {
+    "checked": {
+     "admitted": 2,
+     "bound": "0.7764",
+     "error_rate": "0",
+     "errors": 0,
+     "status": "draft"
+    },
+    "cleared": {
+     "admitted": 2,
+     "bound": "0.9747",
+     "error_rate": "0.5",
+     "errors": 1,
+     "status": "draft"
+    }
+   },
+   "scored": 6,
+   "with_value": 5
+  },
+  "total": {
+   "miss_rate": "0.3333",
+   "missed": 2,
+   "review": 0,
+   "review_share": "0",
+   "routes": {
+    "checked": {
+     "admitted": 5,
+     "bound": "0.6574",
+     "error_rate": "0.2",
+     "errors": 1,
+     "status": "measured"
+    },
+    "cleared": {
+     "admitted": 0,
+     "bound": "1",
+     "error_rate": null,
+     "errors": 0,
+     "status": "draft"
+    }
+   },
+   "scored": 6,
+   "with_value": 6
+  }
+ },
+ "gold_sha256": "sha256:d434a73b41817fc23e922624b755fa347afa262030aa2cc6ef9c7a0608147680",
+ "groundgate_calibration_report": 1,
+ "operating_point": {
+  "KEY_NOT_AT_VALUE": 0.7,
+  "judge": {
+   "digest": "j-1",
+   "id": "j"
+  },
+  "tried": [
+   {
+    "admitted": 4,
+    "bound": "0.7514",
+    "errors": 1,
+    "passes": false,
+    "threshold": 0.6
+   },
+   {
+    "admitted": 3,
+    "bound": "0.6316",
+    "errors": 0,
+    "passes": true,
+    "threshold": 0.7
+   },
+   {
+    "admitted": 2,
+    "bound": "0.7764",
+    "errors": 0,
+    "passes": false,
+    "threshold": 0.9
+   },
+   {
+    "admitted": 1,
+    "bound": "0.95",
+    "errors": 0,
+    "passes": false,
+    "threshold": 0.95
+   }
+  ]
+ },
+ "profile": {
+  "id": "rates-test",
+  "sha256": "sha256:9bf0a10d5ab7dafa37d40d68d1314d9032b6b0a0039ad186f7dfdf322c919021",
+  "version": "1.0.0"
+ },
+ "spec": "0.12",
+ "split_sha256": "sha256:524f2ad03c39ffd7f48a11d96da41a9a3d567de30a7ad0b2f61a9d883c573460",
+ "target": "0.7"
+}

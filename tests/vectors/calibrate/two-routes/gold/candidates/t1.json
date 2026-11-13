@@ -1,0 +1,35 @@
+[
+ {
+  "evidence": [
+   {
+    "end": 9,
+    "start": 6,
+    "text": "$90"
+   },
+   {
+    "end": 5,
+    "role": "field",
+    "start": 0,
+    "text": "Total"
+   }
+  ],
+  "field": "total",
+  "id": "t",
+  "unit": "USD",
+  "value": 90
+ },
+ {
+  "evidence": [
+   {
+    "end": 35,
+    "start": 32,
+    "text": "$10"
+   }
+  ],
+  "field": "rate",
+  "id": "r",
+  "key": "standard",
+  "unit": "USD",
+  "value": 10
+ }
+]

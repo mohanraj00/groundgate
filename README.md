@@ -404,6 +404,34 @@ document also gets a packet, and `summary.json` names its key. The
 [guide](docs/guide.md#command-line) describes missing and empty candidate files, shared policy
 and references, per-document judgments, and the batch options and summary format.
 
+### Calibrate a new document family
+
+A profile holds the terms and the thresholds of one document family
+([SPEC §4.10](SPEC.md)). `groundgate calibrate measure` measures a profile on your own gold set.
+It calls no model.
+
+1. Write a profile: the schema of your fields and, if you use a judge, its policy.
+2. Collect documents of the family. Put each text in `gold/docs/<doc>.txt`.
+3. Run your extractor one time. Record its candidates in `gold/candidates/<doc>.json`, and the
+   judgments of your judge in `gold/judgments/<doc>.json`.
+4. Label each field of each document by hand, before you look at a decision. Write the labels
+   to `gold/labels.json`.
+5. Write a split file that puts each document in the `calibration` part or the `test` part.
+6. Run the measure:
+
+   ```bash
+   groundgate calibrate measure --profile invoice.json --gold ./gold --split split.json --out run1
+   ```
+
+7. Read `run1/REPORT.md`. For each field and route, it gives the admitted error rate with its
+   upper bound, the review share and the miss rate. A route is `measured` only when its bound
+   is below the target.
+8. Read `run1/profile.json`, the draft profile change. If you agree, use it as the next version
+   of your profile.
+
+[docs/calibrate.md](docs/calibrate.md#measure-a-profile-on-your-gold-set) defines the gold set,
+the split file and the report.
+
 ## What it checks
 
 Checks run in a fixed order. The first failure rejects the fact.

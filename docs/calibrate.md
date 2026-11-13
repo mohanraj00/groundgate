@@ -211,3 +211,119 @@ question looks like this:
 
 A block for the key question has `"clear": {"KEY_NOT_AT_VALUE": t}` in place of `doubt`. To use
 both thresholds, put both in one block.
+
+## measure: a profile on your gold set
+
+`groundgate calibrate measure` gives the field measure of one profile
+([SPEC §4.10](../SPEC.md)) on a gold set that you keep
+([#640](https://github.com/mohanraj00/groundgate/issues/640)). It reads only the three inputs
+that you name, and it calls no model. A recorded run gives the candidates and the judgments as
+files.
+
+```bash
+groundgate calibrate measure --profile P --gold G --split S --out DIR \
+    [--target 0.05] [--date YYYY-MM-DD]
+```
+
+### The gold set, format 1
+
+`G` is a directory:
+
+- `G/docs/<doc>.txt`: the document text, in Unicode NFC.
+- `G/candidates/<doc>.json`: the list of the candidates that your extractor recorded.
+- `G/judgments/<doc>.json`: optional. The list of the recorded judgments of the document.
+- `G/labels.json`: the labels.
+
+```json
+{"groundgate_gold": 1,
+ "labels": {"inv-001": {"total": "90", "due_date": "2026-12-01", "rate": null}}}
+```
+
+A label is the right value of a field in one document, in the canonical form of the receipt
+`value`, as a string. Two numbers are equal when they have the same value, so `40` and `40.0`
+are equal. Null says that the document has no value for the field. A field that a document does
+not list is not scored. Each label must come from a person who did not see the decisions.
+
+A document name starts with a letter or a digit, and then has only letters, digits, `.`, `_`
+and `-`, at most 128 characters. `labels.json` lists each document of `docs/` and no other. The
+command refuses a link, a file of more than 16 MiB and a set of more than 10,000 documents.
+
+The gold set digest is `sha256` of `groundgate-gold/1:` and the canonical JSON of
+`{"groundgate_gold": 1, "files": {doc: {"text", "candidates", "judgments"}}, "labels"}`. Each
+member of `files` is the `sha256` of the bytes of that file, and `judgments` is null when the
+document has no judgment file.
+
+### The split file, format 1
+
+```json
+{"groundgate_split": 1, "documents": {"inv-001": "calibration", "inv-002": "test"}}
+```
+
+Each gold document has one part. The calibration part picks the judge threshold. The test part
+gives each number of the report. Write the split before you look at a decision, and keep it.
+At least one document must be in the test part.
+
+### What the command measures
+
+The gate decides each document with the profile. Then, for each field, on the test part:
+
+- A **route** is `cleared` when the admitted decision has `MODEL_CLEARED`, and `checked`
+  when it has not.
+- **admitted** is the count of admitted values on the route. Two candidates with one value in
+  one document are one admitted value.
+- **errors** is the count of admitted values that are not the label. An admitted value for a
+  null label is an error.
+- **bound** is the one-sided 95% upper bound of the admitted error rate (Clopper-Pearson).
+  With no admitted value, the bound is 1.
+- **status** is `measured` only when the route has an admitted value and the bound is below
+  the target. If not, it is `draft`.
+- **review share** is the share of the scored labels with no admitted value and one or more
+  `needs_verification` decisions.
+- **miss rate** is the share of the labels with a value that get no admitted right value.
+
+If the policy of the profile names a judge, the command picks the operating point on the
+calibration part. It tries each `p` of the `key` judgments of that judge as
+`clear.KEY_NOT_AT_VALUE`. For each threshold it counts the `cleared` values of all fields
+together. It picks the lowest threshold whose bound is below the target. If no threshold
+passes, the draft profile has no clear threshold, and no value is cleared.
+
+### The output
+
+`DIR` gets three files. The command refuses a `DIR` that has one of them.
+
+- `report.json`: report format 1, below.
+- `REPORT.md`: the same numbers as a table.
+- `profile.json`: the draft profile change. It is the input profile with the next patch
+  version, the threshold of the operating point, one route row for each route with an admitted
+  value, and the gold set digest. The command never writes the input profile. Read the draft,
+  and then replace your profile with it if you agree.
+
+```json
+{"groundgate_calibration_report": 1, "spec": "0.12", "date": "2026-11-13",
+ "profile": {"id": "rates-test", "version": "1.0.0", "sha256": "sha256:..."},
+ "gold_sha256": "sha256:...", "split_sha256": "sha256:...",
+ "documents": {"calibration": 4, "test": 6}, "target": "0.7",
+ "operating_point": {"judge": {"id": "j", "digest": "j-1"}, "KEY_NOT_AT_VALUE": 0.7,
+  "tried": [{"threshold": 0.6, "admitted": 4, "errors": 1, "bound": "0.7514", "passes": false}]},
+ "fields": {"total": {"scored": 6, "with_value": 6, "review": 0, "review_share": "0",
+   "missed": 2, "miss_rate": "0.3333",
+   "routes": {"checked": {"admitted": 5, "errors": 1, "error_rate": "0.2", "bound": "0.6574",
+                          "status": "measured"},
+              "cleared": {"admitted": 0, "errors": 0, "error_rate": null, "bound": "1",
+                          "status": "draft"}}}},
+ "draft_profile": {"id": "rates-test", "version": "1.0.1", "sha256": "sha256:..."}}
+```
+
+A rate is a decimal string with at most 4 places, or null when there is nothing to count.
+`split_sha256` is `sha256` of `groundgate-split/1:` and the canonical JSON of the split file.
+The vectors of this format are in
+[tests/vectors/calibrate](../tests/vectors/calibrate/README.md).
+
+### Limits
+
+- The measure scores the fields of the schema. It does not score the member fields of a record.
+- The operating point is only `clear.KEY_NOT_AT_VALUE`. The command does not pick
+  `doubt.field_match`.
+- A small test part gives a high bound. With no error, a bound below 0.05 needs 59 admitted
+  values on one route.
+
