@@ -3,6 +3,87 @@
 Versions follow [SemVer](https://semver.org). A change to how any candidate is decided is a new
 spec version, and receipts name the spec version they were decided under.
 
+## 0.15.0 (2026-11-13)
+
+Spec 0.12, with no change to a reading rule for numbers. 0.15 is the first release after the
+core reading rules froze. It adds the document-family profile and its measure, three value
+kinds (`date`, `record` and `passage`), closed options, and four packet members that a reader
+or an app gives: `pin`, `places`, `completeness` and `outline`. A packet that uses none of them
+is decided as in 0.14.0 and gets the same receipt, so the spec version string stays
+`groundgate/0.12`.
+
+Known limits. I did not run a bench set for 0.15, so the numbers of 0.14 below stand: 0 escapes,
+2 rejected right values, 69 reviews and a miss rate of 60.66% (74 of 122) on the development
+split of `bench/requested4`. The profile and `calibrate measure` are the tools to lower the
+reviews for one document family, and no profile of a bench family is measured yet (#648).
+`groundgate extract` does not propose a passage, does not put the options of a field into its
+prompt, and does not give the completeness or the outline of its reading to the gate.
+
+Profiles and their measure:
+
+- A document-family profile holds the kind pack, the packs, the schema terms, the policy with
+  the judge thresholds, the route table and the gold set digest of one family. A packet can
+  give a profile in place of its schema, policy and packs, and the receipt names the profile
+  by id, version and digest. SPEC §4.10 defines the format and the checks P1 to P8 (#639).
+- `groundgate calibrate measure` measures a profile on a gold set of your own, outside the
+  repository. For each field and route it gives the admitted error rate with its one-sided 95%
+  upper bound, the review share and the miss rate. It picks an operating point for the judge
+  threshold on the calibration split and writes a draft profile, never in place (#640).
+
+Value kinds and schema members:
+
+- A `date` field has a list of formats and an optional range. SPEC §4.11 defines six formats
+  and the normal form `YYYY-MM-DD`. New codes: `DATE_OUT_OF_RANGE`, `DATE_FORMAT_UNDECLARED`
+  and the flag `DATE_AMBIGUOUS` (#612).
+- A `record` field holds an array of records, and a reference with `set` is a later document
+  of a document set. The schema member `checks` has the checks `replace`, `unique` and
+  `agree` across the documents of the set. New codes: `RECORD_INVALID`, `RECORD_NOT_ADMITTED`,
+  `RECORD_MEMBER_MISSING`, `RECORD_MEMBER_CONFLICT`, `RECORD_SOURCE_MIXED`,
+  `SET_REPLACES_NOTHING`, `SET_DUPLICATE` and `SET_CONFLICT` (#613).
+- A `passage` field holds a citable section of the document: a heading and the text under it.
+  The gate admits it only when the cited span is exactly the section and the heading has the
+  label. The reader gives the headings in the packet member `outline`. New codes:
+  `PASSAGE_NOT_AT_HEADING`, `PASSAGE_LABEL_MISMATCH`, `PASSAGE_CUT_SHORT` and `PASSAGE_OVERRUN`.
+  Each decision of a passage field has `passage_sha256` (#638).
+- A `string` field can give `options`, a closed list of values. A value that is not an option
+  is `OPTION_INVALID`. The value must still be in the cited text (#530).
+
+Packet members from a reader or an app:
+
+- `pin` names the source of the document: its URL, the digest of its bytes, the day of
+  retrieval and the edition. The receipt holds the pin and its digest, and `store check`
+  compares the digest with the source bytes in the store. `groundgate store pin` writes a pin
+  (#616).
+- `places` gives the page and the box of each word. Each decision then has a `locator`: the
+  page and the box of its cited text. Each coordinate is an integer in hundredths of a PDF
+  point, so the receipt and the export have no float. `admit --layout` and `admit --locate`
+  make the places from a layout (#614).
+- `completeness` says if the reading is `complete`, `partial` or `no_text`, and lists each
+  page that gave no text with a reason. With `partial` or `no_text`, a quote of the document
+  that does not occur gets `SOURCE_NOT_READ` in place of `QUOTE_NOT_FOUND`. `read` gives the
+  completeness of each reading, and `admit --store --reading` gives it to the gate (#615).
+
+The export and the review step:
+
+- `facts@1` has four new optional members: `citation.locator`, `citation.passage_sha256`,
+  `record` with `replaced` on a fact of a member field (#659), and `completeness` at the top
+  level. A fact that has none of them keeps its bytes.
+- The review step takes a model text input. A person says for each statement if the source
+  supports it. The core never admits model text (#531).
+- A field with options gives the review item kind `closed_set`. The page shows the option
+  list, and the task takes no correction (#530).
+
+Other changes:
+
+- The store contract is a set of 46 language-agnostic vectors in `conformance/store/` (#653).
+- `qualifiers` reads each window of a long table sentence one time. Before, a table with a
+  value on each row took time in the square of the rows (#346).
+- SPEC §4.3 now states the per-unit rule as the gate reads it: a per-unit is not followed by
+  an ASCII letter or by one of the four letters with a fold of their own. No decision changes
+  (#363).
+- The conformance suite has 212 vectors, 218 invalid packets, 24 profile vectors, 14 pin
+  vectors and 13 places vectors.
+
 ## 0.14.0 (2026-11-12)
 
 Spec 0.12. The core reading rules freeze at this version: later versions add only value kinds,
