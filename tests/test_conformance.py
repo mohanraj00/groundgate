@@ -23,7 +23,7 @@ REJECT_CODES = {
     "CANDIDATE_INVALID", "FIELD_UNKNOWN", "NULL_STRING_LITERAL", "TYPE_INVALID", "RANGE_INVALID",
     "UNIT_INVALID", "KEY_INVALID", "NO_EVIDENCE", "SPAN_INVALID", "VALUE_NOT_IN_EVIDENCE",
     "UNIT_NOT_IN_EVIDENCE", "QUOTE_NOT_FOUND", "SOURCE_REJECTED", "DATE_OUT_OF_RANGE",
-    "DATE_FORMAT_UNDECLARED", "RECORD_INVALID",
+    "DATE_FORMAT_UNDECLARED", "RECORD_INVALID", "SOURCE_NOT_READ",
 }  # fmt: skip
 FLAG_CODES = {
     "NON_VERBATIM_EVIDENCE", "QUALIFIED_VALUE", "SCALE_WORD", "KEY_NOT_AT_VALUE",
@@ -51,6 +51,7 @@ def _extra(v: dict[str, Any]) -> dict[str, Any]:
         "document_source": v.get("document_source"),
         "packs": v.get("packs") or (),
         "doubt": v.get("doubt"),
+        "completeness": v.get("completeness"),
     }
 
 
@@ -86,6 +87,7 @@ def test_vector(path: Path) -> None:
     else:
         assert "records" not in receipt
     assert receipt.get("checks") == v["expected"].get("checks")
+    assert receipt.get("completeness") == v["expected"].get("completeness")
     args = (v["document"], v["schema"], v["candidates"], v["policy"], js)
     assert gg.verify(receipt, *args, **_extra(v)).ok
 

@@ -21,6 +21,7 @@ from typing import Any, TypeGuard
 
 from ..admit import admit
 from ..canonical import SPEC_VERSION, jcs
+from ..completeness import check_completeness
 from ..escape import escape
 from ..model import PacketError, Receipt
 from . import KEY, NotFound, Store, StoreError, _canonical, key
@@ -55,9 +56,14 @@ _PACKET = (
 # A packet with a source pin has the member ``pin`` too: the key of a ``pin@1`` object (#616).
 # A packet with no pin has no member, for the same reason.
 # A packet with places has the member ``places``: the key of a ``places@1`` object (#614).
-_OPTIONAL = ("doubt", "pin", "places")
+# A packet with a completeness has the member ``completeness``: the key of a
+# ``completeness@1`` object (#615).
+_OPTIONAL = ("doubt", "pin", "places", "completeness")
 _READING = ("document", "format", "layout", "options", "reader", "source", "text")
 _READING2 = (*_READING, "warnings")
+# ``put_reading`` also writes the completeness of the reading (SPEC §4.16, #615). A reading@2
+# object of an older version has no such member.
+_READING2_FULL = ("completeness", *_READING2)
 # The reading kinds. ``put_reading`` writes ``reading@2``, which keeps the warnings of ``read``.
 READINGS = ("reading@1", "reading@2")
 
@@ -105,6 +111,7 @@ class Packet:
     doubt: list[Any] | None = None
     pin: dict[str, Any] | None = None  # the source pin of ``admit``, or None (SPEC §4.14)
     places: list[Any] | None = None  # the places of ``admit``, or None (SPEC §4.15)
+    completeness: dict[str, Any] | None = None  # of ``admit``, or None (SPEC §4.16)
 
     def inputs(self) -> dict[str, Any]:
         """The keyword arguments of ``verify`` and ``render`` after the first four."""
@@ -117,6 +124,7 @@ class Packet:
             "doubt": self.doubt,
             "pin": self.pin,
             "places": self.places,
+            "completeness": self.completeness,
         }
 
 
@@ -278,6 +286,7 @@ def put_reading(
         "layout": layout,
         "document": None if model is None else store.put("document@1", model.to_json()),
         "warnings": list(doc.warnings),
+        "completeness": doc.completeness,
     }
     return store.put("reading@2", _json(reading, "reading")), doc
 
@@ -326,7 +335,11 @@ def _stored_reading(store: Store, k: str, name: str) -> tuple[str, Any] | None:
     layout = Layout.from_dict(_get_json(store, "layout@1", obj["layout"]))
     if layout.document_sha256 != digest("document", {"text": text}):
         return None
-    return k, Extracted(text, layout, tuple(obj["warnings"]))
+    try:  # a reading with no completeness, or with a wrong one, is a miss
+        complete = check_completeness(obj.get("completeness"), text)
+    except PacketError:
+        return None
+    return k, Extracted(text, layout, tuple(obj["warnings"]), completeness=complete)
 
 
 def load_reading(store: Store, k: str) -> dict[str, Any]:
@@ -339,9 +352,14 @@ def load_reading(store: Store, k: str) -> dict[str, Any]:
         raise
     except StoreError:  # the bytes do not have this key as reading@2
         kind = "reading@1"
-    names = _READING2 if kind == "reading@2" else _READING
-    obj = _members(_get_json(store, kind, k), names, kind, k)
+    found = _get_json(store, kind, k)
+    names: tuple[str, ...] = _READING2 if kind == "reading@2" else _READING
+    if kind == "reading@2" and isinstance(found, dict) and "completeness" in found:
+        names = _READING2_FULL
+    obj = _members(found, names, kind, k)
     if kind == "reading@2":
+        if not isinstance(obj.get("completeness", {}), dict):
+            raise StoreError(f"the reading@2 object {k} member completeness is not an object")
         warnings = obj["warnings"]
         if not isinstance(warnings, list) or not all(isinstance(w, str) for w in warnings):
             raise StoreError(f"the reading@2 object {k} member warnings is not a list of strings")
@@ -370,6 +388,7 @@ def check_packet(
     doubt: Sequence[object] | None = None,
     pin: Mapping[str, Any] | None = None,
     places: Sequence[object] | None = None,
+    completeness: Mapping[str, Any] | None = None,
 ) -> Receipt:
     """Do the checks of ``admit_packet`` and return the receipt, but write nothing. If
     ``check_packet`` raises no error, ``admit_packet`` with the same inputs gives the same
@@ -387,6 +406,7 @@ def check_packet(
         doubt=doubt,
         pin=pin,
         places=places,
+        completeness=completeness,
     )[0]
 
 
@@ -404,6 +424,7 @@ def _checked(
     doubt: Sequence[object] | None,
     pin: Mapping[str, Any] | None = None,
     places: Sequence[object] | None = None,
+    completeness: Mapping[str, Any] | None = None,
 ) -> tuple[Receipt, dict[str, Any]]:
     for value, what in ((schema, "schema"), (policy, "policy")):
         if value is not None and not isinstance(value, Mapping):
@@ -421,6 +442,7 @@ def _checked(
         doubt=doubt,
         pin=pin,
         places=places,
+        completeness=completeness,
     )
     given: dict[str, Any] = {
         "schema": schema,
@@ -433,6 +455,7 @@ def _checked(
         "doubt": list(doubt) if doubt else None,
         "pin": None if pin is None else dict(pin),
         "places": None if places is None else list(places),
+        "completeness": None if completeness is None else dict(completeness),
     }
     back = json.loads(_json(given, "inputs"))
     if not _same(given, back):
@@ -449,6 +472,7 @@ def _checked(
             doubt=back["doubt"],
             pin=back["pin"],
             places=back["places"],
+            completeness=back["completeness"],
         )
         if again.to_dict() != receipt.to_dict():
             raise PacketError(
@@ -474,6 +498,7 @@ def admit_packet(
     doubt: Sequence[object] | None = None,
     pin: Mapping[str, Any] | None = None,
     places: Sequence[object] | None = None,
+    completeness: Mapping[str, Any] | None = None,
 ) -> tuple[str, Receipt]:
     """Run ``admit``, then write the text, the schema, the policy, each reference, each pack,
     the candidates, the judgments, the doubt spans, the receipt and a ``packet@1`` object.
@@ -484,7 +509,10 @@ def admit_packet(
     ``doubt`` is the ``doubt`` of ``admit``: a packet with doubt spans names a ``doubt@1``
     object. ``pin`` is the source pin of ``admit`` (SPEC §4.14): a packet with a pin names a
     ``pin@1`` object. ``places`` is the places list of ``admit`` (SPEC §4.15): a packet with
-    places names a ``places@1`` object. The store keeps canonical JSON, where the number 5.0 is
+    places names a ``places@1`` object. ``completeness`` is the completeness of ``admit``
+    (SPEC §4.16): a packet with it names a ``completeness@1`` object. ``admit_packet`` does not
+    take it from the reading: give the member ``completeness`` of the reading. The store keeps
+    canonical JSON, where the number 5.0 is
     5. If that change gives another receipt, ``admit_packet`` raises ``PacketError`` and writes
     nothing, because ``verify`` from the store would then fail."""
     receipt, given = _checked(
@@ -500,6 +528,7 @@ def admit_packet(
         doubt=doubt,
         pin=pin,
         places=places,
+        completeness=completeness,
     )
     if reading is not None:
         if not isinstance(reading, str) or not KEY.fullmatch(reading):
@@ -550,6 +579,8 @@ def _put_packet(
         packet["pin"] = put("pin@1", given["pin"])
     if given.get("places") is not None:
         packet["places"] = put("places@1", given["places"])
+    if given.get("completeness") is not None:
+        packet["completeness"] = put("completeness@1", given["completeness"])
     return put("packet@1", packet)
 
 
@@ -580,6 +611,7 @@ def load_packet(store: Store, k: str, *, layout: bool = False) -> Packet:
     doubt_key = _key_or_none(obj, "doubt", "packet") if "doubt" in obj else None
     pin_key = _key_or_none(obj, "pin", "packet") if "pin" in obj else None
     places_key = _key_or_none(obj, "places", "packet") if "places" in obj else None
+    complete_key = _key_or_none(obj, "completeness", "packet") if "completeness" in obj else None
     references = _key_list(obj, "references", "packet")
     packs = _key_list(obj, "packs", "packet")
     if not isinstance(obj["spec"], str):
@@ -623,4 +655,7 @@ def load_packet(store: Store, k: str, *, layout: bool = False) -> Packet:
         doubt=None if doubt_key is None else _get_json(store, "doubt@1", doubt_key),
         pin=None if pin_key is None else _get_json(store, "pin@1", pin_key),
         places=None if places_key is None else _get_json(store, "places@1", places_key),
+        completeness=(
+            None if complete_key is None else _get_json(store, "completeness@1", complete_key)
+        ),
     )

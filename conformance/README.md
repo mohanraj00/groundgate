@@ -16,6 +16,9 @@ Each file in `vectors/` is a complete, language-agnostic test case:
 - `expected.coverage`: the coverage findings.
 - `expected.relations` (optional): the receipt's relation results (SPEC §5), in receipt order.
   A vector without it has a schema with no relations.
+- `completeness` (optional): the packet's completeness (SPEC §4.16). `expected.completeness` is
+  then the receipt's `completeness` member. A vector without it expects a receipt with no such
+  member.
 
 Files in `profiles/` are profile vectors (SPEC §4.10). Each one has a `profile` in place of
 `schema`, `policy` and `packs`. `expected.profile` is the receipt's `profile` member, with the

@@ -14,6 +14,8 @@ REJECT = {
     "RECORD_INVALID": "The field is a member of a record field, and the candidate has no record.",
     "NO_EVIDENCE": "The candidate gives no value item and no outside evidence.",
     "SPAN_INVALID": "The evidence span is outside its text or splits a character.",
+    "SOURCE_NOT_READ": "The quoted value text does not occur in the document, and the reading "
+    "of the source is not complete.",
     "QUOTE_NOT_FOUND": "The quoted value text does not occur in the document or reference.",
     "VALUE_NOT_IN_EVIDENCE": "The value cannot be read from the cited text.",
     "UNIT_NOT_IN_EVIDENCE": "The value is in the cited text, but not with the field's unit.",

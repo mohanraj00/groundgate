@@ -1,0 +1,30 @@
+{
+ "name": "completeness-bad-complete-missing",
+ "description": "A completeness with the status complete and a missing page is invalid (SPEC §4.16).",
+ "document": "Annual fee: $90\n",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD",
+    "aliases": [
+     "Annual fee"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "completeness": {
+  "status": "complete",
+  "missing": [
+   {
+    "page": 2,
+    "reason": "ocr_off"
+   }
+  ]
+ },
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

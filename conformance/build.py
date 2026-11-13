@@ -44,12 +44,14 @@ def vector(
     export: list[dict[str, Any]] | None = None,
     records: list[dict[str, Any]] | None = None,
     checks: list[tuple[str, bool, list[str]]] | None = None,
+    completeness: dict[str, Any] | None = None,
 ) -> None:
     """``relations`` is the receipt's relation results (SPEC §5), each as (id, key, holds,
     difference, allowance), in receipt order; None when the schema has no relations. ``doubt``
     is the packet's doubt list (SPEC §2.1), each entry a quote marker with a ``confidence``.
     ``records`` is the receipt's record lines (SPEC §4.12, §5), each with the members to compare,
-    and ``checks`` the check results (SPEC §4.13) as (id, holds, records)."""
+    and ``checks`` the check results (SPEC §4.13) as (id, holds, records). ``completeness`` is
+    the packet's completeness (SPEC §4.16), and the receipt must hold the same object."""
     VECTORS.append(
         {
             "name": name,
@@ -75,6 +77,7 @@ def vector(
             "checks": None
             if checks is None
             else [{"id": i, "holds": h, "records": r} for i, h, r in checks],
+            "completeness": completeness,
         }
     )
 
@@ -7510,6 +7513,115 @@ bad_places("places-bad-boolean", "a boolean in place of the page",
            [[0, 7, True, 7200, 7200, 11400, 8400]])  # fmt: skip
 bad_places("places-bad-list", "an object in place of the list", {"words": []})
 
+# ------------------------------------------- completeness of a reading (SPEC §4.16, #615)
+# Each expected code is written by hand from §3.1 and §4.16.
+READ_DOC = "Annual fee: $90\n"
+READ_SCHEMA = {"fields": {"fee": {"type": "integer", "unit": "USD", "aliases": ["Annual fee"]}}}
+READ_FEE = c("r1", "fee", 90, "USD", [{"text": "$90"}, {"role": "field", "text": "Annual fee"}])
+NOT_READ = ("rejected", ["SOURCE_NOT_READ"])
+QUOTE_GONE = ("rejected", ["QUOTE_NOT_FOUND"])
+OCR_OFF = {"status": "partial", "missing": [{"page": 2, "reason": "ocr_off"},
+                                            {"page": 3, "reason": "ocr_off"}]}  # fmt: skip
+
+vector(
+    "completeness-01-complete",
+    "A complete reading. The receipt keeps the completeness. A quote that does not occur keeps "
+    "the code QUOTE_NOT_FOUND, because the reader read all of the source (SPEC §4.16).",
+    READ_DOC,
+    READ_SCHEMA,
+    [READ_FEE, c("r2", "fee", 95, "USD", [{"text": "$95"}], QUOTE_GONE)],
+    completeness={"status": "complete", "missing": []},
+)
+vector(
+    "completeness-02-partial",
+    "A partial reading: pages 2 and 3 are scans and OCR was off. The value on page 1 is "
+    "admitted. A quote of the document that does not occur gets SOURCE_NOT_READ, because the "
+    "quote can be on a page that gave no text. A quote of the reference that does not occur "
+    "keeps QUOTE_NOT_FOUND: the completeness is of the document (SPEC §4.16).",
+    READ_DOC,
+    READ_SCHEMA,
+    [
+        READ_FEE,
+        c("r2", "fee", 95, "USD", [{"text": "$95"}], NOT_READ),
+        c(
+            "r3",
+            "fee",
+            95,
+            "USD",
+            [{"source": "reference", "ref": "rates", "text": "$95"}],
+            QUOTE_GONE,
+        ),
+    ],
+    references=[{"id": "rates", "text": "Annual fee: $90\n", "source": None}],
+    completeness=OCR_OFF,
+)
+vector(
+    "completeness-03-no-text",
+    "A reading with no text: the only page is a scan, and OCR found no text. The document is "
+    "one line break. Each quote of the document gets SOURCE_NOT_READ (SPEC §4.16).",
+    "\n",
+    READ_SCHEMA,
+    [c("r1", "fee", 90, "USD", [{"text": "$90"}], NOT_READ)],
+    completeness={"status": "no_text", "missing": [{"page": 1, "reason": "ocr_no_text"}]},
+)
+vector(
+    "completeness-04-no-text-file",
+    "A text file with no text: the status is no_text and no page is missing. A candidate with "
+    "offsets is not a quote, so it keeps its own code (SPEC §4.16).",
+    "\n",
+    READ_SCHEMA,
+    [
+        c("r1", "fee", 90, "USD", [{"text": "$90"}], NOT_READ),
+        raw(
+            {
+                "id": "r2",
+                "field": "fee",
+                "value": 90,
+                "unit": "USD",
+                "evidence": [{"start": 0, "end": 3, "text": "$90"}],
+            },
+            ("rejected", ["SPAN_INVALID"]),
+        ),
+    ],
+    completeness={"status": "no_text", "missing": []},
+)
+for bad_name, bad_text, bad_doc, bad in (
+    ("status", "a status that is not one of the three", READ_DOC,
+     {"status": "full", "missing": []}),
+    ("member", "a member that is not status or missing", READ_DOC,
+     {"status": "complete", "missing": [], "pages": 3}),
+    ("list", "missing that is not a list", READ_DOC, {"status": "complete", "missing": None}),
+    ("reason", "a reason that is not one of the three", READ_DOC,
+     {"status": "partial", "missing": [{"page": 2, "reason": "skipped"}]}),
+    ("page", "the page 0", READ_DOC,
+     {"status": "partial", "missing": [{"page": 0, "reason": "ocr_off"}]}),
+    ("boolean", "a boolean in place of the page", READ_DOC,
+     {"status": "partial", "missing": [{"page": True, "reason": "ocr_off"}]}),
+    ("order", "a page that is not higher than the page before it", READ_DOC,
+     {"status": "partial", "missing": [{"page": 3, "reason": "ocr_off"},
+                                       {"page": 3, "reason": "ocr_off"}]}),
+    ("entry", "an entry with a member that is not page or reason", READ_DOC,
+     {"status": "partial", "missing": [{"page": 2, "reason": "ocr_off", "text": ""}]}),
+    ("complete-missing", "the status complete and a missing page", READ_DOC,
+     {"status": "complete", "missing": [{"page": 2, "reason": "ocr_off"}]}),
+    ("partial-none", "the status partial and no missing page", READ_DOC,
+     {"status": "partial", "missing": []}),
+    ("no-text-with-text", "the status no_text for a document with text", READ_DOC,
+     {"status": "no_text", "missing": []}),
+    ("complete-no-text", "the status complete for a document with no text", " \n",
+     {"status": "complete", "missing": []}),
+):  # fmt: skip
+    INVALID.append(
+        {
+            "name": f"completeness-bad-{bad_name}",
+            "description": f"A completeness with {bad_text} is invalid (SPEC §4.16).",
+            "document": bad_doc,
+            "schema": READ_SCHEMA,
+            "policy": None,
+            "completeness": bad,
+        }
+    )
+
 
 def main() -> None:
     out_dir = HERE / "vectors"
@@ -7539,6 +7651,7 @@ def main() -> None:
             **({"references": v["references"]} if v["references"] is not None else {}),
             **({"packs": v["packs"]} if v["packs"] is not None else {}),
             **({"doubt": resolve(doc, v["doubt"])} if v["doubt"] is not None else {}),
+            **({"completeness": v["completeness"]} if v["completeness"] is not None else {}),
             "candidates": cands,
             **({"judgments": v["judgments"]} if v["judgments"] is not None else {}),
             "expected": {
@@ -7548,6 +7661,7 @@ def main() -> None:
                 **({"export": v["export"]} if v["export"] is not None else {}),
                 **({"records": v["records"]} if v["records"] is not None else {}),
                 **({"checks": v["checks"]} if v["checks"] is not None else {}),
+                **({"completeness": v["completeness"]} if v["completeness"] is not None else {}),
             },
         }
         (out_dir / f"{v['name']}.json").write_text(

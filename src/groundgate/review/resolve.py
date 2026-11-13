@@ -605,6 +605,7 @@ def _admit_only(packet: Any) -> Correct:
             doubt=packet.doubt,
             pin=packet.pin,
             places=packet.places,
+            completeness=packet.completeness,
         ).to_dict()
         return receipt, _store_key("receipt@1", receipt)
 
@@ -683,6 +684,7 @@ def write_resolution(
             doubt=packet.doubt,
             pin=packet.pin,
             places=packet.places,
+            completeness=packet.completeness,
         )
         if _store_key("receipt@1", receipt.to_dict()) != rkey:
             raise PacketError("a correction gave another receipt in the store")

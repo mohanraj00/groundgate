@@ -145,8 +145,9 @@ def test_the_store_keeps_the_places_and_the_export_gives_the_locator(
         reading, doc = put_reading(store, pdf)
         assert doc.layout is not None
         places = layout_places(doc.layout)
+        # the command below takes the completeness from the reading, so give it here too
         k, receipt = admit_packet(store, doc.text, FEE_SCHEMA, _fee(doc.text), reading=reading,
-                                  places=places)  # fmt: skip
+                                  places=places, completeness=doc.completeness)  # fmt: skip
         packet = load_packet(store, k)
         assert packet.places == places
         assert gg.verify(packet.receipt, packet.text, packet.schema, packet.candidates,

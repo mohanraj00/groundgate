@@ -1,0 +1,25 @@
+{
+ "name": "completeness-bad-list",
+ "description": "A completeness with missing that is not a list is invalid (SPEC §4.16).",
+ "document": "Annual fee: $90\n",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD",
+    "aliases": [
+     "Annual fee"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "completeness": {
+  "status": "complete",
+  "missing": null
+ },
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

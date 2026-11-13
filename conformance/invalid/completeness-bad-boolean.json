@@ -1,0 +1,30 @@
+{
+ "name": "completeness-bad-boolean",
+ "description": "A completeness with a boolean in place of the page is invalid (SPEC §4.16).",
+ "document": "Annual fee: $90\n",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD",
+    "aliases": [
+     "Annual fee"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "completeness": {
+  "status": "partial",
+  "missing": [
+   {
+    "page": true,
+    "reason": "ocr_off"
+   }
+  ]
+ },
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

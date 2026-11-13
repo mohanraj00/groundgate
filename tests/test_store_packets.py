@@ -164,6 +164,7 @@ def test_the_packet_names_each_input(tmp_path: Path) -> None:
             "doubt": None,
             "pin": None,
             "places": None,
+            "completeness": None,
         }
         check = gg.verify(
             found.receipt, found.text, found.schema, found.candidates, **found.inputs()
@@ -498,6 +499,7 @@ def test_a_reading_at_1_never_hits_the_reading_cache(
         k, _ = put_reading(store, source)
         obj = json.loads(store.get("reading@2", k))
         del obj["warnings"]
+        del obj["completeness"]  # a reading@1 has no completeness (#615)
         old = store.put("reading@1", jcs({**obj, "format": "reading@1"}).encode())
         store.forget(k, "test")
         rebuild(store)

@@ -1,0 +1,26 @@
+{
+ "name": "completeness-bad-member",
+ "description": "A completeness with a member that is not status or missing is invalid (SPEC §4.16).",
+ "document": "Annual fee: $90\n",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD",
+    "aliases": [
+     "Annual fee"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "completeness": {
+  "status": "complete",
+  "missing": [],
+  "pages": 3
+ },
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

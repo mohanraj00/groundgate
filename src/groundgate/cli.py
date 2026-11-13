@@ -131,6 +131,11 @@ def _parser() -> argparse.ArgumentParser:
     x.add_argument("--layout", help="also write page and word boxes (PDF only) as JSON")
     x.add_argument("--pages", type=_pages, help="PDF pages to read, e.g. 1-12,15")
     x.add_argument(
+        "--completeness",
+        metavar="FILE",
+        help="also write the completeness of the reading as JSON (SPEC §4.16)",
+    )
+    x.add_argument(
         "--ocr",
         action="store_true",
         help="OCR a PDF page with no text layer (needs groundgate[ocr] and tesseract)",
@@ -171,6 +176,12 @@ def _parser() -> argparse.ArgumentParser:
         p.add_argument("--references", help="JSON array of references (SPEC §2.1)")
         p.add_argument("--document-source", help="the URL of the document (SPEC §2.1)")
         p.add_argument("--pin", metavar="FILE", help="the source pin of the document (SPEC §4.14)")
+        p.add_argument(
+            "--completeness",
+            metavar="FILE",
+            help="the completeness of the reading, from read --completeness (SPEC §4.16). "
+            "With --store and --reading, admit takes it from the reading",
+        )
         p.add_argument(
             "--pack",
             action="append",
@@ -523,6 +534,7 @@ def main(argv: list[str] | None = None) -> int:
             "document_source": args.document_source,
             "packs": [load_pack(f) for f in args.pack],
             "pin": _json(args.pin) if args.pin else None,
+            "completeness": _json(args.completeness) if args.completeness else None,
         }
         if args.layout and args.command in ("admit", "verify"):
             extra["places"] = _layout_places(_json(args.layout), text)
@@ -570,6 +582,8 @@ def _admit_inputs(parser: argparse.ArgumentParser, args: argparse.Namespace) -> 
             parser.error("batch admit cannot use --reading")
         if args.pin is not None:
             parser.error("batch admit cannot use --pin: a pin is for one document")
+        if args.completeness is not None:
+            parser.error("batch admit cannot use --completeness: it is for one document")
         if args.layout is not None or args.locate:
             parser.error("batch admit cannot use --layout or --locate")
     elif not all(value is not None for value in single):
@@ -597,6 +611,7 @@ def _verify_inputs(parser: argparse.ArgumentParser, args: argparse.Namespace) ->
             ("--references", args.references is not None),
             ("--document-source", args.document_source is not None),
             ("--pin", args.pin is not None),
+            ("--completeness", args.completeness is not None),
             ("--layout", args.command == "verify" and args.layout is not None),
             ("--pack", bool(args.pack)),
         )
@@ -660,6 +675,11 @@ def _admit_store(
             extra = {**extra, "places": layout_places(
                 Layout.from_dict(json.loads(store.get("layout@1", found)))
             )}  # fmt: skip
+        if args.reading is not None and extra.get("completeness") is None:
+            from .store.packets import load_reading
+
+            # a partial reading must not look complete to the gate (#615)
+            extra = {**extra, "completeness": load_reading(store, args.reading).get("completeness")}
         packet, receipt = admit_packet(
             store,
             text,
@@ -1129,6 +1149,8 @@ def _read(args: argparse.Namespace) -> int:
 
     for w in doc.warnings:  # a cached reading is untrusted
         print(f"groundgate: warning: {escape(w)}", file=sys.stderr)
+    if args.completeness:
+        Path(args.completeness).write_text(json.dumps(doc.completeness) + "\n", encoding="utf-8")
     if args.layout:
         if doc.layout is None:
             print("groundgate: --layout needs a PDF", file=sys.stderr)

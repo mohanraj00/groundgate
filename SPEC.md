@@ -81,6 +81,12 @@ default is `[]`. Other keys, or a malformed entry, make the packet invalid. Thes
 of the `doubt` member of `document@1`, so an app copies that member as it is. `doubt_sha256` is
 the digest of kind `doubt` over `{"doubt": <list>}`.
 
+A packet may also carry **completeness** (#615): the statement of the reader that the text is
+the complete reading of the source, or that parts of the source gave no text (§4.16). With
+`partial` or `no_text`, a quote of the document that does not occur gets the code
+`SOURCE_NOT_READ` (§3.1). It changes no other decision. A malformed completeness makes the
+packet invalid.
+
 ### 2.2 Offsets
 
 A **span** is `{"start": s, "end": e}`: zero-based, half-open **UTF-8 byte** offsets into the
@@ -409,7 +415,8 @@ The value item's **text** is the document, or its reference. The checks read tha
 | Step | Code | Rejects when |
 |---:|---|---|
 | 9 | `SPAN_INVALID` | The value item's span, or `search_region`, is not a valid span (§2.2). |
-| 9a | `QUOTE_NOT_FOUND` | The value item is a quote, and it does not occur in the text (§4.6). |
+| 9a | `SOURCE_NOT_READ` | The value item is a quote of the document, it does not occur in the text (§4.6), and the completeness of the packet has the status `partial` or `no_text` (§4.16). |
+| 9a | `QUOTE_NOT_FOUND` | The value item is a quote, it does not occur in the text (§4.6), and `SOURCE_NOT_READ` does not apply. |
 | 10 | `VALUE_NOT_IN_EVIDENCE` | No number token (§4.1) in the span equals `value` by one of its derived values (§4.6), and no part is missing (below), and the sign is not dropped (below). For `string` fields: the whitespace-normalised value is not a substring of the whitespace-normalised span text. For `date` fields: no date mention in the span gives `value` in any format of §4.11. |
 | 10 | `DATE_FORMAT_UNDECLARED` | On a `date` field, no date mention in the span gives `value` in a format of the field, and a mention gives `value` in another format of §4.11. |
 | 11 | `UNIT_NOT_IN_EVIDENCE` | The field has a unit, and no matching number token in the span has that unit at its location (§4.3). |
@@ -1798,6 +1805,52 @@ An implementation that reads places also gives the `locator` of each decision an
 `places_sha256` of each vector under `conformance/places/`, and refuses every packet there that
 expects an error.
 
+### 4.16 Completeness of a reading
+
+**Completeness** (#615) is the statement of a reader about its reading: the text is all of the
+source, or parts of the source gave no text. A partial reading must not look complete. The gate
+cannot see the source, so it does not make this statement. It checks the form, keeps the
+statement in the receipt, and uses it at step 9a.
+
+```json
+{"status": "partial", "missing": [{"page": 7, "reason": "ocr_off"},
+                                  {"page": 8, "reason": "ocr_off"}]}
+```
+
+| Member | Meaning |
+|---|---|
+| `status` | `complete`, `partial` or `no_text`. |
+| `missing` | The pages of the source that gave no text: a list of `{"page": n, "reason": r}`, in page order. |
+
+`page` is an integer from 1 to 1,000,000, and each page is higher than the page before it. A
+boolean is not an integer. `reason` is one of:
+
+| Reason | Meaning |
+|---|---|
+| `ocr_off` | The page has no text layer and has an image, and OCR was off. |
+| `ocr_no_text` | OCR read the page and found no text. |
+| `no_text_layer` | The page has marks, and it has no text layer and no image. |
+
+A page with no marks is a blank page, and it is not missing. A selection of pages is an option
+of the reading. It does not make the reading partial.
+
+The status follows from the document and from `missing`:
+
+1. `no_text`: the document is empty after whitespace normalisation (§4.4). `missing` can be
+   empty, as for a text file with no text.
+2. `partial`: the document is not empty, and `missing` has one or more entries.
+3. `complete`: the document is not empty, and `missing` is empty.
+
+The packet is invalid when its completeness is not an object with exactly `status` and
+`missing`, the status is not one of the three, `missing` is not a list, an entry is not an
+object with exactly `page` and `reason`, a page or a reason breaks the rules above, or the
+status is not the status that rules 1 to 3 give.
+
+At step 9a, a quote of the document that does not occur gets `SOURCE_NOT_READ` when the status
+is `partial` or `no_text`: the reason can be the reading and not the extractor. A quote of a
+reference keeps `QUOTE_NOT_FOUND`, because the completeness is of the document. A packet with
+no completeness, or with `complete`, keeps `QUOTE_NOT_FOUND`.
+
 ## 5. Receipt
 
 ```json
@@ -1840,6 +1893,10 @@ no profile has no `profile` member.
 `places_sha256` is the digest of the places of the packet (§4.15), after `pin`. With places,
 each decision also has the member `locator` (§4.15) as its last member. A receipt of a packet
 with no places has no `places_sha256` member, and its decisions have no `locator` member.
+
+`completeness` is the completeness of the packet (§4.16), after `places_sha256`: the object
+with `status` and `missing`. A receipt of a packet with no completeness has no `completeness`
+member.
 
 Decisions are sorted by `candidate_sha256`, then by input position. `codes` lists the rejecting
 code, or the flag codes in the order of the table in §3.3, followed by `EVIDENCE_REANCHORED`,
@@ -1986,6 +2043,9 @@ value and unit are those of the decision. Each shown member is present.
 - `citation.locator` is optional. A fact has it only when its decision has a locator that is
   not null (§4.15): `{"page": 3, "box": [7200, 41020, 11850, 42200]}`, with the box in
   hundredths of a PDF point. A fact with no locator has no `locator` member.
+- `completeness` is an optional member of the export, after `facts`. An export has it only
+  when the receipt has it (§4.16), with the same object. An app that reads `partial` or
+  `no_text` knows that the facts are not from all of the source.
 - For `source: "external"` or `source: "knowledge"`, the fact was admitted by policy.
   `source_sha256`, `text_sha256`, `span` and `ref` are null. `url` is the external item's
   URL, or null for knowledge. Use the packet key to see the recorded evidence.

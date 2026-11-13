@@ -1,0 +1,68 @@
+{
+ "name": "completeness-01-complete",
+ "description": "A complete reading. The receipt keeps the completeness. A quote that does not occur keeps the code QUOTE_NOT_FOUND, because the reader read all of the source (SPEC §4.16).",
+ "document": "Annual fee: $90\n",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD",
+    "aliases": [
+     "Annual fee"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "completeness": {
+  "status": "complete",
+  "missing": []
+ },
+ "candidates": [
+  {
+   "id": "r1",
+   "field": "fee",
+   "value": 90,
+   "unit": "USD",
+   "evidence": [
+    {
+     "text": "$90"
+    },
+    {
+     "role": "field",
+     "text": "Annual fee"
+    }
+   ]
+  },
+  {
+   "id": "r2",
+   "field": "fee",
+   "value": 95,
+   "unit": "USD",
+   "evidence": [
+    {
+     "text": "$95"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "QUOTE_NOT_FOUND"
+    ]
+   }
+  ],
+  "coverage": [],
+  "completeness": {
+   "status": "complete",
+   "missing": []
+  }
+ }
+}

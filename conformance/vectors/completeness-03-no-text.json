@@ -1,0 +1,59 @@
+{
+ "name": "completeness-03-no-text",
+ "description": "A reading with no text: the only page is a scan, and OCR found no text. The document is one line break. Each quote of the document gets SOURCE_NOT_READ (SPEC §4.16).",
+ "document": "\n",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD",
+    "aliases": [
+     "Annual fee"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "completeness": {
+  "status": "no_text",
+  "missing": [
+   {
+    "page": 1,
+    "reason": "ocr_no_text"
+   }
+  ]
+ },
+ "candidates": [
+  {
+   "id": "r1",
+   "field": "fee",
+   "value": 90,
+   "unit": "USD",
+   "evidence": [
+    {
+     "text": "$90"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "rejected",
+    "codes": [
+     "SOURCE_NOT_READ"
+    ]
+   }
+  ],
+  "coverage": [],
+  "completeness": {
+   "status": "no_text",
+   "missing": [
+    {
+     "page": 1,
+     "reason": "ocr_no_text"
+    }
+   ]
+  }
+ }
+}
