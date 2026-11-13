@@ -7328,6 +7328,97 @@ bad_profile("profile-bad-beside-schema", "a schema beside it in the packet",
             profile(), schema={"fields": {"fee": USD}})  # fmt: skip
 
 
+# ------------------------------------------------------------- source pins (SPEC §4.14, #616)
+# A pin vector has a `pin` beside the schema. The expected receipt member is written by hand:
+# the pin after defaults without `groundgate_pin`, and the pin digest. This script only hashes
+# the pin after defaults with hashlib and canonical JSON. The data is ASCII with one integer.
+
+PINS: list[dict[str, Any]] = []
+SOURCE_A = "sha256:" + "0a" * 32
+SOURCE_B = "sha256:" + "0b" * 32
+STANDARD_URL = "https://example.org/standard.pdf"
+
+
+def pin_vector(name: str, description: str, pin: dict[str, Any], body: dict[str, Any],
+               **packet: Any) -> None:  # fmt: skip
+    """``body`` is the pin after defaults, written by hand."""
+    PINS.append({
+        "name": name, "description": description, "document": "Fee\t$90\n",
+        "schema": {"fields": {"fee": {**USD, "aliases": ["Fee"]}}}, "pin": pin, **packet,
+        "candidates": [c("p1", "fee", 90, "USD", [q("$90"), q("Fee", role="field")], ADMIT)],
+        "receipt_pin": {**{k: v for k, v in body.items() if k != "groundgate_pin"},
+                        "sha256": _sha("groundgate-pin/1:", body)},
+    })  # fmt: skip
+
+
+FETCHED = {"groundgate_pin": 1, "source_sha256": SOURCE_A, "url": STANDARD_URL,
+           "retrieved": "2026-11-09", "edition": "2024 revision 2", "origin": "fetched"}  # fmt: skip
+
+pin_vector(
+    "pin-01-fetched",
+    "A fetched pin: the receipt holds the pin after defaults and its digest. The decision is the "
+    "decision without a pin.",
+    FETCHED,
+    {"groundgate_pin": 1, "source_sha256": SOURCE_A, "url": STANDARD_URL,
+     "retrieved": "2026-11-09", "edition": "2024 revision 2", "origin": "fetched",
+     "label": None},
+)  # fmt: skip
+pin_vector(
+    "pin-02-supplied",
+    "A copy that a person supplied, with a label because it is not the official copy. It has no "
+    "url and no edition.",
+    {"groundgate_pin": 1, "source_sha256": SOURCE_B, "retrieved": "2026-11-10",
+     "origin": "supplied", "label": "unofficial copy"},
+    {"groundgate_pin": 1, "source_sha256": SOURCE_B, "url": None, "retrieved": "2026-11-10",
+     "edition": None, "origin": "supplied", "label": "unofficial copy"},
+)  # fmt: skip
+pin_vector(
+    "pin-03-changed-edition",
+    "The same URL with another edition, other bytes and a later day: another pin digest than "
+    "pin-01-fetched, and the same decision.",
+    {**FETCHED, "source_sha256": SOURCE_B, "retrieved": "2027-01-15",
+     "edition": "2026 revision 1"},
+    {"groundgate_pin": 1, "source_sha256": SOURCE_B, "url": STANDARD_URL,
+     "retrieved": "2027-01-15", "edition": "2026 revision 1", "origin": "fetched",
+     "label": None},
+)  # fmt: skip
+pin_vector(
+    "pin-04-document-source",
+    "A packet with a document source and a pin with the same url.",
+    FETCHED,
+    {"groundgate_pin": 1, "source_sha256": SOURCE_A, "url": STANDARD_URL,
+     "retrieved": "2026-11-09", "edition": "2024 revision 2", "origin": "fetched",
+     "label": None},
+    document_source=STANDARD_URL,
+)  # fmt: skip
+
+
+def bad_pin(name: str, why: str, pin: Any, **packet: Any) -> None:
+    PINS.append({"name": name, "description": f"A pin with {why} is invalid (SPEC §4.14).",
+                 "document": "Fee\t$90\n",
+                 "schema": {"fields": {"fee": {**USD, "aliases": ["Fee"]}}},
+                 "pin": pin, **packet, "candidates": [], "error": True})  # fmt: skip
+
+
+bad_pin("pin-bad-format", "groundgate_pin 2 (S1)", {**FETCHED, "groundgate_pin": 2})
+bad_pin("pin-bad-member", "a member that the format does not list (S1)",
+        {**FETCHED, "official": True})  # fmt: skip
+bad_pin("pin-bad-no-origin", "no origin (S1)",
+        {k: v for k, v in FETCHED.items() if k != "origin"})  # fmt: skip
+bad_pin("pin-bad-digest", "a source digest of the wrong form (S2)",
+        {**FETCHED, "source_sha256": "sha256:0A"})  # fmt: skip
+bad_pin("pin-bad-day", "a retrieval day that is not a real day (S3)",
+        {**FETCHED, "retrieved": "2026-02-30"})  # fmt: skip
+bad_pin("pin-bad-origin", "the origin mirrored (S4)", {**FETCHED, "origin": "mirrored"})
+bad_pin("pin-bad-fetched-no-url", "the origin fetched and no url (S5)",
+        {k: v for k, v in FETCHED.items() if k != "url"})  # fmt: skip
+bad_pin("pin-bad-fetched-label", "the origin fetched and a label (S5)",
+        {**FETCHED, "label": "unofficial copy"})  # fmt: skip
+bad_pin("pin-bad-edition", "a blank edition (S5)", {**FETCHED, "edition": " "})
+bad_pin("pin-bad-source", "a url that is not the document source of the packet (S6)", FETCHED,
+        document_source="https://example.org/other.pdf")  # fmt: skip
+
+
 def main() -> None:
     out_dir = HERE / "vectors"
     out_dir.mkdir(exist_ok=True)
@@ -7401,9 +7492,31 @@ def main() -> None:
         (prof_dir / f"{p['name']}.json").write_text(
             json.dumps(out, indent=1, ensure_ascii=False) + "\n"
         )
+    pin_dir = HERE / "pins"
+    pin_dir.mkdir(exist_ok=True)
+    for old in pin_dir.glob("*.json"):
+        old.unlink()
+    for p in PINS:
+        doc = p["document"]
+        given = {k: p[k] for k in ("name", "description", "document", "schema", "pin")}
+        if "document_source" in p:
+            given["document_source"] = p["document_source"]
+        if p.get("error"):
+            out = given | {"candidates": [], "expected": {"error": True}}
+        else:
+            cands = [{k: resolve(doc, val) if k == "evidence" else val
+                      for k, val in item["candidate"].items()} for item in p["candidates"]]  # fmt: skip
+            out = given | {
+                "candidates": cands,
+                "expected": {"decisions": [item["expect"] for item in p["candidates"]],
+                             "pin": p["receipt_pin"]},
+            }  # fmt: skip
+        (pin_dir / f"{p['name']}.json").write_text(
+            json.dumps(out, indent=1, ensure_ascii=False) + "\n"
+        )
     print(
-        f"wrote {len(VECTORS)} vectors, {len(INVALID)} invalid packets and "
-        f"{len(PROFILES)} profile vectors"
+        f"wrote {len(VECTORS)} vectors, {len(INVALID)} invalid packets, "
+        f"{len(PROFILES)} profile vectors and {len(PINS)} pin vectors"
     )
 
 

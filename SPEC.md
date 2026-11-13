@@ -52,6 +52,9 @@ A packet may give the **document source**: the URL that the app got the document
 non-blank string, or null. It goes into the receipt, and the policy can trust external sources on
 its domain (§2.4).
 
+A packet may also give a **source pin** (§4.14, #616): where the bytes of the document came
+from. It goes into the receipt and changes no decision.
+
 A packet may also carry **references**: other source texts that the app, not the extractor,
 supplies. A reference can hold only the part of its source that matters.
 
@@ -1700,6 +1703,55 @@ With the price list "B-200 Bracket $12.50" in the document and the corrigendum a
 the corrigendum record of `B-200` replaces the price list record, and `one_code` holds. Without
 the `replace` check, the two records match, and each gets `SET_DUPLICATE`.
 
+### 4.14 Source pins
+
+A **pin** (#616) records where the bytes of the document came from. It changes no decision. The
+receipt holds it, so each admitted fact shows the copy of the source that it was read from.
+
+A pin is one JSON object in format 1:
+
+```json
+{"groundgate_pin": 1, "source_sha256": "sha256:...",
+ "url": "https://example.org/standard.pdf", "retrieved": "2026-11-09",
+ "edition": "2024 revision 2", "origin": "fetched", "label": null}
+```
+
+| Member | Meaning |
+|---|---|
+| `groundgate_pin` | The pin format, `1`. |
+| `source_sha256` | `sha256:` and the 64 lowercase hex digits of SHA-256 over the bytes of the source file. |
+| `url` | Optional. Null, or the URL of the source. |
+| `retrieved` | The day that the bytes were retrieved or supplied, as `YYYY-MM-DD`. |
+| `edition` | Optional. Null, or an edition marker of the source, for example `2024 revision 2`. |
+| `origin` | `fetched`, when a tool got the bytes from `url`, or `supplied`, when a person supplied the copy. |
+| `label` | Optional. Null, or a label of a supplied copy that is not the official copy, for example `unofficial copy`. |
+
+After defaults, `url`, `edition` and `label` are null.
+
+The packet is invalid when its pin fails one of these checks:
+
+| Check | The packet is invalid with |
+|---|---|
+| S1 closed format | a pin that is not an object, a member that the format does not list, a `groundgate_pin` other than the integer `1`, or no `source_sha256`, `retrieved` or `origin` |
+| S2 digest | a `source_sha256` that is not `sha256:` and 64 lowercase hex digits |
+| S3 day | a `retrieved` that is not a real day as `YYYY-MM-DD` |
+| S4 origin | an `origin` other than `fetched` or `supplied` |
+| S5 texts | a `url` that is not null or a non-blank string of at most 2,048 characters; an `edition` or a `label` that is not null or a non-blank string of at most 200 characters; a `fetched` pin with a null `url`; a `fetched` pin with a `label` |
+| S6 document source | a packet that gives a document source (§2.1) and a pin whose `url` is not equal to it |
+
+groundgate checks only the form of the pin. It does not read the source bytes, so it does not
+check `source_sha256` against them. A store that holds the bytes can do that check.
+
+The digest of a pin is
+
+`pin_sha256 = "sha256:" + hex(SHA-256("groundgate-pin/1:" + JCS(pin)))`
+
+where `pin` is the pin after defaults. So another URL, day, edition, origin, label or source
+digest gives another pin digest. The prefix names the pin format.
+
+An implementation that reads pins also gives the receipt `pin` member of each vector under
+`conformance/pins/`, and refuses every packet there that expects an error.
+
 ## 5. Receipt
 
 ```json
@@ -1708,6 +1760,9 @@ the `replace` check, the two records match, and each gets `SET_DUPLICATE`.
  "references": [],
  "packs": [],
  "profile": {"id": "invoice", "version": "1.0.0", "sha256": "sha256:..."},
+ "pin": {"source_sha256": "sha256:...", "url": "https://example.org/standard.pdf",
+         "retrieved": "2026-11-09", "edition": "2024 revision 2", "origin": "fetched",
+         "label": null, "sha256": "sha256:..."},
  "schema_sha256": "sha256:...", "policy_sha256": "sha256:...",
  "decisions": [{"candidate_id": "c1", "candidate_sha256": "sha256:...", "field": "...",
                 "key": null, "proposer": null, "outcome": "admitted", "codes": [], "value": "2000", "unit": "mg",
@@ -1732,6 +1787,9 @@ base pack.
 `profile` names the packet's profile (§4.10) as `{"id", "version", "sha256"}`, with the digest of
 §4.10. So each admitted fact shows which profile version admitted it. A receipt of a packet with
 no profile has no `profile` member.
+
+`pin` holds the source pin of the packet (§4.14) after defaults, without `groundgate_pin`, and
+`sha256`, the pin digest of §4.14. A receipt of a packet with no pin has no `pin` member.
 
 Decisions are sorted by `candidate_sha256`, then by input position. `codes` lists the rejecting
 code, or the flag codes in the order of the table in §3.3, followed by `EVIDENCE_REANCHORED`,

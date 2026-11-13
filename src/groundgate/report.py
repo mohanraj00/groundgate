@@ -101,12 +101,13 @@ def render(
     packs: Sequence[object] = (),
     pack_dir: str | os.PathLike[str] | None = None,
     doubt: Sequence[object] | None = None,
+    pin: Mapping[str, Any] | None = None,
 ) -> str:
     """Render ``receipt`` over ``text``. ``candidates`` supply the quotes shown on each card.
 
     With ``schema`` (and ``policy``, ``judgments``, ``references``, ``document_source``,
-    ``packs`` and ``doubt`` if they were used), the receipt is re-derived first and the page
-    says whether it matched. Without them the page says it is unverified. ``pack_dir`` is a
+    ``packs``, ``doubt`` and ``pin`` if they were used), the receipt is re-derived first and the
+    page says whether it matched. Without them the page says it is unverified. ``pack_dir`` is a
     folder of pack files, and ``verify`` reads it with the same rules (docs/design/packs.md
     §11). The page shows the cited text of a reference decision only when ``references`` holds
     that reference.
@@ -126,6 +127,7 @@ def render(
             packs=packs,
             pack_dir=pack_dir,
             doubt=doubt,
+            pin=pin,
         ).ok
     )
     texts: dict[str, tuple[str, Offsets]] = {}

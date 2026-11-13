@@ -957,6 +957,7 @@ class Receipt:
     packs: tuple[dict[str, str], ...] = ()  # the packs that applied, sorted by id (SPEC §5)
     doubt_sha256: str | None = None  # None when the packet has no doubt span (SPEC §5)
     profile: dict[str, str] | None = None  # None when the packet gives no profile (SPEC §5)
+    pin: dict[str, Any] | None = None  # None when the packet gives no pin (SPEC §4.14, §5)
     set_positions: tuple[tuple[str, int], ...] = ()  # (reference id, set) (SPEC §4.13)
     records: tuple[RecordLine, ...] | None = None  # None when the schema has no record field
     checks: tuple[CheckResult, ...] | None = None  # None when the schema has no checks
@@ -980,6 +981,7 @@ class Receipt:
             ],
             "packs": [dict(p) for p in self.packs],
             **({} if self.profile is None else {"profile": dict(self.profile)}),
+            **({} if self.pin is None else {"pin": dict(self.pin)}),
             "schema_sha256": self.schema_sha256,
             "policy_sha256": self.policy_sha256,
             "decisions": [d.to_dict() for d in self.decisions],

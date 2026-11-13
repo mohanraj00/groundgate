@@ -51,6 +51,7 @@ KINDS = (
     "document@1",
     "source@1",
     "model-text@1",
+    "pin@1",
 )
 # §8 rule 3: the kinds that ``forget`` removes. The run record goes too if a line holds text.
 REMOVED = frozenset(
@@ -328,10 +329,45 @@ def _named(packet: Mapping[str, Any]) -> list[tuple[str, str]]:
         ("candidates", "candidates@1"),
         ("judgments", "judgments@1"),
         ("doubt", "doubt@1"),
+        ("pin", "pin@1"),
         ("receipt", "receipt@1"),
     ):
         named.extend((kind, k) for k in _keys(packet.get(name)))
     return named
+
+
+def _pin_problems(objects: _Objects, packet: Mapping[str, Any]) -> list[str]:
+    """The problems of the source pin of a packet (#616): a ``pin@1`` object that is not a
+    pin of SPEC §4.14, or a pin whose digest is not the digest of the bytes of the source
+    of the reading of the packet. With no reading, or with a source that ``forget`` removed,
+    there are no bytes to compare."""
+    from ..model import PacketError
+    from ..pin import check_pin, source_digest
+
+    out = []
+    for k in _keys(packet.get("pin")):
+        if objects.kinds.get(k) != "pin@1":
+            continue  # ``named`` reports an object that is missing or of another kind
+        try:
+            pin = check_pin(objects.json("pin@1", k))
+        except (StoreError, PacketError, RecursionError) as exc:
+            out.append(f"the pin {k} is not a pin: {printable(str(exc))}")
+            continue
+        for r in _keys(packet["reading"]):
+            if objects.kinds.get(r) not in READINGS:
+                continue
+            try:
+                sources = _keys(_reading(objects, r)["source"])
+                found = [source_digest(objects.store.get("source@1", s)) for s in sources
+                         if objects.kinds.get(s) == "source@1"]  # fmt: skip
+            except StoreError:
+                continue  # the check of the reading reports it
+            if any(d != pin["source_sha256"] for d in found):
+                out.append(
+                    f"the pin {k} names the source bytes {pin['source_sha256']}, but the "
+                    f"source of the reading {r} has other bytes"
+                )
+    return out
 
 
 def _reading_named(objects: _Objects, k: str) -> list[tuple[str, str]]:
@@ -529,6 +565,8 @@ def check(store: FolderStore, *, repair: bool = False) -> Report:
         except StoreError as exc:
             report.find(str(exc))
             continue
+        for pin_problem in _pin_problems(objects, packet):
+            report.find(f"{owner}: {pin_problem}")
         for n in runs:
             found = objects.kinds.get(n, "absent")
             if found == "absent":
@@ -716,12 +754,20 @@ def _named_by_rest(objects: _Objects, gone: set[str]) -> set[str]:
 
 
 # The members that a correction packet of ``review resolve`` shares with its packet (#516).
-_SAME_INPUTS = ("spec", "document", "reading", "schema", "policy", "references", "packs", "doubt")
+_SAME_INPUTS = ("spec", "document", "reading", "schema", "policy", "references", "packs", "doubt",
+                "pin")  # fmt: skip
 _CORRECTIONS = frozenset({"correct", "adjust_span"})
 _RECORDS = frozenset({"task@1", "resolution@1"})  # the review records of a packet
 # The members of a receipt that record the inputs of ``admit`` other than the candidates.
 _RECEIPT_INPUTS = ("groundgate", "document", "references", "packs", "schema_sha256",
                    "policy_sha256")  # fmt: skip
+# The members that a receipt has only when the packet gives that input (SPEC §5). A receipt
+# with another pin or profile, or with none, is the receipt of other inputs (#616).
+_RECEIPT_OPTIONAL = ("profile", "pin")
+
+
+def _receipt_inputs(receipt: Mapping[str, Any]) -> list[Any]:
+    return [receipt[m] for m in _RECEIPT_INPUTS] + [receipt.get(m) for m in _RECEIPT_OPTIONAL]
 
 
 def _review_plan(
@@ -849,7 +895,7 @@ def _orphans(
             stops.append(("packet@1", k))
     try:
         mine = objects.json("receipt@1", obj["receipt"])
-        inputs = [mine[m] for m in _RECEIPT_INPUTS]
+        inputs = _receipt_inputs(mine)
     except (StoreError, ValueError, TypeError, KeyError, RecursionError):
         stops.append(("receipt@1", str(obj["receipt"])))
     if stops:
@@ -860,7 +906,7 @@ def _orphans(
             continue
         try:
             receipt = objects.json("receipt@1", k)
-            if [receipt[m] for m in _RECEIPT_INPUTS] != inputs:
+            if _receipt_inputs(receipt) != inputs:
                 continue
             hashes = Counter(d["candidate_sha256"] for d in receipt["decisions"])
             if not any(hashes == digests + Counter([c]) for digests, _, _, c in wanted):

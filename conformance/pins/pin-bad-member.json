@@ -1,0 +1,29 @@
+{
+ "name": "pin-bad-member",
+ "description": "A pin with a member that the format does not list (S1) is invalid (SPEC §4.14).",
+ "document": "Fee\t$90\n",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD",
+    "aliases": [
+     "Fee"
+    ]
+   }
+  }
+ },
+ "pin": {
+  "groundgate_pin": 1,
+  "source_sha256": "sha256:0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a",
+  "url": "https://example.org/standard.pdf",
+  "retrieved": "2026-11-09",
+  "edition": "2024 revision 2",
+  "origin": "fetched",
+  "official": true
+ },
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

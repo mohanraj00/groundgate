@@ -21,6 +21,10 @@ Files in `profiles/` are profile vectors (SPEC §4.10). Each one has a `profile`
 `schema`, `policy` and `packs`. `expected.profile` is the receipt's `profile` member, with the
 digest written by hand in `build.py`, and `expected.error` true marks an invalid packet.
 
+Files in `pins/` are source pin vectors (SPEC §4.14). Each one has a `pin` beside the other
+inputs. `expected.pin` is the receipt's `pin` member, with the digest written by hand in
+`build.py`, and `expected.error` true marks an invalid packet.
+
 Files in `invalid/` are invalid packets. An implementation must refuse them (SPEC §2) and emit no
 receipt.
 

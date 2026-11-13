@@ -82,6 +82,7 @@ new key. The store prefix changes only when the key scheme changes.
 | `packet@1` | section 5.2 | `extract`, `admit` |
 | `review-policy@1`, `task@1`, `resolution@1` | review.md §5 | `review` |
 | `model-text@1` | canonical JSON of a model text input, review.md §7.1, in 0.15 | `review` |
+| `pin@1` | canonical JSON of a source pin (SPEC §4.14), in 0.15 | `admit` |
 | `document@1` | the document model of #285, in 0.13 | `read` |
 
 - `put` refuses JSON bytes that are not canonical, so one object has one key.
@@ -130,6 +131,12 @@ a new read (#523). `reading@1` has the same members without `warnings`. `read --
 - A packet with doubt spans has the member `doubt` too: the store key of a `doubt@1` object
   (#573). A packet with no member reads as `doubt` null. `admit` writes the member only when
   the list is not empty, so a packet with no doubt keeps the key that it had before 0.14.
+- A packet with a source pin has the member `pin` too: the store key of a `pin@1` object
+  (#616). A packet with no pin has no member, so it keeps its key. `groundgate store pin`
+  writes the bytes of a source file as `source@1` and prints the pin with their digest.
+  `store check` reads the source of the reading of each packet with a pin. If its bytes do
+  not have the `source_sha256` of the pin, `check` reports the packet and the pin. After
+  `forget` of the source, there are no bytes to compare, and the pin stays.
 - `packs` names only the packs of the app. The receipt names the built-in packs, and they stay
   in the wheel (packs.md §11).
 - `run` is the store key of the run record. The run header names the same input keys, and
@@ -305,7 +312,7 @@ also if it changes during the build.
 
    | Removed | Kept |
    |---|---|
-   | `source@1`, `text@1`, `layout@1`, `document@1`, `reference@1`, `candidates@1`, `prompt@1`, `reply@1`, `admission@1`, `model-text@1` | `packet@1`, `reading@1`, `reading@2`, `receipt@1`, `schema@1`, `policy@1`, `pack@1`, `judgments@1`, `doubt@1`, `run@N`, `task@1`, `resolution@1`, the answer logs |
+   | `source@1`, `text@1`, `layout@1`, `document@1`, `reference@1`, `candidates@1`, `prompt@1`, `reply@1`, `admission@1`, `model-text@1` | `packet@1`, `reading@1`, `reading@2`, `receipt@1`, `schema@1`, `policy@1`, `pack@1`, `judgments@1`, `doubt@1`, `pin@1`, `run@N`, `task@1`, `resolution@1`, the answer logs |
 
    The kept objects hold digests, values, offsets, codes and questions, and no document text
    other than the values. A review question and its choices can quote a value.
