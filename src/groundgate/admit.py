@@ -39,6 +39,7 @@ from .model import (
     normal_date,
 )
 from .pack import BASE, checked_copy, reading_retired, receipt_packs, schema_named
+from .passage import Outline, check_outline, has_label
 from .pin import pin_entry
 from .places import Places, check_places
 from .profile import check_profile
@@ -344,6 +345,7 @@ class _Ctx:
     markers: tuple[str, ...] = ()  # the marker words of every field
     competing: dict[str, tuple[str, ...]] = field(default_factory=dict)  # by field name
     unread: bool = False  # the completeness of the packet is partial or no_text (SPEC §4.16)
+    outline: Outline | None = None  # the headings of the document (SPEC §4.17)
     # the starts and the ends of the doubt spans below min_read_confidence, in text order (#535)
     doubt: tuple[list[int], list[int]] = field(default_factory=lambda: ([], []))
 
@@ -819,7 +821,7 @@ def _check(ctx: _Ctx, cand: object) -> _Passed:
             f.date_maximum is not None and date > f.date_maximum
         ):  # the normal form sorts in date order
             raise _Reject("DATE_OUT_OF_RANGE")
-    elif f.type == "string":
+    elif f.type in ("string", "passage"):
         if not isinstance(raw, str) or not normalize_ws(raw):
             raise _Reject("TYPE_INVALID")
         value = normalize_ws(raw)
@@ -850,7 +852,13 @@ def _check(ctx: _Ctx, cand: object) -> _Passed:
     if vitem is None and not outside:
         raise _Reject("NO_EVIDENCE")
     canon = value if isinstance(value, str) else canonical(value)
-    if vitem is None:
+    if f.type == "passage":  # SPEC §4.17 (#638): no policy admits a passage from outside
+        if vitem is None:
+            raise _Reject("NO_EVIDENCE")
+        assert isinstance(value, str)
+        p = _passage(ctx, f, value, vitem)
+        p.value, p.unit = canon, unit
+    elif vitem is None:
         p = _outside(ctx, f, value, key, outside, "key" in checked)
         p.value, p.unit = canon, unit
     else:
@@ -873,6 +881,32 @@ def _doubted(doubt: tuple[list[int], list[int]], a: int, b: int) -> bool:
     starts, ends = doubt
     i = bisect.bisect_right(ends, a)  # the first doubt span that ends after a
     return i < len(starts) and starts[i] < b
+
+
+def _passage(ctx: _Ctx, f: Field, label: str, vitem: _Item) -> _Passed:
+    """The checks of a passage (SPEC §4.17): the span is the section of the heading that has
+    the label. They take the place of steps 9a, 10 and 11."""
+    if vitem.span is None:
+        raise _Reject("PASSAGE_NOT_AT_HEADING", item=vitem)
+    t = ctx.doc if vitem.source == "document" else ctx.refs[vitem.ref or ""]
+    span = _valid(t.offsets, vitem.span)
+    if span is None:
+        raise _Reject("SPAN_INVALID", item=vitem)
+    at = _At(vitem, t, span, None)
+    start, end = vitem.span
+    outline = ctx.outline if t is ctx.doc else None  # the outline is of the document
+    index = None if outline is None else outline.heading(start)
+    if outline is None or index is None:
+        raise _Reject("PASSAGE_NOT_AT_HEADING", at)
+    if not has_label(outline.text(index), label):
+        raise _Reject("PASSAGE_LABEL_MISMATCH", at)
+    section_end = outline.section_end(index)
+    if end != section_end:
+        raise _Reject("PASSAGE_CUT_SHORT" if end < section_end else "PASSAGE_OVERRUN", at)
+    flags = []
+    if vitem.text is not None and vitem.text != t.text[span[0] : span[1]]:
+        flags.append("NON_VERBATIM_EVIDENCE")
+    return _Passed(f, "", None, None, at, flags, set(), vitem.source)
 
 
 def _checked(
@@ -1741,6 +1775,7 @@ def admit(
     pin: Mapping[str, Any] | None = None,
     places: Sequence[object] | None = None,
     completeness: Mapping[str, Any] | None = None,
+    outline: Sequence[object] | None = None,
 ) -> Receipt:
     """Decide every candidate and return the receipt.
 
@@ -1762,11 +1797,12 @@ def admit(
     whose value span is in the document gets a ``locator``. It changes no outcome and no code.
     ``completeness`` is the completeness of the reading (SPEC §4.16). The receipt holds it. With
     the status ``partial`` or ``no_text``, a quote of the document that does not occur gets the
-    code ``SOURCE_NOT_READ``.
+    code ``SOURCE_NOT_READ``. ``outline`` is the list of the headings of the document, from a
+    reader (SPEC §4.17). Only a ``passage`` field reads it.
 
     Raises ``PacketError`` when the text is not NFC, ``candidates`` is not a list, or the schema,
-    policy, judgments, references, document source, packs, doubt, profile, pin, places or
-    completeness are invalid. Then no receipt is made.
+    policy, judgments, references, document source, packs, doubt, profile, pin, places,
+    completeness or outline are invalid. Then no receipt is made.
     """
     if not isinstance(text, str) or not is_nfc(text):
         raise PacketError("document text must be a string in Unicode NFC")
@@ -1780,6 +1816,7 @@ def admit(
     _check_integers(policy.to_dict() if isinstance(policy, Policy) else policy, "policy")
     _check_integers(pin, "pin")
     _check_integers(completeness, "completeness")
+    _check_integers(outline, "outline")
     entry = None
     if profile is not None:
         if schema is not None or policy is not None or packs:
@@ -1802,6 +1839,7 @@ def admit(
     pinned = None if pin is None else pin_entry(pin, document_source)
     placed = None if places is None else check_places(places, Offsets(text))
     read = None if completeness is None else check_completeness(completeness, text)
+    headings = None if outline is None else check_outline(outline, Offsets(text))
     refs = _references(references)
     positions = _set_positions(references)
     spans = _doubt(doubt, Offsets(text))
@@ -1809,13 +1847,39 @@ def admit(
     with using(schema.vocabulary):
         receipt = _admit(
             text, schema, candidates, policy, document_id, refs, by_cand, document_source, spans,
-            positions, read is not None and read["status"] != "complete",
+            positions, read is not None and read["status"] != "complete", headings,
         )  # fmt: skip
-    if entry is None and pinned is None and placed is None and read is None:
+    passages = {name for name, f in schema.fields.items() if f.type == "passage"}
+    extras = (entry, pinned, placed, read, headings)
+    if all(x is None for x in extras) and not passages:
         return receipt
     draft = dataclasses.replace(
-        receipt, profile=entry, pin=pinned, completeness=read, receipt_sha256=""
+        receipt,
+        profile=entry,
+        pin=pinned,
+        completeness=read,
+        outline_sha256=None if headings is None else digest("outline", {"outline": headings}),
+        receipt_sha256="",
     )
+    if passages:  # SPEC §4.17: the digest of the text of each passage that is not rejected
+        data = text.encode("utf-8")
+        draft = dataclasses.replace(
+            draft,
+            decisions=tuple(
+                dataclasses.replace(
+                    d,
+                    is_passage=True,
+                    passage_sha256=digest(
+                        "passage", {"text": data[d.evidence[0] : d.evidence[1]].decode("utf-8")}
+                    )
+                    if d.outcome != "rejected" and d.evidence is not None
+                    else None,
+                )
+                if d.field in passages
+                else d
+                for d in draft.decisions
+            ),
+        )
     if placed is not None:
         index = Places(placed)
         draft = dataclasses.replace(
@@ -1848,6 +1912,7 @@ def _admit(
     doubt: list[dict[str, Any]],
     positions: dict[str, int],
     unread: bool = False,
+    outline: list[dict[str, int]] | None = None,
 ) -> Receipt:
     table = frozenset(x for _, suffixes in schema.units.values() for x in suffixes)
     ctx = _Ctx(
@@ -1862,6 +1927,7 @@ def _admit(
         markers=tuple(dict.fromkeys(m for f in schema.fields.values() for m in f.markers or ())),
         competing=_competing(schema),
         unread=unread,
+        outline=None if outline is None else Outline(text, Offsets(text), outline),
         doubt=(
             [d["start"] for d in doubt if d["confidence"] < policy.min_read_confidence],
             [d["end"] for d in doubt if d["confidence"] < policy.min_read_confidence],
@@ -2240,9 +2306,12 @@ def _decision(ctx: _Ctx, sha: str, cand: object, cid: object, p: _Passed | _Reje
         if f is not None and isinstance(raw, (str, int)) and not isinstance(raw, bool):
             if f.type == "date":
                 value = normal_date(raw)
-            elif f.type == "string" and isinstance(raw, str) and normalize_ws(raw):
+            elif f.type in ("string", "passage") and isinstance(raw, str) and normalize_ws(raw):
                 value = normalize_ws(raw)
-            elif f.type != "string" and (parsed := parse_value(str(raw))) is not None:
+            elif (
+                f.type not in ("string", "passage")
+                and (parsed := parse_value(str(raw))) is not None
+            ):
                 value = canonical(parsed)
     if p.at is not None:
         span, source, ref = _bytes(p.at.t, p.at.span), p.at.item.source, p.at.item.ref
@@ -2305,6 +2374,7 @@ def verify(
     pin: Mapping[str, Any] | None = None,
     places: Sequence[object] | None = None,
     completeness: Mapping[str, Any] | None = None,
+    outline: Sequence[object] | None = None,
 ) -> Verification:
     """Re-derive the receipt from its inputs and compare it with ``receipt``.
 
@@ -2326,7 +2396,8 @@ def verify(
     gives them (SPEC §4.10), and ``verify`` compares the receipt's ``profile`` member.
     ``pin`` is the source pin that ``admit`` got (SPEC §4.14), and ``verify`` compares the
     receipt's ``pin`` member. ``places`` is the places list that ``admit`` got (SPEC §4.15),
-    and ``completeness`` is the completeness that ``admit`` got (SPEC §4.16).
+    and ``completeness`` is the completeness that ``admit`` got (SPEC §4.16). ``outline`` is
+    the outline that ``admit`` got (SPEC §4.17).
     """
     if not isinstance(receipt, Mapping):
         raise PacketError("receipt must be a JSON object")
@@ -2379,6 +2450,7 @@ def verify(
             pin=pin,
             places=places,
             completeness=completeness,
+            outline=outline,
         ).to_dict()
     for key in (
         "document",
@@ -2388,6 +2460,7 @@ def verify(
         "pin",
         "places_sha256",
         "completeness",
+        "outline_sha256",
         "schema_sha256",
         "policy_sha256",
         "coverage",

@@ -1,0 +1,84 @@
+{
+ "name": "passage-07-no-outline",
+ "description": "A packet with no outline has no heading, so no passage is admitted. A span in a reference is not at a heading, because the outline is of the document. A candidate with only an outside item has no evidence (SPEC §4.17).",
+ "document": "4 Payment\n\n4.1 Rent\nThe rent is $900 for each month.\n\n4.2 Fees\nThe late fee is $25.\n\n4.2.1 Waiver\nThe owner can waive the fee.\n\n4.3 Deposit\nThe deposit is $500.\n\n5 Term\nThe term is 12 months.\n",
+ "schema": {
+  "fields": {
+   "section": {
+    "type": "passage",
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "references": [
+  {
+   "id": "lease",
+   "text": "4 Payment\n\n4.1 Rent\nThe rent is $900 for each month.\n\n4.2 Fees\nThe late fee is $25.\n\n4.2.1 Waiver\nThe owner can waive the fee.\n\n4.3 Deposit\nThe deposit is $500.\n\n5 Term\nThe term is 12 months.\n",
+   "source": null
+  }
+ ],
+ "candidates": [
+  {
+   "id": "p1",
+   "field": "section",
+   "value": "4.3",
+   "evidence": [
+    {
+     "start": 128,
+     "end": 160
+    }
+   ]
+  },
+  {
+   "id": "p2",
+   "field": "section",
+   "value": "4.3",
+   "evidence": [
+    {
+     "source": "reference",
+     "ref": "lease",
+     "start": 128,
+     "end": 160
+    }
+   ]
+  },
+  {
+   "id": "p3",
+   "field": "section",
+   "value": "4.3",
+   "evidence": [
+    {
+     "source": "knowledge",
+     "text": "Section 4.3 is the deposit."
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "rejected",
+    "codes": [
+     "PASSAGE_NOT_AT_HEADING"
+    ],
+    "passage_sha256": null
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "PASSAGE_NOT_AT_HEADING"
+    ],
+    "passage_sha256": null
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "NO_EVIDENCE"
+    ],
+    "passage_sha256": null
+   }
+  ],
+  "coverage": []
+ }
+}

@@ -87,6 +87,9 @@ the complete reading of the source, or that parts of the source gave no text (§
 `SOURCE_NOT_READ` (§3.1). It changes no other decision. A malformed completeness makes the
 packet invalid.
 
+A packet may also carry an **outline** (#638): the headings of the document, as a reader gives
+them (§4.17). Only a `passage` field reads it. A malformed outline makes the packet invalid.
+
 ### 2.2 Offsets
 
 A **span** is `{"start": s, "end": e}`: zero-based, half-open **UTF-8 byte** offsets into the
@@ -97,7 +100,7 @@ boundaries. Heuristic windows in §4 are measured in Unicode code points.
 
 ```text
 {"fields": {"<name>": {
-  "type": "number" | "integer" | "string" | "date" | "record",
+  "type": "number" | "integer" | "string" | "date" | "record" | "passage",
   "unit": "<unit code>" | null,
   "comparator": "eq" | "gt" | "ge" | "lt" | "le" | "approx" | "range",
   "minimum": "<decimal>" | "<date>" | null,
@@ -136,6 +139,10 @@ Only a `date` field has `formats`, and it must have it.
 A `record` field (#613) holds an array of records. It has `members` in place of the other
 members of a field, and its rules are in §4.12. `checks` lists the checks across the documents
 of a set (§4.13).
+
+A `passage` field (#638) holds a citable section of the document, such as one numbered section
+of a statute or one clause of a contract. Its rules are in §4.17. It has only `type`,
+`required`, `multiple` and `description`.
 
 `description` is optional; when present, it must be a non-blank string, with no length limit.
 It has no effect on a decision, but is part of the schema digest.
@@ -420,6 +427,9 @@ The value item's **text** is the document, or its reference. The checks read tha
 | 10 | `VALUE_NOT_IN_EVIDENCE` | No number token (§4.1) in the span equals `value` by one of its derived values (§4.6), and no part is missing (below), and the sign is not dropped (below). For `string` fields: the whitespace-normalised value is not a substring of the whitespace-normalised span text. For `date` fields: no date mention in the span gives `value` in any format of §4.11. |
 | 10 | `DATE_FORMAT_UNDECLARED` | On a `date` field, no date mention in the span gives `value` in a format of the field, and a mention gives `value` in another format of §4.11. |
 | 11 | `UNIT_NOT_IN_EVIDENCE` | The field has a unit, and no matching number token in the span has that unit at its location (§4.3). |
+
+A candidate of a `passage` field takes the checks of §4.17 in place of steps 9a, 10 and 11:
+`PASSAGE_NOT_AT_HEADING`, `PASSAGE_LABEL_MISMATCH`, `PASSAGE_CUT_SHORT` and `PASSAGE_OVERRUN`.
 
 `search_region` limits the search for a quote and for re-anchoring in the document. It does not
 apply to a reference.
@@ -1851,6 +1861,70 @@ is `partial` or `no_text`: the reason can be the reading and not the extractor. 
 reference keeps `QUOTE_NOT_FOUND`, because the completeness is of the document. A packet with
 no completeness, or with `complete`, keeps `QUOTE_NOT_FOUND`.
 
+### 4.17 Passages
+
+A `passage` field (#638) holds a citable section of the document: a heading and the text under
+it, up to the next heading that is not below it. The gate admits a passage only when the cited
+span is exactly that section. The value of the candidate is the **label** of the section, such
+as `4.2`.
+
+```json
+{"fields": {"section": {"type": "passage", "multiple": true}}}
+```
+
+A passage field has only `type`, `required`, `multiple` and `description`. The packet is
+invalid when a passage field has another member, also `unit`, `comparator`, a bound, `keys`,
+`aliases`, `columns`, `markers`, `formats` or `template`, with any value. The packet is also
+invalid when a passage field is a member of a record (§4.12) or a field of a relation (§3.4).
+
+**The outline.** The gate does not find headings in the text. A reader gives them in the packet
+member `outline`, a list with one entry for each heading:
+
+`{"start": s, "end": e, "level": n}`
+
+`start` and `end` are a valid span of the document (§2.2): the text of the heading. `level` is
+an integer from 1 to 6, and 1 is the highest level. A boolean is not an integer. The list is in
+text order with no overlap: each entry starts at or after the end of the entry before it. It
+has at most 1,000,000 entries. The packet is invalid when the outline is not a list, has more
+entries, or has an entry that is not an object with exactly these three members or that breaks
+one of these rules. These are the `heading` nodes of `document@1`. `outline_sha256` is the
+digest (§6) of kind `outline` over `{"outline": <list>}`.
+
+**The section** of a heading starts at the start of the heading. Its limit is the start of the
+next entry of the outline whose level is the same or a lower number, or the end of the document
+when there is no such entry. The section ends at the last character before the limit that is
+not whitespace. So the headings below a heading, and their text, are in its section.
+
+**The checks.** The candidate passes steps 1 to 9 as a `string` field does: the value is a
+string that is not blank, and its canonical form is the value after whitespace normalisation
+(§4.4). A passage candidate with no value item is rejected with `NO_EVIDENCE`, also when it has
+an outside item: no policy admits a passage from an outside source. Then these checks run in
+order, and the first that fails rejects the candidate:
+
+| Code | Rejects when |
+|---|---|
+| `PASSAGE_NOT_AT_HEADING` | The value item has no offsets, or it is from a reference, or its span does not start at the `start` of an entry of the outline. A packet with no outline has no entry. |
+| `PASSAGE_LABEL_MISMATCH` | The heading at the start of the span does not have the label (below). |
+| `PASSAGE_CUT_SHORT` | The span ends before the end of the section. |
+| `PASSAGE_OVERRUN` | The span ends after the end of the section. |
+
+**The label.** Split the text of the heading and the value at whitespace into words. From each
+word, remove each `§` and `(` at its start and each `.`, `:` and `)` at its end, then drop a
+word that is empty. Fold each letter (§4). The heading has the label when the value has one or
+more words, and the words of the value are equal, in order, to the words of the heading that
+start at its first word or at its second word. So `4.2` is the label of the headings
+`4.2 Fees`, `Section 4.2. Fees` and `§4.2 Fees`. It is not the label of `4.2.1 Late fees` or
+`14.2 Fees`, and `Fees` is not the label of `Article 2 Fees`.
+
+Items with a role, `search_region`, re-anchoring and the role checks of §4.6 do not apply to a
+passage, and its decision has no parts. If the value item has a `text` that is not exactly the
+text of the span, code point by code point, the decision gets the flag `NON_VERBATIM_EVIDENCE`.
+`LOW_CONFIDENCE`, `READ_DOUBT` and `CONFLICTING_CANDIDATES` apply as for each field.
+
+**The receipt.** The `evidence` of the decision is the span of the passage. Each decision of a
+passage field also has the member `passage_sha256`: the digest (§6) of kind `passage` over
+`{"text": <the text of the span>}` when the outcome is not `rejected`, else null.
+
 ## 5. Receipt
 
 ```json
@@ -1897,6 +1971,11 @@ with no places has no `places_sha256` member, and its decisions have no `locator
 `completeness` is the completeness of the packet (§4.16), after `places_sha256`: the object
 with `status` and `missing`. A receipt of a packet with no completeness has no `completeness`
 member.
+
+`outline_sha256` is the digest of the outline of the packet (§4.17), after `completeness`. A
+receipt of a packet with no outline has no `outline_sha256` member. A decision of a `passage`
+field has the member `passage_sha256` (§4.17), before `locator`. A decision of another field
+has no such member.
 
 Decisions are sorted by `candidate_sha256`, then by input position. `codes` lists the rejecting
 code, or the flag codes in the order of the table in §3.3, followed by `EVIDENCE_REANCHORED`,
@@ -2043,6 +2122,9 @@ value and unit are those of the decision. Each shown member is present.
 - `citation.locator` is optional. A fact has it only when its decision has a locator that is
   not null (§4.15): `{"page": 3, "box": [7200, 41020, 11850, 42200]}`, with the box in
   hundredths of a PDF point. A fact with no locator has no `locator` member.
+- `citation.passage_sha256` is optional, before `locator`. A fact of a `passage` field has it
+  (§4.17): the digest of the passage text. The `value` of the fact is the label of the
+  section, and `citation.span` is the start and the end of the passage.
 - `completeness` is an optional member of the export, after `facts`. An export has it only
   when the receipt has it (§4.16), with the same object. An app that reads `partial` or
   `no_text` knows that the facts are not from all of the source.

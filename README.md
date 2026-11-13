@@ -419,6 +419,10 @@ Checks run in a fixed order. The first failure rejects the fact.
 | `KEY_INVALID` | the field is keyed by condition, and the key is missing or not one of its keys |
 | `NO_EVIDENCE` | the evidence has no value item and no outside item |
 | `SPAN_INVALID` | the span is outside the document or splits a character |
+| `PASSAGE_NOT_AT_HEADING` | a passage span does not start at a heading of the outline |
+| `PASSAGE_LABEL_MISMATCH` | the heading at the start of a passage does not have the label |
+| `PASSAGE_CUT_SHORT` | a passage span ends before the end of its section |
+| `PASSAGE_OVERRUN` | a passage span ends after the end of its section |
 | `SOURCE_NOT_READ` | the quoted value text is not in the document, and the reading of the source is partial or has no text |
 | `QUOTE_NOT_FOUND` | the quoted value text is not in the document, or in the reference it cites |
 | `VALUE_NOT_IN_EVIDENCE` | no number in the span equals the value, with the sign and scale the evidence gives |

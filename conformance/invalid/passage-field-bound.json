@@ -1,0 +1,18 @@
+{
+ "name": "passage-field-bound",
+ "description": "A passage field with a bound is invalid (SPEC §4.17).",
+ "document": "4 Payment\n\n4.1 Rent\nThe rent is $900 for each month.\n\n4.2 Fees\nThe late fee is $25.\n\n4.2.1 Waiver\nThe owner can waive the fee.\n\n4.3 Deposit\nThe deposit is $500.\n\n5 Term\nThe term is 12 months.\n",
+ "schema": {
+  "fields": {
+   "section": {
+    "type": "passage",
+    "minimum": "1"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

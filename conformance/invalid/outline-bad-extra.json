@@ -1,0 +1,26 @@
+{
+ "name": "outline-bad-extra",
+ "description": "An outline with an entry with a member that is not start, end or level is invalid (SPEC §4.17).",
+ "document": "4 Payment\n\n4.1 Rent\nThe rent is $900 for each month.\n\n4.2 Fees\nThe late fee is $25.\n\n4.2.1 Waiver\nThe owner can waive the fee.\n\n4.3 Deposit\nThe deposit is $500.\n\n5 Term\nThe term is 12 months.\n",
+ "schema": {
+  "fields": {
+   "section": {
+    "type": "passage",
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "outline": [
+  {
+   "start": 0,
+   "end": 9,
+   "level": 1,
+   "text": "4 Payment"
+  }
+ ],
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

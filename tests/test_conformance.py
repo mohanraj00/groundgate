@@ -24,6 +24,7 @@ REJECT_CODES = {
     "UNIT_INVALID", "KEY_INVALID", "NO_EVIDENCE", "SPAN_INVALID", "VALUE_NOT_IN_EVIDENCE",
     "UNIT_NOT_IN_EVIDENCE", "QUOTE_NOT_FOUND", "SOURCE_REJECTED", "DATE_OUT_OF_RANGE",
     "DATE_FORMAT_UNDECLARED", "RECORD_INVALID", "SOURCE_NOT_READ",
+    "PASSAGE_NOT_AT_HEADING", "PASSAGE_LABEL_MISMATCH", "PASSAGE_CUT_SHORT", "PASSAGE_OVERRUN",
 }  # fmt: skip
 FLAG_CODES = {
     "NON_VERBATIM_EVIDENCE", "QUALIFIED_VALUE", "SCALE_WORD", "KEY_NOT_AT_VALUE",
@@ -52,6 +53,7 @@ def _extra(v: dict[str, Any]) -> dict[str, Any]:
         "packs": v.get("packs") or (),
         "doubt": v.get("doubt"),
         "completeness": v.get("completeness"),
+        "outline": v.get("outline"),
     }
 
 
@@ -71,6 +73,9 @@ def test_vector(path: Path) -> None:
             assert got["missing"] == want["missing"], label
         if "proposer" in want:
             assert got["proposer"] == want["proposer"], label
+        assert ("passage_sha256" in got) == ("passage_sha256" in want), label
+        if "passage_sha256" in want:  # SPEC §4.17
+            assert got["passage_sha256"] == want["passage_sha256"], label
         if "parts" in want:
             parts = [{"role": x["role"], "passed": x["passed"]} for x in got["parts"]]
             assert parts == want["parts"], label
@@ -88,6 +93,7 @@ def test_vector(path: Path) -> None:
         assert "records" not in receipt
     assert receipt.get("checks") == v["expected"].get("checks")
     assert receipt.get("completeness") == v["expected"].get("completeness")
+    assert receipt.get("outline_sha256") == v["expected"].get("outline_sha256")
     args = (v["document"], v["schema"], v["candidates"], v["policy"], js)
     assert gg.verify(receipt, *args, **_extra(v)).ok
 

@@ -104,15 +104,16 @@ def render(
     pin: Mapping[str, Any] | None = None,
     places: Sequence[object] | None = None,
     completeness: Mapping[str, Any] | None = None,
+    outline: Sequence[object] | None = None,
 ) -> str:
     """Render ``receipt`` over ``text``. ``candidates`` supply the quotes shown on each card.
 
     With ``schema`` (and ``policy``, ``judgments``, ``references``, ``document_source``, ``packs``,
-    ``doubt``, ``pin``, ``places`` and ``completeness`` if they were used), the receipt is
-    re-derived first and the page says whether it matched. Without them the page says it is
-    unverified. ``pack_dir`` is a folder of pack files, and ``verify`` reads it with the same
-    rules (docs/design/packs.md §11). The page shows the cited text of a reference decision
-    only when ``references`` holds that reference.
+    ``doubt``, ``pin``, ``places``, ``completeness`` and ``outline`` if they were used), the
+    receipt is re-derived first and the page says whether it matched. Without them the page
+    says it is unverified. ``pack_dir`` is a folder of pack files, and ``verify`` reads it
+    with the same rules (docs/design/packs.md §11). The page shows the cited text of a
+    reference decision only when ``references`` holds that reference.
     """
     verified = (
         None
@@ -132,6 +133,7 @@ def render(
             pin=pin,
             places=places,
             completeness=completeness,
+            outline=outline,
         ).ok
     )
     texts: dict[str, tuple[str, Offsets]] = {}

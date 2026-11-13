@@ -19,6 +19,10 @@ Each file in `vectors/` is a complete, language-agnostic test case:
 - `completeness` (optional): the packet's completeness (SPEC §4.16). `expected.completeness` is
   then the receipt's `completeness` member. A vector without it expects a receipt with no such
   member.
+- `outline` (optional): the packet's outline (SPEC §4.17). `expected.outline_sha256` is then
+  the receipt's `outline_sha256` member. An expected decision of a `passage` field has
+  `passage_sha256`: the digest of the passage text, or null for a rejected decision. Both
+  digests are computed in `build.py` from the text that the vector states.
 
 Files in `profiles/` are profile vectors (SPEC §4.10). Each one has a `profile` in place of
 `schema`, `policy` and `packs`. `expected.profile` is the receipt's `profile` member, with the
