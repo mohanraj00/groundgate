@@ -1,0 +1,325 @@
+{
+ "name": "167-record-conflict",
+ "description": "A price list and a catalogue at set position 1 give A-100 with two prices. With the agree check on the price, both rows are SET_CONFLICT. The two rows of B-200 have one price, and a description that only one of them gives is not compared. A row of a reference that is not in the set takes no part in the check (#613).",
+ "document": "Price list 2026\nA-100 Hinge $4.20\nB-200 Bracket $12.50\n",
+ "schema": {
+  "fields": {
+   "items": {
+    "type": "record",
+    "required": false,
+    "members": {
+     "code": {
+      "type": "string",
+      "required": true
+     },
+     "description": {
+      "type": "string"
+     },
+     "unit_price": {
+      "type": "number",
+      "unit": "USD",
+      "required": true
+     }
+    }
+   }
+  },
+  "checks": [
+   {
+    "id": "same_price",
+    "check": "agree",
+    "field": "items",
+    "member": "code",
+    "compare": [
+     "unit_price",
+     "description"
+    ]
+   }
+  ]
+ },
+ "policy": null,
+ "references": [
+  {
+   "id": "catalogue",
+   "text": "Catalogue 2026\nA-100 Hinge $4.40\nB-200 Bracket $12.50\n",
+   "set": 1
+  },
+  {
+   "id": "notes",
+   "text": "Notes\nA-100 Hinge $5.00\n"
+  }
+ ],
+ "candidates": [
+  {
+   "id": "c1",
+   "field": "items.code",
+   "value": "A-100",
+   "evidence": [
+    {
+     "start": 16,
+     "end": 21,
+     "text": "A-100"
+    }
+   ],
+   "record": "p1"
+  },
+  {
+   "id": "c2",
+   "field": "items.unit_price",
+   "value": "4.20",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 28,
+     "end": 33,
+     "text": "$4.20"
+    }
+   ],
+   "record": "p1"
+  },
+  {
+   "id": "c3",
+   "field": "items.code",
+   "value": "B-200",
+   "evidence": [
+    {
+     "start": 34,
+     "end": 39,
+     "text": "B-200"
+    }
+   ],
+   "record": "p2"
+  },
+  {
+   "id": "c4",
+   "field": "items.unit_price",
+   "value": "12.50",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 48,
+     "end": 54,
+     "text": "$12.50"
+    }
+   ],
+   "record": "p2"
+  },
+  {
+   "id": "c5",
+   "field": "items.code",
+   "value": "A-100",
+   "evidence": [
+    {
+     "source": "reference",
+     "ref": "catalogue",
+     "start": 15,
+     "end": 20,
+     "text": "A-100"
+    }
+   ],
+   "record": "q1"
+  },
+  {
+   "id": "c6",
+   "field": "items.unit_price",
+   "value": "4.40",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "reference",
+     "ref": "catalogue",
+     "start": 27,
+     "end": 32,
+     "text": "$4.40"
+    }
+   ],
+   "record": "q1"
+  },
+  {
+   "id": "c7",
+   "field": "items.code",
+   "value": "B-200",
+   "evidence": [
+    {
+     "source": "reference",
+     "ref": "catalogue",
+     "start": 33,
+     "end": 38,
+     "text": "B-200"
+    }
+   ],
+   "record": "q2"
+  },
+  {
+   "id": "c8",
+   "field": "items.unit_price",
+   "value": "12.50",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "reference",
+     "ref": "catalogue",
+     "start": 47,
+     "end": 53,
+     "text": "$12.50"
+    }
+   ],
+   "record": "q2"
+  },
+  {
+   "id": "c9",
+   "field": "items.description",
+   "value": "Bracket",
+   "evidence": [
+    {
+     "source": "reference",
+     "ref": "catalogue",
+     "start": 39,
+     "end": 46,
+     "text": "Bracket"
+    }
+   ],
+   "record": "q2"
+  },
+  {
+   "id": "c10",
+   "field": "items.code",
+   "value": "A-100",
+   "evidence": [
+    {
+     "source": "reference",
+     "ref": "notes",
+     "start": 6,
+     "end": 11,
+     "text": "A-100"
+    }
+   ],
+   "record": "n1"
+  },
+  {
+   "id": "c11",
+   "field": "items.unit_price",
+   "value": "5.00",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "reference",
+     "ref": "notes",
+     "start": 18,
+     "end": 23,
+     "text": "$5.00"
+    }
+   ],
+   "record": "n1"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "RECORD_NOT_ADMITTED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "RECORD_NOT_ADMITTED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "RECORD_NOT_ADMITTED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "RECORD_NOT_ADMITTED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": [],
+  "records": [
+   {
+    "field": "items",
+    "record": "n1",
+    "outcome": "admitted",
+    "codes": [],
+    "source": "reference",
+    "ref": "notes"
+   },
+   {
+    "field": "items",
+    "record": "p1",
+    "outcome": "needs_verification",
+    "codes": [
+     "SET_CONFLICT"
+    ]
+   },
+   {
+    "field": "items",
+    "record": "p2",
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "field": "items",
+    "record": "q1",
+    "outcome": "needs_verification",
+    "codes": [
+     "SET_CONFLICT"
+    ]
+   },
+   {
+    "field": "items",
+    "record": "q2",
+    "outcome": "admitted",
+    "codes": [],
+    "members": {
+     "code": "B-200",
+     "description": "Bracket",
+     "unit_price": "12.5"
+    }
+   }
+  ],
+  "checks": [
+   {
+    "id": "same_price",
+    "holds": false,
+    "records": [
+     "p1",
+     "q1"
+    ]
+   }
+  ]
+ }
+}

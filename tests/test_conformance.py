@@ -23,7 +23,7 @@ REJECT_CODES = {
     "CANDIDATE_INVALID", "FIELD_UNKNOWN", "NULL_STRING_LITERAL", "TYPE_INVALID", "RANGE_INVALID",
     "UNIT_INVALID", "KEY_INVALID", "NO_EVIDENCE", "SPAN_INVALID", "VALUE_NOT_IN_EVIDENCE",
     "UNIT_NOT_IN_EVIDENCE", "QUOTE_NOT_FOUND", "SOURCE_REJECTED", "DATE_OUT_OF_RANGE",
-    "DATE_FORMAT_UNDECLARED",
+    "DATE_FORMAT_UNDECLARED", "RECORD_INVALID",
 }  # fmt: skip
 FLAG_CODES = {
     "NON_VERBATIM_EVIDENCE", "QUALIFIED_VALUE", "SCALE_WORD", "KEY_NOT_AT_VALUE",
@@ -32,7 +32,11 @@ FLAG_CODES = {
     "SCALE_CITATION_INVALID", "UNIT_CITATION_INVALID", "FIELD_CITATION_INVALID", "EVIDENCE_QUOTED",
     "EVIDENCE_STATED", "VALUE_DERIVED", "ADMITTED_BY_POLICY", "RELATION_FAILED",
     "COLUMN_NOT_AT_VALUE", "MARKER_OTHER_FIELD", "READ_DOUBT", "SIGN_DROPPED",
-    "NOT_CORROBORATED", "OTHER_SPAN", "DATE_AMBIGUOUS",
+    "NOT_CORROBORATED", "OTHER_SPAN", "DATE_AMBIGUOUS", "RECORD_NOT_ADMITTED",
+}  # fmt: skip
+RECORD_CODES = {
+    "RECORD_MEMBER_MISSING", "RECORD_MEMBER_CONFLICT", "RECORD_SOURCE_MIXED",
+    "SET_REPLACES_NOTHING", "SET_DUPLICATE", "SET_CONFLICT",
 }  # fmt: skip
 
 
@@ -74,6 +78,14 @@ def test_vector(path: Path) -> None:
             assert want["evidence_units"] is not None or "evidence_units" not in got, label
     assert receipt["coverage"] == v["expected"]["coverage"]
     assert receipt.get("relations") == v["expected"].get("relations")
+    if "records" in v["expected"]:  # SPEC §4.12: the members, replaced, source and ref given
+        got_records = receipt["records"]
+        assert len(got_records) == len(v["expected"]["records"])
+        for got_line, want_line in zip(got_records, v["expected"]["records"], strict=True):
+            assert {k: got_line[k] for k in want_line} == want_line, want_line["record"]
+    else:
+        assert "records" not in receipt
+    assert receipt.get("checks") == v["expected"].get("checks")
     args = (v["document"], v["schema"], v["candidates"], v["policy"], js)
     assert gg.verify(receipt, *args, **_extra(v)).ok
 
@@ -187,6 +199,10 @@ def test_every_code_has_two_vectors() -> None:
                 files[code].add(path.stem)
         for cov in v["expected"]["coverage"]:
             files[cov["code"]].add(path.stem)
-    for code in REJECT_CODES | FLAG_CODES | {"REQUIRED_FIELD_MISSING"}:
+        for line in v["expected"].get("records", []):
+            for code in line["codes"]:
+                files[code].add(path.stem)
+    every = REJECT_CODES | FLAG_CODES | RECORD_CODES | {"REQUIRED_FIELD_MISSING"}
+    for code in every:
         assert len(files[code]) >= 2, f"{code} appears in {sorted(files[code])}"
-    assert set(files) <= REJECT_CODES | FLAG_CODES | {"REQUIRED_FIELD_MISSING"}
+    assert set(files) <= every

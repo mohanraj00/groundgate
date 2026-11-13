@@ -60,8 +60,8 @@ supplies. A reference can hold only the part of its source that matters.
 ```
 
 `id` is a non-blank string, unique in the packet. `text` is a non-empty string in NFC. `source` is
-a non-blank string or null (default). Other keys, or a malformed reference, make the packet
-invalid. A reference's digest is of kind `reference` over `{"text": <text>}`.
+a non-blank string or null (default). A reference can also have `set`, its position in the
+document set (§4.13). Other keys, or a malformed reference, make the packet invalid. A reference's digest is of kind `reference` over `{"text": <text>}`.
 
 A packet may also carry **packs**: the vocabulary packs and kind packs that the schema names
 (§2.3, §4.8, §4.9), and the vocabulary packs that those kind packs need, as pack objects. Each
@@ -85,7 +85,7 @@ boundaries. Heuristic windows in §4 are measured in Unicode code points.
 
 ```text
 {"fields": {"<name>": {
-  "type": "number" | "integer" | "string" | "date",
+  "type": "number" | "integer" | "string" | "date" | "record",
   "unit": "<unit code>" | null,
   "comparator": "eq" | "gt" | "ge" | "lt" | "le" | "approx" | "range",
   "minimum": "<decimal>" | "<date>" | null,
@@ -101,6 +101,8 @@ boundaries. Heuristic windows in §4 are measured in Unicode code points.
   "template": "<pack id>/<field name>"
 }},
  "units": {"<unit code>": {"prefix": ["<surface>"], "suffix": ["<surface>"]}},
+ "checks": [{"id": "<name>", "check": "replace" | "unique" | "agree",
+             "field": "<record field>", "member": "<member>", "compare": ["<member>"]}],
  "relations": [{"id": "<name>", "total": "<field>",
                 "parts": [{"field": "<field>", "factor": "<decimal>"}],
                 "tolerance": "<decimal>"}],
@@ -118,6 +120,10 @@ applies to the name of a field template in a kind pack (§4.9).
 A `date` field (#612) holds a calendar date. Its rules are in §4.11: `formats` lists the
 date formats that the field accepts, and `minimum` and `maximum` are dates in the normal form.
 Only a `date` field has `formats`, and it must have it.
+
+A `record` field (#613) holds an array of records. It has `members` in place of the other
+members of a field, and its rules are in §4.12. `checks` lists the checks across the documents
+of a set (§4.13).
 
 `description` is optional; when present, it must be a non-blank string, with no length limit.
 It has no effect on a decision, but is part of the schema digest.
@@ -180,7 +186,8 @@ A relation is an object with only these members:
 
 The packet is also invalid when `relations` is not a list, a relation breaks the rules above, or:
 
-- a field of the relation has the type `string` or `date`, or `multiple` true;
+- a field of the relation has the type `string` or `date`, or `multiple` true, or is a member
+  field (§4.12);
 - the total is also a part, or two parts name the same field;
 - the field of a part has a `unit` other than the unit of the total's field, and the part gives no
   `factor`. Null counts as a unit here, so a part without a unit under a total in USD needs a
@@ -192,7 +199,7 @@ relations, or with an empty list, has no `relations` member after defaults, so i
 change.
 
 The packet is invalid when the schema is not an object with a `fields` object, has keys other
-than `fields`, `units`, `relations` and `packs`, or a field has a field name that breaks the
+than `fields`, `units`, `relations`, `checks` and `packs`, or a field has a field name that breaks the
 rule above, is not an object, has other keys, has a `type` or `comparator` not listed above, a
 `unit` that is not a string or null, a bound that is not a decimal string or an integer that
 reads as a number (§4.1, so `"1,000"` is accepted), or a `required` or `multiple` that is not a
@@ -318,8 +325,8 @@ reference items are **role items**. External and knowledge items are **outside i
 `candidate.schema.json` in the package (`candidate_schema()` in the reference implementation) is
 a JSON Schema for one candidate. Step 1 is the definition: the schema does not check that a `ref`
 names a reference in the packet, that two document or reference items other than field items have
-different roles, that a candidate cites at most 8 field items, or that an integer has no fraction
-(`2.0`).
+different roles, that a candidate cites at most 8 field items, that a `record` is a string
+(§4.12), or that an integer has no fraction (`2.0`).
 
 ### 2.6 Judgments
 
@@ -360,10 +367,11 @@ later check runs. `value` means the candidate's value parsed per its field type.
 | 5 | `DATE_OUT_OF_RANGE` | On a `date` field, `value` is before `minimum` or after `maximum` (§4.11). |
 | 6 | `UNIT_INVALID` | The candidate's `unit` differs from the field's `unit` (both absent is a match). |
 | 7 | `KEY_INVALID` | The field has `keys`, and the candidate's `key` is absent or not exactly one of them. |
+| 7 | `RECORD_INVALID` | The field is a member field (§4.12), and the candidate's `record` is absent or blank. |
 | 8 | `NO_EVIDENCE` | The candidate has no value item and no outside item. |
 
 Step 1 rejects when the candidate is not an object, `field` is not a string, `value` is missing or
-not a string/integer, `unit`, `key` or `proposer` is not a string, `proposer` is blank (§4.4), `confidence` is not a number in [0, 1],
+not a string/integer, `unit`, `key`, `record` or `proposer` is not a string, `proposer` is blank (§4.4), `confidence` is not a number in [0, 1],
 `search_region` is present but not an object with integer `start` and `end`, or `evidence` is
 present but not an object or a list of objects. It also rejects when an evidence item:
 
@@ -514,6 +522,7 @@ rejected by steps 1–11 or on the outside path.
 | `OTHER_SPAN` | The field is not `multiple`, and a candidate of another proposer, for the same `key` on a keyed field, passed with the same canonical value and an evidence span that does not overlap (below). At least one of the two proposers is `corroborate`. Set on both (spec 0.12, #509). |
 | `RELATION_FAILED` | A relation that names the candidate's field fails at the candidate's key (step 13, §3.4). |
 | `MODEL_DOUBT` | An applying judgment doubts the value (step 12). |
+| `RECORD_NOT_ADMITTED` | The candidate is of a member field, and its record is not admitted (steps 14 and 15, §4.12). |
 
 **Agreement (spec 0.12, #509).** Two candidates have **another proposer** when their
 `proposer` values differ. A candidate with no `proposer` counts as one more proposer, with no
@@ -548,11 +557,13 @@ flag.
 
 The outcome then follows the flags that are left, as above. When `MODEL_CLEARED` removes
 `KEY_NOT_AT_VALUE`, `key` stays in `missing`. Step 13 (§3.4) runs after this step and can add
-`RELATION_FAILED`.
+`RELATION_FAILED`. Steps 14 and 15 (§4.12, §4.13) run after step 13 and can add
+`RECORD_NOT_ADMITTED`.
 
 **Coverage.** For every `required` field with no candidate that is `admitted` or
 `needs_verification`, the receipt lists `{"field": <name>, "code": "REQUIRED_FIELD_MISSING"}`.
-Coverage is per field, not per key.
+Coverage is per field, not per key. For a `required` record field, the list has the entry when
+the field has no record that is not rejected (§4.12). A member field is never in coverage.
 
 ### 3.4 Relations (step 13)
 
@@ -1570,6 +1581,125 @@ With the text "in force from 1 July 2025", the candidate value `2025-07-01` with
 `1 July 2025` is admitted. The value `2025-01-07` is rejected with `VALUE_NOT_IN_EVIDENCE`, and
 the value `2101-01-01` with `DATE_OUT_OF_RANGE`.
 
+### 4.12 Records (step 14)
+
+A `record` field (#613) holds an array of records, for example the rows of a table. Records add
+no reading rule. Each member value is decided by steps 1 to 12 as the value of a field, and
+step 14 reads only the decisions.
+
+```json
+{"fields": {"items": {"type": "record", "required": true, "members": {
+  "code": {"type": "string", "required": true},
+  "description": {"type": "string"},
+  "unit_price": {"type": "number", "unit": "USD", "required": true}}}}}
+```
+
+A `record` field has only the members `type`, `members`, `required` and `description`.
+`members` is an object of 1 to 64 **members**. A member name follows the rule of a field name
+(§2.3). A member is a field object with the rules of §2.3, and these limits: it has no `keys`,
+no `template` and no `multiple`, and its `type` is not `record`. The `required` of a member says
+that each record needs a value of that member. The `required` of the record field says that the
+receipt needs at least one record that is not rejected (Coverage, §3.3). The packet is invalid
+when a `record` field or a member breaks these rules.
+
+The **member field** of the member `code` of the record field `items` is `items.code`. A
+candidate for a member names the member field in `field`, and gives `record`: the id of its
+record, a non-blank string that the extractor chooses. Two candidates with the same member field
+and the same `record` give values of one member of one record. The record ids are compared as
+exact strings, and they are scoped to the record field.
+
+- Step 1 rejects a candidate whose `record` is present and is not a string.
+- Step 7 rejects a candidate of a member field whose `record` is absent or blank (§4.4), with
+  `RECORD_INVALID`. On a field that is not a member field, `record` is ignored.
+- A record field is not a field that takes values: a candidate whose `field` names a record
+  field gets `FIELD_UNKNOWN`.
+- A member field is never in a relation (§2.3, §3.4): the packet is invalid.
+- `CONFLICTING_CANDIDATES` and `OTHER_SPAN` do not apply on a member field, because each record
+  has its own values. Step 14 checks two values of one member of one record.
+
+**The records.** The records of a record field are the record ids of the decisions of its
+member fields that have a `record` (§5), rejected decisions also. For each record, step 14
+reads the decisions of its member fields that passed (§3.3). The **value** of a member is the
+one canonical value of these decisions, or null when no decision of that member passed or when
+they give two canonical values. The **text** of a decision is the document, a reference by its
+`ref`, or, on the outside path, its own text that no other decision shares. The record codes
+are, in this order:
+
+| Code | When |
+|---|---|
+| `RECORD_MEMBER_MISSING` | A required member has no decision that passed. |
+| `RECORD_MEMBER_CONFLICT` | Two decisions of one member passed with two canonical values. |
+| `RECORD_SOURCE_MIXED` | The decisions that passed are in two or more texts. |
+
+The checks of the document set (§4.13, step 15) can add `SET_REPLACES_NOTHING`,
+`SET_DUPLICATE` and `SET_CONFLICT`, in this order, after the codes above. The record
+**outcome** is then:
+
+1. `rejected` when its codes hold `RECORD_MEMBER_MISSING`.
+2. Otherwise `needs_verification` when it has a code, or a decision that passed is
+   `needs_verification`.
+3. Otherwise `admitted`.
+
+So a record is admitted only when each required member has an admitted value, and each value
+that passed is admitted. After step 15, each decision that passed, of a record that is not
+admitted, gets the flag `RECORD_NOT_ADMITTED` (§3.3). So a value of an incomplete or doubtful
+record never stays admitted alone.
+
+### 4.13 Document sets (step 15)
+
+A **document set** (#613) is the document and the later documents that amend it, such as a price
+list and its corrigendum. The document has the position 0. A reference (§2.1) with the member
+`set` is a later document of the set at that position. `set` is an integer from 1 to 1,000,000.
+No two references have the same `set`. A reference without `set` is not in the set. The packet
+is invalid when `set` breaks these rules.
+
+```json
+{"id": "corrigendum-1", "text": "Corrigendum. Item B-200: the unit price is $14.00.", "set": 1}
+```
+
+The schema member `checks` is a list of **checks** across the documents of the set:
+
+```json
+{"checks": [{"id": "corrigendum", "check": "replace", "field": "items", "member": "code"},
+            {"id": "one_code", "check": "unique", "field": "items", "member": "code"}]}
+```
+
+A check is an object with only these members:
+
+- `id`: a non-blank string. No two checks have the same `id`.
+- `check`: `replace`, `unique` or `agree`. The list of kinds is closed.
+- `field`: the name of a `record` field of the schema.
+- `member`: the name of a required member of that field.
+- `compare`: only and always on `agree`. A non-empty list of member names of the field, with no
+  member two times, and not `member`.
+
+The packet is also invalid when `checks` is not a list. After defaults, the checks are as given.
+A schema with no checks, or with an empty list, has no `checks` member after defaults, so its
+digest does not change.
+
+Step 15 reads the **set records** of each check: the records of its field that are not rejected
+(§4.12), whose text is the document or a reference in the set, and whose value of `member` is
+not null. The position of a set record is the position of its text. Two set records **match**
+when they have the same value of `member`.
+
+1. Each `replace` check runs first. A set record is **replaced** when a set record at a higher
+   position matches it. A set record at a position above 0 that matches no set record at a lower
+   position gets `SET_REPLACES_NOTHING`: the later document changes a record that the set does
+   not have.
+2. Each `unique` check then reads the set records that no `replace` check of the same field
+   replaced. Two or more of them that match each get `SET_DUPLICATE`.
+3. Each `agree` check reads the same set records. A group of matching set records at two or more
+   positions fails when one `compare` member has two different values that are not null. Each record of
+   the group gets `SET_CONFLICT`.
+
+A replaced record keeps its outcome: it is a true record of its document. The receipt shows it
+with `replaced` true (§5). The checks never read the text, and a check that holds admits
+nothing.
+
+With the price list "B-200 Bracket $12.50" in the document and the corrigendum above at `set` 1,
+the corrigendum record of `B-200` replaces the price list record, and `one_code` holds. Without
+the `replace` check, the two records match, and each gets `SET_DUPLICATE`.
+
 ## 5. Receipt
 
 ```json
@@ -1593,7 +1723,8 @@ the value `2101-01-01` with `DATE_OUT_OF_RANGE`.
 `document.source` is the document source, or null. `document.doubt_sha256` is the digest of the
 packet's doubt list (§2.1), or null when the list is empty, so a receipt shows which doubt spans
 its decisions read (spec 0.12, #535). `references` lists each reference as
-`{"id", "sha256", "source"}`, sorted by `id`. `packs` lists each pack that the schema names, and
+`{"id", "sha256", "source"}`, sorted by `id`. A reference in the document set (§4.13) also has
+`set`, its position. `packs` lists each pack that the schema names, and
 each pack that a named kind pack needs, as `{"id", "type", "version", "sha256"}`, sorted by `id`.
 `type` is `vocabulary` or `kind`. It lists a named built-in pack such as `finance`, but never the
 base pack.
@@ -1608,7 +1739,9 @@ code, or the flag codes in the order of the table in §3.3, followed by `EVIDENC
 `value` is the canonical value and `unit` the candidate's unit, each `null` when the candidate does
 not provide a parseable one. `key` is the candidate's `key` when its field has `keys` and the key
 is a string, otherwise `null`. `proposer` is the candidate's `proposer` when it is a non-blank
-string, otherwise `null` (spec 0.12, #509).
+string, otherwise `null` (spec 0.12, #509). A decision of a member field (§4.12) whose
+candidate has a non-blank `record` string has the member `record`, with that string. Other
+decisions do not have the member.
 
 - `source` is the kind of the item that the decision rests on: the value item's on the checked
   path from step 9 on, the deciding item's on the outside path, and for a candidate rejected
@@ -1689,7 +1822,27 @@ then by `key` in code point order. `key` is null for a relation over fields with
 `holds` is a boolean. `difference` and `allowance` are canonical decimals (§4.1), or both null
 when the relation fails at the digit limit (§3.4). A relation that did not apply is not listed,
 so the list can be empty. A receipt of a schema without relations
-has no `relations` member. `receipt_sha256` is the digest of kind `receipt` over the receipt without its
+has no `relations` member.
+
+When the schema has a `record` field (§4.12), the receipt has a member `records`: one line for
+each record, sorted by `field`, then by `record` in code point order.
+
+```json
+{"field": "items", "record": "r1", "outcome": "admitted", "codes": [],
+ "source": "document", "ref": null, "replaced": false,
+ "members": {"code": "B-200", "description": "Bracket", "unit_price": "12.5"}}
+```
+
+`codes` lists the record codes in the order of §4.12. `source` and `ref` name the one text of the
+values that passed: `source` is the decision `source`, and `ref` the reference id or null. Both
+are null when the record has no value that passed, or has `RECORD_SOURCE_MIXED`. `replaced` is
+true when a `replace` check replaced the record (§4.13). `members` has each member of the field
+with its value (§4.12), or null.
+
+When the schema has checks (§4.13), the receipt has a member `checks`: each check as
+`{"id", "holds", "records"}`, sorted by `id`. `records` lists the ids of the records that the
+check gave a code, in code point order. `holds` is true when the list is empty. A receipt of a
+schema without checks has no `checks` member. `receipt_sha256` is the digest of kind `receipt` over the receipt without its
 `receipt_sha256` key.
 
 ### 5.1 Admitted facts export
@@ -1741,7 +1894,7 @@ the prefix is ASCII and `JCS(obj)` is UTF-8.
 Semantic correctness (whether the sentence describes the field) by groundgate itself: a recorded
 `field_match` judgment can only add doubt, and a field item checks only the field's own aliases.
 Calling a model, fetching a URL, times of day and dates in formats other than those of §4.11,
-arrays of records, arithmetic over several numbers (a
+records inside a record, checks across documents other than those of §4.13, arithmetic over several numbers (a
 relation of §3.4 is the one exception, and it never admits a value), the
 subject of the document (groundgate assumes one subject per document), and PDF geometry (page and
 bounding box) as evidence. Adapters may convert richer evidence into spans. Number formats other

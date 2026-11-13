@@ -1,0 +1,446 @@
+{
+ "name": "166-record-set",
+ "description": "A price list and its corrigendum are a document set: the corrigendum is a reference at set position 1. With the replace check, the corrigendum row of B-200 replaces the price list row, and the unique check then finds B-200 one time. The corrigendum row of D-400 changes a row that the price list does not have, so it is SET_REPLACES_NOTHING. The two rows of C-300 in the price list are SET_DUPLICATE. A corrigendum row without its price is RECORD_MEMBER_MISSING, and a row with a code from the price list and a price from the corrigendum is RECORD_SOURCE_MIXED and takes no part in the checks (#613).",
+ "document": "Price list 2026\nA-100 Hinge $4.20\nB-200 Bracket $12.50\nC-300 Latch $7.75\nC-300 Latch, brass $7.95\n",
+ "schema": {
+  "fields": {
+   "items": {
+    "type": "record",
+    "required": false,
+    "members": {
+     "code": {
+      "type": "string",
+      "required": true
+     },
+     "description": {
+      "type": "string"
+     },
+     "unit_price": {
+      "type": "number",
+      "unit": "USD",
+      "required": true
+     }
+    }
+   }
+  },
+  "checks": [
+   {
+    "id": "corrigendum",
+    "check": "replace",
+    "field": "items",
+    "member": "code"
+   },
+   {
+    "id": "one_code",
+    "check": "unique",
+    "field": "items",
+    "member": "code"
+   }
+  ]
+ },
+ "policy": null,
+ "references": [
+  {
+   "id": "corr-1",
+   "text": "Corrigendum 1 to the price list 2026.\nB-200 Bracket: read $14.00.\nD-400 Clamp: read $3.10.\nE-500 Hook.\n",
+   "set": 1
+  }
+ ],
+ "candidates": [
+  {
+   "id": "b1",
+   "field": "items.code",
+   "value": "A-100",
+   "evidence": [
+    {
+     "start": 16,
+     "end": 21,
+     "text": "A-100"
+    }
+   ],
+   "record": "p1"
+  },
+  {
+   "id": "b2",
+   "field": "items.unit_price",
+   "value": "4.20",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 28,
+     "end": 33,
+     "text": "$4.20"
+    }
+   ],
+   "record": "p1"
+  },
+  {
+   "id": "b3",
+   "field": "items.code",
+   "value": "B-200",
+   "evidence": [
+    {
+     "start": 34,
+     "end": 39,
+     "text": "B-200"
+    }
+   ],
+   "record": "p2"
+  },
+  {
+   "id": "b4",
+   "field": "items.unit_price",
+   "value": "12.50",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 48,
+     "end": 54,
+     "text": "$12.50"
+    }
+   ],
+   "record": "p2"
+  },
+  {
+   "id": "b5",
+   "field": "items.code",
+   "value": "C-300",
+   "evidence": [
+    {
+     "start": 55,
+     "end": 60,
+     "text": "C-300"
+    }
+   ],
+   "record": "p3"
+  },
+  {
+   "id": "b6",
+   "field": "items.unit_price",
+   "value": "7.75",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 67,
+     "end": 72,
+     "text": "$7.75"
+    }
+   ],
+   "record": "p3"
+  },
+  {
+   "id": "b7",
+   "field": "items.code",
+   "value": "C-300",
+   "evidence": [
+    {
+     "start": 73,
+     "end": 78,
+     "text": "C-300"
+    }
+   ],
+   "record": "p4"
+  },
+  {
+   "id": "b8",
+   "field": "items.unit_price",
+   "value": "7.95",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 92,
+     "end": 97,
+     "text": "$7.95"
+    }
+   ],
+   "record": "p4"
+  },
+  {
+   "id": "b9",
+   "field": "items.code",
+   "value": "B-200",
+   "evidence": [
+    {
+     "source": "reference",
+     "ref": "corr-1",
+     "start": 38,
+     "end": 43,
+     "text": "B-200"
+    }
+   ],
+   "record": "k1"
+  },
+  {
+   "id": "b10",
+   "field": "items.unit_price",
+   "value": "14.00",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "reference",
+     "ref": "corr-1",
+     "start": 58,
+     "end": 64,
+     "text": "$14.00"
+    }
+   ],
+   "record": "k1"
+  },
+  {
+   "id": "b11",
+   "field": "items.code",
+   "value": "D-400",
+   "evidence": [
+    {
+     "source": "reference",
+     "ref": "corr-1",
+     "start": 66,
+     "end": 71,
+     "text": "D-400"
+    }
+   ],
+   "record": "k2"
+  },
+  {
+   "id": "b12",
+   "field": "items.unit_price",
+   "value": "3.10",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "reference",
+     "ref": "corr-1",
+     "start": 84,
+     "end": 89,
+     "text": "$3.10"
+    }
+   ],
+   "record": "k2"
+  },
+  {
+   "id": "b13",
+   "field": "items.code",
+   "value": "E-500",
+   "evidence": [
+    {
+     "source": "reference",
+     "ref": "corr-1",
+     "start": 91,
+     "end": 96,
+     "text": "E-500"
+    }
+   ],
+   "record": "k3"
+  },
+  {
+   "id": "b14",
+   "field": "items.code",
+   "value": "A-100",
+   "evidence": [
+    {
+     "start": 16,
+     "end": 21,
+     "text": "A-100"
+    }
+   ],
+   "record": "m1"
+  },
+  {
+   "id": "b15",
+   "field": "items.unit_price",
+   "value": "14.00",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "reference",
+     "ref": "corr-1",
+     "start": 58,
+     "end": 64,
+     "text": "$14.00"
+    }
+   ],
+   "record": "m1"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "RECORD_NOT_ADMITTED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "RECORD_NOT_ADMITTED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "RECORD_NOT_ADMITTED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "RECORD_NOT_ADMITTED"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "RECORD_NOT_ADMITTED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "RECORD_NOT_ADMITTED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "RECORD_NOT_ADMITTED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "RECORD_NOT_ADMITTED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "RECORD_NOT_ADMITTED"
+    ]
+   }
+  ],
+  "coverage": [],
+  "records": [
+   {
+    "field": "items",
+    "record": "k1",
+    "outcome": "admitted",
+    "codes": [],
+    "source": "reference",
+    "ref": "corr-1",
+    "replaced": false,
+    "members": {
+     "code": "B-200",
+     "description": null,
+     "unit_price": "14"
+    }
+   },
+   {
+    "field": "items",
+    "record": "k2",
+    "outcome": "needs_verification",
+    "codes": [
+     "SET_REPLACES_NOTHING"
+    ],
+    "source": "reference",
+    "ref": "corr-1"
+   },
+   {
+    "field": "items",
+    "record": "k3",
+    "outcome": "rejected",
+    "codes": [
+     "RECORD_MEMBER_MISSING"
+    ]
+   },
+   {
+    "field": "items",
+    "record": "m1",
+    "outcome": "needs_verification",
+    "codes": [
+     "RECORD_SOURCE_MIXED"
+    ],
+    "source": null,
+    "ref": null
+   },
+   {
+    "field": "items",
+    "record": "p1",
+    "outcome": "admitted",
+    "codes": [],
+    "replaced": false
+   },
+   {
+    "field": "items",
+    "record": "p2",
+    "outcome": "admitted",
+    "codes": [],
+    "source": "document",
+    "ref": null,
+    "replaced": true,
+    "members": {
+     "code": "B-200",
+     "description": null,
+     "unit_price": "12.5"
+    }
+   },
+   {
+    "field": "items",
+    "record": "p3",
+    "outcome": "needs_verification",
+    "codes": [
+     "SET_DUPLICATE"
+    ]
+   },
+   {
+    "field": "items",
+    "record": "p4",
+    "outcome": "needs_verification",
+    "codes": [
+     "SET_DUPLICATE"
+    ]
+   }
+  ],
+  "checks": [
+   {
+    "id": "corrigendum",
+    "holds": false,
+    "records": [
+     "k2"
+    ]
+   },
+   {
+    "id": "one_code",
+    "holds": false,
+    "records": [
+     "p3",
+     "p4"
+    ]
+   }
+  ]
+ }
+}

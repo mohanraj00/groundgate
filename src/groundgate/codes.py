@@ -11,6 +11,7 @@ REJECT = {
     "DATE_OUT_OF_RANGE": "The date is before the field's minimum or after its maximum.",
     "UNIT_INVALID": "The unit is not the field's unit.",
     "KEY_INVALID": "The field has keys, and the key is missing or not one of them.",
+    "RECORD_INVALID": "The field is a member of a record field, and the candidate has no record.",
     "NO_EVIDENCE": "The candidate gives no value item and no outside evidence.",
     "SPAN_INVALID": "The evidence span is outside its text or splits a character.",
     "QUOTE_NOT_FOUND": "The quoted value text does not occur in the document or reference.",
@@ -54,6 +55,7 @@ FLAG = {
         "A relation of the schema, such as a total and its parts, does not hold for these values."
     ),
     "MODEL_DOUBT": "A recorded judgment of the policy's judge doubts this value.",
+    "RECORD_NOT_ADMITTED": "The record of this value is not admitted.",
 }
 
 INFO = {
@@ -68,4 +70,13 @@ COVERAGE = {
     "REQUIRED_FIELD_MISSING": "No candidate for this required field was admitted or flagged.",
 }
 
-DESCRIPTIONS = {**REJECT, **FLAG, **INFO, **COVERAGE}
+RECORD = {
+    "RECORD_MEMBER_MISSING": "A required member of the record has no value that passed.",
+    "RECORD_MEMBER_CONFLICT": "A member of the record has two different values.",
+    "RECORD_SOURCE_MIXED": "The values of the record cite two or more texts.",
+    "SET_REPLACES_NOTHING": "A later document of the set changes a record that no earlier one has.",
+    "SET_DUPLICATE": "Another record of the document set has the same value of the check member.",
+    "SET_CONFLICT": "Two documents of the set give this record with different values.",
+}
+
+DESCRIPTIONS = {**REJECT, **FLAG, **INFO, **COVERAGE, **RECORD}

@@ -1,0 +1,43 @@
+{
+ "name": "check-compare-on-unique",
+ "description": "The packet has a unique check with compare (SPEC §4.12, §4.13, #613).",
+ "document": "Price list 2026\nA-100 Hinge $4.20\nB-200 Bracket $12.50\nC-300 Latch $7.75\nFee: delivery $9.00\n",
+ "schema": {
+  "fields": {
+   "items": {
+    "type": "record",
+    "required": false,
+    "members": {
+     "code": {
+      "type": "string",
+      "required": true
+     },
+     "description": {
+      "type": "string"
+     },
+     "unit_price": {
+      "type": "number",
+      "unit": "USD",
+      "required": true
+     }
+    }
+   }
+  },
+  "checks": [
+   {
+    "id": "one_code",
+    "check": "unique",
+    "field": "items",
+    "member": "code",
+    "compare": [
+     "unit_price"
+    ]
+   }
+  ]
+ },
+ "policy": null,
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

@@ -42,10 +42,14 @@ def vector(
     packs: list[dict[str, Any]] | None = None,
     doubt: list[dict[str, Any]] | None = None,
     export: list[dict[str, Any]] | None = None,
+    records: list[dict[str, Any]] | None = None,
+    checks: list[tuple[str, bool, list[str]]] | None = None,
 ) -> None:
     """``relations`` is the receipt's relation results (SPEC §5), each as (id, key, holds,
     difference, allowance), in receipt order; None when the schema has no relations. ``doubt``
-    is the packet's doubt list (SPEC §2.1), each entry a quote marker with a ``confidence``."""
+    is the packet's doubt list (SPEC §2.1), each entry a quote marker with a ``confidence``.
+    ``records`` is the receipt's record lines (SPEC §4.12, §5), each with the members to compare,
+    and ``checks`` the check results (SPEC §4.13) as (id, holds, records)."""
     VECTORS.append(
         {
             "name": name,
@@ -67,6 +71,10 @@ def vector(
             "packs": packs,
             "doubt": doubt,
             "export": export,
+            "records": records,
+            "checks": None
+            if checks is None
+            else [{"id": i, "holds": h, "records": r} for i, h, r in checks],
         }
     )
 
@@ -6831,6 +6839,351 @@ INVALID.append(
 )
 
 
+# ---------------------------------------------------------------- records and document sets (SPEC §4.12, §4.13, #613)
+# A record line is (field, record, outcome, codes), with `members` and `replaced` where given.
+RNA = (REVIEW, ["RECORD_NOT_ADMITTED"])
+PRICE = {"type": "number", "unit": "USD", "required": True}
+
+
+def items(required: bool = False) -> dict[str, Any]:
+    """The rows of a price list (SPEC §4.12)."""
+    return {
+        "type": "record",
+        "required": required,
+        "members": {
+            "code": {"type": "string", "required": True},
+            "description": {"type": "string"},
+            "unit_price": PRICE,
+        },
+    }
+
+
+def m(
+    cid: str,
+    member: str,
+    record: Any,
+    value: Any,
+    quote: str,
+    n: int = 1,
+    expect: tuple[Any, ...] = ADMIT,
+    ref: str | None = None,
+) -> dict[str, Any]:
+    """A candidate for the member ``member`` of ``items`` in ``record``. ``ref`` cites a
+    reference."""
+    where = {} if ref is None else {"source": "reference", "ref": ref}
+    unit = "USD" if member == "unit_price" else None
+    return c(cid, f"items.{member}", value, unit, [q(quote, n, **where)], expect, record=record)
+
+
+def rec(
+    record: str,
+    outcome: str = "admitted",
+    codes: list[str] | None = None,
+    field: str = "items",
+    **want: Any,
+) -> dict[str, Any]:
+    """A record line of the receipt (SPEC §5). ``want`` can give ``members``, ``replaced``,
+    ``source`` and ``ref``."""
+    return {"field": field, "record": record, "outcome": outcome, "codes": codes or [], **want}
+
+
+PRICE_DOC = (
+    "Price list 2026\nA-100 Hinge $4.20\nB-200 Bracket $12.50\nC-300 Latch $7.75\n"
+    "Fee: delivery $9.00\n"
+)
+vector(
+    "165-record-members",
+    "A record field holds the rows of a price list. Each member candidate names its record and is "
+    "decided as the value of a field. A record with each required member admitted is admitted, "
+    "also when an optional member has no value. A row without its code is RECORD_MEMBER_MISSING "
+    "and rejected, and a row with two codes is RECORD_MEMBER_CONFLICT. Each value that passed, of "
+    "a record that is not admitted, gets RECORD_NOT_ADMITTED. A member candidate with no record is "
+    "RECORD_INVALID, and a candidate for the record field itself is FIELD_UNKNOWN. A required "
+    "record field with no record that is not rejected is in coverage (#613).",
+    PRICE_DOC,
+    {"fields": {
+        "items": items(required=True),
+        "fees": {"type": "record", "required": True, "members": {
+            "name": {"type": "string", "required": True}, "amount": PRICE}},
+    }},
+    [
+        m("a1", "code", "r1", "A-100", "A-100"),
+        m("a2", "description", "r1", "Hinge", "Hinge"),
+        m("a3", "unit_price", "r1", "4.20", "$4.20"),
+        m("a4", "code", "r2", "B-200", "B-200"),
+        m("a5", "unit_price", "r2", "12.50", "$12.50"),
+        # a row without its code
+        m("a6", "description", "r3", "Latch", "Latch", expect=RNA),
+        m("a7", "unit_price", "r3", "7.75", "$7.75", expect=RNA),
+        # a row with two codes
+        m("a8", "code", "r4", "A-100", "A-100", expect=RNA),
+        m("a9", "code", "r4", "C-300", "C-300", expect=RNA),
+        m("a10", "unit_price", "r4", "7.75", "$7.75", expect=RNA),
+        # no record, the record field itself, a record that is not a string
+        c("a11", "items.code", "C-300", None, [q("C-300")], ("rejected", ["RECORD_INVALID"])),
+        c("a12", "items", "A-100", None, [q("A-100")], ("rejected", ["FIELD_UNKNOWN"]),
+          record="r1"),
+        m("a13", "code", 5, "C-300", "C-300", expect=("rejected", ["CANDIDATE_INVALID"])),
+        # a record whose one value is rejected
+        m("a14", "unit_price", "r5", "4.25", "$4.20",
+          expect=("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
+        # a fee without its amount
+        c("a15", "fees.name", "delivery", None, [q("delivery")], RNA, record="f1"),
+    ],
+    coverage=[{"field": "fees", "code": "REQUIRED_FIELD_MISSING"}],
+    records=[
+        rec("f1", "rejected", ["RECORD_MEMBER_MISSING"], field="fees",
+            members={"name": "delivery", "amount": None}),
+        rec("r1", members={"code": "A-100", "description": "Hinge", "unit_price": "4.2"},
+            source="document", ref=None, replaced=False),
+        rec("r2", members={"code": "B-200", "description": None, "unit_price": "12.5"}),
+        rec("r3", "rejected", ["RECORD_MEMBER_MISSING"],
+            members={"code": None, "description": "Latch", "unit_price": "7.75"}),
+        rec("r4", REVIEW, ["RECORD_MEMBER_CONFLICT"],
+            members={"code": None, "description": None, "unit_price": "7.75"}),
+        rec("r5", "rejected", ["RECORD_MEMBER_MISSING"], source=None, ref=None,
+            members={"code": None, "description": None, "unit_price": None}),
+    ],
+)  # fmt: skip
+
+SET_DOC = (
+    "Price list 2026\nA-100 Hinge $4.20\nB-200 Bracket $12.50\nC-300 Latch $7.75\n"
+    "C-300 Latch, brass $7.95\n"
+)
+CORR = (
+    "Corrigendum 1 to the price list 2026.\nB-200 Bracket: read $14.00.\n"
+    "D-400 Clamp: read $3.10.\nE-500 Hook.\n"
+)
+CORRIGENDUM = {"id": "corrigendum", "check": "replace", "field": "items", "member": "code"}
+ONE_CODE = {"id": "one_code", "check": "unique", "field": "items", "member": "code"}
+vector(
+    "166-record-set",
+    "A price list and its corrigendum are a document set: the corrigendum is a reference at set "
+    "position 1. With the replace check, the corrigendum row of B-200 replaces the price list "
+    "row, and the unique check then finds B-200 one time. The corrigendum row of D-400 changes a "
+    "row that the price list does not have, so it is SET_REPLACES_NOTHING. The two rows of C-300 "
+    "in the price list are SET_DUPLICATE. A corrigendum row without its price is "
+    "RECORD_MEMBER_MISSING, and a row with a code from the price list and a price from the "
+    "corrigendum is RECORD_SOURCE_MIXED and takes no part in the checks (#613).",
+    SET_DOC,
+    {"fields": {"items": items()}, "checks": [CORRIGENDUM, ONE_CODE]},
+    [
+        m("b1", "code", "p1", "A-100", "A-100"),
+        m("b2", "unit_price", "p1", "4.20", "$4.20"),
+        m("b3", "code", "p2", "B-200", "B-200"),
+        m("b4", "unit_price", "p2", "12.50", "$12.50"),
+        m("b5", "code", "p3", "C-300", "C-300", expect=RNA),
+        m("b6", "unit_price", "p3", "7.75", "$7.75", expect=RNA),
+        m("b7", "code", "p4", "C-300", "C-300", 2, expect=RNA),
+        m("b8", "unit_price", "p4", "7.95", "$7.95", expect=RNA),
+        m("b9", "code", "k1", "B-200", "B-200", ref="corr-1"),
+        m("b10", "unit_price", "k1", "14.00", "$14.00", ref="corr-1"),
+        m("b11", "code", "k2", "D-400", "D-400", expect=RNA, ref="corr-1"),
+        m("b12", "unit_price", "k2", "3.10", "$3.10", expect=RNA, ref="corr-1"),
+        m("b13", "code", "k3", "E-500", "E-500", expect=RNA, ref="corr-1"),
+        m("b14", "code", "m1", "A-100", "A-100", expect=RNA),
+        m("b15", "unit_price", "m1", "14.00", "$14.00", expect=RNA, ref="corr-1"),
+    ],
+    references=[{"id": "corr-1", "text": CORR, "set": 1}],
+    records=[
+        rec("k1", source="reference", ref="corr-1", replaced=False,
+            members={"code": "B-200", "description": None, "unit_price": "14"}),
+        rec("k2", REVIEW, ["SET_REPLACES_NOTHING"], source="reference", ref="corr-1"),
+        rec("k3", "rejected", ["RECORD_MEMBER_MISSING"]),
+        rec("m1", REVIEW, ["RECORD_SOURCE_MIXED"], source=None, ref=None),
+        rec("p1", replaced=False),
+        rec("p2", source="document", ref=None, replaced=True,
+            members={"code": "B-200", "description": None, "unit_price": "12.5"}),
+        rec("p3", REVIEW, ["SET_DUPLICATE"]),
+        rec("p4", REVIEW, ["SET_DUPLICATE"]),
+    ],
+    checks=[("corrigendum", False, ["k2"]), ("one_code", False, ["p3", "p4"])],
+)  # fmt: skip
+
+SAME_PRICE = {"id": "same_price", "check": "agree", "field": "items", "member": "code",
+              "compare": ["unit_price", "description"]}  # fmt: skip
+vector(
+    "167-record-conflict",
+    "A price list and a catalogue at set position 1 give A-100 with two prices. With the agree "
+    "check on the price, both rows are SET_CONFLICT. The two rows of B-200 have one price, and a "
+    "description that only one of them gives is not compared. A row of a reference that is not "
+    "in the set takes no part in the check (#613).",
+    "Price list 2026\nA-100 Hinge $4.20\nB-200 Bracket $12.50\n",
+    {"fields": {"items": items()}, "checks": [SAME_PRICE]},
+    [
+        m("c1", "code", "p1", "A-100", "A-100", expect=RNA),
+        m("c2", "unit_price", "p1", "4.20", "$4.20", expect=RNA),
+        m("c3", "code", "p2", "B-200", "B-200"),
+        m("c4", "unit_price", "p2", "12.50", "$12.50"),
+        m("c5", "code", "q1", "A-100", "A-100", expect=RNA, ref="catalogue"),
+        m("c6", "unit_price", "q1", "4.40", "$4.40", expect=RNA, ref="catalogue"),
+        m("c7", "code", "q2", "B-200", "B-200", ref="catalogue"),
+        m("c8", "unit_price", "q2", "12.50", "$12.50", ref="catalogue"),
+        m("c9", "description", "q2", "Bracket", "Bracket", ref="catalogue"),
+        m("c10", "code", "n1", "A-100", "A-100", ref="notes"),
+        m("c11", "unit_price", "n1", "5.00", "$5.00", ref="notes"),
+    ],
+    references=[
+        {"id": "catalogue", "text": "Catalogue 2026\nA-100 Hinge $4.40\nB-200 Bracket $12.50\n",
+         "set": 1},
+        {"id": "notes", "text": "Notes\nA-100 Hinge $5.00\n"},
+    ],
+    records=[
+        rec("n1", source="reference", ref="notes"),
+        rec("p1", REVIEW, ["SET_CONFLICT"]),
+        rec("p2"),
+        rec("q1", REVIEW, ["SET_CONFLICT"]),
+        rec("q2", members={"code": "B-200", "description": "Bracket", "unit_price": "12.5"}),
+    ],
+    checks=[("same_price", False, ["p1", "q1"])],
+)  # fmt: skip
+
+AMEND = {"id": "amend", "check": "replace", "field": "items", "member": "code"}
+vector(
+    "168-record-amend-twice",
+    "Two corrigenda at set positions 1 and 2 change the price of A-100. The row of the second "
+    "corrigendum replaces the rows of the price list and of the first corrigendum. The second "
+    "corrigendum also gives G-700, which no earlier document has: SET_REPLACES_NOTHING. A row "
+    "with two prices is RECORD_MEMBER_CONFLICT, and a blank record is RECORD_INVALID (#613).",
+    "Price list 2026\nA-100 Hinge $4.20\nF-600 Spring $0.80\n",
+    {"fields": {"items": items()}, "checks": [AMEND]},
+    [
+        m("d1", "code", "p1", "A-100", "A-100"),
+        m("d2", "unit_price", "p1", "4.20", "$4.20"),
+        m("d3", "code", "k1", "A-100", "A-100", ref="corr-1"),
+        m("d4", "unit_price", "k1", "4.30", "$4.30", ref="corr-1"),
+        m("d5", "code", "j1", "A-100", "A-100", ref="corr-2"),
+        m("d6", "unit_price", "j1", "4.40", "$4.40", ref="corr-2"),
+        m("d7", "code", "j2", "G-700", "G-700", expect=RNA, ref="corr-2"),
+        m("d8", "unit_price", "j2", "0.15", "$0.15", expect=RNA, ref="corr-2"),
+        m("d9", "code", "p2", "F-600", "F-600", expect=RNA),
+        m("d10", "unit_price", "p2", "0.80", "$0.80", expect=RNA),
+        m("d11", "unit_price", "p2", "4.20", "$4.20", expect=RNA),
+        m("d12", "code", "  ", "F-600", "F-600", expect=("rejected", ["RECORD_INVALID"])),
+    ],
+    references=[
+        {"id": "corr-2", "text": "Corrigendum 2.\nA-100 Hinge: read $4.40.\nG-700 Pin: read $0.15.\n",
+         "set": 2},
+        {"id": "corr-1", "text": "Corrigendum 1.\nA-100 Hinge: read $4.30.\n", "set": 1},
+    ],
+    records=[
+        rec("j1", replaced=False),
+        rec("j2", REVIEW, ["SET_REPLACES_NOTHING"]),
+        rec("k1", replaced=True),
+        rec("p1", replaced=True),
+        rec("p2", REVIEW, ["RECORD_MEMBER_CONFLICT"], replaced=False,
+            members={"code": "F-600", "description": None, "unit_price": None}),
+    ],
+    checks=[("amend", False, ["j2"])],
+)  # fmt: skip
+
+vector(
+    "169-record-duplicate",
+    "A price list and a supplement at set position 1 both give B-200, and the schema has no "
+    "replace check. The unique check gives each row SET_DUPLICATE, and the agree check on the "
+    "price gives each row SET_CONFLICT. A row whose code is in a reference and whose price is in "
+    "the document is RECORD_SOURCE_MIXED (#613).",
+    "Price list 2026\nB-200 Bracket $12.50\nH-800 Nut $0.05\n",
+    {"fields": {"items": items()},
+     "checks": [{**SAME_PRICE, "compare": ["unit_price"]}, ONE_CODE]},
+    [
+        m("e1", "code", "p1", "B-200", "B-200", expect=RNA),
+        m("e2", "unit_price", "p1", "12.50", "$12.50", expect=RNA),
+        m("e3", "code", "s1", "B-200", "B-200", expect=RNA, ref="supplement"),
+        m("e4", "unit_price", "s1", "13.00", "$13.00", expect=RNA, ref="supplement"),
+        m("e5", "code", "x1", "H-800", "H-800", expect=RNA, ref="memo"),
+        m("e6", "unit_price", "x1", "0.05", "$0.05", expect=RNA),
+    ],
+    references=[
+        {"id": "supplement", "text": "Supplement 2026\nB-200 Bracket $13.00\n", "set": 1},
+        {"id": "memo", "text": "Memo: H-800\n"},
+    ],
+    records=[
+        rec("p1", REVIEW, ["SET_DUPLICATE", "SET_CONFLICT"]),
+        rec("s1", REVIEW, ["SET_DUPLICATE", "SET_CONFLICT"]),
+        rec("x1", REVIEW, ["RECORD_SOURCE_MIXED"], source=None, ref=None,
+            members={"code": "H-800", "description": None, "unit_price": "0.05"}),
+    ],
+    checks=[("one_code", False, ["p1", "s1"]), ("same_price", False, ["p1", "s1"])],
+)  # fmt: skip
+
+
+def _items_with(**member: Any) -> dict[str, Any]:
+    out = items()
+    out["members"] = {**out["members"], **member}
+    return out
+
+
+for name, why, schema, refs in [
+    ("record-member-keys", "a member with keys",
+     {"fields": {"items": _items_with(code={"type": "string", "required": True,
+                                           "keys": ["2026"]})}}, None),
+    ("record-member-multiple", "a member with multiple",
+     {"fields": {"items": _items_with(description={"type": "string", "multiple": True})}}, None),
+    ("record-member-template", "a member with a template",
+     {"fields": {"items": _items_with(description={"type": "string",
+                                                  "template": "x/y"})}}, None),
+    ("record-nested", "a member that is a record",
+     {"fields": {"items": _items_with(parts=items())}}, None),
+    ("record-member-name", "a member name with a capital letter",
+     {"fields": {"items": _items_with(Code={"type": "string"})}}, None),
+    ("record-unit", "a record field with a unit",
+     {"fields": {"items": {**items(), "unit": "USD"}}}, None),
+    ("record-members-empty", "a record field with no members",
+     {"fields": {"items": {"type": "record", "members": {}}}}, None),
+    ("record-no-members", "a record field without members", {"fields": {"items": {"type": "record"}}},
+     None),
+    ("members-on-string", "members on a string field",
+     {"fields": {"code": {"type": "string", "members": {"a": {"type": "string"}}}}}, None),
+    ("record-relation", "a relation that names a member field",
+     {"fields": {"items": items(), "total": {"type": "number", "unit": "USD"}},
+      "relations": [{"id": "r", "total": "total", "parts": [{"field": "items.unit_price"}]}]},
+     None),
+    ("check-kind", "a check of a kind that is not in the list",
+     {"fields": {"items": items()}, "checks": [{**ONE_CODE, "check": "sum"}]}, None),
+    ("check-not-record", "a check on a field that is not a record field",
+     {"fields": {"items": items(), "code": {"type": "string"}},
+      "checks": [{**ONE_CODE, "field": "code"}]}, None),
+    ("check-member-optional", "a check on a member that is not required",
+     {"fields": {"items": items()}, "checks": [{**ONE_CODE, "member": "description"}]}, None),
+    ("check-member-unknown", "a check on a member that the field does not have",
+     {"fields": {"items": items()}, "checks": [{**ONE_CODE, "member": "sku"}]}, None),
+    ("check-agree-no-compare", "an agree check without compare",
+     {"fields": {"items": items()}, "checks": [{**ONE_CODE, "check": "agree"}]}, None),
+    ("check-compare-on-unique", "a unique check with compare",
+     {"fields": {"items": items()}, "checks": [{**ONE_CODE, "compare": ["unit_price"]}]}, None),
+    ("check-compare-member", "an agree check that compares its own member",
+     {"fields": {"items": items()}, "checks": [{**SAME_PRICE, "compare": ["code"]}]}, None),
+    ("check-compare-twice", "an agree check that compares one member two times",
+     {"fields": {"items": items()},
+      "checks": [{**SAME_PRICE, "compare": ["unit_price", "unit_price"]}]}, None),
+    ("check-id-twice", "two checks with one id",
+     {"fields": {"items": items()}, "checks": [ONE_CODE, {**CORRIGENDUM, "id": "one_code"}]},
+     None),
+    ("check-other-key", "a check with another key",
+     {"fields": {"items": items()}, "checks": [{**ONE_CODE, "scope": "all"}]}, None),
+    ("checks-not-list", "checks that are not a list",
+     {"fields": {"items": items()}, "checks": ONE_CODE}, None),
+    ("set-zero", "a reference at set position 0",
+     {"fields": {"items": items()}}, [{"id": "corr-1", "text": CORR, "set": 0}]),
+    ("set-boolean", "a reference whose set is a boolean",
+     {"fields": {"items": items()}}, [{"id": "corr-1", "text": CORR, "set": True}]),
+    ("set-twice", "two references at one set position",
+     {"fields": {"items": items()}},
+     [{"id": "corr-1", "text": CORR, "set": 1}, {"id": "corr-2", "text": CORR, "set": 1}]),
+]:  # fmt: skip
+    INVALID.append(
+        {
+            "name": name,
+            "description": f"The packet has {why} (SPEC §4.12, §4.13, #613).",
+            "document": PRICE_DOC,
+            "schema": schema,
+            "policy": None,
+            **({"references": refs} if refs is not None else {}),
+        }
+    )
+
+
 # ------------------------------------------------------------- profiles (SPEC §4.10, #639)
 # A profile vector has a `profile` in place of `schema`, `policy` and `packs`. The expected
 # digest is written by hand: the schema and the policy after defaults, and the profile body of
@@ -6999,6 +7352,8 @@ def main() -> None:
                 "coverage": v["coverage"],
                 **({"relations": v["relations"]} if v["relations"] is not None else {}),
                 **({"export": v["export"]} if v["export"] is not None else {}),
+                **({"records": v["records"]} if v["records"] is not None else {}),
+                **({"checks": v["checks"]} if v["checks"] is not None else {}),
             },
         }
         (out_dir / f"{v['name']}.json").write_text(

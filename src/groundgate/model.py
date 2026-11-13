@@ -8,6 +8,7 @@ import json
 import re
 from collections.abc import Sequence
 from dataclasses import dataclass, field
+from dataclasses import replace as _replace
 from decimal import Decimal
 from importlib import resources
 from typing import Any, Literal
@@ -111,6 +112,7 @@ class Field:
     date_maximum: str | None = None
     _raw: dict[str, Any] = field(default_factory=dict, compare=False, repr=False)
     template: str | None = None  # "<pack id>/<field name>" of a kind pack (SPEC §2.3, §4.9)
+    record: str | None = None  # the record field of a member field (SPEC §4.12, #613)
 
     @classmethod
     def from_dict(cls, name: str, d: object) -> Field:
@@ -224,8 +226,8 @@ def _relation_field(where: str, name: object, fields: dict[str, Field]) -> Field
     if not isinstance(name, str) or name not in fields:
         raise PacketError(f"{where} names {name!r}, which is not a field of the schema")
     f = fields[name]
-    if f.type in ("string", "date") or f.multiple:
-        raise PacketError(f"{where}: field {name!r} is a string, date or multiple field")
+    if f.type in ("string", "date") or f.multiple or f.record is not None:
+        raise PacketError(f"{where}: field {name!r} is a string, date, multiple or member field")
     return f
 
 
@@ -281,6 +283,102 @@ def _relations(raw: object, fields: dict[str, Field]) -> tuple[tuple[Relation, .
 
 
 @dataclass(frozen=True)
+class RecordField:
+    """A field that holds an array of records (SPEC §4.12, #613). Each member is a field of the
+    schema with the name ``<record field>.<member>``."""
+
+    name: str
+    members: tuple[str, ...]
+    required: bool = False
+
+    def member(self, name: str) -> str:
+        return f"{self.name}.{name}"
+
+
+CHECK_KINDS = ("replace", "unique", "agree")  # the closed list of SPEC §4.13
+
+
+@dataclass(frozen=True)
+class Check:
+    """A check across the documents of a set (SPEC §4.13, #613)."""
+
+    id: str
+    check: str
+    field: str
+    member: str
+    compare: tuple[str, ...] = ()
+
+
+_MAX_MEMBERS = 64
+
+
+def _record(name: str, d: dict[str, Any]) -> tuple[RecordField, dict[str, Field], dict[str, Any]]:
+    """A record field, its member fields and its form after defaults (SPEC §4.12)."""
+    if set(d) - {"type", "members", "required", "description"}:
+        raise PacketError(f"record field {name!r} has keys other than members and required")
+    raw: dict[str, Any] = {"type": "record", "required": d.get("required", False)}
+    if not isinstance(raw["required"], bool):
+        raise PacketError(f"record field {name!r} required must be a boolean")
+    if "description" in d:
+        if not isinstance(d["description"], str) or not d["description"].strip():
+            raise PacketError(f"field {name!r} description must be a non-blank string")
+        raw["description"] = d["description"]
+    given = d.get("members")
+    if not isinstance(given, dict) or not 1 <= len(given) <= _MAX_MEMBERS:
+        raise PacketError(f"record field {name!r} members must be an object of 1 to 64 members")
+    fields: dict[str, Field] = {}
+    for member, md in given.items():
+        if not is_field_name(member):
+            raise PacketError(f"member name {member!r} breaks the rule of SPEC §2.3")
+        if not isinstance(md, dict):
+            raise PacketError(f"member {name}.{member} must be an object")
+        if set(md) & {"keys", "multiple", "template"}:
+            raise PacketError(f"member {name}.{member} has keys, multiple or a template")
+        f = Field.from_dict(f"{name}.{member}", md)
+        fields[f.name] = _replace(f, record=name)
+    raw["members"] = {f.name.split(".", 1)[1]: f._raw for f in fields.values()}
+    members = tuple(raw["members"])
+    return RecordField(name, members, raw["required"]), fields, raw
+
+
+def _checks(
+    raw: object, records: dict[str, RecordField], fields: dict[str, Field]
+) -> tuple[Check, ...]:
+    """The schema's checks across the documents of a set (SPEC §4.13)."""
+    if not isinstance(raw, list):
+        raise PacketError("schema checks must be a list")
+    out: list[Check] = []
+    for n, c in enumerate(raw):
+        if not isinstance(c, dict) or set(c) - {"id", "check", "field", "member", "compare"}:
+            raise PacketError(f"check {n} must be an object with id, check, field and member")
+        cid = c.get("id")
+        if not isinstance(cid, str) or not cid.strip() or any(x.id == cid for x in out):
+            raise PacketError(f"check {n} id must be a unique non-blank string")
+        kind, name = c.get("check"), c.get("field")
+        rf = records.get(name) if isinstance(name, str) else None
+        if kind not in CHECK_KINDS:
+            raise PacketError(f"check {cid!r} has a kind that is not replace, unique or agree")
+        if rf is None:
+            raise PacketError(f"check {cid!r} field is not a record field of the schema")
+        member = c.get("member")
+        if member not in rf.members or not fields[rf.member(member)].required:
+            raise PacketError(f"check {cid!r} member is not a required member of its field")
+        compare = c.get("compare")
+        if kind == "agree":
+            if (
+                not isinstance(compare, list)
+                or not compare
+                or len(set(map(repr, compare))) != len(compare)
+                or any(x not in rf.members or x == member for x in compare)
+            ):
+                raise PacketError(f"check {cid!r} compare must list other members, each one time")
+        elif "compare" in c:
+            raise PacketError(f"check {cid!r}: only an agree check has compare")
+        out.append(Check(cid, kind, rf.name, member, tuple(compare or ())))
+    return tuple(out)
+
+
+@dataclass(frozen=True)
 class Schema:
     fields: dict[str, Field]
     units: dict[str, tuple[list[str], list[str]]]
@@ -293,6 +391,8 @@ class Schema:
     marks: tuple[tuple[str, frozenset[str]], ...] = field(default=(), compare=False, repr=False)
     # the checked copy of each given pack, sorted by id, so that ``copy`` can rebuild the schema
     given: tuple[dict[str, Any], ...] = field(default=(), compare=False, repr=False)
+    records: dict[str, RecordField] = field(default_factory=dict)  # SPEC §4.12
+    checks: tuple[Check, ...] = ()  # SPEC §4.13
 
     @classmethod
     def from_dict(cls, d: object, packs: Sequence[object] = ()) -> Schema:
@@ -300,11 +400,22 @@ class Schema:
         schema names each pack in its member ``packs``, and the caller gives each one."""
         if not isinstance(d, dict) or not isinstance(d.get("fields"), dict):
             raise PacketError("schema must be an object with a 'fields' object")
-        members = {"fields", "units", "relations", "packs"}
+        members = {"fields", "units", "relations", "checks", "packs"}
         if set(d) - members:
             raise PacketError(f"schema has unknown keys {sorted(set(d) - members)}")
         resolved, vocabulary, marks, kinds, given = _resolve_packs(d.get("packs", []), packs)
-        fields = {name: _field(name, f, kinds) for name, f in d["fields"].items()}
+        fields: dict[str, Field] = {}
+        records: dict[str, RecordField] = {}
+        raw_fields: dict[str, Any] = {}
+        for name, f in d["fields"].items():
+            if isinstance(f, dict) and f.get("type") == "record":
+                if not is_field_name(name):
+                    raise PacketError(f"field name {name!r} breaks the rule of SPEC §2.3")
+                records[name], member_fields, raw_fields[name] = _record(name, f)
+                fields.update(member_fields)
+            else:
+                fields[name] = _field(name, f, kinds)
+                raw_fields[name] = fields[name]._raw
         user_units = d.get("units", {})
         if not isinstance(user_units, dict):
             raise PacketError("schema units must be an object")
@@ -321,10 +432,13 @@ class Schema:
                     raise PacketError(f"unit {code!r} surfaces must be non-blank strings")
             units[code] = (list(prefix), list(suffix))
             raw_units[code] = {"prefix": list(prefix), "suffix": list(suffix)}
-        raw: dict[str, Any] = {"fields": {n: f._raw for n, f in fields.items()}, "units": raw_units}
+        raw: dict[str, Any] = {"fields": raw_fields, "units": raw_units}
         relations, filled = _relations(d.get("relations", []), fields)
         if filled:  # a schema without relations keeps its digest (SPEC §2.3)
             raw["relations"] = filled
+        checks = _checks(d.get("checks", []), records, fields)
+        if checks:  # a schema without checks keeps its digest (SPEC §4.13)
+            raw["checks"] = copy.deepcopy(d["checks"])
         if resolved:
             raw["packs"] = [{k: e[k] for k in ("id", "version", "sha256")} for e in resolved]
         return cls(
@@ -336,6 +450,8 @@ class Schema:
             vocabulary=vocabulary,
             marks=marks,
             given=given,
+            records=records,
+            checks=checks,
         )
 
     def to_dict(self) -> dict[str, Any]:
@@ -683,6 +799,7 @@ class Decision:
     packs: tuple[str, ...] = ()  # the ids of the packs that the decision read (SPEC §5)
     evidence_units: EvidenceUnits | None = None  # only after a failed unit check (SPEC §5)
     proposer: str | None = None  # the candidate's non-blank proposer (SPEC §5, #509)
+    record: str | None = None  # the record of a member field (SPEC §4.12, #613)
 
     def to_dict(self) -> dict[str, Any]:
         out: dict[str, Any] = {
@@ -707,6 +824,8 @@ class Decision:
         }
         if self.evidence_units is not None:  # other decisions keep their bytes (#362)
             out["evidence_units"] = self.evidence_units.to_dict()
+        if self.record is not None:  # other decisions keep their bytes (#613)
+            out["record"] = self.record
         return out
 
 
@@ -786,6 +905,43 @@ class RelationResult:
 
 
 @dataclass(frozen=True)
+class RecordLine:
+    """The receipt line of one record (SPEC §4.12, §5, #613)."""
+
+    field: str
+    record: str
+    outcome: Outcome
+    codes: tuple[str, ...]
+    source: str | None
+    ref: str | None
+    replaced: bool
+    members: tuple[tuple[str, str | None], ...]  # (member, value) in the order of the schema
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "field": self.field,
+            "record": self.record,
+            "outcome": self.outcome,
+            "codes": list(self.codes),
+            "source": self.source,
+            "ref": self.ref,
+            "replaced": self.replaced,
+            "members": dict(self.members),
+        }
+
+
+@dataclass(frozen=True)
+class CheckResult:
+    """The result of one check across the documents of a set (SPEC §4.13, §5, #613)."""
+
+    id: str
+    records: tuple[str, ...]  # the records that the check gave a code, sorted
+
+    def to_dict(self) -> dict[str, Any]:
+        return {"id": self.id, "holds": not self.records, "records": list(self.records)}
+
+
+@dataclass(frozen=True)
 class Receipt:
     document_id: str | None
     document_sha256: str
@@ -801,11 +957,15 @@ class Receipt:
     packs: tuple[dict[str, str], ...] = ()  # the packs that applied, sorted by id (SPEC §5)
     doubt_sha256: str | None = None  # None when the packet has no doubt span (SPEC §5)
     profile: dict[str, str] | None = None  # None when the packet gives no profile (SPEC §5)
+    set_positions: tuple[tuple[str, int], ...] = ()  # (reference id, set) (SPEC §4.13)
+    records: tuple[RecordLine, ...] | None = None  # None when the schema has no record field
+    checks: tuple[CheckResult, ...] | None = None  # None when the schema has no checks
 
     def body(self) -> dict[str, Any]:
         counts = {"admitted": 0, "needs_verification": 0, "rejected": 0}
         for d in self.decisions:
             counts[d.outcome] += 1
+        at = dict(self.set_positions)
         return {
             "groundgate": SPEC_VERSION,
             "document": {
@@ -814,7 +974,10 @@ class Receipt:
                 "source": self.document_source,
                 "doubt_sha256": self.doubt_sha256,
             },
-            "references": [{"id": i, "sha256": h, "source": s} for i, h, s in self.references],
+            "references": [
+                {"id": i, "sha256": h, "source": s, **({"set": at[i]} if i in at else {})}
+                for i, h, s in self.references
+            ],
             "packs": [dict(p) for p in self.packs],
             **({} if self.profile is None else {"profile": dict(self.profile)}),
             "schema_sha256": self.schema_sha256,
@@ -827,6 +990,8 @@ class Receipt:
                 if self.relations is None
                 else {"relations": [r.to_dict() for r in self.relations]}
             ),
+            **({} if self.records is None else {"records": [r.to_dict() for r in self.records]}),
+            **({} if self.checks is None else {"checks": [c.to_dict() for c in self.checks]}),
             "summary": counts,
         }
 

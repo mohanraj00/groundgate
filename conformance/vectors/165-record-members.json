@@ -1,0 +1,414 @@
+{
+ "name": "165-record-members",
+ "description": "A record field holds the rows of a price list. Each member candidate names its record and is decided as the value of a field. A record with each required member admitted is admitted, also when an optional member has no value. A row without its code is RECORD_MEMBER_MISSING and rejected, and a row with two codes is RECORD_MEMBER_CONFLICT. Each value that passed, of a record that is not admitted, gets RECORD_NOT_ADMITTED. A member candidate with no record is RECORD_INVALID, and a candidate for the record field itself is FIELD_UNKNOWN. A required record field with no record that is not rejected is in coverage (#613).",
+ "document": "Price list 2026\nA-100 Hinge $4.20\nB-200 Bracket $12.50\nC-300 Latch $7.75\nFee: delivery $9.00\n",
+ "schema": {
+  "fields": {
+   "items": {
+    "type": "record",
+    "required": true,
+    "members": {
+     "code": {
+      "type": "string",
+      "required": true
+     },
+     "description": {
+      "type": "string"
+     },
+     "unit_price": {
+      "type": "number",
+      "unit": "USD",
+      "required": true
+     }
+    }
+   },
+   "fees": {
+    "type": "record",
+    "required": true,
+    "members": {
+     "name": {
+      "type": "string",
+      "required": true
+     },
+     "amount": {
+      "type": "number",
+      "unit": "USD",
+      "required": true
+     }
+    }
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "a1",
+   "field": "items.code",
+   "value": "A-100",
+   "evidence": [
+    {
+     "start": 16,
+     "end": 21,
+     "text": "A-100"
+    }
+   ],
+   "record": "r1"
+  },
+  {
+   "id": "a2",
+   "field": "items.description",
+   "value": "Hinge",
+   "evidence": [
+    {
+     "start": 22,
+     "end": 27,
+     "text": "Hinge"
+    }
+   ],
+   "record": "r1"
+  },
+  {
+   "id": "a3",
+   "field": "items.unit_price",
+   "value": "4.20",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 28,
+     "end": 33,
+     "text": "$4.20"
+    }
+   ],
+   "record": "r1"
+  },
+  {
+   "id": "a4",
+   "field": "items.code",
+   "value": "B-200",
+   "evidence": [
+    {
+     "start": 34,
+     "end": 39,
+     "text": "B-200"
+    }
+   ],
+   "record": "r2"
+  },
+  {
+   "id": "a5",
+   "field": "items.unit_price",
+   "value": "12.50",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 48,
+     "end": 54,
+     "text": "$12.50"
+    }
+   ],
+   "record": "r2"
+  },
+  {
+   "id": "a6",
+   "field": "items.description",
+   "value": "Latch",
+   "evidence": [
+    {
+     "start": 61,
+     "end": 66,
+     "text": "Latch"
+    }
+   ],
+   "record": "r3"
+  },
+  {
+   "id": "a7",
+   "field": "items.unit_price",
+   "value": "7.75",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 67,
+     "end": 72,
+     "text": "$7.75"
+    }
+   ],
+   "record": "r3"
+  },
+  {
+   "id": "a8",
+   "field": "items.code",
+   "value": "A-100",
+   "evidence": [
+    {
+     "start": 16,
+     "end": 21,
+     "text": "A-100"
+    }
+   ],
+   "record": "r4"
+  },
+  {
+   "id": "a9",
+   "field": "items.code",
+   "value": "C-300",
+   "evidence": [
+    {
+     "start": 55,
+     "end": 60,
+     "text": "C-300"
+    }
+   ],
+   "record": "r4"
+  },
+  {
+   "id": "a10",
+   "field": "items.unit_price",
+   "value": "7.75",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 67,
+     "end": 72,
+     "text": "$7.75"
+    }
+   ],
+   "record": "r4"
+  },
+  {
+   "id": "a11",
+   "field": "items.code",
+   "value": "C-300",
+   "evidence": [
+    {
+     "start": 55,
+     "end": 60,
+     "text": "C-300"
+    }
+   ]
+  },
+  {
+   "id": "a12",
+   "field": "items",
+   "value": "A-100",
+   "evidence": [
+    {
+     "start": 16,
+     "end": 21,
+     "text": "A-100"
+    }
+   ],
+   "record": "r1"
+  },
+  {
+   "id": "a13",
+   "field": "items.code",
+   "value": "C-300",
+   "evidence": [
+    {
+     "start": 55,
+     "end": 60,
+     "text": "C-300"
+    }
+   ],
+   "record": 5
+  },
+  {
+   "id": "a14",
+   "field": "items.unit_price",
+   "value": "4.25",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 28,
+     "end": 33,
+     "text": "$4.20"
+    }
+   ],
+   "record": "r5"
+  },
+  {
+   "id": "a15",
+   "field": "fees.name",
+   "value": "delivery",
+   "evidence": [
+    {
+     "start": 78,
+     "end": 86,
+     "text": "delivery"
+    }
+   ],
+   "record": "f1"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "RECORD_NOT_ADMITTED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "RECORD_NOT_ADMITTED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "RECORD_NOT_ADMITTED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "RECORD_NOT_ADMITTED"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "RECORD_NOT_ADMITTED"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "RECORD_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "FIELD_UNKNOWN"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "CANDIDATE_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "RECORD_NOT_ADMITTED"
+    ]
+   }
+  ],
+  "coverage": [
+   {
+    "field": "fees",
+    "code": "REQUIRED_FIELD_MISSING"
+   }
+  ],
+  "records": [
+   {
+    "field": "fees",
+    "record": "f1",
+    "outcome": "rejected",
+    "codes": [
+     "RECORD_MEMBER_MISSING"
+    ],
+    "members": {
+     "name": "delivery",
+     "amount": null
+    }
+   },
+   {
+    "field": "items",
+    "record": "r1",
+    "outcome": "admitted",
+    "codes": [],
+    "members": {
+     "code": "A-100",
+     "description": "Hinge",
+     "unit_price": "4.2"
+    },
+    "source": "document",
+    "ref": null,
+    "replaced": false
+   },
+   {
+    "field": "items",
+    "record": "r2",
+    "outcome": "admitted",
+    "codes": [],
+    "members": {
+     "code": "B-200",
+     "description": null,
+     "unit_price": "12.5"
+    }
+   },
+   {
+    "field": "items",
+    "record": "r3",
+    "outcome": "rejected",
+    "codes": [
+     "RECORD_MEMBER_MISSING"
+    ],
+    "members": {
+     "code": null,
+     "description": "Latch",
+     "unit_price": "7.75"
+    }
+   },
+   {
+    "field": "items",
+    "record": "r4",
+    "outcome": "needs_verification",
+    "codes": [
+     "RECORD_MEMBER_CONFLICT"
+    ],
+    "members": {
+     "code": null,
+     "description": null,
+     "unit_price": "7.75"
+    }
+   },
+   {
+    "field": "items",
+    "record": "r5",
+    "outcome": "rejected",
+    "codes": [
+     "RECORD_MEMBER_MISSING"
+    ],
+    "source": null,
+    "ref": null,
+    "members": {
+     "code": null,
+     "description": null,
+     "unit_price": null
+    }
+   }
+  ]
+ }
+}
