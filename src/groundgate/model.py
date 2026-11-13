@@ -36,6 +36,7 @@ Outcome = Literal["admitted", "needs_verification", "rejected"]
 Action = Literal["admit", "review", "reject"]
 
 _TYPES = ("number", "integer", "string", "date", "passage")
+_NOT_IN_PASSAGE = ("unit", "minimum", "maximum", "keys", "aliases", "columns", "markers")
 # the date formats of SPEC §4.11 (#612), in the order of its table
 DATE_FORMATS = ("YYYY-MM-DD", "D/M/YYYY", "M/D/YYYY", "D.M.YYYY", "D Month YYYY", "Month D, YYYY")
 _NORMAL_DATE = re.compile(r"[0-9]{4}-[0-9]{2}-[0-9]{2}\Z")
@@ -183,8 +184,14 @@ class Field:
             raise PacketError(f"field {name!r} has unknown comparator {raw['comparator']!r}")
         if raw["unit"] is not None and not isinstance(raw["unit"], str):
             raise PacketError(f"field {name!r} unit must be a string or null")
-        if raw["type"] == "passage" and set(d) - {"type", "required", "multiple", "description"}:
-            raise PacketError(  # SPEC §4.17 (#638)
+        if raw["type"] == "passage" and (  # SPEC §4.17 (#638)
+            "template" in d
+            or "formats" in d
+            or raw["comparator"] != "eq"
+            or any(raw[m] is not None for m in _NOT_IN_PASSAGE)
+        ):
+            # the schema with defaults filled in has each of these members with its default
+            raise PacketError(
                 f"field {name!r} is a passage field: it has only type, required, multiple and "
                 "description"
             )
