@@ -67,6 +67,23 @@ def _formats(name: str, raw: object) -> list[str]:
 
 
 _COMPARATORS = ("eq", "gt", "ge", "lt", "le", "approx", "range")
+MAX_OPTIONS = 1000  # the options of one closed field (SPEC §2.3, #530)
+
+
+def _options(name: str, raw: object, kind: object) -> list[str] | None:
+    """The options of a closed string field (SPEC §2.3, #530), or None."""
+    if raw is None:
+        return None
+    if kind != "string":
+        raise PacketError(f"field {name!r} has options, and only a string field has them")
+    if not isinstance(raw, list) or not 1 <= len(raw) <= MAX_OPTIONS:
+        raise PacketError(f"field {name!r} options must be a list of 1 to {MAX_OPTIONS} strings")
+    if not all(isinstance(x, str) for x in raw):
+        raise PacketError(f"field {name!r} options must be a list of 1 to {MAX_OPTIONS} strings")
+    seen = [normalize_ws(x) for x in raw]
+    if "" in seen or len(set(seen)) != len(seen):
+        raise PacketError(f"field {name!r} options must be distinct, non-blank text")
+    return list(raw)
 
 
 def _bound(name: str, raw: object, what: str = "field bound") -> Decimal | None:
@@ -113,6 +130,7 @@ class Field:
     _raw: dict[str, Any] = field(default_factory=dict, compare=False, repr=False)
     template: str | None = None  # "<pack id>/<field name>" of a kind pack (SPEC §2.3, §4.9)
     record: str | None = None  # the record field of a member field (SPEC §4.12, #613)
+    options: tuple[str, ...] | None = None  # the options of a closed string field (#530)
 
     @classmethod
     def from_dict(cls, name: str, d: object) -> Field:
@@ -133,6 +151,7 @@ class Field:
             "description",
             "template",
             "formats",
+            "options",
         }
         if unknown:
             raise PacketError(f"field {name!r} has unknown keys {sorted(unknown)}")
@@ -181,6 +200,9 @@ class Field:
                     raise PacketError(f"field {name!r} {bound} must be a date as YYYY-MM-DD")
         elif "formats" in d:
             raise PacketError(f"field {name!r} has formats, and only a date field has them")
+        options = _options(name, d.get("options"), raw["type"])
+        if options is not None:  # a schema with no options keeps its digest (#530)
+            raw["options"] = options
         for flag in ("required", "multiple"):
             if not isinstance(raw[flag], bool):
                 raise PacketError(f"field {name!r} {flag} must be a boolean")
@@ -209,6 +231,7 @@ class Field:
             date_maximum=raw["maximum"] if is_date else None,
             _raw=raw,
             template=raw.get("template"),
+            options=None if options is None else tuple(options),
         )
 
 

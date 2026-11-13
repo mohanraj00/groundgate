@@ -59,6 +59,7 @@ class _Tally:
     statement_ms: list[float] = field(default_factory=list)  # model text: ms for one statement
     unsupported: int = 0
     statements: int = 0
+    other_option: int = 0  # closed_set: the answers that choose another option than the first
 
     def out(self, item: str) -> dict[str, Any]:
         n = len(self.ms)
@@ -72,6 +73,8 @@ class _Tally:
         if item == "model_text":
             found["statement_ms_median"] = _median(self.statement_ms)
             found["unsupported"] = [self.unsupported, self.statements]
+        if item == "closed_set":
+            found["other_option"] = [self.other_option, n]
         if item in _SPANS:
             found["span_moved"] = [self.moved, n]
             found["span_move_median"] = _median(self.moves)
@@ -261,6 +264,9 @@ def _count(
                     t.statement_ms.append(s.record["ms"] / len(verdicts))
                     t.statements += len(verdicts)
                     t.unsupported += verdicts.count("unsupported")
+                if item == "closed_set" and s.record["verdict"] == "choose":  # §10
+                    first = s.task["choices"][0]["decision"] if s.task["choices"] else None
+                    t.other_option += s.record["decision"] != first
                 if ocr:
                     group = "doubt" if "READ_DOUBT" in s.task["codes"] else "other"
                     t.ocr.setdefault(group, []).append(
@@ -334,6 +340,8 @@ def lines(measured: Measured) -> list[str]:
             parts.append("median time for a statement "
                          + ("none" if each is None else f"{each:.0f} ms"))  # fmt: skip
             parts.append(f"unsupported {_ratio(m['unsupported'])} statements")
+        if "other_option" in m:
+            parts.append(f"another option {_ratio(m['other_option'])}")
         if "span_moved" in m:
             move = m["span_move_median"]
             parts.append(f"span moved {_ratio(m['span_moved'])}")

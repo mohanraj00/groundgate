@@ -1,0 +1,21 @@
+{
+ "name": "options-bad-not-string",
+ "description": "A field with an option that is not a string is invalid (SPEC §2.3, #530).",
+ "document": "Fee\t$90 é\n",
+ "schema": {
+  "fields": {
+   "period": {
+    "type": "string",
+    "options": [
+     "1",
+     2
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

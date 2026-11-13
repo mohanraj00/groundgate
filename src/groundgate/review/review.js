@@ -108,6 +108,7 @@ async function open(k) {
   }
   if (task.label) drawLabel();
   if (task.statements) drawStatements();
+  if (task.options) drawOptions();
   $("correct").hidden = true;
   $("reason").hidden = true;
   $("reason").replaceChildren();
@@ -172,6 +173,21 @@ function labelKey(k) {
 // A model text task (review.md section 7): one verdict for each statement
 
 const VERDICT_KEYS = { y: "supported", w: "unsupported", u: "unsure" };
+
+// A closed set (review.md section 7): the option list of the field, with the option of
+// each choice marked. A closed set takes no typed value and no new span.
+
+function drawOptions() {
+  const list = el("ul", "options");
+  const chosen = task.choices.map((c) => c.shown); // a text choice shows as "value"
+  for (const option of task.options) {
+    const picked = chosen.includes('"' + option + '"');
+    list.append(el("li", picked ? "option picked" : "option", option));
+  }
+  const box = el("li", "optionlist");
+  box.append(el("span", "quote", "The options of the field:"), list);
+  $("choices").append(box);
+}
 
 function drawStatements() {
   $("parts").textContent = "For each statement, press y if the source supports it, w if it " +
@@ -548,7 +564,10 @@ document.addEventListener("keydown", (ev) => {
     else save("choose", { decision: c.decision });
   } else if (k === "x") save("not_in_document", {});
   else if (k === "u") save("unsure", {});
-  else if (k === "n") startCorrection("correct");
+  else if (task.options && (k === "n" || k === "s")) {
+    $("outcome").replaceChildren(el("p", "", "The options are a closed list, so this task " +
+      "takes no new value and no new span. Press x if no option is in the document."));
+  } else if (k === "n") startCorrection("correct");
   else if (k === "s" && n > 0) startCorrection("adjust_span");
   else if (k === "r") showReason();
   else if (k === "k" && st.check && st.check.outcome === "needs_verification") {

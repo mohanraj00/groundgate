@@ -44,6 +44,10 @@ kbd { border: 1px solid var(--line); border-radius: 3px; padding: 0 4px; font-si
 .choices li.picked { font-weight: bold; }
 .choices li.statement { font-weight: normal; padding: 4px 6px; border-left: 3px solid transparent; }
 .choices li.statement.picked { border-left-color: #1971c2; background: #f6f8fa; }
+.choices li.optionlist { font-weight: normal; list-style: none; }
+.choices ul.options { margin: 4px 0 0; padding-left: 20px; }
+.choices ul.options li.option { font-weight: normal; }
+.choices ul.options li.option.picked { font-weight: bold; }
 .choices .verdict { display: block; font-size: 13px; font-weight: 600; }
 mark.differs { background: #ffc9c9; }
 .crops { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }

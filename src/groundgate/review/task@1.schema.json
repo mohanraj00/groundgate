@@ -28,7 +28,7 @@
       }
     },
     "item": {
-      "description": "The item kind (section 7). The field type gives number, text or span. model_text is the kind of a model text input (#531). closed_set and structure are reserved for later kinds.",
+      "description": "The item kind (section 7). The field type gives number, text or span. model_text is the kind of a model text input (#531). closed_set is the kind of a string field with options (#530). structure is reserved for a later kind.",
       "enum": ["number", "text", "span", "closed_set", "model_text", "structure"]
     },
     "mode": {
@@ -96,6 +96,13 @@
           }
         }
       }
+    },
+    "options": {
+      "description": "Only in a closed_set task (section 7): the options of the field, in schema order.",
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1000,
+      "items": { "type": "string", "minLength": 1 }
     },
     "model_text": {
       "description": "Only in a model_text task (section 7): the store key of its model-text@1 object, and the count of its statements. The task holds no model text.",

@@ -1,0 +1,21 @@
+{
+ "name": "options-bad-number",
+ "description": "A field with options on a number field is invalid (SPEC §2.3, #530).",
+ "document": "Fee\t$90 é\n",
+ "schema": {
+  "fields": {
+   "period": {
+    "type": "integer",
+    "options": [
+     "1",
+     "2"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

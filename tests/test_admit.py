@@ -342,7 +342,7 @@ def test_flag_order_and_code_descriptions_are_pinned() -> None:
     )  # fmt: skip
     assert tuple(codes.FLAG) == FLAG_ORDER
     assert tuple(codes.INFO) == INFO_ORDER
-    assert len(codes.REJECT) == 21
+    assert len(codes.REJECT) == 22
     assert set(codes.COVERAGE) == {"REQUIRED_FIELD_MISSING"}
 
 

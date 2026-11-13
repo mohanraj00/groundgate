@@ -326,15 +326,15 @@ cases under `tests/review/cases/` name these points as rules `6.3.1` to `6.3.9`.
 ## 7. Item kinds
 
 In format 1, the field type selects the kind. A `number` or `integer` field gives `number`. A
-`string` field gives `text`, or `span` when the value has more than 300 characters or a line
-break.
+`string` field with `options` (SPEC §2.3) gives `closed_set`. Each other `string` field gives
+`text`, or `span` when the value has more than 300 characters or a line break.
 
 | Kind | The question names | The view | Answer | Format 1 |
 |---|---|---|---|---|
 | `number` | the amount as written and in full, scale, sign, unit, field, key | the page with the value in a box | all six verdicts | yes |
 | `text` | the entity and its role: "Is 'Example Holdings Ltd' the lessor, not the lessee?" | the full sentence, with a mark at each end of the span | all six verdicts | yes |
 | `span` | the start and the end | the start and the end with their context, and the middle closed | all six verdicts; the arrow keys move an end | yes |
-| `closed_set` | the option, and that no other option fits | the quote and the option list; one key chooses another option | `confirm`, `choose`, `not_in_document`, `unsure` | no |
+| `closed_set` | the option, and that no other option fits | the quote and the option list; one key chooses another option | `confirm`, `choose`, `not_in_document`, `unsure` | yes, from 0.15 (#530) |
 | `model_text` | each statement | the model text beside the source; each statement next to its cited span, with the words that differ marked | `statements`: `supported`, `unsupported` or `unsure` for each | from an input (#531) |
 | `structure` | each node of a page | the page with the nodes in boxes; accept or correct in bulk | `nodes`: the nodes accepted and corrected | no |
 
@@ -350,8 +350,12 @@ person the reason (section 8). The reading records OCR for the document, not for
 so each place of that document gets a crop. The crop comes from the source in the store each time. After
 `forget` of the source, the page says that the scan is gone and shows the text only (#537).
 
-- A **closed set** needs a schema member with the options. That changes what the gate checks,
-  so a spec issue comes first.
+- A **closed set** task comes from a `string` field with `options` (SPEC §2.3, #530). The task
+  has the template `closed_set@1` and the member `options`: the options of the field in
+  schema order. The page shows the list and marks the option of each choice. A number key
+  chooses the option of another candidate. The options are a closed list, so the task takes
+  no typed value and no new span: the page and `resolve` refuse `correct`, `adjust_span` and
+  `wrong`. `answer@1` does not change.
 - A **model text** task comes from an input that the app gives: the model text and its
   statements, each with a cited span. The core never admits model text (#285). A statement is
   not a candidate. The resolution gives the verdict of each statement, not a value. Section

@@ -1,0 +1,130 @@
+{
+ "name": "options-01-closed",
+ "description": "A string field with options is closed. A value that is an option and is in the cited text is admitted. A value that is in the text and is not an option is OPTION_INVALID. Letter case counts, so Monthly is not the option monthly. An option that is not in the cited text is still VALUE_NOT_IN_EVIDENCE: the options add a check and remove none (#530).",
+ "document": "Billing is monthly. The plan renews every  two years.\nSupport is billed Weekly.\n",
+ "schema": {
+  "fields": {
+   "billing": {
+    "type": "string",
+    "options": [
+     "monthly",
+     "quarterly",
+     "annual",
+     "every two years"
+    ]
+   },
+   "renewal": {
+    "type": "string",
+    "options": [
+     "monthly",
+     "quarterly",
+     "annual",
+     "every two years"
+    ]
+   },
+   "support": {
+    "type": "string",
+    "options": [
+     "monthly",
+     "quarterly",
+     "annual",
+     "every two years"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "o1",
+   "field": "billing",
+   "value": "monthly",
+   "evidence": [
+    {
+     "start": 0,
+     "end": 19,
+     "text": "Billing is monthly."
+    }
+   ]
+  },
+  {
+   "id": "o2",
+   "field": "renewal",
+   "value": "every two  years",
+   "evidence": [
+    {
+     "start": 29,
+     "end": 52,
+     "text": "renews every  two years"
+    }
+   ]
+  },
+  {
+   "id": "o3",
+   "field": "support",
+   "value": "Weekly",
+   "evidence": [
+    {
+     "start": 65,
+     "end": 78,
+     "text": "billed Weekly"
+    }
+   ]
+  },
+  {
+   "id": "o4",
+   "field": "support",
+   "value": "Monthly",
+   "evidence": [
+    {
+     "start": 0,
+     "end": 19,
+     "text": "Billing is monthly."
+    }
+   ]
+  },
+  {
+   "id": "o5",
+   "field": "support",
+   "value": "annual",
+   "evidence": [
+    {
+     "start": 65,
+     "end": 78,
+     "text": "billed Weekly"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "OPTION_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "OPTION_INVALID"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   }
+  ],
+  "coverage": []
+ }
+}

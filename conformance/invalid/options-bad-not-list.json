@@ -1,0 +1,18 @@
+{
+ "name": "options-bad-not-list",
+ "description": "A field with options that are not a list is invalid (SPEC §2.3, #530).",
+ "document": "Fee\t$90 é\n",
+ "schema": {
+  "fields": {
+   "period": {
+    "type": "string",
+    "options": "monthly"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

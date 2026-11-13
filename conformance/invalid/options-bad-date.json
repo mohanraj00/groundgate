@@ -1,0 +1,23 @@
+{
+ "name": "options-bad-date",
+ "description": "A field with options on a date field is invalid (SPEC §2.3, #530).",
+ "document": "Fee\t$90 é\n",
+ "schema": {
+  "fields": {
+   "period": {
+    "type": "date",
+    "formats": [
+     "YYYY-MM-DD"
+    ],
+    "options": [
+     "2026-01-01"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}
