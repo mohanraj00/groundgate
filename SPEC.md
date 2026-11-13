@@ -876,7 +876,9 @@ that starts earliest, the longest one at a tie; a later match never counts. So `
 the 25 in "25 or 50 mg". It is a **per-unit** when it is followed, after optional whitespace, by `/` or `per`, an
 optional number, and a body-size or volume unit: `kg`, `kilogram`, `lb`, `pound`, `m2`, `m²`,
 `m^2`, `square meter` or `square metre`, `mL`, `dL`, `L`, `liter` or `litre` (plurals included,
-case-insensitive, not followed by a letter). So `mg` is not at the 10 in "10 mg/kg (maximum 500
+case-insensitive, not followed by an ASCII letter or by `ſ`, `ı`, `İ` or the Kelvin sign, the
+four letters with a fold of their own in §4). A letter outside these, such as `é`, does not end
+the per-unit: `mg` is not at the 10 in "10 mg/kgé" (#363). So `mg` is not at the 10 in "10 mg/kg (maximum 500
 mg)", nor at "1.6 mcg/kg/day", "75 mg/m2", "2 mg per kilogram" or "250 mg/5 mL". A time
 denominator keeps the unit: "200 mg/day" is mg. A weight-based dose needs its own unit code, such
 as `mg/kg` with the suffix `mg/kg`. A unit code with no prefixes and no suffixes, because it is
