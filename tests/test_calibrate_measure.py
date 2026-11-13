@@ -179,3 +179,18 @@ def test_many_thresholds_are_rounded_up(monkeypatch: pytest.MonkeyPatch) -> None
     gold = measure.Gold({"d": measure.GoldDoc("d", "", [], js, {})}, "sha256:0")
     profile = {"policy": {"judge": judge}}
     assert measure._thresholds(profile, gold, ["d"]) == [0.62, 0.7]
+
+
+def test_number_equality_is_only_for_number_fields(tmp_path: Path) -> None:
+    """The string "001" is not the label "1". The number 90 is the label "90.0"."""
+    assert measure._same("90", "90.0", True)
+    assert not measure._same("001", "1", False)
+    text = "Code\t001\n"
+    cand = {"id": "c", "field": "code", "value": "001",
+            "evidence": [{"start": 5, "end": 8, "text": "001"},
+                         {"role": "field", "start": 0, "end": 4, "text": "Code"}]}  # fmt: skip
+    profile = {"groundgate_profile": 1, "id": "codes-test", "version": "1.0.0",
+               "schema": {"fields": {"code": {"type": "string", "aliases": ["Code"]}}}}  # fmt: skip
+    gold = measure.Gold({"d": measure.GoldDoc("d", text, [cand], None, {"code": "1"})}, "sha256:0")
+    s = measure.score(profile, gold, ["d"])["code"]
+    assert (s.routes["checked"].admitted, s.routes["checked"].errors, s.missed) == (1, 1, 1)

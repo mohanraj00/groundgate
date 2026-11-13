@@ -185,13 +185,14 @@ def read_split(path: Path, gold: Gold) -> tuple[dict[str, str], str]:
 # ----------------------------------------------------------------------------- scoring
 
 
-def _same(value: str | None, label: str) -> bool:
-    """True when the admitted value is the label. Two numbers are the same at the same value,
-    so "40" and "40.0" are the same."""
+def _same(value: str | None, label: str, numeric: bool) -> bool:
+    """True when the admitted value is the label. For a number or integer field, two numbers
+    are the same at the same value, so "40" and "40.0" are the same. For each other field type
+    the texts must be equal, so the string "001" is not the label "1"."""
     if value is None:
         return False
-    if value == label:
-        return True
+    if value == label or not numeric:
+        return value == label
     try:
         return Decimal(value) == Decimal(label)
     except (InvalidOperation, ValueError):
@@ -236,6 +237,9 @@ def _decimal(x: float) -> str:
 def score(profile: Mapping[str, Any], gold: Gold, docs: Sequence[str]) -> dict[str, FieldScore]:
     """Decide each document of ``docs`` with ``profile`` and score it against its labels."""
     fields = profile["schema"]["fields"]
+    # the resolved schema: it gives the type of a field that comes from a template
+    resolved = check_profile(profile).schema.fields
+    numeric = {n for n, f in resolved.items() if f.type in ("number", "integer")}
     out = {name: FieldScore() for name in sorted(fields)}
     for name in docs:
         g = gold.docs[name]
@@ -264,7 +268,7 @@ def score(profile: Mapping[str, Any], gold: Gold, docs: Sequence[str]) -> dict[s
                 if (route, d.value) in seen:
                     continue  # one fact is one value, however many candidates propose it
                 seen.add((route, d.value))
-                ok = label is not None and _same(d.value, label)
+                ok = label is not None and _same(d.value, label, f in numeric)
                 s.routes[route].admitted += 1
                 s.routes[route].errors += not ok
                 right = right or ok

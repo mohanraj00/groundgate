@@ -240,9 +240,10 @@ groundgate calibrate measure --profile P --gold G --split S --out DIR \
 ```
 
 A label is the right value of a field in one document, in the canonical form of the receipt
-`value`, as a string. Two numbers are equal when they have the same value, so `40` and `40.0`
-are equal. Null says that the document has no value for the field. A field that a document does
-not list is not scored. Each label must come from a person who did not see the decisions.
+`value`, as a string. For a `number` or `integer` field, two numbers are equal when they have
+the same value, so `40` and `40.0` are equal. For each other field type, the texts must be
+equal. Null says that the document has no value for the field. A field that a document does not
+list is not scored. Each label must come from a person who did not see the decisions.
 
 A document name starts with a letter or a digit, and then has only letters, digits, `.`, `_`
 and `-`, at most 128 characters. `labels.json` lists each document of `docs/` and no other. The
