@@ -88,6 +88,15 @@ def test_a_span_after_a_character_of_two_bytes_is_compared_in_bytes(tmp_path: Pa
     assert all(d["passage_sha256"] is None and d["outcome"] == "rejected" for d in codes)
 
 
+def test_a_passage_schema_with_defaults_is_valid_again() -> None:
+    schema = gg.Schema.from_dict(SCHEMA)
+    assert schema.copy().to_dict() == schema.to_dict()
+    assert gg.Schema.from_dict(schema.to_dict()).to_dict() == schema.to_dict()
+    for bad in ({"unit": "USD"}, {"comparator": "ge"}, {"formats": ["%Y"]}):
+        with pytest.raises(gg.PacketError, match="passage field"):
+            gg.Schema.from_dict({"fields": {"section": {"type": "passage", **bad}}})
+
+
 def test_a_receipt_with_no_passage_field_keeps_its_bytes() -> None:
     schema = {"fields": {"fee": {"type": "integer", "unit": "USD"}}}
     cand = {"id": "a", "field": "fee", "value": 90, "unit": "USD", "evidence": [{"text": "$90"}]}

@@ -7955,8 +7955,8 @@ for bad_name, bad_text, bad_field in (
     ("keys", "keys", {"type": "passage", "keys": ["4.2"]}),
     ("aliases", "aliases", {"type": "passage", "aliases": ["Section"]}),
     ("bound", "a bound", {"type": "passage", "minimum": "1"}),
-    ("comparator", "a comparator", {"type": "passage", "comparator": "eq"}),
-    ("null-member", "a member of another kind that is null", {"type": "passage", "unit": None}),
+    ("comparator", "a comparator that is not eq", {"type": "passage", "comparator": "ge"}),
+    ("formats", "formats", {"type": "passage", "formats": ["YYYY-MM-DD"]}),
 ):
     INVALID.append(
         {
