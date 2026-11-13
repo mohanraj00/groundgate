@@ -2122,6 +2122,11 @@ value and unit are those of the decision. Each shown member is present.
 - `citation.locator` is optional. A fact has it only when its decision has a locator that is
   not null (§4.15): `{"page": 3, "box": [7200, 41020, 11850, 42200]}`, with the box in
   hundredths of a PDF point. A fact with no locator has no `locator` member.
+- `record` and `replaced` are optional members of a fact, after `unit` (#659). A fact of a
+  member field (§4.12) has both. `record` is the record id of the decision, so an app can put
+  the member facts of one record into one row. `replaced` is the `replaced` member of the
+  record line of that record (§5): true when a `replace` check replaced the record (§4.13). A
+  fact of another field has neither member.
 - `citation.passage_sha256` is optional, before `locator`. A fact of a `passage` field has it
   (§4.17): the digest of the passage text. The `value` of the fact is the label of the
   section, and `citation.span` is the start and the end of the passage.

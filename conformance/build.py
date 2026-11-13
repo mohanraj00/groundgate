@@ -7626,6 +7626,47 @@ for bad_name, bad_text, bad_doc, bad in (
         }
     )
 
+# ------------------------------------------ records in the export (SPEC §5.1, #659)
+# Each span is counted by hand. "Price list 2026\n" has 16 bytes, so A-100 is at 16 to 21 and
+# $4.20 at 28 to 33; B-200 is at 34 to 39 and $12.50 at 48 to 54. In the corrigendum,
+# "Corrigendum 1.\n" has 15 bytes, so B-200 is at 15 to 20 and $14.00 at 35 to 41.
+vector(
+    "export-records",
+    "A fact of a member field has the record id and the replaced mark, so an app can put the "
+    "member facts into rows. The corrigendum row k1 replaces the price list row p2. The "
+    "replaced row keeps its facts, with replaced true (SPEC §5.1, #659).",
+    "Price list 2026\nA-100 Hinge $4.20\nB-200 Bracket $12.50\n",
+    {"fields": {"items": items()}, "checks": [CORRIGENDUM]},
+    [
+        m("e1", "code", "p1", "A-100", "A-100"),
+        m("e2", "unit_price", "p1", "4.20", "$4.20"),
+        m("e3", "code", "p2", "B-200", "B-200"),
+        m("e4", "unit_price", "p2", "12.50", "$12.50"),
+        m("e5", "code", "k1", "B-200", "B-200", ref="corr-1"),
+        m("e6", "unit_price", "k1", "14.00", "$14.00", ref="corr-1"),
+    ],
+    references=[{"id": "corr-1", "text": "Corrigendum 1.\nB-200 Bracket: read $14.00.\n",
+                 "set": 1}],
+    records=[rec("k1", replaced=False), rec("p1", replaced=False), rec("p2", replaced=True)],
+    checks=[("corrigendum", True, [])],
+    export=[
+        {"field": "items.code", "value": "A-100", "key": None, "unit": None, "record": "p1",
+         "replaced": False, "source": "document", "span": {"start": 16, "end": 21}},
+        {"field": "items.unit_price", "value": "4.2", "key": None, "unit": "USD", "record": "p1",
+         "replaced": False, "source": "document", "span": {"start": 28, "end": 33}},
+        {"field": "items.code", "value": "B-200", "key": None, "unit": None, "record": "p2",
+         "replaced": True, "source": "document", "span": {"start": 34, "end": 39}},
+        {"field": "items.unit_price", "value": "12.5", "key": None, "unit": "USD", "record": "p2",
+         "replaced": True, "source": "document", "span": {"start": 48, "end": 54}},
+        {"field": "items.code", "value": "B-200", "key": None, "unit": None, "record": "k1",
+         "replaced": False, "source": "reference", "ref": "corr-1",
+         "span": {"start": 15, "end": 20}},
+        {"field": "items.unit_price", "value": "14", "key": None, "unit": "USD", "record": "k1",
+         "replaced": False, "source": "reference", "ref": "corr-1",
+         "span": {"start": 35, "end": 41}},
+    ],
+)  # fmt: skip
+
 # -------------------------------------------------------------- passages (SPEC §4.17, #638)
 # Each expected code is written by hand from §4.17. ``passage_sha256`` is the digest of §6 over
 # the passage text that the vector states, computed here with hashlib and not by groundgate.

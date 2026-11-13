@@ -133,10 +133,13 @@ def test_export_vector(path: Path, tmp_path: Path, capsys: pytest.CaptureFixture
     assert capsys.readouterr().out == "receipt verified\n"
 
     saved = receipt.to_dict()
-    order = [d["field"] for d in saved["decisions"] if d["outcome"] == "admitted"]
+    order = [
+        (d["field"], d.get("record")) for d in saved["decisions"] if d["outcome"] == "admitted"
+    ]
     refs = {r["id"]: r for r in v.get("references", [])}
     expected = []
-    for fact in sorted(v["expected"]["export"], key=lambda f: order.index(f["field"])):
+    by_order = lambda f: order.index((f["field"], f.get("record")))  # noqa: E731
+    for fact in sorted(v["expected"]["export"], key=by_order):
         origin = fact["source"]
         source_sha256 = text_sha256 = None
         if origin == "document":
@@ -146,6 +149,7 @@ def test_export_vector(path: Path, tmp_path: Path, capsys: pytest.CaptureFixture
             text_sha256 = gg.digest("reference", {"text": refs[fact["ref"]]["text"]})
         expected.append(
             {k: fact[k] for k in ("field", "key", "value", "unit")}
+            | {k: fact[k] for k in ("record", "replaced") if k in fact}  # SPEC §5.1 (#659)
             | {
                 "citation": {
                     "source": origin,
