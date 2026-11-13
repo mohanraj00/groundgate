@@ -332,7 +332,7 @@ def _record(name: str, d: dict[str, Any]) -> tuple[RecordField, dict[str, Field]
             raise PacketError(f"member name {member!r} breaks the rule of SPEC §2.3")
         if not isinstance(md, dict):
             raise PacketError(f"member {name}.{member} must be an object")
-        if set(md) & {"keys", "multiple", "template"}:
+        if md.get("keys") is not None or md.get("multiple", False) is not False or "template" in md:
             raise PacketError(f"member {name}.{member} has keys, multiple or a template")
         f = Field.from_dict(f"{name}.{member}", md)
         fields[f.name] = _replace(f, record=name)

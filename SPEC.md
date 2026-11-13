@@ -325,8 +325,8 @@ reference items are **role items**. External and knowledge items are **outside i
 `candidate.schema.json` in the package (`candidate_schema()` in the reference implementation) is
 a JSON Schema for one candidate. Step 1 is the definition: the schema does not check that a `ref`
 names a reference in the packet, that two document or reference items other than field items have
-different roles, that a candidate cites at most 8 field items, that a `record` is a string
-(§4.12), or that an integer has no fraction (`2.0`).
+different roles, that a candidate cites at most 8 field items, or that an integer has no fraction
+(`2.0`).
 
 ### 2.6 Judgments
 
@@ -367,11 +367,11 @@ later check runs. `value` means the candidate's value parsed per its field type.
 | 5 | `DATE_OUT_OF_RANGE` | On a `date` field, `value` is before `minimum` or after `maximum` (§4.11). |
 | 6 | `UNIT_INVALID` | The candidate's `unit` differs from the field's `unit` (both absent is a match). |
 | 7 | `KEY_INVALID` | The field has `keys`, and the candidate's `key` is absent or not exactly one of them. |
-| 7 | `RECORD_INVALID` | The field is a member field (§4.12), and the candidate's `record` is absent or blank. |
+| 7 | `RECORD_INVALID` | The field is a member field (§4.12), and the candidate's `record` is absent, not a string, or blank. |
 | 8 | `NO_EVIDENCE` | The candidate has no value item and no outside item. |
 
 Step 1 rejects when the candidate is not an object, `field` is not a string, `value` is missing or
-not a string/integer, `unit`, `key`, `record` or `proposer` is not a string, `proposer` is blank (§4.4), `confidence` is not a number in [0, 1],
+not a string/integer, `unit`, `key` or `proposer` is not a string, `proposer` is blank (§4.4), `confidence` is not a number in [0, 1],
 `search_region` is present but not an object with integer `start` and `end`, or `evidence` is
 present but not an object or a list of objects. It also rejects when an evidence item:
 
@@ -1596,8 +1596,8 @@ step 14 reads only the decisions.
 
 A `record` field has only the members `type`, `members`, `required` and `description`.
 `members` is an object of 1 to 64 **members**. A member name follows the rule of a field name
-(§2.3). A member is a field object with the rules of §2.3, and these limits: it has no `keys`,
-no `template` and no `multiple`, and its `type` is not `record`. The `required` of a member says
+(§2.3). A member is a field object with the rules of §2.3, and these limits: it has no `template`,
+its `keys` is null, its `multiple` is false, and its `type` is not `record`. The `required` of a member says
 that each record needs a value of that member. The `required` of the record field says that the
 receipt needs at least one record that is not rejected (Coverage, §3.3). The packet is invalid
 when a `record` field or a member breaks these rules.
@@ -1608,9 +1608,9 @@ record, a non-blank string that the extractor chooses. Two candidates with the s
 and the same `record` give values of one member of one record. The record ids are compared as
 exact strings, and they are scoped to the record field.
 
-- Step 1 rejects a candidate whose `record` is present and is not a string.
-- Step 7 rejects a candidate of a member field whose `record` is absent or blank (§4.4), with
-  `RECORD_INVALID`. On a field that is not a member field, `record` is ignored.
+- Step 7 rejects a candidate of a member field whose `record` is absent, not a string, or blank
+  (§4.4), with `RECORD_INVALID`. On a field that is not a member field, `record` is ignored, as
+  other keys are (§2.5). So no candidate of an older packet changes its decision.
 - A record field is not a field that takes values: a candidate whose `field` names a record
   field gets `FIELD_UNKNOWN`.
 - A member field is never in a relation (§2.3, §3.4): the packet is invalid.

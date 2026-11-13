@@ -78,3 +78,14 @@ def test_verify_finds_a_changed_record_line() -> None:
     receipt["records"][0]["outcome"] = "rejected"
     problems = gg.verify(receipt, TEXT, schema, cands).problems
     assert "records differs from the re-derived receipt" in problems
+
+
+def test_a_record_schema_survives_a_copy() -> None:
+    schema = gg.Schema.from_dict(
+        {
+            "fields": {"items": ITEMS},
+            "checks": [{"id": "u", "check": "unique", "field": "items", "member": "code"}],
+        }
+    )
+    assert gg.Schema.from_dict(schema.to_dict()).to_dict() == schema.to_dict()
+    assert schema.copy().to_dict() == schema.to_dict()

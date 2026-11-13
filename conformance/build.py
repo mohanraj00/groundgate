@@ -6899,10 +6899,12 @@ vector(
     "and rejected, and a row with two codes is RECORD_MEMBER_CONFLICT. Each value that passed, of "
     "a record that is not admitted, gets RECORD_NOT_ADMITTED. A member candidate with no record is "
     "RECORD_INVALID, and a candidate for the record field itself is FIELD_UNKNOWN. A required "
-    "record field with no record that is not rejected is in coverage (#613).",
+    "record field with no record that is not rejected is in coverage. A record that is not a "
+    "string is RECORD_INVALID on a member field, and ignored on another field (#613).",
     PRICE_DOC,
     {"fields": {
         "items": items(required=True),
+        "fees_note": {"type": "string"},
         "fees": {"type": "record", "required": True, "members": {
             "name": {"type": "string", "required": True}, "amount": PRICE}},
     }},
@@ -6923,7 +6925,9 @@ vector(
         c("a11", "items.code", "C-300", None, [q("C-300")], ("rejected", ["RECORD_INVALID"])),
         c("a12", "items", "A-100", None, [q("A-100")], ("rejected", ["FIELD_UNKNOWN"]),
           record="r1"),
-        m("a13", "code", 5, "C-300", "C-300", expect=("rejected", ["CANDIDATE_INVALID"])),
+        m("a13", "code", 5, "C-300", "C-300", expect=("rejected", ["RECORD_INVALID"])),
+        # a record that is not a string, on a field that is not a member field: ignored
+        c("a16", "fees_note", "delivery", None, [q("delivery")], record=7),
         # a record whose one value is rejected
         m("a14", "unit_price", "r5", "4.25", "$4.20",
           expect=("rejected", ["VALUE_NOT_IN_EVIDENCE"])),

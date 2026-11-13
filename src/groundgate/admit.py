@@ -788,8 +788,6 @@ def _check(ctx: _Ctx, cand: object) -> _Passed:
         raise _Reject("CANDIDATE_INVALID")
     if cand.get("proposer") is not None and _proposer(cand) is None:
         raise _Reject("CANDIDATE_INVALID")
-    if cand.get("record") is not None and not isinstance(cand["record"], str):
-        raise _Reject("CANDIDATE_INVALID")  # SPEC §4.12
     if conf is not None and (
         isinstance(conf, bool) or not isinstance(conf, (int, float)) or not 0 <= conf <= 1
     ):
