@@ -426,7 +426,8 @@ end, and [the calibrate reference](calibrate.md) gives each command and each rul
 Checks run in a fixed order and the first failure rejects:
 
 `CANDIDATE_INVALID`, `FIELD_UNKNOWN`, `NULL_STRING_LITERAL`, `TYPE_INVALID`, `RANGE_INVALID`,
-`UNIT_INVALID`, `KEY_INVALID`, `NO_EVIDENCE`, `SPAN_INVALID`, `QUOTE_NOT_FOUND`,
+`UNIT_INVALID`, `KEY_INVALID`, `NO_EVIDENCE`, `SPAN_INVALID`, `SOURCE_NOT_READ`,
+`QUOTE_NOT_FOUND`,
 `VALUE_NOT_IN_EVIDENCE`, `UNIT_NOT_IN_EVIDENCE`, and on the outside path `SOURCE_REJECTED`.
 
 A fact that passes them all is checked for flags. Any flag makes it `needs_verification`:
@@ -565,6 +566,7 @@ Rejections, in the order of the checks:
 | `KEY_INVALID` | The candidate's `key` is not written exactly as one of the field's `keys`. | Send the key as the schema writes it. |
 | `NO_EVIDENCE` | No value item and no outside item, such as a LangExtract extraction that did not align. | Ask for a quote of the value. |
 | `SPAN_INVALID` or `VALUE_NOT_IN_EVIDENCE` | Character offsets are sent as byte offsets, and the text has a character outside ASCII before the span. | Convert the offsets (see [Candidates](#candidates)), or send only the value item's `text`, and groundgate finds the quote. |
+| `SOURCE_NOT_READ` | The quote is not in the text, and the reading of the source is partial or has no text. The value can be on a page that gave no text. | Read the source again with OCR (`read --ocr`), or send the document to a person. |
 | `QUOTE_NOT_FOUND` | The extractor changed the quote of the value, or cited the wrong reference. | Ask for the text copied exactly, from the text that it cites. |
 | `VALUE_NOT_IN_EVIDENCE` | The value is not in the cited text, or the text writes the number in a form that groundgate does not read (see above). | A person checks the fact. |
 | `UNIT_NOT_IN_EVIDENCE` | Another unit is next to the number, such as mcg for an mg field, or a per-unit such as mg/kg. | Check the field's unit. For a per-unit, give the field its own code, such as `mg/kg`. |

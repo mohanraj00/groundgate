@@ -17,8 +17,10 @@ import unicodedata
 from collections.abc import Iterable
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
 
 from ..canonical import digest, is_nfc
+from ..completeness import completeness_of
 from .layout import Box, Layout, Page, Word
 from .markup import html_text, xml_text
 
@@ -41,6 +43,9 @@ class Extracted:
     layout: Layout | None = None  # PDFs only
     warnings: tuple[str, ...] = ()
     ocr: str | None = None  # the tesseract version, when OCR read a page
+    # The completeness of the reading (SPEC §4.16). ``read`` always gives it. A reading of an
+    # older version from a store has none.
+    completeness: dict[str, Any] | None = None
 
 
 def reader(ocr: str | None = None) -> dict[str, str]:
@@ -84,7 +89,8 @@ def read(
         if not is_nfc(text):  # pragma: no cover - words are normalised one by one
             raise ReadError(f"{path}: extracted text is not NFC")
         layout = Layout(digest("document", {"text": text}), tuple(page_list), tuple(words))
-        return Extracted(text, layout, tuple(warnings), scan.version)
+        complete = completeness_of(text, scan.missing.items())
+        return Extracted(text, layout, tuple(warnings), scan.version, complete)
     if data is None:
         data = path.read_bytes()
     if suffix == ".xml":
@@ -105,4 +111,5 @@ def read(
     else:
         raise ReadError(f"{path}: unsupported file type {suffix or '(none)'}")
     empty = () if text.strip() else (f"{path.name}: no text was extracted",)
-    return Extracted(unicodedata.normalize("NFC", text), warnings=empty)
+    text = unicodedata.normalize("NFC", text)
+    return Extracted(text, warnings=empty, completeness=completeness_of(text))

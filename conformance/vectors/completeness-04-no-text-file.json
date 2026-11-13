@@ -1,0 +1,68 @@
+{
+ "name": "completeness-04-no-text-file",
+ "description": "A text file with no text: the status is no_text and no page is missing. A candidate with offsets is not a quote, so it keeps its own code (SPEC §4.16).",
+ "document": "\n",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD",
+    "aliases": [
+     "Annual fee"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "completeness": {
+  "status": "no_text",
+  "missing": []
+ },
+ "candidates": [
+  {
+   "id": "r1",
+   "field": "fee",
+   "value": 90,
+   "unit": "USD",
+   "evidence": [
+    {
+     "text": "$90"
+    }
+   ]
+  },
+  {
+   "id": "r2",
+   "field": "fee",
+   "value": 90,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 0,
+     "end": 3,
+     "text": "$90"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "rejected",
+    "codes": [
+     "SOURCE_NOT_READ"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "SPAN_INVALID"
+    ]
+   }
+  ],
+  "coverage": [],
+  "completeness": {
+   "status": "no_text",
+   "missing": []
+  }
+ }
+}

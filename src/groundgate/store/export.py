@@ -66,4 +66,7 @@ def admitted_facts(store: Store, packet: Packet) -> dict[str, Any]:
                 },
             }
         )
-    return {"format": "facts@1", "packet_sha256": packet.key, "facts": facts}
+    out: dict[str, Any] = {"format": "facts@1", "packet_sha256": packet.key, "facts": facts}
+    if receipt.get("completeness") is not None:  # only with it in the packet (SPEC §4.16, #615)
+        out["completeness"] = receipt["completeness"]
+    return out

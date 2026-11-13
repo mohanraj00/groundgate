@@ -84,6 +84,7 @@ new key. The store prefix changes only when the key scheme changes.
 | `model-text@1` | canonical JSON of a model text input, review.md §7.1, in 0.15 | `review` |
 | `pin@1` | canonical JSON of a source pin (SPEC §4.14), in 0.15 | `admit` |
 | `places@1` | canonical JSON of the places of a packet (SPEC §4.15), in 0.15 | `admit` |
+| `completeness@1` | canonical JSON of the completeness of a packet (SPEC §4.16), in 0.15 | `admit` |
 | `document@1` | the document model of #285, in 0.13 | `read` |
 
 - `put` refuses JSON bytes that are not canonical, so one object has one key.
@@ -106,7 +107,8 @@ small objects. They name the same keys as the run header, so no data is copied.
  "reader": {"name": "groundgate.read", "version": "0.14.0"},
  "options": {"pages": null},
  "text": "sha256:...", "layout": "sha256:...", "document": null,
- "warnings": ["page 1: dropped 3 words drawn outside the visible page"]}
+ "warnings": ["page 1: dropped 3 words drawn outside the visible page"],
+ "completeness": {"status": "complete", "missing": []}}
 ```
 
 The reading cache maps the source key, the reader name and version, and the options to the
@@ -115,6 +117,8 @@ reading. If the reader changes, the key changes, so a stale entry never applies 
 `warnings` keeps the warnings of `read` in their order, so a cache hit gives the same warnings as
 a new read (#523). `reading@1` has the same members without `warnings`. `read --store` writes
 `reading@2` since 0.14. The store still reads a `reading@1`, but the cache never gives it.
+`completeness` is the completeness of the reading (SPEC §4.16, #615), since 0.15. A `reading@2`
+of 0.14 has no such member. The store still reads it, but the cache never gives it.
 
 ### 5.2 The packet
 
@@ -142,6 +146,10 @@ a new read (#523). `reading@1` has the same members without `warnings`. `read --
   (#614). A packet with no places has no member, so it keeps its key. `admit --locate` makes
   the places from the layout of the reading. The places give where each word of the document
   is, so `forget` deletes them with the text.
+- A packet with a completeness has the member `completeness` too: the store key of a
+  `completeness@1` object (#615). A packet with no completeness has no member, so it keeps its
+  key. `admit --store --reading` gives the completeness of the reading to the gate. The object
+  has a status and page numbers, and no text of the document, so it stays after `forget`.
 - `packs` names only the packs of the app. The receipt names the built-in packs, and they stay
   in the wheel (packs.md §11).
 - `run` is the store key of the run record. The run header names the same input keys, and
@@ -317,7 +325,7 @@ also if it changes during the build.
 
    | Removed | Kept |
    |---|---|
-   | `source@1`, `text@1`, `layout@1`, `document@1`, `reference@1`, `candidates@1`, `prompt@1`, `reply@1`, `admission@1`, `model-text@1`, `places@1` | `packet@1`, `reading@1`, `reading@2`, `receipt@1`, `schema@1`, `policy@1`, `pack@1`, `judgments@1`, `doubt@1`, `pin@1`, `run@N`, `task@1`, `resolution@1`, the answer logs |
+   | `source@1`, `text@1`, `layout@1`, `document@1`, `reference@1`, `candidates@1`, `prompt@1`, `reply@1`, `admission@1`, `model-text@1`, `places@1` | `packet@1`, `reading@1`, `reading@2`, `receipt@1`, `schema@1`, `policy@1`, `pack@1`, `judgments@1`, `doubt@1`, `pin@1`, `completeness@1`, `run@N`, `task@1`, `resolution@1`, the answer logs |
 
    The kept objects hold digests, values, offsets, codes and questions, and no document text
    other than the values. A review question and its choices can quote a value.

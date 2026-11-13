@@ -1,0 +1,25 @@
+{
+ "name": "completeness-bad-status",
+ "description": "A completeness with a status that is not one of the three is invalid (SPEC §4.16).",
+ "document": "Annual fee: $90\n",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD",
+    "aliases": [
+     "Annual fee"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "completeness": {
+  "status": "full",
+  "missing": []
+ },
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

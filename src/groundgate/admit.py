@@ -17,6 +17,7 @@ from decimal import MAX_EMAX, MAX_PREC, MIN_EMIN, Context, Decimal, Inexact
 from typing import Any, cast
 
 from .canonical import SPEC_VERSION, Offsets, digest, is_nfc
+from .completeness import check_completeness
 from .fold import fold_text, mark_fold
 from .model import (
     DATE_FORMATS,
@@ -342,6 +343,7 @@ class _Ctx:
     columns: tuple[str, ...] = ()  # the column words of every field (spec 0.12)
     markers: tuple[str, ...] = ()  # the marker words of every field
     competing: dict[str, tuple[str, ...]] = field(default_factory=dict)  # by field name
+    unread: bool = False  # the completeness of the packet is partial or no_text (SPEC §4.16)
     # the starts and the ends of the doubt spans below min_read_confidence, in text order (#535)
     doubt: tuple[list[int], list[int]] = field(default_factory=lambda: ([], []))
 
@@ -902,7 +904,9 @@ def _checked(
         assert vitem.text is not None
         found = _occurrences(t, vitem.text, region)
         if not found:
-            raise _Reject("QUOTE_NOT_FOUND", item=vitem)
+            # a quote of a reading that is not complete can be in a part that gave no text
+            unread = t is ctx.doc and ctx.unread
+            raise _Reject("SOURCE_NOT_READ" if unread else "QUOTE_NOT_FOUND", item=vitem)
         by_field = bool(fields) and f.aliases is not None
         at: _At | None = None
         first: _At | None = None  # the first occurrence where steps 10-11 pass
@@ -1736,6 +1740,7 @@ def admit(
     profile: Mapping[str, Any] | None = None,
     pin: Mapping[str, Any] | None = None,
     places: Sequence[object] | None = None,
+    completeness: Mapping[str, Any] | None = None,
 ) -> Receipt:
     """Decide every candidate and return the receipt.
 
@@ -1755,10 +1760,13 @@ def admit(
     changes no decision, and the receipt holds it with its digest. ``places`` is the page and
     the box of each word of the document, from a reader (SPEC §4.15). With it, each decision
     whose value span is in the document gets a ``locator``. It changes no outcome and no code.
+    ``completeness`` is the completeness of the reading (SPEC §4.16). The receipt holds it. With
+    the status ``partial`` or ``no_text``, a quote of the document that does not occur gets the
+    code ``SOURCE_NOT_READ``.
 
     Raises ``PacketError`` when the text is not NFC, ``candidates`` is not a list, or the schema,
-    policy, judgments, references, document source, packs, doubt, profile, pin or places are
-    invalid. Then no receipt is made.
+    policy, judgments, references, document source, packs, doubt, profile, pin, places or
+    completeness are invalid. Then no receipt is made.
     """
     if not isinstance(text, str) or not is_nfc(text):
         raise PacketError("document text must be a string in Unicode NFC")
@@ -1771,6 +1779,7 @@ def admit(
     _check_integers(doubt, "doubt")
     _check_integers(policy.to_dict() if isinstance(policy, Policy) else policy, "policy")
     _check_integers(pin, "pin")
+    _check_integers(completeness, "completeness")
     entry = None
     if profile is not None:
         if schema is not None or policy is not None or packs:
@@ -1792,6 +1801,7 @@ def admit(
         raise PacketError("document source must be a non-blank string or null")
     pinned = None if pin is None else pin_entry(pin, document_source)
     placed = None if places is None else check_places(places, Offsets(text))
+    read = None if completeness is None else check_completeness(completeness, text)
     refs = _references(references)
     positions = _set_positions(references)
     spans = _doubt(doubt, Offsets(text))
@@ -1799,11 +1809,13 @@ def admit(
     with using(schema.vocabulary):
         receipt = _admit(
             text, schema, candidates, policy, document_id, refs, by_cand, document_source, spans,
-            positions,
+            positions, read is not None and read["status"] != "complete",
         )  # fmt: skip
-    if entry is None and pinned is None and placed is None:
+    if entry is None and pinned is None and placed is None and read is None:
         return receipt
-    draft = dataclasses.replace(receipt, profile=entry, pin=pinned, receipt_sha256="")
+    draft = dataclasses.replace(
+        receipt, profile=entry, pin=pinned, completeness=read, receipt_sha256=""
+    )
     if placed is not None:
         index = Places(placed)
         draft = dataclasses.replace(
@@ -1835,6 +1847,7 @@ def _admit(
     document_source: str | None,
     doubt: list[dict[str, Any]],
     positions: dict[str, int],
+    unread: bool = False,
 ) -> Receipt:
     table = frozenset(x for _, suffixes in schema.units.values() for x in suffixes)
     ctx = _Ctx(
@@ -1848,6 +1861,7 @@ def _admit(
         columns=tuple(dict.fromkeys(c for f in schema.fields.values() for c in f.columns or ())),
         markers=tuple(dict.fromkeys(m for f in schema.fields.values() for m in f.markers or ())),
         competing=_competing(schema),
+        unread=unread,
         doubt=(
             [d["start"] for d in doubt if d["confidence"] < policy.min_read_confidence],
             [d["end"] for d in doubt if d["confidence"] < policy.min_read_confidence],
@@ -2290,6 +2304,7 @@ def verify(
     profile: Mapping[str, Any] | None = None,
     pin: Mapping[str, Any] | None = None,
     places: Sequence[object] | None = None,
+    completeness: Mapping[str, Any] | None = None,
 ) -> Verification:
     """Re-derive the receipt from its inputs and compare it with ``receipt``.
 
@@ -2310,7 +2325,8 @@ def verify(
     With ``profile``, give no ``schema``, ``policy``, ``packs`` or ``pack_dir``: the profile
     gives them (SPEC §4.10), and ``verify`` compares the receipt's ``profile`` member.
     ``pin`` is the source pin that ``admit`` got (SPEC §4.14), and ``verify`` compares the
-    receipt's ``pin`` member. ``places`` is the places list that ``admit`` got (SPEC §4.15).
+    receipt's ``pin`` member. ``places`` is the places list that ``admit`` got (SPEC §4.15),
+    and ``completeness`` is the completeness that ``admit`` got (SPEC §4.16).
     """
     if not isinstance(receipt, Mapping):
         raise PacketError("receipt must be a JSON object")
@@ -2362,6 +2378,7 @@ def verify(
             profile=profile,
             pin=pin,
             places=places,
+            completeness=completeness,
         ).to_dict()
     for key in (
         "document",
@@ -2370,6 +2387,7 @@ def verify(
         "profile",
         "pin",
         "places_sha256",
+        "completeness",
         "schema_sha256",
         "policy_sha256",
         "coverage",

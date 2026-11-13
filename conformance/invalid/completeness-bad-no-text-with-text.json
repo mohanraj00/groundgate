@@ -1,0 +1,25 @@
+{
+ "name": "completeness-bad-no-text-with-text",
+ "description": "A completeness with the status no_text for a document with text is invalid (SPEC §4.16).",
+ "document": "Annual fee: $90\n",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD",
+    "aliases": [
+     "Annual fee"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "completeness": {
+  "status": "no_text",
+  "missing": []
+ },
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

@@ -969,6 +969,8 @@ class Receipt:
     profile: dict[str, str] | None = None  # None when the packet gives no profile (SPEC §5)
     pin: dict[str, Any] | None = None  # None when the packet gives no pin (SPEC §4.14, §5)
     places_sha256: str | None = None  # None when the packet gives no places (SPEC §4.15, §5)
+    # None when the packet gives no completeness (SPEC §4.16, §5)
+    completeness: dict[str, Any] | None = None
     set_positions: tuple[tuple[str, int], ...] = ()  # (reference id, set) (SPEC §4.13)
     records: tuple[RecordLine, ...] | None = None  # None when the schema has no record field
     checks: tuple[CheckResult, ...] | None = None  # None when the schema has no checks
@@ -994,6 +996,16 @@ class Receipt:
             **({} if self.profile is None else {"profile": dict(self.profile)}),
             **({} if self.pin is None else {"pin": dict(self.pin)}),
             **({} if self.places_sha256 is None else {"places_sha256": self.places_sha256}),
+            **(
+                {}
+                if self.completeness is None
+                else {
+                    "completeness": {
+                        "status": self.completeness["status"],
+                        "missing": [dict(m) for m in self.completeness["missing"]],
+                    }
+                }
+            ),
             "schema_sha256": self.schema_sha256,
             "policy_sha256": self.policy_sha256,
             "decisions": [d.to_dict() for d in self.decisions],

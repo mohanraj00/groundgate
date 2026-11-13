@@ -1,0 +1,30 @@
+{
+ "name": "completeness-bad-page",
+ "description": "A completeness with the page 0 is invalid (SPEC §4.16).",
+ "document": "Annual fee: $90\n",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD",
+    "aliases": [
+     "Annual fee"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "completeness": {
+  "status": "partial",
+  "missing": [
+   {
+    "page": 0,
+    "reason": "ocr_off"
+   }
+  ]
+ },
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

@@ -24,6 +24,7 @@ from pathlib import Path
 from typing import Any
 
 from ..canonical import jcs
+from ..completeness import completeness_of
 from . import HTML_SUFFIXES, OFFICE_SUFFIXES, TEXT_SUFFIXES, Extracted, ReadError, _decode, reader
 from .layout import Layout
 from .nodes import MAX_DEPTH, MAX_NODES, PARENTS, Raw, chars_of_bytes, finish
@@ -392,7 +393,8 @@ def read_document(
         if not is_nfc(text):  # pragma: no cover - words are normalised one by one
             raise ReadError(f"{path}: extracted text is not NFC")
         layout = Layout(digest("document", {"text": text}), tuple(page_list), tuple(words))
-        extracted = Extracted(text, layout, tuple(warnings), scan.version)
+        complete = completeness_of(text, scan.missing.items())
+        extracted = Extracted(text, layout, tuple(warnings), scan.version, complete)
         doubt = scan.doubt
         data = text.encode("utf-8")
         chars = chars_of_bytes(data, [p for r in raws for p in (r.start, r.end) if p >= 0])
@@ -423,7 +425,7 @@ def read_document(
         else:
             raise ReadError(f"{path}: unsupported file type {suffix or '(none)'}")
         empty = () if text.strip() else (f"{path.name}: no text was extracted",)
-        extracted = Extracted(text, warnings=empty)
+        extracted = Extracted(text, warnings=empty, completeness=completeness_of(text))
     from ..store import key
 
     obj = {

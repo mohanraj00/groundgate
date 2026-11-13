@@ -419,6 +419,7 @@ Checks run in a fixed order. The first failure rejects the fact.
 | `KEY_INVALID` | the field is keyed by condition, and the key is missing or not one of its keys |
 | `NO_EVIDENCE` | the evidence has no value item and no outside item |
 | `SPAN_INVALID` | the span is outside the document or splits a character |
+| `SOURCE_NOT_READ` | the quoted value text is not in the document, and the reading of the source is partial or has no text |
 | `QUOTE_NOT_FOUND` | the quoted value text is not in the document, or in the reference it cites |
 | `VALUE_NOT_IN_EVIDENCE` | no number in the span equals the value, with the sign and scale the evidence gives |
 | `UNIT_NOT_IN_EVIDENCE` | the value is there, but with another unit |

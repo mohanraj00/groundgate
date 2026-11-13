@@ -1,0 +1,25 @@
+{
+ "name": "completeness-bad-complete-no-text",
+ "description": "A completeness with the status complete for a document with no text is invalid (SPEC §4.16).",
+ "document": " \n",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD",
+    "aliases": [
+     "Annual fee"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "completeness": {
+  "status": "complete",
+  "missing": []
+ },
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

@@ -72,6 +72,8 @@ class Scan:
     version: str | None = None
     pages: list[int] = field(default_factory=list)
     doubt: list[dict[str, Any]] = field(default_factory=list)
+    # the reason of each page that gave no text (SPEC §4.16), also when OCR is off
+    missing: dict[int, str] = field(default_factory=dict)
     _program: str | None = None
     _pdf: Any = None
 

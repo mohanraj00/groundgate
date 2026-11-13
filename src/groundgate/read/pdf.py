@@ -111,6 +111,17 @@ def _has_image(obj: Any) -> bool:
     return False
 
 
+def _no_text_reason(page: Any, read_by_ocr: bool, hidden: int) -> str | None:
+    """Why a page gave no text (SPEC §4.16), or None for a page with no marks."""
+    if read_by_ocr:
+        return "ocr_no_text"
+    if _has_image(page):
+        return "ocr_off"
+    if hidden or any(True for _ in page):
+        return "no_text_layer"
+    return None
+
+
 def _text_boxes(obj: Any) -> Iterator[Any]:
     from pdfminer.layout import LTFigure, LTTextBox
 
@@ -378,6 +389,10 @@ def _read_pages(
             for word, c in zip(words[first:], confidence, strict=True):
                 if c < 1:
                     scan.doubt.append({"start": word.start, "end": word.end, "confidence": c})
+        if start == out.size:
+            reason = _no_text_reason(device.get_result(), number in scan.pages, hidden)
+            if reason is not None:
+                scan.missing[number] = reason
         page_list.append(Page(number, round(vx1 - vx0, 2), round(vy1 - vy0, 2), start, out.size))
         dropped[number] = hidden
     warnings = layout_warnings(page_list, wanted, dropped, scan.pages, ocr)

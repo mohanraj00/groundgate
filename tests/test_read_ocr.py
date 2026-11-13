@@ -288,6 +288,10 @@ def test_tesseract_on_a_white_page_warns_that_ocr_found_no_text(tmp_path: Path) 
     doc = read(_scan(tmp_path, _gray(400, 400)), ocr=True)
     assert doc.warnings == ("page 1: OCR found no text on the scanned page",)
     assert doc.ocr is not None
+    assert doc.completeness == {
+        "status": "no_text",
+        "missing": [{"page": 1, "reason": "ocr_no_text"}],
+    }
 
 
 @NEEDS_TESSERACT

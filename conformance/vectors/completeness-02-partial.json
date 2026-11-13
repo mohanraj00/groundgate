@@ -1,0 +1,112 @@
+{
+ "name": "completeness-02-partial",
+ "description": "A partial reading: pages 2 and 3 are scans and OCR was off. The value on page 1 is admitted. A quote of the document that does not occur gets SOURCE_NOT_READ, because the quote can be on a page that gave no text. A quote of the reference that does not occur keeps QUOTE_NOT_FOUND: the completeness is of the document (SPEC §4.16).",
+ "document": "Annual fee: $90\n",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD",
+    "aliases": [
+     "Annual fee"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "references": [
+  {
+   "id": "rates",
+   "text": "Annual fee: $90\n",
+   "source": null
+  }
+ ],
+ "completeness": {
+  "status": "partial",
+  "missing": [
+   {
+    "page": 2,
+    "reason": "ocr_off"
+   },
+   {
+    "page": 3,
+    "reason": "ocr_off"
+   }
+  ]
+ },
+ "candidates": [
+  {
+   "id": "r1",
+   "field": "fee",
+   "value": 90,
+   "unit": "USD",
+   "evidence": [
+    {
+     "text": "$90"
+    },
+    {
+     "role": "field",
+     "text": "Annual fee"
+    }
+   ]
+  },
+  {
+   "id": "r2",
+   "field": "fee",
+   "value": 95,
+   "unit": "USD",
+   "evidence": [
+    {
+     "text": "$95"
+    }
+   ]
+  },
+  {
+   "id": "r3",
+   "field": "fee",
+   "value": 95,
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "reference",
+     "ref": "rates",
+     "text": "$95"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "SOURCE_NOT_READ"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "QUOTE_NOT_FOUND"
+    ]
+   }
+  ],
+  "coverage": [],
+  "completeness": {
+   "status": "partial",
+   "missing": [
+    {
+     "page": 2,
+     "reason": "ocr_off"
+    },
+    {
+     "page": 3,
+     "reason": "ocr_off"
+    }
+   ]
+  }
+ }
+}

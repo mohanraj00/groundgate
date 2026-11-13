@@ -1,0 +1,30 @@
+{
+ "name": "completeness-bad-reason",
+ "description": "A completeness with a reason that is not one of the three is invalid (SPEC §4.16).",
+ "document": "Annual fee: $90\n",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD",
+    "aliases": [
+     "Annual fee"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "completeness": {
+  "status": "partial",
+  "missing": [
+   {
+    "page": 2,
+    "reason": "skipped"
+   }
+  ]
+ },
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

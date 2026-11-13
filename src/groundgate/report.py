@@ -103,15 +103,16 @@ def render(
     doubt: Sequence[object] | None = None,
     pin: Mapping[str, Any] | None = None,
     places: Sequence[object] | None = None,
+    completeness: Mapping[str, Any] | None = None,
 ) -> str:
     """Render ``receipt`` over ``text``. ``candidates`` supply the quotes shown on each card.
 
     With ``schema`` (and ``policy``, ``judgments``, ``references``, ``document_source``, ``packs``,
-    ``doubt``, ``pin`` and ``places`` if they were used), the receipt is re-derived first and
-    the page says whether it matched. Without them the page says it is unverified. ``pack_dir``
-    is a folder of pack files, and ``verify`` reads it with the same rules (docs/design/packs.md
-    §11). The page shows the cited text of a reference decision only when ``references`` holds
-    that reference.
+    ``doubt``, ``pin``, ``places`` and ``completeness`` if they were used), the receipt is
+    re-derived first and the page says whether it matched. Without them the page says it is
+    unverified. ``pack_dir`` is a folder of pack files, and ``verify`` reads it with the same
+    rules (docs/design/packs.md §11). The page shows the cited text of a reference decision
+    only when ``references`` holds that reference.
     """
     verified = (
         None
@@ -130,6 +131,7 @@ def render(
             doubt=doubt,
             pin=pin,
             places=places,
+            completeness=completeness,
         ).ok
     )
     texts: dict[str, tuple[str, Offsets]] = {}
@@ -192,6 +194,9 @@ def render(
         f'<span title="{_e(doc.get("sha256"))}">document {_e(_short(doc.get("sha256")))}</span>'
         "</p>"
     )
+    reading = _reading_line(receipt.get("completeness"))
+    if reading is not None:
+        parts.append(f'<p class="meta">{reading}</p>')
     coverage = receipt.get("coverage", [])
     if coverage:
         parts.append('<ul class="coverage">')
@@ -457,6 +462,24 @@ def _card(item: _Item, layout: Layout | None) -> str:
         out.append(f'<p class="where">{" · ".join(proposer)}</p>')
     out.append("</div>")
     return "".join(out)
+
+
+def _reading_line(obj: object) -> str | None:
+    """The completeness of the reading (SPEC §4.16) as one line, or None. The receipt is
+    untrusted, so each member is checked and the line names at most 20 pages."""
+    if not isinstance(obj, Mapping) or not isinstance(obj.get("status"), str):
+        return None
+    missing = obj.get("missing")
+    pages = [
+        f"{m['page']} ({_e(m.get('reason'))})"
+        for m in (missing if isinstance(missing, list) else [])
+        if isinstance(m, Mapping) and type(m.get("page")) is int
+    ]
+    line = f"reading: {_e(obj['status'].replace('_', ' '))}"
+    if pages:
+        more = f" and {len(pages) - 20} more" if len(pages) > 20 else ""
+        line += f" · pages with no text: {', '.join(pages[:20])}{more}"
+    return line
 
 
 def _locator(obj: object) -> str | None:

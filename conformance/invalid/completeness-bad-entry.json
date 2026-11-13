@@ -1,0 +1,31 @@
+{
+ "name": "completeness-bad-entry",
+ "description": "A completeness with an entry with a member that is not page or reason is invalid (SPEC §4.16).",
+ "document": "Annual fee: $90\n",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD",
+    "aliases": [
+     "Annual fee"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "completeness": {
+  "status": "partial",
+  "missing": [
+   {
+    "page": 2,
+    "reason": "ocr_off",
+    "text": ""
+   }
+  ]
+ },
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}
