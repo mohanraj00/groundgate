@@ -472,6 +472,7 @@ A fact that passes every check can still be flagged for a person:
 | `COLUMN_NOT_AT_VALUE` | the field has `columns`, and the value is not in a column of the field (spec 0.12) |
 | `MARKER_OTHER_FIELD` | a marker word of another field, such as "family", is next to the value (spec 0.12) |
 | `READ_DOUBT` | a cited item is on a word that the reader, such as OCR, read with a low confidence (spec 0.12) |
+| `PASSAGE_NOT_READ` | on a `passage` field, the reading is not complete, and a page that gave no text can be in the section |
 | `EVIDENCE_QUOTED`, `EVIDENCE_STATED` | only an external quote, or the extractor's own knowledge, supports the value |
 | `LOW_CONFIDENCE` | the extractor's confidence is below the policy minimum |
 | `CONFLICTING_CANDIDATES` | another proposal for the same field and key has a different value |

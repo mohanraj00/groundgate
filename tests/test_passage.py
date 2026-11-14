@@ -211,3 +211,48 @@ def test_the_store_the_export_and_the_commands(
     (tmp_path / "other.txt").write_text("Other text.\n", encoding="utf-8")
     assert main(["admit", str(tmp_path / "other.txt"), *files[1:], "--outline", model]) == 2
     assert "--outline" in capsys.readouterr().err
+
+
+PAGED = "1 Scope\nOne flat.\n\n2 Rent\nThe rent is $900.\nDue on day 1.\n\n3 Term\n12 months.\n"
+PAGED_OUTLINE = [{"start": 0, "end": 7, "level": 1}, {"start": 19, "end": 25, "level": 1},
+                 {"start": 59, "end": 65, "level": 1}]  # fmt: skip
+# Section 2 has the word Rent on page 1 and the word Due on page 3.
+PAGED_WORDS = [[2, 7, 1, 0, 0, 10, 10], [21, 25, 1, 0, 20, 10, 30], [44, 47, 3, 0, 0, 10, 10],
+               [61, 65, 3, 0, 20, 10, 30]]  # fmt: skip
+PAGED_SPANS = {"1": (0, 17), "2": (19, 57), "3": (59, 76)}
+
+
+def _paged(missing: list[int], places: list[list[int]] | None) -> dict[str, list[str]]:
+    """The codes of each section of PAGED, with ``missing`` pages that gave no text."""
+    cands = [_cand(label, label, {"start": a, "end": b}) for label, (a, b) in PAGED_SPANS.items()]
+    read = {"status": "partial" if missing else "complete",
+            "missing": [{"page": p, "reason": "ocr_off"} for p in missing]}  # fmt: skip
+    more: dict[str, Any] = {"outline": PAGED_OUTLINE, "completeness": read, "places": places}
+    receipt = gg.admit(PAGED, SCHEMA, cands, **more)
+    assert gg.verify(receipt.to_dict(), PAGED, SCHEMA, cands, **more).ok
+    return {d.value: list(d.codes) for d in receipt.decisions}
+
+
+def test_a_passage_with_a_page_not_read_inside_goes_to_review() -> None:
+    """#672: the places say which sections can have a part on a page that gave no text."""
+    flag = ["PASSAGE_NOT_READ"]
+    assert _paged([2], PAGED_WORDS) == {"1": [], "2": flag, "3": []}
+    assert _paged([4], PAGED_WORDS) == {"1": [], "2": [], "3": flag}
+    assert _paged([2, 4], PAGED_WORDS) == {"1": [], "2": flag, "3": flag}
+    assert _paged([], PAGED_WORDS) == {"1": [], "2": [], "3": []}
+
+
+def test_a_passage_of_a_partial_reading_with_no_places_goes_to_review() -> None:
+    flag = ["PASSAGE_NOT_READ"]
+    assert _paged([2], None) == {"1": flag, "2": flag, "3": flag}
+    assert _paged([2], []) == {"1": flag, "2": flag, "3": flag}
+    assert _paged([2], PAGED_WORDS[1:]) == {"1": flag, "2": flag, "3": []}
+    assert _paged([], None) == {"1": [], "2": [], "3": []}
+
+
+def test_a_passage_with_the_flag_is_not_an_admitted_fact() -> None:
+    cands = [_cand("a", "2", {"start": 19, "end": 57})]
+    read = {"status": "partial", "missing": [{"page": 2, "reason": "ocr_off"}]}
+    receipt = gg.admit(PAGED, SCHEMA, cands, outline=PAGED_OUTLINE, completeness=read)
+    (d,) = receipt.to_dict()["decisions"]
+    assert d["outcome"] == "needs_verification" and d["passage_sha256"] is not None

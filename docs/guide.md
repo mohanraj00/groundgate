@@ -436,7 +436,7 @@ A fact that passes them all is checked for flags. Any flag makes it `needs_verif
 
 `NON_VERBATIM_EVIDENCE`, `QUALIFIED_VALUE`, `SCALE_WORD`, `PART_MISSING`, `SIGN_DROPPED`, `SIGN_CITATION_INVALID`,
 `SCALE_CITATION_INVALID`, `UNIT_CITATION_INVALID`, `FIELD_CITATION_INVALID`, `KEY_NOT_AT_VALUE`,
-`KEY_CITATION_INVALID`, `COLUMN_NOT_AT_VALUE`, `MARKER_OTHER_FIELD`, `READ_DOUBT`,
+`KEY_CITATION_INVALID`, `COLUMN_NOT_AT_VALUE`, `MARKER_OTHER_FIELD`, `READ_DOUBT`, `PASSAGE_NOT_READ`,
 `EVIDENCE_QUOTED`, `EVIDENCE_STATED`, `LOW_CONFIDENCE`, `CONFLICTING_CANDIDATES`, `NOT_CORROBORATED`, `OTHER_SPAN`, `RELATION_FAILED`, and `MODEL_DOUBT` from a recorded judgment.
 `EVIDENCE_REANCHORED`, `VALUE_DERIVED`, `KEY_CITED`, `ADMITTED_BY_POLICY` and `MODEL_CLEARED`
 only inform.
@@ -594,6 +594,7 @@ Flags send the fact to a person:
 | `COLUMN_NOT_AT_VALUE` | The field has `columns`, and no column item puts the value under a header cell of the field. A passing field item with a column word, as "Typical supply current", also puts it there. On a line with no tab, no column item passes. | In a table, ask the extractor for a `column` item. Otherwise a person checks the fact. |
 | `MARKER_OTHER_FIELD` | The field has `markers`, a marker word of another field is next to the value, as "family" in "$800 family", and no marker word of this field is. | A person checks the fact. Usually the value is of the other field. |
 | `READ_DOUBT` | The value item or a passing role item shares a byte with a span of the packet's `doubt` list whose `confidence` is below `min_read_confidence` (default 1). OCR gives such spans. | A person checks the fact on the page image. A lower `min_read_confidence` is your choice: groundgate has not measured one. |
+| `PASSAGE_NOT_READ` | On a `passage` field, the reading is `partial`, and a page that gave no text can be in the section. With `places`, only a section that has such a page between its words, or after its last word at the end of the document, gets the flag. With no `places`, each passage gets it. | A person compares the section with the source. Read the document with OCR on to get a complete reading. |
 | `EVIDENCE_QUOTED`, `EVIDENCE_STATED` | Only outside evidence supports the value. | Check the source. If you trust it, add the URL prefix to `sources.external.allow`, or set `sources.knowledge` to `admit`. |
 | `LOW_CONFIDENCE` | The extractor's `confidence` is below `min_confidence`. | A person checks the fact. |
 | `CONFLICTING_CANDIDATES` | Two proposers read different values. | A person picks one. groundgate never picks. |
