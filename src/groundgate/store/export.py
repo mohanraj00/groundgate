@@ -46,6 +46,8 @@ def admitted_facts(store: Store, packet: Packet) -> dict[str, Any]:
         elif source == "external":
             url = decision["url"]
         citation_more = {}
+        if decision.get("passage_sha256") is not None:  # only a passage field (SPEC §4.17, #638)
+            citation_more["passage_sha256"] = decision["passage_sha256"]
         if decision.get("locator") is not None:  # only with places in the packet (#614)
             citation_more["locator"] = decision["locator"]
         facts.append(

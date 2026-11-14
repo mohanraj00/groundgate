@@ -1,0 +1,108 @@
+{
+ "name": "passage-03-cut-short",
+ "description": "A span that ends before the end of its section is cut short: without the subsection 4.2.1, with only the heading, and without the last word (SPEC §4.17).",
+ "document": "4 Payment\n\n4.1 Rent\nThe rent is $900 for each month.\n\n4.2 Fees\nThe late fee is $25.\n\n4.2.1 Waiver\nThe owner can waive the fee.\n\n4.3 Deposit\nThe deposit is $500.\n\n5 Term\nThe term is 12 months.\n",
+ "schema": {
+  "fields": {
+   "section": {
+    "type": "passage",
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "outline": [
+  {
+   "level": 1,
+   "start": 0,
+   "end": 9
+  },
+  {
+   "level": 2,
+   "start": 11,
+   "end": 19
+  },
+  {
+   "level": 2,
+   "start": 54,
+   "end": 62
+  },
+  {
+   "level": 3,
+   "start": 85,
+   "end": 97
+  },
+  {
+   "level": 2,
+   "start": 128,
+   "end": 139
+  },
+  {
+   "level": 1,
+   "start": 162,
+   "end": 168
+  }
+ ],
+ "candidates": [
+  {
+   "id": "p1",
+   "field": "section",
+   "value": "4.2",
+   "evidence": [
+    {
+     "start": 54,
+     "end": 83
+    }
+   ]
+  },
+  {
+   "id": "p2",
+   "field": "section",
+   "value": "4.3",
+   "evidence": [
+    {
+     "start": 128,
+     "end": 139
+    }
+   ]
+  },
+  {
+   "id": "p3",
+   "field": "section",
+   "value": "5",
+   "evidence": [
+    {
+     "start": 162,
+     "end": 183
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "rejected",
+    "codes": [
+     "PASSAGE_CUT_SHORT"
+    ],
+    "passage_sha256": null
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "PASSAGE_CUT_SHORT"
+    ],
+    "passage_sha256": null
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "PASSAGE_CUT_SHORT"
+    ],
+    "passage_sha256": null
+   }
+  ],
+  "coverage": [],
+  "outline_sha256": "sha256:717e4ef692e198a6eeca1645902ecdefdbfaf5a512a3fe090b259e17c25787f9"
+ }
+}

@@ -45,13 +45,16 @@ def vector(
     records: list[dict[str, Any]] | None = None,
     checks: list[tuple[str, bool, list[str]]] | None = None,
     completeness: dict[str, Any] | None = None,
+    outline: list[dict[str, Any]] | None = None,
 ) -> None:
     """``relations`` is the receipt's relation results (SPEC §5), each as (id, key, holds,
     difference, allowance), in receipt order; None when the schema has no relations. ``doubt``
     is the packet's doubt list (SPEC §2.1), each entry a quote marker with a ``confidence``.
     ``records`` is the receipt's record lines (SPEC §4.12, §5), each with the members to compare,
     and ``checks`` the check results (SPEC §4.13) as (id, holds, records). ``completeness`` is
-    the packet's completeness (SPEC §4.16), and the receipt must hold the same object."""
+    the packet's completeness (SPEC §4.16), and the receipt must hold the same object.
+    ``outline`` is the packet's outline (SPEC §4.17), each entry a quote marker with a
+    ``level``."""
     VECTORS.append(
         {
             "name": name,
@@ -78,6 +81,7 @@ def vector(
             if checks is None
             else [{"id": i, "holds": h, "records": r} for i, h, r in checks],
             "completeness": completeness,
+            "outline": outline,
         }
     )
 
@@ -7622,6 +7626,273 @@ for bad_name, bad_text, bad_doc, bad in (
         }
     )
 
+# -------------------------------------------------------------- passages (SPEC §4.17, #638)
+# Each expected code is written by hand from §4.17. ``passage_sha256`` is the digest of §6 over
+# the passage text that the vector states, computed here with hashlib and not by groundgate.
+LEASE = (
+    "4 Payment\n\n"
+    "4.1 Rent\nThe rent is $900 for each month.\n\n"
+    "4.2 Fees\nThe late fee is $25.\n\n"
+    "4.2.1 Waiver\nThe owner can waive the fee.\n\n"
+    "4.3 Deposit\nThe deposit is $500.\n\n"
+    "5 Term\nThe term is 12 months.\n"
+)
+S41 = "4.1 Rent\nThe rent is $900 for each month."
+S421 = "4.2.1 Waiver\nThe owner can waive the fee."
+S42 = "4.2 Fees\nThe late fee is $25.\n\n" + S421
+S43 = "4.3 Deposit\nThe deposit is $500."
+S4 = "4 Payment\n\n" + S41 + "\n\n" + S42 + "\n\n" + S43
+S5 = "5 Term\nThe term is 12 months."
+LEASE_OUTLINE = [
+    q("4 Payment", 1, NO_TEXT, level=1),
+    q("4.1 Rent", 1, NO_TEXT, level=2),
+    q("4.2 Fees", 1, NO_TEXT, level=2),
+    q("4.2.1 Waiver", 1, NO_TEXT, level=3),
+    q("4.3 Deposit", 1, NO_TEXT, level=2),
+    q("5 Term", 1, NO_TEXT, level=1),
+]
+SECTIONS = {"fields": {"section": {"type": "passage", "multiple": True}}}
+NOT_AT_HEADING = ("rejected", ["PASSAGE_NOT_AT_HEADING"])
+LABEL_MISMATCH = ("rejected", ["PASSAGE_LABEL_MISMATCH"])
+CUT_SHORT = ("rejected", ["PASSAGE_CUT_SHORT"])
+OVERRUN = ("rejected", ["PASSAGE_OVERRUN"])
+
+
+def passage(
+    cid: str, label: str, span: str, expect: tuple[Any, ...] = ADMIT, text: object = NO_TEXT
+) -> dict[str, Any]:
+    """A passage candidate: the label, and the span of ``span`` in the document. A decision
+    that is not rejected has the digest of ``span``; a rejected one has null."""
+    item = c(cid, "section", label, None, [q(span, 1, text)], expect)
+    kept = expect[0] != "rejected"
+    item["expect"]["passage_sha256"] = spec_digest("passage", {"text": span}) if kept else None
+    return item
+
+
+def no_digest(item: dict[str, Any]) -> dict[str, Any]:
+    """A rejected passage candidate: its decision has a null ``passage_sha256``."""
+    item["expect"]["passage_sha256"] = None
+    return item
+
+
+vector(
+    "passage-01-exact",
+    "Each span is exactly one section: from its heading to the last character before the next "
+    "heading of the same level or a higher level. The last section ends at the end of the "
+    "document, without the line break. A value item whose text is not exactly the span text "
+    "gets NON_VERBATIM_EVIDENCE (SPEC §4.17).",
+    LEASE,
+    SECTIONS,
+    [
+        passage("p1", "4.3", S43),
+        passage("p2", "5", S5),
+        passage("p3", "4.2.1", S421, text=S421),
+        passage(
+            "p4",
+            "4.1",
+            S41,
+            ("needs_verification", ["NON_VERBATIM_EVIDENCE"]),
+            text="4.1 Rent The rent is $900 for each month.",
+        ),
+    ],
+    outline=LEASE_OUTLINE,
+)
+vector(
+    "passage-02-subsections",
+    "The section of a heading holds the headings below it. Section 4.2 holds 4.2.1, and "
+    "section 4 holds 4.1 to 4.3. The label can have the mark of the end of a number, and it "
+    "can be the second word of the heading (SPEC §4.17).",
+    LEASE,
+    SECTIONS,
+    [
+        passage("p1", "4.2", S42),
+        passage("p2", "4", S4),
+        passage("p3", "4.3.", S43),
+        passage("p4", "Deposit", S43),
+    ],
+    outline=LEASE_OUTLINE,
+)
+vector(
+    "passage-03-cut-short",
+    "A span that ends before the end of its section is cut short: without the subsection "
+    "4.2.1, with only the heading, and without the last word (SPEC §4.17).",
+    LEASE,
+    SECTIONS,
+    [
+        passage("p1", "4.2", "4.2 Fees\nThe late fee is $25.", CUT_SHORT),
+        passage("p2", "4.3", "4.3 Deposit", CUT_SHORT),
+        passage("p3", "5", "5 Term\nThe term is 12", CUT_SHORT),
+    ],
+    outline=LEASE_OUTLINE,
+)
+vector(
+    "passage-04-overrun",
+    "A span that ends after the end of its section runs into the next section. The whitespace "
+    "after the last character of a section is not part of it (SPEC §4.17).",
+    LEASE,
+    SECTIONS,
+    [
+        passage("p1", "4.3", S43 + "\n\n5 Term", OVERRUN),
+        passage("p2", "4.2.1", S421 + "\n\n" + S43, OVERRUN),
+        passage("p3", "4.3", S43 + "\n", OVERRUN),
+    ],
+    outline=LEASE_OUTLINE,
+)
+vector(
+    "passage-05-label",
+    "The heading at the start of the span must have the label. 4.2 is not the label of the "
+    "heading 4.2.1 Waiver, and 4.3 is not the label of 4.2 Fees. A label with a lead word "
+    "that the heading does not have does not match (SPEC §4.17).",
+    LEASE,
+    SECTIONS,
+    [
+        passage("p1", "4.2", S421, LABEL_MISMATCH),
+        passage("p2", "4.3", S42, LABEL_MISMATCH),
+        passage("p3", "Section 4.3", S43, LABEL_MISMATCH),
+        passage("p4", "4", S41, LABEL_MISMATCH),
+    ],
+    outline=LEASE_OUTLINE,
+)
+vector(
+    "passage-06-not-at-heading",
+    "A span that starts in the text under a heading, or one character after the start of a "
+    "heading, is not at a heading. A quote with no offsets is not at a heading (SPEC §4.17).",
+    LEASE,
+    SECTIONS,
+    [
+        passage("p1", "4.3", "The deposit is $500.", NOT_AT_HEADING),
+        passage("p2", "4.3", ".3 Deposit\nThe deposit is $500.", NOT_AT_HEADING),
+        no_digest(c("p3", "section", "4.3", None, [{"text": S43}], NOT_AT_HEADING)),
+    ],
+    outline=LEASE_OUTLINE,
+)
+vector(
+    "passage-07-no-outline",
+    "A packet with no outline has no heading, so no passage is admitted. A span in a "
+    "reference is not at a heading, because the outline is of the document. A candidate with "
+    "only an outside item has no evidence (SPEC §4.17).",
+    LEASE,
+    SECTIONS,
+    [
+        passage("p1", "4.3", S43, NOT_AT_HEADING),
+        no_digest(
+            c(
+                "p2",
+                "section",
+                "4.3",
+                None,
+                [q(S43, 1, NO_TEXT, source="reference", ref="lease")],
+                NOT_AT_HEADING,
+            )
+        ),
+        no_digest(
+            c(
+                "p3",
+                "section",
+                "4.3",
+                None,
+                [know("Section 4.3 is the deposit.")],
+                ("rejected", ["NO_EVIDENCE"]),
+            )
+        ),
+    ],
+    references=[{"id": "lease", "text": LEASE, "source": None}],
+)
+CONTRACT = (
+    "Article 1 Parties\nThe owner and the tenant.\n\n"
+    "Article 2 Fees\nSection 2.1 Late fee\nThe late fee is $25.\n\n"
+    "§ 3 Term\nThe term is 12 months.\n"
+)
+A1 = "Article 1 Parties\nThe owner and the tenant."
+S21 = "Section 2.1 Late fee\nThe late fee is $25."
+A2 = "Article 2 Fees\n" + S21
+A3 = "§ 3 Term\nThe term is 12 months."
+vector(
+    "passage-08-lead-words",
+    "Headings with a lead word. The label can start at the first word or at the second word "
+    "of the heading: Article 2 and 2 are labels of Article 2 Fees. Fees is its third word, so "
+    "it is not a label. 2 is not the label of Section 2.1 Late fee (SPEC §4.17).",
+    CONTRACT,
+    SECTIONS,
+    [
+        passage("p1", "Article 2", A2),
+        passage("p2", "2.1", S21),
+        passage("p3", "3", A3),
+        passage("p4", "article 1", A1),
+        passage("p5", "1", "Article 1 Parties", CUT_SHORT),
+        passage("p6", "1", A1 + "\n\nArticle 2 Fees", OVERRUN),
+        passage("p7", "2", S21, LABEL_MISMATCH),
+        passage("p8", "Fees", A2, LABEL_MISMATCH),
+    ],
+    outline=[
+        q("Article 1 Parties", 1, NO_TEXT, level=1),
+        q("Article 2 Fees", 1, NO_TEXT, level=1),
+        q("Section 2.1 Late fee", 1, NO_TEXT, level=2),
+        q("§ 3 Term", 1, NO_TEXT, level=1),
+    ],
+)
+for bad_name, bad_text, bad_field in (
+    ("unit", "a unit", {"type": "passage", "unit": "USD"}),
+    ("keys", "keys", {"type": "passage", "keys": ["4.2"]}),
+    ("aliases", "aliases", {"type": "passage", "aliases": ["Section"]}),
+    ("bound", "a bound", {"type": "passage", "minimum": "1"}),
+    ("comparator", "a comparator that is not eq", {"type": "passage", "comparator": "ge"}),
+    ("formats", "formats", {"type": "passage", "formats": ["YYYY-MM-DD"]}),
+):
+    INVALID.append(
+        {
+            "name": f"passage-field-{bad_name}",
+            "description": f"A passage field with {bad_text} is invalid (SPEC §4.17).",
+            "document": LEASE,
+            "schema": {"fields": {"section": bad_field}},
+            "policy": None,
+        }
+    )
+INVALID.append(
+    {
+        "name": "passage-field-in-record",
+        "description": "A passage field as a member of a record is invalid (SPEC §4.17).",
+        "document": LEASE,
+        "schema": {"fields": {"rows": {"type": "record",
+                                       "members": {"section": {"type": "passage"}}}}},
+        "policy": None,
+    }
+)  # fmt: skip
+INVALID.append(
+    {
+        "name": "passage-field-in-relation",
+        "description": "A passage field as a field of a relation is invalid (SPEC §4.17).",
+        "document": LEASE,
+        "schema": {"fields": {"section": {"type": "passage"}, "total": {"type": "integer"}},
+                   "relations": [{"id": "sum", "total": "total",
+                                  "parts": [{"field": "section"}]}]},
+        "policy": None,
+    }
+)  # fmt: skip
+for bad_name, bad_text, bad_outline in (
+    ("list", "an object in place of the list", {"start": 0, "end": 9, "level": 1}),
+    ("member", "an entry with no level", [{"start": 0, "end": 9}]),
+    ("extra", "an entry with a member that is not start, end or level",
+     [{"start": 0, "end": 9, "level": 1, "text": "4 Payment"}]),
+    ("level-zero", "the level 0", [{"start": 0, "end": 9, "level": 0}]),
+    ("level-seven", "the level 7", [{"start": 0, "end": 9, "level": 7}]),
+    ("level-boolean", "a boolean in place of the level", [{"start": 0, "end": 9, "level": True}]),
+    ("span", "a span that ends after the document", [{"start": 0, "end": 9999, "level": 1}]),
+    ("empty-span", "a span with no character", [{"start": 4, "end": 4, "level": 1}]),
+    ("order", "an entry that starts before the end of the entry before it",
+     [{"start": 0, "end": 9, "level": 1}, {"start": 5, "end": 12, "level": 2}]),
+):  # fmt: skip
+    INVALID.append(
+        {
+            "name": f"outline-bad-{bad_name}",
+            "description": f"An outline with {bad_text} is invalid (SPEC §4.17).",
+            "document": LEASE,
+            "schema": SECTIONS,
+            "policy": None,
+            "outline": bad_outline,
+        }
+    )
+
 
 def main() -> None:
     out_dir = HERE / "vectors"
@@ -7652,6 +7923,7 @@ def main() -> None:
             **({"packs": v["packs"]} if v["packs"] is not None else {}),
             **({"doubt": resolve(doc, v["doubt"])} if v["doubt"] is not None else {}),
             **({"completeness": v["completeness"]} if v["completeness"] is not None else {}),
+            **({"outline": resolve(doc, v["outline"])} if v["outline"] is not None else {}),
             "candidates": cands,
             **({"judgments": v["judgments"]} if v["judgments"] is not None else {}),
             "expected": {
@@ -7662,6 +7934,15 @@ def main() -> None:
                 **({"records": v["records"]} if v["records"] is not None else {}),
                 **({"checks": v["checks"]} if v["checks"] is not None else {}),
                 **({"completeness": v["completeness"]} if v["completeness"] is not None else {}),
+                **(
+                    {
+                        "outline_sha256": spec_digest(
+                            "outline", {"outline": resolve(doc, v["outline"])}
+                        )
+                    }
+                    if v["outline"] is not None
+                    else {}
+                ),
             },
         }
         (out_dir / f"{v['name']}.json").write_text(

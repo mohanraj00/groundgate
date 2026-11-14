@@ -177,6 +177,12 @@ def _parser() -> argparse.ArgumentParser:
         p.add_argument("--document-source", help="the URL of the document (SPEC §2.1)")
         p.add_argument("--pin", metavar="FILE", help="the source pin of the document (SPEC §4.14)")
         p.add_argument(
+            "--outline",
+            metavar="FILE",
+            help="the headings of the document for passage fields (SPEC §4.17): an outline "
+            "list as JSON, or the document model from read --document",
+        )
+        p.add_argument(
             "--completeness",
             metavar="FILE",
             help="the completeness of the reading, from read --completeness (SPEC §4.16). "
@@ -535,6 +541,7 @@ def main(argv: list[str] | None = None) -> int:
             "packs": [load_pack(f) for f in args.pack],
             "pin": _json(args.pin) if args.pin else None,
             "completeness": _json(args.completeness) if args.completeness else None,
+            "outline": _outline(_json(args.outline), text) if args.outline else None,
         }
         if args.layout and args.command in ("admit", "verify"):
             extra["places"] = _layout_places(_json(args.layout), text)
@@ -584,6 +591,8 @@ def _admit_inputs(parser: argparse.ArgumentParser, args: argparse.Namespace) -> 
             parser.error("batch admit cannot use --pin: a pin is for one document")
         if args.completeness is not None:
             parser.error("batch admit cannot use --completeness: it is for one document")
+        if args.outline is not None:
+            parser.error("batch admit cannot use --outline: it is for one document")
         if args.layout is not None or args.locate:
             parser.error("batch admit cannot use --layout or --locate")
     elif not all(value is not None for value in single):
@@ -612,6 +621,7 @@ def _verify_inputs(parser: argparse.ArgumentParser, args: argparse.Namespace) ->
             ("--document-source", args.document_source is not None),
             ("--pin", args.pin is not None),
             ("--completeness", args.completeness is not None),
+            ("--outline", args.outline is not None),
             ("--layout", args.command == "verify" and args.layout is not None),
             ("--pack", bool(args.pack)),
         )
@@ -622,6 +632,27 @@ def _verify_inputs(parser: argparse.ArgumentParser, args: argparse.Namespace) ->
             f"with --store, {args.command} gets each input from the packet: remove "
             + ", ".join(given)
         )
+
+
+def _has_passage(schema: Any) -> bool:
+    fields = schema.get("fields") if isinstance(schema, dict) else None
+    return isinstance(fields, dict) and any(
+        isinstance(f, dict) and f.get("type") == "passage" for f in fields.values()
+    )
+
+
+def _outline(given: Any, text: str) -> Any:
+    """The outline of SPEC §4.17 from the file of ``--outline``: the list itself, or the
+    headings of a ``document@1`` model, which must be of ``text``."""
+    if not isinstance(given, dict):
+        return given  # ``admit`` checks the list
+    from .passage import document_outline
+    from .read.document import Document, DocumentError
+
+    try:
+        return document_outline(Document.from_dict(given, text))
+    except DocumentError as exc:
+        raise PacketError(f"--outline: {exc}") from exc
 
 
 def _layout_places(layout_dict: Any, text: str) -> list[list[int]]:
@@ -680,6 +711,16 @@ def _admit_store(
 
             # a partial reading must not look complete to the gate (#615)
             extra = {**extra, "completeness": load_reading(store, args.reading).get("completeness")}
+        if args.reading is not None and extra.get("outline") is None and _has_passage(schema):
+            from .store.packets import load_reading
+
+            # a passage field reads the headings of the document model of the reading (#638)
+            model = load_reading(store, args.reading)["document"]
+            if model is not None:
+                extra = {
+                    **extra,
+                    "outline": _outline(json.loads(store.get("document@1", model)), text),
+                }
         packet, receipt = admit_packet(
             store,
             text,

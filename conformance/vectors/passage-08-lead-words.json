@@ -1,0 +1,180 @@
+{
+ "name": "passage-08-lead-words",
+ "description": "Headings with a lead word. The label can start at the first word or at the second word of the heading: Article 2 and 2 are labels of Article 2 Fees. Fees is its third word, so it is not a label. 2 is not the label of Section 2.1 Late fee (SPEC §4.17).",
+ "document": "Article 1 Parties\nThe owner and the tenant.\n\nArticle 2 Fees\nSection 2.1 Late fee\nThe late fee is $25.\n\n§ 3 Term\nThe term is 12 months.\n",
+ "schema": {
+  "fields": {
+   "section": {
+    "type": "passage",
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "outline": [
+  {
+   "level": 1,
+   "start": 0,
+   "end": 17
+  },
+  {
+   "level": 1,
+   "start": 45,
+   "end": 59
+  },
+  {
+   "level": 2,
+   "start": 60,
+   "end": 80
+  },
+  {
+   "level": 1,
+   "start": 103,
+   "end": 112
+  }
+ ],
+ "candidates": [
+  {
+   "id": "p1",
+   "field": "section",
+   "value": "Article 2",
+   "evidence": [
+    {
+     "start": 45,
+     "end": 101
+    }
+   ]
+  },
+  {
+   "id": "p2",
+   "field": "section",
+   "value": "2.1",
+   "evidence": [
+    {
+     "start": 60,
+     "end": 101
+    }
+   ]
+  },
+  {
+   "id": "p3",
+   "field": "section",
+   "value": "3",
+   "evidence": [
+    {
+     "start": 103,
+     "end": 135
+    }
+   ]
+  },
+  {
+   "id": "p4",
+   "field": "section",
+   "value": "article 1",
+   "evidence": [
+    {
+     "start": 0,
+     "end": 43
+    }
+   ]
+  },
+  {
+   "id": "p5",
+   "field": "section",
+   "value": "1",
+   "evidence": [
+    {
+     "start": 0,
+     "end": 17
+    }
+   ]
+  },
+  {
+   "id": "p6",
+   "field": "section",
+   "value": "1",
+   "evidence": [
+    {
+     "start": 0,
+     "end": 59
+    }
+   ]
+  },
+  {
+   "id": "p7",
+   "field": "section",
+   "value": "2",
+   "evidence": [
+    {
+     "start": 60,
+     "end": 101
+    }
+   ]
+  },
+  {
+   "id": "p8",
+   "field": "section",
+   "value": "Fees",
+   "evidence": [
+    {
+     "start": 45,
+     "end": 101
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "passage_sha256": "sha256:40fd0d855bc665820b1d51c348b466bf040c963e855b767a4220c23b524b9b39"
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "passage_sha256": "sha256:bc37cbb32550388cfbf31e2d226d84180d09a83aad0cec2aec69210c945a5d88"
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "passage_sha256": "sha256:f81fa10478afce7ff49ee971d9d26017c46e74276eb65ce2973b48ebec70f04c"
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "passage_sha256": "sha256:a0950cd31f4b1ee2aec5a84ec89a9c07f83e04a491774c744c5e6f079262d699"
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "PASSAGE_CUT_SHORT"
+    ],
+    "passage_sha256": null
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "PASSAGE_OVERRUN"
+    ],
+    "passage_sha256": null
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "PASSAGE_LABEL_MISMATCH"
+    ],
+    "passage_sha256": null
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "PASSAGE_LABEL_MISMATCH"
+    ],
+    "passage_sha256": null
+   }
+  ],
+  "coverage": [],
+  "outline_sha256": "sha256:e61ddb60908a61a35c035c7a661ab542a187bcd94f59d8db7bb0e46cb534c35b"
+ }
+}

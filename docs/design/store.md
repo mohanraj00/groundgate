@@ -85,6 +85,7 @@ new key. The store prefix changes only when the key scheme changes.
 | `pin@1` | canonical JSON of a source pin (SPEC §4.14), in 0.15 | `admit` |
 | `places@1` | canonical JSON of the places of a packet (SPEC §4.15), in 0.15 | `admit` |
 | `completeness@1` | canonical JSON of the completeness of a packet (SPEC §4.16), in 0.15 | `admit` |
+| `outline@1` | canonical JSON of the outline of a packet (SPEC §4.17), in 0.15 | `admit` |
 | `document@1` | the document model of #285, in 0.13 | `read` |
 
 - `put` refuses JSON bytes that are not canonical, so one object has one key.
@@ -150,6 +151,11 @@ of 0.14 has no such member. The store still reads it, but the cache never gives 
   `completeness@1` object (#615). A packet with no completeness has no member, so it keeps its
   key. `admit --store --reading` gives the completeness of the reading to the gate. The object
   has a status and page numbers, and no text of the document, so it stays after `forget`.
+- A packet with an outline has the member `outline` too: the store key of an `outline@1`
+  object (#638). A packet with no outline has no member, so it keeps its key. With a passage
+  field in the schema, `admit --store --reading` takes the outline from the `document@1` of
+  the reading. The object has offsets and levels, and no text of the document, so it stays
+  after `forget`.
 - `packs` names only the packs of the app. The receipt names the built-in packs, and they stay
   in the wheel (packs.md §11).
 - `run` is the store key of the run record. The run header names the same input keys, and
@@ -325,7 +331,7 @@ also if it changes during the build.
 
    | Removed | Kept |
    |---|---|
-   | `source@1`, `text@1`, `layout@1`, `document@1`, `reference@1`, `candidates@1`, `prompt@1`, `reply@1`, `admission@1`, `model-text@1`, `places@1` | `packet@1`, `reading@1`, `reading@2`, `receipt@1`, `schema@1`, `policy@1`, `pack@1`, `judgments@1`, `doubt@1`, `pin@1`, `completeness@1`, `run@N`, `task@1`, `resolution@1`, the answer logs |
+   | `source@1`, `text@1`, `layout@1`, `document@1`, `reference@1`, `candidates@1`, `prompt@1`, `reply@1`, `admission@1`, `model-text@1`, `places@1` | `packet@1`, `reading@1`, `reading@2`, `receipt@1`, `schema@1`, `policy@1`, `pack@1`, `judgments@1`, `doubt@1`, `pin@1`, `completeness@1`, `outline@1`, `run@N`, `task@1`, `resolution@1`, the answer logs |
 
    The kept objects hold digests, values, offsets, codes and questions, and no document text
    other than the values. A review question and its choices can quote a value.

@@ -58,7 +58,8 @@ _PACKET = (
 # A packet with places has the member ``places``: the key of a ``places@1`` object (#614).
 # A packet with a completeness has the member ``completeness``: the key of a
 # ``completeness@1`` object (#615).
-_OPTIONAL = ("doubt", "pin", "places", "completeness")
+# A packet with an outline has the member ``outline``: the key of an ``outline@1`` object (#638).
+_OPTIONAL = ("doubt", "pin", "places", "completeness", "outline")
 _READING = ("document", "format", "layout", "options", "reader", "source", "text")
 _READING2 = (*_READING, "warnings")
 # ``put_reading`` also writes the completeness of the reading (SPEC §4.16, #615). A reading@2
@@ -112,6 +113,7 @@ class Packet:
     pin: dict[str, Any] | None = None  # the source pin of ``admit``, or None (SPEC §4.14)
     places: list[Any] | None = None  # the places of ``admit``, or None (SPEC §4.15)
     completeness: dict[str, Any] | None = None  # of ``admit``, or None (SPEC §4.16)
+    outline: list[Any] | None = None  # the outline of ``admit``, or None (SPEC §4.17)
 
     def inputs(self) -> dict[str, Any]:
         """The keyword arguments of ``verify`` and ``render`` after the first four."""
@@ -125,6 +127,7 @@ class Packet:
             "pin": self.pin,
             "places": self.places,
             "completeness": self.completeness,
+            "outline": self.outline,
         }
 
 
@@ -389,6 +392,7 @@ def check_packet(
     pin: Mapping[str, Any] | None = None,
     places: Sequence[object] | None = None,
     completeness: Mapping[str, Any] | None = None,
+    outline: Sequence[object] | None = None,
 ) -> Receipt:
     """Do the checks of ``admit_packet`` and return the receipt, but write nothing. If
     ``check_packet`` raises no error, ``admit_packet`` with the same inputs gives the same
@@ -407,6 +411,7 @@ def check_packet(
         pin=pin,
         places=places,
         completeness=completeness,
+        outline=outline,
     )[0]
 
 
@@ -425,6 +430,7 @@ def _checked(
     pin: Mapping[str, Any] | None = None,
     places: Sequence[object] | None = None,
     completeness: Mapping[str, Any] | None = None,
+    outline: Sequence[object] | None = None,
 ) -> tuple[Receipt, dict[str, Any]]:
     for value, what in ((schema, "schema"), (policy, "policy")):
         if value is not None and not isinstance(value, Mapping):
@@ -443,6 +449,7 @@ def _checked(
         pin=pin,
         places=places,
         completeness=completeness,
+        outline=outline,
     )
     given: dict[str, Any] = {
         "schema": schema,
@@ -456,6 +463,7 @@ def _checked(
         "pin": None if pin is None else dict(pin),
         "places": None if places is None else list(places),
         "completeness": None if completeness is None else dict(completeness),
+        "outline": None if outline is None else list(outline),
     }
     back = json.loads(_json(given, "inputs"))
     if not _same(given, back):
@@ -473,6 +481,7 @@ def _checked(
             pin=back["pin"],
             places=back["places"],
             completeness=back["completeness"],
+            outline=back["outline"],
         )
         if again.to_dict() != receipt.to_dict():
             raise PacketError(
@@ -499,6 +508,7 @@ def admit_packet(
     pin: Mapping[str, Any] | None = None,
     places: Sequence[object] | None = None,
     completeness: Mapping[str, Any] | None = None,
+    outline: Sequence[object] | None = None,
 ) -> tuple[str, Receipt]:
     """Run ``admit``, then write the text, the schema, the policy, each reference, each pack,
     the candidates, the judgments, the doubt spans, the receipt and a ``packet@1`` object.
@@ -511,8 +521,9 @@ def admit_packet(
     ``pin@1`` object. ``places`` is the places list of ``admit`` (SPEC §4.15): a packet with
     places names a ``places@1`` object. ``completeness`` is the completeness of ``admit``
     (SPEC §4.16): a packet with it names a ``completeness@1`` object. ``admit_packet`` does not
-    take it from the reading: give the member ``completeness`` of the reading. The store keeps
-    canonical JSON, where the number 5.0 is
+    take it from the reading: give the member ``completeness`` of the reading. ``outline`` is
+    the outline of ``admit`` (SPEC §4.17): a packet with it names an ``outline@1`` object. The
+    store keeps canonical JSON, where the number 5.0 is
     5. If that change gives another receipt, ``admit_packet`` raises ``PacketError`` and writes
     nothing, because ``verify`` from the store would then fail."""
     receipt, given = _checked(
@@ -529,6 +540,7 @@ def admit_packet(
         pin=pin,
         places=places,
         completeness=completeness,
+        outline=outline,
     )
     if reading is not None:
         if not isinstance(reading, str) or not KEY.fullmatch(reading):
@@ -581,6 +593,8 @@ def _put_packet(
         packet["places"] = put("places@1", given["places"])
     if given.get("completeness") is not None:
         packet["completeness"] = put("completeness@1", given["completeness"])
+    if given.get("outline") is not None:
+        packet["outline"] = put("outline@1", given["outline"])
     return put("packet@1", packet)
 
 
@@ -612,6 +626,7 @@ def load_packet(store: Store, k: str, *, layout: bool = False) -> Packet:
     pin_key = _key_or_none(obj, "pin", "packet") if "pin" in obj else None
     places_key = _key_or_none(obj, "places", "packet") if "places" in obj else None
     complete_key = _key_or_none(obj, "completeness", "packet") if "completeness" in obj else None
+    outline_key = _key_or_none(obj, "outline", "packet") if "outline" in obj else None
     references = _key_list(obj, "references", "packet")
     packs = _key_list(obj, "packs", "packet")
     if not isinstance(obj["spec"], str):
@@ -658,4 +673,5 @@ def load_packet(store: Store, k: str, *, layout: bool = False) -> Packet:
         completeness=(
             None if complete_key is None else _get_json(store, "completeness@1", complete_key)
         ),
+        outline=None if outline_key is None else _get_json(store, "outline@1", outline_key),
     )

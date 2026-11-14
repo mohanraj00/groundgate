@@ -1,0 +1,122 @@
+{
+ "name": "passage-01-exact",
+ "description": "Each span is exactly one section: from its heading to the last character before the next heading of the same level or a higher level. The last section ends at the end of the document, without the line break. A value item whose text is not exactly the span text gets NON_VERBATIM_EVIDENCE (SPEC §4.17).",
+ "document": "4 Payment\n\n4.1 Rent\nThe rent is $900 for each month.\n\n4.2 Fees\nThe late fee is $25.\n\n4.2.1 Waiver\nThe owner can waive the fee.\n\n4.3 Deposit\nThe deposit is $500.\n\n5 Term\nThe term is 12 months.\n",
+ "schema": {
+  "fields": {
+   "section": {
+    "type": "passage",
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "outline": [
+  {
+   "level": 1,
+   "start": 0,
+   "end": 9
+  },
+  {
+   "level": 2,
+   "start": 11,
+   "end": 19
+  },
+  {
+   "level": 2,
+   "start": 54,
+   "end": 62
+  },
+  {
+   "level": 3,
+   "start": 85,
+   "end": 97
+  },
+  {
+   "level": 2,
+   "start": 128,
+   "end": 139
+  },
+  {
+   "level": 1,
+   "start": 162,
+   "end": 168
+  }
+ ],
+ "candidates": [
+  {
+   "id": "p1",
+   "field": "section",
+   "value": "4.3",
+   "evidence": [
+    {
+     "start": 128,
+     "end": 160
+    }
+   ]
+  },
+  {
+   "id": "p2",
+   "field": "section",
+   "value": "5",
+   "evidence": [
+    {
+     "start": 162,
+     "end": 191
+    }
+   ]
+  },
+  {
+   "id": "p3",
+   "field": "section",
+   "value": "4.2.1",
+   "evidence": [
+    {
+     "start": 85,
+     "end": 126,
+     "text": "4.2.1 Waiver\nThe owner can waive the fee."
+    }
+   ]
+  },
+  {
+   "id": "p4",
+   "field": "section",
+   "value": "4.1",
+   "evidence": [
+    {
+     "start": 11,
+     "end": 52,
+     "text": "4.1 Rent The rent is $900 for each month."
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "passage_sha256": "sha256:a2e98666d7f973d7521556dcf82cea25a9d5e97340b8753b98d7df3e4570a810"
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "passage_sha256": "sha256:bccd31d57b277554d628af2680b53eb6e7db498a46c2059df219e4e144809bab"
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "passage_sha256": "sha256:0fe404852834d9b0b1355f6b0ce8a44c1b305a7f59ba5aa3c8123e2c477d2fff"
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "NON_VERBATIM_EVIDENCE"
+    ],
+    "passage_sha256": "sha256:731efeda44547ceb10f2e9e0d7fd352bfdc5f7c96cdc4e35163655f836d54856"
+   }
+  ],
+  "coverage": [],
+  "outline_sha256": "sha256:717e4ef692e198a6eeca1645902ecdefdbfaf5a512a3fe090b259e17c25787f9"
+ }
+}

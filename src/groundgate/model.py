@@ -30,12 +30,13 @@ from .pack import (
 from .pack import PacketError as PacketError
 from .text import BASE_VOCABULARY, SCALED_DIGITS, Vocabulary, normalize_ws, parse_value
 
-FieldType = Literal["number", "integer", "string", "date"]
+FieldType = Literal["number", "integer", "string", "date", "passage"]
 Comparator = Literal["eq", "gt", "ge", "lt", "le", "approx", "range"]
 Outcome = Literal["admitted", "needs_verification", "rejected"]
 Action = Literal["admit", "review", "reject"]
 
-_TYPES = ("number", "integer", "string", "date")
+_TYPES = ("number", "integer", "string", "date", "passage")
+_NOT_IN_PASSAGE = ("unit", "minimum", "maximum", "keys", "aliases", "columns", "markers")
 # the date formats of SPEC §4.11 (#612), in the order of its table
 DATE_FORMATS = ("YYYY-MM-DD", "D/M/YYYY", "M/D/YYYY", "D.M.YYYY", "D Month YYYY", "Month D, YYYY")
 _NORMAL_DATE = re.compile(r"[0-9]{4}-[0-9]{2}-[0-9]{2}\Z")
@@ -164,6 +165,17 @@ class Field:
             raise PacketError(f"field {name!r} has unknown comparator {raw['comparator']!r}")
         if raw["unit"] is not None and not isinstance(raw["unit"], str):
             raise PacketError(f"field {name!r} unit must be a string or null")
+        if raw["type"] == "passage" and (  # SPEC §4.17 (#638)
+            "template" in d
+            or "formats" in d
+            or raw["comparator"] != "eq"
+            or any(raw[m] is not None for m in _NOT_IN_PASSAGE)
+        ):
+            # the schema with defaults filled in has each of these members with its default
+            raise PacketError(
+                f"field {name!r} is a passage field: it has only type, required, multiple and "
+                "description"
+            )
         is_date = raw["type"] == "date"
         if is_date:  # SPEC §4.11 (#612)
             raw["formats"] = _formats(name, d.get("formats"))
@@ -226,8 +238,10 @@ def _relation_field(where: str, name: object, fields: dict[str, Field]) -> Field
     if not isinstance(name, str) or name not in fields:
         raise PacketError(f"{where} names {name!r}, which is not a field of the schema")
     f = fields[name]
-    if f.type in ("string", "date") or f.multiple or f.record is not None:
-        raise PacketError(f"{where}: field {name!r} is a string, date, multiple or member field")
+    if f.type in ("string", "date", "passage") or f.multiple or f.record is not None:
+        raise PacketError(
+            f"{where}: field {name!r} is a string, date, passage, multiple or member field"
+        )
     return f
 
 
@@ -335,6 +349,8 @@ def _record(name: str, d: dict[str, Any]) -> tuple[RecordField, dict[str, Field]
         if md.get("keys") is not None or md.get("multiple", False) is not False or "template" in md:
             raise PacketError(f"member {name}.{member} has keys, multiple or a template")
         f = Field.from_dict(f"{name}.{member}", md)
+        if f.type == "passage":
+            raise PacketError(f"member {name}.{member} is a passage field (SPEC §4.17)")
         fields[f.name] = _replace(f, record=name)
     raw["members"] = {f.name.split(".", 1)[1]: f._raw for f in fields.values()}
     members = tuple(raw["members"])
@@ -804,6 +820,10 @@ class Decision:
     # page and the box of the value span in hundredths of a point, or None.
     located: bool = False
     locator: tuple[int, tuple[int, int, int, int]] | None = None
+    # A decision of a passage field (SPEC §4.17, #638) has ``is_passage`` True, and
+    # ``passage_sha256`` is the digest of the passage text, or None when it is rejected.
+    is_passage: bool = False
+    passage_sha256: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
         out: dict[str, Any] = {
@@ -830,6 +850,8 @@ class Decision:
             out["evidence_units"] = self.evidence_units.to_dict()
         if self.record is not None:  # other decisions keep their bytes (#613)
             out["record"] = self.record
+        if self.is_passage:  # a decision of another field keeps its bytes (#638)
+            out["passage_sha256"] = self.passage_sha256
         if self.located:  # a receipt of a packet with no places keeps its bytes (#614)
             out["locator"] = (
                 None
@@ -971,6 +993,7 @@ class Receipt:
     places_sha256: str | None = None  # None when the packet gives no places (SPEC §4.15, §5)
     # None when the packet gives no completeness (SPEC §4.16, §5)
     completeness: dict[str, Any] | None = None
+    outline_sha256: str | None = None  # None when the packet gives no outline (SPEC §4.17)
     set_positions: tuple[tuple[str, int], ...] = ()  # (reference id, set) (SPEC §4.13)
     records: tuple[RecordLine, ...] | None = None  # None when the schema has no record field
     checks: tuple[CheckResult, ...] | None = None  # None when the schema has no checks
@@ -1006,6 +1029,7 @@ class Receipt:
                     }
                 }
             ),
+            **({} if self.outline_sha256 is None else {"outline_sha256": self.outline_sha256}),
             "schema_sha256": self.schema_sha256,
             "policy_sha256": self.policy_sha256,
             "decisions": [d.to_dict() for d in self.decisions],
@@ -1137,6 +1161,8 @@ def extractor_schema(
     for f in s.fields.values():
         if f.type == "string":
             value = {"type": "string", "description": "The value as the text states it."}
+        elif f.type == "passage":
+            value = {"type": "string", "description": "The label of the section, such as 4.2."}
         elif f.type == "date":
             value = {"type": "string", "description": "The date as YYYY-MM-DD."}
         else:

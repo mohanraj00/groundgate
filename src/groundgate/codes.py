@@ -18,6 +18,10 @@ REJECT = {
     "of the source is not complete.",
     "QUOTE_NOT_FOUND": "The quoted value text does not occur in the document or reference.",
     "VALUE_NOT_IN_EVIDENCE": "The value cannot be read from the cited text.",
+    "PASSAGE_NOT_AT_HEADING": "The passage span does not start at a heading of the outline.",
+    "PASSAGE_LABEL_MISMATCH": "The heading at the start of the passage does not have the label.",
+    "PASSAGE_CUT_SHORT": "The passage span ends before the end of the section.",
+    "PASSAGE_OVERRUN": "The passage span ends after the end of the section.",
     "UNIT_NOT_IN_EVIDENCE": "The value is in the cited text, but not with the field's unit.",
     "DATE_FORMAT_UNDECLARED": (
         "The text gives the date only in a format that the field does not accept."
