@@ -549,6 +549,7 @@ rejected by steps 1–11 or on the outside path.
 | `COLUMN_NOT_AT_VALUE` | The field has `columns`, no column item passes, and no passing field item holds a mention of a column word of the field (§4.6, spec 0.12). Also on a candidate with no field item and no column item. |
 | `MARKER_OTHER_FIELD` | The field has `markers`, a competing word of the field is next to the token, and no marker word of the field is next to it (§4.6, spec 0.12). Also on a candidate with no marker item. |
 | `READ_DOUBT` | The value item, or a role item that passes its check, is in the document and shares at least one byte with a doubt span (§2.1) whose `confidence` is below `policy.min_read_confidence`. The value item counts with its evidence span (§5): the found occurrence of a quote, or the re-anchored span. A role item counts with its span in `parts` (§5). A recorded judgment never removes this flag (spec 0.12, #535). |
+| `PASSAGE_NOT_READ` | On a `passage` field, the reading is not complete, and a page that was not read can be in the section (§4.17, #672). A recorded judgment never removes this flag. |
 | `EVIDENCE_QUOTED` | On the outside path, the deciding item is external, with the action `review`. |
 | `EVIDENCE_STATED` | On the outside path, the deciding item is knowledge, with the action `review`. |
 | `LOW_CONFIDENCE` | `policy.min_confidence` is set and `confidence` is below it. |
@@ -1787,8 +1788,10 @@ An implementation that reads pins also gives the receipt `pin` member of each ve
 ### 4.15 Places and locators
 
 **Places** (#614) give the page and the box of each word of the document, as a reader of a PDF
-gives them, also after OCR. They change no outcome and no code. With places, the receipt gives a
-**locator** for each decision, so a reviewer or an app can show the exact place on the page.
+gives them, also after OCR. With places, the receipt gives a **locator** for each decision, so a
+reviewer or an app can show the exact place on the page. Places change no outcome and no code,
+with one exception: the flag `PASSAGE_NOT_READ` of a passage in a reading that is not complete
+(§4.17).
 
 Places are a list. Each entry is a list of 7 integers:
 
@@ -1825,14 +1828,14 @@ an outside source has a null locator, because the places are of the document.
 
 An implementation that reads places also gives the `locator` of each decision and the
 `places_sha256` of each vector under `conformance/places/`, and refuses every packet there that
-expects an error.
+expects an error. A vector there can also have a `completeness` and an `outline`.
 
 ### 4.16 Completeness of a reading
 
 **Completeness** (#615) is the statement of a reader about its reading: the text is all of the
 source, or parts of the source gave no text. A partial reading must not look complete. The gate
 cannot see the source, so it does not make this statement. It checks the form, keeps the
-statement in the receipt, and uses it at step 9a.
+statement in the receipt, and uses it at step 9a and for the flag of a passage (§4.17).
 
 ```json
 {"status": "partial", "missing": [{"page": 7, "reason": "ocr_off"},
@@ -1934,6 +1937,25 @@ Items with a role, `search_region`, re-anchoring and the role checks of §4.6 do
 passage, and its decision has no parts. If the value item has a `text` that is not exactly the
 text of the span, code point by code point, the decision gets the flag `NON_VERBATIM_EVIDENCE`.
 `LOW_CONFIDENCE`, `READ_DOUBT` and `CONFLICTING_CANDIDATES` apply as for each field.
+
+**A reading that is not complete (#672).** A page that gave no text has no words in the
+document. So a section can have a part on that page, and the span does not show it. When the
+packet has a completeness (§4.16) whose status is not `complete`, a passage that passes the
+four checks gets the flag `PASSAGE_NOT_READ` if a page that was not read can be in its section.
+The places of the packet (§4.15) answer this:
+
+1. The packet has no places, or no entry of the places shares a byte with the span. Then the
+   gate cannot find the pages of the section, and the passage gets the flag.
+2. Else `first` is the page of the first entry, in list order, that shares a byte with the
+   span. `next` is the page of the first entry that starts at or after the end of the span, if
+   there is such an entry. The passage gets the flag when a page of `missing` is higher than
+   `first` and, if there is a `next`, lower than `next`.
+
+So a section that starts on page 1 and continues on page 3 gets the flag when page 2 is in
+`missing`. The last section of the document gets the flag when a page after its first page is
+in `missing`. A section on one page whose next heading is on that page gets no flag. This rule
+rejects no passage: the flag sends it to review, where a person compares the section with the
+source. A packet with no completeness, or with `complete`, gets no flag from this rule.
 
 **The receipt.** The `evidence` of the decision is the span of the passage. Each decision of a
 passage field also has the member `passage_sha256`: the digest (§6) of kind `passage` over

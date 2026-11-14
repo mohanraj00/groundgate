@@ -2,7 +2,9 @@
 
 A reader says if its text is all of the source, or which pages gave no text. The gate checks
 the form of the statement, keeps it in the receipt, and gives a quote of the document that does
-not occur the code ``SOURCE_NOT_READ`` when the reading is not complete.
+not occur the code ``SOURCE_NOT_READ`` when the reading is not complete. A passage of such a
+reading gets the flag ``PASSAGE_NOT_READ`` when a page that was not read can be in its section
+(SPEC §4.17, #672).
 """
 
 from __future__ import annotations
