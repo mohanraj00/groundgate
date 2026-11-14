@@ -105,7 +105,7 @@ small objects. They name the same keys as the run header, so no data is copied.
 ```json
 {"format": "reading@2",
  "source": "sha256:...",
- "reader": {"name": "groundgate.read", "version": "0.14.0"},
+ "reader": {"name": "groundgate.read", "version": "0.15.0"},
  "options": {"pages": null},
  "text": "sha256:...", "layout": "sha256:...", "document": null,
  "warnings": ["page 1: dropped 3 words drawn outside the visible page"],

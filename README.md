@@ -528,7 +528,6 @@ a changed document, schema, policy, candidate or outcome.
   `CONFLICTING_CANDIDATES` catches it only when the models disagree, and in the benchmark they
   mostly agreed: six of the eight escapes were this case. When the field depends on a condition
   the schema can name, such as a drug's indications, a keyed field checks it (spec 0.2).
-- **No dates, arrays of records, or cross-document checks** in spec 0.12.
 - **English number formats only.** A decimal comma (`1.234,56`), space groups (`1 234`) and
   number words (`five`) have no value, so a fact that cites them is rejected. The
   [guide](docs/guide.md#how-values-are-read) lists what is read. Locale packs for other formats
@@ -548,12 +547,17 @@ a changed document, schema, policy, candidate or outcome.
   stated values to review against a target of 35 or fewer. Its miss rate is 60.66% (74 of 122)
   against a target of 40% or less
   ([bench/requested4/development-646/RESULTS.md](bench/requested4/development-646/RESULTS.md)).
-  The 0.15 document-family profiles (#639, #640) are the planned work to lower both numbers.
+  0.15 adds the document-family profile (#639) and its measure on a gold set of your own
+  (#640). I did not run a bench set for 0.15, so these are still the numbers of 0.14.
 
 ## Status
 
-Alpha. groundgate 0.14.0 implements spec v0.12. [CHANGELOG.md](CHANGELOG.md) lists what each version
-changes, with its measure. 0.14 adds the structure reader as a second proposer (#510) and
+Alpha. groundgate 0.15.0 implements spec v0.12. [CHANGELOG.md](CHANGELOG.md) lists what each version
+changes, with its measure. 0.15 adds document-family profiles (#639) and `groundgate calibrate
+measure` (#640), the value kinds `date` (#612), `record` with checks across the documents of a
+set (#613) and `passage` (#638), closed options for a string field (#530), source pins (#616),
+the page and the box of each admitted value (#614), the completeness of each reading (#615),
+the record id in the export (#659) and the model text input of review (#531). 0.14 adds the structure reader as a second proposer (#510) and
 agreement between proposers (#509), column and marker words (#540), `SIGN_DROPPED` (#569),
 `READ_DOUBT` (#535), DOCX and XLSX reading (#529), and `groundgate export` (#584). 0.11 adds the store (#288, #402 to #405), the review step and its local
 page (#287, #408 to #412), and `groundgate calibrate` inside groundgate (#385). It reads currency
