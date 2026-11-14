@@ -108,6 +108,7 @@ FLAG_ORDER = (  # SPEC §3.3 table order; it is part of every receipt hash
     "COLUMN_NOT_AT_VALUE",
     "MARKER_OTHER_FIELD",
     "READ_DOUBT",
+    "PASSAGE_NOT_READ",
     "EVIDENCE_QUOTED",
     "EVIDENCE_STATED",
     "LOW_CONFIDENCE",
@@ -345,6 +346,8 @@ class _Ctx:
     markers: tuple[str, ...] = ()  # the marker words of every field
     competing: dict[str, tuple[str, ...]] = field(default_factory=dict)  # by field name
     unread: bool = False  # the completeness of the packet is partial or no_text (SPEC §4.16)
+    missing: tuple[int, ...] = ()  # the pages that gave no text, in page order (SPEC §4.16)
+    places: Places | None = None  # the places of the document (SPEC §4.15), for a passage
     outline: Outline | None = None  # the headings of the document (SPEC §4.17)
     # the starts and the ends of the doubt spans below min_read_confidence, in text order (#535)
     doubt: tuple[list[int], list[int]] = field(default_factory=lambda: ([], []))
@@ -908,6 +911,12 @@ def _passage(ctx: _Ctx, f: Field, label: str, vitem: _Item) -> _Passed:
     flags = []
     if vitem.text is not None and vitem.text != t.text[span[0] : span[1]]:
         flags.append("NON_VERBATIM_EVIDENCE")
+    if ctx.unread:  # a page that was not read can be in the section (#672)
+        pages = None if ctx.places is None else ctx.places.pages(start, end)
+        if pages is None or any(
+            pages[0] < p and (pages[1] is None or p < pages[1]) for p in ctx.missing
+        ):
+            flags.append("PASSAGE_NOT_READ")
     return _Passed(f, "", None, None, at, flags, set(), vitem.source)
 
 
@@ -1796,11 +1805,14 @@ def admit(
     names the profile digest. ``pin`` is the source pin of the document (SPEC §4.14). It
     changes no decision, and the receipt holds it with its digest. ``places`` is the page and
     the box of each word of the document, from a reader (SPEC §4.15). With it, each decision
-    whose value span is in the document gets a ``locator``. It changes no outcome and no code.
+    whose value span is in the document gets a ``locator``. It changes no outcome and no code,
+    but for the flag of a passage below.
     ``completeness`` is the completeness of the reading (SPEC §4.16). The receipt holds it. With
     the status ``partial`` or ``no_text``, a quote of the document that does not occur gets the
-    code ``SOURCE_NOT_READ``. ``outline`` is the list of the headings of the document, from a
-    reader (SPEC §4.17). Only a ``passage`` field reads it.
+    code ``SOURCE_NOT_READ``, and a passage gets the flag ``PASSAGE_NOT_READ`` when a page that
+    gave no text can be in its section. The places say which pages a section has; with no
+    places, each passage gets the flag (SPEC §4.17). ``outline`` is the list of the headings
+    of the document, from a reader (SPEC §4.17). Only a ``passage`` field reads it.
 
     Raises ``PacketError`` when the text is not NFC, ``candidates`` is not a list, or the schema,
     policy, judgments, references, document source, packs, doubt, profile, pin, places,
@@ -1850,6 +1862,8 @@ def admit(
         receipt = _admit(
             text, schema, candidates, policy, document_id, refs, by_cand, document_source, spans,
             positions, read is not None and read["status"] != "complete", headings,
+            () if read is None else tuple(m["page"] for m in read["missing"]),
+            None if placed is None else Places(placed),
         )  # fmt: skip
     passages = {name for name, f in schema.fields.items() if f.type == "passage"}
     extras = (entry, pinned, placed, read, headings)
@@ -1915,6 +1929,8 @@ def _admit(
     positions: dict[str, int],
     unread: bool = False,
     outline: list[dict[str, int]] | None = None,
+    missing: tuple[int, ...] = (),
+    places: Places | None = None,
 ) -> Receipt:
     table = frozenset(x for _, suffixes in schema.units.values() for x in suffixes)
     ctx = _Ctx(
@@ -1929,6 +1945,8 @@ def _admit(
         markers=tuple(dict.fromkeys(m for f in schema.fields.values() for m in f.markers or ())),
         competing=_competing(schema),
         unread=unread,
+        missing=missing,
+        places=places,
         outline=None if outline is None else Outline(text, Offsets(text), outline),
         doubt=(
             [d["start"] for d in doubt if d["confidence"] < policy.min_read_confidence],

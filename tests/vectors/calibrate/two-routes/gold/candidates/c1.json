@@ -1,0 +1,16 @@
+[
+ {
+  "evidence": [
+   {
+    "end": 32,
+    "start": 29,
+    "text": "$10"
+   }
+  ],
+  "field": "rate",
+  "id": "r",
+  "key": "standard",
+  "unit": "USD",
+  "value": 10
+ }
+]

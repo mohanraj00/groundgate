@@ -1,0 +1,117 @@
+{
+ "date": "2026-11-13",
+ "documents": {
+  "calibration": 4,
+  "test": 6
+ },
+ "draft_profile": {
+  "id": "rates-test",
+  "sha256": "sha256:4524e53eb10972f812fcda9ce9f37fbb56fc1cd86280bae70001b57a1925a7d4",
+  "version": "1.0.1"
+ },
+ "fields": {
+  "rate": {
+   "miss_rate": "0.5",
+   "missed": 3,
+   "review": 1,
+   "review_share": "0.1429",
+   "routes": {
+    "checked": {
+     "admitted": 2,
+     "bound": "0.7764",
+     "error_rate": "0",
+     "errors": 0,
+     "status": "draft",
+     "unscored": 0
+    },
+    "cleared": {
+     "admitted": 2,
+     "bound": "0.9747",
+     "error_rate": "0.5",
+     "errors": 1,
+     "status": "draft",
+     "unscored": 0
+    }
+   },
+   "scored": 7,
+   "with_value": 6
+  },
+  "total": {
+   "miss_rate": "0.3333",
+   "missed": 2,
+   "review": 0,
+   "review_share": "0",
+   "routes": {
+    "checked": {
+     "admitted": 5,
+     "bound": "0.6574",
+     "error_rate": "0.2",
+     "errors": 1,
+     "status": "measured",
+     "unscored": 0
+    },
+    "cleared": {
+     "admitted": 0,
+     "bound": "1",
+     "error_rate": null,
+     "errors": 0,
+     "status": "draft",
+     "unscored": 0
+    }
+   },
+   "scored": 6,
+   "with_value": 6
+  }
+ },
+ "gold_sha256": "sha256:75e22d1f780fa0ef7023454bc15272b41b96e1e82794ecaaf11dc7f6db7ae32d",
+ "groundgate_calibration_report": 1,
+ "operating_point": {
+  "KEY_NOT_AT_VALUE": 0.7,
+  "judge": {
+   "digest": "j-1",
+   "id": "j"
+  },
+  "tried": [
+   {
+    "admitted": 4,
+    "bound": "0.7514",
+    "errors": 1,
+    "passes": false,
+    "threshold": 0.6,
+    "unscored": 0
+   },
+   {
+    "admitted": 3,
+    "bound": "0.6316",
+    "errors": 0,
+    "passes": true,
+    "threshold": 0.7,
+    "unscored": 0
+   },
+   {
+    "admitted": 2,
+    "bound": "0.7764",
+    "errors": 0,
+    "passes": false,
+    "threshold": 0.9,
+    "unscored": 0
+   },
+   {
+    "admitted": 1,
+    "bound": "0.95",
+    "errors": 0,
+    "passes": false,
+    "threshold": 0.95,
+    "unscored": 0
+   }
+  ]
+ },
+ "profile": {
+  "id": "rates-test",
+  "sha256": "sha256:9bf0a10d5ab7dafa37d40d68d1314d9032b6b0a0039ad186f7dfdf322c919021",
+  "version": "1.0.0"
+ },
+ "spec": "0.12",
+ "split_sha256": "sha256:524f2ad03c39ffd7f48a11d96da41a9a3d567de30a7ad0b2f61a9d883c573460",
+ "target": "0.7"
+}

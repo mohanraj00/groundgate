@@ -45,6 +45,10 @@ Value kinds and schema members:
   label. The reader gives the headings in the packet member `outline`. New codes:
   `PASSAGE_NOT_AT_HEADING`, `PASSAGE_LABEL_MISMATCH`, `PASSAGE_CUT_SHORT` and `PASSAGE_OVERRUN`.
   Each decision of a passage field has `passage_sha256` (#638).
+- A passage of a reading that is not `complete` gets the flag `PASSAGE_NOT_READ` when a page
+  that gave no text can be in its section, and it goes to review. With `places`, only a
+  section that can hold such a page gets the flag. With no `places`, each passage gets it
+  (#672).
 - A `string` field can give `options`, a closed list of values. A value that is not an option
   is `OPTION_INVALID`. The value must still be in the cited text (#530).
 
@@ -81,8 +85,8 @@ Other changes:
 - SPEC §4.3 now states the per-unit rule as the gate reads it: a per-unit is not followed by
   an ASCII letter or by one of the four letters with a fold of their own. No decision changes
   (#363).
-- The conformance suite has 212 vectors, 218 invalid packets, 24 profile vectors, 14 pin
-  vectors and 13 places vectors.
+- The conformance suite has 214 vectors, 218 invalid packets, 24 profile vectors, 14 pin
+  vectors and 18 places vectors.
 
 ## 0.14.0 (2026-11-12)
 
