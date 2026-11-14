@@ -1,0 +1,112 @@
+{
+ "name": "places-09-passage-no-word",
+ "description": "Page 2 gave no text, and the places have no word in section 1. The gate cannot find the pages of the section: PASSAGE_NOT_READ, as for a packet with no places. With a complete reading, the next vector admits the same section (SPEC §4.17).",
+ "document": "1 Scope\nThis lease covers one flat.\n\n2 Rent\nThe rent is $900.\nThe tenant pays on day 1.\n\n3 Term\nThe term is 12 months.\n",
+ "schema": {
+  "fields": {
+   "section": {
+    "type": "passage",
+    "multiple": true
+   }
+  }
+ },
+ "completeness": {
+  "status": "partial",
+  "missing": [
+   {
+    "page": 2,
+    "reason": "ocr_off"
+   }
+  ]
+ },
+ "outline": [
+  {
+   "level": 1,
+   "start": 0,
+   "end": 7
+  },
+  {
+   "level": 1,
+   "start": 37,
+   "end": 43
+  },
+  {
+   "level": 1,
+   "start": 89,
+   "end": 95
+  }
+ ],
+ "places": [
+  [
+   39,
+   43,
+   1,
+   8000,
+   11000,
+   10600,
+   12200
+  ],
+  [
+   56,
+   61,
+   1,
+   15000,
+   12400,
+   18200,
+   13600
+  ],
+  [
+   66,
+   72,
+   3,
+   9500,
+   7200,
+   13000,
+   8400
+  ],
+  [
+   91,
+   95,
+   3,
+   8000,
+   9800,
+   10900,
+   11000
+  ],
+  [
+   111,
+   118,
+   3,
+   17500,
+   11200,
+   21800,
+   12400
+  ]
+ ],
+ "candidates": [
+  {
+   "id": "p1",
+   "field": "section",
+   "value": "1",
+   "evidence": [
+    {
+     "start": 0,
+     "end": 35
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PASSAGE_NOT_READ"
+    ],
+    "passage_sha256": "sha256:33e8a061f55ddb4c6d4bc18b6f7380c6ee7f3d01b298b11430d1d3e7bb99fa53",
+    "locator": null
+   }
+  ],
+  "places_sha256": "sha256:3ad6a140161389c2c44c6ae314c7b2dd503ff8573edcc7cd5298d59ac9472550"
+ }
+}

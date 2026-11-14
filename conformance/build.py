@@ -7831,6 +7831,127 @@ vector(
         q("§ 3 Term", 1, NO_TEXT, level=1),
     ],
 )
+# A reading that is not complete (SPEC §4.17, #672). Each expected flag is written by hand.
+PASSAGE_NOT_READ = (REVIEW, ["PASSAGE_NOT_READ"])
+vector(
+    "passage-09-partial-reading",
+    "The reading is partial, and the packet has no places. The gate cannot find the pages of a "
+    "section, so each passage that passes the four checks goes to review with "
+    "PASSAGE_NOT_READ. A span that is cut short is still rejected (SPEC §4.17).",
+    LEASE,
+    SECTIONS,
+    [
+        passage("p1", "4.3", S43, PASSAGE_NOT_READ),
+        passage("p2", "4", S4, PASSAGE_NOT_READ),
+        passage("p3", "5", "5 Term\nThe term is 12", CUT_SHORT),
+    ],
+    completeness=OCR_OFF,
+    outline=LEASE_OUTLINE,
+)
+vector(
+    "passage-10-partial-reading-flags",
+    "PASSAGE_NOT_READ comes with the other flags of a passage, after them in the order of "
+    "the table of SPEC §3.3: a text that is not exactly the span text, and a word that the "
+    "reader doubts (SPEC §4.17).",
+    LEASE,
+    SECTIONS,
+    [
+        passage(
+            "p1",
+            "4.1",
+            S41,
+            (REVIEW, ["NON_VERBATIM_EVIDENCE", "PASSAGE_NOT_READ"]),
+            text="4.1 Rent The rent is $900 for each month.",
+        ),
+        passage("p2", "4.3", S43, (REVIEW, ["READ_DOUBT", "PASSAGE_NOT_READ"])),
+        passage("p3", "5", S5, PASSAGE_NOT_READ),
+    ],
+    doubt=[q("$500", 1, NO_TEXT, confidence=0.4)],
+    completeness={"status": "partial", "missing": [{"page": 4, "reason": "ocr_no_text"}]},
+    outline=LEASE_OUTLINE,
+)
+
+# Places vectors of a passage. The source has 4 pages. Pages 1 and 3 gave the text of PAGED:
+# section 2 starts on page 1 and continues on page 3. Each word and each locator is written by
+# hand, as above.
+PAGED = (
+    "1 Scope\nThis lease covers one flat.\n\n"
+    "2 Rent\nThe rent is $900.\n"
+    "The tenant pays on day 1.\n\n"
+    "3 Term\nThe term is 12 months.\n"
+)
+P1 = "1 Scope\nThis lease covers one flat."
+P2 = "2 Rent\nThe rent is $900.\nThe tenant pays on day 1."
+P3 = "3 Term\nThe term is 12 months."
+PAGED_OUTLINE = [
+    q("1 Scope", 1, NO_TEXT, level=1),
+    q("2 Rent", 1, NO_TEXT, level=1),
+    q("3 Term", 1, NO_TEXT, level=1),
+]
+PAGED_WORDS = [("Scope", 1, 8000, 7200, 11000, 8400), ("flat.", 1, 19000, 8600, 21500, 9800),
+               ("Rent", 1, 8000, 11000, 10600, 12200), ("$900.", 1, 15000, 12400, 18200, 13600),
+               ("tenant", 3, 9500, 7200, 13000, 8400), ("Term", 3, 8000, 9800, 10900, 11000),
+               ("months.", 3, 17500, 11200, 21800, 12400)]  # fmt: skip
+PAGE_2_OFF = {"status": "partial", "missing": [{"page": 2, "reason": "ocr_off"}]}
+PAGE_4_OFF = {"status": "partial", "missing": [{"page": 4, "reason": "ocr_off"}]}
+LOC_1 = {"page": 1, "box": [8000, 7200, 21500, 9800]}
+LOC_2 = {"page": 1, "box": [8000, 11000, 18200, 13600]}
+LOC_3 = {"page": 3, "box": [8000, 9800, 21800, 12400]}
+PAGED_PACKET = {"document": PAGED, "schema": SECTIONS, "outline": PAGED_OUTLINE}
+places_vector(
+    "places-06-passage-unread-inside",
+    "Page 2 gave no text. Section 2 has its first word on page 1, and the first word after "
+    "it is on page 3, so page 2 can be in the section: PASSAGE_NOT_READ. The locator is the "
+    "box of its words on page 1 (SPEC §4.17).",
+    PAGED_WORDS,
+    [passage("p1", "2", P2, PASSAGE_NOT_READ)],
+    [LOC_2],
+    completeness=PAGE_2_OFF,
+    **PAGED_PACKET,
+)
+places_vector(
+    "places-07-passage-read-pages",
+    "Page 2 gave no text. Section 1 is on page 1, and the first word after it is on page 1. "
+    "Section 3 starts on page 3, after the page that was not read. Each section has only "
+    "pages that were read, and each is admitted (SPEC §4.17).",
+    PAGED_WORDS,
+    [passage("p1", "1", P1), passage("p2", "3", P3)],
+    [LOC_1, LOC_3],
+    completeness=PAGE_2_OFF,
+    **PAGED_PACKET,
+)
+places_vector(
+    "places-08-passage-unread-after",
+    "Page 4 gave no text. Section 3 is the last section, and no word is after it, so page 4 "
+    "can be in the section: PASSAGE_NOT_READ. Sections 1 and 2 end before a word of page 1 "
+    "or page 3, and they are admitted (SPEC §4.17).",
+    PAGED_WORDS,
+    [passage("p1", "3", P3, PASSAGE_NOT_READ), passage("p2", "1", P1), passage("p3", "2", P2)],
+    [LOC_3, LOC_1, LOC_2],
+    completeness=PAGE_4_OFF,
+    **PAGED_PACKET,
+)
+places_vector(
+    "places-09-passage-no-word",
+    "Page 2 gave no text, and the places have no word in section 1. The gate cannot find the "
+    "pages of the section: PASSAGE_NOT_READ, as for a packet with no places. With a complete "
+    "reading, the next vector admits the same section (SPEC §4.17).",
+    PAGED_WORDS[2:],
+    [passage("p1", "1", P1, PASSAGE_NOT_READ)],
+    [None],
+    completeness=PAGE_2_OFF,
+    **PAGED_PACKET,
+)
+places_vector(
+    "places-10-passage-complete",
+    "The reading is complete, so no passage gets PASSAGE_NOT_READ: section 2 goes over a "
+    "page break and is admitted, and section 1 has no word in the places (SPEC §4.17).",
+    PAGED_WORDS[2:],
+    [passage("p1", "2", P2), passage("p2", "1", P1)],
+    [LOC_2, None],
+    completeness={"status": "complete", "missing": []},
+    **PAGED_PACKET,
+)
 for bad_name, bad_text, bad_field in (
     ("unit", "a unit", {"type": "passage", "unit": "USD"}),
     ("keys", "keys", {"type": "passage", "keys": ["4.2"]}),
@@ -8006,18 +8127,23 @@ def main() -> None:
     for old in places_dir.glob("*.json"):
         old.unlink()
     for p in PLACES:
-        given = {"name": p["name"], "description": p["description"], "document": PLACE_DOC,
-                 "schema": PLACE_SCHEMA}  # fmt: skip
+        doc = p.get("document", PLACE_DOC)
+        given = {"name": p["name"], "description": p["description"], "document": doc,
+                 "schema": p.get("schema", PLACE_SCHEMA)}  # fmt: skip
         if p.get("error"):
             out = given | {"places": p["places"], "candidates": [], "expected": {"error": True}}
         else:
             places = []
             for word, *box in p["words"]:
-                at = len(PLACE_DOC[: PLACE_DOC.index(word)].encode("utf-8"))
+                at = len(doc[: doc.index(word)].encode("utf-8"))
                 places.append([at, at + len(word.encode("utf-8")), *box])
             if "doubt" in p:
-                given["doubt"] = resolve(PLACE_DOC, p["doubt"])
-            cands = [{k: resolve(PLACE_DOC, val) if k == "evidence" else val
+                given["doubt"] = resolve(doc, p["doubt"])
+            if "completeness" in p:
+                given["completeness"] = p["completeness"]
+            if "outline" in p:
+                given["outline"] = resolve(doc, p["outline"])
+            cands = [{k: resolve(doc, val) if k == "evidence" else val
                       for k, val in item["candidate"].items()} for item in p["candidates"]]  # fmt: skip
             decisions = [{**item["expect"], "locator": loc}
                          for item, loc in zip(p["candidates"], p["locators"], strict=True)]  # fmt: skip
