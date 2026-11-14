@@ -1,0 +1,61 @@
+{
+ "description": "A synthetic profile for the calibrate measure vector.",
+ "gold_sha256": "sha256:75e22d1f780fa0ef7023454bc15272b41b96e1e82794ecaaf11dc7f6db7ae32d",
+ "groundgate_profile": 1,
+ "id": "rates-test",
+ "policy": {
+  "judge": {
+   "clear": {
+    "KEY_NOT_AT_VALUE": 0.7
+   },
+   "digest": "j-1",
+   "id": "j"
+  }
+ },
+ "routes": [
+  {
+   "bound": "0.7764",
+   "date": "2026-11-13",
+   "documents": 6,
+   "field": "rate",
+   "route": "checked",
+   "status": "draft"
+  },
+  {
+   "bound": "0.9747",
+   "date": "2026-11-13",
+   "documents": 6,
+   "field": "rate",
+   "route": "cleared",
+   "status": "draft"
+  },
+  {
+   "bound": "0.6574",
+   "date": "2026-11-13",
+   "documents": 6,
+   "field": "total",
+   "route": "checked",
+   "status": "measured"
+  }
+ ],
+ "schema": {
+  "fields": {
+   "rate": {
+    "keys": [
+     "standard",
+     "express"
+    ],
+    "type": "integer",
+    "unit": "USD"
+   },
+   "total": {
+    "aliases": [
+     "Total"
+    ],
+    "type": "integer",
+    "unit": "USD"
+   }
+  }
+ },
+ "version": "1.0.1"
+}

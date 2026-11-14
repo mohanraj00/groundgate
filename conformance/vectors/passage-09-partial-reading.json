@@ -1,0 +1,134 @@
+{
+ "name": "passage-09-partial-reading",
+ "description": "The reading is partial, and the packet has no places. The gate cannot find the pages of a section, so each passage that passes the four checks goes to review with PASSAGE_NOT_READ. A span that is cut short is still rejected (SPEC §4.17).",
+ "document": "4 Payment\n\n4.1 Rent\nThe rent is $900 for each month.\n\n4.2 Fees\nThe late fee is $25.\n\n4.2.1 Waiver\nThe owner can waive the fee.\n\n4.3 Deposit\nThe deposit is $500.\n\n5 Term\nThe term is 12 months.\n",
+ "schema": {
+  "fields": {
+   "section": {
+    "type": "passage",
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "completeness": {
+  "status": "partial",
+  "missing": [
+   {
+    "page": 2,
+    "reason": "ocr_off"
+   },
+   {
+    "page": 3,
+    "reason": "ocr_off"
+   }
+  ]
+ },
+ "outline": [
+  {
+   "level": 1,
+   "start": 0,
+   "end": 9
+  },
+  {
+   "level": 2,
+   "start": 11,
+   "end": 19
+  },
+  {
+   "level": 2,
+   "start": 54,
+   "end": 62
+  },
+  {
+   "level": 3,
+   "start": 85,
+   "end": 97
+  },
+  {
+   "level": 2,
+   "start": 128,
+   "end": 139
+  },
+  {
+   "level": 1,
+   "start": 162,
+   "end": 168
+  }
+ ],
+ "candidates": [
+  {
+   "id": "p1",
+   "field": "section",
+   "value": "4.3",
+   "evidence": [
+    {
+     "start": 128,
+     "end": 160
+    }
+   ]
+  },
+  {
+   "id": "p2",
+   "field": "section",
+   "value": "4",
+   "evidence": [
+    {
+     "start": 0,
+     "end": 160
+    }
+   ]
+  },
+  {
+   "id": "p3",
+   "field": "section",
+   "value": "5",
+   "evidence": [
+    {
+     "start": 162,
+     "end": 183
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PASSAGE_NOT_READ"
+    ],
+    "passage_sha256": "sha256:a2e98666d7f973d7521556dcf82cea25a9d5e97340b8753b98d7df3e4570a810"
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "PASSAGE_NOT_READ"
+    ],
+    "passage_sha256": "sha256:13ab14a061f989baf34dbf0c0ef51ceb15b60c952961429feb53592dacae1999"
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "PASSAGE_CUT_SHORT"
+    ],
+    "passage_sha256": null
+   }
+  ],
+  "coverage": [],
+  "completeness": {
+   "status": "partial",
+   "missing": [
+    {
+     "page": 2,
+     "reason": "ocr_off"
+    },
+    {
+     "page": 3,
+     "reason": "ocr_off"
+    }
+   ]
+  },
+  "outline_sha256": "sha256:717e4ef692e198a6eeca1645902ecdefdbfaf5a512a3fe090b259e17c25787f9"
+ }
+}

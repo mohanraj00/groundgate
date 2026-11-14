@@ -132,3 +132,28 @@ def test_resolve_refuses_a_correction_record_of_a_closed_set_task(tmp_path: Path
                            "format": "answer@2", "field_keys": None})  # fmt: skip
         with pytest.raises(AnswerError, match="closed_set task takes only"):
             write_resolution(store, k, None, ["ben"])
+
+
+def test_the_same_option_from_another_candidate_is_not_another_option(tmp_path: Path) -> None:
+    text = "Billing is monthly. Each invoice is monthly.\n"
+    cands = [
+        {"id": "a", "field": "billing", "value": "monthly", "evidence": [{"text": "is monthly."}]},
+        {
+            "id": "b",
+            "field": "billing",
+            "value": "monthly",
+            "evidence": [{"text": "is monthly.\n"}],
+        },
+    ]
+    store = FolderStore(tmp_path / "s")
+    with store:
+        doubt = [{"start": 0, "end": len(text), "confidence": 0.1}]
+        k, _ = admit_packet(store, text, SCHEMA, cands, {"min_read_confidence": 0.5},
+                            doubt=doubt)  # fmt: skip
+        (found,) = [(tk, t) for tk, t in write_tasks(store, k).tasks
+                    if t["slot"]["field"] == "billing"]  # fmt: skip
+        tk, task = found
+        assert [c["value"] for c in task["choices"]] == ["monthly", "monthly"]
+        review = Review(store, "ana", clock=lambda: CLOCK)
+        review.answer(body(tk, "choose", decision=task["choices"][1]["decision"]))
+        assert measures(store).kinds["closed_set"]["other_option"] == [0, 1]
