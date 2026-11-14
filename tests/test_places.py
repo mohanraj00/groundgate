@@ -36,7 +36,8 @@ def _load(path: Path) -> dict[str, Any]:
 @pytest.mark.parametrize("path", PLACES, ids=lambda p: p.stem)
 def test_places_vector(path: Path) -> None:
     v = _load(path)
-    more = {"doubt": v.get("doubt"), "places": v["places"]}
+    more = {"doubt": v.get("doubt"), "places": v["places"],
+            "completeness": v.get("completeness"), "outline": v.get("outline")}  # fmt: skip
     if v["expected"].get("error"):
         with pytest.raises(gg.PacketError, match="places"):
             gg.admit(v["document"], v["schema"], v["candidates"], **more)

@@ -2,7 +2,8 @@
 
 A reader gives the places of a PDF. With them, the receipt gives a locator for each decision
 whose value span is in the document: the page and the box of the cited words. The places change
-no outcome and no code.
+no outcome and no code, with one exception: the flag ``PASSAGE_NOT_READ`` of a passage in a
+reading that is not complete (SPEC §4.17, #672).
 """
 
 from __future__ import annotations
@@ -60,11 +61,22 @@ def check_places(raw: object, offsets: Offsets) -> list[list[int]]:
 
 
 class Places:
-    """The checked places of a document, for ``locate``."""
+    """The checked places of a document, for ``locate`` and ``pages``."""
 
     def __init__(self, places: list[list[int]]) -> None:
         self.places = places
+        self._starts = [p[0] for p in places]
         self._ends = [p[1] for p in places]  # in order, because no two entries overlap
+
+    def pages(self, start: int, end: int) -> tuple[int, int | None] | None:
+        """The page of the first word of the byte span [start, end), and the page of the first
+        word that starts at or after ``end``, or None for it when there is no such word. None
+        when no word overlaps the span (SPEC §4.17)."""
+        i = bisect.bisect_right(self._ends, start)  # the first entry that ends after start
+        if i == len(self.places) or self.places[i][0] >= end:
+            return None
+        j = bisect.bisect_left(self._starts, end)
+        return self.places[i][2], self.places[j][2] if j < len(self.places) else None
 
     def locate(self, start: int, end: int) -> Locator | None:
         """The locator of the byte span [start, end): the page of its first word, and the box
