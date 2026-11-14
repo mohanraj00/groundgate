@@ -1,0 +1,271 @@
+{
+ "name": "export-records",
+ "description": "A fact of a member field has the record id and the replaced mark, so an app can put the member facts into rows. The corrigendum row k1 replaces the price list row p2. The replaced row keeps its facts, with replaced true (SPEC §5.1, #659).",
+ "document": "Price list 2026\nA-100 Hinge $4.20\nB-200 Bracket $12.50\n",
+ "schema": {
+  "fields": {
+   "items": {
+    "type": "record",
+    "required": false,
+    "members": {
+     "code": {
+      "type": "string",
+      "required": true
+     },
+     "description": {
+      "type": "string"
+     },
+     "unit_price": {
+      "type": "number",
+      "unit": "USD",
+      "required": true
+     }
+    }
+   }
+  },
+  "checks": [
+   {
+    "id": "corrigendum",
+    "check": "replace",
+    "field": "items",
+    "member": "code"
+   }
+  ]
+ },
+ "policy": null,
+ "references": [
+  {
+   "id": "corr-1",
+   "text": "Corrigendum 1.\nB-200 Bracket: read $14.00.\n",
+   "set": 1
+  }
+ ],
+ "candidates": [
+  {
+   "id": "e1",
+   "field": "items.code",
+   "value": "A-100",
+   "evidence": [
+    {
+     "start": 16,
+     "end": 21,
+     "text": "A-100"
+    }
+   ],
+   "record": "p1"
+  },
+  {
+   "id": "e2",
+   "field": "items.unit_price",
+   "value": "4.20",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 28,
+     "end": 33,
+     "text": "$4.20"
+    }
+   ],
+   "record": "p1"
+  },
+  {
+   "id": "e3",
+   "field": "items.code",
+   "value": "B-200",
+   "evidence": [
+    {
+     "start": 34,
+     "end": 39,
+     "text": "B-200"
+    }
+   ],
+   "record": "p2"
+  },
+  {
+   "id": "e4",
+   "field": "items.unit_price",
+   "value": "12.50",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 48,
+     "end": 54,
+     "text": "$12.50"
+    }
+   ],
+   "record": "p2"
+  },
+  {
+   "id": "e5",
+   "field": "items.code",
+   "value": "B-200",
+   "evidence": [
+    {
+     "source": "reference",
+     "ref": "corr-1",
+     "start": 15,
+     "end": 20,
+     "text": "B-200"
+    }
+   ],
+   "record": "k1"
+  },
+  {
+   "id": "e6",
+   "field": "items.unit_price",
+   "value": "14.00",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "reference",
+     "ref": "corr-1",
+     "start": 35,
+     "end": 41,
+     "text": "$14.00"
+    }
+   ],
+   "record": "k1"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": [],
+  "export": [
+   {
+    "field": "items.code",
+    "value": "A-100",
+    "key": null,
+    "unit": null,
+    "record": "p1",
+    "replaced": false,
+    "source": "document",
+    "span": {
+     "start": 16,
+     "end": 21
+    }
+   },
+   {
+    "field": "items.unit_price",
+    "value": "4.2",
+    "key": null,
+    "unit": "USD",
+    "record": "p1",
+    "replaced": false,
+    "source": "document",
+    "span": {
+     "start": 28,
+     "end": 33
+    }
+   },
+   {
+    "field": "items.code",
+    "value": "B-200",
+    "key": null,
+    "unit": null,
+    "record": "p2",
+    "replaced": true,
+    "source": "document",
+    "span": {
+     "start": 34,
+     "end": 39
+    }
+   },
+   {
+    "field": "items.unit_price",
+    "value": "12.5",
+    "key": null,
+    "unit": "USD",
+    "record": "p2",
+    "replaced": true,
+    "source": "document",
+    "span": {
+     "start": 48,
+     "end": 54
+    }
+   },
+   {
+    "field": "items.code",
+    "value": "B-200",
+    "key": null,
+    "unit": null,
+    "record": "k1",
+    "replaced": false,
+    "source": "reference",
+    "ref": "corr-1",
+    "span": {
+     "start": 15,
+     "end": 20
+    }
+   },
+   {
+    "field": "items.unit_price",
+    "value": "14",
+    "key": null,
+    "unit": "USD",
+    "record": "k1",
+    "replaced": false,
+    "source": "reference",
+    "ref": "corr-1",
+    "span": {
+     "start": 35,
+     "end": 41
+    }
+   }
+  ],
+  "records": [
+   {
+    "field": "items",
+    "record": "k1",
+    "outcome": "admitted",
+    "codes": [],
+    "replaced": false
+   },
+   {
+    "field": "items",
+    "record": "p1",
+    "outcome": "admitted",
+    "codes": [],
+    "replaced": false
+   },
+   {
+    "field": "items",
+    "record": "p2",
+    "outcome": "admitted",
+    "codes": [],
+    "replaced": true
+   }
+  ],
+  "checks": [
+   {
+    "id": "corrigendum",
+    "holds": true,
+    "records": []
+   }
+  ]
+ }
+}

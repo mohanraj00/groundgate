@@ -32,6 +32,8 @@ def admitted_facts(store: Store, packet: Packet) -> dict[str, Any]:
         else None
     )
     references = {r["id"]: r for r in receipt["references"]}
+    # the replaced mark of each record line, by record field and record id (SPEC §5, #659)
+    replaced = {(r["field"], r["record"]): r["replaced"] for r in receipt.get("records", [])}
     facts = []
     for decision in admitted:
         source = decision["source"]
@@ -45,6 +47,10 @@ def admitted_facts(store: Store, packet: Packet) -> dict[str, Any]:
             url = reference["source"]
         elif source == "external":
             url = decision["url"]
+        row = {}
+        if decision.get("record") is not None:  # only a fact of a member field (#659)
+            line = (decision["field"].split(".", 1)[0], decision["record"])
+            row = {"record": decision["record"], "replaced": replaced[line]}
         citation_more = {}
         if decision.get("passage_sha256") is not None:  # only a passage field (SPEC §4.17, #638)
             citation_more["passage_sha256"] = decision["passage_sha256"]
@@ -56,6 +62,7 @@ def admitted_facts(store: Store, packet: Packet) -> dict[str, Any]:
                 "key": decision["key"],
                 "value": decision["value"],
                 "unit": decision["unit"],
+                **row,
                 "citation": {
                     "source": source,
                     "ref": decision["ref"],
