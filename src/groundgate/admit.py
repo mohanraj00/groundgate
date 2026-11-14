@@ -828,6 +828,8 @@ def _check(ctx: _Ctx, cand: object) -> _Passed:
         if not isinstance(raw, str) or not normalize_ws(raw):
             raise _Reject("TYPE_INVALID")
         value = normalize_ws(raw)
+        if f.options is not None and value not in {normalize_ws(o) for o in f.options}:
+            raise _Reject("OPTION_INVALID")  # SPEC §3 step 5 (#530)
     else:
         parsed = parse_value(text_value)
         if parsed is None or (f.type == "integer" and parsed != parsed.to_integral_value()):

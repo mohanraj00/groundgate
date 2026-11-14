@@ -106,6 +106,7 @@ boundaries. Heuristic windows in §4 are measured in Unicode code points.
   "minimum": "<decimal>" | "<date>" | null,
   "maximum": "<decimal>" | "<date>" | null,
   "formats": ["<date format>"],
+  "options": ["<value>"] | null,
   "required": false,
   "multiple": false,
   "keys": ["<key>"] | null,
@@ -125,7 +126,7 @@ boundaries. Heuristic windows in §4 are measured in Unicode code points.
 ```
 
 Defaults: `type` `"number"`, `unit` null, `comparator` `"eq"`, bounds null, `required` false, `multiple` false,
-`keys` null, `aliases` null, `columns` null, `markers` null.
+`keys` null, `aliases` null, `columns` null, `markers` null, `options` null.
 
 A field name (spec 0.11, #359) has 1 to 64 characters. Each character is a lowercase ASCII
 letter, a digit or `_`, and the first character is a letter. So `net_sales` and `e` are names,
@@ -139,6 +140,16 @@ Only a `date` field has `formats`, and it must have it.
 A `record` field (#613) holds an array of records. It has `members` in place of the other
 members of a field, and its rules are in §4.12. `checks` lists the checks across the documents
 of a set (§4.13).
+
+`options` (#530) makes a `string` field **closed**: its value is one of a fixed list, such as
+`monthly`, `quarterly` and `annual`. `options` is null or a list of 1 to 1,000 strings. No
+option is blank, and no two options are equal after whitespace normalisation (§4.4). Letter
+case counts: `Annual` and `annual` are two options. Only a `string` field can have options
+that are not null, also as a member of a record (§4.12). A field template (§4.9) cannot give
+options. Step 5 rejects a value that is not an option (§3). Each other check stays: the value
+must still be in the cited text (step 10). After defaults, a field has the member `options`
+only when its options are not null, so the digest of a schema with no options does not change.
+The packet is invalid when `options` breaks one of these rules.
 
 A `passage` field (#638) holds a citable section of the document, such as one numbered section
 of a statute or one clause of a contract. Its rules are in §4.17. It has only `type`,
@@ -384,6 +395,7 @@ later check runs. `value` means the candidate's value parsed per its field type.
 | 4 | `TYPE_INVALID` | `value` does not parse as the field type (§4.1). For a `string` field: `value` is not a string, or is blank after whitespace normalisation (§4.4). For a `date` field: `value` is not a date in the normal form (§4.11). |
 | 5 | `RANGE_INVALID` | `value` is below `minimum` or above `maximum`. Not on a `date` field. |
 | 5 | `DATE_OUT_OF_RANGE` | On a `date` field, `value` is before `minimum` or after `maximum` (§4.11). |
+| 5 | `OPTION_INVALID` | The field has `options` (§2.3), and `value` after whitespace normalisation (§4.4) is not equal to an option after whitespace normalisation. Letter case counts. |
 | 6 | `UNIT_INVALID` | The candidate's `unit` differs from the field's `unit` (both absent is a match). |
 | 7 | `KEY_INVALID` | The field has `keys`, and the candidate's `key` is absent or not exactly one of them. |
 | 7 | `RECORD_INVALID` | The field is a member field (§4.12), and the candidate's `record` is absent, not a string, or blank. |

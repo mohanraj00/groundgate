@@ -1,0 +1,21 @@
+{
+ "name": "options-bad-twice",
+ "description": "A field with two options that are equal after whitespace normalisation is invalid (SPEC §2.3, #530).",
+ "document": "Fee\t$90 é\n",
+ "schema": {
+  "fields": {
+   "period": {
+    "type": "string",
+    "options": [
+     "every two years",
+     "every  two years"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [],
+ "expected": {
+  "error": true
+ }
+}

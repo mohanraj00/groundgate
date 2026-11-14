@@ -66,6 +66,7 @@ _PARTS = {
     "number@1": ("amount", "scale", "sign", "unit", "field", "key"),
     "text@1": ("text", "field", "key"),
     "span@1": ("start", "end", "field", "key"),
+    "closed_set@1": ("option", "field", "key"),
 }
 
 
@@ -231,6 +232,8 @@ def _task(
             raise PacketError(f"a passed decision of the field {slot.field} has no value")
     if field.type in ("number", "integer"):
         item, template = "number", "number@1"
+    elif field.options is not None:  # a closed string field (SPEC §2.3, #530)
+        item, template = "closed_set", "closed_set@1"
     elif any(_long(decisions[i], texts) for i in passed):
         item, template = "span", "span@1"
     else:
@@ -242,7 +245,7 @@ def _task(
         if item == "number":
             shown = _number(d["value"], d.get("unit"), span, texts.get(d.get("ref")))
         else:
-            shown = _string(d["value"], item)
+            shown = _string(d["value"], "text" if item == "closed_set" else item)
         choices.append(
             {"decision": i, "value": d["value"], "unit": d.get("unit"), "shown": shown,
              "evidence": None if span is None else {"start": span[0], "end": span[1]}}
@@ -251,7 +254,7 @@ def _task(
     codes: list[str] = [MISSING] if slot.missing else []
     for i in slot.decisions:
         codes += [c for c in decisions[i]["codes"] if c not in codes]
-    return {
+    task: dict[str, Any] = {
         "format": "task@1",
         "packet": packet_key,
         "slot": {"field": slot.field, "key": slot.key, "decisions": list(slot.decisions)},
@@ -264,6 +267,9 @@ def _task(
         "choices": choices,
         "places": _places([decisions[i] for i in slot.decisions], layout),
     }
+    if field.options is not None and item == "closed_set":
+        task["options"] = list(field.options)  # the view shows each option (§7)
+    return task
 
 
 def _question(item: str, slot: Slot, unit: str | None, shown: list[str]) -> tuple[str, set[str]]:
@@ -280,6 +286,13 @@ def _question(item: str, slot: Slot, unit: str | None, shown: list[str]) -> tupl
         if len(shown) == 1:
             return f"Is {subject} {shown[0]}?", named
         return f"Which amount is {subject}?", named
+    if item == "closed_set":
+        if not shown:
+            return f"Which option is the {subject}?", named
+        named.add("option")
+        if len(shown) == 1:
+            return f"Is {shown[0]} the {subject}, and does no other option fit?", named
+        return f"Which option is the {subject}?", named
     if item == "text":
         if not shown:
             return f"What is the {subject}?", named

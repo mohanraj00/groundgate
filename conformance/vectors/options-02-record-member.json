@@ -1,0 +1,126 @@
+{
+ "name": "options-02-record-member",
+ "description": "A member of a record can have options. The row with a status that is not an option has no admitted status: the value is OPTION_INVALID, the record is RECORD_MEMBER_MISSING, and its code that passed gets RECORD_NOT_ADMITTED (#530).",
+ "document": "A-100 active\nB-200 retired\n",
+ "schema": {
+  "fields": {
+   "parts": {
+    "type": "record",
+    "members": {
+     "code": {
+      "type": "string",
+      "required": true
+     },
+     "status": {
+      "type": "string",
+      "required": true,
+      "options": [
+       "active",
+       "withdrawn"
+      ]
+     }
+    }
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "o1",
+   "field": "parts.code",
+   "value": "A-100",
+   "evidence": [
+    {
+     "start": 0,
+     "end": 5,
+     "text": "A-100"
+    }
+   ],
+   "record": "r1"
+  },
+  {
+   "id": "o2",
+   "field": "parts.status",
+   "value": "active",
+   "evidence": [
+    {
+     "start": 6,
+     "end": 12,
+     "text": "active"
+    }
+   ],
+   "record": "r1"
+  },
+  {
+   "id": "o3",
+   "field": "parts.code",
+   "value": "B-200",
+   "evidence": [
+    {
+     "start": 13,
+     "end": 18,
+     "text": "B-200"
+    }
+   ],
+   "record": "r2"
+  },
+  {
+   "id": "o4",
+   "field": "parts.status",
+   "value": "retired",
+   "evidence": [
+    {
+     "start": 19,
+     "end": 26,
+     "text": "retired"
+    }
+   ],
+   "record": "r2"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "RECORD_NOT_ADMITTED"
+    ]
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "OPTION_INVALID"
+    ]
+   }
+  ],
+  "coverage": [],
+  "records": [
+   {
+    "field": "parts",
+    "record": "r1",
+    "outcome": "admitted",
+    "codes": [],
+    "members": {
+     "code": "A-100",
+     "status": "active"
+    }
+   },
+   {
+    "field": "parts",
+    "record": "r2",
+    "outcome": "rejected",
+    "codes": [
+     "RECORD_MEMBER_MISSING"
+    ]
+   }
+  ]
+ }
+}

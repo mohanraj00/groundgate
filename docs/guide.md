@@ -429,6 +429,7 @@ Checks run in a fixed order and the first failure rejects:
 `UNIT_INVALID`, `KEY_INVALID`, `NO_EVIDENCE`, `SPAN_INVALID`, `SOURCE_NOT_READ`,
 `QUOTE_NOT_FOUND`,
 `VALUE_NOT_IN_EVIDENCE`, `UNIT_NOT_IN_EVIDENCE`, and on the outside path `SOURCE_REJECTED`.
+A `string` field with `options` adds `OPTION_INVALID` (SPEC §2.3).
 A `passage` field has four codes of its own: `PASSAGE_NOT_AT_HEADING`,
 `PASSAGE_LABEL_MISMATCH`, `PASSAGE_CUT_SHORT` and `PASSAGE_OVERRUN` (SPEC §4.17).
 
@@ -568,6 +569,7 @@ Rejections, in the order of the checks:
 | `KEY_INVALID` | The candidate's `key` is not written exactly as one of the field's `keys`. | Send the key as the schema writes it. |
 | `NO_EVIDENCE` | No value item and no outside item, such as a LangExtract extraction that did not align. | Ask for a quote of the value. |
 | `SPAN_INVALID` or `VALUE_NOT_IN_EVIDENCE` | Character offsets are sent as byte offsets, and the text has a character outside ASCII before the span. | Convert the offsets (see [Candidates](#candidates)), or send only the value item's `text`, and groundgate finds the quote. |
+| `OPTION_INVALID` | The value is not one of the options of the field. Letter case counts. | Give the option as the schema has it, and cite the text that has it. If the document uses another word, add that word as an option. |
 | `PASSAGE_NOT_AT_HEADING` | The span of the passage does not start at a heading, or the packet has no outline. | Give the outline of the reading (`admit --outline`), and start the span at the first character of the heading. |
 | `PASSAGE_LABEL_MISMATCH` | The heading at the start of the span has another label. | Give the label as the heading has it, such as `4.2`. |
 | `PASSAGE_CUT_SHORT` | The span ends before the end of the section. | End the span at the last character before the next heading of the same level or a higher level. |

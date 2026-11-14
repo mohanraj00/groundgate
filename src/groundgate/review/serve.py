@@ -76,6 +76,7 @@ from ..text import (
 from .labels import QUESTIONS, label_tasks
 from .model_text import all_model_texts, check_model_text, model_text_task, statement_views
 from .resolve import (
+    CLOSED_SET_VERDICTS,
     CORRECTIONS,
     EVERY_TASK,
     VERDICTS,
@@ -503,6 +504,8 @@ class Review:
             "label": label,
             # a model text task (§7): each statement with its cited text and its marks
             "statements": statement_views(doc.texts[tk], u.text) if tk in doc.texts else None,
+            # a closed_set task (§7): each option of the field
+            "options": task.get("options"),
             "view": self._source(doc, task, places),
         }
 
@@ -885,6 +888,8 @@ class Review:
             raise Refused(400, "a calibrate task takes no correction")
         if tk in doc.texts:
             raise Refused(400, "a model text task takes no correction")
+        if task["item"] == "closed_set":
+            raise Refused(400, "a closed_set task takes no correction: the options are closed")
         if not isinstance(verdict, str) or verdict not in CORRECTIONS:
             raise Refused(400, "the verdict must be correct or adjust_span")
         candidate = self._candidate(doc, slot, task, body)
@@ -925,6 +930,10 @@ class Review:
             raise Refused(400, "the verdict is not an answer verdict")
         if tk in doc.labels and verdict in CORRECTIONS:
             raise Refused(400, "a calibrate task takes no correction")
+        if task["item"] == "closed_set" and verdict not in CLOSED_SET_VERDICTS:
+            raise Refused(
+                400, "a closed_set task takes only confirm, choose, not_in_document and unsure"
+            )
         if tk in doc.texts and verdict != "confirm":
             raise Refused(400, "an answer to a model text task has the verdict confirm")
         candidate = None

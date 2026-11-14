@@ -7626,6 +7626,69 @@ for bad_name, bad_text, bad_doc, bad in (
         }
     )
 
+# --------------------------------------------------- closed options (SPEC §2.3, §3, #530)
+# Each expected code is written by hand from the table of §3.
+PERIODS = {"type": "string", "options": ["monthly", "quarterly", "annual", "every two years"]}
+NOT_AN_OPTION = ("rejected", ["OPTION_INVALID"])
+vector(
+    "options-01-closed",
+    "A string field with options is closed. A value that is an option and is in the cited text "
+    "is admitted. A value that is in the text and is not an option is OPTION_INVALID. Letter "
+    "case counts, so Monthly is not the option monthly. An option that is not in the cited "
+    "text is still VALUE_NOT_IN_EVIDENCE: the options add a check and remove none (#530).",
+    "Billing is monthly. The plan renews every  two years.\nSupport is billed Weekly.\n",
+    {"fields": {"billing": PERIODS, "renewal": PERIODS, "support": PERIODS}},
+    [
+        c("o1", "billing", "monthly", None, [q("Billing is monthly.")]),
+        c("o2", "renewal", "every two  years", None, [q("renews every  two years")]),
+        c("o3", "support", "Weekly", None, [q("billed Weekly")], NOT_AN_OPTION),
+        c("o4", "support", "Monthly", None, [q("Billing is monthly.")], NOT_AN_OPTION),
+        c("o5", "support", "annual", None, [q("billed Weekly")],
+          ("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
+    ],
+)  # fmt: skip
+vector(
+    "options-02-record-member",
+    "A member of a record can have options. The row with a status that is not an option has "
+    "no admitted status: the value is OPTION_INVALID, the record is RECORD_MEMBER_MISSING, and "
+    "its code that passed gets RECORD_NOT_ADMITTED (#530).",
+    "A-100 active\nB-200 retired\n",
+    {"fields": {"parts": {"type": "record", "members": {
+        "code": {"type": "string", "required": True},
+        "status": {"type": "string", "required": True, "options": ["active", "withdrawn"]},
+    }}}},
+    [
+        c("o1", "parts.code", "A-100", None, [q("A-100")], record="r1"),
+        c("o2", "parts.status", "active", None, [q("active")], record="r1"),
+        c("o3", "parts.code", "B-200", None, [q("B-200")], RNA, record="r2"),
+        c("o4", "parts.status", "retired", None, [q("retired")], NOT_AN_OPTION, record="r2"),
+    ],
+    records=[
+        rec("r1", field="parts", members={"code": "A-100", "status": "active"}),
+        rec("r2", "rejected", ["RECORD_MEMBER_MISSING"], field="parts"),
+    ],
+)  # fmt: skip
+for bad_name, bad_text, bad_field in (
+    ("empty", "an empty list of options", {"type": "string", "options": []}),
+    ("blank", "a blank option", {"type": "string", "options": ["monthly", " "]}),
+    ("twice", "two options that are equal after whitespace normalisation",
+     {"type": "string", "options": ["every two years", "every  two years"]}),
+    ("not-string", "an option that is not a string", {"type": "string", "options": ["1", 2]}),
+    ("not-list", "options that are not a list", {"type": "string", "options": "monthly"}),
+    ("number", "options on a number field", {"type": "integer", "options": ["1", "2"]}),
+    ("date", "options on a date field",
+     {"type": "date", "formats": ["YYYY-MM-DD"], "options": ["2026-01-01"]}),
+):  # fmt: skip
+    INVALID.append(
+        {
+            "name": f"options-bad-{bad_name}",
+            "description": f"A field with {bad_text} is invalid (SPEC §2.3, #530).",
+            "document": BAD_DOC,
+            "schema": {"fields": {"period": bad_field}},
+            "policy": None,
+        }
+    )
+
 # ------------------------------------------ records in the export (SPEC §5.1, #659)
 # Each span is counted by hand. "Price list 2026\n" has 16 bytes, so A-100 is at 16 to 21 and
 # $4.20 at 28 to 33; B-200 is at 34 to 39 and $12.50 at 48 to 54. In the corrigendum,

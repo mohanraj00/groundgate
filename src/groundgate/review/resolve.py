@@ -49,6 +49,8 @@ EVERY_TASK: dict[str, Any] = {
 
 CORRECTIONS = frozenset({"correct", "adjust_span"})
 VERDICTS = frozenset({"confirm", "choose", "not_in_document", "unsure", "wrong"}) | CORRECTIONS
+# §7: the option list is closed, so a closed_set task takes no typed value and no new span
+CLOSED_SET_VERDICTS = frozenset({"confirm", "choose", "not_in_document", "unsure"})
 CHAIN = frozenset({"sequence", "previous", "entry_sha256"})  # the store adds these members
 # The members of each answer format before the store adds the chain members. answer@2 adds the
 # verdict wrong and the member field_keys (§5.3).
@@ -428,6 +430,8 @@ def _check(
         return _statements(name, sequence, task_key, slot, task, record, fail)
     if record["statements"] is not None or record["nodes"] is not None:
         raise fail("statements and nodes are only for a model text or a structure task")
+    if task["item"] == "closed_set" and verdict not in CLOSED_SET_VERDICTS:
+        raise fail("a closed_set task takes only confirm, choose, not_in_document and unsure")
     choices = [c["decision"] for c in task["choices"]]
     decision = record["decision"]
     if verdict == "choose":
