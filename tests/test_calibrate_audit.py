@@ -211,6 +211,7 @@ def test_measure_counts_the_audit_labels_with_the_gold_labels(tmp_path: Path) ->
     assert (a["seed"], a["since"], a["picked"], a["documents"], a["admitted"], a["skipped"]) == (
         SEED, None, 30, 30, 30, 0,
     )  # fmt: skip
+    assert a["duplicates"] == 0
     assert (a["rate"], a["alerts"]) == ("0.02", [])
     assert a["routes"] == [{"field": "items", "route": "checked", **checked}]
     assert report["documents"] == {"calibration": 1, "test": 2}
@@ -278,9 +279,12 @@ def test_the_rate_comes_from_the_profile_of_the_log_and_not_from_the_draft(
     log, given = [], []
     for i in range(1, 31):
         name = f"a{i:02d}"
-        for sub, end in (("docs", "txt"), ("candidates", "json"), ("judgments", "json")):
+        for sub, end in (("candidates", "json"), ("judgments", "json")):
             # c1: the judge clears the standard rate 10 with p 0.9
             shutil.copy(vector / "gold" / sub / f"c1.{end}", folder / sub / f"{name}.{end}")
+        text = (vector / "gold" / "docs" / "c1.txt").read_text("utf-8")
+        # a last line makes each text different, so each document counts
+        (folder / "docs" / f"{name}.txt").write_text(f"{text}\nNote {i}\n", "utf-8")
         log.append({"entry": "document", "document": name, "profile": digest, "items": 1})
         given.append({**_label(name, "11"), "profile": digest, "field": "rate",
                       "key": "standard"})  # fmt: skip
@@ -304,6 +308,29 @@ def test_the_rate_comes_from_the_profile_of_the_log_and_not_from_the_draft(
     assert {"field": "rate", "route": "cleared", "bound": "1"} in a["alerts"]
     text = (tmp_path / "out" / "REPORT.md").read_text("utf-8")
     assert "rate cleared: 30 admitted, 30 errors, 0 with no label, bound 1 (draft)." in text
+
+
+def test_a_document_text_counts_one_time(tmp_path: Path) -> None:
+    """a01 has the text of the gold test document g2. a03 has the text of a02, which comes
+    before it in the log, and a label that calls the value wrong. The two do not count."""
+    case = Case(tmp_path)
+    _document(case.audit, "a01", 502)
+    _document(case.audit, "a03", 102)
+    case.labels[2] = _label("a03", "999")
+    case.write_labels()
+    report = case.run("out")
+    checked = report["fields"]["items"]["routes"]["checked"]
+    # 2 gold values and 28 audit values, with no error: the label of a03 has no effect
+    assert (checked["admitted"], checked["errors"]) == (30, 0)
+    a = report["audit"]
+    assert (a["documents"], a["duplicates"], a["admitted"]) == (30, 2, 28)
+    assert a["rate"] == "0.1"  # the audit labels cover fewer than 30 admitted values
+    assert a["routes"] == [{"field": "items", "route": "checked", **checked}]
+    profile = json.loads((tmp_path / "out" / "profile.json").read_text("utf-8"))
+    assert profile["routes"][0]["documents"] == 30
+    assert "2 labelled audit documents do not count" in (tmp_path / "out" / "REPORT.md").read_text(
+        "utf-8"
+    )
 
 
 def test_a_wrong_admitted_value_raises_the_rate_and_gives_an_alert(

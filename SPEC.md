@@ -2050,6 +2050,10 @@ profile, and its document is in the pick of the seed and the log. A label with a
 digest does not count. A label of a document that is not in the pick, or whose digest is not
 the digest of the log entry of its document, stops the measure.
 
+A document text counts one time in a measure. A labelled audit document does not count when its
+text is the text of a gold set document of the measure, or the text of a labelled audit
+document that comes before it in the log.
+
 **The rate rule.** A measure of a profile version decides each labelled document with that
 profile version, as its digest names it in the log. It does not decide them with a profile that
 the measure changes, for example a draft with another clear threshold. The measure gives each

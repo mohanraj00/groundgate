@@ -451,7 +451,14 @@ def measure(
     scores = score(measured_profile, gold, test)
     documents = len(test)
     if audit is not None:
-        names = sorted(audit.gold.docs)
+        # a document text counts one time: not a text of the gold set, and not a text of an
+        # audit document that comes before in the log (SPEC §4.18)
+        seen = {gold.docs[d].text for d in (*calibration, *test)}
+        names = []
+        for name, doc in audit.gold.docs.items():
+            if doc.text not in seen:
+                seen.add(doc.text)
+                names.append(name)
         # the monitor of the profile version of the log: its decisions, not those of the draft
         logged_audit = draft_audit = score(measured_profile, audit.gold, names)
         logged = _pooled(scores, draft_audit)
@@ -512,6 +519,7 @@ def measure(
             "since": audit.since,
             "picked": audit.picked,
             "documents": len(audit.gold.docs),
+            "duplicates": len(audit.gold.docs) - len(names),
             "admitted": covered,
             "skipped": audit.skipped,
             "routes": [
@@ -538,6 +546,11 @@ def _audit_lines(report: Mapping[str, Any]) -> list[str]:
         f"{a['picked']} picked, {a['admitted']} admitted values. The numbers count them with "
         f"the test part. Next audit rate: {a['rate']}."
     ]
+    if a["duplicates"]:
+        lines.append(
+            f"- {a['duplicates']} labelled audit documents do not count: each has the text of "
+            "a gold set document or of an audit document before it in the log."
+        )
     lines += [
         f"- The profile version of the log, {_cell(x['field'])} {x['route']}: "
         f"{x['admitted']} admitted, {x['errors']} errors, {x['unscored']} with no label, "

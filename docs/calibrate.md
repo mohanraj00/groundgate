@@ -423,7 +423,7 @@ documents with the test part of the gold set. The report then has an `audit` mem
 
 ```json
 "audit": {"audit_sha256": "sha256:...", "seed": "2026-11-audit", "since": null,
-          "picked": 34, "documents": 30, "admitted": 41, "skipped": 0,
+          "picked": 34, "documents": 30, "duplicates": 0, "admitted": 41, "skipped": 0,
           "routes": [{"field": "total", "route": "checked", "admitted": 43, "errors": 0,
                       "error_rate": "0", "bound": "0.0673", "unscored": 0,
                       "status": "measured"}],
@@ -437,6 +437,9 @@ The `audit` member comes from `P` as it is, because the log and the labels name 
 
 - `picked` is the count of the picked documents of the profile, and `documents` the count of
   them with a label. `admitted` is the count of the values that `P` admits and the labels cover.
+- `duplicates` is the count of the labelled documents that do not count. A document text
+  counts one time: an audit document with the text of a gold set document does not count, and
+  nor does one with the text of an audit document before it in the log.
 - `routes` has one row for each route of `P` with an admitted value, from the test part and the
   audit documents together. Its members are those of a route in `fields`.
 - `skipped` is the count of the labels of another profile version, or of a day before

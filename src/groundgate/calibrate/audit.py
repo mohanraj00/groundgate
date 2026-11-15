@@ -279,7 +279,8 @@ def rate(routes: Iterable[Mapping[str, Any]], covered: int) -> str:
 @dataclass(frozen=True)
 class AuditSet:
     """The audit set of one measure: the labelled, picked documents of one profile digest in
-    the form of a gold set, and the counts that the report gives."""
+    the form of a gold set, and the counts that the report gives. ``gold.docs`` is in log
+    order."""
 
     gold: Gold
     sha256: str
@@ -350,7 +351,7 @@ def read_audit(root: Path, profile_sha256: str, since: str | None = None) -> Aud
         raise AuditError(f"a measure counts at most {MAX_DOCUMENTS} audit documents")
     files: dict[str, dict[str, str | None]] = {}
     docs: dict[str, GoldDoc] = {}
-    for name in sorted(rows):
+    for name in (n for n in picks if n in rows):  # in log order
         raw = _read_bytes(root / "docs" / f"{name}.txt")
         try:
             text = raw.decode("utf-8")
