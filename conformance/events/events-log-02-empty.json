@@ -1,0 +1,11 @@
+{
+ "name": "events-log-02-empty",
+ "kind": "log",
+ "description": "A log with no record has no event.",
+ "profile": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+ "records": [],
+ "expected": {
+  "valid": true,
+  "counted": []
+ }
+}

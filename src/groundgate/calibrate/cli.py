@@ -34,7 +34,7 @@ from typing import Any
 
 from groundgate.canonical import SPEC_VERSION
 
-from . import audit, judges, label, measure
+from . import audit, events, judges, label, measure
 from . import questions as q
 from .stats import CEILINGS, needed
 
@@ -612,6 +612,7 @@ def main(argv: list[str] | None = None, prog: str = "groundgate calibrate") -> N
     p.add_argument("--out", type=Path, required=True, help="a directory for <doc>.json")
     measure.add_parser(sub)
     audit.add_parser(sub)
+    events.add_parser(sub)
     args = ap.parse_args(argv)
     for option, name in (("--reviewer", "reviewer"), ("--set", "set_name")):
         value = getattr(args, name, None)
@@ -632,6 +633,9 @@ def main(argv: list[str] | None = None, prog: str = "groundgate calibrate") -> N
         return
     if args.cmd == "audit":
         audit.main(args)
+        return
+    if args.cmd == "events":
+        events.main(args)
         return
     w = Work(args.work)
     if args.cmd == "sample":

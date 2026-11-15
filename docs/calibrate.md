@@ -458,3 +458,53 @@ again to 10% when a bound passes the target or the profile version changes.
 
 The route rows of the draft profile count the audit documents in `documents`. `gold_sha256`
 stays the digest of the gold set.
+
+## events: the decisions of an outside approver
+
+An approver outside groundgate sees the exported facts (`facts@1` or `facts@2`) and approves,
+rejects or corrects each one. Each decision can come back as one calibration event
+([SPEC §4.19](../SPEC.md), [#642](https://github.com/mohanraj00/groundgate/issues/642)). The
+events tell you where a profile version needs work. They are not labels: the approver saw the
+proposed value, so an event never counts for a bound. `calibrate measure` and the audit never
+read them.
+
+```bash
+groundgate calibrate events add --store S --events approvals.jsonl
+groundgate calibrate events suggest --store S --profile invoice.json --out drafts.json
+```
+
+### The events file
+
+The events file has one JSON event (SPEC §4.19) on each line, and each line ends with a line
+break. The approver writes it. `fact_sha256` is the digest of kind `fact` over the fact object
+that the approver saw. `groundgate.calibrate.events.fact_sha256(fact)` calculates it.
+
+`events add` checks each event before it writes one. Then it appends each event to the `events`
+log of its profile digest in the store. An event with the `origin` of an event in the log is a
+copy, and `add` does not write it. So you can add the same file again. The command prints the
+count of the new events and of the copies. `store check` reports an events log with a record
+that is not an event of its profile.
+
+### The drafts
+
+`events suggest` reads the events of the profile version of `--profile` and writes the drafts
+as JSON (`groundgate_profile_drafts`, format 1). It changes nothing: you accept or refuse each
+draft, then you make a new profile version and measure it. The new version has a new digest,
+so it starts with no events.
+
+- `review_share`: one for each field and key with events, in code point order. It gives the
+  counts of the approved, rejected and corrected values, and `share`, the part of the events
+  that the approver found wrong, rounded up to two decimals. A high share tells you to send the
+  field to review, or to keep its route a draft.
+- `value_test`: one for each rejection and correction, in log order. It names the packet, the
+  value that the gate must not admit (`refuse`) and the right value (`admit`, null for a
+  rejection). Add it to your gold set or to your tests, and replay the packet with a new
+  profile version to see the effect, with no model call.
+- `term`: one for a correction when the right value is on exactly one line of the packet text,
+  with words before it on that line. `alias` is those words, with the punctuation and spaces at
+  the end removed. The draft names the packet and the line. A field name or an alias that the
+  field has already gives no draft. Check each term against the document before you add it to
+  the field's `aliases`.
+
+`missing_packets` lists each packet of a correction that is not in the store. A correction of
+such a packet gives no term.

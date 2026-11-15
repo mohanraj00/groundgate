@@ -43,7 +43,7 @@ MAX_BYTES = 2**30
 KEY = re.compile(r"sha256:[0-9a-f]{64}")
 KIND = re.compile(r"[a-z][a-z0-9-]{0,62}@[1-9][0-9]{0,8}")
 # The log kinds and the number of keys in each log name (§6, §7.1).
-LOGS = {"answers": 2, "splits": 1, "deleted": 0}
+LOGS = {"answers": 2, "splits": 1, "events": 1, "deleted": 0}
 CHAIN = ("sequence", "previous", "entry_sha256")
 _UTF8 = frozenset({"text@1", "prompt@1", "reply@1"})
 _RUN = re.compile(r"run@[1-9][0-9]{0,8}")
@@ -522,11 +522,11 @@ class FolderStore:
             rel = f"logs/{entry}"
             if entry == "deleted.jsonl" and kind(top / entry) == "file":
                 names.append(("deleted",))
-            elif entry in ("deleted.lock", "answers", "splits"):
+            elif entry in ("deleted.lock", "answers", "splits", "events"):
                 continue
             else:
                 problems.append(f"{rel} is not a log")
-        for word in ("splits", "answers"):
+        for word in ("splits", "events", "answers"):
             folder = top / word
             if not folder.exists() and not folder.is_symlink():
                 continue
@@ -535,10 +535,10 @@ class FolderStore:
                 continue
             for entry in sorted(os.listdir(folder)):
                 rel = f"logs/{word}/{entry}"
-                if word == "splits":
+                if word in ("splits", "events"):
                     found = stem(entry)
                     if found is not None and kind(folder / entry) == "file":
-                        names.append(("splits", "sha256:" + found))
+                        names.append((word, "sha256:" + found))
                     elif not (entry.endswith(".lock") and stem(entry[:-5] + ".jsonl")):
                         problems.append(f"{rel} is not a log")
                     continue
@@ -596,9 +596,9 @@ class FolderStore:
             self._unlink_own(lock, mark)
 
     def forget_log(self, log: LogName, reason: str) -> None:
-        """Remove an answer log or a splits log, and record the log name, the time and the
-        reason in the deleted log. ``forget_log`` holds the lock of the log for the change, so
-        another writer of the log stops it with ``Locked``."""
+        """Remove an answer log, a splits log or an events log, and record the log name, the
+        time and the reason in the deleted log. ``forget_log`` holds the lock of the log for the
+        change, so another writer of the log stops it with ``Locked``."""
         word, _ = _check_log(log)
         if word == "deleted":
             raise ValueError("forget_log does not remove the deleted log")

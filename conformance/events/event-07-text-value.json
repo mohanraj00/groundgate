@@ -1,0 +1,26 @@
+{
+ "name": "event-07-text-value",
+ "kind": "event",
+ "description": "A value is any string, also an empty one, as the export gives it.",
+ "event": {
+  "groundgate_calibration_event": 1,
+  "decision": "correct",
+  "profile": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "packet_sha256": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+  "receipt_sha256": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "fact_sha256": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "field": "total",
+  "key": null,
+  "value": "",
+  "corrected": "Net 30",
+  "actor": "person",
+  "origin": {
+   "system": "approvals",
+   "id": "d-0001"
+  },
+  "date": "2026-11-15"
+ },
+ "expected": {
+  "valid": true
+ }
+}

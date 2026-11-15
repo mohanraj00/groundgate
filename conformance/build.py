@@ -8483,6 +8483,12 @@ for label_name, label_text, label, label_ok in (
      "not list.", audit_label(proposed="90"), False),
     ("bad-approver", "The decision of an approver is not an audit label.",
      {"document": "inv-0007", "field": "total", "decision": "approved", "approver": "bo"}, False),
+    ("bad-calibration-event", "A calibration event of SPEC 4.19 is not an audit label.",
+     {"groundgate_calibration_event": 1, "decision": "correct", "profile": PROFILE_A,
+      "packet_sha256": "sha256:" + "f" * 64, "receipt_sha256": "sha256:" + "e" * 64,
+      "fact_sha256": "sha256:" + "d" * 64, "field": "total", "key": None, "value": "90",
+      "corrected": "95", "actor": "person", "origin": {"system": "approvals", "id": "d-0001"},
+      "date": "2026-11-15"}, False),
     ("bad-format", "A label format other than 1.", audit_label(groundgate_audit_label=2), False),
     ("bad-no-labeler", "A label with no labeler.", without(audit_label(), "labeler"), False),
     ("bad-blank-labeler", "A labeler name with only a space.", audit_label(labeler=" "), False),
@@ -8522,6 +8528,110 @@ audit_rate("06-no-label", "One route has 30 admitted values and no label for the
            [(30, 0, "measured"), (0, 30, "draft")], 30, "0.1")  # fmt: skip
 audit_rate("07-label-missing", "One route has a label for 39 of its 40 admitted values, so it "
            "is a draft.", [(39, 1, "draft"), (12, 0, "measured")], 51, "0.1")  # fmt: skip
+
+
+# ------------------------------------------------ calibration events (SPEC §4.19, #642)
+# Each expectation is written by hand. An event is a suggestion, so no vector gives a bound.
+EVENTS: list[dict[str, Any]] = []
+FACT_A = "sha256:" + "d" * 64
+RECEIPT_A = "sha256:" + "e" * 64
+PACKET_A = "sha256:" + "f" * 64
+
+
+def event(**members: Any) -> dict[str, Any]:
+    return {"groundgate_calibration_event": 1, "decision": "correct", "profile": PROFILE_A,
+            "packet_sha256": PACKET_A, "receipt_sha256": RECEIPT_A, "fact_sha256": FACT_A,
+            "field": "total", "key": None, "value": "90", "corrected": "95", "actor": "person",
+            "origin": {"system": "approvals", "id": "d-0001"}, "date": "2026-11-15",
+            **members}  # fmt: skip
+
+
+for event_name, event_text, ev, event_ok in (
+    ("01-approve", "An approval has no corrected value.",
+     event(decision="approve", corrected=None), True),
+    ("02-reject", "A rejection has no corrected value.",
+     event(decision="reject", corrected=None), True),
+    ("03-correct", "A correction gives the right value.", event(), True),
+    ("04-key", "An event of one key of a field with keys.",
+     event(field="rate", key="express", value="12.5", corrected="12.75"), True),
+    ("05-program", "A program can be the approver.", event(actor="program"), True),
+    ("06-long-id", "An origin id of 256 characters.",
+     event(origin={"system": "s" * 128, "id": "i" * 256}), True),
+    ("07-text-value", "A value is any string, also an empty one, as the export gives it.",
+     event(value="", corrected="Net 30"), True),
+    ("bad-format", "An event format other than 1.", event(groundgate_calibration_event=2), False),
+    ("bad-format-boolean", "An event format that is a boolean.",
+     event(groundgate_calibration_event=True), False),
+    ("bad-decision", "A decision other than approve, reject and correct.",
+     event(decision="approved"), False),
+    ("bad-correct-no-value", "A correction with no corrected value.",
+     event(corrected=None), False),
+    ("bad-same-value", "A correction to the same value.", event(corrected="90"), False),
+    ("bad-approve-value", "An approval with a corrected value.",
+     event(decision="approve"), False),
+    ("bad-reject-value", "A rejection with a corrected value.", event(decision="reject"), False),
+    ("bad-extra-member", "A member that the format does not list.", event(reason="typo"), False),
+    ("bad-no-origin", "An event with no origin.", without(event(), "origin"), False),
+    ("bad-no-fact", "An event with no fact digest.", without(event(), "fact_sha256"), False),
+    ("bad-origin-member", "An origin with a member that the format does not list.",
+     event(origin={"system": "approvals", "id": "d-0001", "user": "bo"}), False),
+    ("bad-blank-system", "A system name with only a space.",
+     event(origin={"system": " ", "id": "d-0001"}), False),
+    ("bad-system-nfc", "A system name that is not NFC.",
+     event(origin={"system": "Cafe\u0301", "id": "d-0001"}), False),
+    ("bad-long-system", "A system name of 129 characters.",
+     event(origin={"system": "s" * 129, "id": "d-0001"}), False),
+    ("bad-long-id", "An origin id of 257 characters.",
+     event(origin={"system": "approvals", "id": "i" * 257}), False),
+    ("bad-digest", "A fact digest with capital hex digits.",
+     event(fact_sha256="sha256:" + "D" * 64), False),
+    ("bad-profile", "A profile that is not a digest.", event(profile="invoice"), False),
+    ("bad-date", "A date that is not a real day.", event(date="2026-02-30"), False),
+    ("bad-actor", "An actor kind other than person and program.", event(actor="agent"), False),
+    ("bad-value-number", "A value that is a JSON number.", event(value=90), False),
+    ("bad-corrected-number", "A corrected value that is a JSON number.",
+     event(corrected=95), False),
+    ("bad-empty-field", "A field with no characters.", event(field=""), False),
+    ("bad-empty-key", "A key with no characters.", event(key=""), False),
+    ("bad-size", "An event of more than 64 KiB as canonical JSON.",
+     event(value="9" * 65536), False),
+    ("bad-audit-label", "An audit label is not an event.", audit_label(), False),
+    ("bad-array", "An event that is not an object.", [event()], False),
+):  # fmt: skip
+    EVENTS.append({"name": f"event-{event_name}", "kind": "event",
+                   "description": event_text, "event": ev,
+                   "expected": {"valid": event_ok}})  # fmt: skip
+
+
+def events_log(name: str, description: str, profile: str, records: list[Any],
+               counted: list[str] | None) -> None:  # fmt: skip
+    """``records`` are the records of the events log of ``profile`` without the chain members.
+    ``counted`` lists the origin id of each event that counts, in log order, or is None when
+    the log is invalid."""
+    EVENTS.append({
+        "name": f"events-log-{name}", "kind": "log", "description": description,
+        "profile": profile, "records": records,
+        "expected": {"valid": counted is not None, "counted": counted or []},
+    })  # fmt: skip
+
+
+def origin(n: int) -> dict[str, str]:
+    return {"system": "approvals", "id": f"d-{n:04d}"}
+
+
+events_log("01-copy", "The second event with the origin d-0001 is a copy, also with another "
+           "decision. It does not count.", PROFILE_A,
+           [event(decision="approve", corrected=None), event(origin=origin(2)),
+            event(decision="reject", corrected=None)],
+           ["d-0001", "d-0002"])  # fmt: skip
+events_log("02-empty", "A log with no record has no event.", PROFILE_A, [], [])
+events_log("03-same-id-other-system", "One id in two approver systems is two origins.",
+           PROFILE_A, [event(), event(origin={"system": "audit-desk", "id": "d-0001"})],
+           ["d-0001", "d-0001"])  # fmt: skip
+events_log("bad-other-profile", "An event of another profile digest in the log.", PROFILE_A,
+           [event(), event(profile=PROFILE_B, origin=origin(2))], None)  # fmt: skip
+events_log("bad-not-event", "An audit label in the log.", PROFILE_A,
+           [event(), audit_label()], None)  # fmt: skip
 
 
 def main() -> None:
@@ -8701,11 +8811,19 @@ def main() -> None:
         (audit_dir / f"{a['name']}.json").write_text(
             json.dumps(a, indent=1, ensure_ascii=False) + "\n"
         )
+    events_dir = HERE / "events"
+    events_dir.mkdir(exist_ok=True)
+    for old in events_dir.glob("*.json"):
+        old.unlink()
+    for e in EVENTS:
+        (events_dir / f"{e['name']}.json").write_text(
+            json.dumps(e, indent=1, ensure_ascii=False) + "\n"
+        )
     print(
         f"wrote {len(VECTORS)} vectors, {len(INVALID)} invalid packets, "
         f"{len(PROFILES)} profile vectors, {len(PINS)} pin vectors, "
-        f"{len(PLACES)} places vectors, {len(EXPORTS)} export vectors and "
-        f"{len(AUDITS)} audit vectors"
+        f"{len(PLACES)} places vectors, {len(EXPORTS)} export vectors, "
+        f"{len(AUDITS)} audit vectors and {len(EVENTS)} event vectors"
     )
 
 

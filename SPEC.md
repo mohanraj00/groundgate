@@ -4,8 +4,8 @@ Status: released with groundgate 0.14.0, in the `v0.14.0` tag. groundgate 0.15.0
 §4.17 to this version: the profile, the value kinds `date`, `record` and `passage`, closed
 options and the packet members `pin`, `places`, `completeness` and `outline`. A packet that
 uses none of them is decided as in 0.14.0 and gets the same receipt, so the version string does
-not change. groundgate 0.16.0 adds §5.2, the `facts@2` export of a reviewed packet, and §4.18,
-the blind audit sample. They change no decision and no receipt. Version string: `groundgate/0.12`. Spec 0.11 was released with
+not change. groundgate 0.16.0 adds §5.2, the `facts@2` export of a reviewed packet, §4.18,
+the blind audit sample, and §4.19, the calibration events. They change no decision and no receipt. Version string: `groundgate/0.12`. Spec 0.11 was released with
 groundgate 0.11.0 and is in the `v0.11.0` tag. Spec 0.10 is in the `v0.10.0` tag. Spec 0.9 is in the `v0.9.0` tag,
 spec 0.8 in the `v0.8.0` tag, spec 0.7 in the `v0.7.0` tag, spec 0.6 in the `v0.6.0` tag, spec
 0.5 in the `v0.5.0` tag, spec 0.4 in the `v0.4.0` tag, spec 0.3 in the `v0.3.0` tag, spec 0.2 in
@@ -2073,6 +2073,61 @@ decreases to 2% while the bound of each route stays below the target, and it inc
 
 The vectors in `conformance/audit/` give the pick of a seed and a log, the tasks of a document,
 valid and invalid labels and logs, and the rate of a measure.
+
+### 4.19 Calibration events
+
+A **calibration event** (#642) records one decision of an outside approver about one fact that
+the gate admitted with a profile (§4.10): an approval, a rejection or a correction. An approver
+is a person or a program outside groundgate that sees the exported facts (§5.1, §5.2). This
+section changes no decision.
+
+An event is a suggestion only. The approver saw the proposed value, so an event is not a label
+and never counts for the bound of a route (§4.18). A tool can propose a draft change of a
+profile from events. A person or a policy accepts or refuses each draft.
+
+**The event** (format 1) is one object:
+
+```json
+{"groundgate_calibration_event": 1, "decision": "correct", "profile": "sha256:...",
+ "packet_sha256": "sha256:...", "receipt_sha256": "sha256:...", "fact_sha256": "sha256:...",
+ "field": "total", "key": null, "value": "90", "corrected": "95", "actor": "person",
+ "origin": {"system": "approvals", "id": "d-0001"}, "date": "2026-11-15"}
+```
+
+| Member | Meaning |
+|---|---|
+| `groundgate_calibration_event` | The event format, the integer `1`. |
+| `decision` | `approve`, `reject` or `correct`. |
+| `profile` | The digest of the profile version of the facts (§4.10): the `profile.sha256` of the receipt (§5), when it has one. |
+| `packet_sha256` | The `packet@1` store key of the export (§5.1). |
+| `receipt_sha256` | The `citation.receipt_sha256` of the fact. |
+| `fact_sha256` | The digest (§6) of kind `fact` over the fact object of the export, as it is. |
+| `field`, `key` | The field and the key of the fact. `key` is null for a field with no keys. |
+| `value` | The value of the fact, as the export gives it. |
+| `corrected` | The right value in the canonical form of the receipt `value`, for `correct`. Null for `approve` and `reject`. |
+| `actor` | `person` or `program`: the kind of the approver that decided. |
+| `origin` | `{"system", "id"}`: the name of the approver system and the id of the decision in it. |
+| `date` | The day of the decision, a real day as `YYYY-MM-DD`. |
+
+A digest is `sha256:` and 64 lowercase hex digits. `field` is a string with one or more
+characters. `key` is null or a string with one or more characters. `value` is a string.
+`corrected` is a string that is not equal to `value` for `correct`, and null for the other
+decisions. `system` and `id` are NFC strings with a character that is not a space, with at most
+128 and 256 characters. An event is invalid with a member that this format does not list, a
+member that is missing, or a member with another form. A canonical JSON event of more than
+64 KiB is invalid.
+
+groundgate checks the form of the digests only. The fact digest names the fact that the approver
+saw. A replay of the packet (§5.1) gives the fact again.
+
+**The events log.** A store (docs/design/store.md) keeps the events of one profile digest in one
+log, the `events` log of that digest. Each record of the log is an event and the chain members
+of the store. A record whose `profile` is not the digest of its log, or that is not an event
+without its chain members, makes the log invalid. The first event with an `origin` counts. A
+later event with the same `origin` is a copy, and it does not count.
+
+The vectors in `conformance/events/` give valid and invalid events, and the events of one log
+that count.
 
 ## 5. Receipt
 

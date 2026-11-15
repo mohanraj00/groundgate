@@ -44,7 +44,8 @@ I choose A. If a view becomes slow, a SQLite index can come later as a view.
    references, candidate lists, judgments, receipts, prompts, replies, admission packets,
    readings, packets, review tasks and resolutions. The runner writes its record one time, at
    the end of a run. Thus the store keeps the record as one object, and the chain stays inside it.
-2. **Logs** only grow: the review answers, the splits of #383 and the deletions. Each record holds
+2. **Logs** only grow: the review answers, the splits of #383, the calibration events of #642
+   and the deletions. Each record holds
    the digest of the record before it.
 3. **Views** are derived: the reading cache, the review queue, the latest resolution, the labels
    for calibrate and the measures. A view comes only from objects and logs, so the store can
@@ -186,7 +187,8 @@ and resolutions name the packet, and the answer logs of a packet are filed under
 for example `("answers", packet, reviewer)`. The reviewer part is the store key of the kind
 `reviewer@1` over the UTF-8 of the reviewer name. The set part of a `splits` log is the store
 key of the kind `set@1` over the UTF-8 of the set name. A reviewer name and a set name must be
-NFC. `reviewer_key` and `set_key` refuse a name that is not NFC, so one name has one key and one
+NFC. The profile part of an `events` log is the profile digest (SPEC §4.19), which is a store
+key. `reviewer_key` and `set_key` refuse a name that is not NFC, so one name has one key and one
 reviewer has one log (#418). Thus the file name is a digest, not the name that the CLI takes, and
 a name never becomes a path.
 
@@ -206,6 +208,7 @@ store/
   objects/ab/cdef...                         one file for each object, named by its key
   logs/answers/<packet>/<reviewer>.jsonl     one answer log for each packet and reviewer
   logs/splits/<set>.jsonl                    the splits of #383, one log for each set
+  logs/events/<profile>.jsonl                the calibration events of #642, one log for each profile digest
   logs/deleted.jsonl                         the deletions
   views/...                                  JSON files; delete them at any time
 ```

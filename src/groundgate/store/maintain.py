@@ -649,9 +649,18 @@ def _orphan_run_objects(report: Report, objects: _Objects) -> None:
 
 def _split_view(report: Report, log: tuple[str, ...], records: list[dict[str, Any]]) -> None:
     """A finding for a splits log whose view fails: a bad record, or a second split for one
-    document (§10)."""
+    document (§10). Also a finding for an events log with a record that is not an event of
+    its profile (SPEC §4.19)."""
     from .splits import split_view
 
+    if log[0] == "events":
+        from ..calibrate.events import EventError, counted
+
+        try:
+            counted(log[1], records)
+        except EventError as exc:
+            report.find(f"{_log_rel(log)}: {exc}")
+        return
     if log[0] != "splits":
         return
     try:

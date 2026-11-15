@@ -160,10 +160,11 @@ class _Lax(MemoryStore):
 def test_the_report_names_the_failed_vectors() -> None:
     got = contract.report(_NoChain, "no chain")
     failed = {r["id"]: r for r in got["results"] if not r["passed"]}
-    assert set(failed) == {"chain/two-reviewers", "forget/put-again"}
+    assert set(failed) == {"chain/two-reviewers", "chain/events", "forget/put-again"}
     assert failed["chain/two-reviewers"]["step"] == 2
     assert failed["forget/put-again"]["step"] == 8  # the sequence of the second record
-    assert got["failed"] == 2
+    assert failed["chain/events"]["step"] == 2
+    assert got["failed"] == 3
 
 
 class _Changes(MemoryStore):
