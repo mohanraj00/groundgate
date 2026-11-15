@@ -33,7 +33,8 @@ LOCK = ".labels.lock"
 
 def judged(folder: Path) -> bool:
     """True once a judge run starts in the work folder: the labels are frozen then."""
-    return any(folder.glob("answers-*.json")) or any(folder.glob(".answers-*.partial.json"))
+    # Check the partial file first. ask writes the final file before it removes the partial file.
+    return any(folder.glob(".answers-*.partial.json")) or any(folder.glob("answers-*.json"))
 
 
 @contextlib.contextmanager
