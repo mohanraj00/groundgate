@@ -179,11 +179,11 @@ const VERDICT_KEYS = { y: "supported", w: "unsupported", u: "unsure" };
 
 function drawOptions() {
   const list = el("ul", "options");
-  const chosen = task.choices.map((c) => c.shown); // a text choice shows as "value"
-  for (const option of task.options) {
-    const picked = chosen.includes('"' + option + '"');
+  const chosen = task.choices.map((c) => c.option_index);
+  task.options.forEach((option, i) => {
+    const picked = chosen.includes(i);
     list.append(el("li", picked ? "option picked" : "option", option));
-  }
+  });
   const box = el("li", "optionlist");
   box.append(el("span", "quote", "The options of the field:"), list);
   $("choices").append(box);

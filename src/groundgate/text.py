@@ -234,6 +234,12 @@ def normalize_ws(text: str) -> str:
     return _WS.sub(" ", text).strip()
 
 
+def option_index(value: str, options: Iterable[str]) -> int | None:
+    """The index of the option equal after whitespace normalisation (SPEC §3 step 5)."""
+    value = normalize_ws(value)
+    return next((i for i, option in enumerate(options) if normalize_ws(option) == value), None)
+
+
 def verbatim_equal(a: str, b: str) -> bool:
     return normalize_ws(_HYPHEN_BREAK.sub("", a)) == normalize_ws(_HYPHEN_BREAK.sub("", b))
 

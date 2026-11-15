@@ -63,6 +63,7 @@ from ..text import (
     item_scale,
     loss_sign,
     normalize_ws,
+    option_index,
     parse_value,
     quote_pattern,
     scale_by,
@@ -483,6 +484,8 @@ class Review:
                     break
             choices.append({"n": n, "decision": c["decision"], "shown": c["shown"],
                             "quote": quote})  # fmt: skip
+            if task["item"] == "closed_set":
+                choices[-1]["option_index"] = option_index(c["value"], task["options"])
         mine = [r for r in self._logs(doc.key).get(self.reviewer, []) if r.get("task") == tk]
         label = None
         if tk in doc.labels:  # the page asks a calibrate question (§11)
