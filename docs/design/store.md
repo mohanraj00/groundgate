@@ -255,6 +255,7 @@ source, reader version, options and source format, and its text and layout are i
 `read --store` uses it and does not run the reader again. A row can name a `reading@1` too, and
 `read --store` does not count it. A row can also name readings of the same bytes in two formats,
 and the source format selects one (#570). `read --store` always reads a `.docx` or `.xlsx` file.
+It also reads a text, HTML or XML file with no text again, because the warning names the file.
 A new reader version misses the cache. A cache hit gives the warnings that the
 reading keeps (#523). `store rebuild` also
 builds the calibrate labels, as `views/calibrate-labels.json` (`calibrate-labels@1`, #406). For

@@ -306,7 +306,8 @@ def _cached_reading(
     """The reading key and the result of ``read`` from the reading cache, or ``None`` on a miss.
     The cache and the objects are untrusted. Each value that does not agree with ``want`` is a
     miss, and so is a row with no ``reading@2`` of ``source_format`` or more than one. Only a
-    PDF, text, HTML or XML file can hit."""
+    PDF, text, HTML or XML file can hit. A text, HTML or XML file with no text never hits,
+    because the warning of ``read`` names the file."""
     view = getattr(store, "read_view", None)
     if view is None or source_format not in _CACHED_FORMATS:
         return None
@@ -364,7 +365,9 @@ def _stored_reading(store: Store, k: str, name: str, source_format: str) -> tupl
         layout = Layout.from_dict(_get_json(store, "layout@1", obj["layout"]))
         if layout.document_sha256 != digest("document", {"text": text}):
             return None
-    elif obj["layout"] is not None:  # only a reading of a PDF has a layout
+    elif obj["layout"] is not None or not text.strip():
+        # Only a reading of a PDF has a layout. The warning of a file with no text names the
+        # file, so read runs again (#683).
         return None
     try:  # a reading with no completeness, or with a wrong one, is a miss
         complete = check_completeness(obj.get("completeness"), text)

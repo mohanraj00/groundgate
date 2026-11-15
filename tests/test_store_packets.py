@@ -529,7 +529,6 @@ def test_a_reading_at_1_never_hits_the_reading_cache(
         ("a.md", b"Fee: $500.", "text"),
         ("a.html", b"<p>Fee: <b>$500</b>.</p>", "html"),
         ("a.xml", b"<doc><fee>Fee: $500.</fee></doc>", "xml"),
-        ("empty.txt", b"  ", "text"),
     ],
 )
 def test_text_html_and_xml_hit_the_reading_cache(
@@ -547,6 +546,24 @@ def test_text_html_and_xml_hit_the_reading_cache(
         assert hit == k and not calls
         assert (doc.text, doc.layout, doc.warnings) == (first.text, None, first.warnings)
         assert doc.completeness == first.completeness
+
+
+@pytest.mark.parametrize("suffix", [".txt", ".html", ".xml"])
+def test_a_file_with_no_text_misses_the_reading_cache(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, suffix: str
+) -> None:
+    """The warning of a file with no text names the file. Two files with the same bytes and
+    other names each get their own warning, so the second one misses (#683)."""
+    data = b"<doc> </doc>" if suffix == ".xml" else b"  "
+    (tmp_path / f"first{suffix}").write_bytes(data)
+    (tmp_path / f"second{suffix}").write_bytes(data)
+    with FolderStore(tmp_path / "s") as store:
+        put_reading(store, tmp_path / f"first{suffix}")
+        rebuild(store)
+        calls = _count_reads(monkeypatch)
+        _, doc = put_reading(store, tmp_path / f"second{suffix}")
+        assert len(calls) == 1
+        assert doc.warnings == (f"second{suffix}: no text was extracted",)
 
 
 def test_the_same_bytes_as_text_and_html_hit_their_own_readings(
