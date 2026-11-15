@@ -8133,6 +8133,396 @@ for bad_name, bad_text, bad_outline in (
         }
     )
 
+# ------------------------------------------- the reviewed facts export (SPEC §5.2, #675)
+# Each vector is a packet, a review policy and the answers of the reviewers. The expected facts
+# and open slots are written by hand. The keys and the digests come from the store in the test.
+EXPORTS: list[dict[str, Any]] = []
+REVIEW_POLICY = {"format": "review-policy@1", "audit": {"rate": "0", "seed": ""}, "agree": 1,
+                 "leads": [], "rejected": False}  # fmt: skip
+
+
+def answer(reviewer: str, field: str, verdict: str, **more: Any) -> dict[str, Any]:
+    """An answer of ``reviewer`` to the task of the slot of ``field`` with a null key. ``choice``
+    is the id of the chosen candidate, and ``candidate`` the candidate of a correction."""
+    return {"reviewer": reviewer, "slot": {"field": field, "key": None}, "verdict": verdict,
+            **more}  # fmt: skip
+
+
+def fact(
+    field: str, value: str, status: str, span: tuple[int, int], selector: tuple[Any, ...],
+    answers: list[tuple[str, str]] | None = None, **citation: Any,
+) -> dict[str, Any]:  # fmt: skip
+    """An expected fact. ``selector`` is (start, end, exact, prefix, suffix) in code points, or
+    None. ``answers`` lists (reviewer, verdict) of each answer that settles the slot."""
+    start, end, exact, prefix, suffix = selector
+    return {
+        "field": field, "key": None, "value": value, "unit": None, "status": status,
+        "answers": None if answers is None else [{"reviewer": r, "verdict": v} for r, v in answers],
+        "source": citation.get("source", "document"), "ref": citation.get("ref"),
+        "span": {"start": span[0], "end": span[1]},
+        "selector": {"start": start, "end": end, "exact": exact, "prefix": prefix,
+                     "suffix": suffix},
+    }  # fmt: skip
+
+
+def reviewed(
+    name: str, description: str, document: str, schema: dict[str, Any], candidates: list[Any],
+    answers: list[dict[str, Any]], facts: list[dict[str, Any]], open_: list[tuple[str, str, bool]],
+    review_policy: dict[str, Any] | None = None, references: list[dict[str, Any]] | None = None,
+    coverage: list[dict[str, str]] | None = None,
+) -> None:  # fmt: skip
+    """``open_`` lists (field, status, has a task) of each slot without a value, in slot order."""
+    EXPORTS.append(
+        {
+            "name": name, "description": description, "document": document, "schema": schema,
+            "candidates": candidates, "references": references, "coverage": coverage or [],
+            "review_policy": review_policy or REVIEW_POLICY, "answers": answers,
+            "facts": facts,
+            "open": [{"field": f, "key": None, "status": st, "task": t} for f, st, t in open_],
+        }
+    )  # fmt: skip
+
+
+INTEGERS = {"type": "integer"}
+reviewed(
+    "export2-invoice",
+    "The example of #675. The gate admits two values, a reviewer confirms one, and one task stays "
+    "open. The é takes two bytes, so each byte offset after it is one more than the code point "
+    "offset.",
+    "Café invoice\nItems: 2\nBoxes: 3\nEstimate: up to 4\nWeight: about 8\n",
+    {"fields": {name: INTEGERS for name in ("items", "boxes", "estimate", "weight")}},
+    [
+        c("a", "items", 2, evidence=q("2")),
+        c("b", "boxes", 3, evidence=q("3")),
+        c("c", "estimate", 4, evidence=q("4"), expect=(REVIEW, ["QUALIFIED_VALUE"])),
+        c("d", "weight", 8, evidence=q("8"), expect=(REVIEW, ["QUALIFIED_VALUE"])),
+    ],
+    answers=[answer("ana", "estimate", "confirm")],
+    facts=[
+        fact("boxes", "3", "admitted", (30, 31),
+             (29, 30, "3", "Café invoice\nItems: 2\nBoxes: ", "\nEstimate: up to 4\nWeight: about")),
+        fact("estimate", "4", "confirmed", (48, 49),
+             (47, 48, "4", "ems: 2\nBoxes: 3\nEstimate: up to ", "\nWeight: about 8\n"),
+             answers=[("ana", "confirm")]),
+        fact("items", "2", "admitted", (21, 22),
+             (20, 21, "2", "Café invoice\nItems: ", "\nBoxes: 3\nEstimate: up to 4\nWeig")),
+    ],
+    open_=[("weight", "open", True)],
+)  # fmt: skip
+
+reviewed(
+    "export2-scripts",
+    "A Japanese document and a Greek reference. Each CJK character takes three bytes and each "
+    "Greek letter two, so the byte span and the code point span differ. A reviewer corrects a "
+    "rejected value and says that a required field is not in the document.",
+    "請求書\n品目: 2\n箱: 3\n",
+    {"fields": {"items": INTEGERS, "boxes": INTEGERS, "crates": INTEGERS,
+                "pallets": {"type": "integer", "required": True}}},
+    [
+        c("a", "items", 2, evidence=q("2")),
+        c("b", "boxes", 4, evidence=q("3"), expect=("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
+        c("c", "crates", 5, evidence=q("5", ref="stock", source="reference")),
+    ],
+    references=[{"id": "stock", "text": "Κιβώτια: 5"}],
+    coverage=[{"field": "pallets", "code": "REQUIRED_FIELD_MISSING"}],
+    review_policy={**REVIEW_POLICY, "rejected": True},
+    answers=[
+        answer("ana", "boxes", "correct",
+               candidate={"id": "ana-1", "field": "boxes", "value": 3, "proposer": "person:ana",
+                          "evidence": q("3")}),
+        answer("ana", "pallets", "not_in_document"),
+    ],
+    facts=[
+        fact("boxes", "3", "corrected", (25, 26), (13, 14, "3", "請求書\n品目: 2\n箱: ", "\n"),
+             answers=[("ana", "correct")]),
+        fact("crates", "5", "admitted", (16, 17), (9, 10, "5", "Κιβώτια: ", ""),
+             source="reference", ref="stock"),
+        fact("items", "2", "admitted", (18, 19), (8, 9, "2", "請求書\n品目: ", "\n箱: 3\n")),
+    ],
+    open_=[("pallets", "not_in_document", True)],
+)  # fmt: skip
+
+reviewed(
+    "export2-chosen-disputed",
+    "Two reviewers choose the same candidate of two, so the fact lists both answers in reviewer "
+    "order. On another field they choose two candidates, and with no lead the slot is disputed.",
+    "Total: 10\nTotal: 12\nFee: 3\nFee: 5\n",
+    {"fields": {"total": INTEGERS, "fee": INTEGERS}},
+    [
+        c("t1", "total", 10, evidence=q("10"), expect=(REVIEW, ["CONFLICTING_CANDIDATES"])),
+        c("t2", "total", 12, evidence=q("12"), expect=(REVIEW, ["CONFLICTING_CANDIDATES"])),
+        c("f1", "fee", 3, evidence=q("3"), expect=(REVIEW, ["CONFLICTING_CANDIDATES"])),
+        c("f2", "fee", 5, evidence=q("5"), expect=(REVIEW, ["CONFLICTING_CANDIDATES"])),
+    ],
+    answers=[
+        answer("bo", "total", "choose", choice="t2"),
+        answer("ana", "total", "choose", choice="t2"),
+        answer("ana", "fee", "choose", choice="f1"),
+        answer("bo", "fee", "choose", choice="f2"),
+    ],
+    facts=[
+        fact("total", "12", "chosen", (17, 19),
+             (17, 19, "12", "Total: 10\nTotal: ", "\nFee: 3\nFee: 5\n"),
+             answers=[("ana", "choose"), ("bo", "choose")]),
+    ],
+    open_=[("fee", "disputed", True)],
+)  # fmt: skip
+
+# ------------------------------------------------ the blind audit sample (SPEC §4.18, #643)
+# Each expectation is written by hand. A script with only hashlib and json gave the hash of
+# each document entry, and ``_checked_pick`` proves each written pick with those functions.
+AUDITS: list[dict[str, Any]] = []
+PROFILE_A = "sha256:" + "a" * 64
+PROFILE_B = "sha256:" + "b" * 64
+PROFILE_C = "sha256:" + "c" * 64
+AUDIT_SEED = "2026-11-audit"
+
+
+def doc_entry(document: str, profile: str, items: int) -> dict[str, Any]:
+    return {"entry": "document", "document": document, "profile": profile, "items": items}
+
+
+def rate_entry(profile: str, rate: str) -> dict[str, Any]:
+    return {"entry": "rate", "profile": profile, "rate": rate}
+
+
+def _line(obj: Any) -> str:
+    """The canonical JSON of an entry or a label with only ASCII strings and integers."""
+    return json.dumps(obj, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+
+
+def _blind_hash(seed: str, profile: str, document: str) -> str:
+    text = "groundgate-blind-audit/1:" + _line([seed, profile, document])
+    return hashlib.sha256(text.encode("utf-8")).digest()[:8].hex()
+
+
+def _checked_pick(seed: str, log: list[dict[str, Any]], hashes: dict[str, str],
+                  picked: list[tuple[str, str, str]]) -> None:  # fmt: skip
+    """Stop the build if a written hash or a written pick is not the pick of SPEC §4.18."""
+    rates: dict[str, str] = {}
+    counts: dict[str, int] = {}
+    found = []
+    for e in log:
+        profile = e["profile"]
+        if e["entry"] == "rate":
+            rates[profile] = e["rate"]
+            continue
+        if hashes[e["document"]] != _blind_hash(seed, profile, e["document"]):
+            raise SystemExit(f"the written hash of {e['document']} is wrong")
+        rate = rates.get(profile, "0.1")
+        digits = rate.partition(".")[2]
+        by_rate = int(hashes[e["document"]], 16) * 10 ** len(digits) < int(digits) * 2**64
+        if counts.get(profile, 0) < 30 or by_rate:
+            reason = "minimum" if counts.get(profile, 0) < 30 else "rate"
+            counts[profile] = counts.get(profile, 0) + e["items"]
+            found.append((e["document"], rate, reason))
+    if found != picked:
+        raise SystemExit(f"the written pick is wrong: {found}")
+
+
+def audit_pick(name: str, description: str, seed: str, log: list[dict[str, Any]],
+               hashes: dict[str, str], picked: list[tuple[str, str, str]]) -> None:  # fmt: skip
+    """``hashes`` gives the first 8 bytes of the hash of each document entry, in hex.
+    ``picked`` lists (document, rate, reason) of each picked document, in log order."""
+    _checked_pick(seed, log, hashes, picked)
+    profiles = {e["document"]: e["profile"] for e in log if e["entry"] == "document"}
+    AUDITS.append({
+        "name": name, "kind": "pick", "description": description, "seed": seed,
+        "log": [_line(e) for e in log],
+        "expected": {
+            "hashes": [{"document": d, "first_8_bytes": h} for d, h in hashes.items()],
+            "pick": [{"document": d, "profile": profiles[d], "rate": r, "reason": why}
+                     for d, r, why in picked],
+        },
+    })  # fmt: skip
+
+
+audit_pick(
+    "audit-pick-01-rates",
+    "Profile a: the first four documents are picked until 30 items are picked. Then a document "
+    "is picked only when its hash is below the rate: 0.1 at first, 0.02 after the first rate "
+    "entry, and 0.1 again after the second. Profile b is a new version, so its first document "
+    "is picked for the minimum. A rate entry before the first document of profile c sets its "
+    "rate, and the minimum still picks the document.",
+    AUDIT_SEED,
+    [
+        doc_entry("inv-0001", PROFILE_A, 12),
+        doc_entry("inv-0002", PROFILE_A, 12),
+        doc_entry("inv-0003", PROFILE_A, 0),
+        doc_entry("inv-0004", PROFILE_A, 10),
+        doc_entry("inv-0005", PROFILE_A, 5),
+        doc_entry("inv-0012", PROFILE_A, 5),
+        doc_entry("inv-0019", PROFILE_A, 5),
+        rate_entry(PROFILE_A, "0.02"),
+        doc_entry("inv-0023", PROFILE_A, 5),
+        doc_entry("inv-0084", PROFILE_A, 5),
+        doc_entry("inv-0006", PROFILE_B, 40),
+        doc_entry("inv-0008", PROFILE_B, 3),
+        doc_entry("inv-0007", PROFILE_B, 3),
+        rate_entry(PROFILE_A, "0.1"),
+        doc_entry("inv-0035", PROFILE_A, 5),
+        doc_entry("inv-0013", PROFILE_A, 5),
+        rate_entry(PROFILE_C, "0.02"),
+        doc_entry("inv-0164", PROFILE_C, 1),
+    ],
+    {
+        "inv-0001": "266c76e894eb083c",  # 0.1501 of 2^64
+        "inv-0002": "35987d8172244edf",  # 0.2094
+        "inv-0003": "9fdca5ddee61412e",  # 0.6245
+        "inv-0004": "e31f65d5537e98d1",  # 0.8872
+        "inv-0005": "fff3cc9ba04ceffa",  # 0.9998
+        "inv-0012": "0a250b141a7bd71e",  # 0.0396
+        "inv-0019": "17c2b5b34477612a",  # 0.0928
+        "inv-0023": "0c08c4da0796730c",  # 0.0470
+        "inv-0084": "02c0c17f92769d22",  # 0.0108
+        "inv-0006": "418a9777f6321f4e",  # 0.2560, profile b
+        "inv-0008": "156b9cf9956bd4af",  # 0.0837, profile b
+        "inv-0007": "f0ae00028ffcff99",  # 0.9402, profile b
+        "inv-0035": "0cd9a64ef9924add",  # 0.0502
+        "inv-0013": "c92418aa0e4b4fff",  # 0.7857
+        "inv-0164": "3a6b05d7f0eed94b",  # 0.2282, profile c
+    },
+    [
+        ("inv-0001", "0.1", "minimum"),
+        ("inv-0002", "0.1", "minimum"),
+        ("inv-0003", "0.1", "minimum"),
+        ("inv-0004", "0.1", "minimum"),
+        ("inv-0012", "0.1", "rate"),
+        ("inv-0019", "0.1", "rate"),
+        ("inv-0084", "0.02", "rate"),
+        ("inv-0006", "0.1", "minimum"),
+        ("inv-0008", "0.1", "rate"),
+        ("inv-0035", "0.1", "rate"),
+        ("inv-0164", "0.02", "minimum"),
+    ],
+)
+audit_pick("audit-pick-02-empty", "A log with no entry gives an empty pick.", "", [], {}, [])
+
+
+def audit_bad_log(name: str, description: str, lines: list[str]) -> None:
+    AUDITS.append({"name": f"audit-log-bad-{name}", "kind": "log", "description": description,
+                   "log": lines, "expected": {"error": True}})  # fmt: skip
+
+
+GOOD_ENTRY = _line(doc_entry("inv-0001", PROFILE_A, 4))
+audit_bad_log("spaces", "A line with a space after a comma is not canonical JSON.",
+              [GOOD_ENTRY.replace(",", ", ")])  # fmt: skip
+audit_bad_log("member-order", "A line with its members in another order is not canonical JSON.",
+              ['{"entry":"rate","rate":"0.02","profile":"' + PROFILE_A + '"}'])  # fmt: skip
+audit_bad_log("array", "An entry that is not an object.", ['["document","inv-0001"]'])
+audit_bad_log("kind", "An entry kind other than document and rate.",
+              [_line({"entry": "label", "document": "inv-0001", "profile": PROFILE_A,
+                      "items": 4})])  # fmt: skip
+audit_bad_log("extra-member", "A document entry with a member that the format does not list.",
+              [_line({**doc_entry("inv-0001", PROFILE_A, 4), "value": "90"})])  # fmt: skip
+audit_bad_log("no-items", "A document entry with no items.",
+              [_line({"entry": "document", "document": "inv-0001", "profile": PROFILE_A})])  # fmt: skip
+audit_bad_log("negative-items", "A count of items below 0.",
+              [_line(doc_entry("inv-0001", PROFILE_A, -1))])  # fmt: skip
+audit_bad_log("boolean-items", "A count of items that is a boolean.",
+              ['{"document":"inv-0001","entry":"document","items":true,"profile":"'
+               + PROFILE_A + '"}'])  # fmt: skip
+audit_bad_log("name", "A document name with a path.",
+              [_line(doc_entry("../inv-0001", PROFILE_A, 4))])  # fmt: skip
+audit_bad_log("digest", "A profile digest with capital hex digits.",
+              [_line(doc_entry("inv-0001", "sha256:" + "A" * 64, 4))])  # fmt: skip
+audit_bad_log("rate", "A rate other than 0.1 and 0.02.", [_line(rate_entry(PROFILE_A, "0.05"))])
+audit_bad_log("rate-number", "A rate that is a number.",
+              ['{"entry":"rate","profile":"' + PROFILE_A + '","rate":0.02}'])  # fmt: skip
+audit_bad_log("two-entries", "Two document entries for one name, also with two profiles.",
+              [GOOD_ENTRY, _line(doc_entry("inv-0001", PROFILE_B, 4))])  # fmt: skip
+
+AUDITS.append({
+    "name": "audit-tasks-01-fields",
+    "kind": "tasks",
+    "description": "One task for each field and each key, in code point order, and none for a "
+    "member field of a record. A task gives the document and the field only. The runner adds "
+    "the format member and the digest of the profile.",
+    "profile": {
+        "groundgate_profile": 1, "id": "invoice-test", "version": "1.0.0",
+        "schema": {"fields": {
+            "total": {"type": "number"},
+            "rate": {"type": "number", "keys": ["standard", "express"]},
+            "due": {"type": "date", "formats": ["YYYY-MM-DD"]},
+            "lines": {"type": "record", "members": {"code": {"type": "string"}}},
+        }},
+    },
+    "document": "inv-0007",
+    "expected": {"tasks": [
+        {"document": "inv-0007", "field": "due", "key": None},
+        {"document": "inv-0007", "field": "rate", "key": "express"},
+        {"document": "inv-0007", "field": "rate", "key": "standard"},
+        {"document": "inv-0007", "field": "total", "key": None},
+    ]},
+})  # fmt: skip
+
+
+def audit_label(**members: Any) -> dict[str, Any]:
+    return {"groundgate_audit_label": 1, "document": "inv-0007", "profile": PROFILE_A,
+            "field": "total", "key": None, "value": "90", "labeler": "ana",
+            "date": "2026-11-15", **members}  # fmt: skip
+
+
+def without(obj: dict[str, Any], member: str) -> dict[str, Any]:
+    return {k: v for k, v in obj.items() if k != member}
+
+
+for label_name, label_text, label, label_ok in (
+    ("01-value", "A label with a value.", audit_label(), True),
+    ("02-no-value", "Null says that the document has no value for the field.",
+     audit_label(value=None), True),
+    ("03-key", "A label of one key of a field with keys.",
+     audit_label(field="rate", key="express", value="12.5"), True),
+    ("bad-review-answer", "An answer of the review step is not an audit label.",
+     {"format": "answer@1", "task": PROFILE_B, "reviewer": "ana", "verdict": "confirm",
+      "decision": None, "candidate": None, "codes_kept": [], "statements": None, "nodes": None,
+      "reason_seen": False, "keys": 1, "ms": 1000, "time": "2026-11-15T10:00:00Z"}, False),
+    ("bad-verdict", "A label with a verdict about a proposed value has a member that the format "
+     "does not list.", audit_label(verdict="confirm"), False),
+    ("bad-proposed", "A label that holds the proposed value has a member that the format does "
+     "not list.", audit_label(proposed="90"), False),
+    ("bad-approver", "The decision of an approver is not an audit label.",
+     {"document": "inv-0007", "field": "total", "decision": "approved", "approver": "bo"}, False),
+    ("bad-format", "A label format other than 1.", audit_label(groundgate_audit_label=2), False),
+    ("bad-no-labeler", "A label with no labeler.", without(audit_label(), "labeler"), False),
+    ("bad-blank-labeler", "A labeler name with only a space.", audit_label(labeler=" "), False),
+    ("bad-number", "A value that is a JSON number.", audit_label(value=90), False),
+    ("bad-date", "A date that is not a real day.", audit_label(date="2026-02-30"), False),
+    ("bad-digest", "A profile that is not a digest.", audit_label(profile="invoice-test"), False),
+):  # fmt: skip
+    AUDITS.append({"name": f"audit-label-{label_name}", "kind": "label",
+                   "description": label_text, "label": label,
+                   "expected": {"valid": label_ok}})  # fmt: skip
+
+
+def audit_rate(name: str, description: str, routes: list[tuple[int, int, str]], covered: int,
+               rate: str) -> None:  # fmt: skip
+    """``routes`` lists (admitted, unscored, status) of each route of the measure: the admitted
+    values with a label, the admitted values with no label, and the status. ``covered`` is the
+    count of the admitted values that the audit labels cover."""
+    AUDITS.append({
+        "name": f"audit-rate-{name}", "kind": "rate", "description": description,
+        "routes": [{"admitted": a, "unscored": u, "status": st} for a, u, st in routes],
+        "covered": covered, "expected": {"rate": rate},
+    })  # fmt: skip
+
+
+audit_rate("01-low", "Each route with an admitted value is measured, and the audit labels cover "
+           "30 admitted values.", [(40, 0, "measured"), (12, 0, "measured")], 30, "0.02")  # fmt: skip
+audit_rate("02-few-items", "The audit labels cover 29 admitted values, so the rate stays 0.1.",
+           [(40, 0, "measured"), (12, 0, "measured")], 29, "0.1")  # fmt: skip
+audit_rate("03-bound-passed", "One route with an admitted value is a draft: its bound is not "
+           "below the target.", [(40, 0, "measured"), (12, 0, "draft")], 200, "0.1")  # fmt: skip
+audit_rate("04-empty-route", "A route with no admitted value is a draft and does not count.",
+           [(40, 0, "measured"), (0, 0, "draft")], 35, "0.02")  # fmt: skip
+audit_rate("05-no-value", "No route has an admitted value.", [(0, 0, "draft"), (0, 0, "draft")],
+           0, "0.1")  # fmt: skip
+audit_rate("06-no-label", "One route has 30 admitted values and no label for them. It is a "
+           "draft and it counts, so the rate stays 0.1.",
+           [(30, 0, "measured"), (0, 30, "draft")], 30, "0.1")  # fmt: skip
+audit_rate("07-label-missing", "One route has a label for 39 of its 40 admitted values, so it "
+           "is a draft.", [(39, 1, "draft"), (12, 0, "measured")], 51, "0.1")  # fmt: skip
+
 
 def main() -> None:
     out_dir = HERE / "vectors"
@@ -8274,10 +8664,48 @@ def main() -> None:
         (places_dir / f"{p['name']}.json").write_text(
             json.dumps(out, indent=1, ensure_ascii=False) + "\n"
         )
+    exp_dir = HERE / "exports"
+    exp_dir.mkdir(exist_ok=True)
+    for old in exp_dir.glob("*.json"):
+        old.unlink()
+    for e in EXPORTS:
+        doc = e["document"]
+        refs = {r["id"]: r["text"] for r in e["references"] or []}
+        answers = [
+            {**a, "candidate": {k: resolve(doc, val, refs) if k == "evidence" else val
+                                for k, val in a["candidate"].items()}}
+            if "candidate" in a else a
+            for a in e["answers"]
+        ]  # fmt: skip
+        out = {
+            "name": e["name"], "description": e["description"], "document": doc,
+            "schema": e["schema"], "policy": None,
+            **({"references": e["references"]} if e["references"] is not None else {}),
+            "candidates": [
+                {k: resolve(doc, val, refs) if k == "evidence" else val
+                 for k, val in item["candidate"].items()}
+                for item in e["candidates"]
+            ],
+            "review_policy": e["review_policy"], "answers": answers,
+            "expected": {"decisions": [item["expect"] for item in e["candidates"]],
+                         "coverage": e["coverage"], "facts": e["facts"], "open": e["open"]},
+        }  # fmt: skip
+        (exp_dir / f"{e['name']}.json").write_text(
+            json.dumps(out, indent=1, ensure_ascii=False) + "\n"
+        )
+    audit_dir = HERE / "audit"
+    audit_dir.mkdir(exist_ok=True)
+    for old in audit_dir.glob("*.json"):
+        old.unlink()
+    for a in AUDITS:
+        (audit_dir / f"{a['name']}.json").write_text(
+            json.dumps(a, indent=1, ensure_ascii=False) + "\n"
+        )
     print(
         f"wrote {len(VECTORS)} vectors, {len(INVALID)} invalid packets, "
-        f"{len(PROFILES)} profile vectors, {len(PINS)} pin vectors and "
-        f"{len(PLACES)} places vectors"
+        f"{len(PROFILES)} profile vectors, {len(PINS)} pin vectors, "
+        f"{len(PLACES)} places vectors, {len(EXPORTS)} export vectors and "
+        f"{len(AUDITS)} audit vectors"
     )
 
 

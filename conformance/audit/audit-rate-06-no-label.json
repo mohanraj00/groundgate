@@ -1,0 +1,21 @@
+{
+ "name": "audit-rate-06-no-label",
+ "kind": "rate",
+ "description": "One route has 30 admitted values and no label for them. It is a draft and it counts, so the rate stays 0.1.",
+ "routes": [
+  {
+   "admitted": 30,
+   "unscored": 0,
+   "status": "measured"
+  },
+  {
+   "admitted": 0,
+   "unscored": 30,
+   "status": "draft"
+  }
+ ],
+ "covered": 30,
+ "expected": {
+  "rate": "0.1"
+ }
+}

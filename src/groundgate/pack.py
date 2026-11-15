@@ -635,6 +635,28 @@ def built_in_pack(pid: str, version: str) -> dict[str, Any] | None:
     return copy.deepcopy(_LOADED[(pid, version)])  # a caller cannot change the cached pack
 
 
+def list_built_in_packs() -> list[dict[str, Any]]:
+    """List the built-in packs of SPEC §4.8, with their status and measured rows."""
+    entries = []
+    for pid, version in sorted(BUILT_IN_SHA256):
+        pack = built_in_pack(pid, version)
+        assert pack is not None
+        measured = [row for row in pack.get("status", []) if row["status"] == "measured"]
+        for row in measured:
+            if not {"documents", "bound", "results"} <= row.keys():
+                raise _fail(pack, "a measured row needs documents, bound and results (L8)")
+        entries.append(
+            {
+                "id": pid,
+                "version": version,
+                "type": pack["type"],
+                "status": "measured" if measured else "example",
+                "measured": sorted(measured, key=jcs),
+            }
+        )
+    return entries
+
+
 # ------------------------------------------------------- verify: the packs of a receipt
 
 _VERIFYING: ContextVar[bool] = ContextVar("groundgate_verifying", default=False)

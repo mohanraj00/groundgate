@@ -4,7 +4,8 @@ Status: released with groundgate 0.14.0, in the `v0.14.0` tag. groundgate 0.15.0
 §4.17 to this version: the profile, the value kinds `date`, `record` and `passage`, closed
 options and the packet members `pin`, `places`, `completeness` and `outline`. A packet that
 uses none of them is decided as in 0.14.0 and gets the same receipt, so the version string does
-not change. Version string: `groundgate/0.12`. Spec 0.11 was released with
+not change. groundgate 0.16.0 adds §5.2, the `facts@2` export of a reviewed packet, and §4.18,
+the blind audit sample. They change no decision and no receipt. Version string: `groundgate/0.12`. Spec 0.11 was released with
 groundgate 0.11.0 and is in the `v0.11.0` tag. Spec 0.10 is in the `v0.10.0` tag. Spec 0.9 is in the `v0.9.0` tag,
 spec 0.8 in the `v0.8.0` tag, spec 0.7 in the `v0.7.0` tag, spec 0.6 in the `v0.6.0` tag, spec
 0.5 in the `v0.5.0` tag, spec 0.4 in the `v0.4.0` tag, spec 0.3 in the `v0.3.0` tag, spec 0.2 in
@@ -1967,6 +1968,112 @@ source. A packet with no completeness, or with `complete`, gets no flag from thi
 passage field also has the member `passage_sha256`: the digest (§6) of kind `passage` over
 `{"text": <the text of the span>}` when the outcome is not `rejected`, else null.
 
+### 4.18 Blind audit sample
+
+A **blind audit** (#643) labels a random sample of the documents that the gate decided with a
+profile (§4.10). The labeler gets the document and the field, and never the proposed value. Only
+a blind audit label and a gold set label count for the bound of a route. A review answer and the
+decision of an outside approver are not labels, because that person saw the proposal. This
+section changes no decision.
+
+**The audit log** (format 1) is a UTF-8 text file with one canonical JSON object (§6) on each
+line, in the order in which the app wrote the lines. Each line ends with a line feed. An entry
+is one of two kinds:
+
+```json
+{"entry": "document", "document": "inv-0007", "profile": "sha256:...", "items": 4}
+{"entry": "rate", "profile": "sha256:...", "rate": "0.02"}
+```
+
+- A document entry says that the gate decided the document `document` with the profile whose
+  digest is `profile` (§4.10). `items` is the count of the admitted values of its receipt, an
+  integer in [0, 2^53 - 1]. Two admitted decisions with one field, one key and one value are one
+  admitted value. A document name starts with a letter or a digit, and then has only letters,
+  digits, `.`, `_` and `-`, at most 128 characters. A name has one document entry only.
+- A rate entry sets the audit rate of the profile digest `profile` from its line on. `rate` is
+  `"0.1"` or `"0.02"`.
+
+The log is invalid with a line that is not canonical JSON, an entry that is not an object, a
+member that its kind does not list, a member that is missing or has another form, or a second
+document entry for one name. A profile digest is `sha256:` and 64 lowercase hex digits. An
+invalid log gives no pick.
+
+**The pick.** The inputs are a seed, which is a string, and the audit log. For each profile
+digest the pick keeps a rate, at first `0.1`, and a count of picked items, at first 0. A new
+profile version has a new digest, so it starts again at `0.1` with no picked item. The pick
+reads the entries in log order:
+
+1. A rate entry sets the rate of its digest.
+2. A document entry is picked with the reason `minimum` when the count of picked items of its
+   digest is less than 30.
+3. If not, it is picked with the reason `rate` when H / 2^64 is less than the rate of its
+   digest. H is the first 8 bytes, as a big-endian integer, of SHA-256 over
+   `groundgate-blind-audit/1:` and the canonical JSON of `[seed, profile, document]`. The
+   comparison is in integers: with the rate n / 10^d, the entry is picked when
+   H · 10^d < n · 2^64.
+4. A picked document adds its `items` to the count of picked items of its digest.
+
+The pick is the list of the picked documents in log order, each as
+`{"document", "profile", "rate", "reason"}`, with the rate of the digest at that entry. It is a
+function of the seed and the log only, so a replay gives the same documents. A pick is a whole
+document: each field of it gets a task.
+
+**The audit task** of a picked document is one object for each field of the schema of the
+profile that is not a member field of a record (§4.12), and for a field with `keys`, one for
+each key. The tasks are in code point order of the field, then of the key.
+
+```json
+{"groundgate_audit_task": 1, "document": "inv-0007", "profile": "sha256:...",
+ "field": "total", "key": null}
+```
+
+A task has these members only. It gives no value, no unit, no evidence, no candidate and no
+outcome, and it is the same for a field with an admitted value and a field with none.
+
+**The audit label** (format 1) is the answer of one labeler to one task:
+
+```json
+{"groundgate_audit_label": 1, "document": "inv-0007", "profile": "sha256:...",
+ "field": "total", "key": null, "value": "90", "labeler": "ana", "date": "2026-11-15"}
+```
+
+`value` is the right value in the canonical form of the receipt `value`, as a string, or null
+when the document has no value for the field. `labeler` is an NFC string with a character that
+is not a space. `date` is a real day as `YYYY-MM-DD`. A record is invalid with a member that
+this format does not list, a member that is missing, or a member with another form. So a
+review answer or the decision of an approver is not an audit label. A label file has one
+canonical JSON label on each line, as the audit log has its entries. The last label of one
+document, field and key counts.
+
+A label counts for a measure of a profile only when its `profile` is the digest of that
+profile, and its document is in the pick of the seed and the log. A label with another profile
+digest does not count. A label of a document that is not in the pick, or whose digest is not
+the digest of the log entry of its document, stops the measure.
+
+A document text counts one time in a measure. A labelled audit document does not count when its
+text is the text of a gold set document of the measure, or the text of a labelled audit
+document that comes before it in the log.
+
+**The rate rule.** A measure of a profile version decides each labelled document with that
+profile version, as its digest names it in the log. It does not decide them with a profile that
+the measure changes, for example a draft with another clear threshold. The measure gives each
+route (§4.10) its count of admitted values with a label, its count of admitted values with no
+label, its bound and its status, from the gold set labels and the audit labels together. After
+the measure, the rate of the profile digest is `0.02` when all of these hold:
+
+- the audit labels of the measure cover 30 or more admitted values;
+- one or more routes have an admitted value;
+- each route with an admitted value has a label for each of its admitted values, and a bound
+  below the target. A route whose admitted values all have no label is such a route, and it
+  does not pass.
+
+If not, the rate is `0.1`. The app writes the result to the log as a rate entry. So the rate
+decreases to 2% while the bound of each route stays below the target, and it increases again to
+10% when a bound passes the target or the profile version changes.
+
+The vectors in `conformance/audit/` give the pick of a seed and a log, the tasks of a document,
+valid and invalid labels and logs, and the rate of a measure.
+
 ## 5. Receipt
 
 ```json
@@ -2178,6 +2285,76 @@ value and unit are those of the decision. Each shown member is present.
 - For `source: "external"` or `source: "knowledge"`, the fact was admitted by policy.
   `source_sha256`, `text_sha256`, `span` and `ref` are null. `url` is the external item's
   URL, or null for knowledge. Use the packet key to see the recorded evidence.
+
+### 5.2 Reviewed facts export
+
+`groundgate export --store DIR PACKET --resolution KEY` writes one `facts@2` JSON object (#675).
+`KEY` is the `resolution@1` store key that `groundgate review resolve` printed for the packet.
+`facts@2` gives each slot of the resolution: the value that the gate admitted or that a person
+gave in review, and each slot that has no value yet. It is for an app or an approver outside the
+store. `facts@1` (§5.1) does not change, and `export` without `--resolution` still writes it.
+
+The export decides the packet again as §5.1 does. Then it resolves the packet again from the
+stored review policy of the resolution and the answer log of each reviewer that the resolution
+names, up to the head entry that it names (docs/design/review.md §6). If the head entry is not
+in its log, or the new resolution is not equal to the stored one, the export exits 1 with no
+output. A resolution of another packet, or a missing store object, exits 2. `--pack-dir` does
+not apply with `--resolution`, and the two together exit 2.
+
+```json
+{"format": "facts@2", "packet_sha256": "sha256:...", "resolution_sha256": "sha256:...",
+ "policy_sha256": "sha256:...",
+ "facts": [{"field": "estimate", "key": null, "value": "4", "unit": null,
+            "status": "confirmed",
+            "review": {"task": "sha256:...", "policy": "sha256:...",
+                       "answers": [{"reviewer": "ana", "verdict": "confirm",
+                                    "entry_sha256": "sha256:..."}]},
+            "citation": {"source": "document", "ref": null, "url": null,
+                         "source_sha256": "sha256:...", "text_sha256": "sha256:...",
+                         "span": {"start": 48, "end": 49},
+                         "selector": {"start": 47, "end": 48, "exact": "4",
+                                      "prefix": "ems: 2\nBoxes: 3\nEstimate: up to ",
+                                      "suffix": "\nWeight: about 8\n"},
+                         "receipt_sha256": "sha256:..."}}],
+ "open": [{"field": "weight", "key": null, "status": "open", "task": "sha256:..."}]}
+```
+
+- `resolution_sha256` is `KEY`. `policy_sha256` is the `review-policy@1` key of the
+  resolution, the `policy` member of `resolution@1`.
+- `facts` has one fact for each slot of the resolution with the status `admitted`,
+  `confirmed`, `chosen` or `corrected`, in slot order. `open` has one entry for each slot with
+  the status `open`, `disputed`, `not_in_document` or `rejected`, in slot order. A slot of a
+  model text (docs/design/review.md §7) is in neither list.
+- A fact has the members of a `facts@1` fact (§5.1), in the same order, with `status` and
+  `review` after `unit` and `record` and `replaced` after `review`. The value, the unit and the
+  citation come from the decision that gives the value of the slot: the first decision that
+  passed for `admitted`, the chosen decision for `confirmed` and `chosen`, and the decision of
+  the person's candidate in the correction receipt for `corrected`. `citation.receipt_sha256`
+  is the digest of the receipt of that decision: the correction receipt for `corrected`.
+- `review` is null for `admitted`, also when an audit answer kept the value. For the other
+  statuses it is `{"task", "policy", "answers"}`. `task` is the `task@1` key of the slot.
+  `policy` is `policy_sha256`. `answers` lists each answer that settles the slot, in code point
+  order of the reviewer: the latest answer of each reviewer with the target that settles the
+  slot (docs/design/review.md §6.1). Each one is `{"reviewer", "verdict", "entry_sha256"}`, with
+  the reviewer name, the verdict and the `entry_sha256` of the answer record in its log.
+- An `open` entry is `{"field", "key", "status", "task"}`. `task` is the `task@1` key of the
+  slot, or null for a slot with no task, as a `rejected` slot under a policy with `rejected`
+  false.
+- `citation.selector` is after `span`. For `source: "document"` and `source: "reference"`,
+  with a span that is not null, it is `{"start", "end", "exact", "prefix", "suffix"}` over the
+  cited NFC text. `start` and `end` are the span in Unicode code points, zero-based and
+  half-open. `exact` is the text from `start` to `end`. `prefix` is the text of at most 32 code
+  points before `start`, and `suffix` the text of at most 32 code points after `end`. Each
+  other citation has `"selector": null`. `span` stays in UTF-8 bytes (§2.2).
+- `completeness` is an optional member after `open`, as in §5.1.
+
+In the example, the NFC text is `Café invoice\nItems: 2\nBoxes: 3\nEstimate: up to 4\nWeight:
+about 8\n`. The `é` takes two bytes, so the byte span 48 to 49 is the code point span 47 to 48.
+The prefix is cut to its last 32 code points.
+
+`groundgate/store/facts@2.schema.json` in the package is the JSON schema of `facts@2`, and
+`groundgate.store.export.facts_schema()` gives it. The vectors
+in `conformance/exports/` give the expected facts and open slots of reviewed packets.
 
 ## 6. Canonical JSON and digests
 

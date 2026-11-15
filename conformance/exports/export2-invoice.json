@@ -1,0 +1,187 @@
+{
+ "name": "export2-invoice",
+ "description": "The example of #675. The gate admits two values, a reviewer confirms one, and one task stays open. The é takes two bytes, so each byte offset after it is one more than the code point offset.",
+ "document": "Café invoice\nItems: 2\nBoxes: 3\nEstimate: up to 4\nWeight: about 8\n",
+ "schema": {
+  "fields": {
+   "items": {
+    "type": "integer"
+   },
+   "boxes": {
+    "type": "integer"
+   },
+   "estimate": {
+    "type": "integer"
+   },
+   "weight": {
+    "type": "integer"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "a",
+   "field": "items",
+   "value": 2,
+   "evidence": {
+    "start": 21,
+    "end": 22,
+    "text": "2"
+   }
+  },
+  {
+   "id": "b",
+   "field": "boxes",
+   "value": 3,
+   "evidence": {
+    "start": 30,
+    "end": 31,
+    "text": "3"
+   }
+  },
+  {
+   "id": "c",
+   "field": "estimate",
+   "value": 4,
+   "evidence": {
+    "start": 48,
+    "end": 49,
+    "text": "4"
+   }
+  },
+  {
+   "id": "d",
+   "field": "weight",
+   "value": 8,
+   "evidence": {
+    "start": 64,
+    "end": 65,
+    "text": "8"
+   }
+  }
+ ],
+ "review_policy": {
+  "format": "review-policy@1",
+  "audit": {
+   "rate": "0",
+   "seed": ""
+  },
+  "agree": 1,
+  "leads": [],
+  "rejected": false
+ },
+ "answers": [
+  {
+   "reviewer": "ana",
+   "slot": {
+    "field": "estimate",
+    "key": null
+   },
+   "verdict": "confirm"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "QUALIFIED_VALUE"
+    ]
+   }
+  ],
+  "coverage": [],
+  "facts": [
+   {
+    "field": "boxes",
+    "key": null,
+    "value": "3",
+    "unit": null,
+    "status": "admitted",
+    "answers": null,
+    "source": "document",
+    "ref": null,
+    "span": {
+     "start": 30,
+     "end": 31
+    },
+    "selector": {
+     "start": 29,
+     "end": 30,
+     "exact": "3",
+     "prefix": "Café invoice\nItems: 2\nBoxes: ",
+     "suffix": "\nEstimate: up to 4\nWeight: about"
+    }
+   },
+   {
+    "field": "estimate",
+    "key": null,
+    "value": "4",
+    "unit": null,
+    "status": "confirmed",
+    "answers": [
+     {
+      "reviewer": "ana",
+      "verdict": "confirm"
+     }
+    ],
+    "source": "document",
+    "ref": null,
+    "span": {
+     "start": 48,
+     "end": 49
+    },
+    "selector": {
+     "start": 47,
+     "end": 48,
+     "exact": "4",
+     "prefix": "ems: 2\nBoxes: 3\nEstimate: up to ",
+     "suffix": "\nWeight: about 8\n"
+    }
+   },
+   {
+    "field": "items",
+    "key": null,
+    "value": "2",
+    "unit": null,
+    "status": "admitted",
+    "answers": null,
+    "source": "document",
+    "ref": null,
+    "span": {
+     "start": 21,
+     "end": 22
+    },
+    "selector": {
+     "start": 20,
+     "end": 21,
+     "exact": "2",
+     "prefix": "Café invoice\nItems: ",
+     "suffix": "\nBoxes: 3\nEstimate: up to 4\nWeig"
+    }
+   }
+  ],
+  "open": [
+   {
+    "field": "weight",
+    "key": null,
+    "status": "open",
+    "task": true
+   }
+  ]
+ }
+}

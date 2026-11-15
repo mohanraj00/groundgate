@@ -1,0 +1,18 @@
+{
+ "name": "audit-label-bad-date",
+ "kind": "label",
+ "description": "A date that is not a real day.",
+ "label": {
+  "groundgate_audit_label": 1,
+  "document": "inv-0007",
+  "profile": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "field": "total",
+  "key": null,
+  "value": "90",
+  "labeler": "ana",
+  "date": "2026-02-30"
+ },
+ "expected": {
+  "valid": false
+ }
+}

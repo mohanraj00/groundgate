@@ -1,0 +1,11 @@
+{
+ "name": "audit-log-bad-negative-items",
+ "kind": "log",
+ "description": "A count of items below 0.",
+ "log": [
+  "{\"document\":\"inv-0001\",\"entry\":\"document\",\"items\":-1,\"profile\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}"
+ ],
+ "expected": {
+  "error": true
+ }
+}

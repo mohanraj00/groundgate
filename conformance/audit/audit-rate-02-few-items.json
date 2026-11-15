@@ -1,0 +1,21 @@
+{
+ "name": "audit-rate-02-few-items",
+ "kind": "rate",
+ "description": "The audit labels cover 29 admitted values, so the rate stays 0.1.",
+ "routes": [
+  {
+   "admitted": 40,
+   "unscored": 0,
+   "status": "measured"
+  },
+  {
+   "admitted": 12,
+   "unscored": 0,
+   "status": "measured"
+  }
+ ],
+ "covered": 29,
+ "expected": {
+  "rate": "0.1"
+ }
+}

@@ -1,0 +1,204 @@
+{
+ "name": "export2-scripts",
+ "description": "A Japanese document and a Greek reference. Each CJK character takes three bytes and each Greek letter two, so the byte span and the code point span differ. A reviewer corrects a rejected value and says that a required field is not in the document.",
+ "document": "請求書\n品目: 2\n箱: 3\n",
+ "schema": {
+  "fields": {
+   "items": {
+    "type": "integer"
+   },
+   "boxes": {
+    "type": "integer"
+   },
+   "crates": {
+    "type": "integer"
+   },
+   "pallets": {
+    "type": "integer",
+    "required": true
+   }
+  }
+ },
+ "policy": null,
+ "references": [
+  {
+   "id": "stock",
+   "text": "Κιβώτια: 5"
+  }
+ ],
+ "candidates": [
+  {
+   "id": "a",
+   "field": "items",
+   "value": 2,
+   "evidence": {
+    "start": 18,
+    "end": 19,
+    "text": "2"
+   }
+  },
+  {
+   "id": "b",
+   "field": "boxes",
+   "value": 4,
+   "evidence": {
+    "start": 25,
+    "end": 26,
+    "text": "3"
+   }
+  },
+  {
+   "id": "c",
+   "field": "crates",
+   "value": 5,
+   "evidence": {
+    "ref": "stock",
+    "source": "reference",
+    "start": 16,
+    "end": 17,
+    "text": "5"
+   }
+  }
+ ],
+ "review_policy": {
+  "format": "review-policy@1",
+  "audit": {
+   "rate": "0",
+   "seed": ""
+  },
+  "agree": 1,
+  "leads": [],
+  "rejected": true
+ },
+ "answers": [
+  {
+   "reviewer": "ana",
+   "slot": {
+    "field": "boxes",
+    "key": null
+   },
+   "verdict": "correct",
+   "candidate": {
+    "id": "ana-1",
+    "field": "boxes",
+    "value": 3,
+    "proposer": "person:ana",
+    "evidence": {
+     "start": 25,
+     "end": 26,
+     "text": "3"
+    }
+   }
+  },
+  {
+   "reviewer": "ana",
+   "slot": {
+    "field": "pallets",
+    "key": null
+   },
+   "verdict": "not_in_document"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": []
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "VALUE_NOT_IN_EVIDENCE"
+    ]
+   },
+   {
+    "outcome": "admitted",
+    "codes": []
+   }
+  ],
+  "coverage": [
+   {
+    "field": "pallets",
+    "code": "REQUIRED_FIELD_MISSING"
+   }
+  ],
+  "facts": [
+   {
+    "field": "boxes",
+    "key": null,
+    "value": "3",
+    "unit": null,
+    "status": "corrected",
+    "answers": [
+     {
+      "reviewer": "ana",
+      "verdict": "correct"
+     }
+    ],
+    "source": "document",
+    "ref": null,
+    "span": {
+     "start": 25,
+     "end": 26
+    },
+    "selector": {
+     "start": 13,
+     "end": 14,
+     "exact": "3",
+     "prefix": "請求書\n品目: 2\n箱: ",
+     "suffix": "\n"
+    }
+   },
+   {
+    "field": "crates",
+    "key": null,
+    "value": "5",
+    "unit": null,
+    "status": "admitted",
+    "answers": null,
+    "source": "reference",
+    "ref": "stock",
+    "span": {
+     "start": 16,
+     "end": 17
+    },
+    "selector": {
+     "start": 9,
+     "end": 10,
+     "exact": "5",
+     "prefix": "Κιβώτια: ",
+     "suffix": ""
+    }
+   },
+   {
+    "field": "items",
+    "key": null,
+    "value": "2",
+    "unit": null,
+    "status": "admitted",
+    "answers": null,
+    "source": "document",
+    "ref": null,
+    "span": {
+     "start": 18,
+     "end": 19
+    },
+    "selector": {
+     "start": 8,
+     "end": 9,
+     "exact": "2",
+     "prefix": "請求書\n品目: ",
+     "suffix": "\n箱: 3\n"
+    }
+   }
+  ],
+  "open": [
+   {
+    "field": "pallets",
+    "key": null,
+    "status": "not_in_document",
+    "task": true
+   }
+  ]
+ }
+}

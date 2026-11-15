@@ -1,0 +1,21 @@
+{
+ "name": "audit-rate-03-bound-passed",
+ "kind": "rate",
+ "description": "One route with an admitted value is a draft: its bound is not below the target.",
+ "routes": [
+  {
+   "admitted": 40,
+   "unscored": 0,
+   "status": "measured"
+  },
+  {
+   "admitted": 12,
+   "unscored": 0,
+   "status": "draft"
+  }
+ ],
+ "covered": 200,
+ "expected": {
+  "rate": "0.1"
+ }
+}

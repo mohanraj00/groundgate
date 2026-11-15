@@ -1,11 +1,12 @@
 """groundgate calibrate measure: the field measure of a profile on a gold set of the user (#640).
 
     groundgate calibrate measure --profile P --gold G --split S --out DIR \
-        [--target 0.05] [--date YYYY-MM-DD]
+        [--target 0.05] [--date YYYY-MM-DD] [--audit A] [--audit-since YYYY-MM-DD]
 
-The measure reads only the profile P, the gold set G and the split file S. It calls no model:
-the candidates and the judgments of a run are recorded files in G. The gate decides each
-document with the profile, and the measure compares each admitted value with its label.
+The measure reads only the profile P, the gold set G, the split file S and the audit set A. It
+calls no model: the candidates and the judgments of a run are recorded files in G. The gate
+decides each document with the profile, and the measure compares each admitted value with its
+label.
 
 The gold set (format 1) is a directory:
 
@@ -21,8 +22,12 @@ not scored. A route or a threshold with an admitted value that has no label is n
 
 The split file (format 1) is {"groundgate_split": 1, "documents": {doc: part}}, where a part is
 "calibration" or "test". The calibration part picks the judge threshold, and the test part gives
-the numbers of the report. DIR gets report.json, REPORT.md and profile.json, the draft profile
-change. The command never writes the input profile.
+the numbers of the report. With --audit A, the blind audit labels of the audit set A (SPEC
+§4.18, ``groundgate.calibrate.audit``) count with the test part. The audit rate and the alerts
+come from the decisions of P as it is, not from those of the draft. No other label has an input:
+a review answer and the decision of an approver never count for a bound. DIR gets report.json,
+REPORT.md and profile.json, the draft profile change. The command never writes the input
+profile.
 """
 
 from __future__ import annotations
@@ -329,6 +334,21 @@ def score(profile: Mapping[str, Any], gold: Gold, docs: Sequence[str]) -> dict[s
     return out
 
 
+def _pooled(a: Mapping[str, FieldScore], b: Mapping[str, FieldScore]) -> dict[str, FieldScore]:
+    """The sum of two scores of one profile: the test part and the audit documents."""
+    out = {}
+    for name in a:
+        x, y = a[name], b[name]
+        out[name] = FieldScore(
+            x.scored + y.scored, x.with_value + y.with_value, x.review + y.review,
+            x.missed + y.missed,
+            {r: Route(x.routes[r].admitted + y.routes[r].admitted,
+                      x.routes[r].errors + y.routes[r].errors,
+                      x.routes[r].unscored + y.routes[r].unscored) for r in ROUTES},
+        )  # fmt: skip
+    return out
+
+
 # ----------------------------------------------------------------------- operating point
 
 
@@ -410,8 +430,11 @@ def measure(
     split_sha256: str,
     target: Decimal,
     date: str,
+    audit: Any = None,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
-    """The report and the draft profile change. ``profile`` is not changed."""
+    """The report and the draft profile change. ``profile`` is not changed. ``audit`` is the
+    ``AuditSet`` of the profile, or None: its labelled documents count with the test part. The
+    ``audit`` member of the report has the numbers of ``profile``, not those of the draft."""
     checked = check_profile(profile)
     calibration = sorted(d for d, p in parts.items() if p == "calibration")
     test = sorted(d for d, p in parts.items() if p == "test")
@@ -426,6 +449,24 @@ def measure(
             "tried": tried,
         }
     scores = score(measured_profile, gold, test)
+    documents = len(test)
+    if audit is not None:
+        # a document text counts one time: not a text of the gold set, and not a text of an
+        # audit document that comes before in the log (SPEC §4.18)
+        seen = {gold.docs[d].text for d in (*calibration, *test)}
+        names = []
+        for name, doc in audit.gold.docs.items():
+            if doc.text not in seen:
+                seen.add(doc.text)
+                names.append(name)
+        # the monitor of the profile version of the log: its decisions, not those of the draft
+        logged_audit = draft_audit = score(measured_profile, audit.gold, names)
+        logged = _pooled(scores, draft_audit)
+        if measured_profile != profile:  # the draft has another clear threshold
+            logged_audit = score(profile, audit.gold, names)
+            logged = _pooled(score(profile, gold, test), logged_audit)
+        scores = _pooled(scores, draft_audit)
+        documents += len(names)
     fields: dict[str, Any] = {}
     rows: list[dict[str, Any]] = []
     for name, s in scores.items():
@@ -443,7 +484,7 @@ def measure(
             if sm["admitted"]:
                 rows.append(
                     {"field": name, "route": r, "status": sm["status"], "date": date,
-                     "documents": len(test), "bound": sm["bound"]}
+                     "documents": documents, "bound": sm["bound"]}
                 )  # fmt: skip
     draft = copy.deepcopy(dict(measured_profile))
     draft["version"] = _next_version(checked.version)
@@ -466,7 +507,62 @@ def measure(
         "fields": fields,
         "draft_profile": draft_checked.entry(),
     }
+    if audit is not None:
+        from .audit import rate
+
+        summaries = [(n, r, s.routes[r].summary(target)) for n, s in logged.items() for r in ROUTES]
+        # the admitted values of the profile version that an audit label covers
+        covered = sum(r.admitted for s in logged_audit.values() for r in s.routes.values())
+        report["audit"] = {
+            "audit_sha256": audit.sha256,
+            "seed": audit.seed,
+            "since": audit.since,
+            "picked": audit.picked,
+            "documents": len(audit.gold.docs),
+            "duplicates": len(audit.gold.docs) - len(names),
+            "admitted": covered,
+            "skipped": audit.skipped,
+            "routes": [
+                {"field": n, "route": r, **sm}
+                for n, r, sm in summaries
+                if sm["admitted"] + sm["unscored"] > 0
+            ],
+            "rate": rate([sm for _, _, sm in summaries], covered),
+            "alerts": [
+                {"field": n, "route": r, "bound": sm["bound"]}
+                for n, r, sm in summaries
+                if sm["admitted"] > 0 and Decimal(sm["bound"]) >= target
+            ],
+        }
     return report, draft
+
+
+def _audit_lines(report: Mapping[str, Any]) -> list[str]:
+    a = report.get("audit")
+    if a is None:
+        return []
+    lines = [
+        f"- Blind audit: `{a['audit_sha256']}`, {a['documents']} labelled documents of "
+        f"{a['picked']} picked, {a['admitted']} admitted values. The numbers count them with "
+        f"the test part. Next audit rate: {a['rate']}."
+    ]
+    if a["duplicates"]:
+        lines.append(
+            f"- {a['duplicates']} labelled audit documents do not count: each has the text of "
+            "a gold set document or of an audit document before it in the log."
+        )
+    lines += [
+        f"- The profile version of the log, {_cell(x['field'])} {x['route']}: "
+        f"{x['admitted']} admitted, {x['errors']} errors, {x['unscored']} with no label, "
+        f"bound {x['bound']} ({x['status']})."
+        for x in a["routes"]
+    ]
+    lines += [
+        f"- Alert: the bound of {_cell(x['field'])} on the route {x['route']} is "
+        f"{x['bound']}, not below the target."
+        for x in a["alerts"]
+    ]
+    return lines
 
 
 def _cell(x: object) -> str:
@@ -488,6 +584,7 @@ def markdown(report: Mapping[str, Any]) -> str:
         f"- Target bound: {report['target']}. Date: {report['date']}. Spec {report['spec']}.",
         f"- Operating point: clear.KEY_NOT_AT_VALUE = {_cell(point['KEY_NOT_AT_VALUE'])}",
         f"- Draft profile: {_cell(d['version'])} `{d['sha256']}`",
+        *_audit_lines(report),
         "",
         "The numbers are on the test part. The bound is the one-sided 95% upper bound of the "
         "admitted error rate.",
@@ -511,8 +608,22 @@ def _dump(obj: Any) -> str:
     return json.dumps(obj, indent=1, sort_keys=True, ensure_ascii=False) + "\n"
 
 
+def _real_day(day: str) -> bool:
+    try:
+        return bool(_DATE.match(day)) and datetime.date.fromisoformat(day).isoformat() == day
+    except ValueError:
+        return False
+
+
 def run(
-    profile_path: Path, gold_path: Path, split_path: Path, out: Path, target: str, date: str
+    profile_path: Path,
+    gold_path: Path,
+    split_path: Path,
+    out: Path,
+    target: str,
+    date: str,
+    audit_path: Path | None = None,
+    since: str | None = None,
 ) -> dict[str, Any]:
     """Measure, write DIR/report.json, DIR/REPORT.md and DIR/profile.json, and give the report."""
     try:
@@ -521,12 +632,10 @@ def run(
         raise MeasureError("--target must be a decimal number") from None
     if not (t.is_finite() and 0 < t <= 1):
         raise MeasureError("--target must be in (0, 1]")
-    try:
-        ok = bool(_DATE.match(date)) and datetime.date.fromisoformat(date).isoformat() == date
-    except ValueError:
-        ok = False
-    if not ok:
+    if not _real_day(date):
         raise MeasureError("--date must be a real day as YYYY-MM-DD")
+    if since is not None and (audit_path is None or not _real_day(since)):
+        raise MeasureError("--audit-since must be a real day as YYYY-MM-DD, with --audit")
     names = ("report.json", "REPORT.md", "profile.json")
     if out.exists() and (out.is_symlink() or not out.is_dir()):
         raise MeasureError(f"{out} is not a directory")
@@ -538,7 +647,12 @@ def run(
         raise MeasureError(str(e)) from None
     gold = read_gold(gold_path)
     parts, split_sha = read_split(split_path, gold)
-    report, draft = measure(profile, gold, parts, split_sha, t, date)
+    audit = None
+    if audit_path is not None:
+        from .audit import read_audit
+
+        audit = read_audit(audit_path, check_profile(profile).sha256, since)
+    report, draft = measure(profile, gold, parts, split_sha, t, date, audit)
     out.mkdir(parents=True, exist_ok=True)
     for n, body in zip(names, (_dump(report), markdown(report), _dump(draft)), strict=True):
         with open(out / n, "x", encoding="utf-8") as f:  # "x": never write over a file
@@ -554,15 +668,22 @@ def add_parser(sub: Any) -> None:
     p.add_argument("--out", type=Path, required=True, help="a new directory for the output")
     p.add_argument("--target", default="0.05", help="the bound that a measured route is below")
     p.add_argument("--date", default=None, help="the day of the measure, YYYY-MM-DD")
+    p.add_argument("--audit", type=Path, help="an audit set: count its blind audit labels")
+    p.add_argument("--audit-since", help="count the audit labels from this day on, YYYY-MM-DD")
 
 
 def main(args: argparse.Namespace) -> None:
     date = args.date or datetime.date.today().isoformat()
     try:
-        report = run(args.profile, args.gold, args.split, args.out, args.target, date)
+        report = run(
+            args.profile, args.gold, args.split, args.out, args.target, date,
+            args.audit, args.audit_since,
+        )  # fmt: skip
     except (MeasureError, OSError) as e:
         raise SystemExit(f"calibrate measure: {e}") from None
     n = sum(
         sm["status"] == "measured" for f in report["fields"].values() for sm in f["routes"].values()
     )
     print(f"wrote {args.out}/report.json, REPORT.md and profile.json: {n} measured routes")
+    for x in report.get("audit", {}).get("alerts", []):
+        print(f"alert: the bound of {x['field']!r} on the route {x['route']} is {x['bound']}")

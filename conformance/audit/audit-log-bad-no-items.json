@@ -1,0 +1,11 @@
+{
+ "name": "audit-log-bad-no-items",
+ "kind": "log",
+ "description": "A document entry with no items.",
+ "log": [
+  "{\"document\":\"inv-0001\",\"entry\":\"document\",\"profile\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}"
+ ],
+ "expected": {
+  "error": true
+ }
+}

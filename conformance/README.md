@@ -37,6 +37,27 @@ other inputs. Each expected decision has its `locator`, and `expected.places_sha
 digest of the places, both written by hand in `build.py`. `expected.error` true marks an
 invalid packet.
 
+Files in `exports/` are export vectors (SPEC §5.2). Each one has a packet, a `review_policy`
+and the `answers` of the reviewers. An answer names its slot, its reviewer and its verdict, with
+`choice`, the id of the chosen candidate, or `candidate`, the candidate of a correction.
+`expected.facts` and `expected.open` give the facts and the open slots of the `facts@2` export,
+in order, written by hand in `build.py`. A fact gives its `answers` as the reviewer and the
+verdict of each one, and its `selector` in code points. A runner adds the keys and the digests
+from its own store. `task` in an open slot is true when the slot has a task.
+
+Files in `audit/` are blind audit vectors (SPEC §4.18). `kind` names what a vector checks:
+
+- `pick`: a `seed` and the lines of a `log`. `expected.pick` is the pick, and
+  `expected.hashes` gives the first 8 bytes of the hash of each document entry.
+- `log`: the lines of an invalid log, with `expected.error` true.
+- `tasks`: a `profile` and a `document`. `expected.tasks` lists the document, the field and the
+  key of each task. A runner adds the format member and the digest of the profile.
+- `label`: one `label`, with `expected.valid`.
+- `rate`: the routes of a measure and `covered`, the count of the admitted values that the audit
+  labels cover. Each route has `admitted`, the count of its admitted values with a label,
+  `unscored`, the count of its admitted values with no label, and its `status`. `expected.rate`
+  is the next rate.
+
 Files in `invalid/` are invalid packets. An implementation must refuse them (SPEC §2) and emit no
 receipt.
 

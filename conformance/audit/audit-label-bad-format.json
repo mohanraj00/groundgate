@@ -1,0 +1,18 @@
+{
+ "name": "audit-label-bad-format",
+ "kind": "label",
+ "description": "A label format other than 1.",
+ "label": {
+  "groundgate_audit_label": 2,
+  "document": "inv-0007",
+  "profile": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "field": "total",
+  "key": null,
+  "value": "90",
+  "labeler": "ana",
+  "date": "2026-11-15"
+ },
+ "expected": {
+  "valid": false
+ }
+}

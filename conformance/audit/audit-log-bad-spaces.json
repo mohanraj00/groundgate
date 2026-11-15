@@ -1,0 +1,11 @@
+{
+ "name": "audit-log-bad-spaces",
+ "kind": "log",
+ "description": "A line with a space after a comma is not canonical JSON.",
+ "log": [
+  "{\"document\":\"inv-0001\", \"entry\":\"document\", \"items\":4, \"profile\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}"
+ ],
+ "expected": {
+  "error": true
+ }
+}

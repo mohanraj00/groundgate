@@ -1,0 +1,158 @@
+{
+ "name": "audit-pick-01-rates",
+ "kind": "pick",
+ "description": "Profile a: the first four documents are picked until 30 items are picked. Then a document is picked only when its hash is below the rate: 0.1 at first, 0.02 after the first rate entry, and 0.1 again after the second. Profile b is a new version, so its first document is picked for the minimum. A rate entry before the first document of profile c sets its rate, and the minimum still picks the document.",
+ "seed": "2026-11-audit",
+ "log": [
+  "{\"document\":\"inv-0001\",\"entry\":\"document\",\"items\":12,\"profile\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}",
+  "{\"document\":\"inv-0002\",\"entry\":\"document\",\"items\":12,\"profile\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}",
+  "{\"document\":\"inv-0003\",\"entry\":\"document\",\"items\":0,\"profile\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}",
+  "{\"document\":\"inv-0004\",\"entry\":\"document\",\"items\":10,\"profile\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}",
+  "{\"document\":\"inv-0005\",\"entry\":\"document\",\"items\":5,\"profile\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}",
+  "{\"document\":\"inv-0012\",\"entry\":\"document\",\"items\":5,\"profile\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}",
+  "{\"document\":\"inv-0019\",\"entry\":\"document\",\"items\":5,\"profile\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}",
+  "{\"entry\":\"rate\",\"profile\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"rate\":\"0.02\"}",
+  "{\"document\":\"inv-0023\",\"entry\":\"document\",\"items\":5,\"profile\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}",
+  "{\"document\":\"inv-0084\",\"entry\":\"document\",\"items\":5,\"profile\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}",
+  "{\"document\":\"inv-0006\",\"entry\":\"document\",\"items\":40,\"profile\":\"sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\"}",
+  "{\"document\":\"inv-0008\",\"entry\":\"document\",\"items\":3,\"profile\":\"sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\"}",
+  "{\"document\":\"inv-0007\",\"entry\":\"document\",\"items\":3,\"profile\":\"sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\"}",
+  "{\"entry\":\"rate\",\"profile\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"rate\":\"0.1\"}",
+  "{\"document\":\"inv-0035\",\"entry\":\"document\",\"items\":5,\"profile\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}",
+  "{\"document\":\"inv-0013\",\"entry\":\"document\",\"items\":5,\"profile\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}",
+  "{\"entry\":\"rate\",\"profile\":\"sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc\",\"rate\":\"0.02\"}",
+  "{\"document\":\"inv-0164\",\"entry\":\"document\",\"items\":1,\"profile\":\"sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc\"}"
+ ],
+ "expected": {
+  "hashes": [
+   {
+    "document": "inv-0001",
+    "first_8_bytes": "266c76e894eb083c"
+   },
+   {
+    "document": "inv-0002",
+    "first_8_bytes": "35987d8172244edf"
+   },
+   {
+    "document": "inv-0003",
+    "first_8_bytes": "9fdca5ddee61412e"
+   },
+   {
+    "document": "inv-0004",
+    "first_8_bytes": "e31f65d5537e98d1"
+   },
+   {
+    "document": "inv-0005",
+    "first_8_bytes": "fff3cc9ba04ceffa"
+   },
+   {
+    "document": "inv-0012",
+    "first_8_bytes": "0a250b141a7bd71e"
+   },
+   {
+    "document": "inv-0019",
+    "first_8_bytes": "17c2b5b34477612a"
+   },
+   {
+    "document": "inv-0023",
+    "first_8_bytes": "0c08c4da0796730c"
+   },
+   {
+    "document": "inv-0084",
+    "first_8_bytes": "02c0c17f92769d22"
+   },
+   {
+    "document": "inv-0006",
+    "first_8_bytes": "418a9777f6321f4e"
+   },
+   {
+    "document": "inv-0008",
+    "first_8_bytes": "156b9cf9956bd4af"
+   },
+   {
+    "document": "inv-0007",
+    "first_8_bytes": "f0ae00028ffcff99"
+   },
+   {
+    "document": "inv-0035",
+    "first_8_bytes": "0cd9a64ef9924add"
+   },
+   {
+    "document": "inv-0013",
+    "first_8_bytes": "c92418aa0e4b4fff"
+   },
+   {
+    "document": "inv-0164",
+    "first_8_bytes": "3a6b05d7f0eed94b"
+   }
+  ],
+  "pick": [
+   {
+    "document": "inv-0001",
+    "profile": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "rate": "0.1",
+    "reason": "minimum"
+   },
+   {
+    "document": "inv-0002",
+    "profile": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "rate": "0.1",
+    "reason": "minimum"
+   },
+   {
+    "document": "inv-0003",
+    "profile": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "rate": "0.1",
+    "reason": "minimum"
+   },
+   {
+    "document": "inv-0004",
+    "profile": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "rate": "0.1",
+    "reason": "minimum"
+   },
+   {
+    "document": "inv-0012",
+    "profile": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "rate": "0.1",
+    "reason": "rate"
+   },
+   {
+    "document": "inv-0019",
+    "profile": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "rate": "0.1",
+    "reason": "rate"
+   },
+   {
+    "document": "inv-0084",
+    "profile": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "rate": "0.02",
+    "reason": "rate"
+   },
+   {
+    "document": "inv-0006",
+    "profile": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "rate": "0.1",
+    "reason": "minimum"
+   },
+   {
+    "document": "inv-0008",
+    "profile": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "rate": "0.1",
+    "reason": "rate"
+   },
+   {
+    "document": "inv-0035",
+    "profile": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "rate": "0.1",
+    "reason": "rate"
+   },
+   {
+    "document": "inv-0164",
+    "profile": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "rate": "0.02",
+    "reason": "minimum"
+   }
+  ]
+ }
+}
