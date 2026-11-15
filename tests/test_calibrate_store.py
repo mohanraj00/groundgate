@@ -564,8 +564,9 @@ def test_one_folder_never_mixes_label_sources(
     assert not list(work.glob("*answers-fake2*"))
 
 
+@pytest.mark.parametrize("finish_during_check", [False, True])
 def test_ask_freezes_the_labels_before_its_snapshot(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, finish_during_check: bool
 ) -> None:
     import threading
 
@@ -597,25 +598,48 @@ def test_ask_freezes_the_labels_before_its_snapshot(
     assert not partial.exists()
     with FolderStore(store) as s:
         Review(s, "ana").answer(answer(tasks[items[0]["id"]]["task"], "confirm"))
-    snapshot, seen, late = cli.stored_labels, [], []
+    snapshot, seen = cli.stored_labels, []
+    results: list[dict[str, Any]] = []
+    errors: list[BaseException] = []
+    checked, finished = threading.Event(), threading.Event()
+    glob = Path.glob
+
+    def finish_between_checks(folder: Path, pattern: str, **kwargs: Any) -> Iterator[Path]:
+        found = glob(folder, pattern, **kwargs)
+        if (
+            folder == work
+            and pattern in {"answers-*.json", ".answers-*.partial.json"}
+            and threads
+            and threading.current_thread() is threads[0]
+            and not checked.is_set()
+        ):
+            # Read the first file list. Let ask finish before the next check.
+            found = iter(list(found))
+            checked.set()
+            assert finished.wait(60), "ask did not finish within 60 seconds"
+        return found
+
+    if finish_during_check:
+        monkeypatch.setattr(Path, "glob", finish_between_checks)
 
     def write_late() -> None:
-        with FolderStore(store) as s:
-            try:
-                cli.label_review(w, s, "ana").answer(
-                    answer(tasks[items[0]["id"]]["task"], "unsure")
+        try:
+            with FolderStore(store) as s:
+                results.append(
+                    cli.label_review(w, s, "ana").answer(
+                        answer(tasks[items[0]["id"]]["task"], "unsure")
+                    )
                 )
-            except Refused as exc:
-                late.append(exc.code)
+        except BaseException as exc:
+            errors.append(exc)
 
     def frozen_snapshot(*a: Any, **k: Any) -> Any:
-        # the marker is there before the snapshot, and ask holds the labels lock: a label write
-        # now waits for the lock, and then the freeze refuses it
+        # The partial file exists before the snapshot. The label write must wait for the lock.
         assert partial.exists()
         writer = threading.Thread(target=write_late)
         writer.start()
         writer.join(0.3)
-        assert writer.is_alive()
+        assert writer.is_alive(), f"label writer did not wait: {results=}, {errors=}"
         threads.append(writer)
         return snapshot(*a, **k)
 
@@ -623,20 +647,27 @@ def test_ask_freezes_the_labels_before_its_snapshot(
 
     class Judge(fake({"field": {"noul": 0.2}})):  # type: ignore[misc]
         def ask(self, state: str, qs: dict[str, Any]) -> dict[str, Any]:
-            # the marker holds the meta of the run before the first judge call
+            # The partial file has the run data before the first judge call.
             seen.append(json.loads(partial.read_text())["meta"].get("labels_from"))
+            if finish_during_check:
+                assert checked.wait(60), f"label writer did not check files: {results=}, {errors=}"
             return super().ask(state, qs)
 
     monkeypatch.setattr(cli, "stored_labels", frozen_snapshot)
     monkeypatch.setitem(judges.BUILT_IN, "fake", Judge)
-    cli.main(ask)
+    try:
+        cli.main(ask)
+    finally:
+        finished.set()
     assert seen and all(x is not None and x["reviewer"] == "ana" for x in seen)
     assert not partial.exists() and (work / "answers-fake.json").exists()
     assert cli.stored_labels is frozen_snapshot
     (writer,) = threads
     writer.join(60)
-    assert not writer.is_alive(), "late label writer did not finish within 60 seconds"
-    assert late == [409]
+    assert not writer.is_alive(), f"late label writer did not finish: {results=}, {errors=}"
+    assert not results and len(errors) == 1, f"{results=}, {errors=}"
+    assert isinstance(errors[0], Refused), f"{results=}, {errors=}"
+    assert errors[0].code == 409, f"{results=}, {errors=}"
     labels, _ = snapshot(w, store, "ana")
     assert set(labels.values()) == {True}
 
