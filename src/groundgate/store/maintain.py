@@ -23,7 +23,7 @@ from typing import Any
 
 from ..canonical import SPEC_VERSION, digest, jcs
 from . import KEY, FolderStore, NotFound, StoreError, Torn, _canonical, check_bytes, key
-from .packets import _READING, _READING2, _READING2_FULL, READINGS, packet_members, printable
+from .packets import _READING, READINGS, packet_members, printable, reading2_names
 
 __all__ = ["Report", "check", "forget_packet", "rebuild"]
 
@@ -299,10 +299,8 @@ def _packet(objects: _Objects, k: str) -> dict[str, Any]:
 
 def _reading(objects: _Objects, k: str) -> dict[str, Any]:
     kind = "reading@2" if objects.kinds.get(k) == "reading@2" else "reading@1"
-    names: tuple[str, ...] = _READING2 if kind == "reading@2" else _READING
     obj = objects.json(kind, k)
-    if kind == "reading@2" and isinstance(obj, dict) and "completeness" in obj:
-        names = _READING2_FULL
+    names = reading2_names(obj) if kind == "reading@2" else _READING
     if not isinstance(obj, dict) or sorted(obj) != list(names) or obj["format"] != kind:
         raise StoreError(f"the {kind} object {k} does not have the members of {kind}")
     return obj
