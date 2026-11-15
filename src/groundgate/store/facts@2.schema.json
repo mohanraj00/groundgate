@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/mohanraj00/groundgate/blob/main/src/groundgate/store/facts@2.schema.json",
+  "title": "groundgate reviewed facts export, format facts@2",
+  "description": "The value of each slot of a reviewed packet, with its review result and its citation, and each slot that has no value (SPEC section 5.2). An app or an approver outside the store reads it.",
+  "type": "object",
+  "required": ["format", "packet_sha256", "resolution_sha256", "policy_sha256", "facts", "open"],
+  "additionalProperties": false,
+  "properties": {
+    "format": { "const": "facts@2" },
+    "packet_sha256": { "description": "The packet@1 store key.", "$ref": "#/$defs/key" },
+    "resolution_sha256": { "description": "The resolution@1 store key.", "$ref": "#/$defs/key" },
+    "policy_sha256": { "description": "The review-policy@1 store key of the resolution.", "$ref": "#/$defs/key" },
+    "facts": { "type": "array", "items": { "$ref": "#/$defs/fact" } },
+    "open": { "type": "array", "items": { "$ref": "#/$defs/open" } },
+    "completeness": {
+      "description": "The completeness of the reading (SPEC section 4.16). Only an export of a packet with it has this member.",
+      "type": "object"
+    }
+  },
+  "$defs": {
+    "key": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "span": {
+      "description": "UTF-8 byte offsets in the cited NFC text, zero-based and half-open.",
+      "type": "object",
+      "required": ["start", "end"],
+      "additionalProperties": false,
+      "properties": {
+        "start": { "type": "integer", "minimum": 0 },
+        "end": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "selector": {
+      "description": "The cited words in the NFC text. start and end are Unicode code point offsets, zero-based and half-open.",
+      "type": "object",
+      "required": ["start", "end", "exact", "prefix", "suffix"],
+      "additionalProperties": false,
+      "properties": {
+        "start": { "type": "integer", "minimum": 0 },
+        "end": { "type": "integer", "minimum": 1 },
+        "exact": { "type": "string", "minLength": 1 },
+        "prefix": { "description": "At most 32 code points before start.", "type": "string" },
+        "suffix": { "description": "At most 32 code points after end.", "type": "string" }
+      }
+    },
+    "answer": {
+      "type": "object",
+      "required": ["reviewer", "verdict", "entry_sha256"],
+      "additionalProperties": false,
+      "properties": {
+        "reviewer": { "type": "string", "minLength": 1 },
+        "verdict": { "enum": ["confirm", "choose", "correct", "adjust_span"] },
+        "entry_sha256": { "description": "The entry_sha256 of the answer record in the answer log of the reviewer.", "$ref": "#/$defs/key" }
+      }
+    },
+    "review": {
+      "type": "object",
+      "required": ["task", "policy", "answers"],
+      "additionalProperties": false,
+      "properties": {
+        "task": { "description": "The task@1 store key of the slot.", "$ref": "#/$defs/key" },
+        "policy": { "description": "The review-policy@1 store key.", "$ref": "#/$defs/key" },
+        "answers": {
+          "description": "Each answer that settles the slot, in code point order of the reviewer.",
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/answer" }
+        }
+      }
+    },
+    "citation": {
+      "type": "object",
+      "required": ["source", "ref", "url", "source_sha256", "text_sha256", "span", "selector", "receipt_sha256"],
+      "additionalProperties": false,
+      "properties": {
+        "source": { "enum": ["document", "reference", "external", "knowledge"] },
+        "ref": { "type": ["string", "null"] },
+        "url": { "type": ["string", "null"] },
+        "source_sha256": { "anyOf": [{ "$ref": "#/$defs/key" }, { "type": "null" }] },
+        "text_sha256": { "anyOf": [{ "$ref": "#/$defs/key" }, { "type": "null" }] },
+        "span": { "anyOf": [{ "$ref": "#/$defs/span" }, { "type": "null" }] },
+        "selector": { "anyOf": [{ "$ref": "#/$defs/selector" }, { "type": "null" }] },
+        "receipt_sha256": { "$ref": "#/$defs/key" },
+        "passage_sha256": { "$ref": "#/$defs/key" },
+        "locator": { "type": "object" }
+      }
+    },
+    "fact": {
+      "type": "object",
+      "required": ["field", "key", "value", "unit", "status", "review", "citation"],
+      "additionalProperties": false,
+      "properties": {
+        "field": { "type": "string" },
+        "key": { "type": ["string", "null"] },
+        "value": { "type": ["string", "null"] },
+        "unit": { "type": ["string", "null"] },
+        "status": { "enum": ["admitted", "confirmed", "chosen", "corrected"] },
+        "review": { "anyOf": [{ "$ref": "#/$defs/review" }, { "type": "null" }] },
+        "record": { "type": "string" },
+        "replaced": { "type": "boolean" },
+        "citation": { "$ref": "#/$defs/citation" }
+      },
+      "dependentRequired": { "record": ["replaced"], "replaced": ["record"] },
+      "if": { "properties": { "status": { "const": "admitted" } } },
+      "then": { "properties": { "review": { "type": "null" } } },
+      "else": { "properties": { "review": { "$ref": "#/$defs/review" } } }
+    },
+    "open": {
+      "type": "object",
+      "required": ["field", "key", "status", "task"],
+      "additionalProperties": false,
+      "properties": {
+        "field": { "type": "string" },
+        "key": { "type": ["string", "null"] },
+        "status": { "enum": ["open", "disputed", "not_in_document", "rejected"] },
+        "task": { "anyOf": [{ "$ref": "#/$defs/key" }, { "type": "null" }] }
+      }
+    }
+  }
+}

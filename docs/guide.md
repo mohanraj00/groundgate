@@ -1003,3 +1003,36 @@ operations on a new, empty store, with the expected result or error of each one.
 
 `groundgate.store.contract.report(make, backend)` gives the same report in Python. A backend
 passes when the report has `"failed": 0` for the current file.
+
+### Export
+
+`groundgate export` writes the facts of one stored packet as JSON, for an app that does not read
+the store. It decides the packet again first, and it exits 1 with no output if the receipt does
+not match.
+
+```bash
+groundgate export --store DIR PACKET > facts.json
+groundgate export --store DIR PACKET --resolution KEY > facts.json
+```
+
+Without `--resolution` the export is `facts@1`: each admitted fact with its citation
+([SPEC §5.1](../SPEC.md#51-admitted-facts-export)). It leaves out each value that a person gave
+in review.
+
+With `--resolution` the export is `facts@2`, for a packet that went through review
+([SPEC §5.2](../SPEC.md#52-reviewed-facts-export)). `KEY` is the key that
+`groundgate review resolve` printed. Use it when an approver outside the store decides on an
+update that cites the facts:
+
+- `facts` has one fact for each slot with a value. `status` says where the value came from:
+  `admitted` by the gate, or `confirmed`, `chosen` or `corrected` by a person. A fact from
+  review names its task, the review policy and each answer that settled it, with the reviewer
+  and the verdict.
+- `open` has each slot with no value: `open`, `disputed`, `not_in_document` or `rejected`. An
+  approver can refuse an update while this list is not empty.
+- Each citation has a `selector` beside the byte span: the start and the end in Unicode code
+  points, the exact cited text, and up to 32 code points before and after it. A reader in any
+  language can show the cited words without decoding UTF-8 bytes.
+
+The export also resolves the packet again from the answer logs, and it exits 1 if the result is
+not the stored resolution. The JSON schema is `groundgate.store.export.facts_schema()`.

@@ -1,0 +1,175 @@
+{
+ "name": "export2-chosen-disputed",
+ "description": "Two reviewers choose the same candidate of two, so the fact lists both answers in reviewer order. On another field they choose two candidates, and with no lead the slot is disputed.",
+ "document": "Total: 10\nTotal: 12\nFee: 3\nFee: 5\n",
+ "schema": {
+  "fields": {
+   "total": {
+    "type": "integer"
+   },
+   "fee": {
+    "type": "integer"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "t1",
+   "field": "total",
+   "value": 10,
+   "evidence": {
+    "start": 7,
+    "end": 9,
+    "text": "10"
+   }
+  },
+  {
+   "id": "t2",
+   "field": "total",
+   "value": 12,
+   "evidence": {
+    "start": 17,
+    "end": 19,
+    "text": "12"
+   }
+  },
+  {
+   "id": "f1",
+   "field": "fee",
+   "value": 3,
+   "evidence": {
+    "start": 25,
+    "end": 26,
+    "text": "3"
+   }
+  },
+  {
+   "id": "f2",
+   "field": "fee",
+   "value": 5,
+   "evidence": {
+    "start": 32,
+    "end": 33,
+    "text": "5"
+   }
+  }
+ ],
+ "review_policy": {
+  "format": "review-policy@1",
+  "audit": {
+   "rate": "0",
+   "seed": ""
+  },
+  "agree": 1,
+  "leads": [],
+  "rejected": false
+ },
+ "answers": [
+  {
+   "reviewer": "bo",
+   "slot": {
+    "field": "total",
+    "key": null
+   },
+   "verdict": "choose",
+   "choice": "t2"
+  },
+  {
+   "reviewer": "ana",
+   "slot": {
+    "field": "total",
+    "key": null
+   },
+   "verdict": "choose",
+   "choice": "t2"
+  },
+  {
+   "reviewer": "ana",
+   "slot": {
+    "field": "fee",
+    "key": null
+   },
+   "verdict": "choose",
+   "choice": "f1"
+  },
+  {
+   "reviewer": "bo",
+   "slot": {
+    "field": "fee",
+    "key": null
+   },
+   "verdict": "choose",
+   "choice": "f2"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "CONFLICTING_CANDIDATES"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "CONFLICTING_CANDIDATES"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "CONFLICTING_CANDIDATES"
+    ]
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "CONFLICTING_CANDIDATES"
+    ]
+   }
+  ],
+  "coverage": [],
+  "facts": [
+   {
+    "field": "total",
+    "key": null,
+    "value": "12",
+    "unit": null,
+    "status": "chosen",
+    "answers": [
+     {
+      "reviewer": "ana",
+      "verdict": "choose"
+     },
+     {
+      "reviewer": "bo",
+      "verdict": "choose"
+     }
+    ],
+    "source": "document",
+    "ref": null,
+    "span": {
+     "start": 17,
+     "end": 19
+    },
+    "selector": {
+     "start": 17,
+     "end": 19,
+     "exact": "12",
+     "prefix": "Total: 10\nTotal: ",
+     "suffix": "\nFee: 3\nFee: 5\n"
+    }
+   }
+  ],
+  "open": [
+   {
+    "field": "fee",
+    "key": null,
+    "status": "disputed",
+    "task": true
+   }
+  ]
+ }
+}

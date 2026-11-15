@@ -8,6 +8,7 @@
   groundgate verify   RECEIPT DOC SCHEMA CANDIDATES [--pack-dir DIR]
   groundgate verify   --store DIR PACKET
   groundgate export   --store DIR PACKET               > facts.json
+  groundgate export   --store DIR PACKET --resolution KEY  (facts@2, with the review results)
   groundgate report   RECEIPT DOC SCHEMA CANDIDATES [--pack-dir DIR] -o report.html
   groundgate report   --store DIR PACKET -o report.html
   groundgate review   tasks --store DIR PACKET          > task keys
@@ -240,10 +241,19 @@ def _parser() -> argparse.ArgumentParser:
     v.add_argument("--layout", metavar="FILE", help="the layout JSON that admit got")
     store_option(v, "get the receipt and each input of the packet PACKET")
 
-    e = sub.add_parser("export", help="verify a stored receipt and export its admitted facts")
+    e = sub.add_parser(
+        "export",
+        help="verify a stored receipt and export its admitted facts, or its reviewed facts",
+    )
     e.add_argument("packet", metavar="PACKET", help="the store key of the packet")
     e.add_argument("--store", metavar="DIR", required=True, help="the store folder")
     e.add_argument("-o", "--output", help="write the facts here instead of stdout")
+    e.add_argument(
+        "--resolution",
+        metavar="KEY",
+        help="the resolution@1 key from review resolve: write facts@2 with the review results "
+        "and the open slots (SPEC 5.2)",
+    )
     pack_dir(e)
 
     r = sub.add_parser("report", help="verify a receipt, then render an HTML review page")
@@ -760,9 +770,20 @@ def _from_store(args: argparse.Namespace) -> int:
 
 
 def _export(args: argparse.Namespace) -> int:
-    from .store.export import admitted_facts
+    from .store.export import admitted_facts, reviewed_facts
     from .store.packets import load_packet, printable
 
+    if args.resolution is not None:
+        if args.pack_dir is not None:
+            raise ValueError("--pack-dir does not apply with --resolution")
+        with _store(args.store, make=False) as store:
+            reviewed, problems = reviewed_facts(store, args.packet, args.resolution)
+        for problem in problems:
+            print(f"mismatch: {printable(problem, limit=None)}", file=sys.stderr)
+        if reviewed is None:
+            return 1
+        _write(_dumps(reviewed), args.output)
+        return 0
     with _store(args.store, make=False) as store:
         packet = load_packet(store, args.packet)
         result = verify(

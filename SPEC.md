@@ -4,7 +4,8 @@ Status: released with groundgate 0.14.0, in the `v0.14.0` tag. groundgate 0.15.0
 §4.17 to this version: the profile, the value kinds `date`, `record` and `passage`, closed
 options and the packet members `pin`, `places`, `completeness` and `outline`. A packet that
 uses none of them is decided as in 0.14.0 and gets the same receipt, so the version string does
-not change. Version string: `groundgate/0.12`. Spec 0.11 was released with
+not change. groundgate 0.16.0 adds §5.2, the `facts@2` export of a reviewed packet. It changes
+no decision and no receipt. Version string: `groundgate/0.12`. Spec 0.11 was released with
 groundgate 0.11.0 and is in the `v0.11.0` tag. Spec 0.10 is in the `v0.10.0` tag. Spec 0.9 is in the `v0.9.0` tag,
 spec 0.8 in the `v0.8.0` tag, spec 0.7 in the `v0.7.0` tag, spec 0.6 in the `v0.6.0` tag, spec
 0.5 in the `v0.5.0` tag, spec 0.4 in the `v0.4.0` tag, spec 0.3 in the `v0.3.0` tag, spec 0.2 in
@@ -2178,6 +2179,76 @@ value and unit are those of the decision. Each shown member is present.
 - For `source: "external"` or `source: "knowledge"`, the fact was admitted by policy.
   `source_sha256`, `text_sha256`, `span` and `ref` are null. `url` is the external item's
   URL, or null for knowledge. Use the packet key to see the recorded evidence.
+
+### 5.2 Reviewed facts export
+
+`groundgate export --store DIR PACKET --resolution KEY` writes one `facts@2` JSON object (#675).
+`KEY` is the `resolution@1` store key that `groundgate review resolve` printed for the packet.
+`facts@2` gives each slot of the resolution: the value that the gate admitted or that a person
+gave in review, and each slot that has no value yet. It is for an app or an approver outside the
+store. `facts@1` (§5.1) does not change, and `export` without `--resolution` still writes it.
+
+The export decides the packet again as §5.1 does. Then it resolves the packet again from the
+stored review policy of the resolution and the answer log of each reviewer that the resolution
+names, up to the head entry that it names (docs/design/review.md §6). If the head entry is not
+in its log, or the new resolution is not equal to the stored one, the export exits 1 with no
+output. A resolution of another packet, or a missing store object, exits 2. `--pack-dir` does
+not apply with `--resolution`, and the two together exit 2.
+
+```json
+{"format": "facts@2", "packet_sha256": "sha256:...", "resolution_sha256": "sha256:...",
+ "policy_sha256": "sha256:...",
+ "facts": [{"field": "estimate", "key": null, "value": "4", "unit": null,
+            "status": "confirmed",
+            "review": {"task": "sha256:...", "policy": "sha256:...",
+                       "answers": [{"reviewer": "ana", "verdict": "confirm",
+                                    "entry_sha256": "sha256:..."}]},
+            "citation": {"source": "document", "ref": null, "url": null,
+                         "source_sha256": "sha256:...", "text_sha256": "sha256:...",
+                         "span": {"start": 48, "end": 49},
+                         "selector": {"start": 47, "end": 48, "exact": "4",
+                                      "prefix": "ems: 2\nBoxes: 3\nEstimate: up to ",
+                                      "suffix": "\nWeight: about 8\n"},
+                         "receipt_sha256": "sha256:..."}}],
+ "open": [{"field": "weight", "key": null, "status": "open", "task": "sha256:..."}]}
+```
+
+- `resolution_sha256` is `KEY`. `policy_sha256` is the `review-policy@1` key of the
+  resolution, the `policy` member of `resolution@1`.
+- `facts` has one fact for each slot of the resolution with the status `admitted`,
+  `confirmed`, `chosen` or `corrected`, in slot order. `open` has one entry for each slot with
+  the status `open`, `disputed`, `not_in_document` or `rejected`, in slot order. A slot of a
+  model text (docs/design/review.md §7) is in neither list.
+- A fact has the members of a `facts@1` fact (§5.1), in the same order, with `status` and
+  `review` after `unit` and `record` and `replaced` after `review`. The value, the unit and the
+  citation come from the decision that gives the value of the slot: the first decision that
+  passed for `admitted`, the chosen decision for `confirmed` and `chosen`, and the decision of
+  the person's candidate in the correction receipt for `corrected`. `citation.receipt_sha256`
+  is the digest of the receipt of that decision: the correction receipt for `corrected`.
+- `review` is null for `admitted`, also when an audit answer kept the value. For the other
+  statuses it is `{"task", "policy", "answers"}`. `task` is the `task@1` key of the slot.
+  `policy` is `policy_sha256`. `answers` lists each answer that settles the slot, in code point
+  order of the reviewer: the latest answer of each reviewer with the target that settles the
+  slot (docs/design/review.md §6.1). Each one is `{"reviewer", "verdict", "entry_sha256"}`, with
+  the reviewer name, the verdict and the `entry_sha256` of the answer record in its log.
+- An `open` entry is `{"field", "key", "status", "task"}`. `task` is the `task@1` key of the
+  slot, or null for a slot with no task, as a `rejected` slot under a policy with `rejected`
+  false.
+- `citation.selector` is after `span`. For `source: "document"` and `source: "reference"`,
+  with a span that is not null, it is `{"start", "end", "exact", "prefix", "suffix"}` over the
+  cited NFC text. `start` and `end` are the span in Unicode code points, zero-based and
+  half-open. `exact` is the text from `start` to `end`. `prefix` is the text of at most 32 code
+  points before `start`, and `suffix` the text of at most 32 code points after `end`. Each
+  other citation has `"selector": null`. `span` stays in UTF-8 bytes (§2.2).
+- `completeness` is an optional member after `open`, as in §5.1.
+
+In the example, the NFC text is `Café invoice\nItems: 2\nBoxes: 3\nEstimate: up to 4\nWeight:
+about 8\n`. The `é` takes two bytes, so the byte span 48 to 49 is the code point span 47 to 48.
+The prefix is cut to its last 32 code points.
+
+`groundgate/store/facts@2.schema.json` in the package is the JSON schema of `facts@2`, and
+`groundgate.store.export.facts_schema()` gives it. The vectors
+in `conformance/exports/` give the expected facts and open slots of reviewed packets.
 
 ## 6. Canonical JSON and digests
 

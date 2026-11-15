@@ -8133,6 +8133,141 @@ for bad_name, bad_text, bad_outline in (
         }
     )
 
+# ------------------------------------------- the reviewed facts export (SPEC §5.2, #675)
+# Each vector is a packet, a review policy and the answers of the reviewers. The expected facts
+# and open slots are written by hand. The keys and the digests come from the store in the test.
+EXPORTS: list[dict[str, Any]] = []
+REVIEW_POLICY = {"format": "review-policy@1", "audit": {"rate": "0", "seed": ""}, "agree": 1,
+                 "leads": [], "rejected": False}  # fmt: skip
+
+
+def answer(reviewer: str, field: str, verdict: str, **more: Any) -> dict[str, Any]:
+    """An answer of ``reviewer`` to the task of the slot of ``field`` with a null key. ``choice``
+    is the id of the chosen candidate, and ``candidate`` the candidate of a correction."""
+    return {"reviewer": reviewer, "slot": {"field": field, "key": None}, "verdict": verdict,
+            **more}  # fmt: skip
+
+
+def fact(
+    field: str, value: str, status: str, span: tuple[int, int], selector: tuple[Any, ...],
+    answers: list[tuple[str, str]] | None = None, **citation: Any,
+) -> dict[str, Any]:  # fmt: skip
+    """An expected fact. ``selector`` is (start, end, exact, prefix, suffix) in code points, or
+    None. ``answers`` lists (reviewer, verdict) of each answer that settles the slot."""
+    start, end, exact, prefix, suffix = selector
+    return {
+        "field": field, "key": None, "value": value, "unit": None, "status": status,
+        "answers": None if answers is None else [{"reviewer": r, "verdict": v} for r, v in answers],
+        "source": citation.get("source", "document"), "ref": citation.get("ref"),
+        "span": {"start": span[0], "end": span[1]},
+        "selector": {"start": start, "end": end, "exact": exact, "prefix": prefix,
+                     "suffix": suffix},
+    }  # fmt: skip
+
+
+def reviewed(
+    name: str, description: str, document: str, schema: dict[str, Any], candidates: list[Any],
+    answers: list[dict[str, Any]], facts: list[dict[str, Any]], open_: list[tuple[str, str, bool]],
+    review_policy: dict[str, Any] | None = None, references: list[dict[str, Any]] | None = None,
+    coverage: list[dict[str, str]] | None = None,
+) -> None:  # fmt: skip
+    """``open_`` lists (field, status, has a task) of each slot without a value, in slot order."""
+    EXPORTS.append(
+        {
+            "name": name, "description": description, "document": document, "schema": schema,
+            "candidates": candidates, "references": references, "coverage": coverage or [],
+            "review_policy": review_policy or REVIEW_POLICY, "answers": answers,
+            "facts": facts,
+            "open": [{"field": f, "key": None, "status": st, "task": t} for f, st, t in open_],
+        }
+    )  # fmt: skip
+
+
+INTEGERS = {"type": "integer"}
+reviewed(
+    "export2-invoice",
+    "The example of #675. The gate admits two values, a reviewer confirms one, and one task stays "
+    "open. The é takes two bytes, so each byte offset after it is one more than the code point "
+    "offset.",
+    "Café invoice\nItems: 2\nBoxes: 3\nEstimate: up to 4\nWeight: about 8\n",
+    {"fields": {name: INTEGERS for name in ("items", "boxes", "estimate", "weight")}},
+    [
+        c("a", "items", 2, evidence=q("2")),
+        c("b", "boxes", 3, evidence=q("3")),
+        c("c", "estimate", 4, evidence=q("4"), expect=(REVIEW, ["QUALIFIED_VALUE"])),
+        c("d", "weight", 8, evidence=q("8"), expect=(REVIEW, ["QUALIFIED_VALUE"])),
+    ],
+    answers=[answer("ana", "estimate", "confirm")],
+    facts=[
+        fact("boxes", "3", "admitted", (30, 31),
+             (29, 30, "3", "Café invoice\nItems: 2\nBoxes: ", "\nEstimate: up to 4\nWeight: about")),
+        fact("estimate", "4", "confirmed", (48, 49),
+             (47, 48, "4", "ems: 2\nBoxes: 3\nEstimate: up to ", "\nWeight: about 8\n"),
+             answers=[("ana", "confirm")]),
+        fact("items", "2", "admitted", (21, 22),
+             (20, 21, "2", "Café invoice\nItems: ", "\nBoxes: 3\nEstimate: up to 4\nWeig")),
+    ],
+    open_=[("weight", "open", True)],
+)  # fmt: skip
+
+reviewed(
+    "export2-scripts",
+    "A Japanese document and a Greek reference. Each CJK character takes three bytes and each "
+    "Greek letter two, so the byte span and the code point span differ. A reviewer corrects a "
+    "rejected value and says that a required field is not in the document.",
+    "請求書\n品目: 2\n箱: 3\n",
+    {"fields": {"items": INTEGERS, "boxes": INTEGERS, "crates": INTEGERS,
+                "pallets": {"type": "integer", "required": True}}},
+    [
+        c("a", "items", 2, evidence=q("2")),
+        c("b", "boxes", 4, evidence=q("3"), expect=("rejected", ["VALUE_NOT_IN_EVIDENCE"])),
+        c("c", "crates", 5, evidence=q("5", ref="stock", source="reference")),
+    ],
+    references=[{"id": "stock", "text": "Κιβώτια: 5"}],
+    coverage=[{"field": "pallets", "code": "REQUIRED_FIELD_MISSING"}],
+    review_policy={**REVIEW_POLICY, "rejected": True},
+    answers=[
+        answer("ana", "boxes", "correct",
+               candidate={"id": "ana-1", "field": "boxes", "value": 3, "proposer": "person:ana",
+                          "evidence": q("3")}),
+        answer("ana", "pallets", "not_in_document"),
+    ],
+    facts=[
+        fact("boxes", "3", "corrected", (25, 26), (13, 14, "3", "請求書\n品目: 2\n箱: ", "\n"),
+             answers=[("ana", "correct")]),
+        fact("crates", "5", "admitted", (16, 17), (9, 10, "5", "Κιβώτια: ", ""),
+             source="reference", ref="stock"),
+        fact("items", "2", "admitted", (18, 19), (8, 9, "2", "請求書\n品目: ", "\n箱: 3\n")),
+    ],
+    open_=[("pallets", "not_in_document", True)],
+)  # fmt: skip
+
+reviewed(
+    "export2-chosen-disputed",
+    "Two reviewers choose the same candidate of two, so the fact lists both answers in reviewer "
+    "order. On another field they choose two candidates, and with no lead the slot is disputed.",
+    "Total: 10\nTotal: 12\nFee: 3\nFee: 5\n",
+    {"fields": {"total": INTEGERS, "fee": INTEGERS}},
+    [
+        c("t1", "total", 10, evidence=q("10"), expect=(REVIEW, ["CONFLICTING_CANDIDATES"])),
+        c("t2", "total", 12, evidence=q("12"), expect=(REVIEW, ["CONFLICTING_CANDIDATES"])),
+        c("f1", "fee", 3, evidence=q("3"), expect=(REVIEW, ["CONFLICTING_CANDIDATES"])),
+        c("f2", "fee", 5, evidence=q("5"), expect=(REVIEW, ["CONFLICTING_CANDIDATES"])),
+    ],
+    answers=[
+        answer("bo", "total", "choose", choice="t2"),
+        answer("ana", "total", "choose", choice="t2"),
+        answer("ana", "fee", "choose", choice="f1"),
+        answer("bo", "fee", "choose", choice="f2"),
+    ],
+    facts=[
+        fact("total", "12", "chosen", (17, 19),
+             (17, 19, "12", "Total: 10\nTotal: ", "\nFee: 3\nFee: 5\n"),
+             answers=[("ana", "choose"), ("bo", "choose")]),
+    ],
+    open_=[("fee", "disputed", True)],
+)  # fmt: skip
+
 
 def main() -> None:
     out_dir = HERE / "vectors"
@@ -8274,10 +8409,39 @@ def main() -> None:
         (places_dir / f"{p['name']}.json").write_text(
             json.dumps(out, indent=1, ensure_ascii=False) + "\n"
         )
+    exp_dir = HERE / "exports"
+    exp_dir.mkdir(exist_ok=True)
+    for old in exp_dir.glob("*.json"):
+        old.unlink()
+    for e in EXPORTS:
+        doc = e["document"]
+        refs = {r["id"]: r["text"] for r in e["references"] or []}
+        answers = [
+            {**a, "candidate": {k: resolve(doc, val, refs) if k == "evidence" else val
+                                for k, val in a["candidate"].items()}}
+            if "candidate" in a else a
+            for a in e["answers"]
+        ]  # fmt: skip
+        out = {
+            "name": e["name"], "description": e["description"], "document": doc,
+            "schema": e["schema"], "policy": None,
+            **({"references": e["references"]} if e["references"] is not None else {}),
+            "candidates": [
+                {k: resolve(doc, val, refs) if k == "evidence" else val
+                 for k, val in item["candidate"].items()}
+                for item in e["candidates"]
+            ],
+            "review_policy": e["review_policy"], "answers": answers,
+            "expected": {"decisions": [item["expect"] for item in e["candidates"]],
+                         "coverage": e["coverage"], "facts": e["facts"], "open": e["open"]},
+        }  # fmt: skip
+        (exp_dir / f"{e['name']}.json").write_text(
+            json.dumps(out, indent=1, ensure_ascii=False) + "\n"
+        )
     print(
         f"wrote {len(VECTORS)} vectors, {len(INVALID)} invalid packets, "
-        f"{len(PROFILES)} profile vectors, {len(PINS)} pin vectors and "
-        f"{len(PLACES)} places vectors"
+        f"{len(PROFILES)} profile vectors, {len(PINS)} pin vectors, "
+        f"{len(PLACES)} places vectors and {len(EXPORTS)} export vectors"
     )
 
 

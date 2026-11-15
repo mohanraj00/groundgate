@@ -37,6 +37,14 @@ other inputs. Each expected decision has its `locator`, and `expected.places_sha
 digest of the places, both written by hand in `build.py`. `expected.error` true marks an
 invalid packet.
 
+Files in `exports/` are export vectors (SPEC §5.2). Each one has a packet, a `review_policy`
+and the `answers` of the reviewers. An answer names its slot, its reviewer and its verdict, with
+`choice`, the id of the chosen candidate, or `candidate`, the candidate of a correction.
+`expected.facts` and `expected.open` give the facts and the open slots of the `facts@2` export,
+in order, written by hand in `build.py`. A fact gives its `answers` as the reviewer and the
+verdict of each one, and its `selector` in code points. A runner adds the keys and the digests
+from its own store. `task` in an open slot is true when the slot has a task.
+
 Files in `invalid/` are invalid packets. An implementation must refuse them (SPEC §2) and emit no
 receipt.
 
