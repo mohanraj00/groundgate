@@ -709,8 +709,23 @@ wins, also `aliases`. If the field gives a `type` or a `unit` that differs from 
 the packet is invalid. Give each vocabulary pack in the kind pack's `needs` too. The schema does
 not have to name it.
 
-Five kind packs are built in, all 1.0.0 and all `draft`. They are examples: no route is measured ([Profiles](#profiles)). Their templates come from the bench
-schemas. Name one in the schema, and do not give it. The packs that it needs load with it.
+The five built-in kind packs are examples. Each has version 1.0.0 and an empty status table.
+No route is measured. The pack descriptions say "Draft: no route is measured". The packs stay
+in the wheel. `groundgate pack list` marks each pack as `example` when it has no measured row.
+A pack with at least one measured row has the status `measured`. The command shows each
+measured row with its kind, field, code, document count, bound and results path. The base pack
+`en` is part of the core and is not in this list.
+
+Use `--json` for a JSON list. Each entry has `id`, `version`, `type`, `status` and `measured`.
+The `measured` member holds the measured rows. The entries are sorted by id, then version.
+
+```sh
+groundgate pack list
+groundgate pack list --json
+```
+
+The templates come from the bench schemas. Name a pack in the schema, and do not give it.
+The packs that it needs load with it. See [Profiles](#profiles) for example profiles.
 
 | Kind pack | Documents | Needs |
 |---|---|---|
