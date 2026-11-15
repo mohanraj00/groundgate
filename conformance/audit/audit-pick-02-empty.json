@@ -1,0 +1,11 @@
+{
+ "name": "audit-pick-02-empty",
+ "kind": "pick",
+ "description": "A log with no entry gives an empty pick.",
+ "seed": "",
+ "log": [],
+ "expected": {
+  "hashes": [],
+  "pick": []
+ }
+}

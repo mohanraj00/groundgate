@@ -1,0 +1,21 @@
+{
+ "name": "audit-rate-04-empty-route",
+ "kind": "rate",
+ "description": "A route with no admitted value is a draft and does not count.",
+ "routes": [
+  {
+   "admitted": 40,
+   "unscored": 0,
+   "status": "measured"
+  },
+  {
+   "admitted": 0,
+   "unscored": 0,
+   "status": "draft"
+  }
+ ],
+ "covered": 35,
+ "expected": {
+  "rate": "0.02"
+ }
+}

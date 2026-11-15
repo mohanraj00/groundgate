@@ -1,0 +1,11 @@
+{
+ "name": "audit-log-bad-digest",
+ "kind": "log",
+ "description": "A profile digest with capital hex digits.",
+ "log": [
+  "{\"document\":\"inv-0001\",\"entry\":\"document\",\"items\":4,\"profile\":\"sha256:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\"}"
+ ],
+ "expected": {
+  "error": true
+ }
+}

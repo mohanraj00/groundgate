@@ -1,0 +1,11 @@
+{
+ "name": "audit-log-bad-member-order",
+ "kind": "log",
+ "description": "A line with its members in another order is not canonical JSON.",
+ "log": [
+  "{\"entry\":\"rate\",\"rate\":\"0.02\",\"profile\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}"
+ ],
+ "expected": {
+  "error": true
+ }
+}

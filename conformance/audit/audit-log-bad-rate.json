@@ -1,0 +1,11 @@
+{
+ "name": "audit-log-bad-rate",
+ "kind": "log",
+ "description": "A rate other than 0.1 and 0.02.",
+ "log": [
+  "{\"entry\":\"rate\",\"profile\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"rate\":\"0.05\"}"
+ ],
+ "expected": {
+  "error": true
+ }
+}

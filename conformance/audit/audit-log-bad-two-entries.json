@@ -1,0 +1,12 @@
+{
+ "name": "audit-log-bad-two-entries",
+ "kind": "log",
+ "description": "Two document entries for one name, also with two profiles.",
+ "log": [
+  "{\"document\":\"inv-0001\",\"entry\":\"document\",\"items\":4,\"profile\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}",
+  "{\"document\":\"inv-0001\",\"entry\":\"document\",\"items\":4,\"profile\":\"sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\"}"
+ ],
+ "expected": {
+  "error": true
+ }
+}

@@ -1,0 +1,11 @@
+{
+ "name": "audit-log-bad-extra-member",
+ "kind": "log",
+ "description": "A document entry with a member that the format does not list.",
+ "log": [
+  "{\"document\":\"inv-0001\",\"entry\":\"document\",\"items\":4,\"profile\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"value\":\"90\"}"
+ ],
+ "expected": {
+  "error": true
+ }
+}
