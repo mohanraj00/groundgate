@@ -634,7 +634,8 @@ def test_ask_freezes_the_labels_before_its_snapshot(
     assert not partial.exists() and (work / "answers-fake.json").exists()
     assert cli.stored_labels is frozen_snapshot
     (writer,) = threads
-    writer.join(10)
+    writer.join(60)
+    assert not writer.is_alive(), "late label writer did not finish within 60 seconds"
     assert late == [409]
     labels, _ = snapshot(w, store, "ana")
     assert set(labels.values()) == {True}
