@@ -17,6 +17,7 @@
   groundgate review   measures --store DIR [--json]     (the measures of the answers)
   groundgate schema   SCHEMA                            > extractor.schema.json
   groundgate schema check SCHEMA
+  groundgate pack     list [--json]                     (the built-in pack status)
   groundgate store    check   --store DIR [--repair]
   groundgate store    rebuild --store DIR
   groundgate store    forget  --store DIR PACKET --reason TEXT [--all]
@@ -43,7 +44,7 @@ from typing import TYPE_CHECKING, Any
 from .admit import admit, verify
 from .fold import fold, fold_text
 from .model import PacketError, Schema, extractor_schema
-from .pack import load_pack
+from .pack import list_built_in_packs, load_pack
 from .text import KEY_DASHES, key_mentions, normalize_ws
 
 if TYPE_CHECKING:
@@ -125,6 +126,11 @@ def _parser() -> argparse.ArgumentParser:
         prog="groundgate", description=__doc__, formatter_class=argparse.RawTextHelpFormatter
     )
     sub = ap.add_subparsers(dest="command", required=True)
+
+    p = sub.add_parser("pack", help="show the built-in packs")
+    pack_steps = p.add_subparsers(dest="step", required=True)
+    pack_list = pack_steps.add_parser("list", help="list the built-in packs and their status")
+    pack_list.add_argument("--json", action="store_true", help="print the pack list as JSON")
 
     x = sub.add_parser("read", help="turn a PDF, HTML, XML, DOCX, XLSX or text file into NFC text")
     x.add_argument("file")
@@ -523,6 +529,8 @@ def main(argv: list[str] | None = None) -> int:
     try:
         if check:
             return _check(args)
+        if args.command == "pack":
+            return _pack_list(args)
         if args.command == "read":
             return _read(args)
         if args.command == "schema":
@@ -583,6 +591,27 @@ def main(argv: list[str] | None = None) -> int:
     except (PacketError, ValueError, OSError, ImportError) as e:  # JSON, UTF-8: ValueError
         print(f"groundgate: {printable(str(e), limit=None)}", file=sys.stderr)  # can quote input
         return 2
+
+
+def _pack_list(args: argparse.Namespace) -> int:
+    from .store.packets import printable
+
+    entries = list_built_in_packs()
+    if args.json:
+        _write(_dumps(entries), None)
+    else:
+        print("id\tversion\ttype\tstatus")
+        for entry in entries:
+            print("\t".join(entry[key] for key in ("id", "version", "type", "status")))
+            for row in entry["measured"]:
+                print(
+                    "  "
+                    + " ".join(
+                        f"{key}={printable(str(row[key]), limit=None)}"
+                        for key in ("kind", "field", "code", "documents", "bound", "results")
+                    )
+                )
+    return 0
 
 
 def _admit_inputs(parser: argparse.ArgumentParser, args: argparse.Namespace) -> None:
