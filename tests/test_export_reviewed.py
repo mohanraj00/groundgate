@@ -21,7 +21,7 @@ from groundgate.cli import main
 from groundgate.review.tasks import write_tasks
 from groundgate.store import FolderStore, reviewer_key
 from groundgate.store import key as store_key
-from groundgate.store.export import facts_schema, selector
+from groundgate.store.export import Offsets, facts_schema, selector
 from groundgate.store.packets import admit_packet, put_reading
 
 ROOT = Path(__file__).parent.parent / "conformance"
@@ -282,3 +282,52 @@ def test_selector_cuts_the_context_at_32_code_points() -> None:
         "start": 40, "end": 41, "exact": "値", "prefix": "д" * 32, "suffix": "ж" * 32,
     }  # fmt: skip
     assert selector(text, None) is None
+
+
+def test_offsets_match_one_decode_of_the_text_at_each_block_end() -> None:
+    """A lookup reads one block of 4096 code points. The result is the same as with one
+    decode of all the bytes before the offset."""
+    text = ("aд値😀" * 3000)[:-1]  # 11999 code points, 1 to 4 bytes each
+    offsets = Offsets(text)
+    data = text.encode("utf-8")
+    at = [0, 1, 3, len(data)]
+    for block in (4096, 8192):
+        at += [len(text[:n].encode("utf-8")) for n in (block - 1, block, block + 1)]
+    for byte in at:
+        assert offsets.point(byte) == len(data[:byte].decode("utf-8"))
+    assert Offsets("").point(0) == 0
+    assert Offsets("д" * 4096).point(8192) == 4096
+    last = len(data) - 3  # the text ends with a character of 3 bytes
+    assert selector(text, {"start": last, "end": len(data)}, offsets)["exact"] == "値"
+
+
+def test_a_document_fact_after_a_reference_fact_keeps_its_source_key(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """The fact of the reference comes first in the export. The fact of the document after it
+    has the same ``source_sha256`` as in ``facts@1``."""
+    v = {
+        "document": "Boxes: 3\n",
+        "schema": {"fields": {"a": {"type": "integer"}, "z": {"type": "integer"}}},
+        "candidates": [
+            {"id": "z", "field": "z", "value": 3, "evidence": {"start": 7, "end": 8, "text": "3"}},
+            {"id": "a", "field": "a", "value": 5,
+             "evidence": {"ref": "stock", "source": "reference", "start": 8, "end": 9,
+                          "text": "5"}},
+        ],
+        "policy": None,
+        "references": [{"id": "stock", "text": "Crates: 5"}],
+        "review_policy": EVERY,
+        "answers": [],
+    }  # fmt: skip
+    reviewed = Reviewed(v, tmp_path, capsys)
+    _, exported, _ = reviewed.export(capsys)
+    assert main(["export", "--store", str(reviewed.folder), reviewed.packet]) == 0
+    first = {f["field"]: f["citation"] for f in json.loads(capsys.readouterr().out)["facts"]}
+    assert [f["field"] for f in exported["facts"]] == ["a", "z"]
+    assert [f["citation"]["source"] for f in exported["facts"]] == ["reference", "document"]
+    key = store_key("source@1", reviewed.source.read_bytes())
+    for fact in exported["facts"]:
+        expected = key if fact["field"] == "z" else None
+        assert fact["citation"]["source_sha256"] == expected
+        assert first[fact["field"]]["source_sha256"] == expected

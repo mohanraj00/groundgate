@@ -4,6 +4,7 @@ of a reviewed packet (SPEC §5.2)."""
 from __future__ import annotations
 
 import json
+from bisect import bisect_right
 from collections.abc import Callable, Mapping, Sequence
 from importlib import resources
 from typing import Any
@@ -108,13 +109,34 @@ def facts_schema() -> dict[str, Any]:
     return json.loads(raw)  # type: ignore[no-any-return]
 
 
-def selector(text: str, span: Mapping[str, int] | None) -> dict[str, Any] | None:
-    """The text selector of a UTF-8 byte span of the NFC ``text`` (SPEC §5.2)."""
+class Offsets:
+    """The code point offset of each UTF-8 byte offset of one NFC text. It reads the text one
+    time, then a lookup reads one block. Thus many spans of a large text stay cheap."""
+
+    BLOCK = 4096  # code points
+
+    def __init__(self, text: str) -> None:
+        self.text = text
+        self.starts = [0]  # the byte offset of each block
+        for i in range(0, len(text), self.BLOCK):
+            self.starts.append(self.starts[-1] + len(text[i : i + self.BLOCK].encode("utf-8")))
+
+    def point(self, byte: int) -> int:
+        block = min(bisect_right(self.starts, byte) - 1, max(len(self.starts) - 2, 0))
+        first = block * self.BLOCK
+        data = self.text[first : first + self.BLOCK].encode("utf-8")
+        return first + len(data[: byte - self.starts[block]].decode("utf-8"))
+
+
+def selector(
+    text: str, span: Mapping[str, int] | None, offsets: Offsets | None = None
+) -> dict[str, Any] | None:
+    """The text selector of a UTF-8 byte span of the NFC ``text`` (SPEC §5.2). ``offsets`` is
+    the ``Offsets`` of ``text``, for a caller with more than one span."""
     if span is None:
         return None
-    data = text.encode("utf-8")
-    start = len(data[: span["start"]].decode("utf-8"))
-    end = start + len(data[span["start"] : span["end"]].decode("utf-8"))
+    offsets = offsets or Offsets(text)
+    start, end = offsets.point(span["start"]), offsets.point(span["end"])
     return {
         "start": start,
         "end": end,
@@ -184,16 +206,20 @@ def reviewed_facts(
     receipt = packet.receipt
     decisions = receipt["decisions"]
     texts = {None: packet.text} | {r["id"]: r["text"] for r in packet.references or []}
+    offsets: dict[str | None, Offsets] = {}  # one for each cited text
     source_key: list[str | None] = []  # read only for the first fact with a document source
     projections: dict[str, Fact] = {}
 
     def project(decision: Mapping[str, Any], cited: Mapping[str, Any]) -> dict[str, Any]:
-        if decision["source"] == "document" and not source_key:
-            source_key.append(_document_source_key(store, packet))
         digest = cited["receipt_sha256"]
         if digest not in projections:
-            projections[digest] = _projection(cited, source_key[0] if source_key else None)
-        return projections[digest](decision)
+            projections[digest] = _projection(cited, None)
+        fact = projections[digest](decision)
+        if decision["source"] == "document":  # the key is not in the projection: it comes late
+            if not source_key:
+                source_key.append(_document_source_key(store, packet))
+            fact["citation"]["source_sha256"] = source_key[0]
+        return fact
 
     facts, open_ = [], []
     model_text_slots = len(slots(receipt, schema))  # the slots of model texts come after these
@@ -230,12 +256,15 @@ def reviewed_facts(
         fact = project(decision, cited)
         citation = fact.pop("citation")
         span = citation["span"]
-        cited_text = (
-            texts.get(citation["ref"]) if citation["source"] in ("document", "reference") else None
-        )
+        chosen = None
+        if citation["source"] in ("document", "reference") and citation["ref"] in texts:
+            ref = citation["ref"]
+            if ref not in offsets:
+                offsets[ref] = Offsets(texts[ref])
+            chosen = selector(texts[ref], span, offsets[ref])
         citation = {
             **{k: citation[k] for k in _BEFORE_SELECTOR},
-            "selector": None if cited_text is None else selector(cited_text, span),
+            "selector": chosen,
             **{k: v for k, v in citation.items() if k not in _BEFORE_SELECTOR},
         }
         row: dict[str, Any] = {k: fact.pop(k) for k in ("record", "replaced") if k in fact}
