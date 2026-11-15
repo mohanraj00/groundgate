@@ -423,24 +423,34 @@ documents with the test part of the gold set. The report then has an `audit` mem
 
 ```json
 "audit": {"audit_sha256": "sha256:...", "seed": "2026-11-audit", "since": null,
-          "picked": 34, "documents": 30, "admitted": 41, "skipped": 0, "rate": "0.02",
-          "alerts": []}
+          "picked": 34, "documents": 30, "admitted": 41, "skipped": 0,
+          "routes": [{"field": "total", "route": "checked", "admitted": 43, "errors": 0,
+                      "error_rate": "0", "bound": "0.0673", "unscored": 0,
+                      "status": "measured"}],
+          "rate": "0.02", "alerts": []}
 ```
 
+The measure decides the audit documents two times when the draft has another clear threshold
+than `P`. The `fields` of the report and the routes of the draft come from the draft profile.
+The `audit` member comes from `P` as it is, because the log and the labels name the digest of
+`P`. So an error that `P` admits gives an alert, also when the draft does not admit that value.
+
 - `picked` is the count of the picked documents of the profile, and `documents` the count of
-  them with a label. `admitted` is the count of the admitted values that the labels cover.
+  them with a label. `admitted` is the count of the values that `P` admits and the labels cover.
+- `routes` has one row for each route of `P` with an admitted value, from the test part and the
+  audit documents together. Its members are those of a route in `fields`.
 - `skipped` is the count of the labels of another profile version, or of a day before
   `--audit-since`.
 - `rate` is the next audit rate. It is `0.02` when the audit labels cover 30 or more admitted
   values and each route with an admitted value is `measured`. If not, it is `0.1`. A route
   whose admitted values all have no label (`unscored`) is a `draft`, so it keeps the rate at
   `0.1`.
-- `alerts` lists each route with an admitted value whose bound is not below the target. The
-  command prints one `alert:` line for each. With `--audit-since`, only the labels from that
-  day on count, so the alert is for that period.
+- `alerts` lists each route of `routes` with a labelled admitted value whose bound is not below
+  the target. The command prints one `alert:` line for each. With `--audit-since`, only the
+  labels from that day on count, so the alert is for that period.
 
-`audit rate` adds the rate of a report to the log as a rate entry. The pick uses it from that
-line on. So the rate goes down to 2% while each bound stays below the target, and it goes up
+`audit rate` adds the rate of a report to the log as a rate entry. It refuses the report of an
+audit set with another seed. The pick uses the rate from that line on. So the rate goes down to 2% while each bound stays below the target, and it goes up
 again to 10% when a bound passes the target or the profile version changes.
 
 The route rows of the draft profile count the audit documents in `documents`. `gold_sha256`

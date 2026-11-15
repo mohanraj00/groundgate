@@ -438,16 +438,20 @@ def picked(root: Path, profile_path: Path | None) -> dict[str, Any]:
 
 
 def write_rate(root: Path, report_path: Path) -> dict[str, Any]:
-    """Add the rate entry of a measure report to the log of the audit set."""
-    read_seed(root)
+    """Add the rate entry of a measure report to the log of the audit set. The report must be
+    of an audit set with the same seed."""
+    seed = read_seed(root)
     report = _read_json(report_path)
     try:
+        other = report["audit"]["seed"]
         entry = check_entry(
             {"entry": "rate", "profile": report["profile"]["sha256"],
              "rate": report["audit"]["rate"]}
         )  # fmt: skip
     except (KeyError, TypeError):
         raise AuditError(f"{report_path} is not a report of a measure with --audit") from None
+    if other != seed:
+        raise AuditError(f"{report_path} is the report of an audit set with another seed")
     _append(root, entry, _log(root))
     return entry
 

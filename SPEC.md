@@ -2046,14 +2046,16 @@ canonical JSON label on each line, as the audit log has its entries. The last la
 document, field and key counts.
 
 A label counts for a measure of a profile only when its `profile` is the digest of that
-profile, and its document is in the pick of the seed and the log. A label with another profile digest does not count. A label of a document
-that is not in the pick, or whose digest is not the digest of the log entry of its document,
-stops the measure.
+profile, and its document is in the pick of the seed and the log. A label with another profile
+digest does not count. A label of a document that is not in the pick, or whose digest is not
+the digest of the log entry of its document, stops the measure.
 
-**The rate rule.** A measure of a profile version gives each route (§4.10) its count of
-admitted values with a label, its count of admitted values with no label, its bound and its
-status, from the gold set labels and the audit labels together. After the measure, the rate of
-the profile digest is `0.02` when all of these hold:
+**The rate rule.** A measure of a profile version decides each labelled document with that
+profile version, as its digest names it in the log. It does not decide them with a profile that
+the measure changes, for example a draft with another clear threshold. The measure gives each
+route (§4.10) its count of admitted values with a label, its count of admitted values with no
+label, its bound and its status, from the gold set labels and the audit labels together. After
+the measure, the rate of the profile digest is `0.02` when all of these hold:
 
 - the audit labels of the measure cover 30 or more admitted values;
 - one or more routes have an admitted value;

@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 from decimal import Decimal
 from pathlib import Path
 from typing import Any
@@ -211,6 +212,7 @@ def test_measure_counts_the_audit_labels_with_the_gold_labels(tmp_path: Path) ->
         SEED, None, 30, 30, 30, 0,
     )  # fmt: skip
     assert (a["rate"], a["alerts"]) == ("0.02", [])
+    assert a["routes"] == [{"field": "items", "route": "checked", **checked}]
     assert report["documents"] == {"calibration": 1, "test": 2}
     draft = json.loads((tmp_path / "with" / "profile.json").read_text("utf-8"))
     assert draft["routes"] == [
@@ -246,6 +248,62 @@ def test_a_route_with_no_label_keeps_the_rate(tmp_path: Path) -> None:
     assert (other["admitted"], other["unscored"], other["status"]) == (0, 1, "draft")
     a = report["audit"]
     assert (a["picked"], a["admitted"], a["rate"], a["alerts"]) == (30, 30, "0.1", [])
+
+
+def test_the_rate_comes_from_the_profile_of_the_log_and_not_from_the_draft(
+    tmp_path: Path,
+) -> None:
+    """The profile clears a key judgment at 0.5. The split has no calibration document, so the
+    draft has no clear threshold. Each of the 30 audit documents has a cleared value that its
+    label calls wrong. The draft admits none of them. The profile of the log admits each one,
+    so the rate stays 0.1 and the cleared route gives an alert."""
+    vector = Path(__file__).parent / "vectors" / "calibrate" / "two-routes"
+    src = tmp_path / "in"
+    shutil.copytree(vector, src)
+    gold = src / "gold"
+    for sub in ("docs", "candidates", "judgments"):
+        for f in (gold / sub).iterdir():
+            if f.stem != "t1":  # t1 has a right total and a right standard rate, both checked
+                f.unlink()
+    labels = json.loads((gold / "labels.json").read_text("utf-8"))
+    labels["labels"] = {"t1": labels["labels"]["t1"]}
+    (gold / "labels.json").write_text(json.dumps(labels), "utf-8")
+    split = {"groundgate_split": 1, "documents": {"t1": "test"}}
+    (src / "split.json").write_text(json.dumps(split), "utf-8")
+    digest = check_profile(json.loads((src / "profile.json").read_text("utf-8"))).sha256
+    folder = tmp_path / "audit"
+    for sub in ("docs", "candidates", "judgments"):
+        (folder / sub).mkdir(parents=True)
+    (folder / "audit.json").write_text(json.dumps({"groundgate_audit": 1, "seed": SEED}), "utf-8")
+    log, given = [], []
+    for i in range(1, 31):
+        name = f"a{i:02d}"
+        for sub, end in (("docs", "txt"), ("candidates", "json"), ("judgments", "json")):
+            # c1: the judge clears the standard rate 10 with p 0.9
+            shutil.copy(vector / "gold" / sub / f"c1.{end}", folder / sub / f"{name}.{end}")
+        log.append({"entry": "document", "document": name, "profile": digest, "items": 1})
+        given.append({**_label(name, "11"), "profile": digest, "field": "rate",
+                      "key": "standard"})  # fmt: skip
+    (folder / "log.jsonl").write_text("".join(jcs(e) + "\n" for e in log), "utf-8")
+    (folder / "labels.jsonl").write_text("".join(jcs(x) + "\n" for x in given), "utf-8")
+    main(["measure", "--profile", str(src / "profile.json"), "--gold", str(gold),
+          "--split", str(src / "split.json"), "--out", str(tmp_path / "out"), "--target", "0.1",
+          "--date", "2026-11-15", "--audit", str(folder)])  # fmt: skip
+    report = json.loads((tmp_path / "out" / "report.json").read_text("utf-8"))
+    assert report["operating_point"]["KEY_NOT_AT_VALUE"] is None
+    draft = report["fields"]["rate"]["routes"]["cleared"]
+    assert (draft["admitted"], draft["errors"]) == (0, 0)  # the draft clears no value
+    a = report["audit"]
+    rows = {(x["field"], x["route"]): x for x in a["routes"]}
+    assert sorted(rows) == [("rate", "checked"), ("rate", "cleared"), ("total", "checked")]
+    cleared = rows["rate", "cleared"]
+    # 30 admitted values, each one wrong: the bound is 1
+    assert (cleared["admitted"], cleared["errors"], cleared["unscored"]) == (30, 30, 0)
+    assert (cleared["bound"], cleared["status"]) == ("1", "draft")
+    assert (a["admitted"], a["rate"]) == (30, "0.1")
+    assert {"field": "rate", "route": "cleared", "bound": "1"} in a["alerts"]
+    text = (tmp_path / "out" / "REPORT.md").read_text("utf-8")
+    assert "rate cleared: 30 admitted, 30 errors, 0 with no label, bound 1 (draft)." in text
 
 
 def test_a_wrong_admitted_value_raises_the_rate_and_gives_an_alert(
@@ -382,6 +440,13 @@ def test_the_audit_steps(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> 
     with pytest.raises(SystemExit, match="not a report of a measure with --audit"):
         main(["audit", "rate", "--audit", str(case.audit),
               "--report", str(tmp_path / "gold-only" / "report.json")])  # fmt: skip
+    other = tmp_path / "other"
+    other.mkdir()
+    (other / "audit.json").write_text(json.dumps({"groundgate_audit": 1, "seed": "x"}), "utf-8")
+    with pytest.raises(SystemExit, match="another seed"):
+        main(["audit", "rate", "--audit", str(other),
+              "--report", str(tmp_path / "out" / "report.json")])  # fmt: skip
+    assert not (other / "log.jsonl").exists()
 
 
 def test_a_receipt_with_no_profile_has_no_entry() -> None:

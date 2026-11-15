@@ -23,7 +23,8 @@ not scored. A route or a threshold with an admitted value that has no label is n
 The split file (format 1) is {"groundgate_split": 1, "documents": {doc: part}}, where a part is
 "calibration" or "test". The calibration part picks the judge threshold, and the test part gives
 the numbers of the report. With --audit A, the blind audit labels of the audit set A (SPEC
-§4.18, ``groundgate.calibrate.audit``) count with the test part. No other label has an input:
+§4.18, ``groundgate.calibrate.audit``) count with the test part. The audit rate and the alerts
+come from the decisions of P as it is, not from those of the draft. No other label has an input:
 a review answer and the decision of an approver never count for a bound. DIR gets report.json,
 REPORT.md and profile.json, the draft profile change. The command never writes the input
 profile.
@@ -432,7 +433,8 @@ def measure(
     audit: Any = None,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     """The report and the draft profile change. ``profile`` is not changed. ``audit`` is the
-    ``AuditSet`` of the profile, or None: its labelled documents count with the test part."""
+    ``AuditSet`` of the profile, or None: its labelled documents count with the test part. The
+    ``audit`` member of the report has the numbers of ``profile``, not those of the draft."""
     checked = check_profile(profile)
     calibration = sorted(d for d, p in parts.items() if p == "calibration")
     test = sorted(d for d, p in parts.items() if p == "test")
@@ -448,12 +450,16 @@ def measure(
         }
     scores = score(measured_profile, gold, test)
     documents = len(test)
-    covered = 0  # the admitted values that an audit label covers
     if audit is not None:
-        extra = score(measured_profile, audit.gold, sorted(audit.gold.docs))
-        covered = sum(r.admitted for s in extra.values() for r in s.routes.values())
-        scores = _pooled(scores, extra)
-        documents += len(audit.gold.docs)
+        names = sorted(audit.gold.docs)
+        # the monitor of the profile version of the log: its decisions, not those of the draft
+        logged_audit = draft_audit = score(measured_profile, audit.gold, names)
+        logged = _pooled(scores, draft_audit)
+        if measured_profile != profile:  # the draft has another clear threshold
+            logged_audit = score(profile, audit.gold, names)
+            logged = _pooled(score(profile, gold, test), logged_audit)
+        scores = _pooled(scores, draft_audit)
+        documents += len(names)
     fields: dict[str, Any] = {}
     rows: list[dict[str, Any]] = []
     for name, s in scores.items():
@@ -497,7 +503,9 @@ def measure(
     if audit is not None:
         from .audit import rate
 
-        summaries = [(n, r, sm) for n, f in fields.items() for r, sm in f["routes"].items()]
+        summaries = [(n, r, s.routes[r].summary(target)) for n, s in logged.items() for r in ROUTES]
+        # the admitted values of the profile version that an audit label covers
+        covered = sum(r.admitted for s in logged_audit.values() for r in s.routes.values())
         report["audit"] = {
             "audit_sha256": audit.sha256,
             "seed": audit.seed,
@@ -506,6 +514,11 @@ def measure(
             "documents": len(audit.gold.docs),
             "admitted": covered,
             "skipped": audit.skipped,
+            "routes": [
+                {"field": n, "route": r, **sm}
+                for n, r, sm in summaries
+                if sm["admitted"] + sm["unscored"] > 0
+            ],
             "rate": rate([sm for _, _, sm in summaries], covered),
             "alerts": [
                 {"field": n, "route": r, "bound": sm["bound"]}
@@ -524,6 +537,12 @@ def _audit_lines(report: Mapping[str, Any]) -> list[str]:
         f"- Blind audit: `{a['audit_sha256']}`, {a['documents']} labelled documents of "
         f"{a['picked']} picked, {a['admitted']} admitted values. The numbers count them with "
         f"the test part. Next audit rate: {a['rate']}."
+    ]
+    lines += [
+        f"- The profile version of the log, {_cell(x['field'])} {x['route']}: "
+        f"{x['admitted']} admitted, {x['errors']} errors, {x['unscored']} with no label, "
+        f"bound {x['bound']} ({x['status']})."
+        for x in a["routes"]
     ]
     lines += [
         f"- Alert: the bound of {_cell(x['field'])} on the route {x['route']} is "
