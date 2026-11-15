@@ -73,6 +73,7 @@ from .text import (
     loss_sign,
     minus_sign,
     normalize_ws,
+    option_index,
     parse_value,
     qualifiers,
     quote_pattern,
@@ -828,7 +829,7 @@ def _check(ctx: _Ctx, cand: object) -> _Passed:
         if not isinstance(raw, str) or not normalize_ws(raw):
             raise _Reject("TYPE_INVALID")
         value = normalize_ws(raw)
-        if f.options is not None and value not in {normalize_ws(o) for o in f.options}:
+        if f.options is not None and option_index(value, f.options) is None:
             raise _Reject("OPTION_INVALID")  # SPEC §3 step 5 (#530)
     else:
         parsed = parse_value(text_value)

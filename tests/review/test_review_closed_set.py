@@ -13,7 +13,7 @@ from groundgate.review.measures import lines as measure_lines
 from groundgate.review.measures import measures
 from groundgate.review.resolve import AnswerError, write_resolution
 from groundgate.review.serve import Refused, Review
-from groundgate.review.tasks import write_tasks
+from groundgate.review.tasks import DEFAULT_POLICY, write_tasks
 from groundgate.store import FolderStore, reviewer_key
 from groundgate.store.packets import admit_packet
 
@@ -89,12 +89,42 @@ def test_one_choice_asks_if_no_other_option_fits(tmp_path: Path) -> None:
         assert task["question"] == 'Is "monthly" the billing, and does no other option fit?'
 
 
+@pytest.mark.parametrize(
+    ("options", "value", "index"),
+    [
+        (["every  two years", "monthly"], "every two years", 0),
+        ([" every\ttwo\n years ", "monthly"], "\tevery\u00a0two  years ", 0),
+        (["Annual", "annual"], "annual", 1),
+        (['every  "two" years', "monthly"], 'every "two" years', 0),
+    ],
+)
+def test_the_view_gives_the_option_index_with_the_gate_comparison(
+    tmp_path: Path, options: list[str], value: str, index: int
+) -> None:
+    text = f"Billing is {value}.\n"
+    schema = {"fields": {"billing": {"type": "string", "options": options}}}
+    candidates = [{"field": "billing", "value": value, "evidence": [{"text": text}]}]
+    policy = {**DEFAULT_POLICY, "audit": {"rate": "1", "seed": "s"}}
+    with FolderStore(tmp_path / "s") as store:
+        k, receipt = admit_packet(store, text, schema, candidates)
+        assert receipt.to_dict()["decisions"][0]["outcome"] == "admitted"
+        ((tk, task),) = write_tasks(store, k, policy).tasks
+        view = Review(store, "ana", policy, clock=lambda: CLOCK).view(tk)
+        assert view["options"] == options
+        assert view["choices"][0]["shown"] == task["choices"][0]["shown"]
+        assert view["choices"][0]["option_index"] == index
+        assert "option_index" not in task["choices"][0]
+
+
 def test_the_page_shows_the_options_and_takes_no_correction(tmp_path: Path) -> None:
     store, k, tk, task = stored(tmp_path / "s")
     with store:
         review = Review(store, "ana", clock=lambda: CLOCK)
         view = review.view(tk)
         assert view["item"] == "closed_set" and view["options"] == OPTIONS
+        assert [c["option_index"] for c in view["choices"]] == [
+            OPTIONS.index(c["value"]) for c in task["choices"]
+        ]
         other = next(t for t in review.tasks if t != tk) if len(review.tasks) > 1 else None
         if other is not None:
             assert review.view(other)["options"] is None
