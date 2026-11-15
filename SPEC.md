@@ -2051,13 +2051,15 @@ that is not in the pick, or whose digest is not the digest of the log entry of i
 stops the measure.
 
 **The rate rule.** A measure of a profile version gives each route (§4.10) its count of
-admitted values, its bound and its status, from the gold set labels and the audit labels
-together. After the measure, the rate of the profile digest is `0.02` when all of these hold:
+admitted values with a label, its count of admitted values with no label, its bound and its
+status, from the gold set labels and the audit labels together. After the measure, the rate of
+the profile digest is `0.02` when all of these hold:
 
 - the audit labels of the measure cover 30 or more admitted values;
 - one or more routes have an admitted value;
 - each route with an admitted value has a label for each of its admitted values, and a bound
-  below the target.
+  below the target. A route whose admitted values all have no label is such a route, and it
+  does not pass.
 
 If not, the rate is `0.1`. The app writes the result to the log as a rate entry. So the rate
 decreases to 2% while the bound of each route stays below the target, and it increases again to

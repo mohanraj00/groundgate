@@ -266,8 +266,9 @@ def read_labels(text: str) -> list[dict[str, Any]]:
 def rate(routes: Iterable[Mapping[str, Any]], covered: int) -> str:
     """The audit rate after a measure (SPEC §4.18). ``routes`` holds the summary of each route
     of the report, and ``covered`` is the count of the admitted values that the audit labels
-    cover."""
-    with_value = [r for r in routes if r["admitted"] > 0]
+    cover. A route has an admitted value when one has a label (``admitted``) or when one has
+    no label (``unscored``)."""
+    with_value = [r for r in routes if r["admitted"] + r["unscored"] > 0]
     measured = all(r["status"] == "measured" for r in with_value)
     return LOW if covered >= MINIMUM and with_value and measured else START
 

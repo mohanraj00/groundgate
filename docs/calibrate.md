@@ -432,7 +432,9 @@ documents with the test part of the gold set. The report then has an `audit` mem
 - `skipped` is the count of the labels of another profile version, or of a day before
   `--audit-since`.
 - `rate` is the next audit rate. It is `0.02` when the audit labels cover 30 or more admitted
-  values and each route with an admitted value is `measured`. If not, it is `0.1`.
+  values and each route with an admitted value is `measured`. If not, it is `0.1`. A route
+  whose admitted values all have no label (`unscored`) is a `draft`, so it keeps the rate at
+  `0.1`.
 - `alerts` lists each route with an admitted value whose bound is not below the target. The
   command prints one `alert:` line for each. With `--audit-since`, only the labels from that
   day on count, so the alert is for that period.

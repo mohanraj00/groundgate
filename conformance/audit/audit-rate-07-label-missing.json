@@ -1,0 +1,21 @@
+{
+ "name": "audit-rate-07-label-missing",
+ "kind": "rate",
+ "description": "One route has a label for 39 of its 40 admitted values, so it is a draft.",
+ "routes": [
+  {
+   "admitted": 39,
+   "unscored": 1,
+   "status": "draft"
+  },
+  {
+   "admitted": 12,
+   "unscored": 0,
+   "status": "measured"
+  }
+ ],
+ "covered": 51,
+ "expected": {
+  "rate": "0.1"
+ }
+}

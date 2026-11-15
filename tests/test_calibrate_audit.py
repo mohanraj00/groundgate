@@ -220,6 +220,34 @@ def test_measure_counts_the_audit_labels_with_the_gold_labels(tmp_path: Path) ->
     assert "Blind audit" in (tmp_path / "with" / "REPORT.md").read_text("utf-8")
 
 
+def test_a_route_with_no_label_keeps_the_rate(tmp_path: Path) -> None:
+    """The last audit document also admits ``other``, and no label covers it. The route of
+    ``other`` has an admitted value and no label, so the rate stays 0.1."""
+    case = Case(tmp_path)
+    profile = {**PROFILE, "schema": {"fields": {"items": {"type": "integer"},
+                                                "other": {"type": "integer"}}}}  # fmt: skip
+    case.profile.write_text(json.dumps(profile), "utf-8")
+    digest = check_profile(profile).sha256
+    (case.audit / "docs" / "a30.txt").write_text("Items: 130\nOther: 730\n", "utf-8")
+    cand = [
+        {"id": "c1", "field": "items", "value": 130, "evidence": {"text": "130"}},
+        {"id": "c2", "field": "other", "value": 730, "evidence": {"text": "730"}},
+    ]
+    (case.audit / "candidates" / "a30.json").write_text(json.dumps(cand), "utf-8")
+    entries = [{**e, "profile": digest} for e in case.entries]
+    entries[-1]["items"] = 2  # 29 items before it, so the pick has all 30 documents
+    case.write_log(entries)
+    case.labels = [{**x, "profile": digest} for x in case.labels]
+    case.write_labels()
+    report = case.run("out")
+    items = report["fields"]["items"]["routes"]["checked"]
+    other = report["fields"]["other"]["routes"]["checked"]
+    assert (items["admitted"], items["unscored"], items["status"]) == (32, 0, "measured")
+    assert (other["admitted"], other["unscored"], other["status"]) == (0, 1, "draft")
+    a = report["audit"]
+    assert (a["picked"], a["admitted"], a["rate"], a["alerts"]) == (30, 30, "0.1", [])
+
+
 def test_a_wrong_admitted_value_raises_the_rate_and_gives_an_alert(
     tmp_path: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:

@@ -5,10 +5,12 @@
  "routes": [
   {
    "admitted": 0,
+   "unscored": 0,
    "status": "draft"
   },
   {
    "admitted": 0,
+   "unscored": 0,
    "status": "draft"
   }
  ],

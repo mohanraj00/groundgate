@@ -8495,28 +8495,33 @@ for label_name, label_text, label, label_ok in (
                    "expected": {"valid": label_ok}})  # fmt: skip
 
 
-def audit_rate(name: str, description: str, routes: list[tuple[int, str]], covered: int,
+def audit_rate(name: str, description: str, routes: list[tuple[int, int, str]], covered: int,
                rate: str) -> None:  # fmt: skip
-    """``routes`` lists (admitted, status) of each route of the measure. ``covered`` is the
+    """``routes`` lists (admitted, unscored, status) of each route of the measure: the admitted
+    values with a label, the admitted values with no label, and the status. ``covered`` is the
     count of the admitted values that the audit labels cover."""
     AUDITS.append({
         "name": f"audit-rate-{name}", "kind": "rate", "description": description,
-        "routes": [{"admitted": a, "status": st} for a, st in routes], "covered": covered,
-        "expected": {"rate": rate},
+        "routes": [{"admitted": a, "unscored": u, "status": st} for a, u, st in routes],
+        "covered": covered, "expected": {"rate": rate},
     })  # fmt: skip
 
 
 audit_rate("01-low", "Each route with an admitted value is measured, and the audit labels cover "
-           "30 admitted values.", [(40, "measured"), (12, "measured")], 30, "0.02")  # fmt: skip
+           "30 admitted values.", [(40, 0, "measured"), (12, 0, "measured")], 30, "0.02")  # fmt: skip
 audit_rate("02-few-items", "The audit labels cover 29 admitted values, so the rate stays 0.1.",
-           [(40, "measured"), (12, "measured")], 29, "0.1")  # fmt: skip
+           [(40, 0, "measured"), (12, 0, "measured")], 29, "0.1")  # fmt: skip
 audit_rate("03-bound-passed", "One route with an admitted value is a draft: its bound is not "
-           "below the target, or it has an admitted value with no label.",
-           [(40, "measured"), (12, "draft")], 200, "0.1")  # fmt: skip
+           "below the target.", [(40, 0, "measured"), (12, 0, "draft")], 200, "0.1")  # fmt: skip
 audit_rate("04-empty-route", "A route with no admitted value is a draft and does not count.",
-           [(40, "measured"), (0, "draft")], 35, "0.02")  # fmt: skip
-audit_rate("05-no-value", "No route has an admitted value.", [(0, "draft"), (0, "draft")], 0,
-           "0.1")  # fmt: skip
+           [(40, 0, "measured"), (0, 0, "draft")], 35, "0.02")  # fmt: skip
+audit_rate("05-no-value", "No route has an admitted value.", [(0, 0, "draft"), (0, 0, "draft")],
+           0, "0.1")  # fmt: skip
+audit_rate("06-no-label", "One route has 30 admitted values and no label for them. It is a "
+           "draft and it counts, so the rate stays 0.1.",
+           [(30, 0, "measured"), (0, 30, "draft")], 30, "0.1")  # fmt: skip
+audit_rate("07-label-missing", "One route has a label for 39 of its 40 admitted values, so it "
+           "is a draft.", [(39, 1, "draft"), (12, 0, "measured")], 51, "0.1")  # fmt: skip
 
 
 def main() -> None:
