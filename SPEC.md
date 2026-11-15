@@ -1976,8 +1976,9 @@ a blind audit label and a gold set label count for the bound of a route. A revie
 decision of an outside approver are not labels, because that person saw the proposal. This
 section changes no decision.
 
-**The audit log** (format 1) is a text file with one canonical JSON object (§6) on each line, in
-the order in which the app wrote the lines. An entry is one of two kinds:
+**The audit log** (format 1) is a UTF-8 text file with one canonical JSON object (§6) on each
+line, in the order in which the app wrote the lines. Each line ends with a line feed. An entry
+is one of two kinds:
 
 ```json
 {"entry": "document", "document": "inv-0007", "profile": "sha256:...", "items": 4}
@@ -2041,7 +2042,8 @@ when the document has no value for the field. `labeler` is an NFC string with a 
 is not a space. `date` is a real day as `YYYY-MM-DD`. A record is invalid with a member that
 this format does not list, a member that is missing, or a member with another form. So a
 review answer or the decision of an approver is not an audit label. A label file has one
-canonical JSON label on each line. The last label of one document, field and key counts.
+canonical JSON label on each line, as the audit log has its entries. The last label of one
+document, field and key counts.
 
 A label counts for a measure of a profile only when its `profile` is the digest of that
 profile, and its document is in the pick of the seed and the log. A label with another profile digest does not count. A label of a document
