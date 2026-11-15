@@ -1,0 +1,19 @@
+{
+ "name": "audit-rate-01-low",
+ "kind": "rate",
+ "description": "Each route with an admitted value is measured, and the audit labels cover 30 admitted values.",
+ "routes": [
+  {
+   "admitted": 40,
+   "status": "measured"
+  },
+  {
+   "admitted": 12,
+   "status": "measured"
+  }
+ ],
+ "covered": 30,
+ "expected": {
+  "rate": "0.02"
+ }
+}

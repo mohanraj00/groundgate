@@ -1,0 +1,11 @@
+{
+ "name": "audit-log-bad-boolean-items",
+ "kind": "log",
+ "description": "A count of items that is a boolean.",
+ "log": [
+  "{\"document\":\"inv-0001\",\"entry\":\"document\",\"items\":true,\"profile\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}"
+ ],
+ "expected": {
+  "error": true
+ }
+}

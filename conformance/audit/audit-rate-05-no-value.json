@@ -1,0 +1,19 @@
+{
+ "name": "audit-rate-05-no-value",
+ "kind": "rate",
+ "description": "No route has an admitted value.",
+ "routes": [
+  {
+   "admitted": 0,
+   "status": "draft"
+  },
+  {
+   "admitted": 0,
+   "status": "draft"
+  }
+ ],
+ "covered": 0,
+ "expected": {
+  "rate": "0.1"
+ }
+}

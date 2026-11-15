@@ -1,0 +1,11 @@
+{
+ "name": "audit-log-bad-array",
+ "kind": "log",
+ "description": "An entry that is not an object.",
+ "log": [
+  "[\"document\",\"inv-0001\"]"
+ ],
+ "expected": {
+  "error": true
+ }
+}

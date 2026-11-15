@@ -1,0 +1,63 @@
+{
+ "name": "audit-tasks-01-fields",
+ "kind": "tasks",
+ "description": "One task for each field and each key, in code point order, and none for a member field of a record. A task gives the document and the field only. The runner adds the format member and the digest of the profile.",
+ "profile": {
+  "groundgate_profile": 1,
+  "id": "invoice-test",
+  "version": "1.0.0",
+  "schema": {
+   "fields": {
+    "total": {
+     "type": "number"
+    },
+    "rate": {
+     "type": "number",
+     "keys": [
+      "standard",
+      "express"
+     ]
+    },
+    "due": {
+     "type": "date",
+     "formats": [
+      "YYYY-MM-DD"
+     ]
+    },
+    "lines": {
+     "type": "record",
+     "members": {
+      "code": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ },
+ "document": "inv-0007",
+ "expected": {
+  "tasks": [
+   {
+    "document": "inv-0007",
+    "field": "due",
+    "key": null
+   },
+   {
+    "document": "inv-0007",
+    "field": "rate",
+    "key": "express"
+   },
+   {
+    "document": "inv-0007",
+    "field": "rate",
+    "key": "standard"
+   },
+   {
+    "document": "inv-0007",
+    "field": "total",
+    "key": null
+   }
+  ]
+ }
+}

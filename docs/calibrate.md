@@ -222,8 +222,13 @@ files.
 
 ```bash
 groundgate calibrate measure --profile P --gold G --split S --out DIR \
-    [--target 0.05] [--date YYYY-MM-DD]
+    [--target 0.05] [--date YYYY-MM-DD] [--audit A] [--audit-since YYYY-MM-DD]
 ```
+
+With `--audit A`, the blind audit labels of the audit set `A` count with the labels of the test
+part ([audit](#audit-a-blind-sample-of-production-documents)). These two are the only labels
+that the command reads. A review answer and the decision of an approver never count for a
+bound, because that person saw the proposed value.
 
 ### The gold set, format 1
 
@@ -340,3 +345,101 @@ The vectors of this format are in
 - A small test part gives a high bound. With no error, a bound below 0.05 needs 59 admitted
   values on one route.
 
+## audit: a blind sample of production documents
+
+A gold set tells you how a profile did before you used it. The blind audit tells you how it
+does on the documents that it decides now ([SPEC §4.18](../SPEC.md),
+[#643](https://github.com/mohanraj00/groundgate/issues/643)). It picks whole documents at
+random, and a person labels each field without the proposed value. `calibrate measure --audit`
+then counts those labels with the gold set labels.
+
+The page for the audit task is not part of this command. It is a separate issue.
+
+### The audit set, format 1
+
+`A` is a directory that you keep:
+
+- `A/audit.json`: `{"groundgate_audit": 1, "seed": "2026-11-audit"}`. Choose the seed one
+  time, before the first document, and do not change it.
+- `A/log.jsonl`: the audit log. Each line is one entry in canonical JSON.
+- `A/labels.jsonl`: the audit labels. Each line is one label in canonical JSON.
+- `A/docs/<doc>.txt`, `A/candidates/<doc>.json` and the optional `A/judgments/<doc>.json`:
+  the recorded inputs of each labelled document, as in a gold set.
+
+```bash
+groundgate calibrate audit add  --audit A --name DOC --receipt receipt.json
+groundgate calibrate audit pick --audit A [--profile P] [--out pick.json]
+groundgate calibrate audit rate --audit A --report DIR/report.json
+```
+
+### The log and the pick
+
+`audit add` adds one document entry to the log for a receipt that a profile decided:
+
+```json
+{"document":"inv-0007","entry":"document","items":4,"profile":"sha256:..."}
+```
+
+`items` is the count of the admitted values of the receipt. Add each document that the gate
+decides, in the order in which it decides them, also a document with no admitted value.
+
+`audit pick` replays the pick from the seed and the log. It reads no clock and no label, so
+the same seed and the same log give the same documents each time:
+
+- For each profile version, each document is picked until the picked documents have 30 items.
+- After that, a document is picked when its hash is below the rate of its profile version. The
+  rate starts at 10%.
+- A new profile version has a new digest, so it starts again at 10% with no picked item.
+
+With `--profile P`, the output also has the tasks of the picked documents of that profile: one
+task for each field, and one for each key of a field with keys.
+
+```json
+{"groundgate_audit_task": 1, "document": "inv-0007", "profile": "sha256:...",
+ "field": "total", "key": null}
+```
+
+A task gives the document and the field only. It has no proposed value, no evidence and no
+outcome, and a field with an admitted value gets the same task as a field with none.
+
+### The labels
+
+The labeler reads the document and writes the right value of each task, in the canonical form
+of the receipt `value`, or null when the document has no value for the field:
+
+```json
+{"date":"2026-11-15","document":"inv-0007","field":"total","groundgate_audit_label":1,"key":null,"labeler":"ana","profile":"sha256:...","value":"90"}
+```
+
+The format is closed. A record with another member, for example the `verdict` of a review
+answer or the decision of an approver, stops the measure. So does a label of a document that
+is not in the pick. The last label of one document, field and key counts.
+
+### The measure and the rate
+
+`calibrate measure --audit A` replays the pick, reads the labels of the profile `P`, and decides
+each labelled document again from its recorded candidates and judgments. It counts those
+documents with the test part of the gold set. The report then has an `audit` member:
+
+```json
+"audit": {"audit_sha256": "sha256:...", "seed": "2026-11-audit", "since": null,
+          "picked": 34, "documents": 30, "admitted": 41, "skipped": 0, "rate": "0.02",
+          "alerts": []}
+```
+
+- `picked` is the count of the picked documents of the profile, and `documents` the count of
+  them with a label. `admitted` is the count of the admitted values that the labels cover.
+- `skipped` is the count of the labels of another profile version, or of a day before
+  `--audit-since`.
+- `rate` is the next audit rate. It is `0.02` when the audit labels cover 30 or more admitted
+  values and each route with an admitted value is `measured`. If not, it is `0.1`.
+- `alerts` lists each route with an admitted value whose bound is not below the target. The
+  command prints one `alert:` line for each. With `--audit-since`, only the labels from that
+  day on count, so the alert is for that period.
+
+`audit rate` adds the rate of a report to the log as a rate entry. The pick uses it from that
+line on. So the rate goes down to 2% while each bound stays below the target, and it goes up
+again to 10% when a bound passes the target or the profile version changes.
+
+The route rows of the draft profile count the audit documents in `documents`. `gold_sha256`
+stays the digest of the gold set.

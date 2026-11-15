@@ -1,0 +1,14 @@
+{
+ "name": "audit-label-bad-approver",
+ "kind": "label",
+ "description": "The decision of an approver is not an audit label.",
+ "label": {
+  "document": "inv-0007",
+  "field": "total",
+  "decision": "approved",
+  "approver": "bo"
+ },
+ "expected": {
+  "valid": false
+ }
+}

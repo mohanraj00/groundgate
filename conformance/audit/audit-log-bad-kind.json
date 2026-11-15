@@ -1,0 +1,11 @@
+{
+ "name": "audit-log-bad-kind",
+ "kind": "log",
+ "description": "An entry kind other than document and rate.",
+ "log": [
+  "{\"document\":\"inv-0001\",\"entry\":\"label\",\"items\":4,\"profile\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}"
+ ],
+ "expected": {
+  "error": true
+ }
+}
