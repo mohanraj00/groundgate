@@ -380,9 +380,10 @@ also if it changes during the build.
    `forget(key, reason)` with no run keys, has no run keys, so the second rule applies to it.
    A value is still document data. If an app must also remove the values,
    `groundgate store forget --all PACKET` removes each object and log of the packet. It
-   removes each event of the packet from the `events` logs, because an event holds a value, and
-   writes the events of the other packets again as a new chain. If an `events` log cannot be
-   read, `forget --all` prints it as "unchecked", exits 1 and keeps the packet. It also
+   removes each event of the packet and of its correction packets from the `events` logs,
+   because an event holds a value, and writes the events of the other packets again as a new
+   chain. The events go first, before any object. If an `events` log cannot be read, `forget
+   --all` prints it as "unchecked" and exits 1, as for an answer log that cannot be read. It also
    removes each `task@1` and `resolution@1` that names the packet, and each correction packet
    that `review resolve` wrote for it, with its candidates, judgments and receipt (#516). A
    correction packet has the inputs of the packet, no run record, and the exact candidates

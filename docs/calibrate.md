@@ -498,13 +498,15 @@ so it starts with no events.
   field to review, or to keep its route a draft.
 - `value_test`: one for each rejection and correction, in log order. It names the packet, the
   value that the gate must not admit (`refuse`) and the right value (`admit`, null for a
-  rejection). Add it to your gold set or to your tests, and replay the packet with a new
-  profile version to see the effect, with no model call.
-- `term`: one for a correction when the right value is on exactly one line of the packet text,
-  with words before it on that line. `alias` is those words, with the punctuation and spaces at
-  the end removed. The draft names the packet and the line. A field name or an alias that the
+  rejection and for a correction to null). Add it to your gold set or to your tests, and
+  replay the packet with a new profile version to see the effect, with no model call.
+- `term`: one for a correction to a string when the right value is on exactly one line of the
+  packet text, with words before it on that line. `alias` is those words, with the punctuation
+  and spaces at the end removed. The draft names the packet and the line. A field name or an alias that the
   field has already gives no draft. Check each term against the document before you add it to
   the field's `aliases`.
 
 `missing_packets` lists each packet of a correction that is not in the store. A correction of
-such a packet gives no term.
+such a packet gives no term. `suggest` scans the packet text once for each packet
+and right value, and for at most 1024 of them. `unscanned_corrections` counts the corrections
+after that bound, which give no term.

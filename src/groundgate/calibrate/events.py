@@ -41,8 +41,10 @@ __all__ = [
 
 FORMAT = 1
 DRAFTS_FORMAT = 1
-MAX_EVENT = 64 << 10  # bytes of one event as canonical JSON
+MAX_EVENT = 64 << 10  # bytes of one event as canonical JSON, with a null ``corrected``
+MAX_CORRECTED = 65536  # characters of a corrected value
 MAX_LABEL = 64  # characters of a proposed term
+MAX_SCANS = 1024  # (packet, corrected value) pairs that one suggest scans for a term
 DECISIONS = ("approve", "reject", "correct")
 ACTORS = ("person", "program")
 _EVENT = frozenset(
@@ -94,7 +96,12 @@ def check_event(obj: object) -> dict[str, Any]:
         and (obj["key"] is None or (isinstance(obj["key"], str) and bool(obj["key"])))
         and isinstance(obj["value"], str)
         and (
-            (isinstance(corrected, str) and corrected != obj["value"])
+            corrected is None
+            or (
+                isinstance(corrected, str)
+                and corrected != obj["value"]
+                and len(corrected) <= MAX_CORRECTED
+            )
             if decision == "correct"
             else corrected is None
         )
@@ -103,7 +110,7 @@ def check_event(obj: object) -> dict[str, Any]:
         and set(origin) == {"system", "id"}
         and _text(origin["system"], 128)
         and _text(origin["id"], 256)
-        and _day(obj["date"])
+        and (obj["date"] is None or _day(obj["date"]))
     )
     if not ok:
         raise EventError("an event has a member with a wrong form")
@@ -111,11 +118,15 @@ def check_event(obj: object) -> dict[str, Any]:
         # A lone surrogate has no UTF-8 form, so a later write of the drafts would fail.
         raise EventError("an event has a string with a lone surrogate")
     try:
-        size = len(jcs(obj).encode("utf-8"))
+        # The corrected value has its own bound, so an event has at most 64 KiB and 65536
+        # characters of six bytes each as canonical JSON (SPEC §4.19).
+        size = len(jcs({**obj, "corrected": None}).encode("utf-8"))
     except (PacketError, TypeError, ValueError, RecursionError) as exc:
         raise EventError(f"an event has no canonical JSON form: {exc}") from None
     if size > MAX_EVENT:
-        raise EventError(f"an event is more than {MAX_EVENT} bytes as canonical JSON")
+        raise EventError(
+            f"an event is more than {MAX_EVENT} bytes as canonical JSON without its correction"
+        )
     return dict(obj)
 
 
@@ -296,9 +307,13 @@ def suggest(store: Store, profile_obj: Mapping[str, Any]) -> dict[str, Any]:
     missing: set[str] = set()
     terms: set[tuple[str, str]] = set()
     texts: dict[str, str] = {}
+    # Each scan reads the whole packet text, so scan each pair once, and at most MAX_SCANS
+    # pairs: many events of a bad approver cannot make suggest scan without a bound (#684).
+    scans: dict[tuple[str, str], tuple[str, int] | None] = {}
+    unscanned = 0
     for e in events:
-        if e["decision"] != "correct":
-            continue
+        if e["decision"] != "correct" or e["corrected"] is None:
+            continue  # a correction to null gives no term
         packet = e["packet_sha256"]
         if packet not in texts:
             try:
@@ -307,7 +322,13 @@ def suggest(store: Store, profile_obj: Mapping[str, Any]) -> dict[str, Any]:
                 missing.add(packet)
                 texts[packet] = ""
                 continue
-        found = _term(texts[packet], e["corrected"])
+        pair = (packet, e["corrected"])
+        if pair not in scans:
+            if len(scans) >= MAX_SCANS:
+                unscanned += 1
+                continue
+            scans[pair] = _term(texts[packet], e["corrected"])
+        found = scans[pair]
         spec = profile.schema.fields.get(e["field"])
         if found is None or spec is None:
             continue
@@ -326,6 +347,7 @@ def suggest(store: Store, profile_obj: Mapping[str, Any]) -> dict[str, Any]:
         "events": len(events),
         "drafts": drafts,
         "missing_packets": sorted(missing),
+        "unscanned_corrections": unscanned,
     }
 
 

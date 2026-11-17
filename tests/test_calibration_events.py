@@ -129,6 +129,7 @@ WANT_DRAFTS = {
          "line": 3, "origin": {"system": "approvals", "id": "d-0003"}},
     ],
     "missing_packets": [],
+    "unscanned_corrections": 0,
 }  # fmt: skip
 
 
@@ -299,3 +300,43 @@ def test_an_event_with_a_lone_surrogate_is_refused(tmp_path: Path) -> None:
     assert "\\ud800" in path.read_text("utf-8")
     with pytest.raises(events.EventError, match="line 1: an event has a string with a lone"):
         events.read_file(path)
+
+
+def test_a_correction_to_null_gives_a_value_test_and_no_term(tmp_path: Path) -> None:
+    """A correction can give null as the right value, and the day can be unknown (#684)."""
+    root = tmp_path / "s"
+    _store(root)
+    line = (FIXTURE / "events.jsonl").read_text("utf-8").splitlines()[2]
+    event = {**json.loads(line), "corrected": None, "date": None}
+    with FolderStore(root) as store:
+        events.add(store, [event])
+        drafts = events.suggest(store, PROFILE)["drafts"]
+    assert [d["draft"] for d in drafts] == ["review_share", "value_test"]
+    assert drafts[1]["refuse"] == "90" and drafts[1]["admit"] is None
+
+
+def test_suggest_scans_each_packet_and_value_once_and_has_a_bound(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Many corrections of one packet cannot make suggest scan its text without a bound (#684)."""
+    root = tmp_path / "s"
+    _store(root)
+    line = json.loads((FIXTURE / "events.jsonl").read_text("utf-8").splitlines()[2])
+    same = [{**line, "origin": {"system": "approvals", "id": f"s-{n}"}} for n in range(5)]
+    other = [{**line, "corrected": str(100 + n), "origin": {"system": "approvals", "id": f"o-{n}"}}
+             for n in range(4)]  # fmt: skip
+    calls: list[str] = []
+    real = events._term
+
+    def counted_term(text: str, value: str) -> tuple[str, int] | None:
+        calls.append(value)
+        return real(text, value)
+
+    monkeypatch.setattr(events, "_term", counted_term)
+    monkeypatch.setattr(events, "MAX_SCANS", 3)
+    with FolderStore(root) as store:
+        events.add(store, [*same, *other])
+        drafts = events.suggest(store, PROFILE)
+    assert calls == ["95", "100", "101"]
+    assert drafts["unscanned_corrections"] == 2
+    assert [d["draft"] for d in drafts["drafts"]].count("term") == 1

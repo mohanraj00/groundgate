@@ -1,7 +1,7 @@
 {
  "name": "event-bad-size",
  "kind": "event",
- "description": "An event of more than 64 KiB as canonical JSON.",
+ "description": "An event of more than 64 KiB as canonical JSON with a null correction.",
  "event": {
   "groundgate_calibration_event": 1,
   "decision": "correct",

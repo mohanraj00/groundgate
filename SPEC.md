@@ -2104,19 +2104,20 @@ profile from events. A person or a policy accepts or refuses each draft.
 | `fact_sha256` | The digest (§6) of kind `fact` over the fact object of the export, as it is. |
 | `field`, `key` | The field and the key of the fact. `key` is null for a field with no keys. |
 | `value` | The value of the fact, as the export gives it. |
-| `corrected` | The right value in the canonical form of the receipt `value`, for `correct`. Null for `approve` and `reject`. |
+| `corrected` | The right value in the canonical form of the receipt `value`, for `correct`, or null if the right value is null. Null for `approve` and `reject`. |
 | `actor` | `person` or `program`: the kind of the approver that decided. |
 | `origin` | `{"system", "id"}`: the name of the approver system and the id of the decision in it. |
-| `date` | The day of the decision, a real day as `YYYY-MM-DD`. |
+| `date` | The day of the decision, a real day as `YYYY-MM-DD`, or null if the approver system does not give the day. |
 
 A digest is `sha256:` and 64 lowercase hex digits. `field` is a string with one or more
 characters. `key` is null or a string with one or more characters. `value` is a string.
-`corrected` is a string that is not equal to `value` for `correct`, and null for the other
-decisions. `system` and `id` are NFC strings with a character that is not a space, with at most
+`corrected` is null or a string for `correct`. A string has at most 65536 characters and is not
+equal to `value`. `corrected` is null for the other decisions. `system` and `id` are NFC strings with a character that is not a space, with at most
 128 and 256 characters. An event is invalid with a member that this format does not list, a
 member that is missing, or a member with another form. A string with a lone surrogate (an
 escape from `\ud800` to `\udfff` with no pair) has no UTF-8 form, so it makes the event invalid.
-A canonical JSON event of more than 64 KiB is invalid.
+An event is invalid if its canonical JSON with a null `corrected` has more than 64 KiB. So an
+event has at most 64 KiB and the canonical JSON of 65536 characters, at most 448 KiB in all.
 
 groundgate checks the form of the digests only. The fact digest names the fact that the approver
 saw. A replay of the packet (§5.1) gives the fact again.

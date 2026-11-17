@@ -1,7 +1,7 @@
 {
- "name": "event-bad-correct-no-value",
+ "name": "event-09-no-date",
  "kind": "event",
- "description": "A correction with no corrected value.",
+ "description": "The approver system does not give the day of the decision.",
  "event": {
   "groundgate_calibration_event": 1,
   "decision": "correct",
@@ -12,15 +12,15 @@
   "field": "total",
   "key": null,
   "value": "90",
-  "corrected": null,
+  "corrected": "95",
   "actor": "person",
   "origin": {
    "system": "approvals",
    "id": "d-0001"
   },
-  "date": "2026-11-15"
+  "date": null
  },
  "expected": {
-  "valid": false
+  "valid": true
  }
 }
