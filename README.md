@@ -548,12 +548,17 @@ a changed document, schema, policy, candidate or outcome.
   against a target of 40% or less
   ([bench/requested4/development-646/RESULTS.md](bench/requested4/development-646/RESULTS.md)).
   0.15 adds the document-family profile (#639) and its measure on a gold set of your own
-  (#640). I did not run a bench set for 0.15, so these are still the numbers of 0.14.
+  (#640). I did not run a bench set for 0.15 or for 0.16, so these are still the numbers of
+  0.14. 0.16 seals 76 labels for a held-out regulatory text family (#641). Its claim split is
+  not run yet (#686).
 
 ## Status
 
-Alpha. groundgate 0.15.0 implements spec v0.12. [CHANGELOG.md](CHANGELOG.md) lists what each version
-changes, with its measure. 0.15 adds document-family profiles (#639) and `groundgate calibrate
+Alpha. groundgate 0.16.0 implements spec v0.12. [CHANGELOG.md](CHANGELOG.md) lists what each version
+changes, with its measure. 0.16 adds the `facts@2` export with review results and text selectors
+(#675), a blind audit sample with an adaptive rate (#643), calibration events from an outside
+approver (#642), the source format in `reading@2` (#570), the status of each built-in kind pack
+in `groundgate pack list` (#648), and the held-out regulatory text family (#641). 0.15 adds document-family profiles (#639) and `groundgate calibrate
 measure` (#640), the value kinds `date` (#612), `record` with checks across the documents of a
 set (#613) and `passage` (#638), closed options for a string field (#530), source pins (#616),
 the page and the box of each admitted value (#614), the completeness of each reading (#615),
