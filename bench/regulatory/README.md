@@ -98,4 +98,8 @@ The owner approved this method on 2026-11-17. `passes.py` runs it:
 5. `passes.py seal` writes `labels.json` and its digest into the manifest. It refuses while a
    slot is open. The labels are sealed before any benchmark model output on this set.
 
+The labels were sealed on 2026-11-17. 71 of the 76 slots are agreements, and the owner decided
+the other 5. 58 labels have a value and 18 are absent. The manifest records the digest of
+`labels.json`.
+
 The answers of the passes stay in local work storage.

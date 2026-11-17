@@ -1151,3 +1151,18 @@ def test_a_rerun_with_a_changed_source_fails_before_it_writes(
     assert "rate" in (out / "cfr-9-391.txt").read_text()
     assert sources.main(["--out", str(out), "--repin"]) == 0
     assert (here / "manifest.json").read_text() != pinned
+
+
+def test_the_sealed_regulatory_labels_match_the_manifest_and_the_slots() -> None:
+    import hashlib
+
+    here = BENCH / "regulatory"
+    raw = (here / "labels.json").read_bytes()
+    manifest = json.loads((here / "manifest.json").read_text())
+    assert manifest["labels"]["sha256"] == "sha256:" + hashlib.sha256(raw).hexdigest()
+    slots = json.loads((here / "slots.json").read_text())["slots"]
+    labels = {x["slot"]: x for x in json.loads(raw)["labels"]}
+    assert set(labels) == {s["slot"] for s in slots}
+    label = _label_module()
+    for s in slots:
+        assert label.problem(s["kind"], labels[s["slot"]]) is None

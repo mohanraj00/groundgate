@@ -276,5 +276,12 @@
   "count": 76,
   "calibration": 26,
   "heldout": 50
+ },
+ "labels": {
+  "file": "labels.json",
+  "sha256": "sha256:123f05877152ce42a3518cae7e71504e2027c42165d72f1e260f64e6aea80ff7",
+  "sealed": "2026-11-17",
+  "agree": 71,
+  "owner": 5
  }
 }

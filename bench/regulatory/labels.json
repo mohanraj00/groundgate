@@ -1,0 +1,1156 @@
+{
+ "format": "regulatory-labels/1",
+ "labels": [
+  {
+   "slot": "r001",
+   "id": "cfr-7-800",
+   "split": "heldout",
+   "field": "section_text",
+   "status": "value",
+   "value": "Any person desiring to complain of a rejection or disapproval of equipment by official personnel or of any alleged discrepancy in the testing of equipment under the Act by official personnel or by approved scale testing organizations may file a complaint with the Service.",
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r002",
+   "id": "cfr-7-800",
+   "split": "heldout",
+   "field": "section_text",
+   "status": "value",
+   "value": "(a) General. Registration is subject to suspension or revocation whenever the Administrator determines that the registrant has violated any provision of the Act or regulations, or has been convicted of any violation involving the handling, weighing, or inspection of grain under Title 18 of the United States Code.\n\n(b) Procedure. Before the Service suspends or revokes a registration, the registrant (hereinafter the “respondent”): (1) Shall be notified of the proposed action and the reasons therefor and (2) shall be afforded opportunity for a hearing in accordance with the Rules of Practice Governing Formal Adjudicatory Proceedings Instituted by the Secretary under Various Statutes (7 CFR, 1.130 through 1.151). Prior to formal adjudicatory proceedings, the Service may allow the respondent to express views on the action proposed by the Service in an informal conference before the Administrator. If the Service and the respondent enter into a consent agreement, no formal adjudicatory proceedings shall be initiated.",
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r003",
+   "id": "cfr-7-800",
+   "split": "heldout",
+   "field": "definition",
+   "status": "value",
+   "value": "A geographical area assigned to an agency or to a field office for the performance of official inspection or Class X or Class Y weighing services.",
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r004",
+   "id": "cfr-7-800",
+   "split": "heldout",
+   "field": "table_value",
+   "status": "value",
+   "value": "10.0",
+   "unit": "percent",
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r005",
+   "id": "cfr-7-800",
+   "split": "heldout",
+   "field": "table_value",
+   "status": "absent",
+   "value": null,
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r006",
+   "id": "cfr-7-800",
+   "split": "heldout",
+   "field": "table_rows",
+   "status": "value",
+   "value": [
+    {
+     "Grade": null,
+     "Minimum test weight per bushel (percent)": "GL BP",
+     "Maximum limits of— / Damaged kernels / Heat-damaged (percent)": "GL BP",
+     "Maximum limits of— / Damaged kernels / Total 1 (percent)": "GL BP",
+     "Maximum limits of— / Foreign material / Material other than wheat or rye (percent)": "GL BP",
+     "Maximum limits of— / Foreign material / Total 2 (percent)": "GL BP",
+     "Maximum limits of— / Shrunken and broken kernels (percent)": "GL BP",
+     "Maximum limits of— / Defects 3 (percent)": "GL BP"
+    },
+    {
+     "Grade": "U.S. No. 1",
+     "Minimum test weight per bushel (percent)": "48.0 -0.5",
+     "Maximum limits of— / Damaged kernels / Heat-damaged (percent)": "0.2 0.1",
+     "Maximum limits of— / Damaged kernels / Total 1 (percent)": "2.0 0.8",
+     "Maximum limits of— / Foreign material / Material other than wheat or rye (percent)": "1.0 0.4",
+     "Maximum limits of— / Foreign material / Total 2 (percent)": "2.0 0.6",
+     "Maximum limits of— / Shrunken and broken kernels (percent)": "5.0 0.8",
+     "Maximum limits of— / Defects 3 (percent)": "5.0 1.3"
+    },
+    {
+     "Grade": "U.S. No. 2",
+     "Minimum test weight per bushel (percent)": "45.0 -0.5",
+     "Maximum limits of— / Damaged kernels / Heat-damaged (percent)": "0.2 0.1",
+     "Maximum limits of— / Damaged kernels / Total 1 (percent)": "4.0 1.1",
+     "Maximum limits of— / Foreign material / Material other than wheat or rye (percent)": "2.0 0.5",
+     "Maximum limits of— / Foreign material / Total 2 (percent)": "4.0 0.9",
+     "Maximum limits of— / Shrunken and broken kernels (percent)": "8.0 0.8",
+     "Maximum limits of— / Defects 3 (percent)": "8.0 1.3"
+    },
+    {
+     "Grade": "U.S. No. 3",
+     "Minimum test weight per bushel (percent)": "43.0 -0.5",
+     "Maximum limits of— / Damaged kernels / Heat-damaged (percent)": "0.5 0.4",
+     "Maximum limits of— / Damaged kernels / Total 1 (percent)": "8.0 1.5",
+     "Maximum limits of— / Foreign material / Material other than wheat or rye (percent)": "3.0 0.6",
+     "Maximum limits of— / Foreign material / Total 2 (percent)": "7.0 1.2",
+     "Maximum limits of— / Shrunken and broken kernels (percent)": "12.0 1.6",
+     "Maximum limits of— / Defects 3 (percent)": "12.0 2.3"
+    },
+    {
+     "Grade": "U.S. No. 4",
+     "Minimum test weight per bushel (percent)": "41.0 -0.5",
+     "Maximum limits of— / Damaged kernels / Heat-damaged (percent)": "3.0 0.8",
+     "Maximum limits of— / Damaged kernels / Total 1 (percent)": "15.0 2.0",
+     "Maximum limits of— / Foreign material / Material other than wheat or rye (percent)": "4.0 0.8",
+     "Maximum limits of— / Foreign material / Total 2 (percent)": "10.0 1.4",
+     "Maximum limits of— / Shrunken and broken kernels (percent)": "20.0 2.3",
+     "Maximum limits of— / Defects 3 (percent)": "20.0 2.3"
+    }
+   ],
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r007",
+   "id": "cfr-7-800",
+   "split": "heldout",
+   "field": "effective_date",
+   "status": "absent",
+   "value": null,
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r008",
+   "id": "cfr-8-106",
+   "split": "heldout",
+   "field": "section_text",
+   "status": "value",
+   "value": "The Director of USCIS, or such officials as he or she may designate, may certify records when authorized under 5 U.S.C. 552 or any other law to provide such records.",
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r009",
+   "id": "cfr-8-106",
+   "split": "heldout",
+   "field": "section_text",
+   "status": "value",
+   "value": "The provisions of this part are separate and severable from one another. If any provision is stayed or determined to be invalid, or held unenforceable as to any person or circumstance, the remaining provisions and applications will continue in effect.",
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r010",
+   "id": "cfr-8-106",
+   "split": "heldout",
+   "field": "effective_date",
+   "status": "absent",
+   "value": null,
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r011",
+   "id": "cfr-9-391",
+   "split": "heldout",
+   "field": "section_text",
+   "status": "value",
+   "value": "Fees shall be charged by the Agency for certain specified inspection services provided on a holiday, on an overtime basis, and/or which are voluntary inspection services.",
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r012",
+   "id": "cfr-9-391",
+   "split": "heldout",
+   "field": "section_text",
+   "status": "value",
+   "value": "(a) For each calendar year, FSIS will calculate the basetime rate for inspection services, per hour per program employee, provided pursuant to §§ 350.7, 351.8, 351.9, 352.5, 354.101, 355.12, and 362.5 of this chapter, using the following formula: The quotient of dividing the Office of Field Operations plus Office of International Affairs inspection program personnel's previous fiscal year's regular direct pay by the previous fiscal year's regular hours, plus the quotient multiplied by the calendar year's percentage of cost of living increase, plus the benefits rate, plus the travel and operating rate, plus the overhead rate, plus the allowance for bad debt rate.\n\n(b) FSIS will calculate the benefits, travel and operating, overhead, and allowance for bad debt rate components of the basetime rate, using the following formulas:\n\n(1) Benefits rate. The quotient of dividing the previous fiscal year's direct benefits costs by the previous fiscal year's total hours (regular, overtime, and holiday), plus the quotient multiplied by the calendar year's percentage cost of living increase. Some examples of direct benefits are health insurance, retirement, life insurance, and Thrift Savings Plan basic and matching contributions.\n\n(2) Travel and operating rate. The quotient of dividing the previous fiscal year's total direct travel and operating costs by the previous fiscal year's total hours (regular, overtime, and holiday), plus the quotient multiplied by the calendar year's percentage of inflation.\n\n(3) Overhead rate. The quotient of dividing the previous fiscal year's indirect costs plus the previous fiscal year's information technology (IT) costs in the Public Health Data Communication Infrastructure System Fund plus the previous fiscal year's Office of Management Program cost in the Reimbursable and Voluntary Funds plus the provision for the operating balance less any Greenbook costs (i.e., costs of USDA support services prorated to the service component for which the fees are charged) that are not related to food inspection, by the previous fiscal year's total hours (regular, overtime, and holiday) worked across all funds, plus the quotient multiplied by the calendar year's percentage of inflation.\n\n(4) Allowance for bad debt rate. Previous fiscal year's allowance for bad debt (for example, debt owed that is not paid in full by plants and establishments that declare bankruptcy) divided by the previous fiscal year's total hours (regular, overtime, and holiday) worked.\n\n(c) The calendar year's cost of living increases and percentage of inflation factors used in the formulas in this section are based on the Office of Management and Budget's Presidential Economic Assumptions.",
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r013",
+   "id": "cfr-9-391",
+   "split": "heldout",
+   "field": "effective_date",
+   "status": "absent",
+   "value": null,
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r014",
+   "id": "cfr-10-170",
+   "split": "heldout",
+   "field": "section_text",
+   "status": "value",
+   "value": "Applicants for construction permits, manufacturing licenses, operating licenses, import and export licenses, approvals of facility standard reference designs, re-qualification and replacement examinations for reactor operators, and special projects and holders of construction permits, licenses, and other approvals shall pay fees for the following categories of services:\n\nTable 1 to § 170.21—Schedule of Facility Fees\n\n[See footnotes at end of table]\n\nFacility categories and type of fees\tFees ^1 2\nA. Nuclear Power Reactors:\nApplication for Construction Permit\tFull Cost.\nEarly Site Permit, Construction Permit, Combined License, Operating License\tFull Cost.\nAmendment, Renewal, Dismantling-Decommissioning and Termination, Other Approvals\tFull Cost.\nInspections ^3\tFull Cost.\nB. Standard Reference Design Review:\nStandard Design Approvals, Certification\tFull Cost.\nAmendment, Renewal, Other Approvals\tFull Cost.\nC. Test Facility/Research Reactor/Critical Facility:\nApplication for Construction Permit\tFull Cost.\nConstruction Permit, Operating License\tFull Cost.\nAmendment, Renewal, Dismantling-Decommissioning and Termination, Other Approvals\tFull Cost.\nInspections ^3\tFull Cost.\nD. Manufacturing License:\nApplication for Construction\tFull Cost.\nStandard Design Approval\tFull Cost.\nAmendment, Renewal, Other Approvals\tFull Cost.\nInspections ^3\tFull Cost.\nE. [Reserved]\nF. [Reserved]\nG. Other Production or Utilization Facility:\nApplication for Construction Permit\tFull Cost.\nConstruction Permit, Operating License\tFull Cost.\nAmendment, Renewal, Other Approvals\tFull Cost.\nInspections ^3\tFull Cost.\nH. Production or Utilization Facility Permanently Closed Down:\nInspections ^3\tFull Cost.\nI. Part 55 Reviews:\nRequalification and Replacement Examinations for Reactors Operators\tFull Cost.\nJ. Special Projects:\nApprovals and preapplication/licensing activities\tFull Cost.\nInspections ^3\tFull Cost.\nContested hearings on licensing actions directly related to U.S. Government national security initiatives\tFull Cost.\nTouhy requests ^5\tFull Cost.\nK. Import and export licenses: ^6\nLicenses for the import and export only of production or utilization facilities or the export only of components for production or utilization facilities issued under 10 CFR part 110\n1. Application for import or export of production or utilization facilities ^4 (including reactors and other facilities) and exports of components requiring Commission and Executive Branch review, for example, actions under 10 CFR 110.40(b)\nApplication—new license, or amendment; or license exemption request\tN/A\n2. Application for export of reactor and other components requiring Executive Branch review, for example, those actions under 10 CFR 110.41(a).\nApplication—new license, or amendment; or license exemption request\tN/A\n3. Application for export of components requiring the assistance of the Executive Branch to obtain foreign government assurances\nApplication—new license, or amendment; or license exemption request\tN/A\n4. Application for export of facility components and equipment not requiring Commission or Executive Branch review, or obtaining foreign government assurances\nApplication—new license, or amendment; or license exemption request\tN/A\n5. Minor amendment of any active export or import license, for example, to extend the expiration date, change domestic information, or make other revisions which do not involve any substantive changes to license terms or conditions or to the type of facility or component authorized for export and, therefore, do not require in-depth analysis or review or consultation with the Executive Branch, U.S. host state, or foreign government authorities\nMinor amendment to license\tN/A\n^1 Fees will be charged for approvals issued under a specific exemption provision of the Commission's regulations under title 10 of the Code of Federal Regulations (e.g., 10 CFR 50.12, 10 CFR 53.080, 10 CFR 73.5) and any other sections in effect now or in the future, regardless of whether the approval is in the form of a license amendment, letter of approval, safety evaluation report, or other form.\n^2 Full cost fees will be determined based on the professional staff time and appropriate contractual support services expended. For applications currently on file and for which fees are determined based on the full cost expended for the review, the professional staff hours expended for the review of the application up to the effective date of the final rule will be determined at the professional hourly rate in effect when the service was provided. Effective October 1, 2025, the “full cost fees” described in the table 1 for advanced nuclear reactor applicants and advanced nuclear reactor pre-applicants will be assessed consistent with § 170.20(b) and (c).\n^3 Inspections covered by this schedule are both routine and non-routine safety and safeguards inspections performed by the NRC for the purpose of review or follow-up of a licensed program. Inspections are performed through the full term of the license to ensure that the authorized activities are being conducted in accordance with the Atomic Energy Act of 1954, as amended, other legislation, Commission regulations or orders, and the terms and conditions of the license. Non-routine inspections that result from third-party allegations will not be subject to fees.\n^4 Imports only of major components for end-use at NRC-licensed reactors are authorized under NRC general import license in 10 CFR 110.27.\n^5 Full cost fees will be assessed once NRC work on a Touhy request exceeds 50 hours, in accordance with § 170.12(d).\n^6 Because the resources for import and export licensing activities are identified as a fee-relief activity to be excluded from the fee-recoverable budget, import and export licensing actions will not incur fees.",
+   "unit": null,
+   "decided_by": "owner"
+  },
+  {
+   "slot": "r015",
+   "id": "cfr-10-170",
+   "split": "heldout",
+   "field": "section_text",
+   "status": "value",
+   "value": "All debtors' disputes of fees assessed must be submitted in accordance with 10 CFR 15.31.",
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r016",
+   "id": "cfr-10-170",
+   "split": "heldout",
+   "field": "definition",
+   "status": "value",
+   "value": "means:\n\n(1) Uranium or thorium, or any combination thereof, in any physical or chemical form; or\n\n(2) Ores which contain by weight one-twentieth of one percent (0.05%) or more of\n\n(i) Uranium,\n\n(ii) Thorium, or\n\n(iii) Any combination thereof. Source material does not include special nuclear material.",
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r017",
+   "id": "cfr-10-170",
+   "split": "heldout",
+   "field": "table_value",
+   "status": "value",
+   "value": "10400",
+   "unit": "USD",
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r018",
+   "id": "cfr-10-170",
+   "split": "heldout",
+   "field": "table_value",
+   "status": "value",
+   "value": "10000",
+   "unit": "USD",
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r019",
+   "id": "cfr-10-170",
+   "split": "heldout",
+   "field": "effective_date",
+   "status": "absent",
+   "value": null,
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r020",
+   "id": "cfr-10-171",
+   "split": "calibration",
+   "field": "section_text",
+   "status": "value",
+   "value": "The regulations in this part apply to any person holding an operating license for a test reactor or research reactor issued under part 50 of this chapter, and to any person holding an operating license for a power reactor licensed under 10 CFR part 50 or part 53, or a combined license issued under 10 CFR part 52 or part 53, that has provided notification to the U.S. Nuclear Regulatory Commission (NRC) that the licensee has successfully completed power ascension testing. The regulations in this part also apply to any person holding a materials license as defined in this part, a Certificate of Compliance, a sealed source or device registration, a quality assurance program approval, and to a Government agency as defined in this part. Notwithstanding the other provisions in this section, the regulations in this part do not apply to uranium recovery and fuel facility licensees until after the Commission verifies through inspection that the facility has been constructed in accordance with the requirements of the license.",
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r021",
+   "id": "cfr-10-171",
+   "split": "calibration",
+   "field": "section_text",
+   "status": "value",
+   "value": "If any person required to pay the annual fee fails to pay when the fee is due, or files a false certification with respect to qualifying as a small entity under the Regulatory Flexibility Criteria, the Commission may refuse to process any application submitted by or on behalf of the person with respect to any license issued to the person and may suspend or revoke any licenses held by the person. The filing of a false certification to qualify as a small entity under § 171.16(c) of this part may also result in punitive action pursuant to 18 U.S.C. 1001.",
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r022",
+   "id": "cfr-10-171",
+   "split": "calibration",
+   "field": "definition",
+   "status": "value",
+   "value": "means uranium enriched below 20 percent in the isotope uranium-235.",
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r023",
+   "id": "cfr-10-171",
+   "split": "calibration",
+   "field": "table_value",
+   "status": "value",
+   "value": "28200",
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r024",
+   "id": "cfr-10-171",
+   "split": "calibration",
+   "field": "table_value",
+   "status": "absent",
+   "value": null,
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r025",
+   "id": "cfr-10-171",
+   "split": "calibration",
+   "field": "table_rows",
+   "status": "value",
+   "value": [
+    {
+     "NRC small entity classification": "Small businesses not engaged in manufacturing (Average gross receipts over the last 5 completed fiscal years):",
+     "Maximum annual fee per licensed category": null
+    },
+    {
+     "NRC small entity classification": "$555,000 to $8 million",
+     "Maximum annual fee per licensed category": "$5,800"
+    },
+    {
+     "NRC small entity classification": "Less than $555,000",
+     "Maximum annual fee per licensed category": "1,100"
+    },
+    {
+     "NRC small entity classification": "Small not-for-profit organizations (Annual gross receipts):",
+     "Maximum annual fee per licensed category": null
+    },
+    {
+     "NRC small entity classification": "$555,000 to $8 million",
+     "Maximum annual fee per licensed category": "5,800"
+    },
+    {
+     "NRC small entity classification": "Less than $555,000",
+     "Maximum annual fee per licensed category": "1,100"
+    },
+    {
+     "NRC small entity classification": "Manufacturing entities that have an average of 500 employees or fewer:",
+     "Maximum annual fee per licensed category": null
+    },
+    {
+     "NRC small entity classification": "35 to 500 employees",
+     "Maximum annual fee per licensed category": "5,800"
+    },
+    {
+     "NRC small entity classification": "Fewer than 35 employees",
+     "Maximum annual fee per licensed category": "1,100"
+    },
+    {
+     "NRC small entity classification": "Small governmental jurisdictions (Including publicly supported educational institutions) (Population):\n20,000 to 49,999",
+     "Maximum annual fee per licensed category": "5,800"
+    },
+    {
+     "NRC small entity classification": "Fewer than 20,000",
+     "Maximum annual fee per licensed category": "1,100"
+    },
+    {
+     "NRC small entity classification": "Educational institutions that are not State or publicly supported, and have 500 employees or fewer:\n35 to 500 employees",
+     "Maximum annual fee per licensed category": "5,800"
+    },
+    {
+     "NRC small entity classification": "Fewer than 35 employees",
+     "Maximum annual fee per licensed category": "1,100"
+    }
+   ],
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r026",
+   "id": "cfr-10-171",
+   "split": "calibration",
+   "field": "effective_date",
+   "status": "absent",
+   "value": null,
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r027",
+   "id": "cfr-14-187",
+   "split": "heldout",
+   "field": "section_text",
+   "status": "value",
+   "value": "The fees for furnishing photostatic or similar copies of documents and for affixation of the seal for a certification or validation are the same as those provided in subpart H of 49 CFR part 7.",
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r028",
+   "id": "cfr-14-187",
+   "split": "heldout",
+   "field": "section_text",
+   "status": "value",
+   "value": "(a) The fees of this part are payable to the Federal Aviation Administration by check, money order, wire transfers, draft, payable in U.S. currency and drawn on a U.S. bank, or by credit card payable in U.S. currency, prior to the provision of any service under this part.\n\n(b) Applicants for the FAA services provided under this part shall pay any bank processing charges on fees collected under this part, when such charges are assessed on U.S. Government.\n\n(c) Applicants for the FAA services described in Appendix A of this part shall pay bank processing charges, when such charges are assessed by banks on U.S. Government deposits.\n\n(d) The fees described in appendix B of this part are payable to the Federal Aviation Administration in U.S. currency. Remittance of fees of $1,000 or more are to be paid by electronic funds transfer. Remittance of amounts less than $1,000 may be paid by electronic funds transfer, check, money order, credit card, or draft.",
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r029",
+   "id": "cfr-14-187",
+   "split": "heldout",
+   "field": "definition",
+   "status": "value",
+   "value": "means an overflight through U.S.-controlled airspace where primarily procedural air traffic services are provided.",
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r030",
+   "id": "cfr-14-187",
+   "split": "heldout",
+   "field": "table_value",
+   "status": "value",
+   "value": "58.45",
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r031",
+   "id": "cfr-14-187",
+   "split": "heldout",
+   "field": "table_value",
+   "status": "value",
+   "value": "24.77",
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r032",
+   "id": "cfr-14-187",
+   "split": "heldout",
+   "field": "table_rows",
+   "status": "value",
+   "value": [
+    {
+     "Time period": "January 1, 2017 to January 1, 2018",
+     "Enroute rate": "58.45",
+     "Oceanic rate": "23.15"
+    },
+    {
+     "Time period": "January 1,2018 to January 1, 2019",
+     "Enroute rate": "60.07",
+     "Oceanic rate": "24.77"
+    },
+    {
+     "Time period": "January 1, 2019 and Beyond",
+     "Enroute rate": "61.75",
+     "Oceanic rate": "26.51"
+    }
+   ],
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r033",
+   "id": "cfr-14-187",
+   "split": "heldout",
+   "field": "effective_date",
+   "status": "absent",
+   "value": null,
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r034",
+   "id": "cfr-19-24",
+   "split": "calibration",
+   "field": "section_text",
+   "status": "value",
+   "value": "Center directors, port directors, CBP cashiers, CBP officers, CBP dock tellers, and such other officers and employees as the Center director or port director will designate will receive Customs collections.",
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r035",
+   "id": "cfr-19-24",
+   "split": "calibration",
+   "field": "section_text",
+   "status": "value",
+   "value": "(a) General standards. The seals and fastenings, together, shall\n\n(1) Be strong and durable;\n\n(2) Be capable of being affixed easily and quickly;\n\n(3) Be capable of being checked readily and identified by unique marks (such as a logotype) and numbers;\n\n(4) Not permit removal or undoing without breaking, or tampering without leaving traces;\n\n(5) Not permit use more than once; and\n\n(6) Be made as difficult as possible to copy or counterfeit.\n\n(b) Seal specifications. (1) The shape and size of the seal shall be such that any identifying marks are readily legible.\n\n(2) Each eyelet in a seal shall be of a size corresponding to that of the fastening used, and shall be positioned so that the fastening will be held firmly in place when the seal is closed.\n\n(3) The material used shall be sufficiently strong to prevent accidental breakage, early deterioration (due to weather conditions, chemical action, etc.) or undetectable tampering under normal usage.\n\n(4) The material used shall be selected with reference to the sealing system used.\n\n(c) Fastening specifications. (1) The fastening shall be strong and durable and resistant to weather and corrosion.\n\n(2) The length of the fastening used shall not enable a sealed aperture to be opened or partly opened without the seal or fastening being broken or otherwise showing obvious damage.\n\n(3) The material used shall be selected with reference to the sealing system used.\n\n(d) Identification marks. (1) If the seal is to be purchased and used by U.S. Customs, the seal or fastening, as appropriate, shall be marked to show that it is a U.S. Customs seal by application of the words “U.S. Customs” and a unique identification number on the seal.\n\n(2) If the seal is to be used by private industry (i.e., a shipper, manufacturer, or carrier), it must be clearly and legibly marked with a unique company name (or logotype) and identification number.\n\n(e) Customs acceptance. Seals will be considered as acceptable for use and/or purchase by U.S. Customs as soon as the manufacturer attests that the seals have been tested and meet or exceed the standards provided in paragraphs (a) through (d) of this section, and will continue to be considered acceptable until such time as it is demonstrated that they do not meet the standards. A manufacturer may attest to the qualification of a specific seal, or to an entire product line of seals as of a certain date. Any addition of a seal to a group of seals attested to as a group would require specific acceptance of that seal by Customs.\n\n(f) Testing. All testing of seals deemed necessary before Customs acceptance will be done by the manufacturer or by a private laboratory, and not by Customs. However, Customs reserves the right to test, or to have tested, seals that have been accepted by Customs.\n\n(g) Records. The manufacturer's attestation that a seal meets or exceeds the standards specified in this section and, if deemed necessary by Customs, the seal test record shall be sent to the Assistant Commissioner, Field Operations, Headquarters, U.S. Customs Service, Washington DC 20229.",
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r036",
+   "id": "cfr-19-24",
+   "split": "calibration",
+   "field": "table_value",
+   "status": "absent",
+   "value": null,
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r037",
+   "id": "cfr-19-24",
+   "split": "calibration",
+   "field": "table_value",
+   "status": "value",
+   "value": "1696",
+   "unit": "hours",
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r038",
+   "id": "cfr-19-24",
+   "split": "calibration",
+   "field": "table_rows",
+   "status": "value",
+   "value": [
+    {
+     "Place where journey originates (see (g)(1)(iv))": "SL",
+     "Fee status for arrival from SL / Vessel": "$1.93, as adjusted by the terms of paragraph (k) of this section",
+     "Fee status for arrival from SL / Aircraft": "No fee",
+     "Fee status for arrival from other than SL / Vessel": "No fee",
+     "Fee status for arrival from other than SL / Aircraft": "No fee"
+    },
+    {
+     "Place where journey originates (see (g)(1)(iv))": "Other than SL or U.S.",
+     "Fee status for arrival from SL / Vessel": "$1.93, as adjusted by the terms of paragraph (k) of this section",
+     "Fee status for arrival from SL / Aircraft": "No fee",
+     "Fee status for arrival from other than SL / Vessel": "$5.50, as adjusted by the terms of paragraph (k) of this section",
+     "Fee status for arrival from other than SL / Aircraft": "$5.50, as adjusted by the terms of paragraph (k) of this section"
+    },
+    {
+     "Place where journey originates (see (g)(1)(iv))": "U.S.",
+     "Fee status for arrival from SL / Vessel": "$1.93, as adjusted by the terms of paragraph (k) of this section",
+     "Fee status for arrival from SL / Aircraft": "No fee",
+     "Fee status for arrival from other than SL / Vessel": "N/A",
+     "Fee status for arrival from other than SL / Aircraft": "N/A"
+    },
+    {
+     "Place where journey originates (see (g)(1)(iv))": "U.S.",
+     "Fee status for arrival from SL / Vessel": "$1.93, as adjusted by the terms of paragraph (k) of this section",
+     "Fee status for arrival from SL / Aircraft": "No fee",
+     "Fee status for arrival from other than SL / Vessel": "$5.50, as adjusted by the terms of paragraph (k) of this section",
+     "Fee status for arrival from other than SL / Aircraft": "$5.50, as adjusted by the terms of paragraph (k) of this section"
+    }
+   ],
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r039",
+   "id": "cfr-19-24",
+   "split": "calibration",
+   "field": "effective_date",
+   "status": "absent",
+   "value": null,
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r040",
+   "id": "cfr-33-402",
+   "split": "heldout",
+   "field": "section_text",
+   "status": "value",
+   "value": "Item\tColumn 1\nPlace in Montreal-Lake Ontario\tColumn 2\nPeriod after clearance date\tColumn 3\nAmount ($)\n(5 locks) ^1\n(a)\tCape Vincent (downbound) or Cape Saint-Michel (upbound):\n(1) If the postponement is for 24 hours\t(a) 24 hours or more but less than 36 hours\t20,000\n(b) 36 hours or more but less than 48 hours\t40,000\n(c) 48 hours or more but less than 72 hours\t60,000\n(d) 72 hours or more but less than 96 hours\t80,000\n(2) If the postponement is for 48 hours\t(a) 48 hours or more but less than 56 hours\t20,000\n(b) 56 hours or more but less than 64 hours\t40,000\n(c) 64 hours or more but less than 72 hours\t60,000\n(d) 72 hours or more but less than 96 hours\t80,000\n(3) If the postponement is for 72 hours\t(a) 72 hours or more but less than 78 hours\t20,000\n(b) 78 hours or more but less than 84 hours\t40,000\n(c) 84 hours or more but less than 90 hours\t60,000\n(d) 90 hours or more but less than 96 hours\t80,000\n(b)\tPort, dock or wharf within St. Lambert—Iroquois lock segment:\n(1) If the postponement is for 24 hours\t(a) 24 hours or more but less than 48 hours\tn/a\n(b) 48 hours or more but less than 60 hours\t20,000\n(c) 60 hours or more but less than 72 hours\t40,000\n(d) 72 hours or more but less than 96 hours\t60,000\n(2) If the postponement is for 48 hours\t(a) 48 hours or more but less than 72 hours\tn/a\n(b) 72 hours or more but less than 80 hours\t20,000\n(c) 80 hours or more but less than 88 hours\t40,000\n(d) 88 hours or more but less than 96 hours\t60,000\n(3) If the postponement is for 72 hours or more\t(a) 72 hours or more but less than 96 hours\tn/a\n^1 Prorated on a per-lock basis.",
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r041",
+   "id": "cfr-33-402",
+   "split": "heldout",
+   "field": "section_text",
+   "status": "value",
+   "value": "(a) To be eligible to the Volume Rebate Incentive program:\n\n(1) A shipper/receiver in the Great Lakes/St. Lawrence Seaway System must submit to the Manager for approval, before June 30th of every season, the commodity, as defined under the Manager's commodity classification, for which a Volume Rebate is sought, the origin or destination of the commodity, and a proof of the maximum volume of the commodity the shipper/receiver has shipped over the last 5 years from that origin or to that destination.\n\n(2) The shipper/receiver must already move the commodity, as defined under the Manager's commodity classification, through the Seaway at a minimum of 100,000 tonnes per season for the past five navigation seasons.\n\n(b) Once approved by the Manager, the maximum volume will become the basis on which to calculate the incremental volume.\n\n(c) The Volume Rebate Incentive program is not accessible at the end of the navigation season without a pre-approved maximum volume within the set deadline.\n\n(d) The same cargo volume can only be used by one shipper/receiver.\n\n(e) For the Volume Rebate to be applicable, the total volume of the commodity shipped through the Seaway must also increase during the navigation season.",
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r042",
+   "id": "cfr-33-402",
+   "split": "heldout",
+   "field": "table_value",
+   "status": "value",
+   "value": "40000",
+   "unit": "$",
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r043",
+   "id": "cfr-33-402",
+   "split": "heldout",
+   "field": "table_value",
+   "status": "absent",
+   "value": null,
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r044",
+   "id": "cfr-33-402",
+   "split": "heldout",
+   "field": "table_rows",
+   "status": "value",
+   "value": [
+    {
+     "Item": "1",
+     "Column 1 / Description of charges": "Subject to item 3, for complete transit of the Seaway, a composite toll, comprising:",
+     "Column 2 / Rate ($) Montreal to or from Lake Ontario (5 locks)": null,
+     "Column 3 / Rate ($) Welland Canal—Lake Ontario to or from Lake Erie (8 locks)": null
+    },
+    {
+     "Item": null,
+     "Column 1 / Description of charges": "(1) a charge per gross registered ton of the ship, applicable whether the ship is wholly or partially laden, or is in ballast, and the gross registered tonnage being calculated according to prescribed rules for measurement or under the International Convention on Tonnage Measurement of Ships, 1969, as amended from time to time ^1",
+     "Column 2 / Rate ($) Montreal to or from Lake Ontario (5 locks)": null,
+     "Column 3 / Rate ($) Welland Canal—Lake Ontario to or from Lake Erie (8 locks)": null
+    },
+    {
+     "Item": null,
+     "Column 1 / Description of charges": "(a) all vessels excluding passenger vessels",
+     "Column 2 / Rate ($) Montreal to or from Lake Ontario (5 locks)": "0.1344",
+     "Column 3 / Rate ($) Welland Canal—Lake Ontario to or from Lake Erie (8 locks)": "0.2150."
+    },
+    {
+     "Item": null,
+     "Column 1 / Description of charges": "(b) passenger vessels",
+     "Column 2 / Rate ($) Montreal to or from Lake Ontario (5 locks)": "0.4032",
+     "Column 3 / Rate ($) Welland Canal—Lake Ontario to or from Lake Erie (8 locks)": "0.6450."
+    },
+    {
+     "Item": null,
+     "Column 1 / Description of charges": "(2) a charge per metric ton of cargo as certified on the ship's manifest or other document, as follows:",
+     "Column 2 / Rate ($) Montreal to or from Lake Ontario (5 locks)": null,
+     "Column 3 / Rate ($) Welland Canal—Lake Ontario to or from Lake Erie (8 locks)": null
+    },
+    {
+     "Item": null,
+     "Column 1 / Description of charges": "(a) bulk cargo",
+     "Column 2 / Rate ($) Montreal to or from Lake Ontario (5 locks)": "1.3933",
+     "Column 3 / Rate ($) Welland Canal—Lake Ontario to or from Lake Erie (8 locks)": "0.9510."
+    },
+    {
+     "Item": null,
+     "Column 1 / Description of charges": "(b) general cargo",
+     "Column 2 / Rate ($) Montreal to or from Lake Ontario (5 locks)": "3.3572",
+     "Column 3 / Rate ($) Welland Canal—Lake Ontario to or from Lake Erie (8 locks)": "1.5220."
+    },
+    {
+     "Item": null,
+     "Column 1 / Description of charges": "(c) domestic general cargo",
+     "Column 2 / Rate ($) Montreal to or from Lake Ontario (5 locks)": "1.3933",
+     "Column 3 / Rate ($) Welland Canal—Lake Ontario to or from Lake Erie (8 locks)": "0.9510."
+    },
+    {
+     "Item": null,
+     "Column 1 / Description of charges": "(d) steel slab",
+     "Column 2 / Rate ($) Montreal to or from Lake Ontario (5 locks)": "3.0384",
+     "Column 3 / Rate ($) Welland Canal—Lake Ontario to or from Lake Erie (8 locks)": "1.0896."
+    },
+    {
+     "Item": null,
+     "Column 1 / Description of charges": "(e) containerized cargo",
+     "Column 2 / Rate ($) Montreal to or from Lake Ontario (5 locks)": "1.3933",
+     "Column 3 / Rate ($) Welland Canal—Lake Ontario to or from Lake Erie (8 locks)": "0.9510."
+    },
+    {
+     "Item": null,
+     "Column 1 / Description of charges": "(e) government aid cargo",
+     "Column 2 / Rate ($) Montreal to or from Lake Ontario (5 locks)": "n/a",
+     "Column 3 / Rate ($) Welland Canal—Lake Ontario to or from Lake Erie (8 locks)": "n/a."
+    },
+    {
+     "Item": null,
+     "Column 1 / Description of charges": "(g) grain",
+     "Column 2 / Rate ($) Montreal to or from Lake Ontario (5 locks)": "0.8560",
+     "Column 3 / Rate ($) Welland Canal—Lake Ontario to or from Lake Erie (8 locks)": "0.9510."
+    },
+    {
+     "Item": null,
+     "Column 1 / Description of charges": "(h) coal",
+     "Column 2 / Rate ($) Montreal to or from Lake Ontario (5 locks)": "0.8560",
+     "Column 3 / Rate ($) Welland Canal—Lake Ontario to or from Lake Erie (8 locks)": "0.9510."
+    },
+    {
+     "Item": null,
+     "Column 1 / Description of charges": "(3) a charge per passenger per lock",
+     "Column 2 / Rate ($) Montreal to or from Lake Ontario (5 locks)": "0.0000",
+     "Column 3 / Rate ($) Welland Canal—Lake Ontario to or from Lake Erie (8 locks)": "0.0000."
+    },
+    {
+     "Item": null,
+     "Column 1 / Description of charges": "(4) a lockage charge per Gross Registered Ton of the vessel, as defined in item 1(1), applicable whether the ship is wholly or partially laden, or is in ballast, for transit of the Welland Canal in either direction by cargo ships,",
+     "Column 2 / Rate ($) Montreal to or from Lake Ontario (5 locks)": "n/a",
+     "Column 3 / Rate ($) Welland Canal—Lake Ontario to or from Lake Erie (8 locks)": "0.3582."
+    },
+    {
+     "Item": null,
+     "Column 1 / Description of charges": "Up to a maximum charge per vessel",
+     "Column 2 / Rate ($) Montreal to or from Lake Ontario (5 locks)": "n/a",
+     "Column 3 / Rate ($) Welland Canal—Lake Ontario to or from Lake Erie (8 locks)": "5,011.00."
+    },
+    {
+     "Item": "2",
+     "Column 1 / Description of charges": "Subject to item 3, for partial transit of the Seaway",
+     "Column 2 / Rate ($) Montreal to or from Lake Ontario (5 locks)": "20 per cent per lock of the applicable charge under items 1(1), 1(2) and 1(4) plus the applicable charge under items 1(3)",
+     "Column 3 / Rate ($) Welland Canal—Lake Ontario to or from Lake Erie (8 locks)": "13 per cent per lock of the applicable charge under items 1(1), 1(2) and 1(4) plus the applicable charge under items 1(3)."
+    },
+    {
+     "Item": "3",
+     "Column 1 / Description of charges": "Minimum charge per vessel per lock transited for full or partial transit of the Seaway",
+     "Column 2 / Rate ($) Montreal to or from Lake Ontario (5 locks)": "34.78 ^2",
+     "Column 3 / Rate ($) Welland Canal—Lake Ontario to or from Lake Erie (8 locks)": "34.78."
+    },
+    {
+     "Item": "4",
+     "Column 1 / Description of charges": "A charge per pleasure craft per lock transited for full or partial transit of the Seaway, including applicable federal taxes ^3",
+     "Column 2 / Rate ($) Montreal to or from Lake Ontario (5 locks)": "25.00 ^4",
+     "Column 3 / Rate ($) Welland Canal—Lake Ontario to or from Lake Erie (8 locks)": "25.00."
+    },
+    {
+     "Item": "5",
+     "Column 1 / Description of charges": "Under the New Business Initiative Program, for cargo accepted as New Business, a percentage rebate on the applicable cargo charges for the approved period",
+     "Column 2 / Rate ($) Montreal to or from Lake Ontario (5 locks)": "20%",
+     "Column 3 / Rate ($) Welland Canal—Lake Ontario to or from Lake Erie (8 locks)": "20%."
+    },
+    {
+     "Item": "6",
+     "Column 1 / Description of charges": "Under the Volume Rebate Incentive program, a retroactive percentage rebate on cargo tolls on the incremental volume calculated based on the pre-approved maximum volume",
+     "Column 2 / Rate ($) Montreal to or from Lake Ontario (5 locks)": "10%",
+     "Column 3 / Rate ($) Welland Canal—Lake Ontario to or from Lake Erie (8 locks)": "10%."
+    },
+    {
+     "Item": "7",
+     "Column 1 / Description of charges": "Under the New Service Incentive Program, for New Business cargo moving under an approved new service, an additional percentage refund on applicable cargo tolls above the New Business rebate",
+     "Column 2 / Rate ($) Montreal to or from Lake Ontario (5 locks)": "20%",
+     "Column 3 / Rate ($) Welland Canal—Lake Ontario to or from Lake Erie (8 locks)": "20%."
+    }
+   ],
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r045",
+   "id": "cfr-33-402",
+   "split": "heldout",
+   "field": "effective_date",
+   "status": "absent",
+   "value": null,
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r046",
+   "id": "cfr-36-71",
+   "split": "calibration",
+   "field": "section_text",
+   "status": "value",
+   "value": "(a) Special recreation permits may be required in accordance with procedures established by the administering bureaus for specialized recreation uses, such as, but not limited to, group activities, recreation events, and the use of motorized recreation vehicles. In any instance where such a permit is required, the following conditions must be satisfied:\n\n(1) The use complies with pertinent State and Federal laws and regulations on public health, safety, air quality, and water quality;\n\n(2) The use will not adversely impact archeological, historic or primitive values and is not in conflict with existing resource management programs and objectives;\n\n(3) The necessary clean-up and restoration is made for any damage to resources or facilities; and\n\n(4) The use is restricted, to the extent practicable, to an area where minimal impact is imposed on the environmental, cultural or natural resource values.\n\n(b) Fees for special recreation permits shall be established by all outdoor recreation bureaus of the Department of the Interior issuing such permits in accordance with the following criteria:\n\n(1) The direct and indirect cost to the Government;\n\n(2) The benefit to the recipient;\n\n(3) The public policy or interest served;\n\n(4) The comparable recreation fees charged by other Federal and non-Federal public agencies within the service area of the management unit at which the fee is charged;\n\n(5) The economic and administrative feasibility of fee collection; and\n\n(6) Other pertinent factors.",
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r047",
+   "id": "cfr-36-71",
+   "split": "calibration",
+   "field": "section_text",
+   "status": "value",
+   "value": "(a) Recreation use fees shall be established by all outdoor recreation administering agencies of the Department of the Interior in accordance with the following criteria:\n\n(1) The direct and indirect cost to the government,\n\n(2) The benefit to the recipient,\n\n(3) The public policy or interest served,\n\n(4) The comparable recreation fees charged by other Federal agencies, non-Federal public agencies and the private sector located within the service area of the management unit at which the fee is charged,\n\n(5) The economic and administrative feasibility of fee collection, and\n\n(6) Other pertinent factors.\n\n(b) With the approval of the Secretary of the Interior recreation use fees may be established for other types of facilities in addition to those which are listed below.\n\n(c) Types of recreation facilities for which use fees may be charged:\n\nTent, trailer and recreation vehicle sites 1\n\n1 Provided, That in no event shall there be a charge for the use of any campsite and adjacent related facilities unless the campground in which the site is located has all of the following: Tent or trailer spaces, drinking water, access road, refuse containers, toilet facilities, personal collection of the fee by an employee or agent of the bureau operating the facility, reasonable visitor protection, and simple devices for containing a campfire (where campfires are permitted).\n\nGroup camping sites 1 2\n\n2 The administering agency may establish a group use rate in lieu of the above “Group Camping Sites” recreation use fee in accordance with the criteria set out in this section provided such rate is not less than $3.00 per day per group. Such a group use rate may constitute either a special recreation permit fee or a recreation use fee as determined by the administering agency.\n\nSpecialized boat launching facilities and services 3\n\n3 Use fees for boat ramps are prohibited. However, in the case of boat launching facilities with specialized facilities or services, such as mechanical or hydraulic lifts, reasonable fees may be assessed in accordance with the criteria set out in a paragraph (a) of this section.\n\nLockers Boat storage and handling Elevators Ferries and other means of transportation Bathhouses Swimming pools Overnight shelters Guided tours Electrical hook-ups Vehicle and trailer storage Rental of nonmotorized boats Rental of motorized boats Rental of hunting blinds Reservation services Specialized sites (highly developed)",
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r048",
+   "id": "cfr-36-71",
+   "split": "calibration",
+   "field": "effective_date",
+   "status": "absent",
+   "value": null,
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r049",
+   "id": "cfr-37-201",
+   "split": "heldout",
+   "field": "section_text",
+   "status": "value",
+   "value": "(a) Definitions. (1) A Notice of Objection is a notice, as required by 17 U.S.C. 110(4), to be served as a condition of preventing the noncommercial performance of a nondramatic literary or musical work under certain circumstances.\n\n(2) For purposes of this section, the copyright owner of a nondramatic literary or musical work is the author of the work (including, in the case of a work made for hire, the employer or other person for whom the work was prepared), or a person or organization that has obtained ownership of the exclusive right, initially owned by the author of performance of the type referred to in 17 U.S.C. 110(4). If the other requirements of this section are met, a Notice of Objection may cover the works of more than one copyright owner.\n\n(b) Form. The Copyright Office does not provide printed forms for the use of persons serving Notices of Objection.\n\n(c) Contents. (1) A Notice of Objection must clearly state that the copyright owner objects to the performance, and must include all of the following:\n\n(i) Reference to the statutory authority on which the Notice of Objection is based, either by citation of 17 U.S.C. 110(4) or by a more general characterization or description of that statutory provision;\n\n(ii) The date and place of the performance to which an objection is being made; however, if the exact date or place of a particular performance, or both, are not known to the copyright owner, it is sufficient if the Notice describes whatever information the copyright owner has about the date and place of a particular performance, and the source of that information unless the source was considered private or confidential;\n\n(iii) Clear identification, by title and at least one author, of the particular nondramatic literary or musical work or works, to the performance of which the copyright owner thereof is lodging objection; a Notice may cover any number of separately identified copyrighted works owned by the copyright owner or owners serving the objection. Alternatively, a blanket notice, with or without separate identification of certain copyrighted works, and purporting to cover one or more groups of copyrighted works not separately identified by title and author, shall have effect if the conditions specified in paragraph (c)(2) of this section are met; and\n\n(iv) A concise statement of the reasons for the objection.\n\n(2) A blanket notice purporting to cover one or more groups of copyrighted works not separately identified by title and author shall be valid only if all of the following conditions are met:\n\n(i) The Notice shall identify each group of works covered by the blanket notice by a description of any common characteristics distinguishing them from other copyrighted works, such as common author, common copyright owner, common publisher, or common licensing agent;\n\n(ii) The Notice shall identify a particular individual whom the person responsible for the performance can contact for more detailed information about the works covered by the blanket notice and to determine whether a particular work planned for performance is in fact covered by the Notice. Such identification shall include the full name and business and residence addresses of the individual, telephone numbers at which the individual can be reached throughout the period between service of the notice and the performance, and name, addresses, and telephone numbers of another individual to contact during that period in case the first cannot be reached.\n\n(iii) If the copyright owner or owners of all works covered by the blanket notice is not identified in the Notice, the Notice shall include an offer to identify, by name and last known address, the owner or owners of any and all such works, upon request made to the individual referred to in paragraph (c)(2)(ii) of this section.\n\n(3) A Notice of Objection must also include clear and prominent statements explaining that:\n\n(i) A failure to exclude the works identified in the Notice from the performance in question may subject the person responsible for the performance to liability for copyright infringement; and\n\n(ii) The objection is without legal effect if there is no direct or indirect admission charge for the performance, and if the other conditions of 17 U.S.C. 110(4) are met.\n\n(d) Signature and identification. (1) A Notice of Objection shall be in writing and signed by each copyright owner, or such owner's duly authorized agent, as required by 17 U.S.C. 110(4)(B)(i).\n\n(2) The signature of each owner or agent shall be an actual handwritten signature of an individual, accompanied by the date of signature and the full name, address, and telephone number of that person, typewritten or printed legibly by hand.\n\n(3) If a Notice of Objection is initially served in the form of an email, fax, or similar communication, as provided by paragraph (e) of this section, the requirement for an individual's handwritten signature shall be considered waived if the further conditions of paragraph (e) are met.\n\n(e) Service. (1) A Notice of Objection shall be served on the person responsible for the performance at least seven days before the date of the performance, as provided by 17 U.S.C. 110 (4)(B)(ii).\n\n(2) Service of the Notice may be effected by any of the following methods:\n\n(i) Personal service;\n\n(ii) First-class mail;\n\n(iii) Email, fax, or similar form of communication, if:\n\n(A) The Notice meets all of the other conditions provided by this section; and\n\n(B) Before the performance takes place, the person responsible for the performance receives written confirmation of the Notice, bearing the actual handwritten signature of each copyright owner or duly authorized agent.\n\n(3) The date of service is the date the Notice of Objection is received by the person responsible for the performance or any agent or employee of that person.",
+   "unit": null,
+   "decided_by": "owner"
+  },
+  {
+   "slot": "r050",
+   "id": "cfr-37-201",
+   "split": "heldout",
+   "field": "section_text",
+   "status": "value",
+   "value": "(a) General. This section prescribes the procedures for submission of Notices of Intent to Enforce a Restored Copyright under the Uruguay Round Agreements Act, as required in 17 U.S.C. 104A(a). On or before May 1, 1996, and every four months thereafter, the Copyright Office will publish in the Federal Register a list of works for which Notices of Intent to Enforce have been filed. It will maintain a list of these works. The Office will also make a more complete version of the information contained in the Notice of Intent to Enforce available on its website.\n\n(b) Definitions. (1) NAFTA work means a work restored to copyright on January 1, 1995, as a result of compliance with procedures contained in the North American Free Trade Agreement Implementation Act of December 8, 1993, Public Law No. 103-182.\n\n(2) Reliance party means any person who—\n\n(i) With respect to a particular work, engages in acts, before the source country of that work becomes an eligible country under the URAA, which would have violated 17 U.S.C. 106 if the restored work had been subject to copyright protection and who, after the source country becomes an eligible country, continues to engage in such acts;\n\n(ii) Before the source country of a particular work becomes an eligible country, makes or acquires one or more copies or phonorecords of that work; or\n\n(iii) As the result of the sale or other disposition of a derivative work, covered under 17 U.S.C. 104A(d)(3), or of significant assets of a person, described in 17 U.S.C. 104 A(d)(3) (A) or (B), is a successor, assignee or licensee of that person.\n\n(3) Restored work means an original work of authorship that—\n\n(i) Is protected under 17 U.S.C. 104A(a);\n\n(ii) Is not in the public domain in its source country through expiration of term of protection;\n\n(iii) Is in the public domain in the United States due to—\n\n(A) Noncompliance with formalities imposed at any time by U.S. copyright law, including failure of renewal, lack of proper notice, or failure to comply with any manufacturing requirements;\n\n(B) Lack of subject matter protection in the case of sound recordings fixed before February 15, 1972; or\n\n(C) Lack of national eligibility; and\n\n(iv) Has at least one author or rightholder who was, at the time the work was created, a national or domiciliary of an eligible country, and if published, was first published in an eligible country and not published in the United States during the 30-day period following publication in such eligible country.\n\n(4) Source country of a restored work is—\n\n(i) A nation other than the United States; and\n\n(ii) In the case of an unpublished work—\n\n(A) The eligible country in which the author or rightholder is a national or domiciliary, or, if a restored work has more than one author or rightholder, the majority of foreign authors or rightholders are nationals or domiciliaries of eligible countries; or\n\n(B) If the majority of authors or rightholders are not foreign, the nation other than the United States which has the most significant contacts with the work; and\n\n(iii) In the case of a published work—\n\n(A) The eligible country in which the work is first published; or\n\n(B) If the restored work is published on the same day in two or more eligible countries, the eligible country which has the most significant contacts with the work.\n\n(c) Forms. The Copyright Office does not provide forms for Notices of Intent to Enforce filed with the Copyright Office. It requests that filers of such notices follow the format set out in Appendix A of this section and give all of the information listed in paragraph (d) of this section. Notices of Intent to Enforce must be in English, legible, and submitted in a letter-sized document format.\n\n(d) Requirements for Notice of Intent to Enforce a Copyright Restored under the Uruguay Round Agreements Act. (1) Notices of Intent to Enforce should be mailed to the address specified in § 201.1.\n\n(2) The document should be clearly designated as “Notice of Intent to Enforce a Copyright Restored under the Uruguay Round Agreements Act”.\n\n(3) Notices of Intent to Enforce must include:\n\n(i) Required information:\n\n(A) The title of the work, or if untitled, a brief description of the work;\n\n(B) An English translation of the title if title is in a foreign language;\n\n(C) Alternative titles if any;\n\n(D) Name of the copyright owner of the restored work, or of an owner of an exclusive right therein;\n\n(E) The address and telephone number where the owner of copyright or the exclusive right therein can be reached; and\n\n(F) The following certification signed and dated by the owner of copyright, or the owner of an exclusive right therein, or the owner's authorized agent:\n\nI hereby certify that for each of the work(s) listed above, I am the copyright owner, or the owner of an exclusive right, or the owner's authorized agent, the agency relationship having been constituted in a writing signed by the owner before the filing of this notice, and that the information given herein is true and correct to the best of my knowledge.\n\nSignature Name (printed or typed) As agent for (if applicable) Date:\n\n(ii) Optional but essential information:\n\n(A) Type of work (painting, sculpture, music, motion picture, sound recording, book, etc.);\n\n(B) Name of author(s);\n\n(C) Source country;\n\n(D) Approximate year of publication;\n\n(E) Additional identifying information (e.g., for movies: director, leading actors, screenwriter, animator; for photographs or books: subject matter; for books: editor, publisher, contributors);\n\n(F) Rights owned by the party on whose behalf the Notice of Intent to Enforce is filed (e.g., the right to reproduce/distribute/publicly display/publicly perform the work, or to prepare a derivative work based on the work, etc.); and\n\n(G) Email address at which owner, exclusive rights holder, or agent thereof can be reached.\n\n(4) Notices of Intent to Enforce may cover multiple works provided that each work is identified by title, all the works are by the same author, all the works are owned by the identified copyright owner or owner of an exclusive right, and the rights owned by the party on whose behalf the Notice of Intent is filed are the same. In the case of Notices of Intent to Enforce covering multiple works, the notice must separately designate for each work covered the title of the work, or if untitled, a brief description of the work; an English translation of the title if the title is in a foreign language; alternative titles, if any; the type of work; the source country; the approximate year of publication; and additional identifying information.\n\n(5) Notices of Intent to Enforce works restored on January 1, 1996, may be submitted to the Copyright Office on or after January 1, 1996, through December 31, 1997.\n\n(e) Fee. The filing fee for recording Notices of Intent to Enforce is prescribed in § 201.3(c).\n\n(f) Public access. Notices of Intent to Enforce filed with the Copyright Office are available for public inspection and copying in the Records Research and Certification Section. Some of the information contained in these records is available on the Office's website, including the title of the work or a brief description if the work is untitled and the name of the copyright owner or owner of an exclusive right.\n\n(g) NAFTA work. The copyright owner of a work restored under NAFTA by the filing of a NAFTA Statement of Intent to Restore with the Copyright Office prior to January 1, 1995, is not required to file a Notice of Intent to Enforce under this regulation.\n\nAppendix A to § 201.33—Notice of Intent To Enforce a Copyright Restored under the Uruguay Round Agreements Act (URAA) 1. Title:\n\n(If this work does not have a title, state “No title.”) OR\n\nBrief description of work (for untitled works only): ________\n\n2. English translation of title (if applicable): 3. Alternative title(s) (if any): 4. Type of work:\n\n(e.g. painting, sculpture, music, motion picture, sound recording, book)\n\n5. Name of author(s): 6. Source country: 7. Approximate year of publication: 8. Additional identifying information: (e.g. for movies; director, leading actors, screenwriter, animator, for photographs: subject matter; for books; editor, publisher, contributors, subject matter). 9. Name of copyright owner: (Statements may be filed in the name of the owner of the restored copyright or the owner of an exclusive right therein.) 10. If you are not the owner of all rights, specify the rights you own: (e.g. the right to reproduce/distribute publicly display/publicly perform the work, or to prepare a derivative work based on the work) 11. Address at which copyright owner may be contacted: (Give the complete address, including the country and an “attention” line, or “in care of” name, if necessary.) 12. Telephone number of owner: 13. Fax number of owner: 14. Certification and Signature:\n\nI hereby certify that, for each of the work(s) listed above, I am the copyright owner, or the owner of an exclusive right, or the owner's authorized agent, the agency relationship having been constituted in a writing signed by the owner before the filing of this notice, and that the information given herein is true and correct to the best of my knowledge.\n\nSignature: Name (printed or typed): As agent for (if applicable): Date: Note:\n\nNotices of Intent to Enforce must be in English, except for the original title, and either typed or printed by hand legibly in dark, preferably black, ink. They should be on 8 1/2″ by 11″ white paper of good quality, with at least a 1-inch (or 3 cm) margin.",
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r051",
+   "id": "cfr-37-201",
+   "split": "heldout",
+   "field": "table_value",
+   "status": "value",
+   "value": "30",
+   "unit": "USD",
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r052",
+   "id": "cfr-37-201",
+   "split": "heldout",
+   "field": "table_value",
+   "status": "value",
+   "value": "250",
+   "unit": "USD",
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r053",
+   "id": "cfr-37-201",
+   "split": "heldout",
+   "field": "table_rows",
+   "status": "value",
+   "value": [
+    {
+     "Licensing section services": "(1)(i) Recordation of a notice of intention to make and distribute phonorecords (17 U.S.C. 115)",
+     "Fees ($)": "75"
+    },
+    {
+     "Licensing section services": "(ii) Additional titles (per group of 1 to 10 titles) (paper filing)",
+     "Fees ($)": "20"
+    },
+    {
+     "Licensing section services": "(iii) Additional titles (per group of 1 to 100 titles) (online filing)",
+     "Fees ($)": "10"
+    },
+    {
+     "Licensing section services": "(2) Statement of account amendment (cable television systems and satellite carriers, 17 U.S.C. 111 and 119; digital audio recording devices or media, 17 U.S.C. 1003)",
+     "Fees ($)": "50"
+    },
+    {
+     "Licensing section services": "(3) Recordation of certain contracts by cable TV systems located outside the 48 contiguous states",
+     "Fees ($)": "50"
+    },
+    {
+     "Licensing section services": "(4) Initial or amended notice of digital transmission of sound recording (17 U.S.C. 112, 114)",
+     "Fees ($)": "50"
+    },
+    {
+     "Licensing section services": "(5) Processing of a statement of account based on secondary transmissions of primary transmissions pursuant to 17 U.S.C. 111:",
+     "Fees ($)": null
+    },
+    {
+     "Licensing section services": "(i) Form SA1",
+     "Fees ($)": "15"
+    },
+    {
+     "Licensing section services": "(ii) Form SA2",
+     "Fees ($)": "20"
+    },
+    {
+     "Licensing section services": "(iii) Form SA3",
+     "Fees ($)": "725"
+    },
+    {
+     "Licensing section services": "(6) Processing of a statement of account based on secondary transmissions of primary transmissions pursuant to 17 U.S.C. 119 or 122",
+     "Fees ($)": "725"
+    },
+    {
+     "Licensing section services": "(7) Search report prepared from Licensing Section records (per hour, 2 hour minimum)",
+     "Fees ($)": "200"
+    }
+   ],
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r054",
+   "id": "cfr-37-201",
+   "split": "heldout",
+   "field": "effective_date",
+   "status": "absent",
+   "value": null,
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r055",
+   "id": "cfr-46-401",
+   "split": "calibration",
+   "field": "section_text",
+   "status": "value",
+   "value": "(a) A Certificate of Registration must describe the areas and routes of the Great Lakes within which the Pilot is authorized to perform pilotage services, and such description must be consistent with the terms of the pilotage authorization in their Master, Mate, or Pilot endorsement issued under the authority of Title 46 of the United States Code.\n\n(b) A Certificate of Registration does not authorize the holder to board any vessel, or to serve as a Pilot of any vessel, without the permission of the owner or Master. A Certificate of Registration must be in the possession of a Pilot at all times when they are in the service of a vessel, and must be displayed upon demand of the owner or Master, any United States Coast Guard officer or inspector, or a representative of the Director.\n\n(c) A Certificate of Registration evidencing registration of the holder is the property of the U.S. Coast Guard, and it may not be pledged, deposited, or surrendered to any person except as authorized by this part. A Certificate of Registration may not be copied or digitally reproduced, or be used to make a facsimile or Photostat. A Certificate which has expired without renewal, or renewal of which has been denied under the provisions of this section, must be surrendered to the Director upon demand.\n\n(d) An application for a replacement of a lost, damaged, or defaced Certificate of Registration must be submitted to the Director, on a Form CG-4509, together with two full-face passport style photographs, signed on the photo, vertically, as close to the head as possible. A replacement fee of five dollars ($5) by check or money order, drawn to the order of the U.S. Coast Guard, must accompany any such application. A Certificate issued as a replacement for a lost, damaged, or defaced Certificate will be marked so as to indicate that it is a replacement. Upon receipt of a Certificate issued as a replacement, the damaged or defaced Certificate must be surrendered to the Director.\n\n(e) A Certificate of Registration may be voluntarily surrendered to the Director by a U.S. Registered Pilot at any time such Pilot no longer desires to perform pilotage services; however, in the event such U.S. Registered Pilot has been served with a notice of hearing pursuant to § 401.250, a voluntary surrender of the Certificate of Registration will be at the option of the Director.",
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r056",
+   "id": "cfr-46-401",
+   "split": "calibration",
+   "field": "section_text",
+   "status": "value",
+   "value": "(a) A marine accident that occurs while a United States Registered Pilot, Apprentice Pilot, Apprentice Pilot with Limited Registration, or Temporary Registered Pilot is providing pilotage service to a vessel in United States or Canadian waters of the Great Lakes must be reported in writing by the Pilot to the Director as soon as possible, but not later than 15 days after the accident. The written report must include:\n\n(1) Name and description of the vessel or vessels involved;\n\n(2) Description of the accident;\n\n(3) Type of accident;\n\n(4) Location;\n\n(5) Time of occurrence;\n\n(6) Prevailing weather;\n\n(7) Results of the Pilot's post-casualty drug and alcohol test, if required;\n\n(8) Damage to the vessel or vessels or property; and\n\n(9) Injury to persons or lives lost.\n\n(b) The report in paragraph (a) of this section does not relieve the Pilot or others of responsibility for submitting any report required by other Coast Guard regulations or other government agencies of the United States or Canada.\n\n(c) Every United States Registered Pilot, Apprentice Pilot, Apprentice Pilot with Limited Registration, and Temporary Registered Pilot must file with the Director any change of their mailing address, email address, or phone number within 15 days after the change.",
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r057",
+   "id": "cfr-46-401",
+   "split": "calibration",
+   "field": "definition",
+   "status": "value",
+   "value": "means any organization that holds a Certificate of Authorization issued by the Director to operate a pilotage pool on the Great Lakes.",
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r058",
+   "id": "cfr-46-401",
+   "split": "calibration",
+   "field": "table_value",
+   "status": "value",
+   "value": "1.30",
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r059",
+   "id": "cfr-46-401",
+   "split": "calibration",
+   "field": "table_value",
+   "status": "value",
+   "value": "16250086",
+   "unit": null,
+   "decided_by": "owner"
+  },
+  {
+   "slot": "r060",
+   "id": "cfr-46-401",
+   "split": "calibration",
+   "field": "table_rows",
+   "status": "value",
+   "value": [
+    {
+     "Range of pilotage units": "0-49",
+     "Weighting factor": "1.0"
+    },
+    {
+     "Range of pilotage units": "50-159",
+     "Weighting factor": "1.15"
+    },
+    {
+     "Range of pilotage units": "160-189",
+     "Weighting factor": "1.30"
+    },
+    {
+     "Range of pilotage units": "190-and over",
+     "Weighting factor": "1.45"
+    }
+   ],
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r061",
+   "id": "cfr-46-401",
+   "split": "calibration",
+   "field": "effective_date",
+   "status": "absent",
+   "value": null,
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r062",
+   "id": "cfr-46-404",
+   "split": "calibration",
+   "field": "section_text",
+   "status": "value",
+   "value": "(a) In a full ratemaking year, the Director determines base individual target pilot compensation using a compensation benchmark, set after considering the most relevant currently available non-proprietary information. For supportable circumstances, the Director may make necessary and reasonable adjustments to the benchmark.\n\n(b) In an interim year, the Director adjusts the previous year's individual target pilot compensation level by the Bureau of Labor Statistics' Employment Cost Index for the Transportation and Materials sector, or if that is unavailable, the Director adjusts the previous year's individual target pilot compensation level using a two-step process:\n\n(1) First, the Director adjusts the previous year's individual target pilot compensation by the difference between the previous year's Bureau of Labor Statistics' Employment Cost Index for the Transportation and Materials sector and the Federal Open Market Committee median economic projections for Personal Consumption Expenditures inflation value used to inflate the previous year's target pilot compensation.\n\n(2) Second, the Director then adjusts that value by the Federal Open Market Committee median economic projections for Personal Consumption Expenditures inflation for the upcoming year.\n\n(c) The Director determines each pilotage association's total target pilot compensation by multiplying individual target pilot compensation computed in paragraph (a) or (b) of this section by the number of pilots projected under § 404.103 or § 401.220(a) of this chapter, whichever is lower.\n\n(d) The Director determines the individual Apprentice Pilot wage benchmark at the rate of 36 percent of the individual target pilot compensation, as calculated according to paragraphs (a) or (b) of this section.\n\n(e) The Director determines each pilot association's total Apprentice Pilot wage benchmark by multiplying the Apprentice Pilot compensation computed in paragraph (d) of this section by the number of Apprentice Pilots and Apprentice Pilots with Limited Registrations projected under § 404.103(b).",
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r063",
+   "id": "cfr-46-404",
+   "split": "calibration",
+   "field": "section_text",
+   "status": "value",
+   "value": "(a) The Director establishes base pilotage rates by a full ratemaking pursuant to §§ 404.101 through 404.109, which is conducted at least once every 5 years and completed by March 1 of the first year for which the base rates will be in effect. Base rates will be set to meet the goal specified in § 404.1(a).\n\n(b) In the interim years preceding the next scheduled full rate review, the Director will adjust base pilotage rates by an interim ratemaking pursuant to §§ 404.101 through 404.109.\n\n(c) Each year, the Director will announce whether the Coast Guard will conduct a full ratemaking or interim ratemaking procedure.",
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r064",
+   "id": "cfr-46-404",
+   "split": "calibration",
+   "field": "effective_date",
+   "status": "absent",
+   "value": null,
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r065",
+   "id": "cfr-49-107",
+   "split": "heldout",
+   "field": "section_text",
+   "status": "value",
+   "value": "This subpart prescribes procedures for the issuance, modification and termination of special permits from requirements of this subchapter, subchapter C of this chapter, or regulations issued under chapter 51 of 49 U.S.C.",
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r066",
+   "id": "cfr-49-107",
+   "split": "heldout",
+   "field": "section_text",
+   "status": "value",
+   "value": "(a) Each application for renewal of a special permit or party status to a special permit must conform to the following requirements:\n\n(1) The application must:\n\n(i) Be submitted to the Associate Administrator for Hazardous Materials Safety (Attention: General Approvals and Permits, PHH-31), Pipeline and Hazardous Materials Safety Administration, U.S. Department of Transportation, East Building, 1200 New Jersey Avenue, SE., Washington, DC 20590-0001;\n\n(ii) Be submitted with any attached supporting documentation submitted in an appropriate format by facsimile (fax) to: (202) 366-3753 or (202) 366-3308; or\n\n(iii) Be submitted electronically by e-mail to: specialpermits@dot.gov; or on-line at: http://www.phmsa.dot.gov/hazmat/regs/sp-a.\n\n(2) The application must identify by number the special permit for which renewal is requested.\n\n(3) The application must state the name, mailing address, physical address(es) of all known new locations not previously identified in the application where the special permit would be used and all locations not previously identified where the special permit was used, e-mail address (if available), and telephone number of the applicant. If the applicant is not an individual, the application must state the name, mailing address, physical address(es) of all known new locations not previously identified in the application where the special permit would be used and all locations not previously identified where the special permit was used, e-mail address (if available), and telephone number of an individual designated as the point of contact for the applicant for all purposes related to the application, the name of the company Chief Executive Officer (CEO), president, or ranking executive officer, and the Dun and Bradstreet Data Universal Numbering System (D-U-N-S) identifier. In addition, each applicant for renewal of party status must state why party status to the special permit is needed and must submit a certification of understanding of the provisions of the special permit to which party status is being requested.\n\n(4) The application must include either a certification by the applicant that the original application, as it may have been updated by any application for renewal, remains accurate (e.g., all section references, shipping descriptions, email address, etc.) and complete; or include an amendment to the previously submitted application as is necessary to update and ensure the accuracy and completeness of the application, with certification by the applicant that the application as amended is accurate and complete.\n\n(5) The application must include a statement describing all relevant operational, shipping, and incident experience of which the applicant is aware in connection with the special permit since its issuance or most recent renewal. If the applicant is aware of no incidents, the applicant must so certify. When known to the applicant, the statement must indicate the approximate number of shipments made or packages shipped, as applicable, and the number of shipments or packages involved in any loss of contents, including loss by venting other than as authorized in subchapter C.\n\n(6) When a Class 1 material is forbidden for transportation by aircraft, except under a special permit (see Columns 9A and 9B in the table in 49 CFR 172.101), an application to renew a special permit to transport such Class 1 material on passenger-carrying or cargo-only aircraft with a maximum certificated takeoff weight of less than 12,500 pounds must certify that no person within the categories listed in 18 U.S.C. 842(i) will participate in the transportation of the Class 1 material.\n\n(7) If the renewal is requested after the expiration date of the special permit, the following information is required:\n\n(i) The reason the special permit authorization was allowed to expire;\n\n(ii) A certification statement that no shipments were transported after the expiration date of the special permit, or a statement describing any transportation under the terms of the special permit after the expiration date, if applicable; and\n\n(iii) A statement describing the action(s) the applicant will take to ensure future renewal is requested before the expiration date.\n\n(8) If no operations or shipments have been made since the issuance or renewal of the special permit, the applicant must provide specific justification as to why the special permit should be renewed.\n\n(9) A statement indicating whether the applicant will be acting as a shipper (offeror), carrier or both under the terms of the special permit.\n\n(b) If, on or before an existing special permit expires the holder files an application for renewal that is complete and conforms to the requirements of this section, the special permit will not expire until final administrative action on the application for renewal has been taken. Operation under an expired special permit not filed for renewal before the expiration date is prohibited. This paragraph does not limit the authority of the Associate Administrator to modify, suspend, or terminate a special permit under § 107.121.",
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r067",
+   "id": "cfr-49-107",
+   "split": "heldout",
+   "field": "definition",
+   "status": "value",
+   "value": "means the existence of a condition which presents a substantial likelihood that death, serious illness, severe personal injury, or substantial endangerment to health, property, or the environment may occur before the reasonably foreseeable completion of an administrative hearing or other formal proceeding initiated to abate the risks of those effects.",
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r068",
+   "id": "cfr-49-107",
+   "split": "heldout",
+   "field": "table_value",
+   "status": "value",
+   "value": "2575",
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r069",
+   "id": "cfr-49-107",
+   "split": "heldout",
+   "field": "table_value",
+   "status": "value",
+   "value": "250",
+   "unit": "USD",
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r070",
+   "id": "cfr-49-107",
+   "split": "heldout",
+   "field": "table_rows",
+   "status": "value",
+   "value": [
+    {
+     "Registration year": "2014-2015 and later",
+     "Small business": "$250",
+     "Not-for-profit organization": "$250",
+     "Other than small business or not-for-profit organization": "$2,575"
+    },
+    {
+     "Registration year": "2013-2014",
+     "Small business": "125",
+     "Not-for-profit organization": "125",
+     "Other than small business or not-for-profit organization": "1,300"
+    },
+    {
+     "Registration year": "2012-2013, 2011-2012, 2010-2011",
+     "Small business": "250",
+     "Not-for-profit organization": "250",
+     "Other than small business or not-for-profit organization": "2,575"
+    },
+    {
+     "Registration year": "2009-2010, 2008-2009, 2007-2008, 2006-2007",
+     "Small business": "250",
+     "Not-for-profit organization": "250",
+     "Other than small business or not-for-profit organization": "975"
+    },
+    {
+     "Registration year": "2005-2006, 2004-2005, 2003-2004",
+     "Small business": "125",
+     "Not-for-profit organization": "125",
+     "Other than small business or not-for-profit organization": "275"
+    },
+    {
+     "Registration year": "2002-2003, 2001-2002, 2000-2001",
+     "Small business": "275",
+     "Not-for-profit organization": "(^1)",
+     "Other than small business or not-for-profit organization": "1,975"
+    },
+    {
+     "Registration year": "1999-2000 and earlier",
+     "Small business": "250",
+     "Not-for-profit organization": "250",
+     "Other than small business or not-for-profit organization": "250"
+    }
+   ],
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r071",
+   "id": "cfr-49-107",
+   "split": "heldout",
+   "field": "effective_date",
+   "status": "absent",
+   "value": null,
+   "unit": null,
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r072",
+   "id": "cfr-49-1002",
+   "split": "heldout",
+   "field": "section_text",
+   "status": "value",
+   "value": "Certifications and copies of such tariffs, reports and other public records and documents on file with the Surface Transportation Board as may be practicable to furnish, as well as searches and copying of records not considered public under the Freedom of Information Act (5 U.S.C. 552), will be furnished on the following basis:\n\n(a) Certificate of the Records Officer, $26.00.\n\n(b) Services involved in examination of tariffs or schedules for preparation of certified copies of tariffs or schedules or extracts therefrom at the rate of $56.00 per hour.\n\n(c) Services involved in checking records to be certified to determine authenticity, including clerical work, etc. incidental thereto, at a rate of $39.00 per hour.\n\n(d) Copies or computer printouts of tariffs, reports, and other public documents, at the rate of $.25 per letter or legal size exposure, only after the first 100 pages, with a minimum charge of $7.50. Copies of electronic records, audiovisual materials, or other forms of data are available at the actual cost of duplication or transcription.\n\n(e) Fees for courier services to transport agency records to provide on-site access to agency records stored off-site will be set at the rates set forth in the Board's agreement with its courier service provider. Rate information can be obtained from the Board's Records Officer, Surface Transportation Board, Washington, DC 20423-0001.\n\n(f) The fees for search, review and copying services for records not considered public under the Freedom of Information Act are as follows:\n\n(1) When records are sought for commercial use, requesters will be assessed the full and reasonable direct costs of document search, review and duplication. A “commercial use” request refers to a request from or on behalf of one who seeks information for a use or purpose that furthers the commercial, trade, or profit interests of the requester or the person on whose behalf the request is made.\n\n(2) When records are not sought for commercial use and a request is made by an educational or noncommercial scientific institution, requesters will be assessed only for the cost of duplication (excluding charges for the first 100 pages). The term “Educational Institution” refers to a preschool, a public or private elementary or secondary school, an institution of graduate higher education, an institution of undergraduate higher education, an institution of professional education, and an institution of vocational education, which operates a program of scholarly research. The term “noncommercial scientific institution” refers to an institution that is not operated on a “commercial” basis and that is operated solely for the purpose of conducting scientific research the results of which are not intended to promote any particular product or industry. They must show that their request is authorized by and under the auspices of a qualifying institution and the records are not sought for a commercial use but, instead, are in furtherance of scholarly or scientific research.\n\n(3) Requesters who are representatives of the news media (persons actively gathering news for an entity that is organized and operated to publish or broadcast news to the public) will be assessed only for the cost of duplication (excluding charges for the first 100 pages) if they can show that their request is not made for a commercial use. A request for records supporting the news dissemination function of the requester shall not be considered a request for a commercial use.\n\n(4) All other requesters will be assessed fees which recover the full, reasonable direct cost of searching for and duplicating records that are responsive to the request (excluding charges for the first 100 pages of duplication and the first two hours of search time).\n\n(5) All requesters must reasonably describe the records sought.\n\n(6) The search and review hourly fees will be based upon employee grade levels in order to recoup the full, allowable direct costs attributable to their performance of these functions. A listing of the hourly fees by employee grade level is available on the Board's website, http://www.stb.gov.\n\n(7) The fee for copies or computer printouts shall be $.25 per letter or legal size exposure, with a minimum charge of $7.50. Copies of electronic records, audiovisual materials, or other forms of data are available at the actual cost of duplication or transcription.\n\n(8) If the cost of collecting any fee would be equal to or greater than the fee itself, it will not be assessed.\n\n(9) A fee may be charged for searches which are not productive and for searches for records or those parts of records which subsequently are determined to be exempt from disclosure.\n\n(10) Interest charges will be assessed on any unpaid bill starting on the date specified in the bill, at the rate prescribed in 31 U.S.C. 3717 and will accrue from the date of the billing. The Debt Collection Act, 5 U.S.C. 5514 (1982), including disclosure to the consumer reporting agencies and the use of collection agencies, as prescribed in the Board's Debt Collection Regulations in 49 CFR part 1018, will be utilized to encourage payment where appropriate.\n\n(11) If search charges are likely to exceed $25, the requester will be notified of the estimated fees unless requester willingness to pay whatever fee is assessed has been provided in advance. The administrative time limits prescribed in 5 U.S.C. 552(a)(6) will not begin until after the requester agrees in writing to accept the prospective charges.\n\n(12) An advance payment (before work is commenced or continued on a request) may be required if the charges are likely to exceed $250. Requesters who have previously failed to pay a fee charged in timely fashion (i.e. within 30 days of the date of billing) may be required first to pay this amount plus any applicable interest (or demonstrate that the fee has been paid) and then make an advance payment of the full amount of the estimated fee before the new or pending request is processed. The administrative time limits prescribed in 5 U.S.C. 552(a)(6) also will not begin until after a requester has complied with this provision.\n\n(13) Documents shall be furnished without any charge or at a charge reduced below the fees set forth above if disclosure of the information is in the public interest because it is likely to contribute significantly to public understanding of the operations or activities of the government and is not primarily in the commercial interest of the requester. The following six factors will be employed in determining when such fees shall be waived or reduced:\n\n(i) The subject of the request: Whether the subject of the requester records concerns “the operations or activities of the government”;\n\n(ii) The informative value of the information to be disclosed: Whether the disclosure is “likely to contribute” to an understanding of government operations or activities;\n\n(iii) The contribution to an understanding of the subject by the general public likely to result from disclosure: Whether disclosure of the requested information will contribute to “public understanding”;\n\n(iv) The significance of the contribution to public understanding: Whether the disclosure is likely to contribute “significantly” to public understanding of government operations or activities;\n\n(v) The existence and magnitude of a commercial interest: Whether the requester has a commercial interest that would be furthered by the requested disclosure; and, if so\n\n(vi) The primary interest in disclosure: Whether the magnitude of the identified commercial interest of the requester is sufficiently large, in comparison with the public interest in disclosure, that disclosure is “primarily in the commercial interest of the requester.” This fee waiver and reduction provision will be implemented in accordance with guidelines issued by the U.S. Department of Justice on April 2, 1987 and entitled “New FOIA Fee Waiver Policy Guidance.” A copy of these guidelines may be inspected or obtained from the Surface Transportation Board's Freedom of Information Office, Washington, DC 20423-0001.\n\n(14) No fees will be assessed if the FOIA Officer fails to comply with any time limit under the FOIA or these regulations, and has not timely notified the requester, in writing, that an unusual circumstance exists. If an unusual circumstance exists, and timely, written notice is given to the requester, the failure to meet the time limit may be excused an additional 10 working days before fees are automatically waived under this paragraph (f)(14).\n\n(15) If the FOIA Officer determines that unusual circumstances apply and more than 5,000 pages are necessary to respond to a request, fees may be charged if timely, written notice to the requester is provided and discussed with the requester via mail, Email, or telephone (or if at least three good-faith attempts are made to do so) regarding how the requester could effectively limit the scope of the request.\n\n(16) If a court has determined that exceptional circumstances exist, a failure to comply with time limits imposed by these regulations or FOIA shall be excused for the length of time provided by court order.\n\n(17) Fees may not be avoided by filing multiple requests at the same time. When the FOIA Officer reasonably believes that a requester, alone or with others, is breaking down one request into a series of requests to avoid fees, the requests will be combined, and the requester or requesters will be charged accordingly.\n\n(g) Fees for services described in paragraphs (a) through (f) of this section must be paid via the Board's electronic payment system in accordance with § 1002.2(a)(2).\n\n(h) Transcript of testimony and of oral argument, or extracts therefrom, may be purchased by the public from the Board's official reporter. For information regarding the official reporter, contact the Records Officer, Surface Transportation Board, Washington, DC 20423-0001.",
+   "unit": null,
+   "decided_by": "owner"
+  },
+  {
+   "slot": "r073",
+   "id": "cfr-49-1002",
+   "split": "heldout",
+   "field": "section_text",
+   "status": "value",
+   "value": "(a) Manner of payment. (1) Except as specified in this section, all filing fees will be payable at the time and place the application, petition, notice, tariff, contract summary, or other document is tendered for filing.\n\n(2) Filing fees for all filings must be paid via the Board's electronic payment system found on the Board's website.\n\n(b) Nonpayment of fees. Any filing that is not accompanied by the appropriate filing fee or a request for waiver of the fee is deficient. If a filer requests a fee waiver but does not submit the appropriate fee, the filing is held for processing until a determination has been made on the fee waiver request. If the filer requests a fee waiver and submits the appropriate fee, the filing is accepted and the Board refunds the fee or a portion thereof if the fee waiver is ultimately granted.\n\n(c) Fees not refundable. Fees will be assessed for every filing in the type of proceeding listed in the schedule of fees contained in paragraph (f) of this section, subject to the exceptions contained in paragraphs (d) and (e) of this section. After the application, petition, notice, tariff, contract, or other document has been accepted for filing by the Board, the filing fee will not be refunded, regardless of whether the application, petition, notice, tariff, contract, or other document is granted or approved, denied, rejected before docketing, dismissed, or withdrawn. If an individual exemption proceeding becomes a matter of general applicability and is handled through the rulemaking process, the Board will refund the filing fee.\n\n(d) Related or consolidated proceedings. (1)(i) Except as provided for in paragraph (d)(1)(ii) of this section, separate fees need not be paid for related applications filed by the same applicant that would be the subject of one proceeding.\n\n(ii) In proceedings filed under the rail consolidation procedures at 49 CFR part 1180, the applicable filing fee must be paid for each proceeding submitted concurrently with the primary application. The fee for each type of proceeding is set forth in the fee schedule contained in paragraph (f) of this section.\n\n(2) A separate fee will be assessed for the filing of an application for temporary authority to operate a motor carrier of passengers as provided for in paragraph (f)(5) of this section regardless of whether such application is related to a corresponding transfer proceeding as provided for in paragraph (f)(2) of this section.\n\n(3) The Board may reject concurrently filed applications, petitions, notices, contracts, or other documents asserted to be related and refund the filing fee if, in its judgment, they embrace two or more severable matters which should be the subject of separate proceedings.\n\n(e) Waiver or reduction of filing fees. It is the general policy of the Board not to waive or reduce filing fees except as described below:\n\n(1) Except as noted in this paragraph (e)(1), filing fees are waived for an application, petition, notice, tariff, contract summary, or other document that is filed by a federal government agency or a state or local government entity. A fee waiver is not available under this paragraph for a quasi-governmental entity or government-subsidized transportation company. A fee waiver is also not available to any state or local government entity that is acting in the capacity of a carrier or shipper or that owns or proposes to own a carrier and is before the agency in its proprietary role.\n\n(i) When to request. At the time that a filing is submitted to the Board, the fee waiver applicant may request a waiver of the fee prescribed in this part. Such request should be addressed to the Chief of Case Administration, Office of Chief Counsel, Surface Transportation Board.\n\n(ii) Board action. The Board will either stamp the relevant filing with the notation “Filing Fee Waived,” or the fee waiver applicant will be notified of the decision to grant or deny the request for waiver by the Chief of Case Administration, Office of Chief Counsel.\n\n(2) In extraordinary situations the Board will accept requests for waivers or fee reductions in accordance with the following procedure:\n\n(i) When to request. At the time that a filing is submitted to the Board, the fee waiver applicant may request a waiver or reduction of the fee prescribed in this part. Such request should be addressed to the Chief of Case Administration, Office of Chief Counsel.\n\n(ii) Basis. The fee waiver applicant must show the waiver or reduction of the fee is in the best interest of the public, or that payment of the fee would impose an undue hardship on the fee waiver applicant.\n\n(iii) Board action. The Chief of Case Administration, Office of Chief Counsel will notify the fee waiver applicant of the decision to grant or deny the request for waiver or reduction.\n\n(3) Review. No third-party appeals of fee waiver or reduction decisions are permitted.\n\n(f) Schedule of filing fees.\n\nType of proceeding\tFee\nPART I: Non-Rail Applications or Proceedings to Enter Into a Particular Financial Transaction or Joint Arrangement:\n(1) An application for the pooling or division of traffic\t$6,900.\n(2) (i) An application involving the purchase, lease, consolidation, merger, or acquisition of control of a motor carrier of passengers under 49 U.S.C. 14303\t$3,000.\n(ii) A petition for exemption under 49 U.S.C. 13541 (other than a rulemaking) filed by a non-rail carrier not otherwise covered\t$4,800.\n(iii) A petition to revoke an exemption filed under 49 U.S.C. 13541(d)\t$4,000.\n(3) An application for approval of a non-rail rate association agreement. 49 U.S.C. 13703\t$43,000.\n(4) An application for approval of an amendment to a non-rail rate association agreement:\n(i) Significant amendment\t$7,000.\n(ii) Minor amendment\t$150.\n(5) An application for temporary authority to operate a motor carrier of passengers. 49 U.S.C. 14303(i)\t$750.\n(6) A notice of exemption for transaction within a motor passenger corporate family that does not result in adverse changes in service levels, significant operational changes, or a change in the competitive balance with motor passenger carriers outside the corporate family\t$2,400.\n(7)-(10) [Reserved]\nPART II: Rail Licensing Proceedings other than Abandonment or Discontinuance Proceedings:\n(11) (i) An application for a certificate authorizing the extension, acquisition, or operation of lines of railroad. 49 U.S.C. 10901\t$11,200.\n(ii) Notice of exemption under 49 CFR 1150.31-1150.35\t$2,600.\n(iii) Petition for exemption under 49 U.S.C. 10502\t$19,500.\n(12) (i) An application involving the construction of a rail line\t$116,500.\n(ii) A notice of exemption involving construction of a rail line under 49 CFR 1150.36\t$2,600.\n(iii) A petition for exemption under 49 U.S.C. 10502 involving construction of a rail line\t$116,500.\n(iv) A request for determination of a dispute involving a rail construction that crosses the line of another carrier under 49 U.S.C. 10902(d)\t$350.\n(13) A Feeder Line Development Program application filed under 49 U.S.C. 10907(b)(1)(A)(i) or 10907(b)(1)(A)(ii)\t$2,600.\n(14) (i) An application of a class II or class III carrier to acquire an extended or additional rail line under 49 U.S.C. 10902\t$9,500.\n(ii) Notice of exemption under 49 CFR 1150.41-1150.45\t$2,600.\n(iii) Petition for exemption under 49 U.S.C. 10502 relating to an exemption from the provisions of 49 U.S.C. 10902\t$10,200.\n(15) A notice of a modified certificate of public convenience and necessity under 49 CFR 1150.21-1150.24\t$2,500.\n(16) An application for a land-use-exemption permit for a facility existing as of October 16, 2008 under 49 U.S.C. 10909\t$9,300.\n(17) An application for a land-use-exemption permit for a facility not existing as of October 16, 2008 under 49 U.S.C. 10909\t$33,000.\n(18)-(20) [Reserved]\nPART III: Rail Abandonment or Discontinuance of Transportation Services Proceedings:\n(21) (i) An application for authority to abandon all or a portion of a line of railroad or discontinue operation thereof filed by a railroad (except applications filed by Consolidated Rail Corporation pursuant to the Northeast Rail Service Act [Subtitle E of Title XI of Pub. L. 97-35], bankrupt railroads, or exempt abandonments)\t$34,500.\n(ii) Notice of an exempt abandonment or discontinuance under 49 CFR 1152.50\t$5,400.\n(iii) A petition for exemption under 49 U.S.C. 10502\t$9,700.\n(22) An application for authority to abandon all or a portion of a line of a railroad or operation thereof filed by Consolidated Rail Corporation pursuant to Northeast Rail Service Act\t$700.\n(23) Abandonments filed by bankrupt railroads\t$2,900.\n(24) A request for waiver of filing requirements for abandonment application proceedings\t$2,800.\n(25) An offer of financial assistance under 49 U.S.C. 10904 relating to the purchase of or subsidy for a rail line proposed for abandonment\t$2,400.\n(26) A request to set terms and conditions for the sale of or subsidy for a rail line proposed to be abandoned\t$35,400.\n(27) (i) Request for a trail use condition in an abandonment proceeding under 16 U.S.C. 1247(d)\t$350.\n(ii) A request to extend the period to negotiate a trail use agreement\t$700.\n(28)-(35) [Reserved]\nPART IV: Rail Applications to Enter Into a Particular Financial Transaction or Joint Arrangement:\n(36) An application for use of terminal facilities or other applications under 49 U.S.C. 11102\t$29,500.\n(37) An application for the pooling or division of traffic. 49 U.S.C. 11322\t$15,800.\n(38) An application for two or more carriers to consolidate or merge their properties or franchises (or a part thereof) into one corporation for ownership, management, and operation of the properties previously in separate ownership. 49 U.S.C. 11324:\n(i) Major transaction\t$2,327,700.\n(ii) Significant transaction\t$465,500.\n(iii) Minor transaction\t$10,600.\n(iv) Notice of an exempt transaction under 49 CFR 1180.2(d)\t$2,400.\n(v) Responsive application\t$10,600.\n(vi) Petition for exemption under 49 U.S.C. 10502\t$14,500.\n(vii) A request for waiver or clarification of regulations filed in a major financial proceeding as defined at 49 CFR 1180.2(a)\t$8,600.\n(39) An application of a non-carrier to acquire control of two or more carriers through ownership of stock or otherwise. 49 U.S.C. 11324:\n(i) Major transaction\t$2,237,700.\n(ii) Significant transaction\t$465,500.\n(iii) Minor transaction\t$10,600.\n(iv) A notice of an exempt transaction under 49 CFR 1180.2(d)\t$1,800.\n(v) Responsive application\t$10,600.\n(vi) Petition for exemption under 49 U.S.C. 10502\t$14,500.\n(vii) A request for waiver or clarification of regulations filed in a major financial proceeding as defined at 49 CFR 1180.2(a)\t$8,600.\n(40) An application to acquire trackage rights over, joint ownership in, or joint use of any railroad lines owned and operated by any other carrier and terminals incidental thereto. 49 U.S.C. 11324:\n(i) Major transaction\t$2,327,700.\n(ii) Significant transaction\t$465,500.\n(iii) Minor transaction\t$10,600.\n(iv) Notice of an exempt transaction under 49 CFR 1180.2(d)\t$1,700.\n(v) Responsive application\t$10,600.\n(vi) Petition for exemption under 49 U.S.C. 10502\t$14,500.\n(vii) A request for waiver or clarification of regulations filed in a major financial proceeding as defined at 49 CFR 1180.2(a)\t$8,600.\n(41) An application of a carrier or carriers to purchase, lease, or contract to operate the properties of another, or to acquire control of another by purchase of stock or otherwise. 49 U.S.C. 11324:\n(i) Major transaction\t$2,327,700.\n(ii) Significant transaction\t$465,500.\n(iii) Minor transaction\t$10,600.\n(iv) Notice of an exempt transaction under 49 CFR 1180.2(d)\t$2,000.\n(v) Responsive application\t$10,600.\n(vi) Petition for exemption under 49 U.S.C. 10502\t$10,200.\n(vii) A request for waiver or clarification of regulations filed in a major financial proceeding as defined at 49 CFR 1180.2(a)\t$8,600.\n(42) Notice of a joint project involving relocation of a rail line under 49 CFR 1180.2(d)(5)\t$3,500.\n(43) An application for approval of a rail rate association agreement. 49 U.S.C. 10706\t$109,000.\n(44) An application for approval of an amendment to a rail rate association agreement. 49 U.S.C. 10706:\n(i) Significant amendment\t$20,100.\n(ii) Minor amendment\t$150.\n(45) An application for authority to hold a position as officer or director under 49 U.S.C. 11328\t$1,200.\n(46) A petition for exemption under 49 U.S.C. 10502 (other than a rulemaking) filed by rail carrier not otherwise covered\t$12,400.\n(47) National Railroad Passenger Corporation (Amtrak) conveyance proceeding under 45 U.S.C. 562\t$350.\n(48) National Railroad Passenger Corporation (Amtrak) compensation proceeding under Section 402(a) of the Rail Passenger Service Act\t$350.\n(49)-(55) [Reserved]\nPART V: Formal Proceedings:\n(56) A formal complaint alleging unlawful rates or practices of carriers:\n(i) A formal complaint filed under the coal rate guidelines (Stand-Alone Cost Methodology) alleging unlawful rates and/or practices of rail carriers under 49 U.S.C. 10704(c)(1)\t$350.\n(ii) A formal complaint involving rail maximum rates filed under the Simplified-SAC methodology\t$350.\n(iii) A formal complaint involving rail maximum rates filed under the Three Benchmark methodology\t$150.\n(iv) All other formal complaints (except competitive access complaints)\t$350.\n(v) Competitive access complaints\t$150.\n(vi) A request for an order compelling a rail carrier to establish a common carrier rate\t$350.\n(57) A complaint seeking or a petition requesting institution of an investigation seeking the prescription or division of joint rates or charges. 49 U.S.C. 10705\t$13,800.\n(58) A petition for declaratory order:\n(i) A petition for declaratory order involving a dispute over an existing rate or practice which is comparable to a complaint proceeding\t$1,000.\n(ii) All other petitions for declaratory order\t$1,400.\n(59) An application for shipper antitrust immunity. 49 U.S.C. 10706(a)(5)(A)\t$10,800.\n(60) Labor arbitration proceedings\t$350.\n(61) (i) An appeal of a Surface Transportation Board decision on the merits or petition to revoke an exemption pursuant to 49 U.S.C. 10502(d)\t$350.\n(ii) An appeal of a Surface Transportation Board decision on procedural matters except discovery rulings\t$550.\n(62) Motor carrier undercharge proceedings\t$350.\n(63) (i) Expedited relief for service inadequacies: A request for expedited relief under 49 U.S.C. 11123 and 49 CFR part 1146 for service emergency\t$350.\n(ii) Expedited relief for service inadequacies: A request for temporary relief under 49 U.S.C. 10705 and 11102, and 49 CFR part 1147 for service inadequacy\t$350.\n(64) A request for waiver or clarification of regulations except one filed in an abandonment or discontinuance proceeding, or in a major financial proceeding as defined at 49 CFR 1180.2(a)\t$900.\n(65)-(75) [Reserved]\nPART VI: Informal Proceedings:\n(76) An application for authority to establish released value rates or ratings for motor carriers and freight forwarders of household goods under 49 U.S.C. 14706\t$1,900.\n(77) An application for special permission for short notice or the waiver of other tariff publishing requirements\t$200.\n(78) (i) The filing of tariffs, including supplements, or contract summaries\t$1. per page.\n($38. min. charge.).\n(ii) The filing of water carrier annual certifications\t$38.\n(79) Special docket applications from rail and water carriers:\n(i) Applications involving $25,000 or less\t$75.\n(ii) Applications involving over $25,000\t$200.\n(80) Informal complaint about rail rate applications\t$950.\n(81) Tariff reconciliation petitions from motor common carriers:\n(i) Petitions involving $25,000 or less\t$75.\n(ii) Petitions involving over $25,000\t$200.\n(82) Request for a determination of the applicability or reasonableness of motor carrier rates under 49 U.S.C. 13710(a)(2) and (3)\t$350.\n(83) Filing of documents for recordation. 49 U.S.C. 11301 and 49 CFR 1177.3(c)\t$64. per document.\n(84) Informal opinions about rate applications (all modes)\t$400.\n(85) A railroad accounting interpretation\t$1,700.\n(86) (i) A request for an informal opinion not otherwise covered\t$2,300.\n(ii) A proposal to use on a voting trust agreement pursuant to 49 CFR 1013 and 49 CFR 1180.4(b)(4)(iv) in connection with a major control proceeding as defined at 49 CFR 1180.2(a)\t$8,000.\n(iii) A request for an informal opinion on a voting trust agreement pursuant to 49 CFR 1013.3(a) not otherwise covered\t$800.\n(87) Arbitration of certain disputes subject to the statutory jurisdiction of the Surface Transportation Board under 49 CFR 1108:\n(i) Complaint\t$75.\n(ii) Answer (per defendant), Unless Declining to Submit to Any Arbitration\t$75.\n(iii) Third Party Complaint\t$75.\n(iv) Third Party Answer (per defendant), Unless Declining to Submit to Any Arbitration\t$75.\n(v) Appeals of Arbitration Decisions or Petitions to Modify or Vacate an Arbitration Award\t$150.\n(88) Basic fee for STB adjudicatory services not otherwise covered\t$350.\n(89)-(95) [Reserved]\nPART VII: Services:\n(96) Messenger delivery of decision to a railroad carrier's Washington, DC agent\t$50. per delivery.\n(97) Request for service or pleading list for proceedings\t$38. per list.\n(98) Processing the paperwork related to a request for the Carload Waybill Sample to be used in an STB or State proceeding that:\n(i) Annual request does not require a Federal Register (FR) notice:\n(A) Set cost portion\t$250.\n(B) Sliding cost portion\t$73. per party.\n(ii) Annual request does require a FR notice:\n(A) Set cost portion\t$500.\n(B) Sliding cost portion\t$73. per party.\n(iii) Quarterly request does not require a FR notice:\n(A) Set cost portion\t$63.\n(B) Sliding cost portion\t$18. per party.\n(iv) Quarterly request does require a FR notice:\n(A) Set cost portion\t$233.\n(B) Sliding cost portion\t$18. per party.\n(v) Monthly request does not require a FR notice:\n(A) Set cost portion\t$21.\n(B) Sliding cost portion\t$6. per party.\n(vi) Monthly request does require a FR notice:\n(A) Set cost portion\t$166.\n(B) Sliding cost portion\t$6. per party.\n(99) (i) Application fee for the STB's Practitioners' Exam\t$250.\n(ii) Practitioners' Exam Information Package\t$25.\n(100) Carload Waybill Sample data:\n(i) Requests for Public Use File for all years prior to the most current year Carload Waybill Sample data available, provided on CD-R\t$250. per year.\n(ii) Specialized programming for Waybill requests to the Board\t$153. per hour.",
+   "unit": null,
+   "decided_by": "owner"
+  },
+  {
+   "slot": "r074",
+   "id": "cfr-49-1002",
+   "split": "heldout",
+   "field": "table_value",
+   "status": "value",
+   "value": "350",
+   "unit": "USD",
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r075",
+   "id": "cfr-49-1002",
+   "split": "heldout",
+   "field": "table_value",
+   "status": "value",
+   "value": "700",
+   "unit": "USD",
+   "decided_by": "agree"
+  },
+  {
+   "slot": "r076",
+   "id": "cfr-49-1002",
+   "split": "heldout",
+   "field": "effective_date",
+   "status": "absent",
+   "value": null,
+   "unit": null,
+   "decided_by": "agree"
+  }
+ ]
+}
