@@ -26,12 +26,14 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import subprocess
 import sys
 import tempfile
 import time
 import xml.etree.ElementTree as ET
 from concurrent.futures import ThreadPoolExecutor
+from datetime import date
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
 from typing import Any
@@ -145,6 +147,38 @@ def parse(reply: str) -> dict[str, Any]:
     return {e["slot"]: e for e in got["slots"]}
 
 
+DATE = re.compile(r"\d{4}-\d{2}-\d{2}")
+
+
+def problem(kind: str, e: Any) -> str | None:
+    """Why an answer does not have the shape of the answer rules, or None."""
+    if not isinstance(e, dict) or e.get("status") not in ("value", "absent"):
+        return "the status is not value or absent"
+    if e["status"] == "absent":
+        return None
+    v = e.get("value")
+    if kind == "passage" and not (isinstance(v, str) and v.strip()):
+        return "a passage needs a text value"
+    if kind == "number" and not (isinstance(v, str) and re.fullmatch(r"-?\d+(\.\d+)?", v.strip())):
+        return "a number needs a string of digits"
+    if kind == "date":
+        try:
+            ok = isinstance(v, str) and bool(DATE.fullmatch(v)) and bool(date.fromisoformat(v))
+        except ValueError:
+            ok = False
+        if not ok:
+            return "a date needs a real YYYY-MM-DD value"
+    if kind == "record":
+        if not isinstance(v, list) or not v:
+            return "a record needs a list of rows"
+        for r in v:
+            if not isinstance(r, dict) or not r:
+                return "each row of a record is an object"
+            if any(not isinstance(c, (str, type(None))) for c in r.values()):
+                return "each cell is text or null"
+    return None
+
+
 def load(work: Path, name: str) -> dict[str, Any]:
     out: dict[str, Any] = {}
     for f in sorted((work / name).glob("*.json")):
@@ -189,6 +223,10 @@ def run(args: argparse.Namespace) -> int:
                 answers = parse(reply)
                 if set(answers) != {s["slot"] for s in ss}:
                     raise ValueError("the reply does not answer each slot")
+                for s in ss:
+                    why = problem(s["kind"], answers[s["slot"]])
+                    if why:
+                        raise ValueError(f"{s['slot']}: {why}")
                 break
             except (RuntimeError, ValueError, KeyError, subprocess.TimeoutExpired) as e:
                 if attempt == 1:
@@ -237,13 +275,18 @@ def compare(args: argparse.Namespace) -> int:
     slots = json.loads((HERE / "slots.json").read_text())["slots"]
     a, b = load(args.work, "pass-a"), load(args.work, "pass-b")
     ca, cb = load(args.work, "absence-claude"), load(args.work, "absence-codex")
-    rows, counts = [], {"agree": 0, "disagree": 0, "missing": 0}
+    rows, counts = [], {"agree": 0, "disagree": 0, "invalid": 0, "missing": 0}
     for s in slots:
         k, x, y = s["kind"], a.get(s["slot"]), b.get(s["slot"])
         na, nb = norm(k, x), norm(k, y)
-        checks = [c for c in (cb.get(s["slot"]), ca.get(s["slot"])) if c is not None]
-        if ("missing",) in (na, nb):
+        # an absence of pass a needs the codex check, an absence of pass b the claude check
+        need = [cb.get(s["slot"])] if na == ("absent",) else []
+        need += [ca.get(s["slot"])] if nb == ("absent",) else []
+        checks = [c for c in need if c is not None]
+        if ("missing",) in (na, nb) or len(checks) < len(need):
             state = "missing"
+        elif any(problem(k, e) for e in (x, y, *checks)):
+            state = "invalid"
         elif na == nb and all(norm(k, c) == na for c in checks):
             state = "agree"
         else:
@@ -256,6 +299,15 @@ def compare(args: argparse.Namespace) -> int:
         if r["state"] != "agree":
             print(r["slot"], r["state"])
     return 0
+
+
+def chosen(row: dict[str, Any], d: dict[str, Any]) -> Any:
+    """The answer that an owner decision picks."""
+    if d["choice"] in ("a", "b"):
+        return row[d["choice"]]
+    if d["choice"] == "absent":
+        return {"status": "absent"}
+    return {"status": "value", "value": d["value"], "unit": d["unit"]}
 
 
 def seal(args: argparse.Namespace) -> int:
@@ -274,13 +326,10 @@ def seal(args: argparse.Namespace) -> int:
         if row["state"] == "agree":
             got, how = row["a"], "agree"
         elif s["slot"] in decided:
-            d, how = decided[s["slot"]], "owner"
-            if d["choice"] in ("a", "b"):
-                got = row[d["choice"]]
-            elif d["choice"] == "absent":
-                got = {"status": "absent"}
-            else:
-                got = {"status": "value", "value": d["value"], "unit": d["unit"]}
+            got, how = chosen(row, decided[s["slot"]]), "owner"
+            if problem(s["kind"], got):
+                open_.append(s["slot"])
+                continue
         else:
             open_.append(s["slot"])
             continue

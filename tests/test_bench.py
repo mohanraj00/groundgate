@@ -1026,6 +1026,7 @@ def test_seal_refuses_an_open_disagreement_and_then_writes_the_owner_choice(
     here = tmp_path / "set"
     here.mkdir()
     slot = {"slot": "r001", "id": "cfr-1-1", "split": "heldout", "field": "effective_date"}
+    slot["kind"] = "date"
     (here / "slots.json").write_text(json.dumps({"slots": [slot]}))
     (here / "manifest.json").write_text(json.dumps({"documents": []}))
     monkeypatch.setattr(label, "HERE", here)
@@ -1046,6 +1047,37 @@ def test_seal_refuses_an_open_disagreement_and_then_writes_the_owner_choice(
     assert manifest["labels"]["sha256"] == "sha256:" + __import__("hashlib").sha256(raw).hexdigest()
 
 
+def test_an_answer_with_no_value_or_no_absence_check_does_not_agree(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    label = _label_module()
+    assert label.problem("date", {"status": "value", "value": None})
+    assert label.problem("number", {"status": "value", "value": "1625-0086"})
+    assert label.problem("record", {"status": "value", "value": []})
+    assert label.problem("maybe", {"status": "unsure"})
+    assert label.problem("number", {"status": "value", "value": "-12.5"}) is None
+    assert label.problem("date", {"status": "absent"}) is None
+    here = tmp_path / "set"
+    here.mkdir()
+    slots = [{"slot": f"r00{n}", "kind": "date"} for n in (1, 2, 3)]
+    (here / "slots.json").write_text(json.dumps({"slots": slots}))
+    monkeypatch.setattr(label, "HERE", here)
+    work = tmp_path / "work"
+
+    def answers(name: str, got: dict[str, Any]) -> None:
+        (work / name).mkdir(parents=True, exist_ok=True)
+        (work / name / "x.json").write_text(json.dumps({"answers": got}))
+
+    absent, null = {"status": "absent"}, {"status": "value", "value": None}
+    answers("pass-a", {"r001": absent, "r002": null, "r003": absent})
+    answers("pass-b", {"r001": absent, "r002": null, "r003": absent})
+    answers("absence-codex", {"r001": absent, "r003": absent})
+    answers("absence-claude", {"r003": absent})
+    assert label.compare(type("Args", (), {"work": work})) == 0
+    rows = {r["slot"]: r["state"] for r in json.loads((work / "compare.json").read_text())}
+    assert rows == {"r001": "missing", "r002": "invalid", "r003": "agree"}
+
+
 def test_the_decision_page_needs_the_cookie_and_a_known_slot(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
@@ -1057,7 +1089,8 @@ def test_the_decision_page_needs_the_cookie_and_a_known_slot(
     spec.loader.exec_module(decide)
 
     monkeypatch.setattr(decide, "WORK", tmp_path)
-    monkeypatch.setattr(decide, "ITEMS", [{"slot": "r001", "kind": "date"}])
+    bad = {"status": "value", "value": None}
+    monkeypatch.setattr(decide, "ITEMS", [{"slot": "r001", "kind": "date", "a": bad, "b": bad}])
     server = localweb.LocalServer(0, decide.Handler)
     threading.Thread(target=server.serve_forever, daemon=True).start()
     try:
@@ -1076,6 +1109,8 @@ def test_the_decision_page_needs_the_cookie_and_a_known_slot(
 
         assert post({"slot": "r999", "choice": "a"})[0] == 422
         assert post({"slot": "r001", "choice": "other"})[0] == 422
+        assert post({"slot": "r001", "choice": "other", "value": "2026-02-30"})[0] == 422
+        assert post({"slot": "r001", "choice": "a"})[0] == 422
         assert post({"slot": "r001", "choice": "other", "value": "2026-01-01"}) == (
             200,
             {"decided": 1, "open": 0},

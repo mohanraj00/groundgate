@@ -27,6 +27,7 @@ BENCH = HERE.parent
 sys.path.insert(0, str(BENCH))
 sys.path.insert(0, str(BENCH / "regulatory"))
 import localweb  # noqa: E402  (bench/localweb.py)
+import passes  # noqa: E402  (bench/regulatory/passes.py)
 
 CHOICES = ("a", "b", "absent", "other")
 LOCK = threading.Lock()
@@ -37,8 +38,6 @@ ITEMS: list[dict[str, Any]] = []
 def items(sources: Path, work: Path) -> list[dict[str, Any]]:
     """The disagreements, each with its slot and the reader text of its section."""
     import xml.etree.ElementTree as ET
-
-    import passes
 
     from groundgate.read.markup import xml_text
 
@@ -118,8 +117,12 @@ class Handler(localweb.LocalHandler):
         if slot not in {i["slot"] for i in ITEMS} or choice not in CHOICES:
             self._json(HTTPStatus.UNPROCESSABLE_ENTITY, {"error": "unknown slot or choice"})
             return
-        if choice == "other" and value is None:
-            self._json(HTTPStatus.UNPROCESSABLE_ENTITY, {"error": "give the value"})
+        item = next(i for i in ITEMS if i["slot"] == slot)
+        why = passes.problem(
+            item["kind"], passes.chosen(item, {"choice": choice, "value": value, "unit": unit})
+        )
+        if why:
+            self._json(HTTPStatus.UNPROCESSABLE_ENTITY, {"error": why})
             return
         with LOCK:
             got = decisions()

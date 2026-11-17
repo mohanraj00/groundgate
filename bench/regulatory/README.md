@@ -89,9 +89,13 @@ The owner approved this method on 2026-11-17. `passes.py` runs it:
    text and the XML of each named section, and nothing else.
 2. Each slot that a pass marks absent gets a second blind check by a new agent of the other
    harness.
-3. `passes.py compare` gives the agreements: the same normal form in both passes and in each
-   absence check. The owner decides each other slot on the page of `bench/label/decide.py`.
-4. `passes.py seal` writes `labels.json` and its digest into the manifest. It refuses while a
+3. A pass keeps a reply only when each answer has the shape of the answer rules. A number is
+   a string of digits, a date is a real `YYYY-MM-DD` date, and a record is a list of rows.
+4. `passes.py compare` gives the agreements: the same normal form in both passes and in each
+   absence check. An absence with no second check is missing, not an agreement. A cached
+   answer with a bad shape is invalid. The owner decides each other slot on the page of
+   `bench/label/decide.py`, and the page refuses a choice with a bad shape.
+5. `passes.py seal` writes `labels.json` and its digest into the manifest. It refuses while a
    slot is open. The labels are sealed before any benchmark model output on this set.
 
 The answers of the passes stay in local work storage.
