@@ -16,7 +16,7 @@ from groundgate.canonical import jcs
 from groundgate.profile import check_profile
 from groundgate.store import FolderStore
 from groundgate.store.export import admitted_facts
-from groundgate.store.maintain import check
+from groundgate.store.maintain import check, forget_packet
 from groundgate.store.packets import admit_packet, load_packet
 
 ROOT = Path(__file__).parent.parent / "conformance" / "events"
@@ -241,3 +241,61 @@ def test_store_check_finds_a_bad_events_log(tmp_path: Path) -> None:
     assert len(found) == 1 and "record 1 is of another profile" in found[0]
     with FolderStore(tmp_path / "s") as store, pytest.raises(events.EventError):
         events.read_events(store, other)
+
+
+def test_forget_all_removes_the_events_of_the_packet(tmp_path: Path) -> None:
+    """An event holds a value of the document, so ``forget --all`` removes it. The events of
+    another packet stay in the log, as a new chain (#684)."""
+    root = tmp_path / "s"
+    _store(root)
+    found = events.read_file(FIXTURE / "events.jsonl")
+    other = {**found[0], "packet_sha256": "sha256:" + "b" * 64,
+             "origin": {"system": "approvals", "id": "d-0009"}}  # fmt: skip
+    with FolderStore(root) as store:
+        events.add(store, [found[0], other, *found[1:]])
+    with FolderStore(root) as store:
+        done = forget_packet(store, PACKET, "the owner asked", everything=True)
+    rel = f"logs/events/{DIGEST.removeprefix('sha256:')}.jsonl"
+    assert ("events", rel, "deleted", 0) in done
+    assert ("packet@1", PACKET, "deleted", 0) in done
+    with FolderStore(root) as store:
+        assert events.read_events(store, DIGEST) == [other]
+        assert events.suggest(store, PROFILE)["drafts"][-1]["draft"] == "review_share"
+        (entry,) = [e for e in store.read(("deleted",)) if e.get("log") == ["events", DIGEST]]
+        assert entry["records"] == 3 and entry["reason"] == "the owner asked"
+        assert check(store).findings == []
+    with FolderStore(root) as store:  # a second call finds no event of the packet
+        assert store.forget_records(("events", DIGEST), "again", lambda r: False) == 0
+
+
+def test_forget_all_keeps_the_packet_if_an_events_log_cannot_be_read(tmp_path: Path) -> None:
+    root = tmp_path / "s"
+    _store(root)
+    with FolderStore(root) as store:
+        events.add(store, events.read_file(FIXTURE / "events.jsonl"))
+    path = root / "logs" / "events" / f"{DIGEST.removeprefix('sha256:')}.jsonl"
+    path.write_bytes(path.read_bytes()[:-1])  # a torn last line
+    with FolderStore(root) as store:
+        done = forget_packet(store, PACKET, "the owner asked", everything=True)
+    assert ("packet@1", PACKET, "kept", 0) in done
+    assert any(kind == "log" and state == "unchecked" for kind, _, state, _ in done)
+
+
+def test_forget_records_changes_a_splits_or_events_log_only(tmp_path: Path) -> None:
+    with FolderStore(tmp_path / "s") as store:
+        for log in [("deleted",), ("answers", PACKET, DIGEST)]:
+            with pytest.raises(ValueError, match="splits log or an events log"):
+                store.forget_records(log, "x", lambda r: True)
+        with pytest.raises(ValueError, match="reason"):
+            store.forget_records(("events", DIGEST), "", lambda r: True)
+        assert store.forget_records(("events", DIGEST), "x", lambda r: True) == 0
+
+
+def test_an_event_with_a_lone_surrogate_is_refused(tmp_path: Path) -> None:
+    """A lone surrogate has no UTF-8 form, so ``suggest --out`` could not write it (#684)."""
+    line = (FIXTURE / "events.jsonl").read_text("utf-8").splitlines()[0]
+    path = tmp_path / "events.jsonl"
+    path.write_text(line.replace('"field": "tax"', '"field": "tax\\ud800"') + "\n", "utf-8")
+    assert "\\ud800" in path.read_text("utf-8")
+    with pytest.raises(events.EventError, match="line 1: an event has a string with a lone"):
+        events.read_file(path)

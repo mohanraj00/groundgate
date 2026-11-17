@@ -634,6 +634,49 @@ class FolderStore:
             with contextlib.suppress(OSError):  # the packet folder, if it is now empty
                 os.rmdir(folder)
 
+    def forget_records(self, log: LogName, reason: str, drop: Callable[[Record], bool]) -> int:
+        """Remove each record of a splits log or an events log for which ``drop`` is true, and
+        write the other records again as a new chain. Record the log name, the count of the
+        removed records, the time and the reason in the deleted log. Return the count. If no
+        record matches, nothing changes. ``forget_records`` holds the lock of the log for the
+        change, so another writer of the log stops it with ``Locked``. The new file replaces
+        the old one in one rename."""
+        word, _ = _check_log(log)
+        if word not in ("splits", "events"):
+            raise ValueError("forget_records changes a splits log or an events log only")
+        if not isinstance(reason, str) or not reason:
+            raise ValueError("forget needs a reason")
+        if log in self._heads:
+            raise StoreError("this writer holds the log: close the store, then forget it")
+        parts, name = self._log_parts(log)
+        rel = "/".join([*parts, name + ".jsonl"])
+        try:
+            folder = self._folder(parts, make=False)
+        except NotFound:
+            return 0
+        with self._hold(folder, name):
+            try:
+                data = self._file(folder / f"{name}.jsonl", rel)
+            except NotFound:
+                return 0
+            records = _records(word, data, rel)
+            kept = [{m: v for m, v in r.items() if m not in CHAIN} for r in records if not drop(r)]
+            count = len(records) - len(kept)
+            if not count:
+                return 0
+            lines: list[str] = []
+            previous: str | None = None
+            for n, body in enumerate(kept, 1):
+                entry = {**body, "sequence": n, "previous": previous}
+                previous = _entry_key(word, entry)
+                lines.append(jcs({**entry, "entry_sha256": previous}) + "\n")
+            time = self._clock().astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+            self._append(
+                ("deleted",), {"log": list(log), "records": count, "reason": reason, "time": time}
+            )
+            self._replace(folder, folder / f"{name}.jsonl", "".join(lines).encode("utf-8"))
+        return count
+
     def write_view(self, name: str, data: bytes) -> str:
         """Write the view file ``views/<name>`` in place of the old one, and return its path in
         the store. ``name`` is a fixed word of the code, never a name from input."""

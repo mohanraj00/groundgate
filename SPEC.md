@@ -2114,8 +2114,9 @@ characters. `key` is null or a string with one or more characters. `value` is a 
 `corrected` is a string that is not equal to `value` for `correct`, and null for the other
 decisions. `system` and `id` are NFC strings with a character that is not a space, with at most
 128 and 256 characters. An event is invalid with a member that this format does not list, a
-member that is missing, or a member with another form. A canonical JSON event of more than
-64 KiB is invalid.
+member that is missing, or a member with another form. A string with a lone surrogate (an
+escape from `\ud800` to `\udfff` with no pair) has no UTF-8 form, so it makes the event invalid.
+A canonical JSON event of more than 64 KiB is invalid.
 
 groundgate checks the form of the digests only. The fact digest names the fact that the approver
 saw. A replay of the packet (§5.1) gives the fact again.

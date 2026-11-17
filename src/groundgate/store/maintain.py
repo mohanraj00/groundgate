@@ -22,7 +22,7 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from ..canonical import SPEC_VERSION, digest, jcs
-from . import KEY, FolderStore, NotFound, StoreError, Torn, _canonical, check_bytes, key
+from . import KEY, FolderStore, Locked, NotFound, StoreError, Torn, _canonical, check_bytes, key
 from .packets import _READING, READINGS, packet_members, printable, reading2_names
 
 __all__ = ["Report", "check", "forget_packet", "rebuild"]
@@ -1069,11 +1069,14 @@ def forget_packet(
     text check finds only a string of ``MIN_TEXT`` or more characters that is in the text: it
     is not a proof.
 
-    With ``everything``, remove each object and each answer log of the packet, and the packet
-    last. It also removes each ``task@1`` and ``resolution@1`` that names the packet, and
-    each correction packet that ``review resolve`` wrote for it, with its candidates, judgments
-    and receipt (#516). A ``review-policy@1`` object stays. If an answer log of the packet
-    cannot be read, it is ``unchecked``: it can name a correction. Then ``everything`` removes
+    With ``everything``, remove each object and each answer log of the packet, and the packet last.
+    It also removes each event of the packet from the events logs (SPEC §4.19), because an event
+    holds a value: the events of other packets stay. If an events log cannot be read, it is
+    ``unchecked``, and the packet stays. It also removes each ``task@1`` and ``resolution@1`` that
+    names the packet, and each correction packet that ``review resolve`` wrote for it, with its
+    candidates, judgments and receipt (#516). A ``review-policy@1`` object stays. If an answer log
+    of the packet cannot be read, it is ``unchecked``: it can name a correction. Then
+    ``everything`` removes
     only what a plain ``forget`` removes, and keeps the packet, its corrections, its tasks, its
     resolutions and its logs, so a second call after a repair of the log can finish. The same
     applies when the search for the receipt of a correction whose packet is gone cannot run,
@@ -1275,8 +1278,29 @@ def forget_packet(
                     done.append(("log", _log_rel(log), "absent", 0))
                     continue
                 done.append(("log", _log_rel(log), "deleted", 0))
+        # An event of the packet holds its value, and the log of its profile holds the events
+        # of other packets too: remove only the events of the packet (#684). A log that cannot
+        # be read can hold them, so the packet stays, and a second call can finish.
+        unread_events = False
+        for log in logs:
+            if log[0] != "events":
+                continue
+            try:
+                gone_events = store.forget_records(
+                    log, reason, lambda r: r.get("packet_sha256") == packet
+                )
+            except Locked:  # as for an answer log: the packet stays, and a second call finishes
+                raise
+            except (StoreError, ValueError):
+                done.append(("log", _log_rel(log), "unchecked", 0))
+                unread_events = True
+                continue
+            if gone_events:  # the log stays with the events of the other packets
+                done.append(("events", _log_rel(log), "deleted", 0))
         drop(late)
-        if unread_runs:  # the packet stays, so check and forget still name the kept record
+        if (
+            unread_runs or unread_events
+        ):  # the packet stays, so check and forget still name the kept record
             done.append(("packet@1", packet, "kept", 0))
             return done
         try:

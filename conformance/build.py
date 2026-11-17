@@ -8593,6 +8593,9 @@ for event_name, event_text, ev, event_ok in (
      event(corrected=95), False),
     ("bad-empty-field", "A field with no characters.", event(field=""), False),
     ("bad-empty-key", "A key with no characters.", event(key=""), False),
+    ("bad-value-surrogate", "A value with a lone surrogate, which has no UTF-8 form.",
+     event(value="9\ud800"), False),
+    ("bad-field-surrogate", "A field with a lone surrogate.", event(field="total\udc00"), False),
     ("bad-size", "An event of more than 64 KiB as canonical JSON.",
      event(value="9" * 65536), False),
     ("bad-audit-label", "An audit label is not an event.", audit_label(), False),
@@ -8816,9 +8819,10 @@ def main() -> None:
     for old in events_dir.glob("*.json"):
         old.unlink()
     for e in EVENTS:
-        (events_dir / f"{e['name']}.json").write_text(
-            json.dumps(e, indent=1, ensure_ascii=False) + "\n"
-        )
+        text = json.dumps(e, indent=1, ensure_ascii=False)
+        if any("\ud800" <= ch <= "\udfff" for ch in text):  # keep a lone surrogate escaped
+            text = json.dumps(e, indent=1)
+        (events_dir / f"{e['name']}.json").write_text(text + "\n")
     print(
         f"wrote {len(VECTORS)} vectors, {len(INVALID)} invalid packets, "
         f"{len(PROFILES)} profile vectors, {len(PINS)} pin vectors, "

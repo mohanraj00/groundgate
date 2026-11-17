@@ -217,7 +217,8 @@ Each path part is a 64-digit hex digest or a fixed word.
 
 A record of `logs/deleted.jsonl` names one deletion. An object deletion is
 `{"key": "sha256:...", "reason": "...", "time": "2026-10-20T09:30:00Z"}`, and a log deletion has
-`"log"` in place of `"key"`. For a `document@1` (#508), `prompt@1`, `reply@1` or `admission@1`
+`"log"` in place of `"key"`. If `forget --all` removes the events of a packet from an `events`
+log, the record also has `"records"`: the count of the removed records. For a `document@1` (#508), `prompt@1`, `reply@1` or `admission@1`
 object, `groundgate store forget` adds `"run_keys": ["sha256:..."]`: the key of the object in a run
 record, for each runner version of a run record in the store (section 8). The `forget(key,
 reason)` operation of section 6 does not add them, because it does not read the run records.
@@ -378,7 +379,10 @@ also if it changes during the build.
    that `forget` cannot read is "unchecked". A deletion from 0.12 or earlier, or from a call of
    `forget(key, reason)` with no run keys, has no run keys, so the second rule applies to it.
    A value is still document data. If an app must also remove the values,
-   `groundgate store forget --all PACKET` removes each object and log of the packet. It also
+   `groundgate store forget --all PACKET` removes each object and log of the packet. It
+   removes each event of the packet from the `events` logs, because an event holds a value, and
+   writes the events of the other packets again as a new chain. If an `events` log cannot be
+   read, `forget --all` prints it as "unchecked", exits 1 and keeps the packet. It also
    removes each `task@1` and `resolution@1` that names the packet, and each correction packet
    that `review resolve` wrote for it, with its candidates, judgments and receipt (#516). A
    correction packet has the inputs of the packet, no run record, and the exact candidates

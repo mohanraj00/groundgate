@@ -70,6 +70,11 @@ def _text(v: object, limit: int) -> bool:
     )
 
 
+def _scalars(v: str) -> bool:
+    """True if ``v`` holds only Unicode scalar values: no lone surrogate."""
+    return not any("\ud800" <= ch <= "\udfff" for ch in v)
+
+
 def check_event(obj: object) -> dict[str, Any]:
     """An event of format 1 (SPEC §4.19), or ``EventError``. The format is closed, so an audit
     label or a review answer is not an event."""
@@ -102,6 +107,9 @@ def check_event(obj: object) -> dict[str, Any]:
     )
     if not ok:
         raise EventError("an event has a member with a wrong form")
+    if not all(_scalars(v) for v in (*obj.values(), *origin.values()) if isinstance(v, str)):
+        # A lone surrogate has no UTF-8 form, so a later write of the drafts would fail.
+        raise EventError("an event has a string with a lone surrogate")
     try:
         size = len(jcs(obj).encode("utf-8"))
     except (PacketError, TypeError, ValueError, RecursionError) as exc:
