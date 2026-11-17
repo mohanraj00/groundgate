@@ -1,7 +1,8 @@
 # Regulatory texts: a held-out family
 
-Status: the members, their source pins and the split are frozen (#641). No label exists yet, and
-no model call has run on this set. The claim on this family is #686.
+Status: the members, their source pins, the split and the slots are frozen (#641). The labels
+come from two blind passes and the owner's decisions. No benchmark model call has run on this
+set. The claim on this family is #686.
 
 The set has 14 CFR parts: fee rules, rate tables, definitions and numbered method steps. Today
 the other bench sets have business documents. This family measures the gate on the texts of a
@@ -33,8 +34,11 @@ The XML and the reader text stay in local work storage.
 uv run python bench/regulatory/sources.py --out bench/regulatory/.cache/sources --fetch
 ```
 
-This command downloads the parts again, does the checks, and writes `manifest.json` and
-`source_checks.json`. Two downloads on 2026-11-17 gave the same bytes. The reader text comes
+This command downloads the parts again, does the checks, and writes `manifest.json`,
+`source_checks.json` and the reader text of each part as `<id>.txt` next to its XML. If the XML
+or the reader text of a part is not the pinned one, the command fails before it writes a file,
+so a rerun cannot change the members or the split. Two downloads on 2026-11-17 gave the same
+bytes. The reader text comes
 from `groundgate.read` at the code digest in `reader_text`.
 
 ## Source checks
@@ -54,8 +58,40 @@ The seed is the SHA-256 of the source digests in member order, one on each line.
 the lowest SHA-256 of the seed, a line feed and the id are the calibration parts. Nobody can
 choose the seed after the download, and the seed came before any label.
 
+## Slots
+
+The owner approved five fields on 2026-11-17. `slots.py` draws the slots of each part from its
+structure only: section headings, the defined terms of a definitions section, table captions,
+row positions and column headers. The draw uses the split seed. One layout test reads a cell: a
+`table_value` cell must hold a digit.
+
+| Field | Kind | Slots for each part | Calibration | Held-out |
+|---|---|---|---:|---:|
+| `section_text` | passage | 2 | 10 | 18 |
+| `definition` | passage | 1, if the part has a definitions section | 2 | 4 |
+| `table_value` | number | 2, if the part has a table | 6 | 14 |
+| `table_rows` | record | 1, if the part has a table with 2 to 30 body rows | 3 | 5 |
+| `effective_date` | date | 1 | 5 | 9 |
+
+That is 76 slots: 26 calibration and 50 held-out. `slots.json` holds each request and the
+field rules.
+
+```bash
+uv run python bench/regulatory/slots.py --sources bench/regulatory/.cache/sources
+```
+
 ## Labels
 
-Not started. Two blind label passes come from two different agent harnesses. A second blind
-check reads each absence again. The owner decides each disagreement in `bench/label`. All labels
-are sealed before any model output on this set.
+The owner approved this method on 2026-11-17. `passes.py` runs it:
+
+1. Pass a is Claude Code (`claude -p` with no tools). Pass b is Codex (`codex exec` in a
+   read-only sandbox, in an empty folder). Each pass gets the slots of one part and the reader
+   text and the XML of each named section, and nothing else.
+2. Each slot that a pass marks absent gets a second blind check by a new agent of the other
+   harness.
+3. `passes.py compare` gives the agreements: the same normal form in both passes and in each
+   absence check. The owner decides each other slot on the page of `bench/label/decide.py`.
+4. `passes.py seal` writes `labels.json` and its digest into the manifest. It refuses while a
+   slot is open. The labels are sealed before any benchmark model output on this set.
+
+The answers of the passes stay in local work storage.

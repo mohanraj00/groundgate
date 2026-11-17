@@ -8,6 +8,11 @@ repository), checks it, reads its text with ``groundgate.read``, and writes the 
     uv run python bench/regulatory/sources.py --out DIR            # use the files in DIR
     uv run python bench/regulatory/sources.py --out DIR --fetch    # download them first
 
+If ``manifest.json`` already pins a part, a changed XML or a changed reader text fails the run
+before it writes a file, so a rerun cannot change the members or the split. ``--repin`` is only
+for a new freeze that the owner approves. The script also writes the reader text of each part
+next to its XML, as ``<id>.txt``.
+
 The checks are the identity (the part number and the title in the XML), the section count,
 the text, the language and the printed notices. The split comes from a seed that is the
 SHA-256 of the source digests in member order, so nobody chooses it after the download. The
@@ -143,6 +148,7 @@ def check(title: int, part: int, words: str, listed: int, raw: bytes) -> dict:
         "language": {"language": "English", "word_counts": english},
         "notice": {"matches": len(notices), "examples": notices[:3], "review": NOTICE_REVIEW},
         "problems": problems,
+        "text": text,
     }
 
 
@@ -150,18 +156,33 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--out", type=Path, required=True, help="local work storage for the XML")
     ap.add_argument("--fetch", action="store_true", help="download each part first")
+    ap.add_argument(
+        "--repin",
+        action="store_true",
+        help="replace the pins of manifest.json; without it a changed source or text fails",
+    )
     args = ap.parse_args(argv)
     if args.out.resolve().is_relative_to(ROOT) and ".cache" not in args.out.parts:
         ap.error("--out must be outside the repository or under an ignored .cache folder")
     args.out.mkdir(parents=True, exist_ok=True)
-    docs, checks = [], []
+    manifest_path = HERE / "manifest.json"
+    manifest = json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
+    pinned = {d["id"]: d for d in manifest.get("documents", [])}
+    docs, checks, files, changed = [], [], {}, []
     for title, part, words, listed in MEMBERS:
         path = args.out / f"{member_id(title, part)}.xml"
         if args.fetch:
-            path.write_bytes(fetch(title, part))
+            raw = fetch(title, part)
             time.sleep(1)
-        raw = path.read_bytes()
+        else:
+            raw = path.read_bytes()
         c = check(title, part, words, listed, raw)
+        text = c.pop("text")
+        old = pinned.get(member_id(title, part))
+        if old and (old["source_sha256"], old["text_sha256"]) != (sha(raw), c["text_sha256"]):
+            changed.append(member_id(title, part))
+        files[path] = raw
+        files[path.with_suffix(".txt")] = text.encode()
         url = API.format(date=DATE, title=title, part=part)
         checks.append({"id": member_id(title, part), "source": url, **c})
         docs.append({
@@ -182,13 +203,17 @@ def main(argv: list[str] | None = None) -> int:
             "license": "US government work (17 U.S.C. 105): no copyright in the United States.",
             "text_sha256": c["text_sha256"],
         })  # fmt: skip
+    if changed and not args.repin:
+        print(f"the source or the reader text is not the pinned one: {' '.join(changed)}")
+        print("nothing was written; give --repin only for a new freeze that the owner approved")
+        return 1
+    for path, raw in files.items():
+        path.write_bytes(raw)
     members = [d for d in docs if d["selection_status"] == "frozen_member"]
     seed = split_seed([d["source_sha256"] for d in members])
     sides = split([d["id"] for d in members], seed)
     for d in members:
         d["split"] = sides[d["id"]]
-    manifest_path = HERE / "manifest.json"
-    manifest = json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
     manifest["split_rule"] = {
         "seed": seed,
         "seed_method": "sha256 over the source_sha256 of the members in member order, "

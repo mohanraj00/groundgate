@@ -998,3 +998,121 @@ def test_the_regulatory_check_refuses_a_part_that_is_not_the_approved_one() -> N
     assert good["identity"]["citation"] == "9 CFR Part 391"
     assert "the root is not this part" in sources.check(9, 392, "FEES", 1, raw)["problems"]
     assert "1 sections, not 2" in sources.check(9, 391, "FEES", 2, raw)["problems"]
+
+
+def _label_module() -> Any:
+    _regulatory()
+    import passes as regulatory_passes
+
+    return regulatory_passes
+
+
+def test_two_label_answers_agree_on_the_normal_form_only() -> None:
+    label = _label_module()
+    a = {"status": "value", "value": "1,250.00", "unit": "$"}
+    assert label.norm("number", a) == label.norm("number", {**a, "value": "1250", "unit": "USD"})
+    assert label.norm("number", a) != label.norm("number", {**a, "unit": "percent"})
+    assert label.norm("passage", {"value": "Fees  shall\nbe paid."}) == label.norm(
+        "passage", {"value": "Fees shall be paid."}
+    )
+    assert label.norm("date", {"status": "absent"}) != label.norm("date", {"value": "2026-01-01"})
+    assert label.norm("number", None) == ("missing",)
+
+
+def test_seal_refuses_an_open_disagreement_and_then_writes_the_owner_choice(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    label = _label_module()
+    here = tmp_path / "set"
+    here.mkdir()
+    slot = {"slot": "r001", "id": "cfr-1-1", "split": "heldout", "field": "effective_date"}
+    (here / "slots.json").write_text(json.dumps({"slots": [slot]}))
+    (here / "manifest.json").write_text(json.dumps({"documents": []}))
+    monkeypatch.setattr(label, "HERE", here)
+    work = tmp_path / "work"
+    work.mkdir()
+    a, b = {"status": "absent"}, {"status": "value", "value": "2026-01-01"}
+    row = {"slot": "r001", "state": "disagree", "a": a, "b": b, "absence_checks": []}
+    (work / "compare.json").write_text(json.dumps([row]))
+    args = type("Args", (), {"work": work})
+    assert label.seal(args) == 1
+    assert not (here / "labels.json").exists()
+    (work / "decisions.json").write_text(json.dumps({"r001": {"choice": "b"}}))
+    assert label.seal(args) == 0
+    sealed = json.loads((here / "labels.json").read_text())["labels"]
+    assert sealed[0]["value"] == "2026-01-01" and sealed[0]["decided_by"] == "owner"
+    manifest = json.loads((here / "manifest.json").read_text())
+    raw = (here / "labels.json").read_bytes()
+    assert manifest["labels"]["sha256"] == "sha256:" + __import__("hashlib").sha256(raw).hexdigest()
+
+
+def test_the_decision_page_needs_the_cookie_and_a_known_slot(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("label_decide", BENCH / "label" / "decide.py")
+    assert spec and spec.loader
+    decide = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(decide)
+
+    monkeypatch.setattr(decide, "WORK", tmp_path)
+    monkeypatch.setattr(decide, "ITEMS", [{"slot": "r001", "kind": "date"}])
+    server = localweb.LocalServer(0, decide.Handler)
+    threading.Thread(target=server.serve_forever, daemon=True).start()
+    try:
+        port = server.server_address[1]
+        assert call(port, "GET", "/api/items")[0] == 403
+
+        def post(body: Any) -> tuple:
+            conn = http.client.HTTPConnection("127.0.0.1", port)
+            headers = {
+                "Content-Type": "application/json",
+                "Cookie": f"{server.cookie}={server.token}",
+            }
+            conn.request("POST", "/api/decide", json.dumps(body), headers)
+            r = conn.getresponse()
+            return r.status, json.loads(r.read())
+
+        assert post({"slot": "r999", "choice": "a"})[0] == 422
+        assert post({"slot": "r001", "choice": "other"})[0] == 422
+        assert post({"slot": "r001", "choice": "other", "value": "2026-01-01"}) == (
+            200,
+            {"decided": 1, "open": 0},
+        )
+        got = json.loads((tmp_path / "decisions.json").read_text())["r001"]
+        assert got["value"] == "2026-01-01" and got["by"] == "owner"
+    finally:
+        server.shutdown()
+        server.server_close()
+
+
+def test_a_rerun_with_a_changed_source_fails_before_it_writes(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    sources = _regulatory()
+
+    def xml(word: str) -> bytes:
+        return (
+            '<?xml version="1.0"?><DIV5 N="391" TYPE="PART" hierarchy_metadata='
+            '"{&amp;quot;citation&amp;quot;:&amp;quot;9 CFR Part 391&amp;quot;}">'
+            '<HEAD>PART 391—FEES</HEAD><DIV8 N="391.1" TYPE="SECTION"><P>The fee of the'
+            f" section and the {word} for each hour to the Agency.</P></DIV8></DIV5>"
+        ).encode()
+
+    here, out = tmp_path / "set", tmp_path / "out"
+    here.mkdir()
+    out.mkdir()
+    monkeypatch.setattr(sources, "HERE", here)
+    monkeypatch.setattr(sources, "MEMBERS", ((9, 391, "FEES", 1),))
+    monkeypatch.setattr(sources, "CALIBRATION", 1)
+    (out / "cfr-9-391.xml").write_bytes(xml("rate"))
+    assert sources.main(["--out", str(out)]) == 0
+    pinned = (here / "manifest.json").read_text()
+    assert (out / "cfr-9-391.txt").read_text().count("rate") == 1
+    (out / "cfr-9-391.xml").write_bytes(xml("cost"))
+    assert sources.main(["--out", str(out)]) == 1
+    assert (here / "manifest.json").read_text() == pinned
+    assert "rate" in (out / "cfr-9-391.txt").read_text()
+    assert sources.main(["--out", str(out), "--repin"]) == 0
+    assert (here / "manifest.json").read_text() != pinned

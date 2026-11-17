@@ -4,7 +4,7 @@
  "claim": "#686",
  "selection_complete": true,
  "selection_note": "The owner approved the 14 CFR parts of the #641 candidate list on 2026-11-17. I selected them from publisher metadata only: the eCFR title list, the eCFR structure API and the Federal Register API. No Federal Register final rule of set 2, bench/caps, bench/dots or bench/patterns amends one of them. Selection never used a value or a model output.",
- "label_method": "Not started. Two blind label passes from two different agent harnesses, a second blind check on each absence, and the owner decides each disagreement in bench/label. All labels are sealed before any model output on this set.",
+ "label_method": "Two blind label passes: pass a by Claude Code, pass b by Codex, each with the slots and the named sections only. A second blind check by the other harness on each absence. The owner decides each disagreement with bench/label/decide.py. passes.py seal writes labels.json before any benchmark model output on this set.",
  "source_use": "Each member is a US government work and is cited by its point-in-time eCFR versioner URL and SHA-256. The XML and the reader text stay in local work storage; sources.py downloads the same bytes again.",
  "split_rule": {
   "seed": "sha256:705b29e34e5fe6d08c4b3e0e13915603d25966721a869b5e31f91a77445e2767",
@@ -270,5 +270,11 @@
    "license": "US government work (17 U.S.C. 105): no copyright in the United States.",
    "text_sha256": "sha256:c3831b559d4d0a07f4a4f793ee72f5d0444212dae5c8e6321abb15a521ce9e99"
   }
- ]
+ ],
+ "slots": {
+  "file": "slots.json",
+  "count": 76,
+  "calibration": 26,
+  "heldout": 50
+ }
 }
