@@ -13,7 +13,7 @@ from typing import Any
 import pytest
 
 sys.path.insert(0, str(Path(__file__).parents[1]))
-from report import render_requested
+from report import GOAL_END, GOAL_START, render_goal_table, render_requested, with_goal_table
 from requested.metrics import (
     check_split_rule,
     final_search_limits,
@@ -667,3 +667,30 @@ def test_compare_puts_search_limit_beside_the_published_numbers(tmp_path: Path) 
     assert row.count(cell) == 2
     miss = json.loads(results.read_text())["runs"]["runner"]["total"]["miss_rate"]
     assert f"{miss['k']}/{miss['n']}" in row
+
+
+def test_readme_goal_table_is_the_generator_output() -> None:
+    readme = (Path(__file__).parents[2] / "README.md").read_text(encoding="utf-8")
+    assert with_goal_table(readme, render_goal_table()) == readme
+
+
+def test_goal_table_row_of_0_13_comes_from_its_results() -> None:
+    row = next(line for line in render_goal_table() if line.startswith("| 0.13 |"))
+    cells = [cell.strip() for cell in row.strip("|").split("|")]
+    assert cells == [
+        "0.13",
+        "`bench/requested4/development-464`",
+        "development",
+        "32",
+        "50",
+        "58",
+        "14",
+        "2",
+        "72/122 (59.02%)",
+    ]
+
+
+def test_with_goal_table_replaces_only_the_block() -> None:
+    text = f"before\n{GOAL_START}\nold\n{GOAL_END}\nafter\n"
+    want = f"before\n{GOAL_START}\n\nnew\n\n{GOAL_END}\nafter\n"
+    assert with_goal_table(text, ["new"]) == want
