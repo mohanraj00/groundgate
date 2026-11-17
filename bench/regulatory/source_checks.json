@@ -1,0 +1,448 @@
+{
+ "format": "regulatory-source-checks/1",
+ "date": "2026-11-12",
+ "documents": [
+  {
+   "id": "cfr-7-800",
+   "source": "https://www.ecfr.gov/api/versioner/v1/full/2026-11-12/title-7.xml?part=800",
+   "identity": {
+    "citation": "7 CFR Part 800",
+    "heading": "PART 800—GENERAL REGULATIONS",
+    "date": "2026-11-12"
+   },
+   "sections": 119,
+   "sections_listed": 119,
+   "tables": 25,
+   "text_characters": 321872,
+   "text_sha256": "sha256:a1cce601b7e95178c114e2d1944ea39501417f1d61509b0726cdb5702afd28c2",
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 3814,
+     "of": 1920,
+     "and": 1454,
+     "to": 861,
+     "for": 765
+    }
+   },
+   "notice": {
+    "matches": 2,
+    "examples": [
+     "gement and Budget under control number 0580-0011) § 800.166 Reproducing certificates. Official certificates may be photo copied",
+     "es. Official certificates may be photo copied or similarly reproduced. (Approved by the Office of Management and Budget under"
+    ],
+    "review": "No notice of the publisher in the source. Each match is regulation text, for example a rule on copies of certificates or the address of the Copyright Office."
+   },
+   "problems": []
+  },
+  {
+   "id": "cfr-8-106",
+   "source": "https://www.ecfr.gov/api/versioner/v1/full/2026-11-12/title-8.xml?part=106",
+   "identity": {
+    "citation": "8 CFR Part 106",
+    "heading": "PART 106—USCIS FEE SCHEDULE",
+    "date": "2026-11-12"
+   },
+   "sections": 6,
+   "sections_listed": 6,
+   "tables": 0,
+   "text_characters": 65489,
+   "text_sha256": "sha256:d5decbc0e8b42b26061cfd9fe46165e6b66de592f87d06a2b11446324a48b7cc",
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 456,
+     "of": 448,
+     "and": 158,
+     "to": 280,
+     "for": 452
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": "No notice of the publisher in the source. Each match is regulation text, for example a rule on copies of certificates or the address of the Copyright Office."
+   },
+   "problems": []
+  },
+  {
+   "id": "cfr-9-391",
+   "source": "https://www.ecfr.gov/api/versioner/v1/full/2026-11-12/title-9.xml?part=391",
+   "identity": {
+    "citation": "9 CFR Part 391",
+    "heading": "PART 391—FEES AND CHARGES FOR INSPECTION SERVICES AND LABORATORY ACCREDITATION",
+    "date": "2026-11-12"
+   },
+   "sections": 5,
+   "sections_listed": 5,
+   "tables": 0,
+   "text_characters": 6326,
+   "text_sha256": "sha256:13017e75f1486b576db7f829877e09cb65d992fb14be85691322221ad192f40e",
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 90,
+     "of": 41,
+     "and": 40,
+     "to": 7,
+     "for": 22
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": "No notice of the publisher in the source. Each match is regulation text, for example a rule on copies of certificates or the address of the Copyright Office."
+   },
+   "problems": []
+  },
+  {
+   "id": "cfr-10-170",
+   "source": "https://www.ecfr.gov/api/versioner/v1/full/2026-11-12/title-10.xml?part=170",
+   "identity": {
+    "citation": "10 CFR Part 170",
+    "heading": "PART 170—FEES FOR FACILITIES, MATERIALS, IMPORT AND EXPORT LICENSES, AND OTHER REGULATORY SERVICES UNDER THE ATOMIC ENERGY ACT OF 1954, AS AMENDED",
+    "date": "2026-11-12"
+   },
+   "sections": 15,
+   "sections_listed": 15,
+   "tables": 3,
+   "text_characters": 83889,
+   "text_sha256": "sha256:cfdb269ea659e42947d84bef8546ba3257780bad04f8f86f68a503edde661d0e",
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 531,
+     "of": 557,
+     "and": 342,
+     "to": 229,
+     "for": 320
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": "No notice of the publisher in the source. Each match is regulation text, for example a rule on copies of certificates or the address of the Copyright Office."
+   },
+   "problems": []
+  },
+  {
+   "id": "cfr-10-171",
+   "source": "https://www.ecfr.gov/api/versioner/v1/full/2026-11-12/title-10.xml?part=171",
+   "identity": {
+    "citation": "10 CFR Part 171",
+    "heading": "PART 171—ANNUAL FEES FOR REACTOR LICENSES AND FUEL CYCLE LICENSES AND MATERIALS LICENSES, INCLUDING HOLDERS OF CERTIFICATES OF COMPLIANCE, REGISTRATIONS, AND QUALITY ASSURANCE PROGRAM APPROVALS AND GOVERNMENT AGENCIES LICENSED BY THE NRC",
+    "date": "2026-11-12"
+   },
+   "sections": 16,
+   "sections_listed": 16,
+   "tables": 3,
+   "text_characters": 72018,
+   "text_sha256": "sha256:8b446d96bd7a4061cb0cbdc19330166481c334b044f2ee74812905c57d779c84",
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 628,
+     "of": 513,
+     "and": 268,
+     "to": 196,
+     "for": 296
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": "No notice of the publisher in the source. Each match is regulation text, for example a rule on copies of certificates or the address of the Copyright Office."
+   },
+   "problems": []
+  },
+  {
+   "id": "cfr-14-187",
+   "source": "https://www.ecfr.gov/api/versioner/v1/full/2026-11-12/title-14.xml?part=187",
+   "identity": {
+    "citation": "14 CFR Part 187",
+    "heading": "PART 187—FEES",
+    "date": "2026-11-12"
+   },
+   "sections": 9,
+   "sections_listed": 9,
+   "tables": 1,
+   "text_characters": 18266,
+   "text_sha256": "sha256:caa6454a926b7570625a9771a2f66cba07c08fbd43fa43465263fc6d2582bce7",
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 181,
+     "of": 94,
+     "and": 56,
+     "to": 59,
+     "for": 56
+    }
+   },
+   "notice": {
+    "matches": 1,
+    "examples": [
+     "ions, utilities, budget code series 2300. (5) Printing and reproduction, budget code series 2400. (6) Contractual services, bu"
+    ],
+    "review": "No notice of the publisher in the source. Each match is regulation text, for example a rule on copies of certificates or the address of the Copyright Office."
+   },
+   "problems": []
+  },
+  {
+   "id": "cfr-19-24",
+   "source": "https://www.ecfr.gov/api/versioner/v1/full/2026-11-12/title-19.xml?part=24",
+   "identity": {
+    "citation": "19 CFR Part 24",
+    "heading": "PART 24—CUSTOMS FINANCIAL AND ACCOUNTING PROCEDURE",
+    "date": "2026-11-12"
+   },
+   "sections": 28,
+   "sections_listed": 28,
+   "tables": 5,
+   "text_characters": 246684,
+   "text_sha256": "sha256:e549e9fac854a08ad7ff021d464783b5ef374e960d93960787db345e5be06465",
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 2744,
+     "of": 1797,
+     "and": 973,
+     "to": 915,
+     "for": 725
+    }
+   },
+   "notice": {
+    "matches": 3,
+    "examples": [
+     "ing of trade name in § 133.13(b); (15) Fee for recording a copyright in § 133.33(b); and (16) Fee for renewing, or recording a",
+     "recording a change in name of owner, or of ownership of, a copyright in §§ 133.35(b)(2), 133.36(b), 133.37(a)(3); (c) No admini",
+     "t be maintained and made available for inspection, copying, reproduction or other official use by CBP in accordance with the pro"
+    ],
+    "review": "No notice of the publisher in the source. Each match is regulation text, for example a rule on copies of certificates or the address of the Copyright Office."
+   },
+   "problems": []
+  },
+  {
+   "id": "cfr-33-402",
+   "source": "https://www.ecfr.gov/api/versioner/v1/full/2026-11-12/title-33.xml?part=402",
+   "identity": {
+    "citation": "33 CFR Part 402",
+    "heading": "PART 402—TARIFF OF TOLLS",
+    "date": "2026-11-12"
+   },
+   "sections": 14,
+   "sections_listed": 14,
+   "tables": 3,
+   "text_characters": 26092,
+   "text_sha256": "sha256:0e71add1fb8e1761ffffcd1a4aea43ff55e32b50758a670baf76305290a21afc",
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 325,
+     "of": 137,
+     "and": 76,
+     "to": 66,
+     "for": 66
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": "No notice of the publisher in the source. Each match is regulation text, for example a rule on copies of certificates or the address of the Copyright Office."
+   },
+   "problems": []
+  },
+  {
+   "id": "cfr-36-71",
+   "source": "https://www.ecfr.gov/api/versioner/v1/full/2026-11-12/title-36.xml?part=71",
+   "identity": {
+    "citation": "36 CFR Part 71",
+    "heading": "PART 71—RECREATION FEES",
+    "date": "2026-11-12"
+   },
+   "sections": 15,
+   "sections_listed": 15,
+   "tables": 0,
+   "text_characters": 31074,
+   "text_sha256": "sha256:b03239d2a90f4b9cb51946bbcd326c2efca71fe6a5c93992fb2277a0f4b6097d",
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 405,
+     "of": 207,
+     "and": 124,
+     "to": 92,
+     "for": 83
+    }
+   },
+   "notice": {
+    "matches": 4,
+    "examples": [
+     "” as used in this section, refers to any use, including the reproduction, manufacture, importation, or distribution, of the Insi",
+     "” as used in this section, refers to any use, including the reproduction, manufacture, importation, or distribution, of the Insi",
+     "oved by the Secretary prior to manufacture, importation, or reproduction by the licensee. The Insignia shall not be used in conj"
+    ],
+    "review": "No notice of the publisher in the source. Each match is regulation text, for example a rule on copies of certificates or the address of the Copyright Office."
+   },
+   "problems": []
+  },
+  {
+   "id": "cfr-37-201",
+   "source": "https://www.ecfr.gov/api/versioner/v1/full/2026-11-12/title-37.xml?part=201",
+   "identity": {
+    "citation": "37 CFR Part 201",
+    "heading": "PART 201—GENERAL PROVISIONS",
+    "date": "2026-11-12"
+   },
+   "sections": 38,
+   "sections_listed": 38,
+   "tables": 5,
+   "text_characters": 384816,
+   "text_sha256": "sha256:9cb3c7d77e6a0ce38e4d8729eae73081bab7726c43a18bc37aea58d9177da0c4",
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 5113,
+     "of": 3264,
+     "and": 1240,
+     "to": 1401,
+     "for": 826
+    }
+   },
+   "notice": {
+    "matches": 789,
+    "examples": [
+     "issued under 17 U.S.C. 304. § 201.1 Communication with the Copyright Office. (a) General purpose addresses. Members of the publ",
+     "t address in order to facilitate timely receipt by the U.S. Copyright Office division or section to which an inquiry should be di",
+     "uiries made to a particular division or section of the U.S. Copyright Office. Addresses for special, limited purposes are provide"
+    ],
+    "review": "No notice of the publisher in the source. Each match is regulation text, for example a rule on copies of certificates or the address of the Copyright Office."
+   },
+   "problems": []
+  },
+  {
+   "id": "cfr-46-401",
+   "source": "https://www.ecfr.gov/api/versioner/v1/full/2026-11-12/title-46.xml?part=401",
+   "identity": {
+    "citation": "46 CFR Part 401",
+    "heading": "PART 401—GREAT LAKES PILOTAGE REGULATIONS",
+    "date": "2026-11-12"
+   },
+   "sections": 48,
+   "sections_listed": 48,
+   "tables": 2,
+   "text_characters": 70661,
+   "text_sha256": "sha256:48cc501ee33e584c64ade805c62887274594db5fec60df462d79fe44df41a8e1",
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 822,
+     "of": 484,
+     "and": 256,
+     "to": 255,
+     "for": 146
+    }
+   },
+   "notice": {
+    "matches": 2,
+    "examples": [
+     "y vessel, or to serve as a Pilot of any vessel, without the permission of the owner or Master. A Certificate of Registration must be",
+     "Certificate of Registration may not be copied or digitally reproduced, or be used to make a facsimile or Photostat. A Certifica"
+    ],
+    "review": "No notice of the publisher in the source. Each match is regulation text, for example a rule on copies of certificates or the address of the Copyright Office."
+   },
+   "problems": []
+  },
+  {
+   "id": "cfr-46-404",
+   "source": "https://www.ecfr.gov/api/versioner/v1/full/2026-11-12/title-46.xml?part=404",
+   "identity": {
+    "citation": "46 CFR Part 404",
+    "heading": "PART 404—GREAT LAKES PILOTAGE RATEMAKING",
+    "date": "2026-11-12"
+   },
+   "sections": 13,
+   "sections_listed": 13,
+   "tables": 0,
+   "text_characters": 11107,
+   "text_sha256": "sha256:1e57b56d88e146e277fc779d5bdf447282e8e1f8b35583d7cffa2a16c3b09c01",
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 97,
+     "of": 31,
+     "and": 49,
+     "to": 32,
+     "for": 31
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": "No notice of the publisher in the source. Each match is regulation text, for example a rule on copies of certificates or the address of the Copyright Office."
+   },
+   "problems": []
+  },
+  {
+   "id": "cfr-49-107",
+   "source": "https://www.ecfr.gov/api/versioner/v1/full/2026-11-12/title-49.xml?part=107",
+   "identity": {
+    "citation": "49 CFR Part 107",
+    "heading": "PART 107—HAZARDOUS MATERIALS PROGRAM PROCEDURES",
+    "date": "2026-11-12"
+   },
+   "sections": 76,
+   "sections_listed": 76,
+   "tables": 5,
+   "text_characters": 236575,
+   "text_sha256": "sha256:5e264fcb72e76b12e572e625f8d555647c712245556b15d1efe5658c3bee6a6c",
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 2340,
+     "of": 1357,
+     "and": 727,
+     "to": 916,
+     "for": 477
+    }
+   },
+   "notice": {
+    "matches": 1,
+    "examples": [
+     "credentials for examination, but the credentials may not be reproduced. (2) An investigator may administer oaths and receive af"
+    ],
+    "review": "No notice of the publisher in the source. Each match is regulation text, for example a rule on copies of certificates or the address of the Copyright Office."
+   },
+   "problems": []
+  },
+  {
+   "id": "cfr-49-1002",
+   "source": "https://www.ecfr.gov/api/versioner/v1/full/2026-11-12/title-49.xml?part=1002",
+   "identity": {
+    "citation": "49 CFR Part 1002",
+    "heading": "PART 1002—FEES",
+    "date": "2026-11-12"
+   },
+   "sections": 3,
+   "sections_listed": 3,
+   "tables": 1,
+   "text_characters": 32288,
+   "text_sha256": "sha256:c3831b559d4d0a07f4a4f793ee72f5d0444212dae5c8e6321abb15a521ce9e99",
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 260,
+     "of": 211,
+     "and": 73,
+     "to": 112,
+     "for": 125
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": "No notice of the publisher in the source. Each match is regulation text, for example a rule on copies of certificates or the address of the Copyright Office."
+   },
+   "problems": []
+  }
+ ]
+}

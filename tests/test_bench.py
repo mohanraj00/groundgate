@@ -963,3 +963,38 @@ def test_role_example_admits_every_value_but_the_unit_from_another_row() -> None
     assert len(receipt.decisions) == len(exts)
     for name in ("sign_text", "scale_text", "unit_text", "field_text", "key_text"):
         assert f'"{name}"' in propose.ROLES_NOTE  # the names that the adapter reads
+
+
+def _regulatory() -> Any:
+    sys.path.insert(0, str(BENCH / "regulatory"))
+    import sources as regulatory_sources
+
+    return regulatory_sources
+
+
+def test_the_regulatory_split_comes_from_the_seed_of_the_source_digests() -> None:
+    sources = _regulatory()
+    manifest = json.loads((BENCH / "regulatory" / "manifest.json").read_text())
+    docs = manifest["documents"]
+    assert [d["id"] for d in docs] == [sources.member_id(t, p) for t, p, _, _ in sources.MEMBERS]
+    assert all(d["selection_status"] == "frozen_member" for d in docs)
+    seed = sources.split_seed([d["source_sha256"] for d in docs])
+    assert manifest["split_rule"]["seed"] == seed
+    sides = sources.split([d["id"] for d in docs], seed)
+    assert {d["id"]: d["split"] for d in docs} == sides
+    assert list(sides.values()).count("calibration") == sources.CALIBRATION == 5
+
+
+def test_the_regulatory_check_refuses_a_part_that_is_not_the_approved_one() -> None:
+    sources = _regulatory()
+    raw = (
+        '<?xml version="1.0"?><DIV5 N="391" TYPE="PART" hierarchy_metadata='
+        '"{&amp;quot;citation&amp;quot;:&amp;quot;9 CFR Part 391&amp;quot;}">'
+        '<HEAD>PART 391—FEES</HEAD><DIV8 N="391.1" TYPE="SECTION"><P>The fee of the'
+        " section and the rate for each hour to the Agency.</P></DIV8></DIV5>"
+    ).encode()
+    good = sources.check(9, 391, "FEES", 1, raw)
+    assert good["problems"] == []
+    assert good["identity"]["citation"] == "9 CFR Part 391"
+    assert "the root is not this part" in sources.check(9, 392, "FEES", 1, raw)["problems"]
+    assert "1 sections, not 2" in sources.check(9, 391, "FEES", 2, raw)["problems"]
