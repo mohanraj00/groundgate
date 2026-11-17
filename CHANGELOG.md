@@ -3,6 +3,81 @@
 Versions follow [SemVer](https://semver.org). A change to how any candidate is decided is a new
 spec version, and receipts name the spec version they were decided under.
 
+## 0.16.0 (2026-11-17)
+
+Spec 0.12, with no change to a decision and no change to a receipt. 0.16 is the release for the
+outside approver and the audit. It adds the `facts@2` export with review results, the blind
+audit sample with an adaptive rate, calibration events from an outside approver, the source
+format in `reading@2`, the status of each built-in kind pack, and a held-out regulatory text
+family with sealed labels. The spec version string stays `groundgate/0.12`. §4.18, §4.19 and
+§5.2 define formats that no decision reads. `reading@2` is a store format, and it is not in the
+spec. A packet that uses none of the new members is decided as in 0.15.0 and gets the same
+receipt.
+
+Known limits. I did not run a bench set for 0.16, so the numbers of 0.14 stand: 0 escapes,
+2 rejected right values, 69 reviews and a miss rate of 60.66% (74 of 122) on the development
+split of `bench/requested4`. The regulatory family has 76 sealed labels, and no model has run
+on it. Its claim split is open (#686). An event of an outside approver is a suggestion: it never
+counts for an error bound, because the approver saw the value. `calibrate events suggest` scans
+at most 1024 pairs of packet and value, and it counts the rest as `unscanned_corrections`. The
+bound of the work for many short corrections is open (#685). A reading of 0.15.0 or older has no
+`source_format`, so the cache gives it only for a PDF.
+
+Export and review:
+
+- `groundgate export --store DIR PACKET --resolution KEY` writes `facts@2` (SPEC §5.2). It gives
+  one fact for each slot with a value, with the status `admitted`, `confirmed`, `chosen` or
+  `corrected`. A fact from review names its task, the review policy and each answer that settled
+  it. A slot with no value is in the `open` list. Each citation with a span has a text selector
+  in Unicode code points: the exact text, a prefix and a suffix. The export decides the packet
+  again and resolves it again from the stored review policy and the answer logs. A resolution
+  that does not match exits 1. `facts@1` does not change (#675).
+- The review page marks a `closed_set` option by its index from the server. Before, it compared
+  the option text with the shown value, and an option with a double space was not marked. The
+  gate and the review view now use one comparison, `text.option_index` (#671).
+
+Calibration:
+
+- A blind audit sample gives labels that a review did not shape. The pick is a function of
+  a seed and the audit log. It picks each document until 30 items are picked for a profile
+  digest, and then a document when its hash is below the rate. The rate starts at 0.1, and a
+  rate entry in the log sets it to 0.02 or back to 0.1. An audit task has no proposed value, and
+  the label format is closed, so a review answer or an approver's decision is not a label.
+  `calibrate audit add`, `pick` and `rate` run the steps. `calibrate measure --audit` counts the
+  audit labels with the test part of the gold set, counts a document text one time, and gives
+  the next rate and an alert for each route whose bound is not below the target. SPEC §4.18
+  defines it (#643).
+- `calibration_event@1` is one approval, rejection or correction of one fact by an approver
+  outside groundgate (SPEC §4.19). The store keeps the events of one profile digest in a log,
+  and `forget --all` removes the events of a packet and of its corrections. `calibrate events
+  add` appends the events of a file. `calibrate events suggest` proposes drafts from the events
+  of one profile version: a review share for each field, a changed-value test for each rejection
+  and correction, and a term from a correction. The drafts change nothing (#642).
+
+Store and packs:
+
+- A `reading@2` object has the member `source_format`: `pdf`, `text`, `html`, `xml`, `docx` or
+  `xlsx`. The suffix of the file selects it. The same bytes as a `.txt` file and as an `.html`
+  file give other text, so the cache needs the format. `read --store` now uses the cache for a
+  text, HTML or XML file, and a reading with no text is a cache miss. The store contract has 49
+  vectors (#570).
+- `groundgate pack list` prints each built-in pack with its status: `measured` if its status
+  table has a measured row, else `example`. No pack file changes, so the released digests stay
+  the same (#648).
+
+Bench and docs:
+
+- `bench/regulatory` is a held-out family of 14 CFR parts. Each part is pinned by its digest,
+  and the split is 5 calibration parts and 9 held-out parts. Two blind label passes and the
+  owner's decisions sealed 76 labels: 58 have a value and 18 are absent. `sources.py` stops the
+  run when a pinned source changes (#641).
+- The README has a goal table that `bench/report.py --goal-table` writes from each set's
+  `results.json`, and the Quickstart comes before the Benchmark section (#590).
+- A test of the label freeze check no longer depends on a 10 second join, and the check reads
+  the partial file first (#674).
+- The conformance suite has 214 vectors, 218 invalid packets, 24 profile vectors, 14 pin
+  vectors, 18 places vectors, 37 audit vectors, 44 event vectors and 3 export vectors.
+
 ## 0.15.0 (2026-11-13)
 
 Spec 0.12, with no change to a reading rule for numbers. 0.15 is the first release after the
