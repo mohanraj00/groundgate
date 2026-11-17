@@ -62,9 +62,11 @@ _PACKET = (
 _OPTIONAL = ("doubt", "pin", "places", "completeness", "outline")
 _READING = ("document", "format", "layout", "options", "reader", "source", "text")
 _READING2 = (*_READING, "warnings")
-# ``put_reading`` also writes the completeness of the reading (SPEC §4.16, #615). A reading@2
-# object of an older version has no such member.
-_READING2_FULL = ("completeness", *_READING2)
+# ``put_reading`` also writes the completeness of the reading (SPEC §4.16, #615) and the
+# source format (#570). A reading@2 object of an older version has no such members.
+_READING2_OPTIONAL = ("completeness", "source_format")
+# The source formats that the reading cache gives (#570). Only these readings can hit.
+_CACHED_FORMATS = ("html", "pdf", "text", "xml")
 # The reading kinds. ``put_reading`` writes ``reading@2``, which keeps the warnings of ``read``.
 READINGS = ("reading@1", "reading@2")
 
@@ -240,11 +242,12 @@ def put_reading(
     ``read``. The file must be a regular file. ``put_reading`` reads its bytes one time and
     gives them to ``read``, so ``source@1`` and ``text@1`` come from the same bytes.
 
-    If the file is a PDF and the store has a reading cache (``views/readings.json``, from
-    ``store rebuild``) with one reading of the same source, reader version and options,
-    ``put_reading`` uses that reading and does not run ``read``. Only a PDF reading has a
-    layout, so the reading shows its format. A reading of other files does not name the format
-    (text, HTML or XML), so ``put_reading`` always reads those files. A new reader version
+    If the file is a PDF, text, HTML or XML file and the store has a reading cache
+    (``views/readings.json``, from ``store rebuild``) with one reading of the same source, reader
+    version, options and source format, ``put_reading`` uses that reading and does not run
+    ``read``. The reading names its source format (#570), because the same bytes as text and as
+    HTML give other text. A reading of 0.15 or older names no format, so only its layout shows
+    a PDF. ``put_reading`` always reads a ``.docx`` or ``.xlsx`` file. A new reader version
     misses the cache. The reading keeps the warnings of ``read``, so a cache hit gives the same
     warnings as a new read (#523). A ``reading@1`` does not keep them, so it never gives a hit.
     ``ocr`` is the option of ``read``. With ``ocr=True``, ``put_reading`` does not use
@@ -256,6 +259,7 @@ def put_reading(
     not use the cache, as with OCR. The cache gives a hit only for one reading of a source, reader
     and options, so after a reading with a document, a read with no document misses too."""
     from ..read import ReadError, read, reader
+    from ..read import source_format as read_format
 
     path = Path(path)
     if not path.is_file():
@@ -266,7 +270,8 @@ def put_reading(
         "reader": reader(),
         "options": {"pages": None if pages is None else list(pages)},
     }
-    hit = None if ocr or document else _cached_reading(store, path, want)
+    source_format = read_format(path)
+    hit = None if ocr or document else _cached_reading(store, source_format, want)
     if hit is not None:
         store.put("source@1", source)
         return hit
@@ -290,16 +295,21 @@ def put_reading(
         "document": None if model is None else store.put("document@1", model.to_json()),
         "warnings": list(doc.warnings),
         "completeness": doc.completeness,
+        "source_format": source_format,
     }
     return store.put("reading@2", _json(reading, "reading")), doc
 
 
-def _cached_reading(store: Store, path: Path, want: dict[str, Any]) -> tuple[str, Any] | None:
+def _cached_reading(
+    store: Store, source_format: str, want: dict[str, Any]
+) -> tuple[str, Any] | None:
     """The reading key and the result of ``read`` from the reading cache, or ``None`` on a miss.
     The cache and the objects are untrusted. Each value that does not agree with ``want`` is a
-    miss, and so is a row with no ``reading@2`` or more than one. Only a PDF can hit."""
+    miss, and so is a row with no ``reading@2`` of ``source_format`` or more than one. Only a
+    PDF, text, HTML or XML file can hit. A text, HTML or XML file with no text never hits,
+    because the warning of ``read`` names the file."""
     view = getattr(store, "read_view", None)
-    if view is None or path.suffix.lower() != ".pdf":
+    if view is None or source_format not in _CACHED_FORMATS:
         return None
     try:
         cache = json.loads(view("readings.json"))
@@ -311,17 +321,30 @@ def _cached_reading(store: Store, path: Path, want: dict[str, Any]) -> tuple[str
             found = row.get("readings")
             if not isinstance(found, list) or not all(isinstance(k, str) for k in found):
                 return None
-            current = [k for k in found if load_reading(store, k)["format"] == "reading@2"]
+            current = []
+            for k in found:
+                obj = load_reading(store, k)
+                if obj["format"] == "reading@2" and reading_format(obj) == source_format:
+                    current.append(k)
             if len(current) != 1:
                 return None
-            return _stored_reading(store, current[0], name)
+            return _stored_reading(store, current[0], name, source_format)
     except (StoreError, ValueError, TypeError, KeyError, AttributeError, RecursionError):
         return None  # a deep nest in the view or an object is a miss too
     return None
 
 
-def _stored_reading(store: Store, k: str, name: str) -> tuple[str, Any] | None:
-    """The reading of key ``k`` as the result of ``read``, if its members give ``name``."""
+def reading_format(obj: Mapping[str, Any]) -> str | None:
+    """The source format of a checked reading object, or ``None`` if it does not show one. A
+    reading of 0.15 or older has no member ``source_format``. Only its layout shows a PDF."""
+    if "source_format" in obj:
+        return str(obj["source_format"])  # load_reading checked it
+    return "pdf" if obj["layout"] is not None else None
+
+
+def _stored_reading(store: Store, k: str, name: str, source_format: str) -> tuple[str, Any] | None:
+    """The reading of key ``k`` as the result of ``read``, if its members give ``name`` and
+    ``source_format``."""
     from ..canonical import digest, is_nfc
     from ..read import Extracted, Layout
 
@@ -330,19 +353,34 @@ def _stored_reading(store: Store, k: str, name: str) -> tuple[str, Any] | None:
         return None
     if obj["format"] != "reading@2" or obj["document"] is not None:
         return None
+    if reading_format(obj) != source_format:
+        return None
     text = store.get("text@1", obj["text"]).decode("utf-8")
     if not is_nfc(text):
         return None
-    if obj["layout"] is None:  # a reading of text, HTML or XML
-        return None
-    layout = Layout.from_dict(_get_json(store, "layout@1", obj["layout"]))
-    if layout.document_sha256 != digest("document", {"text": text}):
+    layout = None
+    if source_format == "pdf":
+        if obj["layout"] is None:
+            return None
+        layout = Layout.from_dict(_get_json(store, "layout@1", obj["layout"]))
+        if layout.document_sha256 != digest("document", {"text": text}):
+            return None
+    elif obj["layout"] is not None or not text.strip():
+        # Only a reading of a PDF has a layout. The warning of a file with no text names the
+        # file, so read runs again (#683).
         return None
     try:  # a reading with no completeness, or with a wrong one, is a miss
         complete = check_completeness(obj.get("completeness"), text)
     except PacketError:
         return None
     return k, Extracted(text, layout, tuple(obj["warnings"]), completeness=complete)
+
+
+def reading2_names(obj: object) -> tuple[str, ...]:
+    """The members that a ``reading@2`` object must have: the members of 0.14, and each optional
+    member that ``obj`` has."""
+    extra = tuple(m for m in _READING2_OPTIONAL if isinstance(obj, dict) and m in obj)
+    return tuple(sorted((*_READING2, *extra)))
 
 
 def load_reading(store: Store, k: str) -> dict[str, Any]:
@@ -356,13 +394,17 @@ def load_reading(store: Store, k: str) -> dict[str, Any]:
     except StoreError:  # the bytes do not have this key as reading@2
         kind = "reading@1"
     found = _get_json(store, kind, k)
-    names: tuple[str, ...] = _READING2 if kind == "reading@2" else _READING
-    if kind == "reading@2" and isinstance(found, dict) and "completeness" in found:
-        names = _READING2_FULL
+    from ..read import SOURCE_FORMATS
+
+    names = reading2_names(found) if kind == "reading@2" else _READING
     obj = _members(found, names, kind, k)
     if kind == "reading@2":
         if not isinstance(obj.get("completeness", {}), dict):
             raise StoreError(f"the reading@2 object {k} member completeness is not an object")
+        if obj.get("source_format", "pdf") not in SOURCE_FORMATS:
+            raise StoreError(
+                f"the reading@2 object {k} member source_format is not a source format"
+            )
         warnings = obj["warnings"]
         if not isinstance(warnings, list) or not all(isinstance(w, str) for w in warnings):
             raise StoreError(f"the reading@2 object {k} member warnings is not a list of strings")

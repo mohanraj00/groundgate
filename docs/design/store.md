@@ -109,7 +109,8 @@ small objects. They name the same keys as the run header, so no data is copied.
  "options": {"pages": null},
  "text": "sha256:...", "layout": "sha256:...", "document": null,
  "warnings": ["page 1: dropped 3 words drawn outside the visible page"],
- "completeness": {"status": "complete", "missing": []}}
+ "completeness": {"status": "complete", "missing": []},
+ "source_format": "pdf"}
 ```
 
 The reading cache maps the source key, the reader name and version, and the options to the
@@ -120,6 +121,11 @@ a new read (#523). `reading@1` has the same members without `warnings`. `read --
 `reading@2` since 0.14. The store still reads a `reading@1`, but the cache never gives it.
 `completeness` is the completeness of the reading (SPEC §4.16, #615), since 0.15. A `reading@2`
 of 0.14 has no such member. The store still reads it, but the cache never gives it.
+`source_format` names how `read` read the bytes (#570), since 0.16: `pdf`, `text`, `html`, `xml`,
+`docx` or `xlsx`. The suffix of the file selects it, as it selects the reader. The same bytes as
+a `.txt` file and as an `.html` file give other text, so the cache needs the format. A reading of
+0.15 or older has no such member. The store still reads it. The cache gives it only for a PDF,
+because only the layout shows a PDF.
 
 ### 5.2 The packet
 
@@ -244,11 +250,13 @@ resolution of each packet, the labels for calibrate and the measures.
 
 `store rebuild` builds the reading cache now, as `views/readings.json`. It maps each source,
 reader and options to its readings, and it leaves out a reading whose text is deleted.
-`read --store` of a PDF looks in this cache. If one reading has the same source, reader
-version and options, and its text and layout are in the store, `read --store` uses it and does
-not run the reader again. A row can name a `reading@1` too, and `read --store` does not count it.
-A reading of a text, HTML or XML file does not name its format, so `read --store` always reads
-those files. A new reader version misses the cache. A cache hit gives the warnings that the
+`read --store` of a PDF, text, HTML or XML file looks in this cache. If one reading has the same
+source, reader version, options and source format, and its text and layout are in the store,
+`read --store` uses it and does not run the reader again. A row can name a `reading@1` too, and
+`read --store` does not count it. A row can also name readings of the same bytes in two formats,
+and the source format selects one (#570). `read --store` always reads a `.docx` or `.xlsx` file.
+It also reads a text, HTML or XML file with no text again, because the warning names the file.
+A new reader version misses the cache. A cache hit gives the warnings that the
 reading keeps (#523). `store rebuild` also
 builds the calibrate labels, as `views/calibrate-labels.json` (`calibrate-labels@1`, #406). For
 each calibrate task (review.md §11) and each reviewer, it gives the label of the last answer.

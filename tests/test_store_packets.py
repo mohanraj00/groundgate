@@ -17,7 +17,13 @@ from groundgate.cli import main
 from groundgate.model import PacketError
 from groundgate.store import FolderStore, StoreError, key
 from groundgate.store.maintain import rebuild
-from groundgate.store.packets import InputGone, admit_packet, load_packet, put_reading
+from groundgate.store.packets import (
+    InputGone,
+    admit_packet,
+    load_packet,
+    load_reading,
+    put_reading,
+)
 
 from pdfgen import make_pdf
 
@@ -501,6 +507,7 @@ def test_a_reading_at_1_never_hits_the_reading_cache(
         obj = json.loads(store.get("reading@2", k))
         del obj["warnings"]
         del obj["completeness"]  # a reading@1 has no completeness (#615)
+        del obj["source_format"]  # and no source format (#570)
         old = store.put("reading@1", jcs({**obj, "format": "reading@1"}).encode())
         store.forget(k, "test")
         rebuild(store)
@@ -515,20 +522,168 @@ def test_a_reading_at_1_never_hits_the_reading_cache(
     assert main(["store", "check", "--store", str(tmp_path / "s")]) == 0
 
 
-def test_only_a_pdf_hits_the_reading_cache(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-    """A reading does not name the format of a file that is not a PDF. The same bytes as text
-    and as HTML give other text, so the cache must not give the one for the other."""
+@pytest.mark.parametrize(
+    ("name", "data", "fmt"),
+    [
+        ("a.txt", b"Fee: $500.", "text"),
+        ("a.md", b"Fee: $500.", "text"),
+        ("a.html", b"<p>Fee: <b>$500</b>.</p>", "html"),
+        ("a.xml", b"<doc><fee>Fee: $500.</fee></doc>", "xml"),
+    ],
+)
+def test_text_html_and_xml_hit_the_reading_cache(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, name: str, data: bytes, fmt: str
+) -> None:
+    """A reading names its source format (#570), so a text, HTML or XML file hits too."""
+    source = tmp_path / name
+    source.write_bytes(data)
+    with FolderStore(tmp_path / "s") as store:
+        k, first = put_reading(store, source)
+        assert json.loads(store.get("reading@2", k))["source_format"] == fmt
+        rebuild(store)
+        calls = _count_reads(monkeypatch)
+        hit, doc = put_reading(store, source)
+        assert hit == k and not calls
+        assert (doc.text, doc.layout, doc.warnings) == (first.text, None, first.warnings)
+        assert doc.completeness == first.completeness
+
+
+@pytest.mark.parametrize("suffix", [".txt", ".html", ".xml"])
+def test_a_file_with_no_text_misses_the_reading_cache(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, suffix: str
+) -> None:
+    """The warning of a file with no text names the file. Two files with the same bytes and
+    other names each get their own warning, so the second one misses (#683)."""
+    data = b"<doc> </doc>" if suffix == ".xml" else b"  "
+    (tmp_path / f"first{suffix}").write_bytes(data)
+    (tmp_path / f"second{suffix}").write_bytes(data)
+    with FolderStore(tmp_path / "s") as store:
+        put_reading(store, tmp_path / f"first{suffix}")
+        rebuild(store)
+        calls = _count_reads(monkeypatch)
+        _, doc = put_reading(store, tmp_path / f"second{suffix}")
+        assert len(calls) == 1
+        assert doc.warnings == (f"second{suffix}: no text was extracted",)
+
+
+def test_the_same_bytes_as_text_and_html_hit_their_own_readings(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """The same bytes as text and as HTML give other text. The cache row has both readings,
+    and the source format selects the one for the file (#570)."""
     data = b"Fee must be less than <!-- $500 -->."
     (tmp_path / "a.txt").write_bytes(data)
     (tmp_path / "a.html").write_bytes(data)
     with FolderStore(tmp_path / "s") as store:
-        k, _ = put_reading(store, tmp_path / "a.txt")
+        text, _ = put_reading(store, tmp_path / "a.txt")
+        html, doc = put_reading(store, tmp_path / "a.html")
+        assert html != text and "$500" not in doc.text
         rebuild(store)
+        assert len(json.loads(store.read_view("readings.json"))["readings"]) == 1
         calls = _count_reads(monkeypatch)
         again, doc = put_reading(store, tmp_path / "a.txt")
-        assert again == k and "$500" in doc.text and len(calls) == 1
-        html, doc = put_reading(store, tmp_path / "a.html")
-        assert html != k and "$500" not in doc.text and len(calls) == 2
+        assert again == text and "$500" in doc.text
+        again, doc = put_reading(store, tmp_path / "a.html")
+        assert again == html and "$500" not in doc.text and not calls
+
+
+def _old_reading(store: FolderStore, k: str) -> str:
+    """Write the reading ``k`` again as 0.15 wrote it, with no ``source_format``."""
+    obj = json.loads(store.get("reading@2", k))
+    del obj["source_format"]
+    store.forget(k, "test")
+    return store.put("reading@2", jcs(obj).encode())
+
+
+def test_an_older_reading_of_text_misses_the_reading_cache(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """A reading of 0.15 does not name the format of a text file, so it never hits. The new
+    read writes a reading with the format, and that one hits."""
+    source = tmp_path / "a.html"
+    source.write_bytes(b"<p>Fee: $500.</p>")
+    with FolderStore(tmp_path / "s") as store:
+        k, _ = put_reading(store, source)
+        old = _old_reading(store, k)
+        rebuild(store)
+        calls = _count_reads(monkeypatch)
+        again, _ = put_reading(store, source)
+        assert again == k != old and len(calls) == 1
+        rebuild(store)
+        hit, _ = put_reading(store, source)
+        assert hit == k and len(calls) == 1
+    assert main(["store", "check", "--store", str(tmp_path / "s")]) == 0
+
+
+def test_an_older_reading_of_a_pdf_still_hits_the_reading_cache(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """The layout of a reading of 0.15 shows a PDF, so it still hits."""
+    source = tmp_path / "a.pdf"
+    source.write_bytes(FEE_PDF)
+    with FolderStore(tmp_path / "s") as store:
+        k, _ = put_reading(store, source)
+        old = _old_reading(store, k)
+        rebuild(store)
+        import groundgate.read as reader
+
+        monkeypatch.setattr(reader, "read", _no_read)
+        hit, doc = put_reading(store, source)
+        assert hit == old and "Fee: $500" in doc.text
+
+
+@pytest.mark.parametrize(
+    ("change", "hits"),
+    [
+        ({"source_format": "html"}, False),  # a reading of the file as another format
+        ({"layout": "LAYOUT"}, False),  # a reading of text with a layout
+        ({}, True),
+    ],
+)
+def test_a_reading_with_another_format_misses_the_reading_cache(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, change: dict[str, str], hits: bool
+) -> None:
+    source = tmp_path / "a.txt"
+    source.write_bytes(b"Fee: $500.")
+    with FolderStore(tmp_path / "s") as store:
+        k, _ = put_reading(store, source)
+        obj = json.loads(store.get("reading@2", k))
+        if change.get("layout") == "LAYOUT":
+            change = {"layout": store.put("layout@1", b"{}")}
+        store.forget(k, "test")
+        forged = store.put("reading@2", jcs({**obj, **change}).encode())
+        rebuild(store)
+        calls = _count_reads(monkeypatch)
+        again, _ = put_reading(store, source)
+        assert (again == forged) is hits and len(calls) == (0 if hits else 1)
+
+
+def test_a_reading_with_an_unknown_source_format_is_refused(tmp_path: Path) -> None:
+    source = tmp_path / "a.txt"
+    source.write_bytes(b"Fee: $500.")
+    with FolderStore(tmp_path / "s") as store:
+        k, _ = put_reading(store, source)
+        obj = json.loads(store.get("reading@2", k))
+        bad = store.put("reading@2", jcs({**obj, "source_format": "rtf"}).encode())
+        with pytest.raises(StoreError, match="source_format is not a source format"):
+            load_reading(store, bad)
+
+
+def test_an_office_file_does_not_use_the_reading_cache(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """The cache gives text, HTML, XML and PDF readings only (#570)."""
+    from test_read_office import docx
+
+    source = tmp_path / "a.docx"
+    source.write_bytes(docx("<w:p><w:r><w:t>Fee: $500.</w:t></w:r></w:p>"))
+    with FolderStore(tmp_path / "s") as store:
+        k, _ = put_reading(store, source)
+        assert json.loads(store.get("reading@2", k))["source_format"] == "docx"
+        rebuild(store)
+        calls = _count_reads(monkeypatch)
+        again, doc = put_reading(store, source)
+        assert again == k and "Fee: $500." in doc.text and len(calls) == 1
 
 
 def test_a_new_reader_version_misses_the_reading_cache(

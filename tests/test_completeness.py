@@ -213,6 +213,7 @@ def test_a_reading_of_an_older_version_has_no_completeness_and_never_hits_the_ca
         k, _ = put_reading(store, pdf)
         obj = json.loads(store.get("reading@2", k))
         del obj["completeness"]
+        del obj["source_format"]  # a reading of 0.14 has neither member (#570)
         old = store.put("reading@2", jcs(obj).encode())
         assert "completeness" not in load_reading(store, old)  # the store still reads it
         store.forget(k, "test")

@@ -24,7 +24,18 @@ from ..completeness import completeness_of
 from .layout import Box, Layout, Page, Word
 from .markup import html_text, xml_text
 
-__all__ = ["READER", "Box", "Extracted", "Layout", "Page", "ReadError", "Word", "read", "reader"]
+__all__ = [
+    "READER",
+    "Box",
+    "Extracted",
+    "Layout",
+    "Page",
+    "ReadError",
+    "Word",
+    "read",
+    "reader",
+    "source_format",
+]
 
 READER = "groundgate.read"
 
@@ -35,6 +46,28 @@ OFFICE_SUFFIXES = {".docx", ".xlsx"}
 
 class ReadError(ValueError):
     """The file cannot be turned into text."""
+
+
+# The source formats that ``read`` knows, by the suffix of the file. A reading records the
+# name (docs/design/store.md §5.1, #570), because the same bytes give a different text as a
+# text file and as an HTML file.
+SOURCE_FORMATS = ("docx", "html", "pdf", "text", "xlsx", "xml")
+
+
+def source_format(path: str | Path) -> str:
+    """The source format of ``path`` from its suffix: ``pdf``, ``xml``, ``html``, ``docx``,
+    ``xlsx`` or ``text``. An unknown suffix raises ``ReadError``."""
+    path = Path(path)
+    suffix = path.suffix.lower()
+    if suffix in (".pdf", ".xml"):
+        return suffix[1:]
+    if suffix in HTML_SUFFIXES:
+        return "html"
+    if suffix in OFFICE_SUFFIXES:
+        return suffix[1:]
+    if suffix in TEXT_SUFFIXES:
+        return "text"
+    raise ReadError(f"{path}: unsupported file type {suffix or '(none)'}")
 
 
 @dataclass(frozen=True)
@@ -79,8 +112,8 @@ def read(
     of ``path`` still selects the format, and errors still name ``path``. If ``ocr`` is True, a
     PDF page with no text layer and an image gets OCR. Other formats ignore it."""
     path = Path(path)
-    suffix = path.suffix.lower()
-    if suffix == ".pdf":
+    kind = source_format(path)
+    if kind == "pdf":
         from .ocr import Scan
         from .pdf import read_pdf
 
@@ -93,23 +126,21 @@ def read(
         return Extracted(text, layout, tuple(warnings), scan.version, complete)
     if data is None:
         data = path.read_bytes()
-    if suffix == ".xml":
+    if kind == "xml":
         import xml.etree.ElementTree as ET
 
         try:
             text = xml_text(data)
         except ET.ParseError as e:
             raise ReadError(f"{path}: not well-formed XML ({e})") from e
-    elif suffix in HTML_SUFFIXES:
+    elif kind == "html":
         text = html_text(_decode(data, path))
-    elif suffix in OFFICE_SUFFIXES:
+    elif kind in ("docx", "xlsx"):
         from .office import office_nodes
 
         text, _ = office_nodes(data, path)
-    elif suffix in TEXT_SUFFIXES:
-        text = _decode(data, path)
     else:
-        raise ReadError(f"{path}: unsupported file type {suffix or '(none)'}")
+        text = _decode(data, path)
     empty = () if text.strip() else (f"{path.name}: no text was extracted",)
     text = unicodedata.normalize("NFC", text)
     return Extracted(text, warnings=empty, completeness=completeness_of(text))
