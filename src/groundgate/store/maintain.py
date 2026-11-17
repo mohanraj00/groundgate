@@ -649,9 +649,18 @@ def _orphan_run_objects(report: Report, objects: _Objects) -> None:
 
 def _split_view(report: Report, log: tuple[str, ...], records: list[dict[str, Any]]) -> None:
     """A finding for a splits log whose view fails: a bad record, or a second split for one
-    document (§10)."""
+    document (§10). Also a finding for an events log with a record that is not an event of
+    its profile (SPEC §4.19)."""
     from .splits import split_view
 
+    if log[0] == "events":
+        from ..calibrate.events import EventError, counted
+
+        try:
+            counted(log[1], records)
+        except EventError as exc:
+            report.find(f"{_log_rel(log)}: {exc}")
+        return
     if log[0] != "splits":
         return
     try:
@@ -1060,11 +1069,15 @@ def forget_packet(
     text check finds only a string of ``MIN_TEXT`` or more characters that is in the text: it
     is not a proof.
 
-    With ``everything``, remove each object and each answer log of the packet, and the packet
-    last. It also removes each ``task@1`` and ``resolution@1`` that names the packet, and
-    each correction packet that ``review resolve`` wrote for it, with its candidates, judgments
-    and receipt (#516). A ``review-policy@1`` object stays. If an answer log of the packet
-    cannot be read, it is ``unchecked``: it can name a correction. Then ``everything`` removes
+    With ``everything``, remove each object and each answer log of the packet, and the packet last.
+    It also removes each event of the packet from the events logs (SPEC §4.19), because an event
+    holds a value: the events of other packets stay. The events of its corrections go too, and
+    the events go before the objects. If an events log cannot be read, it is ``unchecked``, as
+    an answer log that cannot be read. It also removes each ``task@1`` and ``resolution@1`` that
+    names the packet, and each correction packet that ``review resolve`` wrote for it, with its
+    candidates, judgments and receipt (#516). A ``review-policy@1`` object stays. If an answer log
+    of the packet cannot be read, it is ``unchecked``: it can name a correction. Then
+    ``everything`` removes
     only what a plain ``forget`` removes, and keeps the packet, its corrections, its tasks, its
     resolutions and its logs, so a second call after a repair of the log can finish. The same
     applies when the search for the receipt of a correction whose packet is gone cannot run,
@@ -1181,6 +1194,15 @@ def forget_packet(
         walked = _review_plan(objects, packet, obj)
         review, corrections, shared_corrections, unread_review, unproven = walked
         unchecked += unproven  # they stay, and they do not stop the rest
+        # An event holds a value, so the events of the packet and of its corrections go too
+        # (#684). A log that cannot be read can hold them: it stops the rest, as an answer
+        # log does, so a second call after a repair can finish.
+        event_logs = [log for log in store.log_names()[0] if log[0] == "events"]
+        for log in event_logs:
+            try:
+                store.read(log)
+            except StoreError:
+                unread_review.append(("log", _log_rel(log)))
         if unread_review:
             # An answer log that cannot be read can name a correction, and a packet that
             # cannot be told can be one. Keep what finds them again: the packet, its kept
@@ -1251,6 +1273,13 @@ def forget_packet(
                     continue
                 done.append((kind, k, "deleted", shared))
 
+    if everything and not (unread_review or packet in keep):
+        # The events go first: after the packets go, nothing names them for a second call.
+        # The log of a profile holds the events of other packets too, and they stay.
+        doomed = ({packet} | set(corrections)) - keep
+        for log in event_logs:
+            if store.forget_records(log, reason, lambda r: r.get("packet_sha256") in doomed):
+                done.append(("events", _log_rel(log), "deleted", 0))
     drop(plan)
     if everything and (unread_review or packet in keep):
         drop(late)

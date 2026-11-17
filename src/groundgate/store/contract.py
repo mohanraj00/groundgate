@@ -217,6 +217,8 @@ def vectors(key_of: KeyOf = key, jcs_of: JcsOf = jcs) -> list[Vector]:
         ("answers-a-name", ["answers", packet, "ana"]),
         ("answers-a-path", ["answers", "../x", ana]),
         ("splits-a-name", ["splits", "requested4"]),
+        ("events-a-name", ["events", "invoice"]),
+        ("events-two-keys", ["events", packet, ana]),
         ("a-parent-path", ["../answers", packet, ana]),
         ("deleted-a-key", ["deleted", ana]),
         ("a-nested-word", [["answers"], packet, ana]),
@@ -248,6 +250,18 @@ def vectors(key_of: KeyOf = key, jcs_of: JcsOf = jcs) -> list[Vector]:
         append(log_b, {"answer": "yes"}, result=b[0]["entry_sha256"]),
         read(log_a, result=a),
         read(log_b, result=b),
+    )
+
+    events = ["events", key_of("profile@1", b"invoice")]
+    e = chain("events", [{"decision": "approve"}, {"decision": "reject"}])
+    add(
+        "check_chain",
+        "events",
+        "an events log of one profile digest (SPEC 4.19) keeps its records in order",
+        read(events, result=[]),
+        append(events, {"decision": "approve"}, result=e[0]["entry_sha256"]),
+        append(events, {"decision": "reject"}, result=e[1]["entry_sha256"]),
+        read(events, result=e),
     )
 
     # check_append_refuses

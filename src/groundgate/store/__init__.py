@@ -43,7 +43,7 @@ MAX_BYTES = 2**30
 KEY = re.compile(r"sha256:[0-9a-f]{64}")
 KIND = re.compile(r"[a-z][a-z0-9-]{0,62}@[1-9][0-9]{0,8}")
 # The log kinds and the number of keys in each log name (§6, §7.1).
-LOGS = {"answers": 2, "splits": 1, "deleted": 0}
+LOGS = {"answers": 2, "splits": 1, "events": 1, "deleted": 0}
 CHAIN = ("sequence", "previous", "entry_sha256")
 _UTF8 = frozenset({"text@1", "prompt@1", "reply@1"})
 _RUN = re.compile(r"run@[1-9][0-9]{0,8}")
@@ -522,11 +522,11 @@ class FolderStore:
             rel = f"logs/{entry}"
             if entry == "deleted.jsonl" and kind(top / entry) == "file":
                 names.append(("deleted",))
-            elif entry in ("deleted.lock", "answers", "splits"):
+            elif entry in ("deleted.lock", "answers", "splits", "events"):
                 continue
             else:
                 problems.append(f"{rel} is not a log")
-        for word in ("splits", "answers"):
+        for word in ("splits", "events", "answers"):
             folder = top / word
             if not folder.exists() and not folder.is_symlink():
                 continue
@@ -535,10 +535,10 @@ class FolderStore:
                 continue
             for entry in sorted(os.listdir(folder)):
                 rel = f"logs/{word}/{entry}"
-                if word == "splits":
+                if word in ("splits", "events"):
                     found = stem(entry)
                     if found is not None and kind(folder / entry) == "file":
-                        names.append(("splits", "sha256:" + found))
+                        names.append((word, "sha256:" + found))
                     elif not (entry.endswith(".lock") and stem(entry[:-5] + ".jsonl")):
                         problems.append(f"{rel} is not a log")
                     continue
@@ -596,9 +596,9 @@ class FolderStore:
             self._unlink_own(lock, mark)
 
     def forget_log(self, log: LogName, reason: str) -> None:
-        """Remove an answer log or a splits log, and record the log name, the time and the
-        reason in the deleted log. ``forget_log`` holds the lock of the log for the change, so
-        another writer of the log stops it with ``Locked``."""
+        """Remove an answer log, a splits log or an events log, and record the log name, the
+        time and the reason in the deleted log. ``forget_log`` holds the lock of the log for the
+        change, so another writer of the log stops it with ``Locked``."""
         word, _ = _check_log(log)
         if word == "deleted":
             raise ValueError("forget_log does not remove the deleted log")
@@ -633,6 +633,49 @@ class FolderStore:
         if word == "answers":
             with contextlib.suppress(OSError):  # the packet folder, if it is now empty
                 os.rmdir(folder)
+
+    def forget_records(self, log: LogName, reason: str, drop: Callable[[Record], bool]) -> int:
+        """Remove each record of a splits log or an events log for which ``drop`` is true, and
+        write the other records again as a new chain. Record the log name, the count of the
+        removed records, the time and the reason in the deleted log. Return the count. If no
+        record matches, nothing changes. ``forget_records`` holds the lock of the log for the
+        change, so another writer of the log stops it with ``Locked``. The new file replaces
+        the old one in one rename."""
+        word, _ = _check_log(log)
+        if word not in ("splits", "events"):
+            raise ValueError("forget_records changes a splits log or an events log only")
+        if not isinstance(reason, str) or not reason:
+            raise ValueError("forget needs a reason")
+        if log in self._heads:
+            raise StoreError("this writer holds the log: close the store, then forget it")
+        parts, name = self._log_parts(log)
+        rel = "/".join([*parts, name + ".jsonl"])
+        try:
+            folder = self._folder(parts, make=False)
+        except NotFound:
+            return 0
+        with self._hold(folder, name):
+            try:
+                data = self._file(folder / f"{name}.jsonl", rel)
+            except NotFound:
+                return 0
+            records = _records(word, data, rel)
+            kept = [{m: v for m, v in r.items() if m not in CHAIN} for r in records if not drop(r)]
+            count = len(records) - len(kept)
+            if not count:
+                return 0
+            lines: list[str] = []
+            previous: str | None = None
+            for n, body in enumerate(kept, 1):
+                entry = {**body, "sequence": n, "previous": previous}
+                previous = _entry_key(word, entry)
+                lines.append(jcs({**entry, "entry_sha256": previous}) + "\n")
+            time = self._clock().astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+            self._append(
+                ("deleted",), {"log": list(log), "records": count, "reason": reason, "time": time}
+            )
+            self._replace(folder, folder / f"{name}.jsonl", "".join(lines).encode("utf-8"))
+        return count
 
     def write_view(self, name: str, data: bytes) -> str:
         """Write the view file ``views/<name>`` in place of the old one, and return its path in

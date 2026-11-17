@@ -1,0 +1,5 @@
+Invoice INV-0007
+Total: $90.00
+Amount due after fees: $95.00
+Tax: $8.00
+Shipping: $12.00

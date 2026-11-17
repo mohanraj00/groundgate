@@ -1,0 +1,6 @@
+{"groundgate_profile": 1, "id": "invoice-x-test", "version": "1.0.0",
+ "description": "A synthetic invoice profile for the calibration event tests (#642).",
+ "schema": {"fields": {
+   "total": {"type": "number", "unit": "USD", "aliases": ["total"]},
+   "tax": {"type": "number", "unit": "USD", "aliases": ["tax"]},
+   "shipping": {"type": "number", "unit": "USD", "aliases": ["shipping"]}}}}

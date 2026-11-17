@@ -1187,3 +1187,34 @@ def test_forget_all_reports_a_correction_of_an_earlier_spec_version(
     assert ("packet@1", fixed, "unchecked", 0) in done
     assert ("packet@1", k, "kept", 0) in done
     assert {k, tk, rk, fixed, receipt} <= set(left)
+
+
+def test_forget_all_removes_the_events_of_a_correction_packet(tmp_path: Path) -> None:
+    """An approver can decide on a fact of a correction packet. ``forget --all`` of the packet
+    removes the correction packet, so it removes its events too, before it removes the objects
+    (#684). The event of another packet stays."""
+    store, k, tk, data = one_choice(tmp_path)
+    profile = "sha256:" + "a" * 64
+    with store:
+        store.append(
+            ("answers", k, reviewer_key("ana")),
+            record(tk, "ana", "correct", candidate=correction("4200000")),
+        )
+        write_resolution(store, k, policy(), ["ana"])
+        fixed = _correction_packet(store, correction_receipt(data["packet"], correction("4200000")))
+        log = ("events", profile)
+        for n, packet in enumerate([k, fixed, "sha256:" + "b" * 64]):
+            store.append(log, {
+                "groundgate_calibration_event": 1, "decision": "correct", "profile": profile,
+                "packet_sha256": packet, "receipt_sha256": "sha256:" + "c" * 64,
+                "fact_sha256": "sha256:" + "d" * 64, "field": "revenue", "key": None,
+                "value": "4200000", "corrected": "4300000", "actor": "person",
+                "origin": {"system": "approvals", "id": f"d-{n}"}, "date": None,
+            })  # fmt: skip
+    with FolderStore(tmp_path / "s") as store:
+        done = forget_packet(store, k, "all", everything=True)
+        assert ("packet@1", fixed, "deleted") in [(a, b, c) for a, b, c, _ in done]
+        assert ("packet@1", k, "deleted", 0) in done
+        left = store.read(log)
+        assert [r["packet_sha256"] for r in left] == ["sha256:" + "b" * 64]
+        assert check(store).findings == []

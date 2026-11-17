@@ -44,7 +44,8 @@ I choose A. If a view becomes slow, a SQLite index can come later as a view.
    references, candidate lists, judgments, receipts, prompts, replies, admission packets,
    readings, packets, review tasks and resolutions. The runner writes its record one time, at
    the end of a run. Thus the store keeps the record as one object, and the chain stays inside it.
-2. **Logs** only grow: the review answers, the splits of #383 and the deletions. Each record holds
+2. **Logs** only grow: the review answers, the splits of #383, the calibration events of #642
+   and the deletions. Each record holds
    the digest of the record before it.
 3. **Views** are derived: the reading cache, the review queue, the latest resolution, the labels
    for calibrate and the measures. A view comes only from objects and logs, so the store can
@@ -186,7 +187,8 @@ and resolutions name the packet, and the answer logs of a packet are filed under
 for example `("answers", packet, reviewer)`. The reviewer part is the store key of the kind
 `reviewer@1` over the UTF-8 of the reviewer name. The set part of a `splits` log is the store
 key of the kind `set@1` over the UTF-8 of the set name. A reviewer name and a set name must be
-NFC. `reviewer_key` and `set_key` refuse a name that is not NFC, so one name has one key and one
+NFC. The profile part of an `events` log is the profile digest (SPEC §4.19), which is a store
+key. `reviewer_key` and `set_key` refuse a name that is not NFC, so one name has one key and one
 reviewer has one log (#418). Thus the file name is a digest, not the name that the CLI takes, and
 a name never becomes a path.
 
@@ -206,6 +208,7 @@ store/
   objects/ab/cdef...                         one file for each object, named by its key
   logs/answers/<packet>/<reviewer>.jsonl     one answer log for each packet and reviewer
   logs/splits/<set>.jsonl                    the splits of #383, one log for each set
+  logs/events/<profile>.jsonl                the calibration events of #642, one log for each profile digest
   logs/deleted.jsonl                         the deletions
   views/...                                  JSON files; delete them at any time
 ```
@@ -214,7 +217,8 @@ Each path part is a 64-digit hex digest or a fixed word.
 
 A record of `logs/deleted.jsonl` names one deletion. An object deletion is
 `{"key": "sha256:...", "reason": "...", "time": "2026-10-20T09:30:00Z"}`, and a log deletion has
-`"log"` in place of `"key"`. For a `document@1` (#508), `prompt@1`, `reply@1` or `admission@1`
+`"log"` in place of `"key"`. If `forget --all` removes the events of a packet from an `events`
+log, the record also has `"records"`: the count of the removed records. For a `document@1` (#508), `prompt@1`, `reply@1` or `admission@1`
 object, `groundgate store forget` adds `"run_keys": ["sha256:..."]`: the key of the object in a run
 record, for each runner version of a run record in the store (section 8). The `forget(key,
 reason)` operation of section 6 does not add them, because it does not read the run records.
@@ -375,7 +379,11 @@ also if it changes during the build.
    that `forget` cannot read is "unchecked". A deletion from 0.12 or earlier, or from a call of
    `forget(key, reason)` with no run keys, has no run keys, so the second rule applies to it.
    A value is still document data. If an app must also remove the values,
-   `groundgate store forget --all PACKET` removes each object and log of the packet. It also
+   `groundgate store forget --all PACKET` removes each object and log of the packet. It
+   removes each event of the packet and of its correction packets from the `events` logs,
+   because an event holds a value, and writes the events of the other packets again as a new
+   chain. The events go first, before any object. If an `events` log cannot be read, `forget
+   --all` prints it as "unchecked" and exits 1, as for an answer log that cannot be read. It also
    removes each `task@1` and `resolution@1` that names the packet, and each correction packet
    that `review resolve` wrote for it, with its candidates, judgments and receipt (#516). A
    correction packet has the inputs of the packet, no run record, and the exact candidates

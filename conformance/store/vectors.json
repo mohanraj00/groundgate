@@ -640,6 +640,60 @@
    ]
   },
   {
+   "id": "bad-logs/events-a-name",
+   "check": "check_bad_logs",
+   "about": "a log name that is not a fixed word and its keys is invalid",
+   "steps": [
+    {
+     "op": "read",
+     "log": [
+      "events",
+      "invoice"
+     ],
+     "error": "invalid"
+    },
+    {
+     "op": "append",
+     "log": [
+      "events",
+      "invoice"
+     ],
+     "record": {
+      "a": 1
+     },
+     "error": "invalid"
+    }
+   ]
+  },
+  {
+   "id": "bad-logs/events-two-keys",
+   "check": "check_bad_logs",
+   "about": "a log name that is not a fixed word and its keys is invalid",
+   "steps": [
+    {
+     "op": "read",
+     "log": [
+      "events",
+      "sha256:6cea534bb1c3c01472bc5fdc5645a2707e80c963310efdf127c743f4098c5fe5",
+      "sha256:303789f3415bc7149bcb9f15a0dd98435cb0c4476ecba27a335d0ae7369b4b6b"
+     ],
+     "error": "invalid"
+    },
+    {
+     "op": "append",
+     "log": [
+      "events",
+      "sha256:6cea534bb1c3c01472bc5fdc5645a2707e80c963310efdf127c743f4098c5fe5",
+      "sha256:303789f3415bc7149bcb9f15a0dd98435cb0c4476ecba27a335d0ae7369b4b6b"
+     ],
+     "record": {
+      "a": 1
+     },
+     "error": "invalid"
+    }
+   ]
+  },
+  {
    "id": "bad-logs/a-parent-path",
    "check": "check_bad_logs",
    "about": "a log name that is not a fixed word and its keys is invalid",
@@ -846,6 +900,64 @@
        "sequence": 1,
        "previous": null,
        "entry_sha256": "sha256:8ca2c0812f32d55ba614c5623c828fb4aa907f2dea2d9692cab23287d108849f"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "chain/events",
+   "check": "check_chain",
+   "about": "an events log of one profile digest (SPEC 4.19) keeps its records in order",
+   "steps": [
+    {
+     "op": "read",
+     "log": [
+      "events",
+      "sha256:2c8fa8ba1d8ad737d17a6480c8c82cfeb2a8d1f05ca03c1fdcf9590ebd1c5e98"
+     ],
+     "result": []
+    },
+    {
+     "op": "append",
+     "log": [
+      "events",
+      "sha256:2c8fa8ba1d8ad737d17a6480c8c82cfeb2a8d1f05ca03c1fdcf9590ebd1c5e98"
+     ],
+     "record": {
+      "decision": "approve"
+     },
+     "result": "sha256:f9f9ad4f229c5a3867864345a93ecfc2e438c5ed42df61c3d02eb5410be12ab1"
+    },
+    {
+     "op": "append",
+     "log": [
+      "events",
+      "sha256:2c8fa8ba1d8ad737d17a6480c8c82cfeb2a8d1f05ca03c1fdcf9590ebd1c5e98"
+     ],
+     "record": {
+      "decision": "reject"
+     },
+     "result": "sha256:33754ee9f10020252c0fd2859c5abf7ea868fbffd73c1e8320f223960236a799"
+    },
+    {
+     "op": "read",
+     "log": [
+      "events",
+      "sha256:2c8fa8ba1d8ad737d17a6480c8c82cfeb2a8d1f05ca03c1fdcf9590ebd1c5e98"
+     ],
+     "result": [
+      {
+       "decision": "approve",
+       "sequence": 1,
+       "previous": null,
+       "entry_sha256": "sha256:f9f9ad4f229c5a3867864345a93ecfc2e438c5ed42df61c3d02eb5410be12ab1"
+      },
+      {
+       "decision": "reject",
+       "sequence": 2,
+       "previous": "sha256:f9f9ad4f229c5a3867864345a93ecfc2e438c5ed42df61c3d02eb5410be12ab1",
+       "entry_sha256": "sha256:33754ee9f10020252c0fd2859c5abf7ea868fbffd73c1e8320f223960236a799"
       }
      ]
     }
