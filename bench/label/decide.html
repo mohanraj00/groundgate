@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Label decisions</title>
+<style>
+  body { font: 15px/1.45 system-ui, sans-serif; margin: 0 auto; max-width: 1100px; padding: 16px; }
+  header { position: sticky; top: 0; background: #fff; padding: 8px 0; border-bottom: 1px solid #ccc; }
+  .item { border: 1px solid #ccc; border-radius: 6px; margin: 16px 0; padding: 12px; }
+  .item.done { border-color: #2a7; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  pre { white-space: pre-wrap; background: #f6f6f6; padding: 8px; max-height: 320px; overflow: auto; }
+  textarea { width: 100%; min-height: 60px; font: 13px monospace; }
+  button { margin: 4px 4px 0 0; }
+  .muted { color: #666; font-size: 13px; }
+  .diff { background: #fff4d6; }
+</style>
+</head>
+<body>
+<header><strong>Label decisions</strong> <span id="status"></span></header>
+<main id="list"></main>
+<script src="/decide.js"></script>
+</body>
+</html>

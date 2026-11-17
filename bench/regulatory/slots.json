@@ -1,0 +1,1008 @@
+{
+ "format": "regulatory-slots/1",
+ "seed": "sha256:705b29e34e5fe6d08c4b3e0e13915603d25966721a869b5e31f91a77445e2767",
+ "draw": "for each part and field, the candidates with the lowest sha256 of seed, id, field and the candidate key, one a line with LF",
+ "schema": {
+  "section_text": {
+   "type": "passage",
+   "description": "The full text of the named section, without its heading and without the source note in brackets at its end."
+  },
+  "definition": {
+   "type": "passage",
+   "description": "The definition of the named term in the named definitions section: the text after the term, to the end of its paragraph and of the paragraphs that continue it."
+  },
+  "table_value": {
+   "type": "number",
+   "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value."
+  },
+  "table_rows": {
+   "type": "record",
+   "description": "The body rows of the named table, one record for each row, with one member for each column header. An empty cell is null."
+  },
+  "effective_date": {
+   "type": "date",
+   "formats": [
+    "YYYY-MM-DD"
+   ],
+   "description": "The date from which the named section, or the rate or fee that it sets, applies, if the section text states one. A date of a source note in brackets is not an effective date."
+  }
+ },
+ "slots": [
+  {
+   "slot": "r001",
+   "split": "heldout",
+   "id": "cfr-7-800",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 800.218 Review of rejection or disapproval of equipment."
+   },
+   "request_text": "The text of § 800.218 Review of rejection or disapproval of equipment."
+  },
+  {
+   "slot": "r002",
+   "split": "heldout",
+   "id": "cfr-7-800",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 800.39 Suspension or revocation of registration for cause."
+   },
+   "request_text": "The text of § 800.39 Suspension or revocation of registration for cause."
+  },
+  {
+   "slot": "r003",
+   "split": "heldout",
+   "id": "cfr-7-800",
+   "field": "definition",
+   "kind": "passage",
+   "request": {
+    "section": "§ 800.0 Meaning of terms.",
+    "term": "Assigned area of responsibility"
+   },
+   "request_text": "The definition of the term “Assigned area of responsibility” in § 800.0 Meaning of terms."
+  },
+  {
+   "slot": "r004",
+   "split": "heldout",
+   "id": "cfr-7-800",
+   "field": "table_value",
+   "kind": "number",
+   "request": {
+    "section": "§ 800.86 Inspection of shiplot, unit train, and lash barge grain in single lots.",
+    "table": "Table 1—Grade Limits (GL) and Breakpoints (BP) for Six-Rowed Malting Barley",
+    "row": 2,
+    "row_label": "U.S. No. 2",
+    "column": "Maximum limits of— / Thin barley (percent) / GL"
+   },
+   "request_text": "The number in Table 1—Grade Limits (GL) and Breakpoints (BP) for Six-Rowed Malting Barley (§ 800.86 Inspection of shiplot, unit train, and lash barge grain in single lots.), body row 2 (first cell: “U.S. No. 2”), column “Maximum limits of— / Thin barley (percent) / GL”"
+  },
+  {
+   "slot": "r005",
+   "split": "heldout",
+   "id": "cfr-7-800",
+   "field": "table_value",
+   "kind": "number",
+   "request": {
+    "section": "§ 800.86 Inspection of shiplot, unit train, and lash barge grain in single lots.",
+    "table": "Table 15—Grade Limits (GL) and Breakpoints (BP) for Sorghum",
+    "row": 4,
+    "row_label": "U.S. No. 3 1",
+    "column": "Maximum limits of— / Damaged kernels / Heat-damaged (percent)"
+   },
+   "request_text": "The number in Table 15—Grade Limits (GL) and Breakpoints (BP) for Sorghum (§ 800.86 Inspection of shiplot, unit train, and lash barge grain in single lots.), body row 4 (first cell: “U.S. No. 3 1”), column “Maximum limits of— / Damaged kernels / Heat-damaged (percent)”"
+  },
+  {
+   "slot": "r006",
+   "split": "heldout",
+   "id": "cfr-7-800",
+   "field": "table_rows",
+   "kind": "record",
+   "request": {
+    "section": "§ 800.86 Inspection of shiplot, unit train, and lash barge grain in single lots.",
+    "name": "Table 21—Grade Limits (GL) and Breakpoints (BP) for Triticale",
+    "columns": [
+     "Grade",
+     "Minimum test weight per bushel (percent)",
+     "Maximum limits of— / Damaged kernels / Heat-damaged (percent)",
+     "Maximum limits of— / Damaged kernels / Total 1 (percent)",
+     "Maximum limits of— / Foreign material / Material other than wheat or rye (percent)",
+     "Maximum limits of— / Foreign material / Total 2 (percent)",
+     "Maximum limits of— / Shrunken and broken kernels (percent)",
+     "Maximum limits of— / Defects 3 (percent)"
+    ]
+   },
+   "request_text": "The body rows of Table 21—Grade Limits (GL) and Breakpoints (BP) for Triticale (§ 800.86 Inspection of shiplot, unit train, and lash barge grain in single lots.), with the members “Grade”; “Minimum test weight per bushel (percent)”; “Maximum limits of— / Damaged kernels / Heat-damaged (percent)”; “Maximum limits of— / Damaged kernels / Total 1 (percent)”; “Maximum limits of— / Foreign material / Material other than wheat or rye (percent)”; “Maximum limits of— / Foreign material / Total 2 (percent)”; “Maximum limits of— / Shrunken and broken kernels (percent)”; “Maximum limits of— / Defects 3 (percent)”"
+  },
+  {
+   "slot": "r007",
+   "split": "heldout",
+   "id": "cfr-7-800",
+   "field": "effective_date",
+   "kind": "date",
+   "request": {
+    "section": "§ 800.32 When to register."
+   },
+   "request_text": "The effective date of § 800.32 When to register."
+  },
+  {
+   "slot": "r008",
+   "split": "heldout",
+   "id": "cfr-8-106",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 106.5 Authority to certify records."
+   },
+   "request_text": "The text of § 106.5 Authority to certify records."
+  },
+  {
+   "slot": "r009",
+   "split": "heldout",
+   "id": "cfr-8-106",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 106.6 DHS severability."
+   },
+   "request_text": "The text of § 106.6 DHS severability."
+  },
+  {
+   "slot": "r010",
+   "split": "heldout",
+   "id": "cfr-8-106",
+   "field": "effective_date",
+   "kind": "date",
+   "request": {
+    "section": "§ 106.5 Authority to certify records."
+   },
+   "request_text": "The effective date of § 106.5 Authority to certify records."
+  },
+  {
+   "slot": "r011",
+   "split": "heldout",
+   "id": "cfr-9-391",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 391.1 Scope and purpose."
+   },
+   "request_text": "The text of § 391.1 Scope and purpose."
+  },
+  {
+   "slot": "r012",
+   "split": "heldout",
+   "id": "cfr-9-391",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 391.2 Basetime rate."
+   },
+   "request_text": "The text of § 391.2 Basetime rate."
+  },
+  {
+   "slot": "r013",
+   "split": "heldout",
+   "id": "cfr-9-391",
+   "field": "effective_date",
+   "kind": "date",
+   "request": {
+    "section": "§ 391.2 Basetime rate."
+   },
+   "request_text": "The effective date of § 391.2 Basetime rate."
+  },
+  {
+   "slot": "r014",
+   "split": "heldout",
+   "id": "cfr-10-170",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 170.21 Schedule of fees for production and utilization facilities, review of standard referenced design approvals, special projects, inspections and import and export licenses."
+   },
+   "request_text": "The text of § 170.21 Schedule of fees for production and utilization facilities, review of standard referenced design approvals, special projects, inspections and import and export licenses."
+  },
+  {
+   "slot": "r015",
+   "split": "heldout",
+   "id": "cfr-10-170",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 170.51 Right to dispute assessed fees."
+   },
+   "request_text": "The text of § 170.51 Right to dispute assessed fees."
+  },
+  {
+   "slot": "r016",
+   "split": "heldout",
+   "id": "cfr-10-170",
+   "field": "definition",
+   "kind": "passage",
+   "request": {
+    "section": "§ 170.3 Definitions.",
+    "term": "Source material"
+   },
+   "request_text": "The definition of the term “Source material” in § 170.3 Definitions."
+  },
+  {
+   "slot": "r017",
+   "split": "heldout",
+   "id": "cfr-10-170",
+   "field": "table_value",
+   "kind": "number",
+   "request": {
+    "section": "§ 170.31 Schedule of fees for materials licenses and other regulatory services, including inspections, and import and export licenses.",
+    "table": "Table 1 to § 170.31—Schedule of Materials Fees[See footnotes at end of table]",
+    "row": 83,
+    "row_label": "C. Other licenses issued under parts 30, 35, 40, and 70 of this chapter for human use of byproduct material, source material, and/or special nuclear material, e",
+    "column": "Fees 2 3"
+   },
+   "request_text": "The number in Table 1 to § 170.31—Schedule of Materials Fees[See footnotes at end of table] (§ 170.31 Schedule of fees for materials licenses and other regulatory services, including inspections, and import and export licenses.), body row 83 (first cell: “C. Other licenses issued under parts 30, 35, 40, and 70 of this chapter for human use of byproduct material, source material, and/or special nuclear material, e”), column “Fees 2 3”"
+  },
+  {
+   "slot": "r018",
+   "split": "heldout",
+   "id": "cfr-10-170",
+   "field": "table_value",
+   "kind": "number",
+   "request": {
+    "section": "§ 170.31 Schedule of fees for materials licenses and other regulatory services, including inspections, and import and export licenses.",
+    "table": "Table 1 to § 170.31—Schedule of Materials Fees[See footnotes at end of table]",
+    "row": 51,
+    "row_label": "M. Other licenses for possession and use of byproduct material issued under part 30 of this chapter for research and development that do not authorize commercia",
+    "column": "Fees 2 3"
+   },
+   "request_text": "The number in Table 1 to § 170.31—Schedule of Materials Fees[See footnotes at end of table] (§ 170.31 Schedule of fees for materials licenses and other regulatory services, including inspections, and import and export licenses.), body row 51 (first cell: “M. Other licenses for possession and use of byproduct material issued under part 30 of this chapter for research and development that do not authorize commercia”), column “Fees 2 3”"
+  },
+  {
+   "slot": "r019",
+   "split": "heldout",
+   "id": "cfr-10-170",
+   "field": "effective_date",
+   "kind": "date",
+   "request": {
+    "section": "§ 170.3 Definitions."
+   },
+   "request_text": "The effective date of § 170.3 Definitions."
+  },
+  {
+   "slot": "r020",
+   "split": "calibration",
+   "id": "cfr-10-171",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 171.3 Scope."
+   },
+   "request_text": "The text of § 171.3 Scope."
+  },
+  {
+   "slot": "r021",
+   "split": "calibration",
+   "id": "cfr-10-171",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 171.23 Enforcement."
+   },
+   "request_text": "The text of § 171.23 Enforcement."
+  },
+  {
+   "slot": "r022",
+   "split": "calibration",
+   "id": "cfr-10-171",
+   "field": "definition",
+   "kind": "passage",
+   "request": {
+    "section": "§ 171.5 Definitions.",
+    "term": "Low enriched uranium fuel"
+   },
+   "request_text": "The definition of the term “Low enriched uranium fuel” in § 171.5 Definitions."
+  },
+  {
+   "slot": "r023",
+   "split": "calibration",
+   "id": "cfr-10-171",
+   "field": "table_value",
+   "kind": "number",
+   "request": {
+    "section": "§ 171.16 Annual fees: Materials licensees, holders of certificates of compliance, holders of sealed source and device registrations, holders of quality assurance program approvals, and government agencies licensed by the NRC.",
+    "table": "Table 2 to Paragraph (d)—Schedule of Materials Annual Fees and Fees for Government Agencies Licensed by the NRC[See footnotes at end of table]",
+    "row": 58,
+    "row_label": "(2). All other specific byproduct material licenses, except those in categories 4.A. through 9.D.18 Number of locations of use: more than 20. [Program Code(s): ",
+    "column": "Annual fees 1 2 3"
+   },
+   "request_text": "The number in Table 2 to Paragraph (d)—Schedule of Materials Annual Fees and Fees for Government Agencies Licensed by the NRC[See footnotes at end of table] (§ 171.16 Annual fees: Materials licensees, holders of certificates of compliance, holders of sealed source and device registrations, holders of quality assurance program approvals, and government agencies licensed by the NRC.), body row 58 (first cell: “(2). All other specific byproduct material licenses, except those in categories 4.A. through 9.D.18 Number of locations of use: more than 20. [Program Code(s): ”), column “Annual fees 1 2 3”"
+  },
+  {
+   "slot": "r024",
+   "split": "calibration",
+   "id": "cfr-10-171",
+   "field": "table_value",
+   "kind": "number",
+   "request": {
+    "section": "§ 171.16 Annual fees: Materials licensees, holders of certificates of compliance, holders of sealed source and device registrations, holders of quality assurance program approvals, and government agencies licensed by the NRC.",
+    "table": "Table 2 to Paragraph (d)—Schedule of Materials Annual Fees and Fees for Government Agencies Licensed by the NRC[See footnotes at end of table]",
+    "row": 95,
+    "row_label": "1. Users and Fabricators",
+    "column": "Annual fees 1 2 3"
+   },
+   "request_text": "The number in Table 2 to Paragraph (d)—Schedule of Materials Annual Fees and Fees for Government Agencies Licensed by the NRC[See footnotes at end of table] (§ 171.16 Annual fees: Materials licensees, holders of certificates of compliance, holders of sealed source and device registrations, holders of quality assurance program approvals, and government agencies licensed by the NRC.), body row 95 (first cell: “1. Users and Fabricators”), column “Annual fees 1 2 3”"
+  },
+  {
+   "slot": "r025",
+   "split": "calibration",
+   "id": "cfr-10-171",
+   "field": "table_rows",
+   "kind": "record",
+   "request": {
+    "section": "§ 171.16 Annual fees: Materials licensees, holders of certificates of compliance, holders of sealed source and device registrations, holders of quality assurance program approvals, and government agencies licensed by the NRC.",
+    "name": "Table 1 to Paragraph (c)",
+    "columns": [
+     "NRC small entity classification",
+     "Maximum annual fee per licensed category"
+    ]
+   },
+   "request_text": "The body rows of Table 1 to Paragraph (c) (§ 171.16 Annual fees: Materials licensees, holders of certificates of compliance, holders of sealed source and device registrations, holders of quality assurance program approvals, and government agencies licensed by the NRC.), with the members “NRC small entity classification”; “Maximum annual fee per licensed category”"
+  },
+  {
+   "slot": "r026",
+   "split": "calibration",
+   "id": "cfr-10-171",
+   "field": "effective_date",
+   "kind": "date",
+   "request": {
+    "section": "§ 171.16 Annual fees: Materials licensees, holders of certificates of compliance, holders of sealed source and device registrations, holders of quality assurance program approvals, and government agencies licensed by the NRC."
+   },
+   "request_text": "The effective date of § 171.16 Annual fees: Materials licensees, holders of certificates of compliance, holders of sealed source and device registrations, holders of quality assurance program approvals, and government agencies licensed by the NRC."
+  },
+  {
+   "slot": "r027",
+   "split": "heldout",
+   "id": "cfr-14-187",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 187.7 Copies; seal."
+   },
+   "request_text": "The text of § 187.7 Copies; seal."
+  },
+  {
+   "slot": "r028",
+   "split": "heldout",
+   "id": "cfr-14-187",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 187.15 Payment of fees."
+   },
+   "request_text": "The text of § 187.15 Payment of fees."
+  },
+  {
+   "slot": "r029",
+   "split": "heldout",
+   "id": "cfr-14-187",
+   "field": "definition",
+   "kind": "passage",
+   "request": {
+    "section": "§ 187.3 Definitions.",
+    "term": "Overflight through Oceanic airspace"
+   },
+   "request_text": "The definition of the term “Overflight through Oceanic airspace” in § 187.3 Definitions."
+  },
+  {
+   "slot": "r030",
+   "split": "heldout",
+   "id": "cfr-14-187",
+   "field": "table_value",
+   "kind": "number",
+   "request": {
+    "section": "§ 187.53 Calculation of overflight fees.",
+    "table": "table 1 of § 187.53 Calculation of overflight fees.",
+    "row": 1,
+    "row_label": "January 1, 2017 to January 1, 2018",
+    "column": "Enroute rate"
+   },
+   "request_text": "The number in table 1 of § 187.53 Calculation of overflight fees., body row 1 (first cell: “January 1, 2017 to January 1, 2018”), column “Enroute rate”"
+  },
+  {
+   "slot": "r031",
+   "split": "heldout",
+   "id": "cfr-14-187",
+   "field": "table_value",
+   "kind": "number",
+   "request": {
+    "section": "§ 187.53 Calculation of overflight fees.",
+    "table": "table 1 of § 187.53 Calculation of overflight fees.",
+    "row": 2,
+    "row_label": "January 1,2018 to January 1, 2019",
+    "column": "Oceanic rate"
+   },
+   "request_text": "The number in table 1 of § 187.53 Calculation of overflight fees., body row 2 (first cell: “January 1,2018 to January 1, 2019”), column “Oceanic rate”"
+  },
+  {
+   "slot": "r032",
+   "split": "heldout",
+   "id": "cfr-14-187",
+   "field": "table_rows",
+   "kind": "record",
+   "request": {
+    "section": "§ 187.53 Calculation of overflight fees.",
+    "name": "table 1 of § 187.53 Calculation of overflight fees.",
+    "columns": [
+     "Time period",
+     "Enroute rate",
+     "Oceanic rate"
+    ]
+   },
+   "request_text": "The body rows of table 1 of § 187.53 Calculation of overflight fees., with the members “Time period”; “Enroute rate”; “Oceanic rate”"
+  },
+  {
+   "slot": "r033",
+   "split": "heldout",
+   "id": "cfr-14-187",
+   "field": "effective_date",
+   "kind": "date",
+   "request": {
+    "section": "§ 187.1 Scope."
+   },
+   "request_text": "The effective date of § 187.1 Scope."
+  },
+  {
+   "slot": "r034",
+   "split": "calibration",
+   "id": "cfr-19-24",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 24.2 Persons authorized to receive Customs collections."
+   },
+   "request_text": "The text of § 24.2 Persons authorized to receive Customs collections."
+  },
+  {
+   "slot": "r035",
+   "split": "calibration",
+   "id": "cfr-19-24",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 24.13a Car, compartment, and package seals; and fastenings; standards; acceptance by Customs."
+   },
+   "request_text": "The text of § 24.13a Car, compartment, and package seals; and fastenings; standards; acceptance by Customs."
+  },
+  {
+   "slot": "r036",
+   "split": "calibration",
+   "id": "cfr-19-24",
+   "field": "table_value",
+   "kind": "number",
+   "request": {
+    "section": "§ 24.24 Harbor maintenance fee.",
+    "table": "Port Codes, Names, and Descriptions of Ports Subject to Harbor Maintenance Fee[Section 1402 of Pub. L. 99-662, as amended]",
+    "row": 84,
+    "row_label": "Delaware River Ports, DE, NJ, PA * 1102—Chester, PA 1107—Camden, NJ 1113—Gloucester, NJ 1118—Marcus Hook, PA 1105—Paulsboro, NJ 1101—Philadelphia, PA 1103—Wilmi",
+    "column": "Port descriptions and notations"
+   },
+   "request_text": "The number in Port Codes, Names, and Descriptions of Ports Subject to Harbor Maintenance Fee[Section 1402 of Pub. L. 99-662, as amended] (§ 24.24 Harbor maintenance fee.), body row 84 (first cell: “Delaware River Ports, DE, NJ, PA * 1102—Chester, PA 1107—Camden, NJ 1113—Gloucester, NJ 1118—Marcus Hook, PA 1105—Paulsboro, NJ 1101—Philadelphia, PA 1103—Wilmi”), column “Port descriptions and notations”"
+  },
+  {
+   "slot": "r037",
+   "split": "calibration",
+   "id": "cfr-19-24",
+   "field": "table_value",
+   "kind": "number",
+   "request": {
+    "section": "§ 24.17 Reimbursable services of CBP employees.",
+    "table": "table 1 of § 24.17 Reimbursable services of CBP employees.",
+    "row": 6,
+    "row_label": "Net number of working hours",
+    "column": "Hours"
+   },
+   "request_text": "The number in table 1 of § 24.17 Reimbursable services of CBP employees., body row 6 (first cell: “Net number of working hours”), column “Hours”"
+  },
+  {
+   "slot": "r038",
+   "split": "calibration",
+   "id": "cfr-19-24",
+   "field": "table_rows",
+   "kind": "record",
+   "request": {
+    "section": "§ 24.22 Fees for certain services.",
+    "name": "table 1 of § 24.22 Fees for certain services.",
+    "columns": [
+     "Place where journey originates (see (g)(1)(iv))",
+     "Fee status for arrival from SL / Vessel",
+     "Fee status for arrival from SL / Aircraft",
+     "Fee status for arrival from other than SL / Vessel",
+     "Fee status for arrival from other than SL / Aircraft"
+    ]
+   },
+   "request_text": "The body rows of table 1 of § 24.22 Fees for certain services., with the members “Place where journey originates (see (g)(1)(iv))”; “Fee status for arrival from SL / Vessel”; “Fee status for arrival from SL / Aircraft”; “Fee status for arrival from other than SL / Vessel”; “Fee status for arrival from other than SL / Aircraft”"
+  },
+  {
+   "slot": "r039",
+   "split": "calibration",
+   "id": "cfr-19-24",
+   "field": "effective_date",
+   "kind": "date",
+   "request": {
+    "section": "§ 24.36 Refunds of excessive duties, taxes, etc."
+   },
+   "request_text": "The effective date of § 24.36 Refunds of excessive duties, taxes, etc."
+  },
+  {
+   "slot": "r040",
+   "split": "heldout",
+   "id": "cfr-33-402",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 402.14 Operational surcharges—after postponements."
+   },
+   "request_text": "The text of § 402.14 Operational surcharges—after postponements."
+  },
+  {
+   "slot": "r041",
+   "split": "heldout",
+   "id": "cfr-33-402",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 402.6 Volume Rebate Incentive program."
+   },
+   "request_text": "The text of § 402.6 Volume Rebate Incentive program."
+  },
+  {
+   "slot": "r042",
+   "split": "heldout",
+   "id": "cfr-33-402",
+   "field": "table_value",
+   "kind": "number",
+   "request": {
+    "section": "§ 402.14 Operational surcharges—after postponements.",
+    "table": "table 1 of § 402.14 Operational surcharges—after postponements.",
+    "row": 3,
+    "row_label": "(b) 36 hours or more but less than 48 hours",
+    "column": "Column 3 Amount ($) (5 locks) 1"
+   },
+   "request_text": "The number in table 1 of § 402.14 Operational surcharges—after postponements., body row 3 (first cell: “(b) 36 hours or more but less than 48 hours”), column “Column 3 Amount ($) (5 locks) 1”"
+  },
+  {
+   "slot": "r043",
+   "split": "heldout",
+   "id": "cfr-33-402",
+   "field": "table_value",
+   "kind": "number",
+   "request": {
+    "section": "§ 402.12 Schedule of tolls.",
+    "table": "Table 1 to § 402.12",
+    "row": 17,
+    "row_label": "2",
+    "column": "Column 2 / Rate ($) Montreal to or from Lake Ontario (5 locks)"
+   },
+   "request_text": "The number in Table 1 to § 402.12 (§ 402.12 Schedule of tolls.), body row 17 (first cell: “2”), column “Column 2 / Rate ($) Montreal to or from Lake Ontario (5 locks)”"
+  },
+  {
+   "slot": "r044",
+   "split": "heldout",
+   "id": "cfr-33-402",
+   "field": "table_rows",
+   "kind": "record",
+   "request": {
+    "section": "§ 402.12 Schedule of tolls.",
+    "name": "Table 1 to § 402.12",
+    "columns": [
+     "Item",
+     "Column 1 / Description of charges",
+     "Column 2 / Rate ($) Montreal to or from Lake Ontario (5 locks)",
+     "Column 3 / Rate ($) Welland Canal—Lake Ontario to or from Lake Erie (8 locks)"
+    ]
+   },
+   "request_text": "The body rows of Table 1 to § 402.12 (§ 402.12 Schedule of tolls.), with the members “Item”; “Column 1 / Description of charges”; “Column 2 / Rate ($) Montreal to or from Lake Ontario (5 locks)”; “Column 3 / Rate ($) Welland Canal—Lake Ontario to or from Lake Erie (8 locks)”"
+  },
+  {
+   "slot": "r045",
+   "split": "heldout",
+   "id": "cfr-33-402",
+   "field": "effective_date",
+   "kind": "date",
+   "request": {
+    "section": "§ 402.9 Description and weight of cargo."
+   },
+   "request_text": "The effective date of § 402.9 Description and weight of cargo."
+  },
+  {
+   "slot": "r046",
+   "split": "calibration",
+   "id": "cfr-36-71",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 71.10 Special recreation permits and special recreation permit fees."
+   },
+   "request_text": "The text of § 71.10 Special recreation permits and special recreation permit fees."
+  },
+  {
+   "slot": "r047",
+   "split": "calibration",
+   "id": "cfr-36-71",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 71.9 Establishment of recreation use fees."
+   },
+   "request_text": "The text of § 71.9 Establishment of recreation use fees."
+  },
+  {
+   "slot": "r048",
+   "split": "calibration",
+   "id": "cfr-36-71",
+   "field": "effective_date",
+   "kind": "date",
+   "request": {
+    "section": "§ 71.11 Collection of Federal recreation fees."
+   },
+   "request_text": "The effective date of § 71.11 Collection of Federal recreation fees."
+  },
+  {
+   "slot": "r049",
+   "split": "heldout",
+   "id": "cfr-37-201",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 201.13 Notices of objection to certain noncommercial performances of nondramatic literary or musical works."
+   },
+   "request_text": "The text of § 201.13 Notices of objection to certain noncommercial performances of nondramatic literary or musical works."
+  },
+  {
+   "slot": "r050",
+   "split": "heldout",
+   "id": "cfr-37-201",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 201.33 Procedures for filing Notices of Intent to Enforce a restored copyright under the Uruguay Round Agreements Act."
+   },
+   "request_text": "The text of § 201.33 Procedures for filing Notices of Intent to Enforce a restored copyright under the Uruguay Round Agreements Act."
+  },
+  {
+   "slot": "r051",
+   "split": "heldout",
+   "id": "cfr-37-201",
+   "field": "table_value",
+   "kind": "number",
+   "request": {
+    "section": "§ 201.3 Fees for registration, recordation, and related services, special services, and services performed by the Licensing Section and the Copyright Claims Board.",
+    "table": "Table 1 to Paragraph (c)",
+    "row": 60,
+    "row_label": "(30) Issuance of a receipt for a section 407 deposit",
+    "column": "Fees ($)"
+   },
+   "request_text": "The number in Table 1 to Paragraph (c) (§ 201.3 Fees for registration, recordation, and related services, special services, and services performed by the Licensing Section and the Copyright Claims Board.), body row 60 (first cell: “(30) Issuance of a receipt for a section 407 deposit”), column “Fees ($)”"
+  },
+  {
+   "slot": "r052",
+   "split": "heldout",
+   "id": "cfr-37-201",
+   "field": "table_value",
+   "kind": "number",
+   "request": {
+    "section": "§ 201.3 Fees for registration, recordation, and related services, special services, and services performed by the Licensing Section and the Copyright Claims Board.",
+    "table": "Table 2 to Paragraph (d)",
+    "row": 7,
+    "row_label": "(5) Secure test examining fee (per staff member per hour)",
+    "column": "Fees ($)"
+   },
+   "request_text": "The number in Table 2 to Paragraph (d) (§ 201.3 Fees for registration, recordation, and related services, special services, and services performed by the Licensing Section and the Copyright Claims Board.), body row 7 (first cell: “(5) Secure test examining fee (per staff member per hour)”), column “Fees ($)”"
+  },
+  {
+   "slot": "r053",
+   "split": "heldout",
+   "id": "cfr-37-201",
+   "field": "table_rows",
+   "kind": "record",
+   "request": {
+    "section": "§ 201.3 Fees for registration, recordation, and related services, special services, and services performed by the Licensing Section and the Copyright Claims Board.",
+    "name": "Table 3 to Paragraph (e)",
+    "columns": [
+     "Licensing section services",
+     "Fees ($)"
+    ]
+   },
+   "request_text": "The body rows of Table 3 to Paragraph (e) (§ 201.3 Fees for registration, recordation, and related services, special services, and services performed by the Licensing Section and the Copyright Claims Board.), with the members “Licensing section services”; “Fees ($)”"
+  },
+  {
+   "slot": "r054",
+   "split": "heldout",
+   "id": "cfr-37-201",
+   "field": "effective_date",
+   "kind": "date",
+   "request": {
+    "section": "§ 201.37 Noncommercial use of pre-1972 sound recordings."
+   },
+   "request_text": "The effective date of § 201.37 Noncommercial use of pre-1972 sound recordings."
+  },
+  {
+   "slot": "r055",
+   "split": "calibration",
+   "id": "cfr-46-401",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 401.230 Certificates of Registration."
+   },
+   "request_text": "The text of § 401.230 Certificates of Registration."
+  },
+  {
+   "slot": "r056",
+   "split": "calibration",
+   "id": "cfr-46-401",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 401.260 Reports."
+   },
+   "request_text": "The text of § 401.260 Reports."
+  },
+  {
+   "slot": "r057",
+   "split": "calibration",
+   "id": "cfr-46-401",
+   "field": "definition",
+   "kind": "passage",
+   "request": {
+    "section": "§ 401.110 Definitions.",
+    "term": "Association"
+   },
+   "request_text": "The definition of the term “Association” in § 401.110 Definitions."
+  },
+  {
+   "slot": "r058",
+   "split": "calibration",
+   "id": "cfr-46-401",
+   "field": "table_value",
+   "kind": "number",
+   "request": {
+    "section": "§ 401.400 Calculation of pilotage units and determination of weighting factor.",
+    "table": "table 1 of § 401.400 Calculation of pilotage units and determination of weighting factor.",
+    "row": 3,
+    "row_label": "160-189",
+    "column": "Weighting factor"
+   },
+   "request_text": "The number in table 1 of § 401.400 Calculation of pilotage units and determination of weighting factor., body row 3 (first cell: “160-189”), column “Weighting factor”"
+  },
+  {
+   "slot": "r059",
+   "split": "calibration",
+   "id": "cfr-46-401",
+   "field": "table_value",
+   "kind": "number",
+   "request": {
+    "section": "§ 401.105 OMB control numbers assigned pursuant to the Paperwork Reduction Act.",
+    "table": "table 1 of § 401.105 OMB control numbers assigned pursuant to the Paperwork Reduction Act.",
+    "row": 1,
+    "row_label": "Part 404",
+    "column": "Current OMB control No."
+   },
+   "request_text": "The number in table 1 of § 401.105 OMB control numbers assigned pursuant to the Paperwork Reduction Act., body row 1 (first cell: “Part 404”), column “Current OMB control No.”"
+  },
+  {
+   "slot": "r060",
+   "split": "calibration",
+   "id": "cfr-46-401",
+   "field": "table_rows",
+   "kind": "record",
+   "request": {
+    "section": "§ 401.400 Calculation of pilotage units and determination of weighting factor.",
+    "name": "table 1 of § 401.400 Calculation of pilotage units and determination of weighting factor.",
+    "columns": [
+     "Range of pilotage units",
+     "Weighting factor"
+    ]
+   },
+   "request_text": "The body rows of table 1 of § 401.400 Calculation of pilotage units and determination of weighting factor., with the members “Range of pilotage units”; “Weighting factor”"
+  },
+  {
+   "slot": "r061",
+   "split": "calibration",
+   "id": "cfr-46-401",
+   "field": "effective_date",
+   "kind": "date",
+   "request": {
+    "section": "§ 401.700 Operating requirements for United States Registered Pilots."
+   },
+   "request_text": "The effective date of § 401.700 Operating requirements for United States Registered Pilots."
+  },
+  {
+   "slot": "r062",
+   "split": "calibration",
+   "id": "cfr-46-404",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 404.104 Ratemaking step 4: Determine target pilot compensation benchmark and apprentice pilot wage benchmark."
+   },
+   "request_text": "The text of § 404.104 Ratemaking step 4: Determine target pilot compensation benchmark and apprentice pilot wage benchmark."
+  },
+  {
+   "slot": "r063",
+   "split": "calibration",
+   "id": "cfr-46-404",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 404.100 Ratemaking and annual reviews in general."
+   },
+   "request_text": "The text of § 404.100 Ratemaking and annual reviews in general."
+  },
+  {
+   "slot": "r064",
+   "split": "calibration",
+   "id": "cfr-46-404",
+   "field": "effective_date",
+   "kind": "date",
+   "request": {
+    "section": "§ 404.100 Ratemaking and annual reviews in general."
+   },
+   "request_text": "The effective date of § 404.100 Ratemaking and annual reviews in general."
+  },
+  {
+   "slot": "r065",
+   "split": "heldout",
+   "id": "cfr-49-107",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 107.101 Purpose and scope."
+   },
+   "request_text": "The text of § 107.101 Purpose and scope."
+  },
+  {
+   "slot": "r066",
+   "split": "heldout",
+   "id": "cfr-49-107",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 107.109 Application for renewal."
+   },
+   "request_text": "The text of § 107.109 Application for renewal."
+  },
+  {
+   "slot": "r067",
+   "split": "heldout",
+   "id": "cfr-49-107",
+   "field": "definition",
+   "kind": "passage",
+   "request": {
+    "section": "§ 107.1 Definitions.",
+    "term": "Imminent Hazard"
+   },
+   "request_text": "The definition of the term “Imminent Hazard” in § 107.1 Definitions."
+  },
+  {
+   "slot": "r068",
+   "split": "heldout",
+   "id": "cfr-49-107",
+   "field": "table_value",
+   "kind": "number",
+   "request": {
+    "section": "§ 107.612 Amount of fee.",
+    "table": "table 1 of § 107.612 Amount of fee.",
+    "row": 3,
+    "row_label": "2012-2013, 2011-2012, 2010-2011",
+    "column": "Other than small business or not-for-profit organization"
+   },
+   "request_text": "The number in table 1 of § 107.612 Amount of fee., body row 3 (first cell: “2012-2013, 2011-2012, 2010-2011”), column “Other than small business or not-for-profit organization”"
+  },
+  {
+   "slot": "r069",
+   "split": "heldout",
+   "id": "cfr-49-107",
+   "field": "table_value",
+   "kind": "number",
+   "request": {
+    "section": "§ 107.612 Amount of fee.",
+    "table": "table 1 of § 107.612 Amount of fee.",
+    "row": 1,
+    "row_label": "2014-2015 and later",
+    "column": "Small business"
+   },
+   "request_text": "The number in table 1 of § 107.612 Amount of fee., body row 1 (first cell: “2014-2015 and later”), column “Small business”"
+  },
+  {
+   "slot": "r070",
+   "split": "heldout",
+   "id": "cfr-49-107",
+   "field": "table_rows",
+   "kind": "record",
+   "request": {
+    "section": "§ 107.612 Amount of fee.",
+    "name": "table 1 of § 107.612 Amount of fee.",
+    "columns": [
+     "Registration year",
+     "Small business",
+     "Not-for-profit organization",
+     "Other than small business or not-for-profit organization"
+    ]
+   },
+   "request_text": "The body rows of table 1 of § 107.612 Amount of fee., with the members “Registration year”; “Small business”; “Not-for-profit organization”; “Other than small business or not-for-profit organization”"
+  },
+  {
+   "slot": "r071",
+   "split": "heldout",
+   "id": "cfr-49-107",
+   "field": "effective_date",
+   "kind": "date",
+   "request": {
+    "section": "§ 107.705 Registrations, reports, and applications for approval."
+   },
+   "request_text": "The effective date of § 107.705 Registrations, reports, and applications for approval."
+  },
+  {
+   "slot": "r072",
+   "split": "heldout",
+   "id": "cfr-49-1002",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 1002.1 Fees for records search, review, copying, certification, and related services."
+   },
+   "request_text": "The text of § 1002.1 Fees for records search, review, copying, certification, and related services."
+  },
+  {
+   "slot": "r073",
+   "split": "heldout",
+   "id": "cfr-49-1002",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 1002.2 Filing fees."
+   },
+   "request_text": "The text of § 1002.2 Filing fees."
+  },
+  {
+   "slot": "r074",
+   "split": "heldout",
+   "id": "cfr-49-1002",
+   "field": "table_value",
+   "kind": "number",
+   "request": {
+    "section": "§ 1002.2 Filing fees.",
+    "table": "table 1 of § 1002.2 Filing fees.",
+    "row": 88,
+    "row_label": "(i) A formal complaint filed under the coal rate guidelines (Stand-Alone Cost Methodology) alleging unlawful rates and/or practices of rail carriers under 49 U.",
+    "column": "Fee"
+   },
+   "request_text": "The number in table 1 of § 1002.2 Filing fees., body row 88 (first cell: “(i) A formal complaint filed under the coal rate guidelines (Stand-Alone Cost Methodology) alleging unlawful rates and/or practices of rail carriers under 49 U.”), column “Fee”"
+  },
+  {
+   "slot": "r075",
+   "split": "heldout",
+   "id": "cfr-49-1002",
+   "field": "table_value",
+   "kind": "number",
+   "request": {
+    "section": "§ 1002.2 Filing fees.",
+    "table": "table 1 of § 1002.2 Filing fees.",
+    "row": 39,
+    "row_label": "(ii) A request to extend the period to negotiate a trail use agreement",
+    "column": "Fee"
+   },
+   "request_text": "The number in table 1 of § 1002.2 Filing fees., body row 39 (first cell: “(ii) A request to extend the period to negotiate a trail use agreement”), column “Fee”"
+  },
+  {
+   "slot": "r076",
+   "split": "heldout",
+   "id": "cfr-49-1002",
+   "field": "effective_date",
+   "kind": "date",
+   "request": {
+    "section": "§ 1002.1 Fees for records search, review, copying, certification, and related services."
+   },
+   "request_text": "The effective date of § 1002.1 Fees for records search, review, copying, certification, and related services."
+  }
+ ]
+}

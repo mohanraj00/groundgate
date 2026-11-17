@@ -135,4 +135,4 @@ def test_each_bench_server_uses_the_checks() -> None:
         if re.search(r"def do_[A-Z]+\(", text):
             servers.append(path.relative_to(BENCH).as_posix())
             assert re.search(r"class Handler\(localweb\.LocalHandler\)", text), path
-    assert len(servers) == 13
+    assert len(servers) == 14
