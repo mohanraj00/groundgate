@@ -30,7 +30,7 @@ and the citation and the heading of the part. The parts are US government works 
 The XML and the reader text stay in local work storage.
 
 ```bash
-WORK="$HOME/Library/Application Support/Codex/LocalWork/groundgate/cache/regulatory-686"
+WORK=/path/outside/the/repo/regulatory-686
 uv run python bench/regulatory/sources.py --out "$WORK/sources" --fetch
 ```
 
@@ -111,10 +111,10 @@ I run these commands from the repository root after the source and label seals a
 Keep both directories outside the repository.
 
 ```bash
-WORK="$HOME/Library/Application Support/Codex/LocalWork/groundgate/cache/regulatory-686"
-uv run python -m bench.regulatory.run calibrate --sources "$WORK/sources" --cache "$WORK/calls" --model gpt-6.1-sol --effort medium
+WORK=/path/outside/the/repo/regulatory-686
+uv run python -m bench.regulatory.run calibrate --sources "$WORK/sources" --cache "$WORK/calls" --model gpt-6.2-sol --effort medium
 uv run python -m bench.regulatory.run freeze --sources "$WORK/sources" --cache "$WORK/calls"
-uv run python -m bench.regulatory.run heldout --sources "$WORK/sources" --cache "$WORK/calls" --model gpt-6.1-sol --effort medium
+uv run python -m bench.regulatory.run heldout --sources "$WORK/sources" --cache "$WORK/calls" --model gpt-6.2-sol --effort medium
 ```
 
 The calibration command caches one reply per calibration part. The freeze replays the
