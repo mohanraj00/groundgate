@@ -4,7 +4,7 @@
  "description": "statements that is an object.",
  "blind": false,
  "body": {
-  "task": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "task": "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
   "verdict": "confirm",
   "statements": {}
  },

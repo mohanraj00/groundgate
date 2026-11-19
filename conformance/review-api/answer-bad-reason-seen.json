@@ -4,7 +4,7 @@
  "description": "reason_seen that is a number.",
  "blind": false,
  "body": {
-  "task": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "task": "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
   "verdict": "confirm",
   "reason_seen": 0
  },

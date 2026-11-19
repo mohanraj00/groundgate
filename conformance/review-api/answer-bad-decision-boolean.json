@@ -4,7 +4,7 @@
  "description": "A decision that is a boolean.",
  "blind": false,
  "body": {
-  "task": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "task": "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
   "verdict": "choose",
   "decision": true
  },

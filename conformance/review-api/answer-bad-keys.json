@@ -4,7 +4,7 @@
  "description": "keys of 2^31.",
  "blind": false,
  "body": {
-  "task": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "task": "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
   "verdict": "confirm",
   "keys": 2147483648
  },

@@ -1,0 +1,151 @@
+{
+ "name": "task-06-key-in-list",
+ "kind": "task",
+ "description": "A list item that is a key of the store is null, so each other item keeps its index. A string that only starts as a key stays. The member sources is made up.",
+ "task": {
+  "format": "task@1",
+  "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+  "slot": {
+   "field": "total_revenue",
+   "key": "2025",
+   "decisions": [
+    3,
+    7
+   ]
+  },
+  "item": "number",
+  "mode": "review",
+  "template": "number@1",
+  "question": "Which amount is total revenue for 2025?",
+  "parts": [
+   "amount",
+   "scale",
+   "sign",
+   "unit",
+   "field",
+   "key"
+  ],
+  "codes": [
+   "CONFLICTING_CANDIDATES"
+  ],
+  "choices": [
+   {
+    "decision": 3,
+    "value": "4200000",
+    "unit": "USD",
+    "shown": "$4,200,000 (written 4,200, in thousands)",
+    "evidence": {
+     "start": 18120,
+     "end": 18125
+    }
+   },
+   {
+    "decision": 7,
+    "value": "4200",
+    "unit": "USD",
+    "shown": "$4,200",
+    "evidence": {
+     "start": 18120,
+     "end": 18125
+    }
+   }
+  ],
+  "places": [
+   {
+    "start": 18120,
+    "end": 18125,
+    "page": 41,
+    "box": [
+     72.0,
+     310.5,
+     101.2,
+     321.0
+    ]
+   }
+  ],
+  "sources": [
+   "sha256:5555555555555555555555555555555555555555555555555555555555555555",
+   "p. 41",
+   {
+    "input": "sha256:6666666666666666666666666666666666666666666666666666666666666666",
+    "n": 1
+   },
+   "sha256:555555555555555555555555555555555555555555555555555555555555555"
+  ]
+ },
+ "expected": {
+  "served": true,
+  "mode": "review",
+  "field": "total_revenue",
+  "key": "2025",
+  "body": {
+   "format": "task@1",
+   "slot": {
+    "field": "total_revenue",
+    "key": "2025",
+    "decisions": [
+     3,
+     7
+    ]
+   },
+   "item": "number",
+   "mode": "review",
+   "template": "number@1",
+   "question": "Which amount is total revenue for 2025?",
+   "parts": [
+    "amount",
+    "scale",
+    "sign",
+    "unit",
+    "field",
+    "key"
+   ],
+   "codes": [
+    "CONFLICTING_CANDIDATES"
+   ],
+   "choices": [
+    {
+     "decision": 3,
+     "value": "4200000",
+     "unit": "USD",
+     "shown": "$4,200,000 (written 4,200, in thousands)",
+     "evidence": {
+      "start": 18120,
+      "end": 18125
+     }
+    },
+    {
+     "decision": 7,
+     "value": "4200",
+     "unit": "USD",
+     "shown": "$4,200",
+     "evidence": {
+      "start": 18120,
+      "end": 18125
+     }
+    }
+   ],
+   "places": [
+    {
+     "start": 18120,
+     "end": 18125,
+     "page": 41,
+     "box": [
+      72.0,
+      310.5,
+      101.2,
+      321.0
+     ]
+    }
+   ],
+   "sources": [
+    null,
+    "p. 41",
+    {
+     "n": 1
+    },
+    "sha256:555555555555555555555555555555555555555555555555555555555555555"
+   ]
+  }
+ }
+}

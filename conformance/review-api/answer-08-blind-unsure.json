@@ -4,7 +4,7 @@
  "description": "A blind task takes unsure.",
  "blind": true,
  "body": {
-  "task": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "task": "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
   "verdict": "unsure"
  },
  "expected": {

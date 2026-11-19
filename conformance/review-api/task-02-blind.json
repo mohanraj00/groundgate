@@ -1,7 +1,7 @@
 {
  "name": "task-02-blind",
  "kind": "task",
- "description": "An audit task is blind. The response gives the field and the key, and no body: no value, no unit, no evidence, no place, no code, no item and no question. It gives no packet key, because that key is a hash over the proposed value.",
+ "description": "An audit task is blind. The response gives the field and the key, and no body: no value, no unit, no evidence, no place, no code, no item and no question.",
  "task": {
   "format": "task@1",
   "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
@@ -52,7 +52,6 @@
  },
  "expected": {
   "served": true,
-  "packet": null,
   "mode": "audit",
   "field": "net_income",
   "key": null,

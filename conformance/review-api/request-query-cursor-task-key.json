@@ -1,9 +1,9 @@
 {
- "name": "request-query-cursor-blind",
+ "name": "request-query-cursor-task-key",
  "kind": "request",
- "description": "A cursor that is a blind ID of no task.",
+ "description": "A cursor that is a task key.",
  "method": "GET",
- "path": "/v1/tasks?cursor=blind:0000000000000000000000000000000000000000000000000000000000000000",
+ "path": "/v1/tasks?cursor=sha256:0000000000000000000000000000000000000000000000000000000000000000",
  "headers": {
   "Host": "127.0.0.1:{port}",
   "Authorization": "Bearer local-token-0123456789-abcdefghijklmnopqrstuvwxyz"

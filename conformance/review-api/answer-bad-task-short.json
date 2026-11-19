@@ -1,0 +1,13 @@
+{
+ "name": "answer-bad-task-short",
+ "kind": "answer",
+ "description": "A task ID with 63 hex digits.",
+ "blind": false,
+ "body": {
+  "task": "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "unsure"
+ },
+ "expected": {
+  "error": "bad_request"
+ }
+}
