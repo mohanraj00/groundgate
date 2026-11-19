@@ -18,7 +18,10 @@ The service keeps no state outside the store. It opens the store for each reques
 same record.
 
 A task with the mode ``audit`` is blind: no response gives its value, its unit, its evidence,
-its places, its codes, its item or its question (SPEC §4.18).
+its places, its codes, its item or its question (SPEC §4.18). A store key is a hash of its
+content, so a response for a blind task gives no store key and no entry hash either: a person
+could test a guess of the proposed value against one. A blind task has an ID with the prefix
+``blind:``, an HMAC of its task key with a random key that the service makes at its start.
 
 The store data and each request are untrusted.
 """
@@ -31,6 +34,7 @@ import hashlib
 import hmac
 import json
 import re
+import secrets
 import threading
 import unicodedata
 from collections.abc import Callable, Iterable, Mapping, Sequence
@@ -48,12 +52,14 @@ from .tasks import DEFAULT_POLICY, check_policy
 __all__ = [
     "API",
     "AUDIENCE",
+    "BLIND_LABEL",
     "BLIND_VERDICTS",
     "STATUS",
     "ApiError",
     "Issuers",
     "Service",
     "Static",
+    "blind_id",
     "check_body",
     "check_claim",
     "check_static",
@@ -77,6 +83,8 @@ MAX_LIMIT = 200
 MAX_CODES = 64
 CSP = "default-src 'none'; frame-ancestors 'none'"
 BLIND_VERDICTS = frozenset({"correct", "not_in_document", "unsure"})
+BLIND_LABEL = b"groundgate-review-blind/1:"
+BLIND_KEY_BYTES = 32
 STATUS = {
     "wrong_host": 421,
     "no_claim": 401,
@@ -97,6 +105,7 @@ STATUS = {
     "server_error": 500,
 }
 _KEY = re.compile(r"sha256:[0-9a-f]{64}")
+_ID = re.compile(r"(?:sha256|blind):[0-9a-f]{64}")  # a task ID: a task key, or a blind ID
 _B64 = re.compile(r"[A-Za-z0-9_-]+")
 _TOKEN = re.compile(r"[A-Za-z0-9._~-]{32,512}")
 _CODE = re.compile(r"[A-Z][A-Z0-9_]*")
@@ -107,7 +116,7 @@ _BODY = frozenset({
     "task", "verdict", "decision", "span", "value", "parts", "codes_kept", "parts_seen",
     "statements", "reason_seen", "keys", "ms",
 })  # fmt: skip
-_TASK = re.compile(r"/v1/tasks/(sha256:[0-9a-f]{64})(/document)?")
+_TASK = re.compile(r"/v1/tasks/((?:sha256|blind):[0-9a-f]{64})(/document)?")
 
 
 class ApiError(Exception):
@@ -284,17 +293,24 @@ def read_issuers(obj: object) -> Issuers:
 def task_view(task: Mapping[str, Any]) -> dict[str, Any] | None:
     """The members of a task response that come from the ``task@1`` object, or None for a task
     that is not a task of the API: a calibrate label task, and an audit task for a closed set.
-    A task with the mode ``audit`` is blind, so its ``body`` is None."""
+    A task with the mode ``audit`` is blind, so its ``body`` and its ``packet`` are None."""
     blind = task["mode"] == "audit"
     if task["template"] in QUESTIONS or (blind and task["item"] == "closed_set"):
         return None
     return {
-        "packet": task["packet"],
+        "packet": None if blind else task["packet"],
         "mode": task["mode"],
         "field": task["slot"]["field"],
         "key": task["slot"]["key"],
         "body": None if blind else dict(task),
     }
+
+
+def blind_id(key: bytes, task_key: str) -> str:
+    """The ID of a blind task: ``blind:`` and HMAC-SHA-256 of the task key with the key of the
+    service. Without the key, the ID tells nothing of the task."""
+    data = BLIND_LABEL + task_key.encode("ascii")
+    return "blind:" + hmac.new(key, data, hashlib.sha256).hexdigest()
 
 
 def statement_list(model_text: Mapping[str, Any]) -> list[dict[str, Any]]:
@@ -311,16 +327,17 @@ def statement_list(model_text: Mapping[str, Any]) -> list[dict[str, Any]]:
 
 
 def _order(entry: Mapping[str, Any]) -> tuple[str, str, bool, str, str]:
+    # only members that the list gives: an order by a hidden key would tell a part of it
     key = entry["key"]
-    return entry["packet"], entry["field"], key is not None, key or "", entry["task"]
+    return entry["document"], entry["field"], key is not None, key or "", entry["task"]
 
 
 def list_page(
     entries: Iterable[Mapping[str, Any]], query: str
 ) -> tuple[list[Mapping[str, Any]], str | None]:
     """One page of the list and its ``next`` cursor. ``entries`` holds each task of the API with
-    ``task``, ``packet``, ``field``, ``key`` and ``open``. ``query`` is the query string as the
-    request has it: the list reads no percent escape."""
+    ``task``, its ID, and ``document``, ``field``, ``key`` and ``open``. ``query`` is the query
+    string as the request has it: the list reads no percent escape."""
     limit, cursor = DEFAULT_LIMIT, None
     seen = set()
     for pair in query.split("&") if query else []:
@@ -337,7 +354,7 @@ def list_page(
     ordered = sorted(entries, key=_order)
     after = None
     if cursor is not None:
-        at = [e for e in ordered if e["task"] == cursor] if _KEY.fullmatch(cursor) else []
+        at = [e for e in ordered if e["task"] == cursor] if _ID.fullmatch(cursor) else []
         if not at:
             raise ApiError("bad_request", "the cursor is not the cursor of a page of this list")
         after = _order(at[0])
@@ -365,8 +382,8 @@ def check_body(body: object, blind: bool = False) -> dict[str, Any]:
     if set(body) - _BODY:
         raise bad("the body has a member that an answer does not have")
     task, verdict = body.get("task"), body.get("verdict")
-    if not isinstance(task, str) or not _KEY.fullmatch(task):
-        raise bad("task must be a task key")
+    if not isinstance(task, str) or not _ID.fullmatch(task):
+        raise bad("task must be a task ID")
     if not isinstance(verdict, str) or verdict not in VERDICTS:
         raise bad("verdict must be an answer verdict")
     decision = body.get("decision")
@@ -441,7 +458,9 @@ def check_body(body: object, blind: bool = False) -> dict[str, Any]:
 class Service:
     """The operations of the review API on the store in the folder ``root``. Each call opens
     the store, reads it again, and closes it, so the service holds no task, no queue and no log
-    lock between two requests. ``auth`` is the issuers or the static token."""
+    lock between two requests. ``auth`` is the issuers or the static token. ``blind_key`` is the
+    key of the blind IDs: without it, the service makes a random key, so a blind ID is good
+    only while this service runs."""
 
     def __init__(
         self,
@@ -450,11 +469,15 @@ class Service:
         policy: Mapping[str, Any] | None = None,
         *,
         clock: Callable[[], datetime] | None = None,
+        blind_key: bytes | None = None,
     ) -> None:
         self.root = Path(root)
         self.auth = auth
         self.policy = check_policy(dict(DEFAULT_POLICY) if policy is None else policy)
         self._clock = clock or (lambda: datetime.now(timezone.utc))
+        if blind_key is not None and len(blind_key) < BLIND_KEY_BYTES:
+            raise ValueError(f"the key of the blind IDs must have {BLIND_KEY_BYTES} bytes or more")
+        self._blind_key = secrets.token_bytes(BLIND_KEY_BYTES) if blind_key is None else blind_key
 
     def actor(self, authorization: Sequence[str]) -> str:
         """The actor of a request, from the value of each of its Authorization headers."""
@@ -479,13 +502,14 @@ class Service:
         with FolderStore(self.root) as store:
             review = self._review(store, actor)
             entries = []
-            for pk, doc in review.docs.items():
+            for doc in review.docs.values():
                 for tk in doc.tasks:
                     view = None if tk in doc.labels else task_view(doc.by_key[tk][1])
                     if view is not None:
-                        entries.append({"task": tk, "packet": pk, "document": doc.document,
-                                        "mode": view["mode"], "field": view["field"],
-                                        "key": view["key"], "open": tk in doc.open})  # fmt: skip
+                        entries.append({"task": self._id(tk, view), "packet": view["packet"],
+                                        "document": doc.document, "mode": view["mode"],
+                                        "field": view["field"], "key": view["key"],
+                                        "open": tk in doc.open})  # fmt: skip
         page, cursor = list_page(entries, query)
         return {
             "api": API,
@@ -494,30 +518,64 @@ class Service:
             "next": cursor,
         }
 
-    def _one(self, review: Review, key: str) -> tuple[Any, Any, dict[str, Any], dict[str, Any]]:
-        """The document, the slot, the task and the view of a task of the API."""
+    def _id(self, key: str, view: Mapping[str, Any]) -> str:
+        """The ID of a task in a response: its task key, or its blind ID for a blind task."""
+        return blind_id(self._blind_key, key) if view["mode"] == "audit" else key
+
+    def _find(self, store: Any, name: str) -> str:
+        """The task key that a task ID names. A blind ID names only a blind task, and a task key
+        names only a task that is not blind: if a task key could name a blind task, a person
+        could test a guess of the proposed value with one request. The check reads only the
+        task object, before the service decides a packet."""
+        from ..store import StoreError
+
+        keys, _ = store.object_keys()
+        key: str | None = None
+        if name.startswith("blind:"):
+            for k in keys:
+                if hmac.compare_digest(blind_id(self._blind_key, k), name):
+                    key = k
+        elif name in keys:
+            key = name
+        mode = None
+        if key is not None:
+            try:
+                task = json.loads(store.object_bytes(key))
+            except (StoreError, ValueError, RecursionError):
+                task = None
+            mode = task.get("mode") if isinstance(task, dict) else None
+        if not isinstance(mode, str) or (mode == "audit") != name.startswith("blind:"):
+            raise ApiError("not_found", "the ID names no task of the API")
+        assert key is not None
+        return key
+
+    def _one(
+        self, store: Any, actor: str, name: str
+    ) -> tuple[Review, str, Any, Any, dict[str, Any]]:
+        """The review, the task key, the document, the slot and the view of the task of the API
+        that the ID ``name`` names."""
+        key = self._find(store, name)
+        review = self._review(store, actor, [key])
         pk = review.tasks.get(key)
         doc = review.docs[pk] if pk is not None else None
         view = None
         if doc is not None and key not in doc.labels:
             view = task_view(doc.by_key[key][1])
-        if doc is None or view is None:
-            raise ApiError("not_found", "the key names no task of the API")
-        slot, task = doc.by_key[key]
-        return doc, slot, task, view
+        if doc is None or view is None or self._id(key, view) != name:
+            raise ApiError("not_found", "the ID names no task of the API")
+        return review, key, doc, doc.by_key[key][0], view
 
-    def task(self, actor: str, key: str) -> dict[str, Any]:
-        """GET /v1/tasks/{task}: one task. A blind task has no body."""
+    def task(self, actor: str, name: str) -> dict[str, Any]:
+        """GET /v1/tasks/{task}: one task. A blind task has no body and no packet key."""
         from ..store import FolderStore
 
         with FolderStore(self.root) as store:
-            review = self._review(store, actor, [key])
-            doc, slot, _, view = self._one(review, key)
+            review, key, doc, slot, view = self._one(store, actor, name)
             mine = [r for r in review._logs(doc.key).get(actor, []) if r.get("task") == key]
             model_text = key in doc.texts
             return {
                 "api": API,
-                "task": key,
+                "task": name,
                 "packet": view["packet"],
                 "document": doc.document,
                 "mode": view["mode"],
@@ -530,16 +588,15 @@ class Service:
                 "statements": statement_list(doc.texts[key]) if model_text else None,
             }
 
-    def document(self, actor: str, key: str) -> dict[str, Any]:
+    def document(self, actor: str, name: str) -> dict[str, Any]:
         """GET /v1/tasks/{task}/document: the text of the document of a task."""
         from ..store import FolderStore
 
         with FolderStore(self.root) as store:
-            review = self._review(store, actor, [key])
-            doc, _, _, view = self._one(review, key)
+            _, _, doc, _, view = self._one(store, actor, name)
             return {
                 "api": API,
-                "task": key,
+                "task": name,
                 "packet": view["packet"],
                 "document": doc.document,
                 "text": doc.units.text,
@@ -550,10 +607,9 @@ class Service:
         from ..store import FolderStore
 
         checked = check_body(body)
-        key = checked["task"]
+        name = checked["task"]
         with FolderStore(self.root) as store:
-            review = self._review(store, actor, [key])
-            doc, _, _, view = self._one(review, key)
+            review, key, doc, _, view = self._one(store, actor, name)
             blind = view["mode"] == "audit"
             if blind:
                 check_body(body, blind=True)
@@ -567,10 +623,11 @@ class Service:
                 return doc.units.u16(chars[0]), doc.units.u16(chars[1])
 
             page: dict[str, Any] = {
-                name: checked[name]
-                for name in ("task", "verdict", "decision", "value", "codes_kept", "parts_seen",
-                             "statements", "reason_seen", "keys", "ms")
+                member: checked[member]
+                for member in ("verdict", "decision", "value", "codes_kept", "parts_seen",
+                               "statements", "reason_seen", "keys", "ms")
             }  # fmt: skip
+            page["task"] = key
             if checked["span"] is not None:
                 page["start"], page["end"] = u16(checked["span"])
             page["parts"] = []
@@ -582,14 +639,18 @@ class Service:
             except Refused as exc:
                 code = exc.kind or ("not_found" if exc.code == 404 else "bad_answer")
                 codes = exc.codes if code in ("correction_rejected", "codes_not_kept") else None
-                raise ApiError(code, exc.message, codes) from exc
+                message = exc.message
+                if blind and code == "log_refused":  # the store message names the log by a key
+                    message = "the answer log cannot take the answer"
+                raise ApiError(code, message, codes) from exc
             return {
                 "api": API,
                 "actor": actor,
-                "task": key,
+                "task": name,
                 "packet": view["packet"],
-                "entry_sha256": head,
-                # the candidate of a correction can hold the unit of the proposed value
+                # The entry hash covers the task key, and the candidate of a correction can hold
+                # the unit of the proposed value. So a blind answer gets neither.
+                "entry_sha256": None if blind else head,
                 "record": None if blind else record,
             }
 

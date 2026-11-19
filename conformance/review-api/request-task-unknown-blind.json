@@ -1,0 +1,16 @@
+{
+ "name": "request-task-unknown-blind",
+ "kind": "request",
+ "description": "A blind ID that names no task.",
+ "method": "GET",
+ "path": "/v1/tasks/blind:0000000000000000000000000000000000000000000000000000000000000000",
+ "headers": {
+  "Host": "127.0.0.1:{port}",
+  "Authorization": "Bearer local-token-0123456789-abcdefghijklmnopqrstuvwxyz"
+ },
+ "body": null,
+ "expected": {
+  "status": 404,
+  "error": "not_found"
+ }
+}

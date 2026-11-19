@@ -2149,7 +2149,9 @@ that it does not know by its HTTP status.
 
 The service keeps no state outside the store. It reads the store again for each request, and
 its only write is the append of one answer record. Its start values are the store, a
-`review-policy@1` object for `agree` and the leads, and the issuers or the static token.
+`review-policy@1` object for `agree` and the leads, and the issuers or the static token. It also
+makes one random key at its start, for the IDs of the blind tasks below. The key is in memory
+only.
 
 **The claim.** Each request has one header `Authorization: Bearer <claim>`, with one space. A
 claim is three parts with `.` between them: a header, a payload and a signature, each in
@@ -2194,8 +2196,8 @@ each holder of the token answers as that name.
 than `127.0.0.1:<port>` gives `wrong_host`. So a request with no claim gets no data and no
 word on a path. A POST has `Content-Type: application/json`, a `Content-Length` of digits only,
 and a body of at most 65536 bytes that is one JSON object. The service checks them in this
-order. A key in a path is `sha256:` and 64 lowercase hex digits, as it is, with no percent
-escape. Only the list takes a query. A query on another path gives `bad_request`.
+order. A task ID in a path is `sha256:` or `blind:` and 64 lowercase hex digits, as it is, with
+no percent escape. Only the list takes a query. A query on another path gives `bad_request`.
 
 **Errors.** An error is a response with the HTTP status of its code and this body:
 
@@ -2214,7 +2216,7 @@ escape. Only the list takes a query. A query on another path gives `bad_request`
 | `bad_claim` | 401 | The claim or the static token fails a step above. |
 | `unknown_issuer` | 401 | The service does not have the issuer of the claim. |
 | `expired_claim` | 401 | The claim is past its `exp`. |
-| `not_found` | 404 | No operation has this path, or the key names no task of the API. |
+| `not_found` | 404 | No operation has this path, or the ID names no task of the API. |
 | `method_not_allowed` | 405 | The path has an operation, but not for this method. |
 | `bad_request` | 400 | The query, the cursor or the body does not have the form of the operation. |
 | `unsupported_media_type` | 415 | The body of a POST is not `application/json`. |
@@ -2240,9 +2242,28 @@ the key, and never the proposed value (§4.18). No response gives its value, its
 evidence, its places, its codes, its item or its question, and no response gives the outcome of
 the gate for its slot. This applies before and after the answer.
 
-**GET /v1/tasks** lists the open tasks of the actor. The order is the code point order of the
-packet key, then of the field, then of the key with null first, then of the task key. The query
-can have `limit`, an integer from 1 to 200 in digits only, and `cursor`. Without `limit`, the
+**The task ID.** Each task has one ID in the API. The ID of a task that is not blind is its
+task key. A task key is a hash of the task object, and the object of a blind task holds the
+proposed value. A person could make a task object for each guess of the value and compare its
+hash with the key. So a blind task has a **blind ID**, and its task key is no ID:
+
+- The blind ID is `blind:` and the 64 lowercase hex digits of HMAC-SHA-256 over the ASCII bytes
+  `groundgate-review-blind/1:` and then the task key, with the random key of the service. The
+  key has 32 bytes. A blind ID is good only while that service runs.
+- A request with the task key of a blind task gets `not_found`, as for a key that names no
+  task. A blind ID of a task that is not blind gets `not_found` too.
+- For the same reason, no response for a blind task gives a hash over data that holds the
+  proposed value: `packet` is null, and the `entry_sha256` of the answer is null.
+
+One limit stays (#698). A review task gives its packet key, and a packet can have a review task
+and a blind task. The packet key is a hash over each input of the packet. A person who knows
+each other input, with the id of each candidate, can test a guess against it. The service does
+not stop that.
+
+**GET /v1/tasks** lists the open tasks of the actor. The order is the code point order of
+`document`, then of the field, then of the key with null first, then of the task ID. The order
+uses only members of the list, so it tells nothing of a key that the list does not give. The
+query can have `limit`, an integer from 1 to 200 in digits only, and `cursor`. Without `limit`, the
 limit is 50. A query member that is not one of these two, or that occurs two times, gives
 `bad_request`.
 
@@ -2253,11 +2274,12 @@ limit is 50. A query member that is not one of these two, or that occurs two tim
  "next": null}
 ```
 
-`document` is the document id of the receipt (§5) as text for a person, or an empty string.
+`task` is the task ID. `packet` is the packet key, or null for a blind task. `document` is the
+document id of the receipt (§5) as text for a person, or an empty string.
 `next` is the cursor of the next page: a string when more open tasks come after the last task of
-this page, and null if not. A client sends it back as it is, in `cursor`. The cursor is the key
+this page, and null if not. A client sends it back as it is, in `cursor`. The cursor is the ID
 of the last task of the page, and the next page starts after that task in the order. A cursor
-that is not the key of a task of the API gives `bad_request`. A task that gets an answer
+that is not the ID of a task of the API gives `bad_request`. A task that gets an answer
 between two requests leaves the list, and one walk never gives a task two times.
 
 **GET /v1/tasks/{task}** gives one task, open or not.
@@ -2272,7 +2294,7 @@ between two requests leaves the list, and one walk never gives a task two times.
 `definition` is the description of the field in the schema, or null. `answered` is the verdict
 of the latest answer of the actor to this task, or null. `body` is the `task@1` object as the
 store has it, with its question, its choices, its evidence and its places. For a blind task,
-`body` is null.
+`body` and `packet` are null.
 
 `statements` is null, except for a model text task (docs/design/review.md §7). Such a task holds
 no model text, so the response gives each statement of its `model-text@1` input, in order:
@@ -2285,15 +2307,16 @@ no model text, so the response gives each statement of its `model-text@1` input,
 cites, and it can be empty.
 
 **GET /v1/tasks/{task}/document** gives the text of the document of the task. Each span of the
-task, and each span of an answer, is in UTF-8 bytes of this text (§2.2).
+task, and each span of an answer, is in UTF-8 bytes of this text (§2.2). For a blind task,
+`packet` is null.
 
 ```json
 {"api": "groundgate-review/1", "task": "sha256:...", "packet": "sha256:...",
  "document": "inv-0007", "text": "..."}
 ```
 
-**POST /v1/answers** writes one answer of the actor. The body has `task` and `verdict`, and it
-can have these members:
+**POST /v1/answers** writes one answer of the actor. The body has `task`, a task ID, and
+`verdict`, and it can have these members:
 
 | Member | Form | For |
 |---|---|---|
@@ -2333,11 +2356,13 @@ The response has the status 201:
 
 `entry_sha256` is the `entry_sha256` of the new record in the answer log of the packet and the
 actor. `record` is the record without the three members that the store adds. For a blind task,
-`record` is null, because the candidate of a correction can hold the unit of the proposed value.
+`packet`, `entry_sha256` and `record` are null. The entry hash covers the task key, and the
+candidate of a correction can hold the unit of the proposed value. The error message of
+`log_refused` for a blind task names no log.
 
 The vectors in `conformance/review-api/` give claims and static tokens with the actor or the
-error, the response members of a task, the statements of a model text, pages of the list,
-answer bodies, requests that the service refuses, and the status of each error code.
+error, the response members of a task, a blind ID, the statements of a model text, pages of
+the list, answer bodies, requests that the service refuses, and the status of each error code.
 
 ## 5. Receipt
 

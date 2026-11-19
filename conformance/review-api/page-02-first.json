@@ -1,11 +1,12 @@
 {
  "name": "page-02-first",
  "kind": "page",
- "description": "A limit of 2 gives two tasks and the cursor of the second.",
+ "description": "A limit of 2 gives two tasks and the cursor of the second. The cursor is a blind ID, because the second task is blind.",
  "entries": [
   {
    "task": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
    "packet": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+   "document": "inv-0002",
    "field": "total",
    "key": null,
    "open": true
@@ -13,6 +14,7 @@
   {
    "task": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
    "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+   "document": "inv-0001",
    "field": "total",
    "key": null,
    "open": true
@@ -20,6 +22,7 @@
   {
    "task": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
    "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+   "document": "inv-0001",
    "field": "rate",
    "key": "standard",
    "open": true
@@ -27,6 +30,7 @@
   {
    "task": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
    "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+   "document": "inv-0001",
    "field": "rate",
    "key": null,
    "open": true
@@ -34,13 +38,15 @@
   {
    "task": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
    "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+   "document": "inv-0001",
    "field": "rate",
    "key": "express",
    "open": false
   },
   {
-   "task": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-   "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+   "task": "blind:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+   "packet": null,
+   "document": "inv-0001",
    "field": "rate",
    "key": "express",
    "open": true
@@ -50,8 +56,8 @@
  "expected": {
   "tasks": [
    "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
-   "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+   "blind:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
   ],
-  "next": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  "next": "blind:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
  }
 }

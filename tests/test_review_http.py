@@ -81,6 +81,14 @@ CANDIDATES = [
 ]  # fmt: skip
 
 
+KEY = bytes(range(32, 64))  # the key of the blind IDs of a service in a test
+
+
+def blind_of(task: str) -> str:
+    """The blind ID that a service with KEY gives to a task key."""
+    return api.blind_id(KEY, task)
+
+
 def make_store(root: Path) -> tuple[str, dict[str, str]]:
     """A store with one packet and its two tasks: the revenue task is a review task with two
     choices, and the net income task is an audit task, so it is blind."""
@@ -175,7 +183,7 @@ def served(tmp_path: Path) -> Iterator[tuple[Path, str, dict[str, str], Call]]:
     """The API on a store with one packet, with a signed claim for ana in each request."""
     root = tmp_path / "store"
     k, tasks = make_store(root)
-    service = Service(root, ISSUERS, clock=lambda: CLOCK)
+    service = Service(root, ISSUERS, clock=lambda: CLOCK, blind_key=KEY)
     with serving(api.server(service), {"Authorization": claim()}) as call:
         yield root, k, tasks, call
 
@@ -223,6 +231,8 @@ def test_vector(path: Path, empty: Call) -> None:
         elif kind == "answer":
             api.check_body(v["body"], v["blind"])
             got = {"valid": True}
+        elif kind == "blind-id":
+            got = {"id": api.blind_id(bytes.fromhex(v["key"]), v["task"])}
         elif kind == "errors":
             got = api.STATUS
         else:
@@ -242,7 +252,8 @@ def test_vector(path: Path, empty: Call) -> None:
 def test_the_vectors_cover_each_kind_and_each_error_of_the_claim_check() -> None:
     vectors = [json.loads(p.read_text("utf-8")) for p in VECTORS]
     assert {v["kind"] for v in vectors} == {
-        "claim", "token", "task", "statements", "page", "answer", "request", "errors",
+        "claim", "token", "task", "blind-id", "statements", "page", "answer", "request",
+        "errors",
     }  # fmt: skip
     claims = {v["expected"].get("error") for v in vectors if v["kind"] == "claim"}
     assert claims == {None, "no_claim", "bad_claim", "unknown_issuer", "expired_claim"}
@@ -266,8 +277,8 @@ def test_the_list_and_a_review_task_and_its_document(served: Served) -> None:
         "api": "groundgate-review/1",
         "actor": "ana",
         "tasks": [
-            {"task": tasks["net_income"], "packet": k, "document": "doc-1", "mode": "audit",
-             "field": "net_income", "key": None},
+            {"task": blind_of(tasks["net_income"]), "packet": None, "document": "doc-1",
+             "mode": "audit", "field": "net_income", "key": None},
             {"task": tasks["revenue"], "packet": k, "document": "doc-1", "mode": "review",
              "field": "revenue", "key": None},
         ],
@@ -276,7 +287,7 @@ def test_the_list_and_a_review_task_and_its_document(served: Served) -> None:
     # one page for each task: the cursor of page 1 gives page 2
     page = json.loads(call("GET", "/v1/tasks?limit=1")[2])
     assert [t["field"] for t in page["tasks"]] == ["net_income"]
-    assert page["next"] == tasks["net_income"]
+    assert page["next"] == blind_of(tasks["net_income"])
     page = json.loads(call("GET", f"/v1/tasks?limit=1&cursor={page['next']}")[2])
     assert [t["field"] for t in page["tasks"]] == ["revenue"] and page["next"] is None
 
@@ -492,13 +503,13 @@ def test_the_gate_checks_a_correction_again(served: Served) -> None:
 
 def test_a_blind_audit_task_never_shows_the_proposed_value(served: Served) -> None:
     root, k, tasks, call = served
-    blind = tasks["net_income"]
+    real, blind = tasks["net_income"], blind_of(tasks["net_income"])
     with FolderStore(root) as store:
-        stored = json.loads(store.get("task@1", blind))
+        stored = json.loads(store.get("task@1", real))
     assert stored["mode"] == "audit" and stored["choices"][0]["value"] == "310000"
     seen = [call("GET", "/v1/tasks"), call("GET", f"/v1/tasks/{blind}")]
     assert json.loads(seen[1][2]) == {
-        "api": "groundgate-review/1", "task": blind, "packet": k, "document": "doc-1",
+        "api": "groundgate-review/1", "task": blind, "packet": None, "document": "doc-1",
         "mode": "audit", "field": "net_income", "key": None,
         "definition": "The profit after tax.", "answered": None, "body": None,
         "statements": None,
@@ -521,12 +532,24 @@ def test_a_blind_audit_task_never_shows_the_proposed_value(served: Served) -> No
     seen.append(call("POST", "/v1/answers", {"task": blind, "verdict": "correct",
                                              "span": at("310 thousand")}))  # fmt: skip
     assert [r[0] for r in seen[-2:]] == [201, 201]
-    written = json.loads(seen[-1][2])
-    assert written["record"] is None and written["task"] == blind
+    assert json.loads(seen[-1][2]) == {
+        "api": "groundgate-review/1", "actor": "ana", "task": blind, "packet": None,
+        "entry_sha256": None, "record": None,
+    }  # fmt: skip
+    document = call("GET", f"/v1/tasks/{blind}/document")
+    assert json.loads(document[2]) == {
+        "api": "groundgate-review/1", "task": blind, "packet": None, "document": "doc-1",
+        "text": TEXT,
+    }  # fmt: skip
     seen += [call("GET", "/v1/tasks"), call("GET", f"/v1/tasks/{blind}")]
     assert json.loads(seen[-1][2])["answered"] == "correct"
-    # no response gives the value, the evidence, the question or a member of the task object
+    # no response gives the value, the evidence, the question or a member of the task object,
+    # and none gives the task key, which is a hash over them
     span = stored["choices"][0]["evidence"]
+    for _, _, text in [*seen, document]:
+        assert real[7:] not in text
+        # the packet key is a hash over the value too: only the review task of the list has it
+        assert k[7:] not in text or '"revenue"' in text
     for _, _, text in seen:
         for word in ("310000", "310,000", "310 thousand", "choices", "evidence", "shown",
                      "question", "places", '"item"', '"unit"', "Is net income", '"start"',
@@ -537,17 +560,62 @@ def test_a_blind_audit_task_never_shows_the_proposed_value(served: Served) -> No
     assert (last["verdict"], last["candidate"]["value"]) == ("correct", "310000")
     assert last["candidate"]["evidence"] == [at("310 thousand")]
     # the document is the one response with the text of the value
-    assert "310 thousand" in json.loads(call("GET", f"/v1/tasks/{blind}/document")[2])["text"]
+    assert "310 thousand" in json.loads(document[2])["text"]
+
+
+def test_the_task_key_of_a_blind_task_is_no_id(served: Served) -> None:
+    """The task key is a hash over the proposed value. If the API took it, a person could make a
+    task object for each guess of the value and test its hash with one request."""
+    root, k, tasks, call = served
+    real, blind = tasks["net_income"], blind_of(tasks["net_income"])
+    unknown = "sha256:" + "0" * 64
+    for name in (real, unknown):
+        assert error(call("GET", f"/v1/tasks/{name}")) == (404, "not_found")
+        assert error(call("GET", f"/v1/tasks/{name}/document")) == (404, "not_found")
+        sent = {"task": name, "verdict": "unsure"}
+        assert error(call("POST", "/v1/answers", sent)) == (404, "not_found")
+        assert error(call("GET", f"/v1/tasks?cursor={name}")) == (400, "bad_request")
+    # the two answers have the same message, so the message tells nothing
+    messages = [json.loads(call("GET", f"/v1/tasks/{n}")[2])["error"] for n in (real, unknown)]
+    assert messages[0] == messages[1]
+    assert records(root, k) == []
+    # a blind ID names only a blind task
+    other = blind_of(tasks["revenue"])
+    assert error(call("GET", f"/v1/tasks/{other}")) == (404, "not_found")
+    assert error(call("POST", "/v1/answers", {"task": other, "verdict": "unsure"}))[0] == 404
+    assert call("GET", f"/v1/tasks?cursor={blind}")[0] == 200
+
+
+def test_a_blind_id_needs_the_key_of_its_service(tmp_path: Path) -> None:
+    root = tmp_path / "store"
+    _, tasks = make_store(root)
+
+    def listed(service: Service) -> list[str]:
+        with serving(api.server(service), {"Authorization": claim()}) as call:
+            return [t["task"] for t in json.loads(call("GET", "/v1/tasks")[2])["tasks"]]
+
+    first = listed(Service(root, ISSUERS, clock=lambda: CLOCK))
+    second = listed(Service(root, ISSUERS, clock=lambda: CLOCK))
+    # each service makes its own random key, so a blind ID is good for one service only
+    assert first[0] != second[0] and first[0].startswith("blind:") and len(first[0]) == 70
+    assert first[1] == second[1] == tasks["revenue"]
+    assert tasks["net_income"] not in first + second
+    with serving(
+        api.server(Service(root, ISSUERS, clock=lambda: CLOCK)), {"Authorization": claim()}
+    ) as call:
+        assert error(call("GET", f"/v1/tasks/{first[0]}")) == (404, "not_found")
+    with pytest.raises(ValueError, match="32 bytes"):
+        Service(root, ISSUERS, blind_key=b"k" * 31)
 
 
 def test_a_blind_task_gets_no_question_about_a_choice(served: Served) -> None:
     """#496: the page asks again when the value differs from a choice only in its sign. A blind
     task does not get that question, because it tells the sign of the proposed value."""
     root, k, tasks, call = served
-    blind = tasks["net_income"]
+    real, blind = tasks["net_income"], blind_of(tasks["net_income"])
     with FolderStore(root) as store:
         # the page server asks about the sign of the text and about the sign of the choice
-        selection = {"task": blind, "verdict": "correct", **u16("310 thousand"),
+        selection = {"task": real, "verdict": "correct", **u16("310 thousand"),
                      "value": "-310000"}  # fmt: skip
         asked = [a["text"] for a in Review(store, "ben").check(selection)["ask"]]
     assert ["value 1 of the task is positive" in a for a in asked] == [False, True]
@@ -582,7 +650,7 @@ def test_a_model_text_task_gives_its_statements_and_takes_a_verdict_for_each(
     with FolderStore(root) as store:
         written = write_tasks(store, k, EVERY, model_text).tasks
         tk = next(tk for tk, t in written if t["item"] == "model_text")
-    service = Service(root, ISSUERS, clock=lambda: CLOCK)
+    service = Service(root, ISSUERS, clock=lambda: CLOCK, blind_key=KEY)
     with serving(api.server(service), {"Authorization": claim()}) as call:
         task = json.loads(call("GET", f"/v1/tasks/{tk}")[2])
         assert (task["mode"], task["field"], task["definition"]) == ("review", "summary", None)
@@ -622,15 +690,17 @@ def test_a_calibrate_label_task_is_not_a_task_of_the_api(tmp_path: Path) -> None
             store.put("task@1", data.encode("utf-8"))
         label = next(iter(labels))
         assert key("task@1", store.get("task@1", label)) == label
-    service = Service(root, ISSUERS, clock=lambda: CLOCK)
+    service = Service(root, ISSUERS, clock=lambda: CLOCK, blind_key=KEY)
     with serving(api.server(service), {"Authorization": claim()}) as call:
         listed = json.loads(call("GET", "/v1/tasks")[2])["tasks"]
-        assert sorted(t["task"] for t in listed) == sorted(tasks.values())
-        assert error(call("GET", f"/v1/tasks/{label}")) == (404, "not_found")
-        assert error(call("GET", f"/v1/tasks/{label}/document")) == (404, "not_found")
-        body = {"task": label, "verdict": "unsure"}
-        assert error(call("POST", "/v1/answers", body)) == (404, "not_found")
-        assert error(call("GET", f"/v1/tasks?cursor={label}")) == (400, "bad_request")
+        served = [blind_of(tasks["net_income"]), tasks["revenue"]]
+        assert [t["task"] for t in listed] == served
+        for name in (label, blind_of(label)):
+            assert error(call("GET", f"/v1/tasks/{name}")) == (404, "not_found")
+            assert error(call("GET", f"/v1/tasks/{name}/document")) == (404, "not_found")
+            body = {"task": name, "verdict": "unsure"}
+            assert error(call("POST", "/v1/answers", body)) == (404, "not_found")
+            assert error(call("GET", f"/v1/tasks?cursor={name}")) == (400, "bad_request")
     assert records(root, k) == []
 
 
@@ -643,7 +713,7 @@ def test_the_service_keeps_no_state_outside_the_store(tmp_path: Path) -> None:
     appends."""
     root = tmp_path / "store"
     FolderStore(root).close()
-    service = Service(root, ISSUERS, clock=lambda: CLOCK)
+    service = Service(root, ISSUERS, clock=lambda: CLOCK, blind_key=KEY)
     with serving(api.server(service), {"Authorization": claim()}) as call:
         assert json.loads(call("GET", "/v1/tasks")[2])["tasks"] == []
         k, tasks = make_store(root)
@@ -665,13 +735,13 @@ def test_the_service_keeps_no_state_outside_the_store(tmp_path: Path) -> None:
         assert answered == "choose"
         assert call("POST", "/v1/answers", body)[0] == 201
     assert [r["verdict"] for r in records(root, k)] == ["unsure", "choose", "unsure"]
-    assert vars(service).keys() == {"root", "auth", "policy", "_clock"}
+    assert vars(service).keys() == {"root", "auth", "policy", "_clock", "_blind_key"}
 
 
 def test_a_packet_that_does_not_match_its_receipt_gives_no_task(tmp_path: Path) -> None:
     root = tmp_path / "store"
     k, tasks = make_store(root)
-    service = Service(root, ISSUERS, clock=lambda: CLOCK)
+    service = Service(root, ISSUERS, clock=lambda: CLOCK, blind_key=KEY)
     assert service.skipped() == []
     with FolderStore(root) as store:
         packet = json.loads(store.get("packet@1", k))
@@ -714,7 +784,7 @@ def test_a_bad_request_line_gets_a_json_error(tmp_path: Path) -> None:
 def test_a_failure_of_the_service_gives_no_store_data(tmp_path: Path) -> None:
     root = tmp_path / "store"
     make_store(root)
-    service = Service(root, ISSUERS, clock=lambda: CLOCK)
+    service = Service(root, ISSUERS, clock=lambda: CLOCK, blind_key=KEY)
 
     def fail(actor: str, query: str = "") -> dict[str, Any]:
         raise RuntimeError("the text of the document: 4,200 thousand")

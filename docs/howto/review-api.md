@@ -179,6 +179,11 @@ a task is blind. The API gives the document, the field and the key, and never th
 Its `body` is null. No response gives its value, its evidence, its question or the outcome of the
 gate.
 
+The `task` of a blind task is a blind ID: `blind:` and 64 hex digits. It is not the task key,
+because the task key is a hash over the proposed value. A blind ID is good only while the server
+runs, so read the list again after a new start. The `packet` of a blind task is null for the
+same reason.
+
 A blind task takes three verdicts: `correct`, `not_in_document` and `unsure`. For `correct`, send
 the span of the value that you found in the document. The service reads the value from the span,
 and the gate checks it again.
@@ -186,18 +191,19 @@ and the gate checks it again.
 ```python
 tax = next(t["task"] for t in listed["tasks"] if t["field"] == "tax")
 blind = call(f"/v1/tasks/{tax}")
-print(blind["mode"], blind["field"], blind["body"])
+print(tax[:6], blind["mode"], blind["field"], blind["packet"], blind["body"])
 written = call("/v1/answers", {"task": tax, "verdict": "correct", "span": span("310 thousand")})
-print(written["record"], written["entry_sha256"][:7])
+print(written["record"], written["entry_sha256"])
 ```
 
 ```text
-audit tax None
-None sha256:
+blind: audit tax None None
+None None
 ```
 
 The response of a blind answer has no record, because the record of a correction can hold the
-unit of the proposed value. The store has the record.
+unit of the proposed value. It has no `entry_sha256`, because that hash is over the record. The
+store has the record.
 
 ## 4. Corrections and their errors
 
@@ -227,7 +233,7 @@ The span `4,200` leaves out the word `thousand`, so the gate flags the value 420
 | Code | Status | What to do |
 |---|---|---|
 | `no_claim`, `bad_claim`, `unknown_issuer`, `expired_claim` | 401 | Send a good claim. |
-| `not_found` | 404 | Check the path and the task key. |
+| `not_found` | 404 | Check the path and the task ID. Use the ID that the list gives. |
 | `bad_request` | 400 | Check the query or the body against SPEC §4.20. |
 | `bad_answer` | 400 | The answer breaks its task: read the task again. |
 | `correction_rejected` | 409 | The gate rejects the value. Select another span. |

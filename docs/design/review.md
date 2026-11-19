@@ -618,6 +618,17 @@ the contract: the operations, the errors and the claim check. This section gives
   Under rule 7 of section 6.1, a blind correction removes the admitted value, and the slot then
   resolves to the value of the person. If that value is the admitted value, the app gets the
   same value with the status `corrected`.
+- **A blind task has a blind ID.** A task key is a hash of the task object, and the object of
+  an audit task holds the proposed value. With the key, a person can make an object for each
+  guess and compare the hashes, with no request. So the API names a blind task with an HMAC of
+  its key, and it takes the task key of a blind task as an unknown ID. The key of the HMAC is
+  random for each start of the service. It is not state: it comes from no store and goes to
+  none, and a client reads the list again after a new start. The service finds the task of a
+  blind ID with one HMAC for each object of the store. The responses for a blind task give no
+  packet key and no entry hash, because each is a hash over the value too. Two limits stay.
+  The packet key of a review task in the same packet is such a hash (#698). And a request with
+  the task key of a blind task reads one object more than a request with an unknown key, so
+  the time of the answer can differ.
 - **Two kinds of task are not in version 1.** A calibrate label task shows its value on
   purpose, and `calibrate label` serves it. An audit task for a closed set has no blind answer,
   because `answer@2` has no member for an option.
