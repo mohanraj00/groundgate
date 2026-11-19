@@ -117,7 +117,7 @@ def test_an_answer_and_an_audit_answer_through_the_page(page: tuple[Path, str, i
     document = json.loads(get(port, f"/v1/tasks/{total}/document")[2])["text"]
     assert document == run.TEXT
     choice = next(c for c in task["body"]["choices"] if c["value"] == "4200000")
-    sent = {"task": total, "verdict": "choose", "decision": choice["decision"]}
+    sent = {"task": total, "verdict": "choose", "choice": choice["choice"]}
     status, _, body = get(port, "/v1/answers", sent)
     assert status == 201 and json.loads(body)["record"]["verdict"] == "choose"
 

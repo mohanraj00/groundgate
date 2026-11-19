@@ -170,7 +170,7 @@ STEPS = """
   const choose = '[data-tool="answer.choose"]';
   await until(() => document.querySelectorAll(choose).length === 2, 'review task');
   out.marks = [...document.querySelectorAll('#detail mark')].map((mark) => mark.textContent);
-  press('.choice[data-decision="2"] [data-tool]');
+  press('.choice[data-choice="2"] [data-tool]');
   await until(() => who().includes('Open tasks: 1.'), 'one open task');
 
   // the audit task: a correction that the gate flags, then the full value
@@ -299,7 +299,8 @@ def test_the_page_answers_a_task_without_the_kit(tmp_path: Path, browser: Browse
     assert out["controls"] == ["button"] and "plain controls" in out["note"]
 
 
-# A review task whose two values cite a reference text of the packet.
+# A review task with two values that cite a reference text of the packet, and one value that
+# cites the document.
 REFERENCE_STEPS = """
 (async () => {
   const wait = (ms) => new Promise((done) => setTimeout(done, ms));
@@ -308,12 +309,14 @@ REFERENCE_STEPS = """
   };
   await until(() => document.body.dataset.state === 'ready');
   document.querySelector('li[data-field=limit]').firstElementChild.click();
-  await until(() => document.querySelectorAll('.choice').length === 2);
+  await until(() => document.querySelectorAll('.choice').length === 3);
   const choices = [...document.querySelectorAll('.choice')];
   return JSON.stringify({
     state: document.body.dataset.state,
-    choices: choices.map((choice) => choice.textContent),
-    marks: document.querySelectorAll('#detail mark, #detail blockquote').length,
+    choices: choices.map((choice) => ({
+      text: choice.textContent,
+      marks: [...choice.querySelectorAll('mark')].map((mark) => mark.textContent),
+    })),
     document: document.getElementById('document').textContent,
   });
 })()
@@ -325,12 +328,14 @@ def test_the_page_shows_no_passage_for_evidence_in_a_reference(
 ) -> None:
     """The span of a value that cites a reference is in the text of the reference. The API gives
     the text of the document only, so the same offsets there are other text. The page must not
-    show that text as the evidence."""
+    show that text as the evidence. One reference value has the offsets of the document value,
+    so only the source of each choice tells them apart."""
     from groundgate.review.tasks import write_tasks
     from groundgate.store.packets import admit_packet
 
-    text = "Unrelated main document.\n"
+    text = "Limit: $9,000 in the unrelated main document.\n"
     reference = "Limit: $7,000 or $8,000."
+    assert text.index("$9,000") == reference.index("$7,000")
 
     def cite(words: str) -> dict[str, Any]:
         start = reference.index(words)
@@ -352,6 +357,13 @@ def test_the_page_shows_no_passage_for_evidence_in_a_reference(
             "unit": "USD",
             "evidence": [cite("$8,000")],
         },
+        {
+            "id": "c3",
+            "field": "limit",
+            "value": "9000",
+            "unit": "USD",
+            "evidence": [{"start": 7, "end": 13, "text": "$9,000"}],
+        },
     ]
     schema = {"fields": {"limit": {"type": "number", "unit": "USD"}}}
     root = tmp_path / "store"
@@ -359,15 +371,21 @@ def test_the_page_shows_no_passage_for_evidence_in_a_reference(
         packet, _ = admit_packet(store, text, schema, candidates, None, "policy-0001",
                                  references=[{"id": "r", "text": reference}])  # fmt: skip
         tasks = [task for _, task in write_tasks(store, packet, run.REVIEW_POLICY).tasks]
-    assert [(t["mode"], len(t["choices"]), t["places"]) for t in tasks] == [("review", 2, [])]
-    wrong = [
-        text.encode()[c["evidence"]["start"] : c["evidence"]["end"]] for c in tasks[0]["choices"]
-    ]
-    assert sorted(wrong) == [b"cument", b"ed mai"]
+    assert [(t["mode"], len(t["choices"])) for t in tasks] == [("review", 3)]
+    spans = {c["value"]: c["evidence"] for c in tasks[0]["choices"]}
+    assert spans["7000"] == spans["9000"] == {"start": 7, "end": 13}
     out = drive(browser, root, None, REFERENCE_STEPS)
-    assert out["state"] == "ready" and out["document"] == text and out["marks"] == 0
-    assert len(out["choices"]) == 2
-    for choice in out["choices"]:
-        assert "cannot show the passage" in choice
+    assert out["state"] == "ready" and out["document"] == text
+    shown = {
+        value: next(c for c in out["choices"] if words in c["text"])
+        for value, words in (("7000", "7,000"), ("8000", "8,000"), ("9000", "9,000 USD"))
+    }
+    assert len({id(c) for c in shown.values()}) == 3
+    # the document value has its passage
+    assert shown["9000"]["marks"] == ["$9,000"]
+    assert "cannot show the passage" not in shown["9000"]["text"]
+    for value in ("7000", "8000"):
+        choice = shown[value]
+        assert choice["marks"] == [] and "cannot show the passage" in choice["text"]
         # a passage has the text around the span too: no part of the document text is there
-        assert "Unrelated" not in choice and "main" not in choice
+        assert "unrelated" not in choice["text"] and "$9,000" not in choice["text"]

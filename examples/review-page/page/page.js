@@ -187,19 +187,17 @@ async function open(entry, number) {
   } else {
     parts.text(detail, task.body.question, 'strong');
     const choices = task.body.choices;
-    // The evidence of a choice can be a span of a reference text, and the task does not name the
-    // source. The places of the task are the spans of the document. So the page shows a passage
-    // only for a span that is a place: the same offsets in the document can be other text.
-    const places = Array.isArray(task.body.places) ? task.body.places : [];
-    const inDocument = ({ start, end }) => places.some((place) => place.start === start && place.end === end);
+    // The evidence of a choice can be a span of a reference text, and the API gives the text of
+    // the document only. Each choice names its source. So the page shows a passage only for the
+    // source `document`: the same offsets in the document are other text for another source.
     choices.forEach((choice, index) => {
-      const block = add(detail, 'div', '', { class: 'choice', 'data-decision': String(choice.decision) });
+      const block = add(detail, 'div', '', { class: 'choice', 'data-choice': String(choice.choice) });
       parts.text(block, `Value ${index + 1}: ${choice.shown}`);
-      if (choice.evidence && inDocument(choice.evidence)) passage(block, data, choice.evidence);
+      if (choice.evidence && choice.source === 'document') passage(block, data, choice.evidence);
       else if (choice.evidence) parts.text(block, NO_PASSAGE, 'caption');
       const list = add(block, 'ul', '', { class: 'actions' });
       if (choices.length === 1) action(list, 'answer.confirm', 'Confirm this value');
-      else action(list, 'answer.choose', `Choose value ${index + 1}`, { decision: choice.decision });
+      else action(list, 'answer.choose', `Choose value ${index + 1}`, { choice: choice.choice });
     });
   }
   add(detail, 'h3', 'Document');
@@ -273,7 +271,7 @@ function answer(tool, args) {
   if (busy) return { ok: false, message: WAIT };
   if (!current || args.task !== current.id) return { ok: false, message: 'The task is not open now.' };
   const task = current.id;
-  if (tool === 'answer.choose') return send({ task, verdict: 'choose', decision: args.decision });
+  if (tool === 'answer.choose') return send({ task, verdict: 'choose', choice: args.choice });
   if (tool === 'answer.confirm') return send({ task, verdict: 'confirm' });
   if (tool === 'answer.not_in_document') return send({ task, verdict: 'not_in_document' });
   if (tool === 'answer.unsure') return send({ task, verdict: 'unsure' });

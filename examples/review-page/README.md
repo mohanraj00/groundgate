@@ -105,7 +105,6 @@ origin. It sends each `/v1/` request to the API as it is. The API does each chec
 - The page is for one person on one machine. The static token gives one reviewer name.
 - A task ID is good only while the API runs. After a new start, load the page again.
 - The page shows a passage only for evidence in the text of the document. A candidate can cite
-  a reference text of the packet. The API does not give that text, and a task does not name the
-  source of a span (#702). For such a value, the page says that it cannot show the passage. If
-  a value cites a reference at the same offsets as a place of the document, the page cannot
-  tell, and it shows the passage of the document.
+  a reference text of the packet, and the API does not give that text (#702). Each choice of a
+  task names its source. For a choice with a source that is not `document`, the page says that
+  it cannot show the passage.
