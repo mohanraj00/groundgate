@@ -631,6 +631,15 @@ the contract: the operations, the errors and the claim check. This section gives
   a key would let the time of a `not_found` tell if the key is in the store. The cost is a
   full read of the store for each request (#697), and a client that cannot name a packet or a
   log entry. A client that needs them reads the store.
+- **No response gives an index of the receipt.** The receipt sorts its decisions by the digest
+  of the candidate. So the indexes of the choices of a review task tell where the candidate of
+  a blind task of the same packet is in that order, and a person can test a guess against
+  that. A choice has its number in its task, from 1, and an answer names a choice by that
+  number. The service finds the decision, so the record in the store does not change.
+- **A choice names the source of its evidence.** The evidence of a choice can be a span of a
+  reference, and the offsets alone do not tell. Each choice has the `source` and the `ref` of
+  its decision. Version 1 gives the document text only, so a client shows a passage only for
+  the source `document`. The text of a reference is not in version 1 (#702).
 - **Two kinds of task are not in version 1.** A calibrate label task shows its value on
   purpose, and `calibrate label` serves it. An audit task for a closed set has no blind answer,
   because `answer@2` has no member for an option.

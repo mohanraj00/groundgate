@@ -132,8 +132,12 @@ runs, so read the list again after a new start. No response gives a key of the s
 says why.
 
 The `total` task is a review task. Its `body` is the `task@1` object without its packet key,
-with the question, the choices and the evidence of each choice. The document comes from a second call. Each span is in
-UTF-8 bytes of that text.
+with the question, the choices and the evidence of each choice. Each choice has `choice`, its
+number in the task from 1. The body has no index of the receipt.
+
+The document comes from a second call. Each span is in UTF-8 bytes of that text, when the
+`source` of the choice is `document`. If the `source` is `reference`, the span is in the text of
+the reference that `ref` names, and version 1 does not give that text. Then show no passage.
 
 ```python
 total = next(t["task"] for t in listed["tasks"] if t["field"] == "total")
@@ -143,29 +147,30 @@ print(task["body"]["question"])
 document = call(f"/v1/tasks/{total}/document")["text"].encode("utf-8")
 for choice in task["body"]["choices"]:
     e = choice["evidence"]
-    print(choice["decision"], choice["shown"], "|", document[e["start"] : e["end"]].decode("utf-8"))
+    passage = document[e["start"] : e["end"]].decode("utf-8")
+    print(choice["choice"], choice["shown"], "|", choice["source"], "|", passage)
 ```
 
 ```text
 The total of the invoice.
 Which amount is total?
-0 4,200 with no unit (written 4,200, not scaled, positive) | 4,200 thousand
-2 4,200,000 with no unit (written 4,200, in thousands, positive) | 4,200 thousand
+1 4,200 with no unit (written 4,200, not scaled, positive) | document | 4,200 thousand
+2 4,200,000 with no unit (written 4,200, in thousands, positive) | document | 4,200 thousand
 ```
 
 For a model text task, the response also has `statements`: the text of each statement and the
 spans of the document that it cites. An answer to it has the verdict `confirm` and one
 `{"statement", "verdict"}` for each statement.
 
-An answer names its task and its verdict. `choose` gives the decision of the right choice: here
-decision 2, because the invoice gives the total in thousands. The response has the record that
-the store now has, without its task key. The reviewer is the actor of the claim: a body cannot
-name another reviewer.
+An answer names its task and its verdict. `choose` gives the number of the right choice: here
+choice 2, because the invoice gives the total in thousands. The response has the record that
+the store now has, without its task key, and with `choice` in place of its `decision`. The
+reviewer is the actor of the claim: a body cannot name another reviewer.
 
 ```python
-written = call("/v1/answers", {"task": total, "verdict": "choose", "decision": 2})
+written = call("/v1/answers", {"task": total, "verdict": "choose", "choice": 2})
 record = written["record"]
-print(record["format"], record["reviewer"], record["verdict"], record["decision"])
+print(record["format"], record["reviewer"], record["verdict"], record["choice"])
 print([t["field"] for t in call("/v1/tasks")["tasks"]])
 ```
 
