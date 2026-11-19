@@ -275,13 +275,468 @@
   "file": "slots.json",
   "count": 76,
   "calibration": 26,
-  "heldout": 50
+  "heldout": 50,
+  "sha256": "sha256:05dccec307da2b6b1e4442962789fb0d714158df08ece347bf193125deeaa726"
  },
  "labels": {
   "file": "labels.json",
   "sha256": "sha256:123f05877152ce42a3518cae7e71504e2027c42165d72f1e260f64e6aea80ff7",
   "sealed": "2026-11-17",
   "agree": 71,
-  "owner": 5
+  "owner": 5,
+  "calibration_ranges": [
+   [
+    17524,
+    22604
+   ],
+   [
+    25548,
+    31817
+   ],
+   [
+    43416,
+    47988
+   ],
+   [
+    66565,
+    75322
+   ]
+  ],
+  "calibration_sha256": "sha256:497db16d6edcfbaefa4e08ed599b98c0fae38e90eaa0a0a52cc5357d05d2e4d6"
+ },
+ "freeze": {
+  "format": "regulatory-freeze/1",
+  "date": "2026-11-19",
+  "set_sha256": "sha256:0f320592f3bab6579286a961ad3b3a9a6ff539ee2da68bc27a42c69238fc9aba",
+  "code_sha256": "sha256:791853d5370f527be8f5a7426260891acf4ab9eae2a3d575862075c09a9d95cc",
+  "profile_sha256": "sha256:4b9cb18996f6fc92d0537ab345691e2bb828f60129c011a63483116503a79108",
+  "profile": {
+   "groundgate_profile": 1,
+   "id": "regulatory",
+   "version": "1.0.1",
+   "description": "Requests on pinned regulatory text.",
+   "schema": {
+    "fields": {
+     "section_text": {
+      "type": "passage",
+      "description": "The full text of the named section, without its heading and without the source note in brackets at its end."
+     },
+     "definition": {
+      "type": "passage",
+      "description": "The definition of the named term in the named definitions section: the text after the term, to the end of its paragraph and of the paragraphs that continue it."
+     },
+     "table_value": {
+      "type": "number",
+      "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value.",
+      "unit": null
+     },
+     "table_rows": {
+      "type": "record",
+      "description": "The body rows of the named table, one record for each row, with one member for each column header. An empty cell is null.",
+      "members": {
+       "c1": {
+        "type": "string"
+       },
+       "c2": {
+        "type": "string"
+       },
+       "c3": {
+        "type": "string"
+       },
+       "c4": {
+        "type": "string"
+       },
+       "c5": {
+        "type": "string"
+       },
+       "c6": {
+        "type": "string"
+       },
+       "c7": {
+        "type": "string"
+       },
+       "c8": {
+        "type": "string"
+       },
+       "c9": {
+        "type": "string"
+       },
+       "c10": {
+        "type": "string"
+       },
+       "c11": {
+        "type": "string"
+       },
+       "c12": {
+        "type": "string"
+       },
+       "c13": {
+        "type": "string"
+       },
+       "c14": {
+        "type": "string"
+       },
+       "c15": {
+        "type": "string"
+       },
+       "c16": {
+        "type": "string"
+       },
+       "c17": {
+        "type": "string"
+       },
+       "c18": {
+        "type": "string"
+       },
+       "c19": {
+        "type": "string"
+       },
+       "c20": {
+        "type": "string"
+       },
+       "c21": {
+        "type": "string"
+       },
+       "c22": {
+        "type": "string"
+       },
+       "c23": {
+        "type": "string"
+       },
+       "c24": {
+        "type": "string"
+       },
+       "c25": {
+        "type": "string"
+       },
+       "c26": {
+        "type": "string"
+       },
+       "c27": {
+        "type": "string"
+       },
+       "c28": {
+        "type": "string"
+       },
+       "c29": {
+        "type": "string"
+       },
+       "c30": {
+        "type": "string"
+       },
+       "c31": {
+        "type": "string"
+       },
+       "c32": {
+        "type": "string"
+       },
+       "c33": {
+        "type": "string"
+       },
+       "c34": {
+        "type": "string"
+       },
+       "c35": {
+        "type": "string"
+       },
+       "c36": {
+        "type": "string"
+       },
+       "c37": {
+        "type": "string"
+       },
+       "c38": {
+        "type": "string"
+       },
+       "c39": {
+        "type": "string"
+       },
+       "c40": {
+        "type": "string"
+       },
+       "c41": {
+        "type": "string"
+       },
+       "c42": {
+        "type": "string"
+       },
+       "c43": {
+        "type": "string"
+       },
+       "c44": {
+        "type": "string"
+       },
+       "c45": {
+        "type": "string"
+       },
+       "c46": {
+        "type": "string"
+       },
+       "c47": {
+        "type": "string"
+       },
+       "c48": {
+        "type": "string"
+       },
+       "c49": {
+        "type": "string"
+       },
+       "c50": {
+        "type": "string"
+       },
+       "c51": {
+        "type": "string"
+       },
+       "c52": {
+        "type": "string"
+       },
+       "c53": {
+        "type": "string"
+       },
+       "c54": {
+        "type": "string"
+       },
+       "c55": {
+        "type": "string"
+       },
+       "c56": {
+        "type": "string"
+       },
+       "c57": {
+        "type": "string"
+       },
+       "c58": {
+        "type": "string"
+       },
+       "c59": {
+        "type": "string"
+       },
+       "c60": {
+        "type": "string"
+       },
+       "c61": {
+        "type": "string"
+       },
+       "c62": {
+        "type": "string"
+       },
+       "c63": {
+        "type": "string"
+       },
+       "c64": {
+        "type": "string"
+       }
+      }
+     },
+     "effective_date": {
+      "type": "date",
+      "formats": [
+       "YYYY-MM-DD",
+       "D/M/YYYY",
+       "M/D/YYYY",
+       "D.M.YYYY",
+       "D Month YYYY",
+       "Month D, YYYY"
+      ],
+      "description": "The date from which the named section, or the rate or fee that it sets, applies, if the section text states one. A date of a source note in brackets is not an effective date."
+     },
+     "table_value_u1": {
+      "type": "number",
+      "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value.",
+      "unit": "%"
+     },
+     "table_value_u2": {
+      "type": "number",
+      "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value.",
+      "unit": "EUR"
+     },
+     "table_value_u3": {
+      "type": "number",
+      "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value.",
+      "unit": "GBP"
+     },
+     "table_value_u4": {
+      "type": "number",
+      "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value.",
+      "unit": "INR"
+     },
+     "table_value_u5": {
+      "type": "number",
+      "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value.",
+      "unit": "L"
+     },
+     "table_value_u6": {
+      "type": "number",
+      "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value.",
+      "unit": "USD"
+     },
+     "table_value_u7": {
+      "type": "number",
+      "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value.",
+      "unit": "days"
+     },
+     "table_value_u8": {
+      "type": "number",
+      "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value.",
+      "unit": "g"
+     },
+     "table_value_u9": {
+      "type": "number",
+      "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value.",
+      "unit": "hours"
+     },
+     "table_value_u10": {
+      "type": "number",
+      "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value.",
+      "unit": "kg"
+     },
+     "table_value_u11": {
+      "type": "number",
+      "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value.",
+      "unit": "mL"
+     },
+     "table_value_u12": {
+      "type": "number",
+      "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value.",
+      "unit": "mcg"
+     },
+     "table_value_u13": {
+      "type": "number",
+      "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value.",
+      "unit": "mg"
+     },
+     "table_value_u14": {
+      "type": "number",
+      "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value.",
+      "unit": "minutes"
+     },
+     "table_value_u15": {
+      "type": "number",
+      "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value.",
+      "unit": "months"
+     },
+     "table_value_u16": {
+      "type": "number",
+      "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value.",
+      "unit": "weeks"
+     },
+     "table_value_u17": {
+      "type": "number",
+      "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value.",
+      "unit": "years"
+     },
+     "table_value_2": {
+      "type": "number",
+      "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value.",
+      "unit": null
+     },
+     "table_value_2_u1": {
+      "type": "number",
+      "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value.",
+      "unit": "%"
+     },
+     "table_value_2_u2": {
+      "type": "number",
+      "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value.",
+      "unit": "EUR"
+     },
+     "table_value_2_u3": {
+      "type": "number",
+      "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value.",
+      "unit": "GBP"
+     },
+     "table_value_2_u4": {
+      "type": "number",
+      "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value.",
+      "unit": "INR"
+     },
+     "table_value_2_u5": {
+      "type": "number",
+      "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value.",
+      "unit": "L"
+     },
+     "table_value_2_u6": {
+      "type": "number",
+      "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value.",
+      "unit": "USD"
+     },
+     "table_value_2_u7": {
+      "type": "number",
+      "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value.",
+      "unit": "days"
+     },
+     "table_value_2_u8": {
+      "type": "number",
+      "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value.",
+      "unit": "g"
+     },
+     "table_value_2_u9": {
+      "type": "number",
+      "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value.",
+      "unit": "hours"
+     },
+     "table_value_2_u10": {
+      "type": "number",
+      "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value.",
+      "unit": "kg"
+     },
+     "table_value_2_u11": {
+      "type": "number",
+      "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value.",
+      "unit": "mL"
+     },
+     "table_value_2_u12": {
+      "type": "number",
+      "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value.",
+      "unit": "mcg"
+     },
+     "table_value_2_u13": {
+      "type": "number",
+      "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value.",
+      "unit": "mg"
+     },
+     "table_value_2_u14": {
+      "type": "number",
+      "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value.",
+      "unit": "minutes"
+     },
+     "table_value_2_u15": {
+      "type": "number",
+      "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value.",
+      "unit": "months"
+     },
+     "table_value_2_u16": {
+      "type": "number",
+      "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value.",
+      "unit": "weeks"
+     },
+     "table_value_2_u17": {
+      "type": "number",
+      "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value.",
+      "unit": "years"
+     }
+    }
+   },
+   "policy": {},
+   "routes": [
+    {
+     "field": "table_value",
+     "route": "checked",
+     "status": "draft",
+     "date": "2026-11-19",
+     "documents": 5,
+     "bound": "0.8646"
+    }
+   ],
+   "gold_sha256": "sha256:f746d2e46c8b2e4012c69fe44cdc28cd2ee6723e4905a476b1f2148bee2d1b69"
+  },
+  "transport": {
+   "effort": "medium",
+   "id": "codex-cli-exec",
+   "model": "gpt-6.2-sol",
+   "version": "codex-cli 0.169.0"
+  },
+  "calibration_run_sha256": "sha256:2e721bba03dc7e8fb68d6f43be38663a56691a42eb76e81f1cd48d74827bdd09",
+  "calibration_measure_sha256": "sha256:22da5f9f0dd8599543f7e6693d3fe11ee0bd05d8217dcf873b6754aa2f449ab9"
  }
 }
