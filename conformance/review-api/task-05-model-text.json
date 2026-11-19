@@ -32,6 +32,7 @@
    "statements": 2
   }
  },
+ "sources": {},
  "expected": {
   "served": true,
   "mode": "review",
@@ -41,8 +42,7 @@
    "format": "task@1",
    "slot": {
     "field": "summary",
-    "key": null,
-    "decisions": []
+    "key": null
    },
    "item": "model_text",
    "mode": "review",

@@ -1,0 +1,14 @@
+{
+ "name": "answer-bad-blind-choice",
+ "kind": "answer",
+ "description": "A blind task shows no choice, so it takes no number of one.",
+ "blind": true,
+ "body": {
+  "task": "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "unsure",
+  "choice": 1
+ },
+ "expected": {
+  "error": "bad_answer"
+ }
+}

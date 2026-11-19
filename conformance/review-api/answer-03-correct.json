@@ -6,7 +6,7 @@
  "body": {
   "task": "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
   "verdict": "correct",
-  "decision": null,
+  "choice": null,
   "span": {
    "start": 18120,
    "end": 18125

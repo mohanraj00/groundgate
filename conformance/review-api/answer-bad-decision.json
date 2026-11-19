@@ -1,12 +1,12 @@
 {
  "name": "answer-bad-decision",
  "kind": "answer",
- "description": "A decision that is a string.",
+ "description": "An index of the receipt in place of the number of a choice: decision is not a member of an answer of the API.",
  "blind": false,
  "body": {
   "task": "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
   "verdict": "choose",
-  "decision": "3"
+  "decision": 3
  },
  "expected": {
   "error": "bad_request"

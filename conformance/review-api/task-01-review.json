@@ -1,7 +1,7 @@
 {
  "name": "task-01-review",
  "kind": "task",
- "description": "A review task. The body is the task object without its packet key: that key is a hash over each candidate of the packet, and so over the proposed value of a blind task of the same packet. The response has no packet member.",
+ "description": "A review task. The body has no packet key: that key is a hash over each candidate of the packet, and so over the proposed value of a blind task of the same packet. It has no index of the receipt: the slot has no decisions, and each choice has its number in the task. Each choice has the source of its evidence.",
  "task": {
   "format": "task@1",
   "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
@@ -64,6 +64,16 @@
    }
   ]
  },
+ "sources": {
+  "3": {
+   "source": "document",
+   "ref": null
+  },
+  "7": {
+   "source": "document",
+   "ref": null
+  }
+ },
  "expected": {
   "served": true,
   "mode": "review",
@@ -73,11 +83,7 @@
    "format": "task@1",
    "slot": {
     "field": "total_revenue",
-    "key": "2025",
-    "decisions": [
-     3,
-     7
-    ]
+    "key": "2025"
    },
    "item": "number",
    "mode": "review",
@@ -96,24 +102,28 @@
    ],
    "choices": [
     {
-     "decision": 3,
+     "choice": 1,
      "value": "4200000",
      "unit": "USD",
      "shown": "$4,200,000 (written 4,200, in thousands)",
      "evidence": {
       "start": 18120,
       "end": 18125
-     }
+     },
+     "source": "document",
+     "ref": null
     },
     {
-     "decision": 7,
+     "choice": 2,
      "value": "4200",
      "unit": "USD",
      "shown": "$4,200",
      "evidence": {
       "start": 18120,
       "end": 18125
-     }
+     },
+     "source": "document",
+     "ref": null
     }
    ],
    "places": [

@@ -39,6 +39,7 @@
    }
   ]
  },
+ "sources": {},
  "expected": {
   "served": false
  }

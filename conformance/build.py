@@ -8886,20 +8886,37 @@ AUDIT_TASK = {
 
 
 def task_vector(name: str, description: str, task: dict[str, Any],
-                expected: dict[str, Any] | None) -> None:  # fmt: skip
+                expected: dict[str, Any] | None,
+                sources: dict[str, Any] | None = None) -> None:  # fmt: skip
     """``expected`` holds the members of GET /v1/tasks/{task} that come from the task object, or
-    None for a task that is not a task of the API."""
+    None for a task that is not a task of the API. ``sources`` gives the ``source`` and the
+    ``ref`` of each decision of the task in the receipt, by its index."""
     REVIEW_API.append({"name": f"task-{name}", "kind": "task", "description": description,
-                       "task": task, "expected": {"served": expected is not None,
-                                                  **(expected or {})}})  # fmt: skip
+                       "task": task, "sources": sources or {},
+                       "expected": {"served": expected is not None,
+                                    **(expected or {})}})  # fmt: skip
 
 
-def _body(task: dict[str, Any], **members: Any) -> dict[str, Any]:
-    """The body of a task response, written by hand: the task object without its packet key,
-    with ``members`` in place of the members that hold another key of the store."""
-    return {k: v for k, v in {**task, **members}.items() if k != "packet"}
-
-
+IN_DOCUMENT = {"source": "document", "ref": None}
+# The body of the review task, written by hand. It has no packet key. Its slot has no decisions,
+# and each choice has its number in the task in place of its index in the receipt: decision 3
+# is choice 1, and decision 7 is choice 2.
+REVIEW_BODY = {
+    "format": "task@1",
+    "slot": {"field": "total_revenue", "key": "2025"},
+    "item": "number", "mode": "review", "template": "number@1",
+    "question": "Which amount is total revenue for 2025?",
+    "parts": ["amount", "scale", "sign", "unit", "field", "key"],
+    "codes": ["CONFLICTING_CANDIDATES"],
+    "choices": [
+        {"choice": 1, "value": "4200000", "unit": "USD",
+         "shown": "$4,200,000 (written 4,200, in thousands)",
+         "evidence": {"start": 18120, "end": 18125}, "source": "document", "ref": None},
+        {"choice": 2, "value": "4200", "unit": "USD", "shown": "$4,200",
+         "evidence": {"start": 18120, "end": 18125}, "source": "document", "ref": None},
+    ],
+    "places": [{"start": 18120, "end": 18125, "page": 41, "box": [72.0, 310.5, 101.2, 321.0]}],
+}  # fmt: skip
 NO_CHOICE_TASK = {
     **REVIEW_TASK, "slot": {"field": "auditor", "key": None, "decisions": []}, "item": "text",
     "template": "text@1", "question": "What is the auditor?", "parts": ["field"],
@@ -8914,16 +8931,18 @@ MODEL_TEXT_TASK = {
     "model_text": {"key": api_key("7"), "statements": 2},
 }  # fmt: skip
 
-task_vector("01-review", "A review task. The body is the task object without its packet key: "
-            "that key is a hash over each candidate of the packet, and so over the proposed "
-            "value of a blind task of the same packet. The response has no packet member.",
-            REVIEW_TASK,
-            {"mode": "review", "field": "total_revenue", "key": "2025",
-             "body": _body(REVIEW_TASK)})  # fmt: skip
+task_vector("01-review", "A review task. The body has no packet key: that key is a hash over "
+            "each candidate of the packet, and so over the proposed value of a blind task of "
+            "the same packet. It has no index of the receipt: the slot has no decisions, and "
+            "each choice has its number in the task. Each choice has the source of its "
+            "evidence.", REVIEW_TASK,
+            {"mode": "review", "field": "total_revenue", "key": "2025", "body": REVIEW_BODY},
+            {"3": IN_DOCUMENT, "7": IN_DOCUMENT})  # fmt: skip
 task_vector("02-blind", "An audit task is blind. The response gives the field and the key, and "
             "no body: no value, no unit, no evidence, no place, no code, no item and no "
             "question.", AUDIT_TASK,
-            {"mode": "audit", "field": "net_income", "key": None, "body": None})  # fmt: skip
+            {"mode": "audit", "field": "net_income", "key": None, "body": None},
+            {"4": IN_DOCUMENT})  # fmt: skip
 task_vector("03-blind-span", "An audit task for a long span is blind too, so the response does "
             "not say that the proposed evidence is long.",
             {**AUDIT_TASK, "slot": {"field": "indication", "key": None, "decisions": [0]},
@@ -8934,24 +8953,43 @@ task_vector("03-blind-span", "An audit task for a long span is blind too, so the
                           "unit": None, "shown": "\"Treatment of ... in adults\"",
                           "evidence": {"start": 40, "end": 76}}],
              "places": [{"start": 40, "end": 76, "page": None, "box": None}]},
-            {"mode": "audit", "field": "indication", "key": None, "body": None})  # fmt: skip
+            {"mode": "audit", "field": "indication", "key": None, "body": None},
+            {"0": IN_DOCUMENT})  # fmt: skip
 task_vector("04-review-no-choice", "A review task for a required field with no value.",
             NO_CHOICE_TASK,
             {"mode": "review", "field": "auditor", "key": None,
-             "body": _body(NO_CHOICE_TASK)})  # fmt: skip
+             "body": {**REVIEW_BODY, "slot": {"field": "auditor", "key": None}, "item": "text",
+                      "template": "text@1", "question": "What is the auditor?",
+                      "parts": ["field"], "codes": ["REQUIRED_FIELD_MISSING"], "choices": [],
+                      "places": []}})  # fmt: skip
 task_vector("05-model-text", "A model text task holds the key of its model-text@1 input. The "
             "body leaves that key out, at its depth, and keeps the count of the statements.",
             MODEL_TEXT_TASK,
             {"mode": "review", "field": "summary", "key": None,
-             "body": _body(MODEL_TEXT_TASK, model_text={"statements": 2})})  # fmt: skip
+             "body": {**REVIEW_BODY, "slot": {"field": "summary", "key": None},
+                      "item": "model_text", "template": "model_text@1",
+                      "question": "Does the source support each statement of summary?",
+                      "parts": ["statement"], "codes": [], "choices": [],
+                      "places": [{"start": 18120, "end": 18160, "page": 41, "box": None}],
+                      "model_text": {"statements": 2}}})  # fmt: skip
 task_vector("06-key-in-list", "A list item that is a key of the store is null, so each other "
             "item keeps its index. A string that only starts as a key stays. The member "
             "sources is made up.",
             {**REVIEW_TASK, "sources": [api_key("5"), "p. 41", {"input": api_key("6"), "n": 1},
                                         "sha256:" + "5" * 63]},
             {"mode": "review", "field": "total_revenue", "key": "2025",
-             "body": _body(REVIEW_TASK, sources=[None, "p. 41", {"n": 1},
-                                                 "sha256:" + "5" * 63])})  # fmt: skip
+             "body": {**REVIEW_BODY, "sources": [None, "p. 41", {"n": 1}, "sha256:" + "5" * 63]}},
+            {"3": IN_DOCUMENT, "7": IN_DOCUMENT})  # fmt: skip
+task_vector("07-reference", "Decision 7 cites a reference of the packet. Its choice has the "
+            "source reference and the id of the reference: its evidence span is in the text of "
+            "that reference, and the same offsets of the document are other text.",
+            REVIEW_TASK,
+            {"mode": "review", "field": "total_revenue", "key": "2025",
+             "body": {**REVIEW_BODY, "choices": [
+                 REVIEW_BODY["choices"][0],
+                 {**REVIEW_BODY["choices"][1], "source": "reference", "ref": "price-list"},
+             ]}},
+            {"3": IN_DOCUMENT, "7": {"source": "reference", "ref": "price-list"}})  # fmt: skip
 task_vector("not-served-calibrate-field", "A calibrate label task is not a task of the API.",
             {**AUDIT_TASK, "template": "calibrate_field@1"}, None)  # fmt: skip
 task_vector("not-served-calibrate-key", "A calibrate key task is not a task of the API.",
@@ -9057,10 +9095,11 @@ def answer_vector(name: str, description: str, body: Any, error: str | None = No
 
 
 API_T = api_task("b")
-answer_vector("01-choose", "A choice.", {"task": API_T, "verdict": "choose", "decision": 3})
+answer_vector("01-choose", "A choice, by its number in the task.",
+              {"task": API_T, "verdict": "choose", "choice": 1})  # fmt: skip
 answer_vector("02-confirm", "The smallest body.", {"task": API_T, "verdict": "confirm"})
 answer_vector("03-correct", "A correction with each member.",
-              {"task": API_T, "verdict": "correct", "decision": None,
+              {"task": API_T, "verdict": "correct", "choice": None,
                "span": {"start": 18120, "end": 18125}, "value": "4200000",
                "parts": [{"role": "scale", "start": 17002, "end": 17025}],
                "codes_kept": ["SCALE_WORD"], "parts_seen": True, "statements": None,
@@ -9075,6 +9114,9 @@ answer_vector("bad-task-key", "A task key is not a task ID.",
               {"task": api_key("b"), "verdict": "unsure"}, "bad_request")  # fmt: skip
 answer_vector("bad-task-short", "A task ID with 63 hex digits.",
               {"task": "task:" + "b" * 63, "verdict": "unsure"}, "bad_request")  # fmt: skip
+answer_vector("bad-blind-choice", "A blind task shows no choice, so it takes no number of one.",
+              {"task": API_T, "verdict": "unsure", "choice": 1}, "bad_answer",
+              blind=True)  # fmt: skip
 answer_vector("07-blind-not-in-document", "A blind task takes not_in_document.",
               {"task": API_T, "verdict": "not_in_document"}, blind=True)  # fmt: skip
 answer_vector("08-blind-unsure", "A blind task takes unsure.",
@@ -9089,7 +9131,7 @@ answer_vector("bad-confirm-span", "A span in an answer that is not a correction.
               {"task": API_T, "verdict": "confirm", "span": {"start": 1, "end": 5}},
               "bad_answer")  # fmt: skip
 answer_vector("bad-choose-codes", "A kept code in an answer that is not a correction.",
-              {"task": API_T, "verdict": "choose", "decision": 3, "codes_kept": ["SCALE_WORD"]},
+              {"task": API_T, "verdict": "choose", "choice": 1, "codes_kept": ["SCALE_WORD"]},
               "bad_answer")  # fmt: skip
 answer_vector("bad-parts-null", "parts that is null.",
               {"task": API_T, "verdict": "correct", "span": {"start": 1, "end": 5},
@@ -9113,10 +9155,15 @@ answer_vector("bad-time", "A body cannot give the time.",
 answer_vector("bad-field-keys", "field_keys is for a calibrate label task, which is not a task "
               "of the API.", {"task": API_T, "verdict": "confirm", "field_keys": []},
               "bad_request")  # fmt: skip
-answer_vector("bad-decision", "A decision that is a string.",
-              {"task": API_T, "verdict": "choose", "decision": "3"}, "bad_request")  # fmt: skip
-answer_vector("bad-decision-boolean", "A decision that is a boolean.",
-              {"task": API_T, "verdict": "choose", "decision": True}, "bad_request")  # fmt: skip
+answer_vector("bad-choice", "A choice that is a string.",
+              {"task": API_T, "verdict": "choose", "choice": "1"}, "bad_request")  # fmt: skip
+answer_vector("bad-choice-boolean", "A choice that is a boolean.",
+              {"task": API_T, "verdict": "choose", "choice": True}, "bad_request")  # fmt: skip
+answer_vector("bad-choice-zero", "A choice of 0: the numbers start at 1.",
+              {"task": API_T, "verdict": "choose", "choice": 0}, "bad_request")  # fmt: skip
+answer_vector("bad-decision", "An index of the receipt in place of the number of a choice: "
+              "decision is not a member of an answer of the API.",
+              {"task": API_T, "verdict": "choose", "decision": 3}, "bad_request")  # fmt: skip
 answer_vector("bad-span-list", "A span that is a list.",
               {"task": API_T, "verdict": "correct", "span": [1, 5]}, "bad_request")  # fmt: skip
 answer_vector("bad-span-member", "A span with a member other than start and end.",

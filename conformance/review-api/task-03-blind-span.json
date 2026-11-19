@@ -43,6 +43,12 @@
    }
   ]
  },
+ "sources": {
+  "0": {
+   "source": "document",
+   "ref": null
+  }
+ },
  "expected": {
   "served": true,
   "mode": "audit",

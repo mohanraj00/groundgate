@@ -23,6 +23,7 @@
   "choices": [],
   "places": []
  },
+ "sources": {},
  "expected": {
   "served": true,
   "mode": "review",
@@ -32,8 +33,7 @@
    "format": "task@1",
    "slot": {
     "field": "auditor",
-    "key": null,
-    "decisions": []
+    "key": null
    },
    "item": "text",
    "mode": "review",
