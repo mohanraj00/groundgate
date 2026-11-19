@@ -49,6 +49,7 @@
    "ref": null
   }
  },
+ "blind_packet": false,
  "expected": {
   "served": true,
   "mode": "audit",

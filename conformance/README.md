@@ -65,7 +65,8 @@ Files in `review-api/` are review API vectors (SPEC §4.20). `kind` names what a
   or the `error` code.
 - `token`: the static `token` and the `reviewer` of a service, and the `Authorization` value.
 - `task`: one `task@1` object, and `sources`: the `source` and the `ref` of each decision of
-  the task in the receipt, by its index. `expected.served` is false for a task that is not a
+  the task in the receipt, by its index. `blind_packet` is true when the packet of the task has
+  a task with the mode `audit`. `expected.served` is false for a task that is not a
   task of the API. If not, `expected` gives the members of the task response that come from the task. The
   `body` has no key of the store and no index of the receipt, and a blind task has a null
   `body`.

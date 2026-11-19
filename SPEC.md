@@ -2229,9 +2229,17 @@ escape. Only the list takes a query. A query on another path gives `bad_request`
 | `server_error` | 500 | The service failed. The response gives no store data. |
 
 **The tasks of the API** are the `task@1` objects of the store that their packet gives, when
-the receipt of the packet matches its inputs. Two kinds of task are not tasks of the API in
-version 1, and they get no task ID: a calibrate label task (docs/design/review.md §11), and a
-task with the mode `audit` and the item `closed_set`.
+the receipt of the packet matches its inputs. Three kinds of task are not tasks of the API in
+version 1, and they get no task ID:
+
+- a calibrate label task (docs/design/review.md §11);
+- a task with the mode `audit` and the item `closed_set`;
+- a model text task of a packet that has a task with the mode `audit`.
+
+A statement of a model text can state the value that a blind task of its packet hides, and each
+actor gets each task of the API. So the API gives a model text task only when no task of its
+packet has the mode `audit`. An answer does not change this: the rule reads the tasks of the
+packet, not their answers.
 
 A task is **open** for an actor when the actor has no answer to it and no answer settles its
 slot under the review policy of the service (docs/design/review.md §6).
