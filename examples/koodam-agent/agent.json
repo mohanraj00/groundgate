@@ -1,0 +1,25 @@
+{
+  "apiVersion": "core.koodam.dev/v1alpha1",
+  "kind": "Agent",
+  "metadata": {"name": "invoice-run"},
+  "spec": {
+    "image": "registry.example.com/groundgate-job:1",
+    "command": [
+      "python", "/job/koodam-agent/agent_job.py",
+      "--input", "/data/input",
+      "--store", "/data/store",
+      "--model", "invoice-model"
+    ],
+    "model": "invoice-model",
+    "budget": "1",
+    "output": {"path": "/data/packet.txt"},
+    "podTemplate": {
+      "spec": {
+        "volumes": [{"name": "data", "persistentVolumeClaim": {"claimName": "invoice-data"}}],
+        "containers": [
+          {"name": "agent", "volumeMounts": [{"name": "data", "mountPath": "/data"}]}
+        ]
+      }
+    }
+  }
+}

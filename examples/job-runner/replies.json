@@ -1,0 +1,3 @@
+[
+  "{\"candidates\": [{\"field\": \"total_due\", \"value\": \"289.80\", \"unit\": \"USD\", \"key\": null, \"evidence\": [{\"source\": \"document\", \"role\": \"value\", \"text\": \"$289.80\"}]}, {\"field\": \"sales_tax\", \"value\": \"13.80\", \"unit\": \"USD\", \"key\": null, \"evidence\": [{\"source\": \"document\", \"role\": \"value\", \"text\": \"$13.80\"}]}], \"not_found\": []}"
+]

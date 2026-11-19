@@ -1,0 +1,6 @@
+{
+  "fields": {
+    "total_due": {"type": "number", "unit": "USD", "required": true},
+    "sales_tax": {"type": "number", "unit": "USD"}
+  }
+}

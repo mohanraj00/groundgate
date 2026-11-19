@@ -1,0 +1,11 @@
+INVOICE
+Invoice number: 2041
+Bill to: Lakeside Workshop
+
+Item              Qty   Amount
+Shelf brackets      4   $96.00
+Assembly hours      3   $180.00
+
+Subtotal: $276.00
+Sales tax (5%): $13.80
+Total due: $289.80
