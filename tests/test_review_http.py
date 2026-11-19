@@ -48,6 +48,7 @@ EVERY = {
     "leads": [],
     "rejected": True,
 }
+NO_AUDIT = {**EVERY, "audit": {"rate": "0", "seed": "s"}}  # no blind task
 TEXT = "Café \U0001f600 revenue was 4,200 thousand in 2025.\nNet income was 310 thousand in 2025.\n"
 SCHEMA = {
     "fields": {
@@ -90,12 +91,15 @@ def id_of(task: str) -> str:
     return api.task_id(KEY, task)
 
 
-def make_store(root: Path) -> tuple[str, dict[str, str]]:
+def make_store(
+    root: Path, policy: dict[str, Any] = EVERY, document: str = "doc-1"
+) -> tuple[str, dict[str, str]]:
     """A store with one packet and its two tasks: the revenue task is a review task with two
-    choices, and the net income task is an audit task, so it is blind."""
+    choices, and the net income task is an audit task, so it is blind. With NO_AUDIT, the packet
+    has the revenue task only."""
     with FolderStore(root) as store:
-        k, _ = admit_packet(store, TEXT, SCHEMA, CANDIDATES, None, "doc-1", None)
-        tasks = {t["slot"]["field"]: tk for tk, t in write_tasks(store, k, EVERY).tasks}
+        k, _ = admit_packet(store, TEXT, SCHEMA, CANDIDATES, None, document, None)
+        tasks = {t["slot"]["field"]: tk for tk, t in write_tasks(store, k, policy).tasks}
     return k, tasks
 
 
@@ -223,7 +227,7 @@ def test_vector(path: Path, empty: Call) -> None:
                 got = {"actor": api.check_static(sent, api.read_token(v["token"], v["reviewer"]))}
         elif kind == "task":
             sources = {int(index): d for index, d in v["sources"].items()}
-            view = api.task_view(v["task"], sources)
+            view = api.task_view(v["task"], sources, v["blind_packet"])
             got = {"served": view is not None, **(view or {})}
         elif kind == "statements":
             got = {"statements": api.statement_list(v["model_text"])}
@@ -755,13 +759,17 @@ def test_no_response_gives_a_key_of_the_store_or_a_hash_over_it(tmp_path: Path) 
     needs the key of the service."""
     root = tmp_path / "store"
     k, tasks = make_store(root)
+    # a model text task is a task of the API only in a packet with no blind task
+    other, more = make_store(root, NO_AUDIT, "doc-2")
+    assert other != k and list(more) == ["revenue"]
+    tasks["revenue of doc-2"] = more["revenue"]
     text = "Revenue was 4,300 thousand."
     model_text = {
-        "format": "model-text@1", "packet": k, "name": "summary", "text": text,
+        "format": "model-text@1", "packet": other, "name": "summary", "text": text,
         "statements": [{"start": 0, "end": len(text), "cites": [at("4,200 thousand")]}],
     }  # fmt: skip
     with FolderStore(root) as store:
-        written = write_tasks(store, k, EVERY, model_text).tasks
+        written = write_tasks(store, other, NO_AUDIT, model_text).tasks
         tasks["summary"] = next(tk for tk, t in written if t["item"] == "model_text")
     ids = {field: id_of(tk) for field, tk in tasks.items()}
     service = Service(root, ISSUERS, clock=lambda: CLOCK, id_key=KEY)
@@ -809,7 +817,8 @@ def test_no_response_gives_a_key_of_the_store_or_a_hash_over_it(tmp_path: Path) 
     with FolderStore(root) as store:
         keys, _ = store.object_keys()
         log = store.read(("answers", k, reviewer_key("ana")))
-    testable = {key[7:] for key in keys} | {k[7:], *(tk[7:] for tk in tasks.values())}
+        log += store.read(("answers", other, reviewer_key("ana")))
+    testable = {key[7:] for key in keys} | {k[7:], other[7:], *(tk[7:] for tk in tasks.values())}
     testable |= {r[name][7:] for r in log for name in ("entry_sha256", "previous") if r[name]}
     testable |= {hashlib.sha256(p.read_bytes()).hexdigest() for p in root.rglob("*") if p.is_file()}
     testable |= {m for p in root.rglob("*") for m in HEX.findall(str(p.relative_to(root)))}
@@ -868,7 +877,7 @@ def test_a_model_text_task_gives_its_statements_and_takes_a_verdict_for_each(
     """The task holds no model text, so the task response gives each statement and its cites.
     The model text has a letter of two bytes, and the statement spans are in bytes."""
     root = tmp_path / "store"
-    k, _ = make_store(root)
+    k, _ = make_store(root, NO_AUDIT)
     text = "Caf\u00e9 revenue was 4,300 thousand. Net income rose."
     first = len("Caf\u00e9 revenue was 4,300 thousand.".encode())
     model_text = {
@@ -879,7 +888,7 @@ def test_a_model_text_task_gives_its_statements_and_takes_a_verdict_for_each(
         ],
     }  # fmt: skip
     with FolderStore(root) as store:
-        written = write_tasks(store, k, EVERY, model_text).tasks
+        written = write_tasks(store, k, NO_AUDIT, model_text).tasks
         tk = id_of(next(tk for tk, t in written if t["item"] == "model_text"))
     service = Service(root, ISSUERS, clock=lambda: CLOCK, id_key=KEY)
     with serving(api.server(service), {"Authorization": claim()}) as call:
@@ -904,6 +913,42 @@ def test_a_model_text_task_gives_its_statements_and_takes_a_verdict_for_each(
         record = json.loads(response[2])["record"]
         assert record["statements"] == verdicts and "task" not in record
     assert records(root, k)[0]["statements"] == verdicts
+
+
+def test_a_model_text_task_of_a_packet_with_a_blind_task_is_not_a_task_of_the_api(
+    tmp_path: Path,
+) -> None:
+    """A statement can state the value that the blind task hides, and one actor gets each task
+    of the API. So the model text task of such a packet has no task ID, with or without an
+    answer to the blind task."""
+    root = tmp_path / "store"
+    k, tasks = make_store(root)
+    text = "Net income was 310 thousand."
+    model_text = {
+        "format": "model-text@1", "packet": k, "name": "summary", "text": text,
+        "statements": [{"start": 0, "end": len(text), "cites": [at("310 thousand")]}],
+    }  # fmt: skip
+    with FolderStore(root) as store:
+        written = write_tasks(store, k, EVERY, model_text).tasks
+        summary = id_of(next(tk for tk, t in written if t["item"] == "model_text"))
+    blind = id_of(tasks["net_income"])
+    service = Service(root, ISSUERS, clock=lambda: CLOCK, id_key=KEY)
+    with serving(api.server(service), {"Authorization": claim()}) as call:
+        for _ in range(2):
+            listed = json.loads(call("GET", "/v1/tasks")[2])["tasks"]
+            assert "summary" not in [t["field"] for t in listed]
+            seen = [
+                call("GET", "/v1/tasks"),
+                call("GET", f"/v1/tasks/{summary}"),
+                call("GET", f"/v1/tasks/{summary}/document"),
+                call("POST", "/v1/answers", {"task": summary, "verdict": "unsure"}),
+            ]
+            assert [error(response) for response in seen[1:]] == [(404, "not_found")] * 3
+            assert all("310 thousand." not in body for _, _, body in seen)
+            # the second pass: the blind task has an answer, and the rule is the same
+            call("POST", "/v1/answers", {"task": blind, "verdict": "unsure"})
+        assert json.loads(call("GET", f"/v1/tasks/{blind}")[2])["answered"] == "unsure"
+    assert [r["verdict"] for r in records(root, k)] == ["unsure", "unsure"]
 
 
 def test_a_calibrate_label_task_is_not_a_task_of_the_api(tmp_path: Path) -> None:

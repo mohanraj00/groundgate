@@ -8887,12 +8887,13 @@ AUDIT_TASK = {
 
 def task_vector(name: str, description: str, task: dict[str, Any],
                 expected: dict[str, Any] | None,
-                sources: dict[str, Any] | None = None) -> None:  # fmt: skip
+                sources: dict[str, Any] | None = None, blind_packet: bool = False) -> None:  # fmt: skip
     """``expected`` holds the members of GET /v1/tasks/{task} that come from the task object, or
     None for a task that is not a task of the API. ``sources`` gives the ``source`` and the
-    ``ref`` of each decision of the task in the receipt, by its index."""
+    ``ref`` of each decision of the task in the receipt, by its index. ``blind_packet`` says
+    that the packet of the task has a task with the mode ``audit``."""
     REVIEW_API.append({"name": f"task-{name}", "kind": "task", "description": description,
-                       "task": task, "sources": sources or {},
+                       "task": task, "sources": sources or {}, "blind_packet": blind_packet,
                        "expected": {"served": expected is not None,
                                     **(expected or {})}})  # fmt: skip
 
@@ -8990,6 +8991,20 @@ task_vector("07-reference", "Decision 7 cites a reference of the packet. Its cho
                  {**REVIEW_BODY["choices"][1], "source": "reference", "ref": "price-list"},
              ]}},
             {"3": IN_DOCUMENT, "7": {"source": "reference", "ref": "price-list"}})  # fmt: skip
+task_vector("08-review-blind-packet", "A review task of a packet that has a blind task is a "
+            "task of the API, with the same body.",
+            REVIEW_TASK, {"mode": "review", "field": "total_revenue", "key": "2025",
+                          "body": REVIEW_BODY},
+            sources={"3": IN_DOCUMENT, "7": IN_DOCUMENT}, blind_packet=True)  # fmt: skip
+task_vector(
+    "not-served-model-text-blind-packet",
+    "A statement of a model text can state the "
+    "value that a blind task of its packet hides. So a model text task of a packet "
+    "that has a task with the mode audit is not a task of the API.",
+    MODEL_TEXT_TASK,
+    None,
+    blind_packet=True,
+)
 task_vector("not-served-calibrate-field", "A calibrate label task is not a task of the API.",
             {**AUDIT_TASK, "template": "calibrate_field@1"}, None)  # fmt: skip
 task_vector("not-served-calibrate-key", "A calibrate key task is not a task of the API.",
