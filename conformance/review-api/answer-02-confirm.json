@@ -1,0 +1,13 @@
+{
+ "name": "answer-02-confirm",
+ "kind": "answer",
+ "description": "The smallest body.",
+ "blind": false,
+ "body": {
+  "task": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "confirm"
+ },
+ "expected": {
+  "valid": true
+ }
+}

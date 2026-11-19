@@ -1,0 +1,13 @@
+{
+ "name": "answer-bad-blind-wrong",
+ "kind": "answer",
+ "description": "A blind task does not take wrong: the actor did not get a value.",
+ "blind": true,
+ "body": {
+  "task": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "wrong"
+ },
+ "expected": {
+  "error": "bad_answer"
+ }
+}

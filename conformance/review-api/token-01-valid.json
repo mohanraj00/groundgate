@@ -1,0 +1,11 @@
+{
+ "name": "token-01-valid",
+ "kind": "token",
+ "description": "The static token. The actor is the reviewer name of the service.",
+ "token": "local-token-0123456789-abcdefghijklmnopqrstuvwxyz",
+ "reviewer": "ana",
+ "authorization": "Bearer local-token-0123456789-abcdefghijklmnopqrstuvwxyz",
+ "expected": {
+  "actor": "ana"
+ }
+}

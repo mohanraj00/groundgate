@@ -1,0 +1,17 @@
+{
+ "name": "answer-bad-span-list",
+ "kind": "answer",
+ "description": "A span that is a list.",
+ "blind": false,
+ "body": {
+  "task": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "correct",
+  "span": [
+   1,
+   5
+  ]
+ },
+ "expected": {
+  "error": "bad_request"
+ }
+}

@@ -1,0 +1,16 @@
+{
+ "name": "request-bad-claim",
+ "kind": "request",
+ "description": "Another token.",
+ "method": "GET",
+ "path": "/v1/tasks",
+ "headers": {
+  "Host": "127.0.0.1:{port}",
+  "Authorization": "Bearer 0000000000000000000000000000000000000000000000000"
+ },
+ "body": null,
+ "expected": {
+  "status": 401,
+  "error": "bad_claim"
+ }
+}

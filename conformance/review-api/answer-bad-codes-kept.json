@@ -1,0 +1,20 @@
+{
+ "name": "answer-bad-codes-kept",
+ "kind": "answer",
+ "description": "codes_kept with a number.",
+ "blind": false,
+ "body": {
+  "task": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "correct",
+  "span": {
+   "start": 1,
+   "end": 5
+  },
+  "codes_kept": [
+   7
+  ]
+ },
+ "expected": {
+  "error": "bad_request"
+ }
+}

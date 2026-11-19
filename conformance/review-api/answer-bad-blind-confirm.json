@@ -1,0 +1,13 @@
+{
+ "name": "answer-bad-blind-confirm",
+ "kind": "answer",
+ "description": "A blind task does not take confirm: the actor did not get a value.",
+ "blind": true,
+ "body": {
+  "task": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "confirm"
+ },
+ "expected": {
+  "error": "bad_answer"
+ }
+}

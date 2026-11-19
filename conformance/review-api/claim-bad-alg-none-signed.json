@@ -1,0 +1,20 @@
+{
+ "name": "claim-bad-alg-none-signed",
+ "kind": "claim",
+ "description": "The alg none with an HMAC signature.",
+ "issuers": [
+  {
+   "issuer": "https://id.example.test",
+   "secret": "cmV2aWV3LWFwaS12ZWN0b3Itc2VjcmV0LUEtMDEyMzQ1Njc4OQ"
+  },
+  {
+   "issuer": "desk",
+   "secret": "cmV2aWV3LWFwaS12ZWN0b3Itc2VjcmV0LUItOTg3NjU0MzIxMA"
+  }
+ ],
+ "now": 1795089600,
+ "authorization": "Bearer eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJpc3MiOiJodHRwczovL2lkLmV4YW1wbGUudGVzdCIsInN1YiI6ImFuYSIsImF1ZCI6Imdyb3VuZGdhdGUtcmV2aWV3IiwiZXhwIjoxNzk1MDg5OTAwfQ.pOMLYh2eoAhrGappR9B5R2HPT6DjdIt2u3HLEmUxaFs",
+ "expected": {
+  "error": "bad_claim"
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "name": "claim-02-second-issuer",
+ "kind": "claim",
+ "description": "A claim of the second issuer, with no typ, an nbf of now, and two members that the check ignores.",
+ "issuers": [
+  {
+   "issuer": "https://id.example.test",
+   "secret": "cmV2aWV3LWFwaS12ZWN0b3Itc2VjcmV0LUEtMDEyMzQ1Njc4OQ"
+  },
+  {
+   "issuer": "desk",
+   "secret": "cmV2aWV3LWFwaS12ZWN0b3Itc2VjcmV0LUItOTg3NjU0MzIxMA"
+  }
+ ],
+ "now": 1795089600,
+ "authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJkZXNrIiwic3ViIjoiYmVuIiwiYXVkIjoiZ3JvdW5kZ2F0ZS1yZXZpZXciLCJleHAiOjE3OTUwODk2NjAsIm5iZiI6MTc5NTA4OTYwMCwiaWF0IjoxNzk1MDg5NTk1LCJqdGkiOiJjLTE3In0.1YkzAlZ_g-Df0vBmMB-Z9FcksjESuhM--YXpYFfp50g",
+ "expected": {
+  "actor": "ben"
+ }
+}

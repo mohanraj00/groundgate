@@ -1,0 +1,14 @@
+{
+ "name": "answer-bad-decision",
+ "kind": "answer",
+ "description": "A decision that is a string.",
+ "blind": false,
+ "body": {
+  "task": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "choose",
+  "decision": "3"
+ },
+ "expected": {
+  "error": "bad_request"
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "name": "request-length-none",
+ "kind": "request",
+ "description": "A POST with no Content-Length.",
+ "method": "POST",
+ "path": "/v1/answers",
+ "headers": {
+  "Host": "127.0.0.1:{port}",
+  "Authorization": "Bearer local-token-0123456789-abcdefghijklmnopqrstuvwxyz",
+  "Content-Type": "application/json"
+ },
+ "body": null,
+ "expected": {
+  "status": 411,
+  "error": "length_required"
+ }
+}

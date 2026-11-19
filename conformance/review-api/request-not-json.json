@@ -1,0 +1,17 @@
+{
+ "name": "request-not-json",
+ "kind": "request",
+ "description": "A body that is not JSON.",
+ "method": "POST",
+ "path": "/v1/answers",
+ "headers": {
+  "Host": "127.0.0.1:{port}",
+  "Authorization": "Bearer local-token-0123456789-abcdefghijklmnopqrstuvwxyz",
+  "Content-Type": "application/json"
+ },
+ "body": "{",
+ "expected": {
+  "status": 400,
+  "error": "bad_request"
+ }
+}

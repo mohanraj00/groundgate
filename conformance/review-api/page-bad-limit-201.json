@@ -1,0 +1,53 @@
+{
+ "name": "page-bad-limit-201",
+ "kind": "page",
+ "description": "A limit of 201.",
+ "entries": [
+  {
+   "task": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "packet": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+   "field": "total",
+   "key": null,
+   "open": true
+  },
+  {
+   "task": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+   "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+   "field": "total",
+   "key": null,
+   "open": true
+  },
+  {
+   "task": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+   "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+   "field": "rate",
+   "key": "standard",
+   "open": true
+  },
+  {
+   "task": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+   "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+   "field": "rate",
+   "key": null,
+   "open": true
+  },
+  {
+   "task": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+   "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+   "field": "rate",
+   "key": "express",
+   "open": false
+  },
+  {
+   "task": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+   "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+   "field": "rate",
+   "key": "express",
+   "open": true
+  }
+ ],
+ "query": "limit=201",
+ "expected": {
+  "error": "bad_request"
+ }
+}

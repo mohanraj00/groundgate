@@ -1,0 +1,17 @@
+{
+ "name": "answer-06-blind-correct",
+ "kind": "answer",
+ "description": "A blind task takes a correction.",
+ "blind": true,
+ "body": {
+  "task": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "correct",
+  "span": {
+   "start": 18240,
+   "end": 18243
+  }
+ },
+ "expected": {
+  "valid": true
+ }
+}

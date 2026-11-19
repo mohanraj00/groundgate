@@ -1,0 +1,16 @@
+{
+ "name": "request-method-delete-task",
+ "kind": "request",
+ "description": "DELETE on a task.",
+ "method": "DELETE",
+ "path": "/v1/tasks/sha256:0000000000000000000000000000000000000000000000000000000000000000",
+ "headers": {
+  "Host": "127.0.0.1:{port}",
+  "Authorization": "Bearer local-token-0123456789-abcdefghijklmnopqrstuvwxyz"
+ },
+ "body": null,
+ "expected": {
+  "status": 405,
+  "error": "method_not_allowed"
+ }
+}

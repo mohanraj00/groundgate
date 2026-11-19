@@ -1,0 +1,16 @@
+{
+ "name": "request-path-version",
+ "kind": "request",
+ "description": "A path of another version.",
+ "method": "GET",
+ "path": "/v2/tasks",
+ "headers": {
+  "Host": "127.0.0.1:{port}",
+  "Authorization": "Bearer local-token-0123456789-abcdefghijklmnopqrstuvwxyz"
+ },
+ "body": null,
+ "expected": {
+  "status": 404,
+  "error": "not_found"
+ }
+}

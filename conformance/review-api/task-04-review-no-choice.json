@@ -1,0 +1,54 @@
+{
+ "name": "task-04-review-no-choice",
+ "kind": "task",
+ "description": "A review task for a required field with no value.",
+ "task": {
+  "format": "task@1",
+  "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+  "slot": {
+   "field": "auditor",
+   "key": null,
+   "decisions": []
+  },
+  "item": "text",
+  "mode": "review",
+  "template": "text@1",
+  "question": "What is the auditor?",
+  "parts": [
+   "field"
+  ],
+  "codes": [
+   "REQUIRED_FIELD_MISSING"
+  ],
+  "choices": [],
+  "places": []
+ },
+ "expected": {
+  "served": true,
+  "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+  "mode": "review",
+  "field": "auditor",
+  "key": null,
+  "body": {
+   "format": "task@1",
+   "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+   "slot": {
+    "field": "auditor",
+    "key": null,
+    "decisions": []
+   },
+   "item": "text",
+   "mode": "review",
+   "template": "text@1",
+   "question": "What is the auditor?",
+   "parts": [
+    "field"
+   ],
+   "codes": [
+    "REQUIRED_FIELD_MISSING"
+   ],
+   "choices": [],
+   "places": []
+  }
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "name": "claim-bad-typ",
+ "kind": "claim",
+ "description": "A typ other than JWT.",
+ "issuers": [
+  {
+   "issuer": "https://id.example.test",
+   "secret": "cmV2aWV3LWFwaS12ZWN0b3Itc2VjcmV0LUEtMDEyMzQ1Njc4OQ"
+  },
+  {
+   "issuer": "desk",
+   "secret": "cmV2aWV3LWFwaS12ZWN0b3Itc2VjcmV0LUItOTg3NjU0MzIxMA"
+  }
+ ],
+ "now": 1795089600,
+ "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6ImF0K2p3dCJ9.eyJpc3MiOiJodHRwczovL2lkLmV4YW1wbGUudGVzdCIsInN1YiI6ImFuYSIsImF1ZCI6Imdyb3VuZGdhdGUtcmV2aWV3IiwiZXhwIjoxNzk1MDg5OTAwfQ.hw1Aed8pXEy3m_ujmSy5XErx5rGdXoM5wGGJEs4sS3s",
+ "expected": {
+  "error": "bad_claim"
+ }
+}

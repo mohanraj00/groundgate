@@ -1,0 +1,18 @@
+{
+ "name": "answer-bad-parts-null",
+ "kind": "answer",
+ "description": "parts that is null.",
+ "blind": false,
+ "body": {
+  "task": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "correct",
+  "span": {
+   "start": 1,
+   "end": 5
+  },
+  "parts": null
+ },
+ "expected": {
+  "error": "bad_request"
+ }
+}

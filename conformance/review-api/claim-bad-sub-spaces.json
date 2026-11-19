@@ -1,0 +1,20 @@
+{
+ "name": "claim-bad-sub-spaces",
+ "kind": "claim",
+ "description": "A sub with spaces only.",
+ "issuers": [
+  {
+   "issuer": "https://id.example.test",
+   "secret": "cmV2aWV3LWFwaS12ZWN0b3Itc2VjcmV0LUEtMDEyMzQ1Njc4OQ"
+  },
+  {
+   "issuer": "desk",
+   "secret": "cmV2aWV3LWFwaS12ZWN0b3Itc2VjcmV0LUItOTg3NjU0MzIxMA"
+  }
+ ],
+ "now": 1795089600,
+ "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2lkLmV4YW1wbGUudGVzdCIsInN1YiI6IiAgIiwiYXVkIjoiZ3JvdW5kZ2F0ZS1yZXZpZXciLCJleHAiOjE3OTUwODk5MDB9.U-s_n-pZ2cyuw46gC3vy4fIgAm-zKRTipRfpLTGJGU0",
+ "expected": {
+  "error": "bad_claim"
+ }
+}

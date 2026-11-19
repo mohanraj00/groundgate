@@ -1,0 +1,20 @@
+{
+ "name": "claim-bad-sub-none",
+ "kind": "claim",
+ "description": "A claim with no sub.",
+ "issuers": [
+  {
+   "issuer": "https://id.example.test",
+   "secret": "cmV2aWV3LWFwaS12ZWN0b3Itc2VjcmV0LUEtMDEyMzQ1Njc4OQ"
+  },
+  {
+   "issuer": "desk",
+   "secret": "cmV2aWV3LWFwaS12ZWN0b3Itc2VjcmV0LUItOTg3NjU0MzIxMA"
+  }
+ ],
+ "now": 1795089600,
+ "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2lkLmV4YW1wbGUudGVzdCIsImF1ZCI6Imdyb3VuZGdhdGUtcmV2aWV3IiwiZXhwIjoxNzk1MDg5OTAwfQ.1oYDYG9j_g9vtIZAvNWKt7OjD5O3DIk1n4c9aecosTk",
+ "expected": {
+  "error": "bad_claim"
+ }
+}

@@ -7,7 +7,9 @@ Run it after editing a vector; commit the output.
 
 from __future__ import annotations
 
+import base64
 import hashlib
+import hmac
 import json
 from pathlib import Path
 from typing import Any
@@ -8644,6 +8646,543 @@ events_log("bad-other-profile", "An event of another profile digest in the log."
 events_log("bad-not-event", "An audit label in the log.", PROFILE_A,
            [event(), audit_label()], None)  # fmt: skip
 
+# ------------------------------------------------------- the review API (SPEC §4.20, #649)
+# Each expectation is written by hand. ``_claim`` signs a claim with only base64, hmac and json,
+# so no vector comes from a run of groundgate.
+REVIEW_API: list[dict[str, Any]] = []
+API_NOW = 1795089600  # 2026-11-19T12:00:00Z
+SECRET_A = b"review-api-vector-secret-A-0123456789"
+SECRET_B = b"review-api-vector-secret-B-9876543210"
+ISSUER_A = "https://id.example.test"
+ISSUER_B = "desk"
+STATIC_TOKEN = "local-token-0123456789-abcdefghijklmnopqrstuvwxyz"
+
+
+def _b64(data: bytes) -> str:
+    return base64.urlsafe_b64encode(data).rstrip(b"=").decode("ascii")
+
+
+API_ISSUERS = [{"issuer": ISSUER_A, "secret": _b64(SECRET_A)},
+               {"issuer": ISSUER_B, "secret": _b64(SECRET_B)}]  # fmt: skip
+HS256 = {"alg": "HS256", "typ": "JWT"}
+
+
+def _part(obj: Any) -> str:
+    return _b64(json.dumps(obj, separators=(",", ":"), ensure_ascii=False).encode("utf-8"))
+
+
+def _claim(header: Any, payload: Any, secret: bytes) -> str:
+    """The claim of SPEC §4.20: the header, the payload and the HMAC-SHA-256 signature."""
+    signed = f"{_part(header)}.{_part(payload)}"
+    return f"{signed}.{_b64(hmac.new(secret, signed.encode('ascii'), hashlib.sha256).digest())}"
+
+
+def payload(**members: Any) -> dict[str, Any]:
+    return {"iss": ISSUER_A, "sub": "ana", "aud": "groundgate-review", "exp": API_NOW + 300,
+            **members}  # fmt: skip
+
+
+def claim_vector(name: str, description: str, authorization: str | None,
+                 actor: str | None = None, error: str | None = None) -> None:  # fmt: skip
+    """``authorization`` is the value of the Authorization header, or None for no header."""
+    REVIEW_API.append({
+        "name": f"claim-{name}", "kind": "claim", "description": description,
+        "issuers": API_ISSUERS, "now": API_NOW, "authorization": authorization,
+        "expected": {"actor": actor} if error is None else {"error": error},
+    })  # fmt: skip
+
+
+def bearer(payload_: Any, secret: bytes = SECRET_A, header: Any = None) -> str:
+    return "Bearer " + _claim(HS256 if header is None else header, payload_, secret)
+
+
+_GOOD = _claim(HS256, payload(), SECRET_A)
+_HEAD, _BODY, _SIG = _GOOD.split(".")
+
+claim_vector("01-valid", "A claim of the first issuer. The actor is its sub.", "Bearer " + _GOOD,
+             actor="ana")  # fmt: skip
+claim_vector("02-second-issuer", "A claim of the second issuer, with no typ, an nbf of now, and "
+             "two members that the check ignores.",
+             bearer({"iss": ISSUER_B, "sub": "ben", "aud": "groundgate-review",
+                     "exp": API_NOW + 60, "nbf": API_NOW, "iat": API_NOW - 5, "jti": "c-17"},
+                    SECRET_B, {"alg": "HS256"}), actor="ben")  # fmt: skip
+claim_vector("03-last-second", "An exp of now + 1 is not expired.",
+             bearer(payload(exp=API_NOW + 1)), actor="ana")  # fmt: skip
+claim_vector("04-name-not-ascii", "A sub in NFC with a letter outside ASCII and a space.",
+             bearer(payload(sub="Zoë Faber")), actor="Zoë Faber")  # fmt: skip
+claim_vector("05-long-name", "A sub of 128 characters.", bearer(payload(sub="n" * 128)),
+             actor="n" * 128)  # fmt: skip
+claim_vector("bad-none", "A request with no Authorization header.", None, error="no_claim")
+claim_vector("bad-basic", "Another scheme than Bearer.", "Basic " + _GOOD, error="bad_claim")
+claim_vector("bad-scheme-case", "The scheme in small letters.", "bearer " + _GOOD,
+             error="bad_claim")  # fmt: skip
+claim_vector("bad-two-spaces", "Two spaces after Bearer.", "Bearer  " + _GOOD, error="bad_claim")
+claim_vector("bad-no-token", "Bearer with no claim.", "Bearer ", error="bad_claim")
+claim_vector("bad-two-parts", "A claim with no signature part.", f"Bearer {_HEAD}.{_BODY}",
+             error="bad_claim")  # fmt: skip
+claim_vector("bad-four-parts", "A claim with four parts.", f"Bearer {_GOOD}.{_SIG}",
+             error="bad_claim")  # fmt: skip
+claim_vector("bad-padding", "A signature part with = at its end.", f"Bearer {_GOOD}=",
+             error="bad_claim")  # fmt: skip
+claim_vector("bad-base64", "A payload part with + and /, which are not base64url.",
+             f"Bearer {_HEAD}.ab+/.{_SIG}", error="bad_claim")  # fmt: skip
+claim_vector("bad-alg-none", "The alg none and an empty signature part.",
+             "Bearer " + _part({"alg": "none", "typ": "JWT"}) + "." + _BODY + ".",
+             error="bad_claim")  # fmt: skip
+claim_vector("bad-alg-none-signed", "The alg none with an HMAC signature.",
+             bearer(payload(), header={"alg": "none", "typ": "JWT"}), error="bad_claim")  # fmt: skip
+claim_vector("bad-alg-hs512", "The alg HS512.",
+             bearer(payload(), header={"alg": "HS512", "typ": "JWT"}), error="bad_claim")  # fmt: skip
+claim_vector("bad-header-member", "A header with a kid.",
+             bearer(payload(), header={"alg": "HS256", "typ": "JWT", "kid": "1"}),
+             error="bad_claim")  # fmt: skip
+claim_vector("bad-typ", "A typ other than JWT.",
+             bearer(payload(), header={"alg": "HS256", "typ": "at+jwt"}), error="bad_claim")  # fmt: skip
+claim_vector("bad-header-array", "A header that is a JSON array.",
+             bearer(payload(), header=["HS256"]), error="bad_claim")  # fmt: skip
+claim_vector("bad-payload-array", "A payload that is a JSON array.",
+             bearer([ISSUER_A, "ana"]), error="bad_claim")  # fmt: skip
+claim_vector("bad-payload-not-json", "A payload that is not JSON.",
+             "Bearer " + _HEAD + "." + _b64(b"{iss}") + "." + _SIG, error="bad_claim")  # fmt: skip
+claim_vector("bad-too-long", "A claim of more than 4096 bytes with a good signature.",
+             bearer(payload(note="x" * 4000)), error="bad_claim")  # fmt: skip
+claim_vector("unknown-issuer", "An issuer that the service does not have, with the secret of the "
+             "first issuer.", bearer(payload(iss="https://other.example.test")),
+             error="unknown_issuer")  # fmt: skip
+claim_vector("unknown-issuer-none", "A payload with no iss.", bearer(without(payload(), "iss")),
+             error="unknown_issuer")  # fmt: skip
+claim_vector("unknown-issuer-number", "An iss that is a number.", bearer(payload(iss=7)),
+             error="unknown_issuer")  # fmt: skip
+claim_vector("unknown-issuer-expired", "Step 3 comes before step 6: an expired claim of an "
+             "issuer that the service does not have.",
+             bearer(payload(iss="other", exp=API_NOW - 60)), error="unknown_issuer")  # fmt: skip
+claim_vector("bad-signature-secret", "A claim of the first issuer with the secret of the second "
+             "issuer.", bearer(payload(), SECRET_B), error="bad_claim")  # fmt: skip
+claim_vector("bad-signature-payload", "The signature of the valid claim with a payload that "
+             "names another actor.",
+             "Bearer " + _HEAD + "." + _part(payload(sub="lead")) + "." + _SIG,
+             error="bad_claim")  # fmt: skip
+claim_vector("bad-signature-expired", "Step 4 comes before step 6: an expired claim with a wrong "
+             "signature.", bearer(payload(exp=API_NOW - 60), SECRET_B), error="bad_claim")  # fmt: skip
+claim_vector("bad-aud", "A claim for another service.", bearer(payload(aud="approvals")),
+             error="bad_claim")  # fmt: skip
+claim_vector("bad-aud-none", "A claim with no aud.", bearer(without(payload(), "aud")),
+             error="bad_claim")  # fmt: skip
+claim_vector("bad-aud-list", "An aud that is a list.", bearer(payload(aud=["groundgate-review"])),
+             error="bad_claim")  # fmt: skip
+claim_vector("expired-now", "An exp of now.", bearer(payload(exp=API_NOW)),
+             error="expired_claim")  # fmt: skip
+claim_vector("expired-before", "An exp of one hour before now.",
+             bearer(payload(exp=API_NOW - 3600)), error="expired_claim")  # fmt: skip
+claim_vector("bad-exp-none", "A claim with no exp.", bearer(without(payload(), "exp")),
+             error="bad_claim")  # fmt: skip
+claim_vector("bad-exp-string", "An exp that is a string.",
+             bearer(payload(exp=str(API_NOW + 300))), error="bad_claim")  # fmt: skip
+claim_vector("bad-exp-fraction", "An exp with a fraction.", bearer(payload(exp=API_NOW + 300.5)),
+             error="bad_claim")  # fmt: skip
+claim_vector("bad-exp-boolean", "An exp that is a boolean.", bearer(payload(exp=True)),
+             error="bad_claim")  # fmt: skip
+claim_vector("bad-nbf-later", "An nbf of now + 1.", bearer(payload(nbf=API_NOW + 1)),
+             error="bad_claim")  # fmt: skip
+claim_vector("bad-nbf-string", "An nbf that is a string.", bearer(payload(nbf="0")),
+             error="bad_claim")  # fmt: skip
+claim_vector("bad-sub-none", "A claim with no sub.", bearer(without(payload(), "sub")),
+             error="bad_claim")  # fmt: skip
+claim_vector("bad-sub-empty", "An empty sub.", bearer(payload(sub="")), error="bad_claim")
+claim_vector("bad-sub-spaces", "A sub with spaces only.", bearer(payload(sub="  ")),
+             error="bad_claim")  # fmt: skip
+claim_vector("bad-sub-not-nfc", "A sub that is not in NFC: e and a combining accent.",
+             bearer(payload(sub="Zoë")), error="bad_claim")  # fmt: skip
+claim_vector("bad-sub-long", "A sub of 129 characters.", bearer(payload(sub="n" * 129)),
+             error="bad_claim")  # fmt: skip
+claim_vector("bad-sub-number", "A sub that is a number.", bearer(payload(sub=7)),
+             error="bad_claim")  # fmt: skip
+
+
+def token_vector(name: str, description: str, authorization: str | None,
+                 actor: str | None = None, error: str | None = None) -> None:  # fmt: skip
+    REVIEW_API.append({
+        "name": f"token-{name}", "kind": "token", "description": description,
+        "token": STATIC_TOKEN, "reviewer": "ana", "authorization": authorization,
+        "expected": {"actor": actor} if error is None else {"error": error},
+    })  # fmt: skip
+
+
+token_vector("01-valid", "The static token. The actor is the reviewer name of the service.",
+             "Bearer " + STATIC_TOKEN, actor="ana")  # fmt: skip
+token_vector("bad-none", "A request with no Authorization header.", None, error="no_claim")
+token_vector("bad-other", "Another token of the same length.",
+             "Bearer " + STATIC_TOKEN[:-1] + "0", error="bad_claim")  # fmt: skip
+token_vector("bad-longer", "The token and one more character.", "Bearer " + STATIC_TOKEN + "z",
+             error="bad_claim")  # fmt: skip
+token_vector("bad-shorter", "The token without its last character.",
+             "Bearer " + STATIC_TOKEN[:-1], error="bad_claim")  # fmt: skip
+token_vector("bad-scheme", "The token with no scheme.", STATIC_TOKEN, error="bad_claim")
+token_vector("bad-claim", "A signed claim, which a service with a static token does not take.",
+             "Bearer " + _GOOD, error="bad_claim")  # fmt: skip
+
+API_PACKET_1 = "sha256:" + "1" * 64
+API_PACKET_2 = "sha256:" + "2" * 64
+
+
+def api_task(letter: str) -> str:
+    return "sha256:" + letter * 64
+
+
+REVIEW_TASK = {
+    "format": "task@1", "packet": API_PACKET_1,
+    "slot": {"field": "total_revenue", "key": "2025", "decisions": [3, 7]},
+    "item": "number", "mode": "review", "template": "number@1",
+    "question": "Which amount is total revenue for 2025?",
+    "parts": ["amount", "scale", "sign", "unit", "field", "key"],
+    "codes": ["CONFLICTING_CANDIDATES"],
+    "choices": [
+        {"decision": 3, "value": "4200000", "unit": "USD",
+         "shown": "$4,200,000 (written 4,200, in thousands)",
+         "evidence": {"start": 18120, "end": 18125}},
+        {"decision": 7, "value": "4200", "unit": "USD", "shown": "$4,200",
+         "evidence": {"start": 18120, "end": 18125}},
+    ],
+    "places": [{"start": 18120, "end": 18125, "page": 41, "box": [72.0, 310.5, 101.2, 321.0]}],
+}  # fmt: skip
+AUDIT_TASK = {
+    "format": "task@1", "packet": API_PACKET_1,
+    "slot": {"field": "net_income", "key": None, "decisions": [4]},
+    "item": "number", "mode": "audit", "template": "number@1",
+    "question": "Is net income $310,000 (written 310, in thousands)?",
+    "parts": ["amount", "scale", "sign", "unit", "field"],
+    "codes": [],
+    "choices": [{"decision": 4, "value": "310000", "unit": "USD",
+                 "shown": "$310,000 (written 310, in thousands)",
+                 "evidence": {"start": 18240, "end": 18243}}],
+    "places": [{"start": 18240, "end": 18243, "page": 41, "box": [72.0, 334.5, 90.0, 345.0]}],
+}  # fmt: skip
+
+
+def task_vector(name: str, description: str, task: dict[str, Any],
+                expected: dict[str, Any] | None) -> None:  # fmt: skip
+    """``expected`` holds the members of GET /v1/tasks/{task} that come from the task object, or
+    None for a task that is not a task of the API."""
+    REVIEW_API.append({"name": f"task-{name}", "kind": "task", "description": description,
+                       "task": task, "expected": {"served": expected is not None,
+                                                  **(expected or {})}})  # fmt: skip
+
+
+task_vector("01-review", "A review task. The body is the task object as it is.", REVIEW_TASK,
+            {"packet": API_PACKET_1, "mode": "review", "field": "total_revenue", "key": "2025",
+             "body": REVIEW_TASK})  # fmt: skip
+task_vector("02-blind", "An audit task is blind. The response gives the packet, the field and "
+            "the key, and no body: no value, no unit, no evidence, no place, no code, no item "
+            "and no question.", AUDIT_TASK,
+            {"packet": API_PACKET_1, "mode": "audit", "field": "net_income", "key": None,
+             "body": None})  # fmt: skip
+task_vector("03-blind-span", "An audit task for a long span is blind too, so the response does "
+            "not say that the proposed evidence is long.",
+            {**AUDIT_TASK, "slot": {"field": "indication", "key": None, "decisions": [0]},
+             "item": "span", "template": "span@1",
+             "question": "Is the indication the text \"Treatment of ... in adults\"?",
+             "parts": ["start", "end", "field"],
+             "choices": [{"decision": 0, "value": "Treatment of moderate pain in adults",
+                          "unit": None, "shown": "\"Treatment of ... in adults\"",
+                          "evidence": {"start": 40, "end": 76}}],
+             "places": [{"start": 40, "end": 76, "page": None, "box": None}]},
+            {"packet": API_PACKET_1, "mode": "audit", "field": "indication", "key": None,
+             "body": None})  # fmt: skip
+task_vector("04-review-no-choice", "A review task for a required field with no value.",
+            {**REVIEW_TASK, "slot": {"field": "auditor", "key": None, "decisions": []},
+             "item": "text", "template": "text@1", "question": "What is the auditor?",
+             "parts": ["field"], "codes": ["REQUIRED_FIELD_MISSING"], "choices": [],
+             "places": []},
+            {"packet": API_PACKET_1, "mode": "review", "field": "auditor", "key": None,
+             "body": {**REVIEW_TASK,
+                      "slot": {"field": "auditor", "key": None, "decisions": []},
+                      "item": "text", "template": "text@1", "question": "What is the auditor?",
+                      "parts": ["field"], "codes": ["REQUIRED_FIELD_MISSING"], "choices": [],
+                      "places": []}})  # fmt: skip
+task_vector("not-served-calibrate-field", "A calibrate label task is not a task of the API.",
+            {**AUDIT_TASK, "template": "calibrate_field@1"}, None)  # fmt: skip
+task_vector("not-served-calibrate-key", "A calibrate key task is not a task of the API.",
+            {**AUDIT_TASK, "template": "calibrate_key@1", "choices": []}, None)  # fmt: skip
+task_vector("not-served-audit-closed-set", "An audit task for a closed set is not a task of the "
+            "API in version 1: its answer has no member for an option.",
+            {**AUDIT_TASK, "item": "closed_set", "template": "closed_set@1",
+             "options": ["annual", "quarterly"]}, None)  # fmt: skip
+
+# The tasks of the API in one store, in no order. ``open`` is false for a task that the actor
+# answered or that an answer settles.
+API_ENTRIES = [
+    {"task": api_task("a"), "packet": API_PACKET_2, "field": "total", "key": None, "open": True},
+    {"task": api_task("f"), "packet": API_PACKET_1, "field": "total", "key": None, "open": True},
+    {"task": api_task("e"), "packet": API_PACKET_1, "field": "rate", "key": "standard",
+     "open": True},
+    {"task": api_task("d"), "packet": API_PACKET_1, "field": "rate", "key": None, "open": True},
+    {"task": api_task("c"), "packet": API_PACKET_1, "field": "rate", "key": "express",
+     "open": False},
+    {"task": api_task("b"), "packet": API_PACKET_1, "field": "rate", "key": "express",
+     "open": True},
+]  # fmt: skip
+
+
+def page_vector(name: str, description: str, query: str, tasks: str | None = None,
+                next_: str | None = None) -> None:  # fmt: skip
+    """``query`` is the query string of GET /v1/tasks. ``tasks`` gives one letter for each task of
+    the page, in order, and ``next_`` the letter of the cursor. No ``tasks`` is bad_request."""
+    expected: dict[str, Any] = {"error": "bad_request"}
+    if tasks is not None:
+        expected = {"tasks": [api_task(t) for t in tasks],
+                    "next": None if next_ is None else api_task(next_)}  # fmt: skip
+    REVIEW_API.append({"name": f"page-{name}", "kind": "page", "description": description,
+                       "entries": API_ENTRIES, "query": query, "expected": expected})  # fmt: skip
+
+
+# The order: packet 1 before packet 2; in packet 1, rate before total; for rate, the null key,
+# then express, then standard. Task c is not open. So the open tasks are d, b, e, f, a.
+page_vector("01-all", "No query: each open task, in the order of the packet, the field, the key "
+            "with null first, and the task.", "", "dbefa")  # fmt: skip
+page_vector("02-first", "A limit of 2 gives two tasks and the cursor of the second.", "limit=2",
+            "db", "b")  # fmt: skip
+page_vector("03-second", "The cursor of page 1 gives the next two tasks.",
+            f"limit=2&cursor={api_task('b')}", "ef", "f")  # fmt: skip
+page_vector("04-last", "The last page has no cursor.", f"cursor={api_task('f')}&limit=2", "a")
+page_vector("05-exact", "A page that ends at the last open task has no cursor.", "limit=5",
+            "dbefa")  # fmt: skip
+page_vector("06-cursor-not-open", "The cursor can be a task that is not open now. The page "
+            "starts after its place in the order.", f"cursor={api_task('c')}&limit=1", "e",
+            "e")  # fmt: skip
+page_vector("07-cursor-at-end", "The cursor of the last task gives an empty page.",
+            f"cursor={api_task('a')}", "")  # fmt: skip
+page_vector("08-limit-200", "The largest limit.", "limit=200", "dbefa")
+page_vector("bad-limit-zero", "A limit of 0.", "limit=0")
+page_vector("bad-limit-201", "A limit of 201.", "limit=201")
+page_vector("bad-limit-sign", "A limit with a sign.", "limit=+2")
+page_vector("bad-limit-fraction", "A limit with a fraction.", "limit=2.0")
+page_vector("bad-limit-empty", "An empty limit.", "limit=")
+page_vector("bad-limit-two", "Two limits.", "limit=2&limit=2")
+page_vector("bad-member", "A query member that the operation does not have.", "limit=2&page=2")
+page_vector("bad-cursor-unknown", "A cursor that is the key of no task of the API.",
+            f"cursor={api_task('9')}")  # fmt: skip
+page_vector("bad-cursor-form", "A cursor that is not a key.", "cursor=2")
+page_vector("bad-cursor-escape", "A cursor with a percent escape for its colon.",
+            f"cursor=sha256%3A{'b' * 64}")  # fmt: skip
+
+
+def answer_vector(name: str, description: str, body: Any, error: str | None = None,
+                  blind: bool = False) -> None:  # fmt: skip
+    """The form of the body of POST /v1/answers, and the verdicts of a blind task. The vector
+    does not check the answer against a task."""
+    REVIEW_API.append({"name": f"answer-{name}", "kind": "answer", "description": description,
+                       "blind": blind, "body": body,
+                       "expected": {"valid": True} if error is None else {"error": error}})  # fmt: skip
+
+
+API_T = api_task("b")
+answer_vector("01-choose", "A choice.", {"task": API_T, "verdict": "choose", "decision": 3})
+answer_vector("02-confirm", "The smallest body.", {"task": API_T, "verdict": "confirm"})
+answer_vector("03-correct", "A correction with each member.",
+              {"task": API_T, "verdict": "correct", "decision": None,
+               "span": {"start": 18120, "end": 18125}, "value": "4200000",
+               "parts": [{"role": "scale", "start": 17002, "end": 17025}],
+               "codes_kept": ["SCALE_WORD"], "parts_seen": True, "statements": None,
+               "reason_seen": True, "keys": 3, "ms": 8400})  # fmt: skip
+answer_vector("04-wrong", "The verdict wrong.", {"task": API_T, "verdict": "wrong"})
+answer_vector("05-limits", "The largest keys and ms.",
+              {"task": API_T, "verdict": "unsure", "keys": 2**31 - 1, "ms": 2**31 - 1})  # fmt: skip
+answer_vector("06-blind-correct", "A blind task takes a correction.",
+              {"task": API_T, "verdict": "correct", "span": {"start": 18240, "end": 18243}},
+              blind=True)  # fmt: skip
+answer_vector("07-blind-not-in-document", "A blind task takes not_in_document.",
+              {"task": API_T, "verdict": "not_in_document"}, blind=True)  # fmt: skip
+answer_vector("08-blind-unsure", "A blind task takes unsure.",
+              {"task": API_T, "verdict": "unsure"}, blind=True)  # fmt: skip
+for _verdict in ("confirm", "choose", "adjust_span", "wrong"):
+    answer_vector(f"bad-blind-{_verdict.replace('_', '-')}",
+                  f"A blind task does not take {_verdict}: the actor did not get a value.",
+                  {"task": API_T, "verdict": _verdict}, "bad_answer", blind=True)  # fmt: skip
+answer_vector("bad-correct-no-span", "A correction with no span.",
+              {"task": API_T, "verdict": "correct", "value": "4200000"}, "bad_answer")  # fmt: skip
+answer_vector("bad-confirm-span", "A span in an answer that is not a correction.",
+              {"task": API_T, "verdict": "confirm", "span": {"start": 1, "end": 5}},
+              "bad_answer")  # fmt: skip
+answer_vector("bad-choose-codes", "A kept code in an answer that is not a correction.",
+              {"task": API_T, "verdict": "choose", "decision": 3, "codes_kept": ["SCALE_WORD"]},
+              "bad_answer")  # fmt: skip
+answer_vector("bad-parts-null", "parts that is null.",
+              {"task": API_T, "verdict": "correct", "span": {"start": 1, "end": 5},
+               "parts": None}, "bad_request")  # fmt: skip
+answer_vector("bad-array", "A body that is not an object.", [API_T, "confirm"], "bad_request")
+answer_vector("bad-no-task", "A body with no task.", {"verdict": "confirm"}, "bad_request")
+answer_vector("bad-task", "A task that is not a key.", {"task": "b", "verdict": "confirm"},
+              "bad_request")  # fmt: skip
+answer_vector("bad-no-verdict", "A body with no verdict.", {"task": API_T}, "bad_request")
+answer_vector("bad-verdict", "A verdict that is not an answer verdict.",
+              {"task": API_T, "verdict": "approve"}, "bad_request")  # fmt: skip
+answer_vector("bad-reviewer", "A body cannot name the reviewer: the actor comes from the claim.",
+              {"task": API_T, "verdict": "confirm", "reviewer": "lead"}, "bad_request")  # fmt: skip
+answer_vector("bad-candidate", "A body cannot give a candidate: the service makes it from the "
+              "span.", {"task": API_T, "verdict": "correct",
+                        "candidate": {"field": "total", "value": "1", "proposer": "person:lead"}},
+              "bad_request")  # fmt: skip
+answer_vector("bad-time", "A body cannot give the time.",
+              {"task": API_T, "verdict": "confirm", "time": "2026-11-19T12:00:00Z"},
+              "bad_request")  # fmt: skip
+answer_vector("bad-field-keys", "field_keys is for a calibrate label task, which is not a task "
+              "of the API.", {"task": API_T, "verdict": "confirm", "field_keys": []},
+              "bad_request")  # fmt: skip
+answer_vector("bad-decision", "A decision that is a string.",
+              {"task": API_T, "verdict": "choose", "decision": "3"}, "bad_request")  # fmt: skip
+answer_vector("bad-decision-boolean", "A decision that is a boolean.",
+              {"task": API_T, "verdict": "choose", "decision": True}, "bad_request")  # fmt: skip
+answer_vector("bad-span-list", "A span that is a list.",
+              {"task": API_T, "verdict": "correct", "span": [1, 5]}, "bad_request")  # fmt: skip
+answer_vector("bad-span-member", "A span with a member other than start and end.",
+              {"task": API_T, "verdict": "correct", "span": {"start": 1, "end": 5, "ref": "r"}},
+              "bad_request")  # fmt: skip
+answer_vector("bad-span-string", "A span with a start that is a string.",
+              {"task": API_T, "verdict": "correct", "span": {"start": "1", "end": 5}},
+              "bad_request")  # fmt: skip
+answer_vector("bad-span-empty", "A span with no byte.",
+              {"task": API_T, "verdict": "correct", "span": {"start": 5, "end": 5}},
+              "bad_request")  # fmt: skip
+answer_vector("bad-span-negative", "A span that starts before 0.",
+              {"task": API_T, "verdict": "correct", "span": {"start": -1, "end": 5}},
+              "bad_request")  # fmt: skip
+answer_vector("bad-value", "A value that is a number.",
+              {"task": API_T, "verdict": "correct", "span": {"start": 1, "end": 5}, "value": 42},
+              "bad_request")  # fmt: skip
+answer_vector("bad-value-long", "A value of 1001 characters.",
+              {"task": API_T, "verdict": "correct", "span": {"start": 1, "end": 5},
+               "value": "7" * 1001}, "bad_request")  # fmt: skip
+answer_vector("bad-parts-nine", "Nine parts.",
+              {"task": API_T, "verdict": "correct", "span": {"start": 1, "end": 5},
+               "parts": [{"role": "scale", "start": 7, "end": 9}] * 9}, "bad_request")  # fmt: skip
+answer_vector("bad-parts-role", "A part with the role amount.",
+              {"task": API_T, "verdict": "correct", "span": {"start": 1, "end": 5},
+               "parts": [{"role": "amount", "start": 7, "end": 9}]}, "bad_request")  # fmt: skip
+answer_vector("bad-parts-member", "A part with no end.",
+              {"task": API_T, "verdict": "correct", "span": {"start": 1, "end": 5},
+               "parts": [{"role": "scale", "start": 7}]}, "bad_request")  # fmt: skip
+answer_vector("bad-codes-kept", "codes_kept with a number.",
+              {"task": API_T, "verdict": "correct", "span": {"start": 1, "end": 5},
+               "codes_kept": [7]}, "bad_request")  # fmt: skip
+answer_vector("bad-parts-seen", "parts_seen that is a string.",
+              {"task": API_T, "verdict": "correct", "span": {"start": 1, "end": 5},
+               "parts_seen": "yes"}, "bad_request")  # fmt: skip
+answer_vector("bad-reason-seen", "reason_seen that is a number.",
+              {"task": API_T, "verdict": "confirm", "reason_seen": 0}, "bad_request")  # fmt: skip
+answer_vector("bad-keys", "keys of 2^31.", {"task": API_T, "verdict": "confirm", "keys": 2**31},
+              "bad_request")  # fmt: skip
+answer_vector("bad-ms", "ms below 0.", {"task": API_T, "verdict": "confirm", "ms": -1},
+              "bad_request")  # fmt: skip
+answer_vector("bad-statements", "statements that is an object.",
+              {"task": API_T, "verdict": "confirm", "statements": {}}, "bad_request")  # fmt: skip
+
+
+def request_vector(name: str, description: str, method: str, path: str, status: int,
+                   error: str | None, *, host: str = "127.0.0.1:{port}", claim: bool = True,
+                   headers: dict[str, str] | None = None, body: str | None = None,
+                   response: dict[str, Any] | None = None) -> None:  # fmt: skip
+    """One request to a service with the static token of the token vectors, the reviewer ana and
+    an empty store. A runner puts the port of the service in place of ``{port}``. ``claim``
+    false sends no Authorization header. A body goes with its Content-Length unless ``headers``
+    gives one."""
+    sent = {"Host": host}
+    if claim:
+        sent["Authorization"] = "Bearer " + STATIC_TOKEN
+    sent.update(headers or {})
+    expected: dict[str, Any] = {"status": status}
+    if error is not None:
+        expected["error"] = error
+    if response is not None:
+        expected["body"] = response
+    REVIEW_API.append({"name": f"request-{name}", "kind": "request", "description": description,
+                       "method": method, "path": path, "headers": sent, "body": body,
+                       "expected": expected})  # fmt: skip
+
+
+JSON_TYPE = {"Content-Type": "application/json"}
+API_T0 = "sha256:" + "0" * 64
+request_vector("01-list", "The list of an empty store.", "GET", "/v1/tasks", 200, None,
+               response={"api": "groundgate-review/1", "actor": "ana", "tasks": [],
+                         "next": None})  # fmt: skip
+request_vector("host-name", "A Host that is a name.", "GET", "/v1/tasks", 421, "wrong_host",
+               host="localhost:{port}")  # fmt: skip
+request_vector("host-no-port", "A Host with no port.", "GET", "/v1/tasks", 421, "wrong_host",
+               host="127.0.0.1")  # fmt: skip
+request_vector("host-first", "The Host check comes before the claim check.", "GET", "/v1/tasks",
+               421, "wrong_host", host="evil.example.test", claim=False)  # fmt: skip
+request_vector("no-claim", "A request with no claim.", "GET", "/v1/tasks", 401, "no_claim",
+               claim=False)  # fmt: skip
+request_vector("no-claim-path", "The claim check comes before the path check: a request with no "
+               "claim gets no word on a path.", "GET", "/v2/tasks", 401, "no_claim",
+               claim=False)  # fmt: skip
+request_vector("no-claim-post", "A POST with no claim.", "POST", "/v1/answers", 401, "no_claim",
+               claim=False, headers=JSON_TYPE, body="{}")  # fmt: skip
+request_vector("bad-claim", "Another token.", "GET", "/v1/tasks", 401, "bad_claim",
+               headers={"Authorization": "Bearer " + "0" * len(STATIC_TOKEN)})  # fmt: skip
+request_vector("path-version", "A path of another version.", "GET", "/v2/tasks", 404,
+               "not_found")  # fmt: skip
+request_vector("path-root", "The root path.", "GET", "/", 404, "not_found")
+request_vector("path-slash", "The list path with a slash at its end.", "GET", "/v1/tasks/", 404,
+               "not_found")  # fmt: skip
+request_vector("path-short-key", "A task path with a short key.", "GET", "/v1/tasks/sha256:abc",
+               404, "not_found")  # fmt: skip
+request_vector("path-escape", "A task path with a percent escape for the colon of its key.",
+               "GET", f"/v1/tasks/sha256%3A{'0' * 64}", 404, "not_found")  # fmt: skip
+request_vector("task-unknown", "A key that names no task of the store.", "GET",
+               f"/v1/tasks/{API_T0}", 404, "not_found")  # fmt: skip
+request_vector("document-unknown", "The document of a key that names no task.", "GET",
+               f"/v1/tasks/{API_T0}/document", 404, "not_found")  # fmt: skip
+request_vector("method-put", "PUT on the list.", "PUT", "/v1/tasks", 405,
+               "method_not_allowed", headers=JSON_TYPE, body="{}")  # fmt: skip
+request_vector("method-post-list", "POST on the list.", "POST", "/v1/tasks", 405,
+               "method_not_allowed", headers=JSON_TYPE, body="{}")  # fmt: skip
+request_vector("method-delete-task", "DELETE on a task.", "DELETE", f"/v1/tasks/{API_T0}", 405,
+               "method_not_allowed")  # fmt: skip
+request_vector("method-get-answers", "GET on the answers.", "GET", "/v1/answers", 405,
+               "method_not_allowed")  # fmt: skip
+request_vector("method-options", "OPTIONS with no claim, as a browser sends before a request "
+               "from another site.", "OPTIONS", "/v1/answers", 401, "no_claim", claim=False)  # fmt: skip
+request_vector("query-limit", "A limit of 0.", "GET", "/v1/tasks?limit=0", 400, "bad_request")
+request_vector("query-member", "A query member that the list does not have.", "GET",
+               "/v1/tasks?page=2", 400, "bad_request")  # fmt: skip
+request_vector("query-cursor", "A cursor that names no task.", "GET",
+               f"/v1/tasks?cursor={API_T0}", 400, "bad_request")  # fmt: skip
+request_vector("query-task", "A query on a task path.", "GET", f"/v1/tasks/{API_T0}?full=1",
+               400, "bad_request")  # fmt: skip
+request_vector("media-type", "A POST body that is not application/json.", "POST", "/v1/answers",
+               415, "unsupported_media_type", headers={"Content-Type": "text/plain"},
+               body="{}")  # fmt: skip
+request_vector("media-type-none", "A POST with no Content-Type.", "POST", "/v1/answers", 415,
+               "unsupported_media_type", body="{}")  # fmt: skip
+request_vector("length-none", "A POST with no Content-Length.", "POST", "/v1/answers", 411,
+               "length_required", headers=JSON_TYPE)  # fmt: skip
+request_vector("length-sign", "A Content-Length with a sign.", "POST", "/v1/answers", 411,
+               "length_required", headers={**JSON_TYPE, "Content-Length": "+2"}, body="{}")  # fmt: skip
+request_vector("too-large", "A Content-Length of 65537.", "POST", "/v1/answers", 413,
+               "body_too_large", headers={**JSON_TYPE, "Content-Length": "65537"})  # fmt: skip
+request_vector("not-json", "A body that is not JSON.", "POST", "/v1/answers", 400, "bad_request",
+               headers=JSON_TYPE, body="{")  # fmt: skip
+request_vector("not-object", "A body that is a JSON array.", "POST", "/v1/answers", 400,
+               "bad_request", headers=JSON_TYPE, body="[]")  # fmt: skip
+request_vector("answer-member", "An answer with a member that the operation does not have.",
+               "POST", "/v1/answers", 400, "bad_request", headers=JSON_TYPE,
+               body=json.dumps({"task": API_T0, "verdict": "confirm", "reviewer": "lead"}))  # fmt: skip
+request_vector("answer-unknown-task", "An answer to a key that names no task.", "POST",
+               "/v1/answers", 404, "not_found", headers=JSON_TYPE,
+               body=json.dumps({"task": API_T0, "verdict": "confirm"}))  # fmt: skip
+
+REVIEW_API.append({
+    "name": "errors-01-status", "kind": "errors",
+    "description": "The HTTP status of each error code of version 1.",
+    "expected": {
+        "wrong_host": 421, "no_claim": 401, "bad_claim": 401, "unknown_issuer": 401,
+        "expired_claim": 401, "not_found": 404, "method_not_allowed": 405, "bad_request": 400,
+        "unsupported_media_type": 415, "length_required": 411, "body_too_large": 413,
+        "bad_answer": 400, "correction_rejected": 409, "codes_not_kept": 409,
+        "parts_disagree": 409, "log_refused": 409, "server_error": 500,
+    },
+})  # fmt: skip
+
 
 def main() -> None:
     out_dir = HERE / "vectors"
@@ -8831,11 +9370,20 @@ def main() -> None:
         if any("\ud800" <= ch <= "\udfff" for ch in text):  # keep a lone surrogate escaped
             text = json.dumps(e, indent=1)
         (events_dir / f"{e['name']}.json").write_text(text + "\n")
+    api_dir = HERE / "review-api"
+    api_dir.mkdir(exist_ok=True)
+    for old in api_dir.glob("*.json"):
+        old.unlink()
+    for r in REVIEW_API:
+        (api_dir / f"{r['name']}.json").write_text(
+            json.dumps(r, indent=1, ensure_ascii=False) + "\n"
+        )
     print(
         f"wrote {len(VECTORS)} vectors, {len(INVALID)} invalid packets, "
         f"{len(PROFILES)} profile vectors, {len(PINS)} pin vectors, "
         f"{len(PLACES)} places vectors, {len(EXPORTS)} export vectors, "
-        f"{len(AUDITS)} audit vectors and {len(EVENTS)} event vectors"
+        f"{len(AUDITS)} audit vectors, {len(EVENTS)} event vectors and "
+        f"{len(REVIEW_API)} review API vectors"
     )
 
 

@@ -1,0 +1,64 @@
+{
+ "name": "answer-bad-parts-nine",
+ "kind": "answer",
+ "description": "Nine parts.",
+ "blind": false,
+ "body": {
+  "task": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "correct",
+  "span": {
+   "start": 1,
+   "end": 5
+  },
+  "parts": [
+   {
+    "role": "scale",
+    "start": 7,
+    "end": 9
+   },
+   {
+    "role": "scale",
+    "start": 7,
+    "end": 9
+   },
+   {
+    "role": "scale",
+    "start": 7,
+    "end": 9
+   },
+   {
+    "role": "scale",
+    "start": 7,
+    "end": 9
+   },
+   {
+    "role": "scale",
+    "start": 7,
+    "end": 9
+   },
+   {
+    "role": "scale",
+    "start": 7,
+    "end": 9
+   },
+   {
+    "role": "scale",
+    "start": 7,
+    "end": 9
+   },
+   {
+    "role": "scale",
+    "start": 7,
+    "end": 9
+   },
+   {
+    "role": "scale",
+    "start": 7,
+    "end": 9
+   }
+  ]
+ },
+ "expected": {
+  "error": "bad_request"
+ }
+}

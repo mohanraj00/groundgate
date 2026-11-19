@@ -1,0 +1,14 @@
+{
+ "name": "answer-bad-decision-boolean",
+ "kind": "answer",
+ "description": "A decision that is a boolean.",
+ "blind": false,
+ "body": {
+  "task": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "choose",
+  "decision": true
+ },
+ "expected": {
+  "error": "bad_request"
+ }
+}

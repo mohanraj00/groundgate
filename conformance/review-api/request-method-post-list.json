@@ -1,0 +1,17 @@
+{
+ "name": "request-method-post-list",
+ "kind": "request",
+ "description": "POST on the list.",
+ "method": "POST",
+ "path": "/v1/tasks",
+ "headers": {
+  "Host": "127.0.0.1:{port}",
+  "Authorization": "Bearer local-token-0123456789-abcdefghijklmnopqrstuvwxyz",
+  "Content-Type": "application/json"
+ },
+ "body": "{}",
+ "expected": {
+  "status": 405,
+  "error": "method_not_allowed"
+ }
+}

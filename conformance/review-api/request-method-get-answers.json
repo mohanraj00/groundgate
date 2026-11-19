@@ -1,0 +1,16 @@
+{
+ "name": "request-method-get-answers",
+ "kind": "request",
+ "description": "GET on the answers.",
+ "method": "GET",
+ "path": "/v1/answers",
+ "headers": {
+  "Host": "127.0.0.1:{port}",
+  "Authorization": "Bearer local-token-0123456789-abcdefghijklmnopqrstuvwxyz"
+ },
+ "body": null,
+ "expected": {
+  "status": 405,
+  "error": "method_not_allowed"
+ }
+}

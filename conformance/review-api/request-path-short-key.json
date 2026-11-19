@@ -1,0 +1,16 @@
+{
+ "name": "request-path-short-key",
+ "kind": "request",
+ "description": "A task path with a short key.",
+ "method": "GET",
+ "path": "/v1/tasks/sha256:abc",
+ "headers": {
+  "Host": "127.0.0.1:{port}",
+  "Authorization": "Bearer local-token-0123456789-abcdefghijklmnopqrstuvwxyz"
+ },
+ "body": null,
+ "expected": {
+  "status": 404,
+  "error": "not_found"
+ }
+}

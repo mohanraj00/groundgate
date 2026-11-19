@@ -1,0 +1,13 @@
+{
+ "name": "answer-bad-task",
+ "kind": "answer",
+ "description": "A task that is not a key.",
+ "blind": false,
+ "body": {
+  "task": "b",
+  "verdict": "confirm"
+ },
+ "expected": {
+  "error": "bad_request"
+ }
+}

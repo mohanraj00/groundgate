@@ -1,0 +1,15 @@
+{
+ "name": "answer-05-limits",
+ "kind": "answer",
+ "description": "The largest keys and ms.",
+ "blind": false,
+ "body": {
+  "task": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "unsure",
+  "keys": 2147483647,
+  "ms": 2147483647
+ },
+ "expected": {
+  "valid": true
+ }
+}

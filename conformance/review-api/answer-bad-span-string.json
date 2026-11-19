@@ -1,0 +1,17 @@
+{
+ "name": "answer-bad-span-string",
+ "kind": "answer",
+ "description": "A span with a start that is a string.",
+ "blind": false,
+ "body": {
+  "task": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "correct",
+  "span": {
+   "start": "1",
+   "end": 5
+  }
+ },
+ "expected": {
+  "error": "bad_request"
+ }
+}

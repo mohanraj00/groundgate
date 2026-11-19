@@ -1,0 +1,16 @@
+{
+ "name": "request-query-task",
+ "kind": "request",
+ "description": "A query on a task path.",
+ "method": "GET",
+ "path": "/v1/tasks/sha256:0000000000000000000000000000000000000000000000000000000000000000?full=1",
+ "headers": {
+  "Host": "127.0.0.1:{port}",
+  "Authorization": "Bearer local-token-0123456789-abcdefghijklmnopqrstuvwxyz"
+ },
+ "body": null,
+ "expected": {
+  "status": 400,
+  "error": "bad_request"
+ }
+}

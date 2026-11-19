@@ -1,0 +1,18 @@
+{
+ "name": "answer-bad-candidate",
+ "kind": "answer",
+ "description": "A body cannot give a candidate: the service makes it from the span.",
+ "blind": false,
+ "body": {
+  "task": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "correct",
+  "candidate": {
+   "field": "total",
+   "value": "1",
+   "proposer": "person:lead"
+  }
+ },
+ "expected": {
+  "error": "bad_request"
+ }
+}

@@ -1,0 +1,16 @@
+{
+ "name": "request-query-member",
+ "kind": "request",
+ "description": "A query member that the list does not have.",
+ "method": "GET",
+ "path": "/v1/tasks?page=2",
+ "headers": {
+  "Host": "127.0.0.1:{port}",
+  "Authorization": "Bearer local-token-0123456789-abcdefghijklmnopqrstuvwxyz"
+ },
+ "body": null,
+ "expected": {
+  "status": 400,
+  "error": "bad_request"
+ }
+}

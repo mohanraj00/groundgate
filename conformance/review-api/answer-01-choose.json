@@ -1,0 +1,14 @@
+{
+ "name": "answer-01-choose",
+ "kind": "answer",
+ "description": "A choice.",
+ "blind": false,
+ "body": {
+  "task": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "choose",
+  "decision": 3
+ },
+ "expected": {
+  "valid": true
+ }
+}

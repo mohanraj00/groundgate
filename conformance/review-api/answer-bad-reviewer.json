@@ -1,0 +1,14 @@
+{
+ "name": "answer-bad-reviewer",
+ "kind": "answer",
+ "description": "A body cannot name the reviewer: the actor comes from the claim.",
+ "blind": false,
+ "body": {
+  "task": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "confirm",
+  "reviewer": "lead"
+ },
+ "expected": {
+  "error": "bad_request"
+ }
+}

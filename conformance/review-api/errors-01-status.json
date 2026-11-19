@@ -1,0 +1,24 @@
+{
+ "name": "errors-01-status",
+ "kind": "errors",
+ "description": "The HTTP status of each error code of version 1.",
+ "expected": {
+  "wrong_host": 421,
+  "no_claim": 401,
+  "bad_claim": 401,
+  "unknown_issuer": 401,
+  "expired_claim": 401,
+  "not_found": 404,
+  "method_not_allowed": 405,
+  "bad_request": 400,
+  "unsupported_media_type": 415,
+  "length_required": 411,
+  "body_too_large": 413,
+  "bad_answer": 400,
+  "correction_rejected": 409,
+  "codes_not_kept": 409,
+  "parts_disagree": 409,
+  "log_refused": 409,
+  "server_error": 500
+ }
+}
