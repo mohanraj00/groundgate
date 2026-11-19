@@ -650,6 +650,13 @@ the contract: the operations, the errors and the claim check. This section gives
   with an audit rate above 0, most packets have an audit task, and `review serve` is then the
   way to answer their model text tasks. A rule for each actor needs an assignment of tasks to
   actors, which version 1 does not have.
+- **A limit of the blind task.** Each rule above closes one path from the data of a packet to
+  the hidden value of a blind task. They do not close the class, because the API gives each
+  task of a packet to each actor, and the gate check of a correction reads the candidates of
+  the other slots (section 6.2). With a relation between two slots, the outcome of a correction
+  changes with the hidden candidate of the related slot, so an actor can test a guess. SPEC
+  §4.20 records this limit. The full fix needs an assignment of tasks to actors, which is state
+  that version 1 does not have, and a correction check with no hidden candidate (#703).
 - **Small on purpose.** Version 1 has four operations. It has no reason, no check without a
   write, no word boxes, no crop and no HTML frame. A page on this API (#647) can add an
   operation in version 1, because an addition is compatible.

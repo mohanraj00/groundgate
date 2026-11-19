@@ -508,5 +508,6 @@ so it starts with no events.
 
 `missing_packets` lists each packet of a correction that is not in the store. A correction of
 such a packet gives no term. `suggest` scans the packet text once for each packet
-and right value, and for at most 1024 of them. `unscanned_corrections` counts the corrections
-after that bound, which give no term.
+and right value, and for at most 1024 of them. It budgets 67,108,864 packet text characters
+across those scans and charges the full packet length for each pair. `unscanned_corrections`
+counts the corrections skipped by either bound, which give no term.

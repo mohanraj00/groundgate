@@ -2283,6 +2283,20 @@ of the receipt:
 - An answer names a choice by that number, and the service finds the decision.
 - The `record` of an answer response has `choice` in place of `decision`.
 
+**A limit of the blind task.** The answer to a blind task is independent only when its actor
+gets nothing that depends on the hidden candidates of the packet. Version 1 gives each task of
+a packet to each actor, so it does not hold this in each case (#703). The rules of this section
+close four known paths: a key of the store, the time of a `not_found`, an index of the receipt,
+and a statement of a model text. One known path is open. The gate check of a correction
+(docs/design/review.md §6.2) reads the candidates of the other slots. If a relation of the
+schema (§3.4) joins the slot of the correction with the slot of a blind task, the outcome of
+the correction changes with the hidden candidate. Example: the schema has the relation
+`total = part`, and the two tasks are blind. With the hidden values 10 and 10, a correction of
+`total` to 10 gives 201. With the hidden values 20 and 20, the same correction gives
+`codes_not_kept` with `RELATION_FAILED`. So an actor can test a guess of a hidden value. A full
+fix keeps the blind tasks of a packet apart from each other task of an actor, and gives the
+check of a correction no hidden candidate (#703).
+
 **GET /v1/tasks** lists the open tasks of the actor. The order is the code point order of
 `document`, then of the field, then of the key with null first, then of the task ID. The order uses
 only members of the list. The query can have `limit`, an integer from 1 to 200 in digits only, and
