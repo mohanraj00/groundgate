@@ -5,6 +5,8 @@ are written by hand."""
 from __future__ import annotations
 
 import json
+import subprocess
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -181,6 +183,23 @@ def test_a_term_needs_one_line_and_words_before_the_value() -> None:
     assert events._term("Due: x\n", " ") is None
 
 
+@pytest.mark.parametrize(
+    ("line", "value", "want"),
+    [
+        ("xa!a!a!a!", "a!a!", 5),
+        ("a---", "---", -1),
+        ("²a a", "a", 3),
+        ("a\u0301a", "a", 0),
+        ("aa_a_", "a", 3),
+        ("a--a", "", 2),
+        ("a-a", "", -1),
+        ("", "", 0),
+    ],
+)
+def test_found_checks_both_neighbors_of_literal_matches(line: str, value: str, want: int) -> None:
+    assert events._found(line, value) == want
+
+
 def test_a_known_alias_gives_no_term(tmp_path: Path) -> None:
     known = json.loads(json.dumps(PROFILE))
     known["schema"]["fields"]["total"]["aliases"].append("amount due after FEES")
@@ -340,3 +359,58 @@ def test_suggest_scans_each_packet_and_value_once_and_has_a_bound(
     assert calls == ["95", "100", "101"]
     assert drafts["unscanned_corrections"] == 2
     assert [d["draft"] for d in drafts["drafts"]].count("term") == 1
+
+
+def test_calibrate_suggest_bounds_term_scan_characters(tmp_path: Path) -> None:
+    root = tmp_path / "s"
+    head = "Repeated: "
+    tail = "\nFirst label: é\nLast label: " + "é" * 64 + "\nOver limit: " + "é" * 65
+    text = head + "é" * ((1 << 20) - len(head) - len(tail)) + tail
+    template = events.read_file(FIXTURE / "events.jsonl")[2]
+    with FolderStore(root) as store:
+        packet, _ = admit_packet(store, text, PROFILE["schema"], [])
+        corrections = [
+            {
+                **template,
+                "packet_sha256": packet,
+                "corrected": "é" * n,
+                "origin": {"system": "approvals", "id": str(n)},
+            }
+            for n in range(1, 97)
+        ]
+        cached = {
+            **corrections[63],
+            "field": "tax",
+            "origin": {"system": "approvals", "id": "cached"},
+        }
+        skipped = {**corrections[64], "origin": {"system": "approvals", "id": "skipped"}}
+        events.add(store, [*corrections, cached, skipped])
+
+    run = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "groundgate.cli",
+            "calibrate",
+            "events",
+            "suggest",
+            "--store",
+            str(root),
+            "--profile",
+            str(FIXTURE / "profile.json"),
+        ],
+        check=True,
+        capture_output=True,
+        text=True,
+        timeout=10,
+    )
+    drafts = json.loads(run.stdout)
+    assert drafts["unscanned_corrections"] == 33
+    assert [d["draft"] for d in drafts["drafts"]].count("value_test") == 98
+    assert [
+        (d["field"], d["alias"], d["line"]) for d in drafts["drafts"] if d["draft"] == "term"
+    ] == [
+        ("total", "First label", 2),
+        ("total", "Last label", 3),
+        ("tax", "Last label", 3),
+    ]

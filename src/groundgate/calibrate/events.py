@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import unicodedata
 from collections.abc import Iterable, Mapping, Sequence
 from pathlib import Path
@@ -45,8 +46,10 @@ MAX_EVENT = 64 << 10  # bytes of one event as canonical JSON, with a null ``corr
 MAX_CORRECTED = 65536  # characters of a corrected value
 MAX_LABEL = 64  # characters of a proposed term
 MAX_SCANS = 1024  # (packet, corrected value) pairs that one suggest scans for a term
+MAX_SCAN_CHARS = 64 << 20  # packet text characters across all term scans in one suggest
 DECISIONS = ("approve", "reject", "correct")
 ACTORS = ("person", "program")
+_NON_WORD = re.compile(r"[\W_]")  # \w includes alphanumerics and underscore
 _EVENT = frozenset(
     {"groundgate_calibration_event", "decision", "profile", "packet_sha256", "receipt_sha256",
      "fact_sha256", "field", "key", "value", "corrected", "actor", "origin", "date"}
@@ -234,17 +237,51 @@ def _is_word(ch: str) -> bool:
     return ch.isalnum()
 
 
+def _whole(line: str, start: int, end: int) -> bool:
+    return (start == 0 or not _is_word(line[start - 1])) and (
+        end == len(line) or not _is_word(line[end])
+    )
+
+
 def _found(line: str, value: str) -> int:
     """The position of the first occurrence of ``value`` in ``line`` with no letter or digit
     just before or after it, or -1."""
+    size = len(value)
     start = line.find(value)
-    while start >= 0:
-        end = start + len(value)
-        before = start > 0 and _is_word(line[start - 1])
-        after = end < len(line) and _is_word(line[end])
-        if not before and not after:
-            return start
-        start = line.find(value, start + 1)
+    if start < 0 or _whole(line, start, start + size):
+        return start
+
+    # The next possible start follows a non-word character.
+    boundary = _NON_WORD.search(line, start, len(line) - size)
+    if boundary is None:
+        return -1
+    start = boundary.end()
+    if not value:
+        return next((at for at in range(start, len(line) + 1) if _whole(line, at, at)), -1)
+
+    # Knuth-Morris-Pratt keeps the longest matching prefix after a mismatch or a rejected hit.
+    # This visits overlapping matches without starting the search again at each position.
+    prefixes = [0] * size
+    matched = 0
+    for at in range(1, size):
+        while matched and value[at] != value[matched]:
+            matched = prefixes[matched - 1]
+        if value[at] == value[matched]:
+            matched += 1
+        prefixes[at] = matched
+
+    matched = 0
+    for at in range(start, len(line)):
+        ch = line[at]
+        while matched and ch != value[matched]:
+            matched = prefixes[matched - 1]
+        if ch == value[matched]:
+            matched += 1
+            if matched == size:
+                end = at + 1
+                if _whole(line, end - size, end):
+                    return end - size
+                matched = prefixes[matched - 1]
     return -1
 
 
@@ -307,9 +344,9 @@ def suggest(store: Store, profile_obj: Mapping[str, Any]) -> dict[str, Any]:
     missing: set[str] = set()
     terms: set[tuple[str, str]] = set()
     texts: dict[str, str] = {}
-    # Each scan reads the whole packet text, so scan each pair once, and at most MAX_SCANS
-    # pairs: many events of a bad approver cannot make suggest scan without a bound (#684).
+    # Charge the full packet length once for each new pair before scanning it.
     scans: dict[tuple[str, str], tuple[str, int] | None] = {}
+    scan_chars_left = MAX_SCAN_CHARS
     unscanned = 0
     for e in events:
         if e["decision"] != "correct" or e["corrected"] is None:
@@ -324,9 +361,11 @@ def suggest(store: Store, profile_obj: Mapping[str, Any]) -> dict[str, Any]:
                 continue
         pair = (packet, e["corrected"])
         if pair not in scans:
-            if len(scans) >= MAX_SCANS:
+            size = len(texts[packet])
+            if len(scans) >= MAX_SCANS or size > scan_chars_left:
                 unscanned += 1
                 continue
+            scan_chars_left -= size
             scans[pair] = _term(texts[packet], e["corrected"])
         found = scans[pair]
         spec = profile.schema.fields.get(e["field"])
