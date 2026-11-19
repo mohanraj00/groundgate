@@ -19,6 +19,8 @@ let current = null;
 // task and sends no second answer, so a response always belongs to the task on the page.
 let busy = false;
 const WAIT = 'The page waits for the response to your answer.';
+const NO_PASSAGE = 'The page cannot show the passage of this value. Its evidence is not in the text of the '
+  + 'document. It can be in a reference text, and the API gives the text of the document only.';
 
 const clip = (text, max) => (text.length > max ? `${text.slice(0, max - 1)}…` : text);
 
@@ -185,10 +187,16 @@ async function open(entry, number) {
   } else {
     parts.text(detail, task.body.question, 'strong');
     const choices = task.body.choices;
+    // The evidence of a choice can be a span of a reference text, and the task does not name the
+    // source. The places of the task are the spans of the document. So the page shows a passage
+    // only for a span that is a place: the same offsets in the document can be other text.
+    const places = Array.isArray(task.body.places) ? task.body.places : [];
+    const inDocument = ({ start, end }) => places.some((place) => place.start === start && place.end === end);
     choices.forEach((choice, index) => {
       const block = add(detail, 'div', '', { class: 'choice', 'data-decision': String(choice.decision) });
       parts.text(block, `Value ${index + 1}: ${choice.shown}`);
-      if (choice.evidence) passage(block, data, choice.evidence);
+      if (choice.evidence && inDocument(choice.evidence)) passage(block, data, choice.evidence);
+      else if (choice.evidence) parts.text(block, NO_PASSAGE, 'caption');
       const list = add(block, 'ul', '', { class: 'actions' });
       if (choices.length === 1) action(list, 'answer.confirm', 'Confirm this value');
       else action(list, 'answer.choose', `Choose value ${index + 1}`, { decision: choice.decision });

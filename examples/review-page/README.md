@@ -45,7 +45,7 @@ uv run python examples/review-page/run.py --store work/store --reviewer ana
 
 - **The list.** A table of the open tasks of the reviewer, with one button for each task.
 - **A review task.** The page shows the question, each value, and the passage of the document
-  for each value. Press the button of the right value. If no value is right, select the right
+  for each value whose evidence is in the document. Press the button of the right value. If no value is right, select the right
   text in the document and press "The selected text is the value".
 - **An audit task.** An audit task is blind. The API gives no proposed value, so the page shows
   none. Find the value in the document, select it with its scale word, and press "The selected
@@ -94,12 +94,18 @@ origin. It sends each `/v1/` request to the API as it is. The API does each chec
   to a review task and one to an audit task. It needs no browser and no network.
 - `tests/test_review_page_kit_seam.py` loads the page in a headless browser with the pinned
   kit, and answers the two tasks with the buttons of the kit. A second test does the same steps
-  without the kit. Each test skips if no browser with a remote debugging pipe is installed, and
-  the first one skips if git cannot get the kit.
+  without the kit, and a third test checks a value that cites a reference text. On a
+  developer machine, each test skips if no browser with a remote debugging pipe is installed,
+  and the first one skips if git cannot get the kit. In CI, each of these is a failure.
 
 ## Limits
 
 - The page does not answer a model text task. Use `groundgate review serve` for it.
 - The page shows the text of the document. It shows no PDF page and no crop of a scan.
 - The page is for one person on one machine. The static token gives one reviewer name.
-- A blind ID is good only while the API runs. After a new start, load the page again.
+- A task ID is good only while the API runs. After a new start, load the page again.
+- The page shows a passage only for evidence in the text of the document. A candidate can cite
+  a reference text of the packet. The API does not give that text, and a task does not name the
+  source of a span (#702). For such a value, the page says that it cannot show the passage. If
+  a value cites a reference at the same offsets as a place of the document, the page cannot
+  tell, and it shows the passage of the document.

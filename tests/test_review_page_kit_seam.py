@@ -2,8 +2,9 @@
 loads in a browser with the kit at the pinned commit, and a press on a button of the kit sends
 an answer through the review API. A second test does the same steps without the kit.
 
-The seam test needs a browser with a remote debugging pipe, git and the network, and it skips
-without one of them. Set REVIEW_PAGE_BROWSER to the path of the browser, and REVIEW_PAGE_KIT to
+The seam test needs a browser with a remote debugging pipe, git and the network. On a developer
+machine, it skips without one of them. In CI, it fails, so a run cannot pass without this test.
+Set REVIEW_PAGE_BROWSER to the path of the browser, and REVIEW_PAGE_KIT to
 a folder that keeps the kit checkout between runs.
 tests/test_review_page.py has the tests that need no browser."""
 
@@ -193,23 +194,32 @@ STEPS = """
 """
 
 
+def not_available(why: str) -> None:
+    """Skip the test on a developer machine. In CI, fail: a CI run must do each browser test."""
+    if os.environ.get("CI") and sys.platform != "win32":
+        pytest.fail(why)
+    pytest.skip(why)
+
+
 @pytest.fixture(scope="module")
 def pinned_kit(tmp_path_factory: pytest.TempPathFactory) -> Path:
     if shutil.which("git") is None:
-        pytest.skip("git is not installed")
+        not_available("git is not installed")
     kept = os.environ.get("REVIEW_PAGE_KIT")
     folder = Path(kept) if kept else tmp_path_factory.mktemp("kit")
     try:
         return run.fetch_kit(folder)
     except RuntimeError as exc:
-        pytest.skip(f"the pinned kit is not available: {exc}")
+        not_available(f"the pinned kit is not available: {exc}")
+        raise
 
 
 @pytest.fixture
 def browser(tmp_path: Path) -> Iterator[Browser]:
     binary = browser_path()
     if sys.platform == "win32" or binary is None:
-        pytest.skip("no browser with a remote debugging pipe is installed")
+        not_available("no browser with a remote debugging pipe is installed")
+        raise AssertionError
     started = Browser(binary, tmp_path / "profile")
     try:
         yield started
@@ -217,23 +227,40 @@ def browser(tmp_path: Path) -> Iterator[Browser]:
         started.close()
 
 
-def answer_two_tasks(browser: Browser, tmp_path: Path, kit: Path | None) -> dict[str, Any]:
-    """Load the page, do the steps, and check what each mode of the page must do: the texts of
-    the page, the blind audit task, and the two answers in the store."""
-    root = tmp_path / "store"
-    packet = run.fixture_store(root)
+def drive(browser: Browser, root: Path, kit: Path | None, steps: str) -> dict[str, Any]:
+    """Start the API and the page on the store in ``root``, load the page in the browser, and
+    do ``steps`` on it. The result is the object that the steps give."""
     api_httpd, page_httpd, url = run.start(root, kit, "ana", TOKEN)
     try:
         target = browser.send("Target.createTarget", {"url": url})["targetId"]
         attached = browser.send("Target.attachToTarget", {"targetId": target, "flatten": True})
-        params = {"expression": STEPS, "awaitPromise": True, "returnByValue": True}
-        result = browser.send("Runtime.evaluate", params, attached["sessionId"])
+        session = attached["sessionId"]
+        # The new target starts with an empty document. Wait for the document of the page.
+        loaded = f"location.href.startsWith({json.dumps(url.split('#')[0])}) && !!document.body"
+        end = time.monotonic() + SECONDS
+        while True:
+            params = {"expression": loaded, "returnByValue": True}
+            if browser.send("Runtime.evaluate", params, session)["result"].get("value") is True:
+                break
+            assert time.monotonic() < end, "the browser did not load the page"
+            time.sleep(0.05)
+        params = {"expression": steps, "awaitPromise": True, "returnByValue": True}
+        result = browser.send("Runtime.evaluate", params, session)
     finally:
         for httpd in (api_httpd, page_httpd):
             httpd.shutdown()
             httpd.server_close()
     assert "exceptionDetails" not in result, result["exceptionDetails"]
     out: dict[str, Any] = json.loads(result["result"]["value"])
+    return out
+
+
+def answer_two_tasks(browser: Browser, tmp_path: Path, kit: Path | None) -> dict[str, Any]:
+    """Load the page, do the steps, and check what each mode of the page must do: the texts of
+    the page, the blind audit task, and the two answers in the store."""
+    root = tmp_path / "store"
+    packet = run.fixture_store(root)
+    out = drive(browser, root, kit, STEPS)
     assert out["start"] == "Reviewer: ana. Open tasks: 2."
     assert "invoice-0007" in out["table"] and "audit" in out["table"]
     # the page did not open the review task while the audit answer was on its way
@@ -270,3 +297,77 @@ def test_the_page_answers_a_task_without_the_kit(tmp_path: Path, browser: Browse
     out = answer_two_tasks(browser, tmp_path, None)
     assert out["defined"] == [] and out["kit"] == "false"
     assert out["controls"] == ["button"] and "plain controls" in out["note"]
+
+
+# A review task whose two values cite a reference text of the packet.
+REFERENCE_STEPS = """
+(async () => {
+  const wait = (ms) => new Promise((done) => setTimeout(done, ms));
+  const until = async (test) => {
+    for (let i = 0; i < 300 && !test(); i += 1) await wait(50);
+  };
+  await until(() => document.body.dataset.state === 'ready');
+  document.querySelector('li[data-field=limit]').firstElementChild.click();
+  await until(() => document.querySelectorAll('.choice').length === 2);
+  const choices = [...document.querySelectorAll('.choice')];
+  return JSON.stringify({
+    state: document.body.dataset.state,
+    choices: choices.map((choice) => choice.textContent),
+    marks: document.querySelectorAll('#detail mark, #detail blockquote').length,
+    document: document.getElementById('document').textContent,
+  });
+})()
+"""
+
+
+def test_the_page_shows_no_passage_for_evidence_in_a_reference(
+    tmp_path: Path, browser: Browser
+) -> None:
+    """The span of a value that cites a reference is in the text of the reference. The API gives
+    the text of the document only, so the same offsets there are other text. The page must not
+    show that text as the evidence."""
+    from groundgate.review.tasks import write_tasks
+    from groundgate.store.packets import admit_packet
+
+    text = "Unrelated main document.\n"
+    reference = "Limit: $7,000 or $8,000."
+
+    def cite(words: str) -> dict[str, Any]:
+        start = reference.index(words)
+        return {"source": "reference", "ref": "r", "start": start, "end": start + len(words),
+                "text": words}  # fmt: skip
+
+    candidates = [
+        {
+            "id": "c1",
+            "field": "limit",
+            "value": "7000",
+            "unit": "USD",
+            "evidence": [cite("$7,000")],
+        },
+        {
+            "id": "c2",
+            "field": "limit",
+            "value": "8000",
+            "unit": "USD",
+            "evidence": [cite("$8,000")],
+        },
+    ]
+    schema = {"fields": {"limit": {"type": "number", "unit": "USD"}}}
+    root = tmp_path / "store"
+    with FolderStore(root) as store:
+        packet, _ = admit_packet(store, text, schema, candidates, None, "policy-0001",
+                                 references=[{"id": "r", "text": reference}])  # fmt: skip
+        tasks = [task for _, task in write_tasks(store, packet, run.REVIEW_POLICY).tasks]
+    assert [(t["mode"], len(t["choices"]), t["places"]) for t in tasks] == [("review", 2, [])]
+    wrong = [
+        text.encode()[c["evidence"]["start"] : c["evidence"]["end"]] for c in tasks[0]["choices"]
+    ]
+    assert sorted(wrong) == [b"cument", b"ed mai"]
+    out = drive(browser, root, None, REFERENCE_STEPS)
+    assert out["state"] == "ready" and out["document"] == text and out["marks"] == 0
+    assert len(out["choices"]) == 2
+    for choice in out["choices"]:
+        assert "cannot show the passage" in choice
+        # a passage has the text around the span too: no part of the document text is there
+        assert "Unrelated" not in choice and "main" not in choice

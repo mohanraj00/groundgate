@@ -125,7 +125,8 @@ def test_an_answer_and_an_audit_answer_through_the_page(page: tuple[Path, str, i
     with FolderStore(root) as store:
         keys, _ = store.object_keys()
         hidden = [k for k in keys if b'"mode":"audit"' in store.object_bytes(k).replace(b" ", b"")]
-    assert len(hidden) == 1 and tax.startswith("blind:")
+    assert len(hidden) == 1 and re.fullmatch(r"task:[0-9a-f]{64}", tax)
+    assert re.fullmatch(r"task:[0-9a-f]{64}", total) and total != tax
     start = run.TEXT.encode("utf-8").index(b"310 thousand")
     correct = {"task": tax, "verdict": "correct"}
     seen = [
@@ -139,9 +140,12 @@ def test_an_answer_and_an_audit_answer_through_the_page(page: tuple[Path, str, i
     assert json.loads(seen[2])["error"]["code"] == "codes_not_kept"
     assert json.loads(seen[3])["record"] is None and json.loads(seen[4])["tasks"] == []
     for text in seen[1:]:
-        for word in (b"310000", b"310,000", b"310 thousand", b"choices", b"evidence", b"question",
-                     hidden[0][7:].encode("ascii"), packet[7:].encode("ascii")):  # fmt: skip
+        for word in (b"310000", b"310,000", b"310 thousand", b"choices", b"evidence", b"question"):
             assert word not in text, (word, text)
+    # no response gives a key of the store: a key is a hash over the proposed value
+    for text in seen:
+        assert hidden[0][7:].encode("ascii") not in text and packet[7:].encode("ascii") not in text
+        assert b"sha256" not in text
     written = records(root, packet)
     assert [r["verdict"] for r in written] == ["choose", "correct"]
     assert written[1]["candidate"]["value"] == "310000"
