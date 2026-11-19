@@ -210,6 +210,10 @@ None
 The response of a blind answer has no record, because the record of a correction can hold the
 unit of the proposed value. The store has the record.
 
+Version 1 has a limit here. The check of a correction reads the other candidates of the packet.
+If the schema has a relation between two fields, the outcome of a correction can change with
+the hidden value of the related field. SPEC §4.20 has an example.
+
 ## 4. Corrections and their errors
 
 A correction is a span, as on the review page. The service reads a number from the span with its
