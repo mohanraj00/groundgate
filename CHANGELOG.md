@@ -30,7 +30,8 @@ The review page does not show the option list of a closed set task (#704), and i
 answer a model text task. The seam test of the job runner guide runs against a local stand-in
 of the job runner, because the version that it pins has no tag yet.
 
-- koodam pin: v0.4.0 (to come). This line is open until the seam test of #594 runs on that tag.
+- Job runner pin: v0.4.0 (to come). This line is open until the seam test of #594 runs on that
+  tag.
 
 The review API:
 
@@ -100,8 +101,8 @@ Bench and CI:
   ([bench/regulatory/RESULTS.md](bench/regulatory/RESULTS.md)). This bound is apart from the
   bound of the requested fields claim (#686).
 - The shared gates are pinned to a newer commit. The cross-review check has a cap of 3 review
-  requests for each PR, and the Dependabot schedule is monthly with one group for the action
-  updates (#690).
+  requests for each PR, and the schedule of the dependency updates is monthly with one group
+  for the action updates (#690).
 - The conformance suite has 214 vectors, 218 invalid packets, 24 profile vectors, 14 pin
   vectors, 18 places vectors, 3 export vectors, 37 audit vectors, 44 event vectors and 173
   review API vectors.
