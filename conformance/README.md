@@ -65,13 +65,14 @@ Files in `review-api/` are review API vectors (SPEC §4.20). `kind` names what a
   or the `error` code.
 - `token`: the static `token` and the `reviewer` of a service, and the `Authorization` value.
 - `task`: one `task@1` object. `expected.served` is false for a task that is not a task of the
-  API. If not, `expected` gives the members of the task response that come from the task. A
-  blind task has a null `body` and a null `packet`.
-- `blind-id`: the `key` of a service in hex and a `task` key. `expected.id` is the blind ID.
+  API. If not, `expected` gives the members of the task response that come from the task. The
+  `body` has no key of the store, and a blind task has a null `body`.
+- `task-id`: the `key` of a service in hex and a `task` key. `expected.id` is the task ID.
 - `statements`: one `model-text@1` object. `expected.statements` is the `statements` member of
   the task response.
 - `page`: the tasks of the API in one store as `entries`, each with its task ID in `task` and
-  with `open`, and the `query` of the list. `expected` gives the task keys of the page and `next`, or the `error` code.
+  with `open`, and the `query` of the list. `expected` gives the task IDs of the page and
+  `next`, or the `error` code.
 - `answer`: the `body` of an answer and `blind`, true for a blind task. `expected.valid` is
   true, or `expected.error` is the code. The vector checks the form of the body and the
   verdicts of a blind task. It does not check the answer against a task.

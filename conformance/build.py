@@ -8822,35 +8822,37 @@ token_vector("bad-claim", "A signed claim, which a service with a static token d
              "Bearer " + _GOOD, error="bad_claim")  # fmt: skip
 
 API_PACKET_1 = "sha256:" + "1" * 64
-API_PACKET_2 = "sha256:" + "2" * 64
 
 
-def api_task(letter: str) -> str:
+def api_key(letter: str) -> str:
+    """A key of the store: a task key, a packet key or the key of an input."""
     return "sha256:" + letter * 64
 
 
-BLIND_KEY = bytes(range(32))  # the key of a service, for the vectors only
+def api_task(letter: str) -> str:
+    """A task ID of the API. The digits stand for an HMAC."""
+    return "task:" + letter * 64
 
 
-def _blind_id(key: bytes, task_key: str) -> str:
-    """The blind ID of SPEC §4.20: HMAC-SHA-256 over the label and the task key."""
-    data = b"groundgate-review-blind/1:" + task_key.encode("ascii")
-    return "blind:" + hmac.new(key, data, hashlib.sha256).hexdigest()
+SERVICE_KEY = bytes(range(32))  # the key of a service, for the vectors only
+
+
+def _task_id(key: bytes, task_key: str) -> str:
+    """The task ID of SPEC §4.20: HMAC-SHA-256 over the label and the task key."""
+    data = b"groundgate-review-task/1:" + task_key.encode("ascii")
+    return "task:" + hmac.new(key, data, hashlib.sha256).hexdigest()
 
 
 REVIEW_API.append({
-    "name": "blind-id-01", "kind": "blind-id",
-    "description": "The ID of a blind task: blind: and the hex of HMAC-SHA-256 over the label "
-    "groundgate-review-blind/1: and the task key, with the key of the service. The key is "
-    "the 32 bytes 00 to 1f, in hex.",
-    "key": BLIND_KEY.hex(), "task": api_task("b"),
-    "expected": {"id": _blind_id(BLIND_KEY, api_task("b"))},
+    "name": "task-id-01", "kind": "task-id",
+    "description": "The ID of a task: task: and the hex of HMAC-SHA-256 over the label "
+    "groundgate-review-task/1: and the task key, with the key of the service. The key is "
+    "the 32 bytes 00 to 1f, in hex. The ID has no part of the task key.",
+    "key": SERVICE_KEY.hex(), "task": api_key("b"),
+    "expected": {"id": _task_id(SERVICE_KEY, api_key("b"))},
 })  # fmt: skip
-if (
-    REVIEW_API[-1]["expected"]["id"] == "blind:" + "b" * 64
-    or len(REVIEW_API[-1]["expected"]["id"]) != 70
-):
-    raise SystemExit("the written blind ID is wrong")
+if "b" * 8 in REVIEW_API[-1]["expected"]["id"] or len(REVIEW_API[-1]["expected"]["id"]) != 69:
+    raise SystemExit("the written task ID is wrong")
 
 
 REVIEW_TASK = {
@@ -8892,15 +8894,36 @@ def task_vector(name: str, description: str, task: dict[str, Any],
                                                   **(expected or {})}})  # fmt: skip
 
 
-task_vector("01-review", "A review task. The body is the task object as it is.", REVIEW_TASK,
-            {"packet": API_PACKET_1, "mode": "review", "field": "total_revenue", "key": "2025",
-             "body": REVIEW_TASK})  # fmt: skip
+def _body(task: dict[str, Any], **members: Any) -> dict[str, Any]:
+    """The body of a task response, written by hand: the task object without its packet key,
+    with ``members`` in place of the members that hold another key of the store."""
+    return {k: v for k, v in {**task, **members}.items() if k != "packet"}
+
+
+NO_CHOICE_TASK = {
+    **REVIEW_TASK, "slot": {"field": "auditor", "key": None, "decisions": []}, "item": "text",
+    "template": "text@1", "question": "What is the auditor?", "parts": ["field"],
+    "codes": ["REQUIRED_FIELD_MISSING"], "choices": [], "places": [],
+}  # fmt: skip
+MODEL_TEXT_TASK = {
+    **REVIEW_TASK, "slot": {"field": "summary", "key": None, "decisions": []},
+    "item": "model_text", "template": "model_text@1",
+    "question": "Does the source support each statement of summary?", "parts": ["statement"],
+    "codes": [], "choices": [],
+    "places": [{"start": 18120, "end": 18160, "page": 41, "box": None}],
+    "model_text": {"key": api_key("7"), "statements": 2},
+}  # fmt: skip
+
+task_vector("01-review", "A review task. The body is the task object without its packet key: "
+            "that key is a hash over each candidate of the packet, and so over the proposed "
+            "value of a blind task of the same packet. The response has no packet member.",
+            REVIEW_TASK,
+            {"mode": "review", "field": "total_revenue", "key": "2025",
+             "body": _body(REVIEW_TASK)})  # fmt: skip
 task_vector("02-blind", "An audit task is blind. The response gives the field and the key, and "
             "no body: no value, no unit, no evidence, no place, no code, no item and no "
-            "question. It gives no packet key, because that key is a hash over the proposed "
-            "value.", AUDIT_TASK,
-            {"packet": None, "mode": "audit", "field": "net_income", "key": None,
-             "body": None})  # fmt: skip
+            "question.", AUDIT_TASK,
+            {"mode": "audit", "field": "net_income", "key": None, "body": None})  # fmt: skip
 task_vector("03-blind-span", "An audit task for a long span is blind too, so the response does "
             "not say that the proposed evidence is long.",
             {**AUDIT_TASK, "slot": {"field": "indication", "key": None, "decisions": [0]},
@@ -8911,19 +8934,24 @@ task_vector("03-blind-span", "An audit task for a long span is blind too, so the
                           "unit": None, "shown": "\"Treatment of ... in adults\"",
                           "evidence": {"start": 40, "end": 76}}],
              "places": [{"start": 40, "end": 76, "page": None, "box": None}]},
-            {"packet": None, "mode": "audit", "field": "indication", "key": None,
-             "body": None})  # fmt: skip
+            {"mode": "audit", "field": "indication", "key": None, "body": None})  # fmt: skip
 task_vector("04-review-no-choice", "A review task for a required field with no value.",
-            {**REVIEW_TASK, "slot": {"field": "auditor", "key": None, "decisions": []},
-             "item": "text", "template": "text@1", "question": "What is the auditor?",
-             "parts": ["field"], "codes": ["REQUIRED_FIELD_MISSING"], "choices": [],
-             "places": []},
-            {"packet": API_PACKET_1, "mode": "review", "field": "auditor", "key": None,
-             "body": {**REVIEW_TASK,
-                      "slot": {"field": "auditor", "key": None, "decisions": []},
-                      "item": "text", "template": "text@1", "question": "What is the auditor?",
-                      "parts": ["field"], "codes": ["REQUIRED_FIELD_MISSING"], "choices": [],
-                      "places": []}})  # fmt: skip
+            NO_CHOICE_TASK,
+            {"mode": "review", "field": "auditor", "key": None,
+             "body": _body(NO_CHOICE_TASK)})  # fmt: skip
+task_vector("05-model-text", "A model text task holds the key of its model-text@1 input. The "
+            "body leaves that key out, at its depth, and keeps the count of the statements.",
+            MODEL_TEXT_TASK,
+            {"mode": "review", "field": "summary", "key": None,
+             "body": _body(MODEL_TEXT_TASK, model_text={"statements": 2})})  # fmt: skip
+task_vector("06-key-in-list", "A list item that is a key of the store is null, so each other "
+            "item keeps its index. A string that only starts as a key stays. The member "
+            "sources is made up.",
+            {**REVIEW_TASK, "sources": [api_key("5"), "p. 41", {"input": api_key("6"), "n": 1},
+                                        "sha256:" + "5" * 63]},
+            {"mode": "review", "field": "total_revenue", "key": "2025",
+             "body": _body(REVIEW_TASK, sources=[None, "p. 41", {"n": 1},
+                                                 "sha256:" + "5" * 63])})  # fmt: skip
 task_vector("not-served-calibrate-field", "A calibrate label task is not a task of the API.",
             {**AUDIT_TASK, "template": "calibrate_field@1"}, None)  # fmt: skip
 task_vector("not-served-calibrate-key", "A calibrate key task is not a task of the API.",
@@ -8956,23 +8984,19 @@ REVIEW_API.append({
     ]},
 })  # fmt: skip
 
-# The tasks of the API in one store, in no order. ``task`` is the task ID. Task b is blind, so
-# its ID is a blind ID and it has no packet key. ``open`` is false for a task that the actor
-# answered or that an answer settles.
-API_IDS = {letter: api_task(letter) for letter in "acdef9"} | {"b": "blind:" + "b" * 64}
+# The tasks of the API in one store, in no order. ``task`` is the task ID. ``open`` is false
+# for a task that the actor answered or that an answer settles.
+API_IDS = {letter: api_task(letter) for letter in "abcdef9"}
 API_ENTRIES = [
-    {"task": API_IDS["a"], "packet": API_PACKET_2, "document": "inv-0002", "field": "total",
-     "key": None, "open": True},
-    {"task": API_IDS["f"], "packet": API_PACKET_1, "document": "inv-0001", "field": "total",
-     "key": None, "open": True},
-    {"task": API_IDS["e"], "packet": API_PACKET_1, "document": "inv-0001", "field": "rate",
-     "key": "standard", "open": True},
-    {"task": API_IDS["d"], "packet": API_PACKET_1, "document": "inv-0001", "field": "rate",
-     "key": None, "open": True},
-    {"task": API_IDS["c"], "packet": API_PACKET_1, "document": "inv-0001", "field": "rate",
-     "key": "express", "open": False},
-    {"task": API_IDS["b"], "packet": None, "document": "inv-0001", "field": "rate",
-     "key": "express", "open": True},
+    {"task": API_IDS["a"], "document": "inv-0002", "field": "total", "key": None, "open": True},
+    {"task": API_IDS["f"], "document": "inv-0001", "field": "total", "key": None, "open": True},
+    {"task": API_IDS["e"], "document": "inv-0001", "field": "rate", "key": "standard",
+     "open": True},
+    {"task": API_IDS["d"], "document": "inv-0001", "field": "rate", "key": None, "open": True},
+    {"task": API_IDS["c"], "document": "inv-0001", "field": "rate", "key": "express",
+     "open": False},
+    {"task": API_IDS["b"], "document": "inv-0001", "field": "rate", "key": "express",
+     "open": True},
 ]  # fmt: skip
 
 
@@ -8989,13 +9013,13 @@ def page_vector(name: str, description: str, query: str, tasks: str | None = Non
 
 
 # The order: document inv-0001 before inv-0002; in inv-0001, rate before total; for rate, the
-# null key, then express, then standard. For rate and express, the blind ID of task b comes
-# before the task key of task c, because "blind:" comes before "sha256:". Task c is not open.
+# null key, then express, then standard. For rate and express, the ID of task b comes before
+# the ID of task c. Task c is not open.
 # So the open tasks are d, b, e, f, a.
 page_vector("01-all", "No query: each open task, in the order of the document, the field, the "
             "key with null first, and the task ID.", "", "dbefa")  # fmt: skip
-page_vector("02-first", "A limit of 2 gives two tasks and the cursor of the second. The cursor "
-            "is a blind ID, because the second task is blind.", "limit=2", "db", "b")  # fmt: skip
+page_vector("02-first", "A limit of 2 gives two tasks and the cursor of the second.", "limit=2",
+            "db", "b")  # fmt: skip
 page_vector("03-second", "The cursor of page 1 gives the next two tasks.",
             f"limit=2&cursor={API_IDS['b']}", "ef", "f")  # fmt: skip
 page_vector("04-last", "The last page has no cursor.", f"cursor={API_IDS['f']}&limit=2", "a")
@@ -9016,11 +9040,11 @@ page_vector("bad-limit-two", "Two limits.", "limit=2&limit=2")
 page_vector("bad-member", "A query member that the operation does not have.", "limit=2&page=2")
 page_vector("bad-cursor-unknown", "A cursor that is the ID of no task of the API.",
             f"cursor={API_IDS['9']}")  # fmt: skip
-page_vector("bad-cursor-task-key", "The task key of a blind task is not its ID, so it is no "
-            "cursor.", f"cursor={api_task('b')}")  # fmt: skip
+page_vector("bad-cursor-task-key", "A task key is not a task ID, so it is no cursor.",
+            f"cursor={api_key('b')}")  # fmt: skip
 page_vector("bad-cursor-form", "A cursor that is not an ID.", "cursor=2")
 page_vector("bad-cursor-escape", "A cursor with a percent escape for its colon.",
-            f"cursor=sha256%3A{'c' * 64}")  # fmt: skip
+            f"cursor=task%3A{'c' * 64}")  # fmt: skip
 
 
 def answer_vector(name: str, description: str, body: Any, error: str | None = None,
@@ -9047,12 +9071,10 @@ answer_vector("05-limits", "The largest keys and ms.",
 answer_vector("06-blind-correct", "A blind task takes a correction.",
               {"task": API_T, "verdict": "correct", "span": {"start": 18240, "end": 18243}},
               blind=True)  # fmt: skip
-answer_vector("09-blind-id", "The task of an answer can be a blind ID.",
-              {"task": "blind:" + "b" * 64, "verdict": "unsure"}, blind=True)  # fmt: skip
-answer_vector("bad-task-prefix", "A task ID with another prefix.",
-              {"task": "task:" + "b" * 64, "verdict": "unsure"}, "bad_request")  # fmt: skip
-answer_vector("bad-task-blind-short", "A blind ID with 63 hex digits.",
-              {"task": "blind:" + "b" * 63, "verdict": "unsure"}, "bad_request")  # fmt: skip
+answer_vector("bad-task-key", "A task key is not a task ID.",
+              {"task": api_key("b"), "verdict": "unsure"}, "bad_request")  # fmt: skip
+answer_vector("bad-task-short", "A task ID with 63 hex digits.",
+              {"task": "task:" + "b" * 63, "verdict": "unsure"}, "bad_request")  # fmt: skip
 answer_vector("07-blind-not-in-document", "A blind task takes not_in_document.",
               {"task": API_T, "verdict": "not_in_document"}, blind=True)  # fmt: skip
 answer_vector("08-blind-unsure", "A blind task takes unsure.",
@@ -9163,7 +9185,7 @@ def request_vector(name: str, description: str, method: str, path: str, status: 
 
 
 JSON_TYPE = {"Content-Type": "application/json"}
-API_T0 = "sha256:" + "0" * 64
+API_T0 = api_task("0")
 request_vector("01-list", "The list of an empty store.", "GET", "/v1/tasks", 200, None,
                response={"api": "groundgate-review/1", "actor": "ana", "tasks": [],
                          "next": None})  # fmt: skip
@@ -9187,22 +9209,21 @@ request_vector("path-version", "A path of another version.", "GET", "/v2/tasks",
 request_vector("path-root", "The root path.", "GET", "/", 404, "not_found")
 request_vector("path-slash", "The list path with a slash at its end.", "GET", "/v1/tasks/", 404,
                "not_found")  # fmt: skip
-request_vector("path-short-key", "A task path with a short key.", "GET", "/v1/tasks/sha256:abc",
+request_vector("path-short-id", "A task path with a short ID.", "GET", "/v1/tasks/task:abc",
                404, "not_found")  # fmt: skip
-request_vector("path-escape", "A task path with a percent escape for the colon of its key.",
-               "GET", f"/v1/tasks/sha256%3A{'0' * 64}", 404, "not_found")  # fmt: skip
-request_vector("task-unknown", "A key that names no task of the store.", "GET",
+request_vector("path-escape", "A task path with a percent escape for the colon of its ID.",
+               "GET", f"/v1/tasks/task%3A{'0' * 64}", 404, "not_found")  # fmt: skip
+request_vector("task-unknown", "An ID that names no task of the store.", "GET",
                f"/v1/tasks/{API_T0}", 404, "not_found")  # fmt: skip
-API_B0 = "blind:" + "0" * 64
-request_vector("task-unknown-blind", "A blind ID that names no task.", "GET",
-               f"/v1/tasks/{API_B0}", 404, "not_found")  # fmt: skip
-request_vector("path-prefix", "A task path with another prefix than sha256 and blind.", "GET",
-               f"/v1/tasks/task:{'0' * 64}", 404, "not_found")  # fmt: skip
-request_vector("query-cursor-blind", "A cursor that is a blind ID of no task.", "GET",
-               f"/v1/tasks?cursor={API_B0}", 400, "bad_request")  # fmt: skip
-request_vector("answer-unknown-blind", "An answer to a blind ID that names no task.", "POST",
-               "/v1/answers", 404, "not_found", headers={"Content-Type": "application/json"},
-               body=json.dumps({"task": API_B0, "verdict": "unsure"}))  # fmt: skip
+request_vector("path-task-key", "A task path with a task key: a task key is not a task ID.",
+               "GET", f"/v1/tasks/{api_key('0')}", 404, "not_found")  # fmt: skip
+request_vector("document-task-key", "A document path with a task key.", "GET",
+               f"/v1/tasks/{api_key('0')}/document", 404, "not_found")  # fmt: skip
+request_vector("query-cursor-task-key", "A cursor that is a task key.", "GET",
+               f"/v1/tasks?cursor={api_key('0')}", 400, "bad_request")  # fmt: skip
+request_vector("answer-task-key", "An answer with a task key in place of a task ID.", "POST",
+               "/v1/answers", 400, "bad_request", headers={"Content-Type": "application/json"},
+               body=json.dumps({"task": api_key("0"), "verdict": "unsure"}))  # fmt: skip
 request_vector("document-unknown", "The document of a key that names no task.", "GET",
                f"/v1/tasks/{API_T0}/document", 404, "not_found")  # fmt: skip
 request_vector("method-put", "PUT on the list.", "PUT", "/v1/tasks", 405,
@@ -9240,7 +9261,7 @@ request_vector("not-object", "A body that is a JSON array.", "POST", "/v1/answer
 request_vector("answer-member", "An answer with a member that the operation does not have.",
                "POST", "/v1/answers", 400, "bad_request", headers=JSON_TYPE,
                body=json.dumps({"task": API_T0, "verdict": "confirm", "reviewer": "lead"}))  # fmt: skip
-request_vector("answer-unknown-task", "An answer to a key that names no task.", "POST",
+request_vector("answer-unknown-task", "An answer to an ID that names no task.", "POST",
                "/v1/answers", 404, "not_found", headers=JSON_TYPE,
                body=json.dumps({"task": API_T0, "verdict": "confirm"}))  # fmt: skip
 

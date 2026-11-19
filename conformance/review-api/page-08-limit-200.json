@@ -4,48 +4,42 @@
  "description": "The largest limit.",
  "entries": [
   {
-   "task": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-   "packet": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+   "task": "task:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
    "document": "inv-0002",
    "field": "total",
    "key": null,
    "open": true
   },
   {
-   "task": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
-   "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+   "task": "task:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
    "document": "inv-0001",
    "field": "total",
    "key": null,
    "open": true
   },
   {
-   "task": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-   "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+   "task": "task:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
    "document": "inv-0001",
    "field": "rate",
    "key": "standard",
    "open": true
   },
   {
-   "task": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
-   "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+   "task": "task:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
    "document": "inv-0001",
    "field": "rate",
    "key": null,
    "open": true
   },
   {
-   "task": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
-   "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+   "task": "task:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
    "document": "inv-0001",
    "field": "rate",
    "key": "express",
    "open": false
   },
   {
-   "task": "blind:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-   "packet": null,
+   "task": "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
    "document": "inv-0001",
    "field": "rate",
    "key": "express",
@@ -55,11 +49,11 @@
  "query": "limit=200",
  "expected": {
   "tasks": [
-   "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
-   "blind:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-   "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-   "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
-   "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+   "task:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+   "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+   "task:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+   "task:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+   "task:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
   ],
   "next": null
  }

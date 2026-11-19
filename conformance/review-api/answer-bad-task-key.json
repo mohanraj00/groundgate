@@ -1,0 +1,13 @@
+{
+ "name": "answer-bad-task-key",
+ "kind": "answer",
+ "description": "A task key is not a task ID.",
+ "blind": false,
+ "body": {
+  "task": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "unsure"
+ },
+ "expected": {
+  "error": "bad_request"
+ }
+}

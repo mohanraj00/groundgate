@@ -3,7 +3,7 @@
  "kind": "request",
  "description": "The document of a key that names no task.",
  "method": "GET",
- "path": "/v1/tasks/sha256:0000000000000000000000000000000000000000000000000000000000000000/document",
+ "path": "/v1/tasks/task:0000000000000000000000000000000000000000000000000000000000000000/document",
  "headers": {
   "Host": "127.0.0.1:{port}",
   "Authorization": "Bearer local-token-0123456789-abcdefghijklmnopqrstuvwxyz"

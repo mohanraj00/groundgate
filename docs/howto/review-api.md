@@ -126,8 +126,13 @@ inv-0007 review total
 The list gives the open tasks of the actor. With `?limit=1`, a page has one task, and `next` is
 the cursor of the next page. Send it back as it is, in `?cursor=`.
 
-The `total` task is a review task. Its `body` is the `task@1` object, with the question, the
-choices and the evidence of each choice. The document comes from a second call. Each span is in
+The `task` of each task is a task ID: `task:` and 64 hex digits. It is not the task key of the
+store. Use it as it is, in a path and in an answer. A task ID is good only while the server
+runs, so read the list again after a new start. No response gives a key of the store: section 6
+says why.
+
+The `total` task is a review task. Its `body` is the `task@1` object without its packet key,
+with the question, the choices and the evidence of each choice. The document comes from a second call. Each span is in
 UTF-8 bytes of that text.
 
 ```python
@@ -154,8 +159,8 @@ spans of the document that it cites. An answer to it has the verdict `confirm` a
 
 An answer names its task and its verdict. `choose` gives the decision of the right choice: here
 decision 2, because the invoice gives the total in thousands. The response has the record that
-the store now has. The reviewer is the actor of the claim: a body
-cannot name another reviewer.
+the store now has, without its task key. The reviewer is the actor of the claim: a body cannot
+name another reviewer.
 
 ```python
 written = call("/v1/answers", {"task": total, "verdict": "choose", "decision": 2})
@@ -179,11 +184,6 @@ a task is blind. The API gives the document, the field and the key, and never th
 Its `body` is null. No response gives its value, its evidence, its question or the outcome of the
 gate.
 
-The `task` of a blind task is a blind ID: `blind:` and 64 hex digits. It is not the task key,
-because the task key is a hash over the proposed value. A blind ID is good only while the server
-runs, so read the list again after a new start. The `packet` of a blind task is null for the
-same reason.
-
 A blind task takes three verdicts: `correct`, `not_in_document` and `unsure`. For `correct`, send
 the span of the value that you found in the document. The service reads the value from the span,
 and the gate checks it again.
@@ -191,19 +191,18 @@ and the gate checks it again.
 ```python
 tax = next(t["task"] for t in listed["tasks"] if t["field"] == "tax")
 blind = call(f"/v1/tasks/{tax}")
-print(tax[:6], blind["mode"], blind["field"], blind["packet"], blind["body"])
+print(blind["mode"], blind["field"], blind["body"])
 written = call("/v1/answers", {"task": tax, "verdict": "correct", "span": span("310 thousand")})
-print(written["record"], written["entry_sha256"])
+print(written["record"])
 ```
 
 ```text
-blind: audit tax None None
-None None
+audit tax None
+None
 ```
 
 The response of a blind answer has no record, because the record of a correction can hold the
-unit of the proposed value. It has no `entry_sha256`, because that hash is over the record. The
-store has the record.
+unit of the proposed value. The store has the record.
 
 ## 4. Corrections and their errors
 
@@ -317,6 +316,10 @@ out of the store folder, with mode 600.
   holds no log between two requests. So `review serve`, `review resolve` and the API work on one
   store. If two writers send an answer to one log at the same time, one of them gets
   `log_refused`.
+- No response gives a key of the store. A store key is a hash of its object, and a packet holds
+  the proposed value of each audit task. With a task key or a packet key, a person could test a
+  guess of that value with no request. So a task has an opaque ID, a task body has no packet
+  key, and the record of an answer has no task key. To get a key, read the store.
 - Within version 1, a later release can add an operation, a response member, a request member
   that you can leave out, and an error code. It does not remove or rename one, and it does not
   change its meaning. Ignore a response member that you do not know.

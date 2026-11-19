@@ -45,7 +45,6 @@
  },
  "expected": {
   "served": true,
-  "packet": null,
   "mode": "audit",
   "field": "indication",
   "key": null,

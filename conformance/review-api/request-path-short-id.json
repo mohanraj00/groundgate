@@ -1,9 +1,9 @@
 {
- "name": "request-task-unknown-blind",
+ "name": "request-path-short-id",
  "kind": "request",
- "description": "A blind ID that names no task.",
+ "description": "A task path with a short ID.",
  "method": "GET",
- "path": "/v1/tasks/blind:0000000000000000000000000000000000000000000000000000000000000000",
+ "path": "/v1/tasks/task:abc",
  "headers": {
   "Host": "127.0.0.1:{port}",
   "Authorization": "Bearer local-token-0123456789-abcdefghijklmnopqrstuvwxyz"

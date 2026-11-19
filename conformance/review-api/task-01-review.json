@@ -1,7 +1,7 @@
 {
  "name": "task-01-review",
  "kind": "task",
- "description": "A review task. The body is the task object as it is.",
+ "description": "A review task. The body is the task object without its packet key: that key is a hash over each candidate of the packet, and so over the proposed value of a blind task of the same packet. The response has no packet member.",
  "task": {
   "format": "task@1",
   "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
@@ -66,13 +66,11 @@
  },
  "expected": {
   "served": true,
-  "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
   "mode": "review",
   "field": "total_revenue",
   "key": "2025",
   "body": {
    "format": "task@1",
-   "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
    "slot": {
     "field": "total_revenue",
     "key": "2025",

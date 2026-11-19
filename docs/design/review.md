@@ -618,18 +618,19 @@ the contract: the operations, the errors and the claim check. This section gives
   Under rule 7 of section 6.1, a blind correction removes the admitted value, and the slot then
   resolves to the value of the person. If that value is the admitted value, the app gets the
   same value with the status `corrected`.
-- **A blind task has a blind ID.** A task key is a hash of the task object, and the object of
-  an audit task holds the proposed value. With the key, a person can make an object for each
-  guess and compare the hashes, with no request. So the API names a blind task with an HMAC of
-  its key, and it takes the task key of a blind task as an unknown ID. The key of the HMAC is
-  random for each start of the service. It is not state: it comes from no store and goes to
-  none, and a client reads the list again after a new start. The responses for a blind task
-  give no packet key and no entry hash, because each is a hash over the value too. The service
-  never looks for the ID of a request in the store: it makes the ID of each task and compares.
-  A lookup by the key would read one object more for the task key of a blind task than for an
-  unknown key, and the time of the `not_found` would tell that a guess is right. The cost is a
-  full read of the store for each request (#697). One limit stays: the packet key of a review
-  task in the same packet is such a hash (#698).
+- **No response gives a key of the store.** A store key is a hash of its object, and the
+  object of an audit task holds the proposed value. With the key, a person can make an object
+  for each guess and compare the hashes, with no request. The packet holds the value too, and
+  the key of each other task of the packet is a hash over the packet key. So is the key of a
+  model text and the entry hash of an answer. A rule for the blind task only left these open
+  (#698). So the rule is for each response: a task has an opaque ID, an HMAC of its task key,
+  and a task body, an answer record and an error message have no store key. The key of the
+  HMAC is random for each start of the service. It is not state: it comes from no store and
+  goes to none, and a client reads the list again after a new start. The service never looks
+  for the ID of a request in the store: it makes the ID of each task and compares. A lookup by
+  a key would let the time of a `not_found` tell if the key is in the store. The cost is a
+  full read of the store for each request (#697), and a client that cannot name a packet or a
+  log entry. A client that needs them reads the store.
 - **Two kinds of task are not in version 1.** A calibrate label task shows its value on
   purpose, and `calibrate label` serves it. An audit task for a closed set has no blind answer,
   because `answer@2` has no member for an option.

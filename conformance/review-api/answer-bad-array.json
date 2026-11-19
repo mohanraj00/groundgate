@@ -4,7 +4,7 @@
  "description": "A body that is not an object.",
  "blind": false,
  "body": [
-  "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
   "confirm"
  ],
  "expected": {

@@ -25,13 +25,11 @@
  },
  "expected": {
   "served": true,
-  "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
   "mode": "review",
   "field": "auditor",
   "key": null,
   "body": {
    "format": "task@1",
-   "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
    "slot": {
     "field": "auditor",
     "key": null,

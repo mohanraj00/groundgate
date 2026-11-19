@@ -4,55 +4,49 @@
  "description": "A cursor that is the ID of no task of the API.",
  "entries": [
   {
-   "task": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-   "packet": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+   "task": "task:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
    "document": "inv-0002",
    "field": "total",
    "key": null,
    "open": true
   },
   {
-   "task": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
-   "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+   "task": "task:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
    "document": "inv-0001",
    "field": "total",
    "key": null,
    "open": true
   },
   {
-   "task": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-   "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+   "task": "task:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
    "document": "inv-0001",
    "field": "rate",
    "key": "standard",
    "open": true
   },
   {
-   "task": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
-   "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+   "task": "task:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
    "document": "inv-0001",
    "field": "rate",
    "key": null,
    "open": true
   },
   {
-   "task": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
-   "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+   "task": "task:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
    "document": "inv-0001",
    "field": "rate",
    "key": "express",
    "open": false
   },
   {
-   "task": "blind:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-   "packet": null,
+   "task": "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
    "document": "inv-0001",
    "field": "rate",
    "key": "express",
    "open": true
   }
  ],
- "query": "cursor=sha256:9999999999999999999999999999999999999999999999999999999999999999",
+ "query": "cursor=task:9999999999999999999999999999999999999999999999999999999999999999",
  "expected": {
   "error": "bad_request"
  }
