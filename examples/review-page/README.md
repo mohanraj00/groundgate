@@ -53,6 +53,8 @@ uv run python examples/review-page/run.py --store work/store --reviewer ana
   document".
 - **A flagged correction.** The gate checks each correction. If it flags the value, the page
   shows the codes and a "Keep the value" button. Press it only if the value is right.
+- **One answer at a time.** From the start of an answer to its response, the page opens no
+  other task and sends no second answer. So a response always belongs to the task on the page.
 
 An answer goes through `POST /v1/answers`, so the store gets the same record as from
 `groundgate review serve`. After an answer, the page reads the list again.
@@ -90,10 +92,10 @@ origin. It sends each `/v1/` request to the API as it is. The API does each chec
 
 - `tests/test_review_page.py` sends the calls of the page through the page server: one answer
   to a review task and one to an audit task. It needs no browser and no network.
-- `tests/test_review_page_kit_seam.py` loads the page in headless Chrome with the pinned kit,
-  and answers the two tasks with the buttons of the kit. A second test does the same steps
-  without the kit. Each test skips if Chrome is not installed, and the first one skips if git
-  cannot get the kit.
+- `tests/test_review_page_kit_seam.py` loads the page in a headless browser with the pinned
+  kit, and answers the two tasks with the buttons of the kit. A second test does the same steps
+  without the kit. Each test skips if no browser with a remote debugging pipe is installed, and
+  the first one skips if git cannot get the kit.
 
 ## Limits
 

@@ -2,8 +2,9 @@
 loads in a browser with the kit at the pinned commit, and a press on a button of the kit sends
 an answer through the review API. A second test does the same steps without the kit.
 
-The seam test needs Chrome, git and the network, and it skips without one of them. Set CHROME to the
-path of the browser, and REVIEW_PAGE_KIT to a folder that keeps the kit checkout between runs.
+The seam test needs a browser with a remote debugging pipe, git and the network, and it skips
+without one of them. Set REVIEW_PAGE_BROWSER to the path of the browser, and REVIEW_PAGE_KIT to
+a folder that keeps the kit checkout between runs.
 tests/test_review_page.py has the tests that need no browser."""
 
 from __future__ import annotations
@@ -24,18 +25,18 @@ from test_review_page import TOKEN, run
 
 from groundgate.store import FolderStore, reviewer_key
 
-MAC_CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+MAC_BROWSER = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 SECONDS = 60
 
 
-def chrome_path() -> str | None:
+def browser_path() -> str | None:
     names = ("google-chrome", "google-chrome-stable", "chromium", "chromium-browser")
-    found = [os.environ.get("CHROME"), *(shutil.which(n) for n in names), MAC_CHROME]
+    found = [os.environ.get("REVIEW_PAGE_BROWSER"), *(shutil.which(n) for n in names), MAC_BROWSER]
     return next((p for p in found if p and Path(p).is_file()), None)
 
 
-class Chrome:
-    """Headless Chrome with the DevTools protocol on a pipe: the browser reads a message on its
+class Browser:
+    """A headless browser with its remote debugging pipe: the browser reads a message on its
     file descriptor 3 and writes on 4. A message is JSON with a zero byte after it. A pipe needs
     no port and no WebSocket, so the standard library is enough."""
 
@@ -139,6 +140,30 @@ STEPS = """
   out.start = who();
   out.table = textOf($('queue').firstElementChild);
 
+  // an answer that is on its way keeps its task on the page: the page opens no other task
+  // before the response, so the response and its "Keep the value" button belong to that task
+  press('li[data-mode=audit]');
+  await until(() => $('detail').dataset.mode === 'audit' && $('document'), 'audit task');
+  await select('310');
+  const real = window.fetch;
+  let release;
+  const held = new Promise((done) => { release = done; });
+  window.fetch = async (...args) => {
+    const response = await real(...args);
+    if (String(args[0]).startsWith('/v1/answers')) await held;
+    return response;
+  };
+  press('[data-tool="answer.correct"]');
+  await wait(300);
+  press('li[data-field=total]');
+  await wait(300);
+  out.held = [$('detail').dataset.mode, textOf($('result').firstElementChild)];
+  window.fetch = real;
+  release();
+  await until(() => $('result').dataset.code === 'codes_not_kept', 'flagged after the wait');
+  const keep = '[data-tool="answer.keep"]';
+  out.after = [$('detail').dataset.mode, document.querySelectorAll(keep).length];
+
   // the review task: choose the second value
   press('li[data-field=total]');
   const choose = '[data-tool="answer.choose"]';
@@ -181,18 +206,18 @@ def pinned_kit(tmp_path_factory: pytest.TempPathFactory) -> Path:
 
 
 @pytest.fixture
-def browser(tmp_path: Path) -> Iterator[Chrome]:
-    binary = chrome_path()
+def browser(tmp_path: Path) -> Iterator[Browser]:
+    binary = browser_path()
     if sys.platform == "win32" or binary is None:
-        pytest.skip("Chrome is not installed")
-    chrome = Chrome(binary, tmp_path / "profile")
+        pytest.skip("no browser with a remote debugging pipe is installed")
+    started = Browser(binary, tmp_path / "profile")
     try:
-        yield chrome
+        yield started
     finally:
-        chrome.close()
+        started.close()
 
 
-def answer_two_tasks(browser: Chrome, tmp_path: Path, kit: Path | None) -> dict[str, Any]:
+def answer_two_tasks(browser: Browser, tmp_path: Path, kit: Path | None) -> dict[str, Any]:
     """Load the page, do the steps, and check what each mode of the page must do: the texts of
     the page, the blind audit task, and the two answers in the store."""
     root = tmp_path / "store"
@@ -211,6 +236,9 @@ def answer_two_tasks(browser: Chrome, tmp_path: Path, kit: Path | None) -> dict[
     out: dict[str, Any] = json.loads(result["result"]["value"])
     assert out["start"] == "Reviewer: ana. Open tasks: 2."
     assert "invoice-0007" in out["table"] and "audit" in out["table"]
+    # the page did not open the review task while the audit answer was on its way
+    assert out["held"][0] == "audit" and "waits for the response" in out["held"][1]
+    assert out["after"] == ["audit", 1]
     assert out["marks"] == ["4,200 thousand", "4,200 thousand"]
     # the audit task shows no proposed value: no choice, no passage, no value in a text
     assert out["choices"] == 0 and "does not show a proposed value" in out["audit"]
@@ -227,7 +255,7 @@ def answer_two_tasks(browser: Chrome, tmp_path: Path, kit: Path | None) -> dict[
 
 
 def test_the_page_answers_a_task_with_the_pinned_kit(
-    tmp_path: Path, pinned_kit: Path, browser: Chrome
+    tmp_path: Path, pinned_kit: Path, browser: Browser
 ) -> None:
     """The seam test: the kit at the pin defines each element that the page mounts, and a press
     on a button of the kit sends the answer through the API."""
@@ -238,7 +266,7 @@ def test_the_page_answers_a_task_with_the_pinned_kit(
     assert out["controls"] == ["mu-button"]
 
 
-def test_the_page_answers_a_task_without_the_kit(tmp_path: Path, browser: Chrome) -> None:
+def test_the_page_answers_a_task_without_the_kit(tmp_path: Path, browser: Browser) -> None:
     out = answer_two_tasks(browser, tmp_path, None)
     assert out["defined"] == [] and out["kit"] == "false"
     assert out["controls"] == ["button"] and "plain controls" in out["note"]

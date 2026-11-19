@@ -15,6 +15,10 @@ const $ = (id) => document.getElementById(id);
 // The open task: its ID, the bytes of its document, the selected span, and an answer that the
 // API refused and that the person can send again.
 let current = null;
+// True from the start of an answer request to its response. In that time, the page opens no
+// task and sends no second answer, so a response always belongs to the task on the page.
+let busy = false;
+const WAIT = 'The page waits for the response to your answer.';
 
 const clip = (text, max) => (text.length > max ? `${text.slice(0, max - 1)}…` : text);
 
@@ -100,6 +104,7 @@ async function read(path) {
 function show(state, text, parent = $('result')) {
   parent.replaceChildren();
   parent.dataset.state = state;
+  delete parent.dataset.code; // the error code of the last answer, for a test
   parts.status(parent, state, text);
 }
 
@@ -152,7 +157,12 @@ function passage(parent, data, { start, end }) {
 }
 
 async function open(entry, number) {
+  if (busy) {
+    show('pending', WAIT);
+    return;
+  }
   const [task, source] = await Promise.all([read(`/v1/tasks/${entry.task}`), read(`/v1/tasks/${entry.task}/document`)]);
+  if (busy) return; // an answer started while the page read the task: keep the task on the page
   const data = encoder.encode(source.text);
   current = { id: entry.task, data, span: null, again: null };
   $('result').replaceChildren();
@@ -211,29 +221,40 @@ document.addEventListener('selectionchange', () => {
   $('selection').textContent = `Selected: ${clip(decoder.decode(current.data.subarray(start, end)), 200)}`;
 });
 
-// Send one answer. The receipt of the button comes from the response of the API.
+// Send one answer of the open task. The receipt of the button comes from the response of the
+// API. ``own`` is the task that the answer belongs to: the response changes only that task, and
+// only if it is the task on the page.
 async function send(body) {
-  const { status, data } = await call('/v1/answers', body);
+  const own = current;
+  busy = true;
+  let response;
+  try {
+    response = await call('/v1/answers', body);
+  } finally {
+    busy = false;
+  }
+  const { status, data } = response;
   if (status === 201) {
-    current = null;
+    if (current === own) current = null;
     // The receipt goes to the button first. Then the page reads the list again.
     setTimeout(() => {
-      $('detail').replaceChildren();
+      if (current === null) $('detail').replaceChildren();
       show('passed', 'The answer is in the store.');
       loadQueue().catch(fail);
     }, 0);
     return { ok: true, message: 'The answer is in the store.' };
   }
   const { code, message, codes } = data.error;
+  if (current !== own) return { ok: false, message: clip(message, 200) };
   const result = $('result');
   if (code === 'codes_not_kept' || code === 'parts_disagree') {
     // The person saw the reason. A second press sends the same answer with the reason kept.
-    current.again = code === 'codes_not_kept' ? { ...body, codes_kept: codes } : { ...body, parts_seen: true };
+    own.again = code === 'codes_not_kept' ? { ...body, codes_kept: codes } : { ...body, parts_seen: true };
     const why = code === 'codes_not_kept' ? `The gate flags the value: ${codes.join(', ')}.` : message;
     show('failed', `${why} If the value is right, keep it. If not, select another text.`);
     action(add(result, 'ul', '', { class: 'actions' }), 'answer.keep', 'Keep the value');
   } else {
-    current.again = null;
+    own.again = null;
     show('failed', message);
   }
   result.dataset.code = code;
@@ -241,6 +262,7 @@ async function send(body) {
 }
 
 function answer(tool, args) {
+  if (busy) return { ok: false, message: WAIT };
   if (!current || args.task !== current.id) return { ok: false, message: 'The task is not open now.' };
   const task = current.id;
   if (tool === 'answer.choose') return send({ task, verdict: 'choose', decision: args.decision });
