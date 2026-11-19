@@ -1,12 +1,12 @@
 {
  "name": "answer-01-choose",
  "kind": "answer",
- "description": "A choice.",
+ "description": "A choice, by its number in the task.",
  "blind": false,
  "body": {
   "task": "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
   "verdict": "choose",
-  "decision": 3
+  "choice": 1
  },
  "expected": {
   "valid": true

@@ -2262,6 +2262,19 @@ no response gives a key of the store, and none gives a hash over data of the sto
   `task`.
 - An error message gives no key of the store.
 
+**No index of the receipt.** A `task@1` object names each choice by its `decision`, the index
+of a decision in the receipt, and its `slot` lists these indexes. The receipt sorts its
+decisions by `candidate_sha256` (§5). So the indexes of one task tell where each other candidate
+of the packet is in that order, and the candidate of a blind task is one of them. A person
+could test a guess of the proposed value against these indexes. So no response gives an index
+of the receipt:
+
+- The `slot` of a `body` has no `decisions`.
+- Each choice of a `body` has `choice` in place of `decision`: the number of the choice in its
+  task, from 1, in the order of the task.
+- An answer names a choice by that number, and the service finds the decision.
+- The `record` of an answer response has `choice` in place of `decision`.
+
 **GET /v1/tasks** lists the open tasks of the actor. The order is the code point order of
 `document`, then of the field, then of the key with null first, then of the task ID. The order uses
 only members of the list. The query can have `limit`, an integer from 1 to 200 in digits only, and
@@ -2275,12 +2288,12 @@ occurs two times, gives `bad_request`.
  "next": null}
 ```
 
-`task` is the task ID. `document` is the document id of the receipt (§5) as text for a person, or an
-empty string. `next` is the cursor of the next page: a string when more open tasks come after the
-last task of this page, and null if not. A client sends it back as it is, in `cursor`. The cursor is
-the ID of the last task of the page, and the next page starts after that task in the order. A cursor
-that is not the ID of a task of the API gives `bad_request`. A task that gets an answer between two
-requests leaves the list, and one walk never gives a task two times.
+`task` is the task ID. `document` is the document id of the receipt (§5) as text for a person, or
+an empty string. `next` is the cursor of the next page: a string when more open tasks come after
+the last task of this page, and null if not. A client sends it back as it is, in `cursor`. The
+cursor is the ID of the last task of the page, and the next page starts after that task in the
+order. A cursor that is not the ID of a task of the API gives `bad_request`. A task that gets an
+answer between two requests leaves the list, and one walk never gives a task two times.
 
 **GET /v1/tasks/{task}** gives one task, open or not.
 
@@ -2290,10 +2303,17 @@ requests leaves the list, and one walk never gives a task two times.
  "body": {"format": "task@1", "...": "..."}, "statements": null}
 ```
 
-`definition` is the description of the field in the schema, or null. `answered` is the verdict
-of the latest answer of the actor to this task, or null. `body` is the `task@1` object of the
-store without each key of the store, with its question, its choices, its evidence and its
-places. For a blind task, `body` is null.
+`definition` is the description of the field in the schema, or null. `answered` is the verdict of
+the latest answer of the actor to this task, or null. `body` is the `task@1` object of the store
+without each key of the store and each index of the receipt, with its question, its choices, its
+evidence and its places. For a blind task, `body` is null.
+
+Each choice of a `body` also has `source` and `ref`, from its decision in the receipt (§5).
+`source` is `document` when the `evidence` of the choice is a span of the document. It is
+`reference` when the evidence is a span of a reference of the packet, and `ref` is then the id
+of that reference. If not, `ref` is null. Version 1 gives the text of the document only. So a
+client reads the `evidence` span against the document text only when `source` is `document`:
+the same offsets of the document are other text for a `reference` choice.
 
 `statements` is null, except for a model text task (docs/design/review.md §7). Such a task holds
 no model text, so the response gives each statement of its `model-text@1` input, in order:
@@ -2317,7 +2337,7 @@ task, and each span of an answer, is in UTF-8 bytes of this text (§2.2).
 
 | Member | Form | For |
 |---|---|---|
-| `decision` | An integer, or null | `choose`: the decision of the choice. |
+| `choice` | An integer from 1, or null | `choose`: the number of the choice in the task. |
 | `span` | `{"start", "end"}` in UTF-8 bytes | `correct` and `adjust_span`: the place of the right value. |
 | `value` | A string of at most 1000 characters, or null | A correction: the value, if the service must not read it from the span. |
 | `parts` | A list of at most 8 objects `{"role", "start", "end"}` | A correction: the role items (§4.6). A role is `sign`, `scale`, `unit`, `field` or `key`. |
@@ -2327,20 +2347,20 @@ task, and each span of an answer, is in UTF-8 bytes of this text (§2.2).
 | `reason_seen` | A boolean | The measures: true when the actor saw the `codes` of the task before the answer. Without it, false. |
 | `keys`, `ms` | Integers from 0 to 2^31 - 1 | The measures. Without them, 0. |
 
-A body with another member, or with a member of another form, gives `bad_request`. A
-correction with no `span` gives `bad_answer`. So does an answer that is not a correction and has
-a `span`, a `value`, a part or a kept code, and an answer with `statements` to a task that is
-not a model text task. The service
-makes the record from the body as `groundgate review serve` does, with the actor as the
-`reviewer`, with `person:` and the actor as the proposer of a correction, and with the time of
-the service. It reads the value of a correction from the span when `value` is null or absent. It
-checks the answer against its task, and it runs the gate again for a correction
-(docs/design/review.md §6.2). Thus the same store, the same answer and the same time give the
-same record through the API and through the page of `groundgate review serve`. The record is
-`answer@2` when the verdict is `wrong`, and `answer@1` if not.
+A body with another member, or with a member of another form, gives `bad_request`. A correction with
+no `span` gives `bad_answer`. So does an answer that is not a correction and has a `span`, a
+`value`, a part or a kept code, an answer with `statements` to a task that is not a model text task,
+and an answer with a `choice` that is not the number of a choice of the task. The service makes the
+record from the body as `groundgate review serve` does, with the actor as the `reviewer`, with
+`person:` and the actor as the proposer of a correction, and with the time of the service. It reads
+the value of a correction from the span when `value` is null or absent. It checks the answer against
+its task, and it runs the gate again for a correction (docs/design/review.md §6.2). Thus the same
+store, the same answer and the same time give the same record through the API and through the page
+of `groundgate review serve`. The record is `answer@2` when the verdict is `wrong`, and `answer@1`
+if not.
 
 A blind task takes only `correct`, `not_in_document` and `unsure`. Each other verdict speaks of
-a value that the actor did not get, and it gives `bad_answer`. For a blind task,
+a value that the actor did not get, and it gives `bad_answer`. So does a `choice`. For a blind task,
 `parts_disagree` comes only from the text and the value of the actor, and never from the
 proposed value.
 
@@ -2353,7 +2373,8 @@ The response has the status 201:
 
 `record` is the new record of the answer log of the packet and the actor, without its `task`
 and without the three members that the store adds. Each of these four is a key of the store or
-a hash over one. For a blind task, `record` is null, because the candidate of a correction can
+a hash over one. The record has `choice`, the number of the choice or null, in place of its
+`decision`. For a blind task, `record` is null, because the candidate of a correction can
 hold the unit of the proposed value. The store has the full record.
 
 The vectors in `conformance/review-api/` give claims and static tokens with the actor or the

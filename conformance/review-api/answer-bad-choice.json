@@ -1,0 +1,14 @@
+{
+ "name": "answer-bad-choice",
+ "kind": "answer",
+ "description": "A choice that is a string.",
+ "blind": false,
+ "body": {
+  "task": "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "choose",
+  "choice": "1"
+ },
+ "expected": {
+  "error": "bad_request"
+ }
+}

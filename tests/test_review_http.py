@@ -222,7 +222,8 @@ def test_vector(path: Path, empty: Call) -> None:
                 assert v["token"] == TOKEN
                 got = {"actor": api.check_static(sent, api.read_token(v["token"], v["reviewer"]))}
         elif kind == "task":
-            view = api.task_view(v["task"])
+            sources = {int(index): d for index, d in v["sources"].items()}
+            view = api.task_view(v["task"], sources)
             got = {"served": view is not None, **(view or {})}
         elif kind == "statements":
             got = {"statements": api.statement_list(v["model_text"])}
@@ -297,8 +298,15 @@ def test_the_list_and_a_review_task_and_its_document(served: Served) -> None:
     task = json.loads(body)
     with FolderStore(served[0]) as store:
         stored = json.loads(store.get("task@1", tasks["revenue"]))
-    # the body is the task object without its packet key
+    # the body is the task object without its packet key and without an index of the receipt:
+    # each choice has its number in the task, and the source of its evidence
     assert stored.pop("packet") == k
+    assert stored["slot"].pop("decisions") == [1, 2]
+    assert [choice.pop("decision") for choice in stored["choices"]] == [1, 2]
+    stored["choices"] = [
+        {"choice": number, **choice, "source": "document", "ref": None}
+        for number, choice in enumerate(stored["choices"], 1)
+    ]
     assert status == 200 and task == {
         "api": "groundgate-review/1", "task": revenue, "document": "doc-1", "mode": "review",
         "field": "revenue", "key": None, "definition": None, "answered": None, "body": stored,
@@ -323,7 +331,7 @@ def test_a_request_with_no_claim_an_expired_claim_or_an_unknown_issuer_is_refuse
 ) -> None:
     root, k, tasks, call = served
     revenue = id_of(tasks["revenue"])
-    good = {"task": revenue, "verdict": "choose", "decision": 1}
+    good = {"task": revenue, "verdict": "choose", "choice": 1}
     refused = {
         "no_claim": None,
         "expired_claim": claim(exp=NOW),
@@ -423,7 +431,7 @@ def test_an_answer_through_the_api_and_through_review_serve_give_identical_recor
         # the verdict wrong gives an answer@2 record
         ({"task": tasks["revenue"], "verdict": "wrong"}, {"task": revenue, "verdict": "wrong"}),
         ({"task": tasks["revenue"], "verdict": "choose", "decision": 1},
-         {"task": revenue, "verdict": "choose", "decision": 1}),
+         {"task": revenue, "verdict": "choose", "choice": 1}),
         ({"task": tasks["revenue"], "verdict": "correct", **u16(number),
           "codes_kept": ["SCALE_WORD"]},
          {"task": revenue, "verdict": "correct", "span": at(number),
@@ -461,13 +469,18 @@ def test_an_answer_through_the_api_and_through_review_serve_give_identical_recor
         {"role": "field", **at("revenue")},
     ]
     assert {r["time"] for r in stored} == {"2026-11-19T12:00:00Z"}
-    # the response gives the record without its task key and without the members of the store
-    left_out = ("task", "sequence", "previous", "entry_sha256")
+    # the response gives the record without its task key and without the members of the store,
+    # and with the number of the choice in place of the index of the decision
+    left_out = ("task", "decision", "sequence", "previous", "entry_sha256")
+    assert [r["decision"] for r in stored] == [None, 1, None, None]
     for response, record in zip(written, stored, strict=True):
         assert record["task"] == tasks["revenue"]
         assert response == {
             "api": "groundgate-review/1", "actor": "ana", "task": revenue,
-            "record": {name: v for name, v in record.items() if name not in left_out},
+            "record": {
+                **{name: v for name, v in record.items() if name not in left_out},
+                "choice": None if record["decision"] is None else 1,
+            },
         }  # fmt: skip
     # the resolution of each store is the same too
     with FolderStore(by_cli) as a, FolderStore(by_api) as b:
@@ -491,7 +504,7 @@ def test_the_gate_checks_a_correction_again(served: Served) -> None:
         {**number, "span": {"start": 0, "end": 999}},  # after the end of the text
         {**number, "span": at("revenue")},  # no number
         {"task": revenue, "verdict": "confirm"},  # two choices
-        {"task": revenue, "verdict": "choose", "decision": 0},  # not a choice
+        {"task": revenue, "verdict": "choose", "choice": 3},  # not a choice
         {"task": revenue, "verdict": "choose"},
         {"task": revenue, "verdict": "unsure", "statements": []},
     ]
@@ -522,7 +535,7 @@ def test_a_blind_audit_task_never_shows_the_proposed_value(served: Served) -> No
     }  # fmt: skip
     # a blind task takes no verdict about a shown value
     for verdict in ("confirm", "choose", "adjust_span", "wrong"):
-        body = {"task": blind, "verdict": verdict, "decision": 2, "span": at("310")}
+        body = {"task": blind, "verdict": verdict, "choice": 1, "span": at("310")}
         if verdict in ("confirm", "wrong"):
             body = {"task": blind, "verdict": verdict}
         seen.append(call("POST", "/v1/answers", body))
@@ -563,6 +576,90 @@ def test_a_blind_audit_task_never_shows_the_proposed_value(served: Served) -> No
     assert last["candidate"]["evidence"] == [at("310 thousand")]
     # the document is the one response with the text of the value
     assert "310 thousand" in json.loads(document[2])["text"]
+
+
+def test_a_choice_names_the_source_of_its_evidence(tmp_path: Path) -> None:
+    """#702: two choices have the same offsets, one in the document and one in a reference.
+    Only the source tells which text the span is in."""
+    text, reference = "Limit: $7,000 for this year.\n", "Limit: $8,000 for each year.\n"
+    span = {"start": 7, "end": 13}
+    candidates = [
+        {"id": "c1", "field": "limit", "value": "7000", "unit": "USD",
+         "evidence": [{**span, "text": "$7,000"}]},
+        {"id": "c2", "field": "limit", "value": "8000", "unit": "USD",
+         "evidence": [{"source": "reference", "ref": "r", **span, "text": "$8,000"}]},
+    ]  # fmt: skip
+    schema = {"fields": {"limit": {"type": "number", "unit": "USD"}}}
+    root = tmp_path / "store"
+    with FolderStore(root) as store:
+        k, _ = admit_packet(
+            store, text, schema, candidates, None, "doc-1", None,
+            references=[{"id": "r", "text": reference}],
+        )  # fmt: skip
+        ((key, _),) = write_tasks(store, k, EVERY).tasks
+    service = Service(root, ISSUERS, clock=lambda: CLOCK, id_key=KEY)
+    with serving(api.server(service), {"Authorization": claim()}) as call:
+        task = json.loads(call("GET", f"/v1/tasks/{id_of(key)}")[2])
+        document = json.loads(call("GET", f"/v1/tasks/{id_of(key)}/document")[2])["text"]
+    choices = {c["value"]: c for c in task["body"]["choices"]}
+    assert {value: (c["evidence"], c["source"], c["ref"]) for value, c in choices.items()} == {
+        "7000": (span, "document", None),
+        "8000": (span, "reference", "r"),
+    }
+    assert sorted(c["choice"] for c in choices.values()) == [1, 2]
+    assert document == text and reference not in json.dumps(task)
+
+
+def test_no_response_gives_an_index_of_the_receipt(tmp_path: Path) -> None:
+    """The receipt sorts its decisions by the digest of the candidate. So the indexes of the
+    revenue task change with the value of the blind tax task: 0 and 2 for one value, 0 and 1
+    for the other. Each response is the same for the two values."""
+    text = "Revenue was 10. Revenue was 20. Tax was 10. Tax was 20."
+    schema = {"fields": {"revenue": {"type": "number"}, "tax": {"type": "number"}}}
+
+    def span(words: str) -> dict[str, Any]:
+        return {"start": text.index(words), "end": text.index(words) + len(words), "text": words}
+
+    seen, indexes = [], []
+    for value in ("10", "20"):
+        candidates = [
+            {"id": "c1", "field": "revenue", "value": "10", "evidence": span("Revenue was 10")},
+            {"id": "c2", "field": "revenue", "value": "20", "evidence": span("Revenue was 20")},
+            {"id": "n5", "field": "tax", "value": value, "evidence": span(f"Tax was {value}")},
+        ]
+        root = tmp_path / value
+        with FolderStore(root) as store:
+            k, _ = admit_packet(store, text, schema, candidates, None, "doc-1", None)
+            tasks = {t["slot"]["field"]: (tk, t) for tk, t in write_tasks(store, k, EVERY).tasks}
+        assert (
+            tasks["tax"][1]["mode"] == "audit" and tasks["tax"][1]["choices"][0]["value"] == value
+        )
+        indexes.append(tasks["revenue"][1]["slot"]["decisions"])
+        names = {id_of(tk): field for field, (tk, _) in tasks.items()}
+        service = Service(root, ISSUERS, clock=lambda: CLOCK, id_key=KEY)
+        with serving(api.server(service), {"Authorization": claim()}) as call:
+            revenue, tax = (id_of(tasks[field][0]) for field in ("revenue", "tax"))
+            responses = [
+                call("GET", "/v1/tasks"),
+                call("GET", f"/v1/tasks/{revenue}"),
+                call("GET", f"/v1/tasks/{tax}"),
+                call("GET", f"/v1/tasks/{revenue}/document"),
+                call("POST", "/v1/answers", {"task": revenue, "verdict": "choose", "choice": 2}),
+                call("POST", "/v1/answers", {"task": revenue, "verdict": "choose", "choice": 3}),
+                call("POST", "/v1/answers", {"task": tax, "verdict": "unsure"}),
+            ]
+        bodies = []
+        for status, _, body in responses:
+            for name, field in names.items():
+                body = body.replace(name, field)
+            bodies.append((status, json.loads(body)))
+        seen.append(bodies)
+        # the answer names choice 2, and the record has the index of its decision
+        assert bodies[4][1]["record"]["choice"] == 2 and bodies[5][0] == 400
+        assert records(root, k)[0]["decision"] == indexes[-1][1]
+    assert indexes == [[0, 2], [0, 1]]
+    assert seen[0] == seen[1]
+    assert [status for status, _ in seen[0]] == [200, 200, 200, 200, 201, 400, 201]
 
 
 def test_a_task_key_is_no_task_id(served: Served, monkeypatch: pytest.MonkeyPatch) -> None:
@@ -691,7 +788,7 @@ def test_no_response_gives_a_key_of_the_store_or_a_hash_over_it(tmp_path: Path) 
         assert ask("POST", "/v1/answers", {**number, "codes_kept": ["SCALE_WORD"]}) == 201
         assert ask("POST", "/v1/answers", {"task": revenue, "verdict": "wrong"}) == 201
         assert (
-            ask("POST", "/v1/answers", {"task": revenue, "verdict": "choose", "decision": 1}) == 201
+            ask("POST", "/v1/answers", {"task": revenue, "verdict": "choose", "choice": 1}) == 201
         )
         guess = {"task": blind, "verdict": "correct", "span": at("310")}
         assert ask("POST", "/v1/answers", guess) == 409

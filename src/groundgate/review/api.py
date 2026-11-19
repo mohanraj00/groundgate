@@ -27,6 +27,11 @@ the value with no request. So a task has an opaque ID, an HMAC of its task key w
 key that the service makes at its start, and ``no_keys`` takes each store key out of a task
 body and an answer record.
 
+No response gives an index of the receipt. The receipt sorts its decisions by the digest of
+the candidate, so the indexes of one task tell where the candidate of a blind task of the same
+packet is in that order. A choice has its number in its task, and an answer names a choice by
+that number.
+
 The store data and each request are untrusted.
 """
 
@@ -120,7 +125,7 @@ _DIGITS = re.compile(r"[0-9]{1,3}")
 _LIMIT = 2**31  # keys and ms
 _OFFSET = 2**53  # a span offset
 _BODY = frozenset({
-    "task", "verdict", "decision", "span", "value", "parts", "codes_kept", "parts_seen",
+    "task", "verdict", "choice", "span", "value", "parts", "codes_kept", "parts_seen",
     "statements", "reason_seen", "keys", "ms",
 })  # fmt: skip
 _TASK = re.compile(r"/v1/tasks/(task:[0-9a-f]{64})(/document)?")
@@ -318,19 +323,57 @@ def no_keys(value: Any) -> Any:
     return value
 
 
-def task_view(task: Mapping[str, Any]) -> dict[str, Any] | None:
+def task_view(
+    task: Mapping[str, Any], sources: Mapping[int, Mapping[str, Any]] | Sequence[Any] = ()
+) -> dict[str, Any] | None:
     """The members of a task response that come from the ``task@1`` object, or None for a task
     that is not a task of the API: a calibrate label task, and an audit task for a closed set.
-    The ``body`` has no key of the store. A task with the mode ``audit`` is blind, so its
-    ``body`` is None."""
+    ``sources`` holds the decisions of the receipt, by their index: each choice gets the
+    ``source`` and the ``ref`` of its decision.
+
+    The ``body`` has no key of the store and no index of the receipt: its slot has no
+    ``decisions``, and each choice has ``choice``, its number in the task, in place of
+    ``decision``. A task with the mode ``audit`` is blind, so its ``body`` is None."""
     blind = task["mode"] == "audit"
     if task["template"] in QUESTIONS or (blind and task["item"] == "closed_set"):
         return None
+    body = None
+    if not blind:
+        body = no_keys(task)
+        body["slot"] = {name: v for name, v in body["slot"].items() if name != "decisions"}
+        body["choices"] = [
+            {
+                "choice": number,
+                **{name: v for name, v in choice.items() if name != "decision"},
+                **_source(sources, task["choices"][number - 1]["decision"]),
+            }
+            for number, choice in enumerate(body["choices"], 1)
+        ]
     return {
         "mode": task["mode"],
         "field": task["slot"]["field"],
         "key": task["slot"]["key"],
-        "body": None if blind else no_keys(task),
+        "body": body,
+    }
+
+
+def _source(
+    sources: Mapping[int, Mapping[str, Any]] | Sequence[Any], index: object
+) -> dict[str, Any]:
+    """The ``source`` and the ``ref`` of the decision ``index`` of the receipt, or None for each
+    when ``sources`` does not have that decision."""
+    found: object = None
+    if type(index) is int:
+        if isinstance(sources, Mapping):
+            found = sources.get(index)
+        elif 0 <= index < len(sources):
+            found = sources[index]
+    if not isinstance(found, Mapping):
+        return {"source": None, "ref": None}
+    source, ref = found.get("source"), found.get("ref")
+    return {
+        "source": source if isinstance(source, str) else None,
+        "ref": ref if isinstance(ref, str) else None,
     }
 
 
@@ -414,9 +457,9 @@ def check_body(body: object, blind: bool = False) -> dict[str, Any]:
         raise bad("task must be a task ID")
     if not isinstance(verdict, str) or verdict not in VERDICTS:
         raise bad("verdict must be an answer verdict")
-    decision = body.get("decision")
-    if decision is not None and (type(decision) is not int or not 0 <= decision < _OFFSET):
-        raise bad("decision must be an integer of 0 or more, or null")
+    choice = body.get("choice")
+    if choice is not None and (type(choice) is not int or not 1 <= choice < _LIMIT):
+        raise bad("choice must be the number of a choice, from 1, or null")
     span = body.get("span")
     if span is not None and not (
         isinstance(span, dict) and set(span) == {"start", "end"} and _offsets(span)
@@ -454,10 +497,11 @@ def check_body(body: object, blind: bool = False) -> dict[str, Any]:
     statements = body.get("statements")
     if statements is not None and not isinstance(statements, list):
         raise bad("statements must be a list, or null")
-    if blind and verdict not in BLIND_VERDICTS:
+    if blind and (verdict not in BLIND_VERDICTS or choice is not None):
         raise ApiError(
             "bad_answer",
-            "a blind task takes only correct, not_in_document and unsure: it shows no value",
+            "a blind task takes only correct, not_in_document and unsure, and no choice: "
+            "it shows no value",
         )
     correction = verdict in CORRECTIONS
     if correction and span is None:
@@ -467,7 +511,7 @@ def check_body(body: object, blind: bool = False) -> dict[str, Any]:
     return {
         "task": task,
         "verdict": verdict,
-        "decision": decision,
+        "choice": choice,
         "span": span,
         "value": value,
         "parts": parts,
@@ -549,7 +593,9 @@ class Service:
         """The task key, the document and the view of each task of the API."""
         for doc in review.docs.values():
             for key in doc.tasks:
-                view = None if key in doc.labels else task_view(doc.by_key[key][1])
+                view = None
+                if key not in doc.labels:
+                    view = task_view(doc.by_key[key][1], doc.packet.receipt["decisions"])
                 if view is not None:
                     yield key, doc, view
 
@@ -623,10 +669,17 @@ class Service:
 
             page: dict[str, Any] = {
                 member: checked[member]
-                for member in ("verdict", "decision", "value", "codes_kept", "parts_seen",
-                               "statements", "reason_seen", "keys", "ms")
+                for member in ("verdict", "value", "codes_kept", "parts_seen", "statements",
+                               "reason_seen", "keys", "ms")
             }  # fmt: skip
             page["task"] = key
+            # An answer names a choice by its number in the task. The record has the index of
+            # the decision in the receipt.
+            indexes = [choice["decision"] for choice in doc.by_key[key][1]["choices"]]
+            number = checked["choice"]
+            if number is not None and number > len(indexes):
+                raise ApiError("bad_answer", "the task has no choice with this number")
+            page["decision"] = None if number is None else indexes[number - 1]
             if checked["span"] is not None:
                 page["start"], page["end"] = u16(checked["span"])
             page["parts"] = []
@@ -642,10 +695,13 @@ class Service:
                 if code == "log_refused":  # the store message names the log by its path
                     message = "the answer log cannot take the answer now"
                 raise ApiError(code, message, codes) from exc
-            # The record has the task key, so the response leaves it out. The candidate of a
+            # The record has the task key, so the response leaves it out, and it gives the
+            # number of the choice in place of the index of the decision. The candidate of a
             # correction can hold the unit of the proposed value, so a blind answer gets no
             # record.
             shown = {member: value for member, value in record.items() if member != "task"}
+            index = shown.pop("decision", None)
+            shown["choice"] = indexes.index(index) + 1 if index in indexes else None
             return {
                 "api": API,
                 "actor": actor,

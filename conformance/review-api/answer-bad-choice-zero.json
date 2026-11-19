@@ -1,12 +1,12 @@
 {
- "name": "answer-bad-decision-boolean",
+ "name": "answer-bad-choice-zero",
  "kind": "answer",
- "description": "A decision that is a boolean.",
+ "description": "A choice of 0: the numbers start at 1.",
  "blind": false,
  "body": {
   "task": "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
   "verdict": "choose",
-  "decision": true
+  "choice": 0
  },
  "expected": {
   "error": "bad_request"

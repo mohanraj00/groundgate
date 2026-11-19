@@ -64,9 +64,11 @@ Files in `review-api/` are review API vectors (SPEC §4.20). `kind` names what a
   the value of the `Authorization` header, or null for no header. `expected` gives the `actor`
   or the `error` code.
 - `token`: the static `token` and the `reviewer` of a service, and the `Authorization` value.
-- `task`: one `task@1` object. `expected.served` is false for a task that is not a task of the
-  API. If not, `expected` gives the members of the task response that come from the task. The
-  `body` has no key of the store, and a blind task has a null `body`.
+- `task`: one `task@1` object, and `sources`: the `source` and the `ref` of each decision of
+  the task in the receipt, by its index. `expected.served` is false for a task that is not a
+  task of the API. If not, `expected` gives the members of the task response that come from the task. The
+  `body` has no key of the store and no index of the receipt, and a blind task has a null
+  `body`.
 - `task-id`: the `key` of a service in hex and a `task` key. `expected.id` is the task ID.
 - `statements`: one `model-text@1` object. `expected.statements` is the `statements` member of
   the task response.
