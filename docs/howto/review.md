@@ -468,5 +468,8 @@ The server reads the answer logs when it starts and after each answer of its own
 another reviewer answers while the page is open, the page does not show it. To see the answers
 of the other reviewers, restart `review serve`.
 
+A program reads the same tasks and sends answers over HTTP with `groundgate review api`:
+[review-api.md](review-api.md).
+
 The frame shows the original page with one change. Each `http-equiv` and `href` name becomes
 `data-equiv` and `data-href`, also in the text, so that the page cannot go to another host.

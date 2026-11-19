@@ -14,6 +14,7 @@
   groundgate review   tasks --store DIR PACKET          > task keys
   groundgate review   resolve --store DIR PACKET --reviewer NAME
   groundgate review   serve --store DIR --reviewer NAME  (the review page on 127.0.0.1)
+  groundgate review   api --store DIR --token-file FILE --reviewer NAME  (the review API)
   groundgate review   measures --store DIR [--json]     (the measures of the answers)
   groundgate schema   SCHEMA                            > extractor.schema.json
   groundgate schema check SCHEMA
@@ -336,6 +337,40 @@ def _parser() -> argparse.ArgumentParser:
     sv.add_argument(
         "--port", type=int, default=0, help="the port; 0 (the default) takes a free one"
     )
+    ra = steps.add_parser(
+        "api",
+        help="serve the review API of a store on 127.0.0.1 (SPEC section 4.20)",
+        description="Serve the review API groundgate-review/1 on 127.0.0.1: list the open "
+        "tasks, read a task and its document, and write an answer. Each request carries a "
+        "claim. With --issuers, the claim is signed with HMAC-SHA-256, and its sub is the "
+        "reviewer of the answer. With --token-file and --reviewer, the claim is a static "
+        "token for one local user. The server keeps no state outside the store. Press Ctrl-C "
+        "to stop. Exit codes: 0 stopped, 2 invalid input.",
+    )
+    ra.add_argument("--store", metavar="DIR", required=True, help="the store folder")
+    ra.add_argument(
+        "--token-file",
+        metavar="FILE",
+        help="a file with the static token: 32 to 512 characters from A-Z, a-z, 0-9, '-', "
+        "'.', '_' and '~'. Use it with --reviewer",
+    )
+    ra.add_argument(
+        "--reviewer", metavar="NAME", help="the reviewer name of the holder of the static token"
+    )
+    ra.add_argument(
+        "--issuers",
+        metavar="FILE",
+        help='a JSON file: {"groundgate_review_issuers": 1, "issuers": [{"issuer": NAME, '
+        '"secret": BASE64URL}]}. A secret has 32 bytes or more',
+    )
+    ra.add_argument(
+        "--policy",
+        metavar="FILE",
+        help="a review-policy@1 JSON file for agree and leads; without it, agree 1 and no lead",
+    )
+    ra.add_argument(
+        "--port", type=int, default=0, help="the port; 0 (the default) takes a free one"
+    )
     ms = steps.add_parser(
         "measures",
         help="print the measures of the answers in a store, for each item kind and field",
@@ -541,6 +576,8 @@ def main(argv: list[str] | None = None) -> int:
             return _review_resolve(args)
         if args.command == "review" and args.step == "serve":
             return _review_serve(args)
+        if args.command == "review" and args.step == "api":
+            return _review_api(args)
         if args.command == "review" and args.step == "measures":
             return _review_measures(args)
         if args.command == "review":
@@ -870,6 +907,41 @@ def _review_serve(args: argparse.Namespace) -> int:
             pass
         finally:
             httpd.server_close()
+    return 0
+
+
+def _review_api(args: argparse.Namespace) -> int:
+    from .review.api import API, Issuers, Service, Static, read_issuers, read_token, server
+
+    static = args.token_file is not None or args.reviewer is not None
+    if static == (args.issuers is not None) or (
+        static and None in (args.token_file, args.reviewer)
+    ):
+        raise ValueError("give --issuers, or --token-file with --reviewer")
+    auth: Issuers | Static
+    if static:
+        auth = read_token(Path(args.token_file).read_text(encoding="utf-8"), args.reviewer)
+    else:
+        auth = read_issuers(_json(args.issuers))
+    policy = _json(args.policy) if args.policy else None
+    if not 0 <= args.port <= 65535:
+        raise ValueError("the port must be from 0 to 65535")
+    with _store(args.store, make=False):
+        service = Service(args.store, auth, policy)
+        for line in service.skipped():
+            print(f"skipped: {line}", file=sys.stderr)
+    httpd = server(service, args.port)
+    print(
+        f"The review API {API} is on http://127.0.0.1:{httpd.server_port}/v1/. "
+        "Press Ctrl-C to stop.",
+        flush=True,
+    )
+    try:
+        httpd.serve_forever()
+    except KeyboardInterrupt:
+        pass
+    finally:
+        httpd.server_close()
     return 0
 
 

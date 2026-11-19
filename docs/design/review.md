@@ -3,6 +3,7 @@
 Status: approved on 2026-10-20, issue #287. The formats of section 5 (#408), `review tasks`
 (#409), `review resolve` (#410), `review serve` (#411) and the command `review measures` (#412)
 are built. Calibrate labels through the review server (issue 6, #413) and `answer@2` are built.
+The review API of section 14 (#649) is built.
 The first measure of section 13, issue 5, waits for answers. This note changes no
 decision. The review step keeps its data in the store of [store.md](store.md) (#288), so the two
 notes go together. The last section lists the code issues.
@@ -588,3 +589,43 @@ issues 1 and 2. No issue changes a decision.
 7. **Later kinds.** `structure` with #414 in 0.14. `closed_set` after a spec issue for the
    options. `model_text` has its input in 0.15 (#531, section 7.1). The OCR crop is a view
    (section 7, #537).
+
+## 14. The review API
+
+`review serve` is for a person at one computer. A program, or a page on another server, needs
+the tasks and the answers over HTTP (#649). `groundgate review api` gives them. SPEC §4.20 owns
+the contract: the operations, the errors and the claim check. This section gives the reasons.
+
+- **One answer path.** The API makes the answer record with `Review.write`, the call of the
+  page. So the checks of section 9, rule 8, and the gate check of section 6.2 are the same, and
+  the same answer gives the same record. The API body gives a span in UTF-8 bytes, the unit of
+  SPEC §2.2. The page sends UTF-16 units, because a browser counts in them.
+- **The actor comes from the claim.** A body cannot name the reviewer. With a signed claim, a
+  lead answer is an act of the holder of that claim. With a static token, it is not, as for
+  `review serve`.
+- **HMAC only in version 1.** The standard library has HMAC-SHA-256, so the core gets no
+  package. The issuer and the service share the secret. A signature with a public key needs a
+  package. If a user needs one, it goes behind an extra in a later release.
+- **No state outside the store.** The service opens the store for each request and closes it.
+  It holds no queue and no log lock between two requests, so the CLI and the API work on one
+  store. The cost: each request reads each object of the store to find the model texts, and a
+  list request decides each packet again. A cache is permitted later only if a store key names
+  each entry, because an object never changes.
+- **An audit task is blind.** On the page, an audit task shows its value, and the person
+  confirms it (section 8). #643 changed what counts as a label: a person who saw the proposed
+  value gives no label for a bound. So the API gives an audit task with no value, and takes
+  only `correct`, `not_in_document` and `unsure` for it. The resolution rules do not change.
+  Under rule 7 of section 6.1, a blind correction removes the admitted value, and the slot then
+  resolves to the value of the person. If that value is the admitted value, the app gets the
+  same value with the status `corrected`.
+- **Two kinds of task are not in version 1.** A calibrate label task shows its value on
+  purpose, and `calibrate label` serves it. An audit task for a closed set has no blind answer,
+  because `answer@2` has no member for an option.
+- **Small on purpose.** Version 1 has four operations. It has no reason, no check without a
+  write, no word boxes, no crop and no HTML frame. A page on this API (#647) can add an
+  operation in version 1, because an addition is compatible.
+
+The server follows the rules of section 9 that apply to an API: it binds to `127.0.0.1`, it
+checks the `Host` header, it takes a POST only as `application/json` of 64 KiB at most, it reads
+objects only by a store key, and it checks each answer before the write. It sends no page and
+no script. A PR for it needs a security review.
