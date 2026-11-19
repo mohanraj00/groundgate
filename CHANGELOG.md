@@ -3,6 +3,109 @@
 Versions follow [SemVer](https://semver.org). A change to how any candidate is decided is a new
 spec version, and receipts name the spec version they were decided under.
 
+## 0.17.0 (2026-11-19)
+
+Spec 0.12, with no change to a decision and no change to a receipt. 0.17 is the release for
+review as a service. It adds the review API over HTTP, a standalone review and audit page on
+that API, a guide for a run under a job runner, and the first held-out claim on the regulatory
+text family. The spec version string stays `groundgate/0.12`. §4.20 defines the review API, and
+no decision reads it. A packet is decided as in 0.16.0 and gets the same receipt.
+
+Known limits. The held-out run of the regulatory family admitted 6 wrong values: 4 passages
+and 2 records, of 34 admitted values. Its miss rate is 28.21% (11 of 39), and the one-sided 95%
+upper bound on the admitted error rate is 31.89%. I did not run `bench/requested4` for 0.17, so
+its numbers of 0.14 stand: 0 escapes, 2 rejected right values, 69 reviews and a miss rate of
+60.66% (74 of 122) on the development split.
+
+The answer to a blind task of the review API is independent only when its actor gets nothing
+that depends on the hidden candidates of the packet. Version 1 of the API gives each task of a
+packet to each actor, and the check of a correction reads the candidates of the other slots.
+So with a relation between two fields, the outcome of a correction can tell a hidden value
+(#703). The API gives a model text task only when its packet has no audit task. It gives no
+text of a reference (#702), a blind answer is not an audit label of SPEC §4.18 yet (#695), a
+closed set task has no blind answer (#696), and each request reads each object of the store
+(#697).
+
+The review page does not show the option list of a closed set task (#704), and it does not
+answer a model text task. The seam test of the job runner guide runs against a local stand-in
+of the job runner, because the version that it pins has no tag yet.
+
+- koodam pin: v0.4.0 (to come). This line is open until the seam test of #594 runs on that tag.
+
+The review API:
+
+- `groundgate review api --store DIR` serves the review tasks of a store over HTTP, on
+  `127.0.0.1` only. The version is `groundgate-review/1`, and a new member or a new operation
+  is a compatible change. The four operations list the open tasks of an actor, give one task,
+  give the text of its document, and take an answer. The server uses only the standard
+  library, and it keeps no state outside the store. SPEC §4.20 defines the operations, 17 error
+  codes and the claim check. [docs/howto/review-api.md](docs/howto/review-api.md) has the steps
+  for a local run (#649).
+- A request needs a signed claim (a JWT with HS256 and a shared secret for each issuer) or the
+  static token of a local run. The actor comes from the claim: a body cannot name the reviewer.
+  A request with no claim, an expired claim or an unknown issuer is refused.
+- An answer through the API and the same answer through the page of `review serve` give the
+  same record. The API makes the record with the call of the page, so the checks and the gate
+  check of a correction are the same.
+- An audit task is blind in the API. The response gives the document, the field and the key,
+  and never the proposed value. A blind task takes only `correct`, `not_in_document` and
+  `unsure`, and the response of a blind answer has no record.
+- No response gives a key of the store or a hash over data of the store. Each task has an
+  opaque task ID: an HMAC of its task key with a random key of the service. A task key, a
+  packet key or an entry hash is a hash over the hidden value of a blind task, so a person
+  could test a guess against it (#698).
+- No response gives an index of the receipt. Each choice has its number in the task, from 1,
+  and an answer names a choice by that number. Each choice also names the source of its
+  evidence, `document` or `reference`, so a client reads a span against the right text.
+- A model text task gives the text of each statement and its cited spans. Three kinds of task
+  are not in version 1: a calibrate label task, an audit task for a closed set, and a model
+  text task of a packet that has an audit task.
+
+The review page:
+
+- `examples/review-page` is a page for the review tasks and the audit tasks of a store. It
+  reads and writes only through the review API. `uv run python examples/review-page/run.py`
+  starts the API and the page for a made-up invoice. The page is an example: it is not in the
+  package, and the core does not import it (#647).
+- The page can draw its controls with a UI kit at a pinned tag and commit, or with plain HTML
+  controls. `--no-kit` selects the plain controls, and the page uses them too when git cannot
+  get the kit. A browser test answers a review task and an audit task in each mode.
+- The page shows a passage only for a choice with the source `document`, it shows a long value
+  in full, and it sends no second answer while an answer waits for its response.
+
+Job runner:
+
+- [docs/howto/job-runner.md](docs/howto/job-runner.md) shows how to run an extraction under a
+  job runner and keep a receipt that verifies after the job ends: put the inputs and the store
+  on storage that outlives the job, save the run before the job ends, verify from the store in
+  a different process, and keep the run identity, the trace and the spend record outside the
+  store. `examples/job-runner` is the job of the page, with one recorded model reply.
+  `examples/koodam-agent` runs the same job as an Agent run of one job runner. The change adds
+  no code to `src/` (#594).
+
+Calibration:
+
+- `calibrate events suggest` bounds the work of its term scans by the characters that they
+  read: 67,108,864 packet text characters for one run. A pair that the budget stops goes into
+  `unscanned_corrections`, as a pair over the limit of 1024 pairs does. The scan of one line is
+  now linear in the line length, with the same result (#685).
+
+Bench and CI:
+
+- `bench/regulatory` has the run harness and the one held-out run of the regulatory family.
+  The family profile is measured on the 5 calibration parts only, and the code and the profile
+  are frozen before the run. The 9 held-out parts have 50 slots, and 39 have a value: 28 right
+  admitted values, 6 escapes and 4 reviews. The miss rate is 28.21%, and the one-sided 95%
+  upper bound on the admitted error rate is 31.89%
+  ([bench/regulatory/RESULTS.md](bench/regulatory/RESULTS.md)). This bound is apart from the
+  bound of the requested fields claim (#686).
+- The shared gates are pinned to a newer commit. The cross-review check has a cap of 3 review
+  requests for each PR, and the Dependabot schedule is monthly with one group for the action
+  updates (#690).
+- The conformance suite has 214 vectors, 218 invalid packets, 24 profile vectors, 14 pin
+  vectors, 18 places vectors, 3 export vectors, 37 audit vectors, 44 event vectors and 173
+  review API vectors.
+
 ## 0.16.0 (2026-11-17)
 
 Spec 0.12, with no change to a decision and no change to a receipt. 0.16 is the release for the

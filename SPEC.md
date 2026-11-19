@@ -5,8 +5,8 @@ Status: released with groundgate 0.14.0, in the `v0.14.0` tag. groundgate 0.15.0
 options and the packet members `pin`, `places`, `completeness` and `outline`. A packet that
 uses none of them is decided as in 0.14.0 and gets the same receipt, so the version string does
 not change. groundgate 0.16.0 adds §5.2, the `facts@2` export of a reviewed packet, §4.18,
-the blind audit sample, and §4.19, the calibration events. §4.20, the review API, comes after
-groundgate 0.16.0. They change no decision and no receipt. Version string: `groundgate/0.12`. Spec 0.11 was released with
+the blind audit sample, and §4.19, the calibration events. groundgate 0.17.0 adds §4.20, the
+review API. They change no decision and no receipt. Version string: `groundgate/0.12`. Spec 0.11 was released with
 groundgate 0.11.0 and is in the `v0.11.0` tag. Spec 0.10 is in the `v0.10.0` tag. Spec 0.9 is in the `v0.9.0` tag,
 spec 0.8 in the `v0.8.0` tag, spec 0.7 in the `v0.7.0` tag, spec 0.6 in the `v0.6.0` tag, spec
 0.5 in the `v0.5.0` tag, spec 0.4 in the `v0.4.0` tag, spec 0.3 in the `v0.3.0` tag, spec 0.2 in
