@@ -1,0 +1,26 @@
+/* The layout of the review page. The colors and the sizes come from the tokens of the kit. */
+main { max-width: 64rem; margin: 0 auto; padding: var(--mu-space-4, 1rem); }
+section { margin-block: var(--mu-space-4, 1rem); }
+#detail > mu-text { display: block; margin-block: var(--mu-space-2, 0.5rem); }
+.picks, .actions { display: flex; flex-wrap: wrap; gap: var(--mu-space-2, 0.5rem); padding: 0; list-style: none; }
+.choice { border-inline-start: 2px solid var(--mu-color-border, currentColor); padding-inline-start: var(--mu-space-3, 0.75rem); margin-block: var(--mu-space-3, 0.75rem); }
+blockquote { margin: var(--mu-space-2, 0.5rem) 0; white-space: pre-wrap; }
+mark { font-weight: 700; }
+h2, p { overflow-wrap: anywhere; }
+#document {
+  white-space: pre-wrap; overflow-wrap: anywhere; max-height: 24rem; overflow: auto;
+  border: 1px solid var(--mu-color-border, currentColor); border-radius: var(--mu-radius-2, 0.25rem);
+  padding: var(--mu-space-3, 0.75rem); margin: 0;
+}
+#document:focus-visible { outline: 2px solid var(--mu-color-focus, currentColor); outline-offset: 2px; }
+#kit { font-size: 0.8rem; }
+
+/* Without the kit, the page draws plain controls. These rules give them a layout. */
+body[data-kit="false"] { font-family: system-ui, sans-serif; line-height: 1.5; }
+body[data-kit="false"] table { border-collapse: collapse; width: 100%; }
+body[data-kit="false"] caption { text-align: start; font-weight: 700; }
+body[data-kit="false"] th, body[data-kit="false"] td { border-block-end: 1px solid; padding: 0.5rem; text-align: start; }
+body[data-kit="false"] button { font: inherit; padding: 0.5rem 0.75rem; }
+body[data-kit="false"] .strong, body[data-kit="false"] .status { font-weight: 700; }
+body[data-kit="false"] .caption { font-size: 0.8rem; }
+body[data-kit="false"] [role="status"] { margin-inline-start: 0.5rem; }

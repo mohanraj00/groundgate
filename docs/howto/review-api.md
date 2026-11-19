@@ -10,6 +10,9 @@ in the store.
 API is `groundgate-review/1`, and each path starts with `/v1/`. The invoice text on this page is
 made up.
 
+[examples/review-page](../../examples/review-page/README.md) has a page on this API: one command
+starts the API and the page for a made-up invoice.
+
 ## 1. Start the server with a static token
 
 For a local run, make a token file and start the server. The token has 32 to 512 characters from
