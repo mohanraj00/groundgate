@@ -24,8 +24,8 @@ Follow these rules for each request:
 
 1. Ask when CI is green and the PR is ready.
 2. For a Codex code review request, write `Head: <sha>` on the next line of the comment, with
-   the short SHA of the PR head commit. Do not add this line to a Claude request. The Claude
-   review starts only for the exact text in the table, and its comment names the head that it
+   the short SHA of the PR head commit. A Claude request does not need this line: the Claude
+   review reads only the first line of the comment, and its comment names the head that it
    reviewed.
 3. Write a security review request as the exact text in the table, with no other text in the
    comment. If the comment has other text, for example a `Head:` line, Codex does a code review
@@ -37,8 +37,8 @@ Follow these rules for each request:
    at the cap, are in the Reviews section of [STANDARD.md](STANDARD.md).
 6. Fix each real finding, or write on the PR why it is not a defect. For a finding in the gates,
    use the stop rule in [STANDARD.md](STANDARD.md). The gates include the files that this project
-   copies from `mohanraj00/.github`: `docs/STANDARD.md`, `tools/claude_review.py` and
-   `.github/workflows/claude-review.yml`. Never change a copy. If a finding in a copy does not
+   copies from `mohanraj00/.github`: `docs/STANDARD.md`, `tools/claude_review.py`,
+   `.github/workflows/claude-review.yml` and `.github/dependabot.yml`. Never change a copy. If a finding in a copy does not
    need a fix now, write the reason on the PR, close the thread and file the finding in
    `mohanraj00/.github`.
 
@@ -47,12 +47,14 @@ Codex reviews through the Codex GitHub integration. Claude Code reviews through 
 of these are true:
 
 - The comment is on a PR.
-- The comment body is exactly one of the two Claude request texts in the table. GitHub compares
-  these texts with no regard to letter case.
+- The comment names `@claude`.
 - The commenter is an owner, a member or a collaborator.
 
-A comment or a review with other text does not start the workflow. The comment text selects one
-of two fixed prompts, and it never goes into a prompt.
+The `gate` job then reads the first line of the comment. A review starts only if that line is one
+of the two Claude request texts in the table. The job ignores the letter case, the white space at
+the two ends, and the length of each run of white space. The next lines can hold other text. A
+first line with other words does not start a review. The first line selects one of two fixed
+prompts, and the comment text never goes into a prompt.
 
 ## Claude review design
 
