@@ -1,8 +1,7 @@
 # Regulatory texts: a held-out family
 
 Status: the members, their source pins, the split and the slots are frozen (#641). The labels
-come from two blind passes and the owner's decisions. No benchmark model call has run on this
-set. The claim on this family is #686.
+come from two blind passes and the owner's decisions. The claim on this family is #686.
 
 The set has 14 CFR parts: fee rules, rate tables, definitions and numbered method steps. Today
 the other bench sets have business documents. This family measures the gate on the texts of a
@@ -31,7 +30,8 @@ and the citation and the heading of the part. The parts are US government works 
 The XML and the reader text stay in local work storage.
 
 ```bash
-uv run python bench/regulatory/sources.py --out bench/regulatory/.cache/sources --fetch
+WORK="$HOME/Library/Application Support/Codex/LocalWork/groundgate/cache/regulatory-686"
+uv run python bench/regulatory/sources.py --out "$WORK/sources" --fetch
 ```
 
 This command downloads the parts again, does the checks, and writes `manifest.json`,
@@ -77,7 +77,7 @@ That is 76 slots: 26 calibration and 50 held-out. `slots.json` holds each reques
 field rules.
 
 ```bash
-uv run python bench/regulatory/slots.py --sources bench/regulatory/.cache/sources
+uv run python bench/regulatory/slots.py --sources "$WORK/sources"
 ```
 
 ## Labels
@@ -103,3 +103,36 @@ the other 5. 58 labels have a value and 18 are absent. The manifest records the 
 `labels.json`.
 
 The answers of the passes stay in local work storage.
+
+## Run the claim
+
+I run these commands from the repository root after the source and label seals are in place.
+`$WORK/sources` has the pinned XML and reader text. The other directory holds the call cache.
+Keep both directories outside the repository.
+
+```bash
+WORK="$HOME/Library/Application Support/Codex/LocalWork/groundgate/cache/regulatory-686"
+uv run python -m bench.regulatory.run calibrate --sources "$WORK/sources" --cache "$WORK/calls" --model gpt-6.1-sol --effort medium
+uv run python -m bench.regulatory.run freeze --sources "$WORK/sources" --cache "$WORK/calls"
+uv run python -m bench.regulatory.run heldout --sources "$WORK/sources" --cache "$WORK/calls" --model gpt-6.1-sol --effort medium
+```
+
+The calibration command caches one reply per calibration part. The freeze replays the
+cache and seeks to the pinned calibration label ranges in `labels.json`. It measures the
+scalar routes with `groundgate calibrate measure` and scores each passage and table as a whole
+from its receipt. The local calibration report has both measures. The manifest records the
+profile, the code and profile digests, and the transport version, model and effort.
+
+Each request includes the named section of the pinned reader text. I use the headings and
+defined terms in the XML to form the passage outline. The scorer strips the heading and
+the trailing source note from an admitted passage. A table counts as one value and keeps
+its row order, column names and empty cells.
+
+The held-out command checks the freeze before any model call. It reserves one run in
+`heldout-run.json` and records each reply before admission. A repeat command can reuse
+completed calls from the same cache while the run is incomplete. A pending call or a
+recorded transport error stops the run. A malformed answer counts as invalid and supplies
+no admitted value. The command opens the full label seal after admission, writes
+`results.json` and renders `RESULTS.md` from it. Once the result exists the command refuses
+another run. If the report is missing, I can render it again from the existing result with
+`uv run python -m bench.regulatory.run report`.

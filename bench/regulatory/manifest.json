@@ -275,13 +275,33 @@
   "file": "slots.json",
   "count": 76,
   "calibration": 26,
-  "heldout": 50
+  "heldout": 50,
+  "sha256": "sha256:05dccec307da2b6b1e4442962789fb0d714158df08ece347bf193125deeaa726"
  },
  "labels": {
   "file": "labels.json",
   "sha256": "sha256:123f05877152ce42a3518cae7e71504e2027c42165d72f1e260f64e6aea80ff7",
   "sealed": "2026-11-17",
   "agree": 71,
-  "owner": 5
+  "owner": 5,
+  "calibration_ranges": [
+   [
+    17524,
+    22604
+   ],
+   [
+    25548,
+    31817
+   ],
+   [
+    43416,
+    47988
+   ],
+   [
+    66565,
+    75322
+   ]
+  ],
+  "calibration_sha256": "sha256:497db16d6edcfbaefa4e08ed599b98c0fae38e90eaa0a0a52cc5357d05d2e4d6"
  }
 }
