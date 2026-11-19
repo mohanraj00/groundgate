@@ -2252,6 +2252,10 @@ hash with the key. So a blind task has a **blind ID**, and its task key is no ID
   key has 32 bytes. A blind ID is good only while that service runs.
 - A request with the task key of a blind task gets `not_found`, as for a key that names no
   task. A blind ID of a task that is not blind gets `not_found` too.
+- The service does not look for the ID of a request in the store. It makes the ID of each task
+  of the API and compares each one with the ID of the request. So the two `not_found` cases
+  above need the same reads of the store, and the time of the response does not tell them
+  apart.
 - For the same reason, no response for a blind task gives a hash over data that holds the
   proposed value: `packet` is null, and the `entry_sha256` of the answer is null.
 

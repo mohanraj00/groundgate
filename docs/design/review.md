@@ -623,12 +623,13 @@ the contract: the operations, the errors and the claim check. This section gives
   guess and compare the hashes, with no request. So the API names a blind task with an HMAC of
   its key, and it takes the task key of a blind task as an unknown ID. The key of the HMAC is
   random for each start of the service. It is not state: it comes from no store and goes to
-  none, and a client reads the list again after a new start. The service finds the task of a
-  blind ID with one HMAC for each object of the store. The responses for a blind task give no
-  packet key and no entry hash, because each is a hash over the value too. Two limits stay.
-  The packet key of a review task in the same packet is such a hash (#698). And a request with
-  the task key of a blind task reads one object more than a request with an unknown key, so
-  the time of the answer can differ.
+  none, and a client reads the list again after a new start. The responses for a blind task
+  give no packet key and no entry hash, because each is a hash over the value too. The service
+  never looks for the ID of a request in the store: it makes the ID of each task and compares.
+  A lookup by the key would read one object more for the task key of a blind task than for an
+  unknown key, and the time of the `not_found` would tell that a guess is right. The cost is a
+  full read of the store for each request (#697). One limit stays: the packet key of a review
+  task in the same packet is such a hash (#698).
 - **Two kinds of task are not in version 1.** A calibrate label task shows its value on
   purpose, and `calibrate label` serves it. An audit task for a closed set has no blind answer,
   because `answer@2` has no member for an option.

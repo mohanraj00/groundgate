@@ -37,7 +37,7 @@ import re
 import secrets
 import threading
 import unicodedata
-from collections.abc import Callable, Iterable, Mapping, Sequence
+from collections.abc import Callable, Iterable, Iterator, Mapping, Sequence
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -500,16 +500,12 @@ class Service:
         from ..store import FolderStore
 
         with FolderStore(self.root) as store:
-            review = self._review(store, actor)
-            entries = []
-            for doc in review.docs.values():
-                for tk in doc.tasks:
-                    view = None if tk in doc.labels else task_view(doc.by_key[tk][1])
-                    if view is not None:
-                        entries.append({"task": self._id(tk, view), "packet": view["packet"],
-                                        "document": doc.document, "mode": view["mode"],
-                                        "field": view["field"], "key": view["key"],
-                                        "open": tk in doc.open})  # fmt: skip
+            entries = [
+                {"task": self._id(tk, view), "packet": view["packet"], "document": doc.document,
+                 "mode": view["mode"], "field": view["field"], "key": view["key"],
+                 "open": tk in doc.open}
+                for tk, doc, view in self._served(self._review(store, actor))
+            ]  # fmt: skip
         page, cursor = list_page(entries, query)
         return {
             "api": API,
@@ -522,48 +518,32 @@ class Service:
         """The ID of a task in a response: its task key, or its blind ID for a blind task."""
         return blind_id(self._blind_key, key) if view["mode"] == "audit" else key
 
-    def _find(self, store: Any, name: str) -> str:
-        """The task key that a task ID names. A blind ID names only a blind task, and a task key
-        names only a task that is not blind: if a task key could name a blind task, a person
-        could test a guess of the proposed value with one request. The check reads only the
-        task object, before the service decides a packet."""
-        from ..store import StoreError
-
-        keys, _ = store.object_keys()
-        key: str | None = None
-        if name.startswith("blind:"):
-            for k in keys:
-                if hmac.compare_digest(blind_id(self._blind_key, k), name):
-                    key = k
-        elif name in keys:
-            key = name
-        mode = None
-        if key is not None:
-            try:
-                task = json.loads(store.object_bytes(key))
-            except (StoreError, ValueError, RecursionError):
-                task = None
-            mode = task.get("mode") if isinstance(task, dict) else None
-        if not isinstance(mode, str) or (mode == "audit") != name.startswith("blind:"):
-            raise ApiError("not_found", "the ID names no task of the API")
-        assert key is not None
-        return key
+    def _served(self, review: Review) -> Iterator[tuple[str, Any, dict[str, Any]]]:
+        """The task key, the document and the view of each task of the API."""
+        for doc in review.docs.values():
+            for key in doc.tasks:
+                view = None if key in doc.labels else task_view(doc.by_key[key][1])
+                if view is not None:
+                    yield key, doc, view
 
     def _one(
         self, store: Any, actor: str, name: str
     ) -> tuple[Review, str, Any, Any, dict[str, Any]]:
         """The review, the task key, the document, the slot and the view of the task of the API
-        that the ID ``name`` names."""
-        key = self._find(store, name)
-        review = self._review(store, actor, [key])
-        pk = review.tasks.get(key)
-        doc = review.docs[pk] if pk is not None else None
-        view = None
-        if doc is not None and key not in doc.labels:
-            view = task_view(doc.by_key[key][1])
-        if doc is None or view is None or self._id(key, view) != name:
+        that the ID ``name`` names.
+
+        The service makes the ID of each task of the API and compares it with ``name``. It
+        never looks for ``name`` in the store. So a request with the task key of a blind task
+        does the same work as a request with a key that names no task, and the time of the
+        ``not_found`` does not tell a person that a guess of the proposed value is right."""
+        review = self._review(store, actor)
+        found = None
+        for key, doc, view in self._served(review):
+            if hmac.compare_digest(self._id(key, view), name):
+                found = review, key, doc, doc.by_key[key][0], view
+        if found is None:
             raise ApiError("not_found", "the ID names no task of the API")
-        return review, key, doc, doc.by_key[key][0], view
+        return found
 
     def task(self, actor: str, name: str) -> dict[str, Any]:
         """GET /v1/tasks/{task}: one task. A blind task has no body and no packet key."""

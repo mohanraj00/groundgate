@@ -586,6 +586,34 @@ def test_the_task_key_of_a_blind_task_is_no_id(served: Served) -> None:
     assert call("GET", f"/v1/tasks?cursor={blind}")[0] == 200
 
 
+def test_a_task_key_of_a_blind_task_needs_the_same_reads_as_an_unknown_key(
+    served: Served, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """If the service looked for the key in the store, a right guess of a blind task key would
+    read one object more than a wrong guess, and the time of the 404 would tell them apart."""
+    _, _, tasks, call = served
+    reads: list[tuple[str, tuple[Any, ...]]] = []
+    for name in ("object_bytes", "object_keys", "get", "read"):
+        real = getattr(FolderStore, name)
+
+        def spy(self: FolderStore, *args: Any, _real: Any = real, _name: str = name) -> Any:
+            reads.append((_name, args))
+            return _real(self, *args)
+
+        monkeypatch.setattr(FolderStore, name, spy)
+    seen = []
+    for task in (tasks["net_income"], "sha256:" + "0" * 64, "sha256:" + "f" * 64):
+        for method, path, body in (
+            ("GET", f"/v1/tasks/{task}", None),
+            ("GET", f"/v1/tasks/{task}/document", None),
+            ("POST", "/v1/answers", {"task": task, "verdict": "unsure"}),
+        ):
+            del reads[:]
+            assert error(call(method, path, body)) == (404, "not_found")
+            seen.append(list(reads))
+    assert seen[0] and seen[0:3] == seen[3:6] == seen[6:9]
+
+
 def test_a_blind_id_needs_the_key_of_its_service(tmp_path: Path) -> None:
     root = tmp_path / "store"
     _, tasks = make_store(root)
