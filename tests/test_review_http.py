@@ -215,6 +215,8 @@ def test_vector(path: Path, empty: Call) -> None:
         elif kind == "task":
             view = api.task_view(v["task"])
             got = {"served": view is not None, **(view or {})}
+        elif kind == "statements":
+            got = {"statements": api.statement_list(v["model_text"])}
         elif kind == "page":
             page, cursor = api.list_page(v["entries"], v["query"])
             got = {"tasks": [e["task"] for e in page], "next": cursor}
@@ -240,7 +242,7 @@ def test_vector(path: Path, empty: Call) -> None:
 def test_the_vectors_cover_each_kind_and_each_error_of_the_claim_check() -> None:
     vectors = [json.loads(p.read_text("utf-8")) for p in VECTORS]
     assert {v["kind"] for v in vectors} == {
-        "claim", "token", "task", "page", "answer", "request", "errors",
+        "claim", "token", "task", "statements", "page", "answer", "request", "errors",
     }  # fmt: skip
     claims = {v["expected"].get("error") for v in vectors if v["kind"] == "claim"}
     assert claims == {None, "no_claim", "bad_claim", "unknown_issuer", "expired_claim"}
@@ -285,7 +287,7 @@ def test_the_list_and_a_review_task_and_its_document(served: Served) -> None:
     assert status == 200 and task == {
         "api": "groundgate-review/1", "task": tasks["revenue"], "packet": k,
         "document": "doc-1", "mode": "review", "field": "revenue", "key": None,
-        "definition": None, "answered": None, "body": stored,
+        "definition": None, "answered": None, "body": stored, "statements": None,
     }  # fmt: skip
     # the evidence of each choice is a span of the document text in UTF-8 bytes
     status, _, body = call("GET", f"/v1/tasks/{tasks['revenue']}/document")
@@ -499,6 +501,7 @@ def test_a_blind_audit_task_never_shows_the_proposed_value(served: Served) -> No
         "api": "groundgate-review/1", "task": blind, "packet": k, "document": "doc-1",
         "mode": "audit", "field": "net_income", "key": None,
         "definition": "The profit after tax.", "answered": None, "body": None,
+        "statements": None,
     }  # fmt: skip
     # a blind task takes no verdict about a shown value
     for verdict in ("confirm", "choose", "adjust_span", "wrong"):
@@ -558,6 +561,48 @@ def test_a_blind_task_gets_no_question_about_a_choice(served: Served) -> None:
     assert message == "the parts of the correction do not agree: " + asked[0]
     assert "of the task" not in message and "310,000" not in message
     assert records(root, k) == []
+
+
+def test_a_model_text_task_gives_its_statements_and_takes_a_verdict_for_each(
+    tmp_path: Path,
+) -> None:
+    """The task holds no model text, so the task response gives each statement and its cites.
+    The model text has a letter of two bytes, and the statement spans are in bytes."""
+    root = tmp_path / "store"
+    k, _ = make_store(root)
+    text = "Caf\u00e9 revenue was 4,300 thousand. Net income rose."
+    first = len("Caf\u00e9 revenue was 4,300 thousand.".encode())
+    model_text = {
+        "format": "model-text@1", "packet": k, "name": "summary", "text": text,
+        "statements": [
+            {"start": 0, "end": first, "cites": [at("4,200 thousand")]},
+            {"start": first + 1, "end": len(text.encode()), "cites": []},
+        ],
+    }  # fmt: skip
+    with FolderStore(root) as store:
+        written = write_tasks(store, k, EVERY, model_text).tasks
+        tk = next(tk for tk, t in written if t["item"] == "model_text")
+    service = Service(root, ISSUERS, clock=lambda: CLOCK)
+    with serving(api.server(service), {"Authorization": claim()}) as call:
+        task = json.loads(call("GET", f"/v1/tasks/{tk}")[2])
+        assert (task["mode"], task["field"], task["definition"]) == ("review", "summary", None)
+        assert task["body"]["model_text"]["statements"] == 2
+        assert task["statements"] == [
+            {"text": "Caf\u00e9 revenue was 4,300 thousand.", "cites": [at("4,200 thousand")]},
+            {"text": "Net income rose.", "cites": []},
+        ]
+        # each cite is a span of the document of the task
+        document = json.loads(call("GET", f"/v1/tasks/{tk}/document")[2])["text"].encode()
+        cite = task["statements"][0]["cites"][0]
+        assert document[cite["start"] : cite["end"]] == b"4,200 thousand"
+        verdicts = [{"statement": 0, "verdict": "unsupported"},
+                    {"statement": 1, "verdict": "unsure"}]  # fmt: skip
+        short = {"task": tk, "verdict": "confirm", "statements": verdicts[:1]}
+        assert error(call("POST", "/v1/answers", short)) == (400, "bad_answer")
+        response = call("POST", "/v1/answers", {**short, "statements": verdicts})
+        assert response[0] == 201, response[2]
+        assert json.loads(response[2])["record"]["statements"] == verdicts
+    assert records(root, k)[0]["statements"] == verdicts
 
 
 def test_a_calibrate_label_task_is_not_a_task_of_the_api(tmp_path: Path) -> None:
@@ -657,7 +702,8 @@ def test_a_bad_request_line_gets_a_json_error(tmp_path: Path) -> None:
     httpd = api.server(Service(root, ISSUERS))
     address = ("127.0.0.1", httpd.server_port)
     with serving(httpd, {}), socket.create_connection(address, timeout=10) as sock:
-        sock.sendall(b"GET /v1/tasks HTTP/1.1 extra words\r\n\r\n")
+        # one line only: bytes that the server does not read can reset the connection
+        sock.sendall(b"GET /v1/tasks HTTP/1.1 extra words\r\n")
         data = b""
         while chunk := sock.recv(65536):
             data += chunk

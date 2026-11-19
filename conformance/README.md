@@ -67,6 +67,8 @@ Files in `review-api/` are review API vectors (SPEC §4.20). `kind` names what a
 - `task`: one `task@1` object. `expected.served` is false for a task that is not a task of the
   API. If not, `expected` gives the members of the task response that come from the task. A
   blind task has a null `body`.
+- `statements`: one `model-text@1` object. `expected.statements` is the `statements` member of
+  the task response.
 - `page`: the tasks of the API in one store as `entries`, each with `open`, and the `query` of
   the list. `expected` gives the task keys of the page and `next`, or the `error` code.
 - `answer`: the `body` of an answer and `blind`, true for a blind task. `expected.valid` is

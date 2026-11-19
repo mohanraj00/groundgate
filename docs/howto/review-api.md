@@ -148,6 +148,10 @@ Which amount is total?
 2 4,200,000 with no unit (written 4,200, in thousands, positive) | 4,200 thousand
 ```
 
+For a model text task, the response also has `statements`: the text of each statement and the
+spans of the document that it cites. An answer to it has the verdict `confirm` and one
+`{"statement", "verdict"}` for each statement.
+
 An answer names its task and its verdict. `choose` gives the decision of the right choice: here
 decision 2, because the invoice gives the total in thousands. The response has the record that
 the store now has. The reviewer is the actor of the claim: a body

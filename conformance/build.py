@@ -8908,6 +8908,29 @@ task_vector("not-served-audit-closed-set", "An audit task for a closed set is no
             {**AUDIT_TASK, "item": "closed_set", "template": "closed_set@1",
              "options": ["annual", "quarterly"]}, None)  # fmt: skip
 
+# The statements of a model text. The sign of the euro has 3 bytes, so statement 1 ends at byte
+# 27 and has 25 characters.
+REVIEW_API.append({
+    "name": "statements-01-model-text", "kind": "statements",
+    "description": "The task response of a model text task gives the text of each statement "
+    "and its cited spans of the document. The spans of the statements are in UTF-8 bytes of "
+    "the model text.",
+    "model_text": {
+        "format": "model-text@1", "packet": API_PACKET_1, "name": "summary",
+        "text": "Revenue was €4.2 million. The lease ends in 2030.",
+        "statements": [
+            {"start": 0, "end": 27, "cites": [{"start": 18120, "end": 18160},
+                                              {"start": 40, "end": 52}]},
+            {"start": 28, "end": 51, "cites": []},
+        ],
+    },
+    "expected": {"statements": [
+        {"text": "Revenue was €4.2 million.",
+         "cites": [{"start": 18120, "end": 18160}, {"start": 40, "end": 52}]},
+        {"text": "The lease ends in 2030.", "cites": []},
+    ]},
+})  # fmt: skip
+
 # The tasks of the API in one store, in no order. ``open`` is false for a task that the actor
 # answered or that an answer settles.
 API_ENTRIES = [

@@ -4,7 +4,7 @@ A program reads the open tasks of a store and writes answers. ``Service`` gives 
 operations of version 1, and ``server`` puts it behind an HTTP server on 127.0.0.1:
 
 - ``GET /v1/tasks``: the open tasks of the actor, with a page cursor.
-- ``GET /v1/tasks/{task}``: one task.
+- ``GET /v1/tasks/{task}``: one task, with the statements of a model text.
 - ``GET /v1/tasks/{task}/document``: the text of its document.
 - ``POST /v1/answers``: one answer.
 
@@ -61,6 +61,7 @@ __all__ = [
     "read_issuers",
     "read_token",
     "server",
+    "statement_list",
     "task_view",
 ]
 
@@ -296,6 +297,19 @@ def task_view(task: Mapping[str, Any]) -> dict[str, Any] | None:
     }
 
 
+def statement_list(model_text: Mapping[str, Any]) -> list[dict[str, Any]]:
+    """The statements of a ``model-text@1`` object for a task response, in order: the text of
+    each statement, and the spans of the document that it cites, in UTF-8 bytes."""
+    data = model_text["text"].encode("utf-8")
+    return [
+        {
+            "text": data[s["start"] : s["end"]].decode("utf-8"),
+            "cites": [{"start": c["start"], "end": c["end"]} for c in s["cites"]],
+        }
+        for s in model_text["statements"]
+    ]
+
+
 def _order(entry: Mapping[str, Any]) -> tuple[str, str, bool, str, str]:
     key = entry["key"]
     return entry["packet"], entry["field"], key is not None, key or "", entry["task"]
@@ -512,6 +526,8 @@ class Service:
                 "definition": None if model_text else doc.schema.fields[slot.field].description,
                 "answered": mine[-1].get("verdict") if mine else None,
                 "body": view["body"],
+                # the task holds no model text: the statements come from the model-text@1 input
+                "statements": statement_list(doc.texts[key]) if model_text else None,
             }
 
     def document(self, actor: str, key: str) -> dict[str, Any]:

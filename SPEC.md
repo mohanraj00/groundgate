@@ -2266,13 +2266,23 @@ between two requests leaves the list, and one walk never gives a task two times.
 {"api": "groundgate-review/1", "task": "sha256:...", "packet": "sha256:...",
  "document": "inv-0007", "mode": "review", "field": "total", "key": null,
  "definition": "The total of the invoice.", "answered": null,
- "body": {"format": "task@1", "...": "..."}}
+ "body": {"format": "task@1", "...": "..."}, "statements": null}
 ```
 
 `definition` is the description of the field in the schema, or null. `answered` is the verdict
 of the latest answer of the actor to this task, or null. `body` is the `task@1` object as the
 store has it, with its question, its choices, its evidence and its places. For a blind task,
 `body` is null.
+
+`statements` is null, except for a model text task (docs/design/review.md §7). Such a task holds
+no model text, so the response gives each statement of its `model-text@1` input, in order:
+
+```json
+{"text": "Revenue was $4.2 million.", "cites": [{"start": 18120, "end": 18160}]}
+```
+
+`text` is the text of the statement. `cites` holds each span of the document that the statement
+cites, and it can be empty.
 
 **GET /v1/tasks/{task}/document** gives the text of the document of the task. Each span of the
 task, and each span of an answer, is in UTF-8 bytes of this text (§2.2).
@@ -2293,7 +2303,7 @@ can have these members:
 | `parts` | A list of at most 8 objects `{"role", "start", "end"}` | A correction: the role items (§4.6). A role is `sign`, `scale`, `unit`, `field` or `key`. |
 | `codes_kept` | A list of reason codes | A correction: each code that the actor saw and kept. |
 | `parts_seen` | A boolean | A correction: true after `parts_disagree`, to keep the value. |
-| `statements` | A list, or null | A model text task: one verdict for each statement. |
+| `statements` | A list, or null | A model text task: one `{"statement", "verdict"}` for each statement, in order. `statement` is its index from 0, and `verdict` is `supported`, `unsupported` or `unsure`. |
 | `reason_seen` | A boolean | The measures: true when the actor saw the `codes` of the task before the answer. Without it, false. |
 | `keys`, `ms` | Integers from 0 to 2^31 - 1 | The measures. Without them, 0. |
 
@@ -2326,8 +2336,8 @@ actor. `record` is the record without the three members that the store adds. For
 `record` is null, because the candidate of a correction can hold the unit of the proposed value.
 
 The vectors in `conformance/review-api/` give claims and static tokens with the actor or the
-error, the response members of a task, pages of the list, answer bodies, requests that the
-service refuses, and the status of each error code.
+error, the response members of a task, the statements of a model text, pages of the list,
+answer bodies, requests that the service refuses, and the status of each error code.
 
 ## 5. Receipt
 
