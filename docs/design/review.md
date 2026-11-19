@@ -640,9 +640,16 @@ the contract: the operations, the errors and the claim check. This section gives
   reference, and the offsets alone do not tell. Each choice has the `source` and the `ref` of
   its decision. Version 1 gives the document text only, so a client shows a passage only for
   the source `document`. The text of a reference is not in version 1 (#702).
-- **Two kinds of task are not in version 1.** A calibrate label task shows its value on
+- **Three kinds of task are not in version 1.** A calibrate label task shows its value on
   purpose, and `calibrate label` serves it. An audit task for a closed set has no blind answer,
-  because `answer@2` has no member for an option.
+  because `answer@2` has no member for an option. A model text task is not a task of the API
+  when its packet has a task with the mode `audit`. A statement of a model text can state the
+  value that the blind task hides, and each actor gets each task of the API. So a person could
+  copy the value of the model in place of an independent label. The rule reads the tasks of
+  the packet in the store, so it needs no state and an answer does not change it. The cost:
+  with an audit rate above 0, most packets have an audit task, and `review serve` is then the
+  way to answer their model text tasks. A rule for each actor needs an assignment of tasks to
+  actors, which version 1 does not have.
 - **Small on purpose.** Version 1 has four operations. It has no reason, no check without a
   write, no word boxes, no crop and no HTML frame. A page on this API (#647) can add an
   operation in version 1, because an addition is compatible.

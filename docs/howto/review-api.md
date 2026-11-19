@@ -160,7 +160,8 @@ Which amount is total?
 
 For a model text task, the response also has `statements`: the text of each statement and the
 spans of the document that it cites. An answer to it has the verdict `confirm` and one
-`{"statement", "verdict"}` for each statement.
+`{"statement", "verdict"}` for each statement. The API gives a model text task only when its
+packet has no audit task: a statement can state the value that a blind task hides.
 
 An answer names its task and its verdict. `choose` gives the number of the right choice: here
 choice 2, because the invoice gives the total in thousands. The response has the record that

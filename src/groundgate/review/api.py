@@ -324,18 +324,24 @@ def no_keys(value: Any) -> Any:
 
 
 def task_view(
-    task: Mapping[str, Any], sources: Mapping[int, Mapping[str, Any]] | Sequence[Any] = ()
+    task: Mapping[str, Any],
+    sources: Mapping[int, Mapping[str, Any]] | Sequence[Any] = (),
+    blind_packet: bool = False,
 ) -> dict[str, Any] | None:
     """The members of a task response that come from the ``task@1`` object, or None for a task
-    that is not a task of the API: a calibrate label task, and an audit task for a closed set.
-    ``sources`` holds the decisions of the receipt, by their index: each choice gets the
-    ``source`` and the ``ref`` of its decision.
+    that is not a task of the API: a calibrate label task, an audit task for a closed set, and
+    a model text task when ``blind_packet`` is true. ``blind_packet`` says that the packet of
+    the task has a task with the mode ``audit``: a statement of the model text can state the
+    value that such a task hides. ``sources`` holds the decisions of the receipt, by their
+    index: each choice gets the ``source`` and the ``ref`` of its decision.
 
     The ``body`` has no key of the store and no index of the receipt: its slot has no
     ``decisions``, and each choice has ``choice``, its number in the task, in place of
     ``decision``. A task with the mode ``audit`` is blind, so its ``body`` is None."""
     blind = task["mode"] == "audit"
     if task["template"] in QUESTIONS or (blind and task["item"] == "closed_set"):
+        return None
+    if blind_packet and task["item"] == "model_text":
         return None
     body = None
     if not blind:
@@ -592,10 +598,15 @@ class Service:
     def _served(self, review: Review) -> Iterator[tuple[str, Any, dict[str, Any]]]:
         """The task key, the document and the view of each task of the API."""
         for doc in review.docs.values():
+            # the tasks of the packet in the store, with or without an answer
+            blind_packet = any(
+                doc.by_key[key][1]["mode"] == "audit" for key in doc.tasks if key in doc.by_key
+            )
             for key in doc.tasks:
                 view = None
                 if key not in doc.labels:
-                    view = task_view(doc.by_key[key][1], doc.packet.receipt["decisions"])
+                    decisions = doc.packet.receipt["decisions"]
+                    view = task_view(doc.by_key[key][1], decisions, blind_packet)
                 if view is not None:
                     yield key, doc, view
 
