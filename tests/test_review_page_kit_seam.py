@@ -389,3 +389,77 @@ def test_the_page_shows_no_passage_for_evidence_in_a_reference(
         assert choice["marks"] == [] and "cannot show the passage" in choice["text"]
         # a passage has the text around the span too: no part of the document text is there
         assert "unrelated" not in choice["text"] and "$9,000" not in choice["text"]
+
+
+# A review task with two long values that differ only in their last character.
+LONG_STEPS = """
+(async () => {
+  const wait = (ms) => new Promise((done) => setTimeout(done, ms));
+  const until = async (test) => {
+    for (let i = 0; i < 300 && !test(); i += 1) await wait(50);
+  };
+  const textOf = (node) => node.shadowRoot?.textContent ?? node.textContent;
+  const press = (parent) => {
+    const control = parent.firstElementChild;
+    (control.shadowRoot?.querySelector('button') ?? control).click();
+  };
+  await until(() => document.body.dataset.state === 'ready');
+  press(document.querySelector('li[data-field=name]'));
+  await until(() => document.querySelectorAll('.choice').length === 2);
+  const choices = [...document.querySelectorAll('.choice')];
+  const labels = choices.map((choice) => textOf(choice.firstElementChild));
+  const heading = document.querySelector('#detail h2').textContent;
+  // choose the value that ends with Y
+  press(choices[labels.findIndex((label) => label.includes('AY"'))].querySelector('[data-tool]'));
+  await until(() => document.getElementById('who').textContent.includes('Open tasks: 0.'));
+  return JSON.stringify({
+    kit: document.body.dataset.kit,
+    labels,
+    heading,
+    who: document.getElementById('who').textContent,
+  });
+})()
+"""
+
+
+def test_the_page_shows_a_long_value_in_full(
+    tmp_path: Path, pinned_kit: Path, browser: Browser
+) -> None:
+    """The text element of the kit takes 10,000 characters. Two values of 12,001 characters
+    differ only in their last character, and their evidence is in a reference, so the page
+    shows no passage. The page must show each value in full: a clipped label gives the same
+    text for the two choices."""
+    from groundgate.review.tasks import write_tasks
+    from groundgate.store.packets import admit_packet
+
+    long = "A" * 12000
+    reference = f"Name: {long}X. Name: {long}Y."
+
+    def cite(words: str) -> dict[str, Any]:
+        start = reference.index(words)
+        return {"source": "reference", "ref": "r", "start": start, "end": start + len(words),
+                "text": words}  # fmt: skip
+
+    candidates = [
+        {"id": "c1", "field": "name", "value": long + "X", "evidence": [cite(long + "X")]},
+        {"id": "c2", "field": "name", "value": long + "Y", "evidence": [cite(long + "Y")]},
+    ]
+    document = "A document with a long key.\n"
+    schema = {"fields": {"name": {"type": "string"}}}
+    root = tmp_path / "store"
+    with FolderStore(root) as store:
+        packet, _ = admit_packet(store, document, schema, candidates, None, "policy-0001",
+                                 references=[{"id": "r", "text": reference}])  # fmt: skip
+        ((_, task),) = write_tasks(store, packet, run.REVIEW_POLICY).tasks
+    shown = [choice["shown"] for choice in task["choices"]]
+    assert all(len(text) > 20000 for text in shown) and shown[0][:10000] == shown[1][:10000]
+    out = drive(browser, root, pinned_kit, LONG_STEPS)
+    assert out["kit"] == "true" and "Open tasks: 0." in out["who"]
+    assert out["labels"][0] != out["labels"][1]
+    assert sorted(label.split(": ", 1)[1] for label in out["labels"]) == sorted(shown)
+    assert out["heading"] == "Task 1: name in policy-0001"
+    # the store has the choice of the value that ends with Y
+    with FolderStore(root) as store:
+        (written,) = store.read(("answers", packet, reviewer_key("ana")))
+    chosen = next(c for c in task["choices"] if c["decision"] == written["decision"])
+    assert written["verdict"] == "choose" and chosen["value"] == long + "Y"

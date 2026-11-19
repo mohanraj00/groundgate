@@ -6,6 +6,7 @@ section { margin-block: var(--mu-space-4, 1rem); }
 .choice { border-inline-start: 2px solid var(--mu-color-border, currentColor); padding-inline-start: var(--mu-space-3, 0.75rem); margin-block: var(--mu-space-3, 0.75rem); }
 blockquote { margin: var(--mu-space-2, 0.5rem) 0; white-space: pre-wrap; }
 mark { font-weight: 700; }
+h2, p { overflow-wrap: anywhere; }
 #document {
   white-space: pre-wrap; overflow-wrap: anywhere; max-height: 24rem; overflow: auto;
   border: 1px solid var(--mu-color-border, currentColor); border-radius: var(--mu-radius-2, 0.25rem);

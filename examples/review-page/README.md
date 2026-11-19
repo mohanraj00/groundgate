@@ -94,9 +94,11 @@ origin. It sends each `/v1/` request to the API as it is. The API does each chec
   to a review task and one to an audit task. It needs no browser and no network.
 - `tests/test_review_page_kit_seam.py` loads the page in a headless browser with the pinned
   kit, and answers the two tasks with the buttons of the kit. A second test does the same steps
-  without the kit, and a third test checks a value that cites a reference text. On a
-  developer machine, each test skips if no browser with a remote debugging pipe is installed,
-  and the first one skips if git cannot get the kit. In CI, each of these is a failure.
+  without the kit, and a third test checks a value that cites a reference text. A fourth test
+  uses the kit and checks two long values that differ only in their last character: the page
+  shows each one in full. On a developer machine, each test skips if no browser with a remote
+  debugging pipe is installed, and a test with the kit skips if git cannot get the kit. In CI,
+  each of these is a failure.
 
 ## Limits
 

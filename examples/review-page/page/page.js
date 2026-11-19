@@ -22,7 +22,11 @@ const WAIT = 'The page waits for the response to your answer.';
 const NO_PASSAGE = 'The page cannot show the passage of this value. Its evidence is not in the text of the '
   + 'document. It can be in a reference text, and the API gives the text of the document only.';
 
+// The page clips a message and a cell of the list. It never clips a text that tells one value
+// or one task from another: a choice, a question, a definition, and the heading of a task.
 const clip = (text, max) => (text.length > max ? `${text.slice(0, max - 1)}…` : text);
+// The text element of the kit takes this many characters at most.
+const KIT_TEXT = 10000;
 
 function add(parent, tag, text = '', attributes = {}) {
   const node = document.createElement(tag);
@@ -64,7 +68,11 @@ const plain = {
 // The same parts with the kit: each one is an element of the kit.
 function kitParts(kit) {
   return {
-    text: (parent, text, variant = 'body') => kit.mount('text', { text: clip(text, 10000), variant }, { parent }),
+    // A longer text goes into a plain element, in full. Two values can differ only after the
+    // limit, and a clipped text shows them as the same value.
+    text: (parent, text, variant = 'body') => (text.length > KIT_TEXT
+      ? plain.text(parent, text, variant)
+      : kit.mount('text', { text, variant }, { parent })),
     status: (parent, state, text) => kit.mount('status', { state, text: clip(text, 200) }, { parent }),
     table: (parent, label, columns, rows) => kit.mount('table', {
       label,
@@ -172,7 +180,7 @@ async function open(entry, number) {
   detail.replaceChildren();
   detail.dataset.mode = task.mode;
   const key = task.key === null ? '' : ` (${task.key})`;
-  add(detail, 'h2', clip(`Task ${number}: ${task.field}${key} in ${task.document}`, 300));
+  add(detail, 'h2', `Task ${number}: ${task.field}${key} in ${task.document}`);
   if (task.definition) parts.text(detail, task.definition, 'caption');
   if (task.answered) parts.text(detail, `Your last answer: ${task.answered}.`, 'caption');
   if (task.statements !== null) {
