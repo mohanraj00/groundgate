@@ -1,0 +1,16 @@
+{
+ "name": "request-host-no-port",
+ "kind": "request",
+ "description": "A Host with no port.",
+ "method": "GET",
+ "path": "/v1/tasks",
+ "headers": {
+  "Host": "127.0.0.1",
+  "Authorization": "Bearer local-token-0123456789-abcdefghijklmnopqrstuvwxyz"
+ },
+ "body": null,
+ "expected": {
+  "status": 421,
+  "error": "wrong_host"
+ }
+}

@@ -1,0 +1,16 @@
+{
+ "name": "request-path-root",
+ "kind": "request",
+ "description": "The root path.",
+ "method": "GET",
+ "path": "/",
+ "headers": {
+  "Host": "127.0.0.1:{port}",
+  "Authorization": "Bearer local-token-0123456789-abcdefghijklmnopqrstuvwxyz"
+ },
+ "body": null,
+ "expected": {
+  "status": 404,
+  "error": "not_found"
+ }
+}

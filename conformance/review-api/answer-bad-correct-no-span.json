@@ -1,0 +1,14 @@
+{
+ "name": "answer-bad-correct-no-span",
+ "kind": "answer",
+ "description": "A correction with no span.",
+ "blind": false,
+ "body": {
+  "task": "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "correct",
+  "value": "4200000"
+ },
+ "expected": {
+  "error": "bad_answer"
+ }
+}

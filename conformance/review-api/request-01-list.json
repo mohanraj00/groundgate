@@ -1,0 +1,21 @@
+{
+ "name": "request-01-list",
+ "kind": "request",
+ "description": "The list of an empty store.",
+ "method": "GET",
+ "path": "/v1/tasks",
+ "headers": {
+  "Host": "127.0.0.1:{port}",
+  "Authorization": "Bearer local-token-0123456789-abcdefghijklmnopqrstuvwxyz"
+ },
+ "body": null,
+ "expected": {
+  "status": 200,
+  "body": {
+   "api": "groundgate-review/1",
+   "actor": "ana",
+   "tasks": [],
+   "next": null
+  }
+ }
+}

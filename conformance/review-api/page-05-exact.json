@@ -1,0 +1,60 @@
+{
+ "name": "page-05-exact",
+ "kind": "page",
+ "description": "A page that ends at the last open task has no cursor.",
+ "entries": [
+  {
+   "task": "task:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "document": "inv-0002",
+   "field": "total",
+   "key": null,
+   "open": true
+  },
+  {
+   "task": "task:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+   "document": "inv-0001",
+   "field": "total",
+   "key": null,
+   "open": true
+  },
+  {
+   "task": "task:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+   "document": "inv-0001",
+   "field": "rate",
+   "key": "standard",
+   "open": true
+  },
+  {
+   "task": "task:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+   "document": "inv-0001",
+   "field": "rate",
+   "key": null,
+   "open": true
+  },
+  {
+   "task": "task:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+   "document": "inv-0001",
+   "field": "rate",
+   "key": "express",
+   "open": false
+  },
+  {
+   "task": "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+   "document": "inv-0001",
+   "field": "rate",
+   "key": "express",
+   "open": true
+  }
+ ],
+ "query": "limit=5",
+ "expected": {
+  "tasks": [
+   "task:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+   "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+   "task:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+   "task:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+   "task:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  ],
+  "next": null
+ }
+}

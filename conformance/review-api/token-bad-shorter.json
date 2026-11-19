@@ -1,0 +1,11 @@
+{
+ "name": "token-bad-shorter",
+ "kind": "token",
+ "description": "The token without its last character.",
+ "token": "local-token-0123456789-abcdefghijklmnopqrstuvwxyz",
+ "reviewer": "ana",
+ "authorization": "Bearer local-token-0123456789-abcdefghijklmnopqrstuvwxy",
+ "expected": {
+  "error": "bad_claim"
+ }
+}

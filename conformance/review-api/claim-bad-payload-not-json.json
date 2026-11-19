@@ -1,0 +1,20 @@
+{
+ "name": "claim-bad-payload-not-json",
+ "kind": "claim",
+ "description": "A payload that is not JSON.",
+ "issuers": [
+  {
+   "issuer": "https://id.example.test",
+   "secret": "cmV2aWV3LWFwaS12ZWN0b3Itc2VjcmV0LUEtMDEyMzQ1Njc4OQ"
+  },
+  {
+   "issuer": "desk",
+   "secret": "cmV2aWV3LWFwaS12ZWN0b3Itc2VjcmV0LUItOTg3NjU0MzIxMA"
+  }
+ ],
+ "now": 1795089600,
+ "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e2lzc30.y4wq0irAkgXGwrzcj9gt63yWNcdOCh99zS3ugn1DGFg",
+ "expected": {
+  "error": "bad_claim"
+ }
+}

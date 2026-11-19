@@ -1,0 +1,16 @@
+{
+ "name": "request-no-claim-post",
+ "kind": "request",
+ "description": "A POST with no claim.",
+ "method": "POST",
+ "path": "/v1/answers",
+ "headers": {
+  "Host": "127.0.0.1:{port}",
+  "Content-Type": "application/json"
+ },
+ "body": "{}",
+ "expected": {
+  "status": 401,
+  "error": "no_claim"
+ }
+}

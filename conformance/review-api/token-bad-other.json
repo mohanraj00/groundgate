@@ -1,0 +1,11 @@
+{
+ "name": "token-bad-other",
+ "kind": "token",
+ "description": "Another token of the same length.",
+ "token": "local-token-0123456789-abcdefghijklmnopqrstuvwxyz",
+ "reviewer": "ana",
+ "authorization": "Bearer local-token-0123456789-abcdefghijklmnopqrstuvwxy0",
+ "expected": {
+  "error": "bad_claim"
+ }
+}

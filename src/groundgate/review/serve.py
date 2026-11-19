@@ -152,12 +152,17 @@ def frame_csp(origin: str) -> str:
 
 
 class Refused(Exception):
-    """A request that the server refuses. ``code`` is the HTTP status."""
+    """A request that the server refuses. ``code`` is the HTTP status. ``kind`` names the cause
+    for the review API (SPEC §4.20), and ``codes`` holds its reason codes."""
 
-    def __init__(self, code: int, message: str) -> None:
+    def __init__(
+        self, code: int, message: str, kind: str = "", codes: Collection[str] = ()
+    ) -> None:
         super().__init__(message)
         self.code = code
         self.message = message
+        self.kind = kind
+        self.codes = list(codes)
 
 
 def _printable(value: object) -> str:
@@ -280,11 +285,13 @@ class Review:
         self._inputs = all_model_texts(self.store)
         found: dict[str, list[str]] = {}
         for k in keys:
+            if self._only is not None and k not in self._only:
+                continue  # before the read: the review API loads one task for each request
             try:
                 data = self.store.object_bytes(k)
             except StoreError:
                 continue
-            if key("task@1", data) != k or (self._only is not None and k not in self._only):
+            if key("task@1", data) != k:
                 continue
             try:
                 task = json.loads(data)
@@ -799,14 +806,18 @@ class Review:
         task: Mapping[str, Any],
         body: Mapping[str, Any],
         candidate: Mapping[str, Any],
+        blind: bool = False,
     ) -> list[dict[str, str]]:
         """The parts of a number correction that do not agree, each with its part and the words
         that the page shows (#496). The page asks again before it saves. The value must be the
         selected number with the scale and the sign of the text near it: a scale in the
         selection, a cited scale part, or a scale word on the lines above it. A choice of the
-        task that differs only in its sign is also a question."""
+        task that differs only in its sign is also a question, but not with ``blind``: then the
+        person did not get the choices (SPEC §4.20)."""
         if task["item"] != "number":
             return []
+        if blind:
+            task = {**task, "choices": []}
         with using(doc.schema.vocabulary):  # the scale and loss words of the packet's packs
             return self._ask_number(doc, slot, task, body, candidate)
 
@@ -922,9 +933,16 @@ class Review:
         }
 
     def answer(self, body: Mapping[str, Any]) -> dict[str, Any]:
+        """Write the answer of ``body`` (``write``), and give the queue."""
+        self.write(body)
+        return self.queue()
+
+    def write(self, body: Mapping[str, Any], blind: bool = False) -> tuple[dict[str, Any], str]:
         """Check an answer against its task (§9 rule 8), then append it to the answer log of the
         reviewer. A correction counts only when the gate does not reject it and the person kept
-        each code that is not informational (§6.2)."""
+        each code that is not informational (§6.2). The result is the record and its
+        ``entry_sha256``. With ``blind``, the person did not get the choices of the task, so no
+        message speaks of them."""
         from ..store import StoreError, reviewer_key
 
         tk, doc, slot, task = self._task(body.get("task"))
@@ -977,25 +995,28 @@ class Review:
                 if extra:
                     raise Refused(400, "the correction has no code " + ", ".join(extra))
                 if d["outcome"] == "rejected":
-                    raise Refused(409, "the gate rejects this correction: " + ", ".join(d["codes"]))
+                    raise Refused(409, "the gate rejects this correction: " + ", ".join(d["codes"]),
+                                  "correction_rejected", d["codes"])  # fmt: skip
                 if read.target is None:
                     left = [c for c in d["codes"] if c not in INFO and c not in kept]
-                    raise Refused(409, "keep each code of the correction: " + ", ".join(left))
+                    raise Refused(409, "keep each code of the correction: " + ", ".join(left),
+                                  "codes_not_kept", left)  # fmt: skip
         except AnswerError as exc:
             raise Refused(400, f"the answer breaks its task: {exc.reason}") from exc
         if candidate is not None and body.get("parts_seen") is not True:
-            ask = self._ask(doc, slot, task, body, candidate)
+            ask = self._ask(doc, slot, task, body, candidate, blind)
             if ask:
                 words = " ".join(x["text"] for x in ask)
-                raise Refused(409, "the parts of the correction do not agree: " + words)
+                raise Refused(409, "the parts of the correction do not agree: " + words,
+                              "parts_disagree")  # fmt: skip
         try:
-            self.store.append(("answers", doc.key, reviewer_key(self.reviewer)), record)
+            head = self.store.append(("answers", doc.key, reviewer_key(self.reviewer)), record)
         except (StoreError, ValueError) as exc:  # ValueError: a number out of the JSON range
             raise Refused(
-                409, f"the answer log cannot take the answer: {_printable(str(exc))}"
+                409, f"the answer log cannot take the answer: {_printable(str(exc))}", "log_refused"
             ) from exc
         self._refresh(doc.key)
-        return self.queue()
+        return record, head
 
 
 def _near_scale(text: str, tok: Token) -> tuple[int, str] | None:

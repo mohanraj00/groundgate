@@ -1,0 +1,53 @@
+{
+ "name": "statements-01-model-text",
+ "kind": "statements",
+ "description": "The task response of a model text task gives the text of each statement and its cited spans of the document. The spans of the statements are in UTF-8 bytes of the model text.",
+ "model_text": {
+  "format": "model-text@1",
+  "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+  "name": "summary",
+  "text": "Revenue was €4.2 million. The lease ends in 2030.",
+  "statements": [
+   {
+    "start": 0,
+    "end": 27,
+    "cites": [
+     {
+      "start": 18120,
+      "end": 18160
+     },
+     {
+      "start": 40,
+      "end": 52
+     }
+    ]
+   },
+   {
+    "start": 28,
+    "end": 51,
+    "cites": []
+   }
+  ]
+ },
+ "expected": {
+  "statements": [
+   {
+    "text": "Revenue was €4.2 million.",
+    "cites": [
+     {
+      "start": 18120,
+      "end": 18160
+     },
+     {
+      "start": 40,
+      "end": 52
+     }
+    ]
+   },
+   {
+    "text": "The lease ends in 2030.",
+    "cites": []
+   }
+  ]
+ }
+}

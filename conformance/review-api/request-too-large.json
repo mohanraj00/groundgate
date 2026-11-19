@@ -1,0 +1,18 @@
+{
+ "name": "request-too-large",
+ "kind": "request",
+ "description": "A Content-Length of 65537.",
+ "method": "POST",
+ "path": "/v1/answers",
+ "headers": {
+  "Host": "127.0.0.1:{port}",
+  "Authorization": "Bearer local-token-0123456789-abcdefghijklmnopqrstuvwxyz",
+  "Content-Type": "application/json",
+  "Content-Length": "65537"
+ },
+ "body": null,
+ "expected": {
+  "status": 413,
+  "error": "body_too_large"
+ }
+}

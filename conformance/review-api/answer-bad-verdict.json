@@ -1,0 +1,13 @@
+{
+ "name": "answer-bad-verdict",
+ "kind": "answer",
+ "description": "A verdict that is not an answer verdict.",
+ "blind": false,
+ "body": {
+  "task": "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "approve"
+ },
+ "expected": {
+  "error": "bad_request"
+ }
+}

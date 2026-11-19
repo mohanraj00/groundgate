@@ -16,6 +16,7 @@ page for your task.
 | Read scanned PDFs with OCR, and review their values | [howto/scanned-pdfs.md](howto/scanned-pdfs.md) |
 | Use references, web sources and the model's knowledge | [howto/outside-sources.md](howto/outside-sources.md) |
 | Review flagged facts, and keep and verify receipts | [howto/review.md](howto/review.md) |
+| Read review tasks and send answers over HTTP | [howto/review-api.md](howto/review-api.md) |
 | Keep your pack files with your receipts | [howto/keep-packs.md](howto/keep-packs.md) |
 | Run groundgate as a job in a container or on a cluster | [howto/job-runner.md](howto/job-runner.md) |
 | Check LangExtract output | [guide.md#langextract](guide.md#langextract) |

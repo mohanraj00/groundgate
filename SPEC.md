@@ -5,7 +5,8 @@ Status: released with groundgate 0.14.0, in the `v0.14.0` tag. groundgate 0.15.0
 options and the packet members `pin`, `places`, `completeness` and `outline`. A packet that
 uses none of them is decided as in 0.14.0 and gets the same receipt, so the version string does
 not change. groundgate 0.16.0 adds §5.2, the `facts@2` export of a reviewed packet, §4.18,
-the blind audit sample, and §4.19, the calibration events. They change no decision and no receipt. Version string: `groundgate/0.12`. Spec 0.11 was released with
+the blind audit sample, and §4.19, the calibration events. §4.20, the review API, comes after
+groundgate 0.16.0. They change no decision and no receipt. Version string: `groundgate/0.12`. Spec 0.11 was released with
 groundgate 0.11.0 and is in the `v0.11.0` tag. Spec 0.10 is in the `v0.10.0` tag. Spec 0.9 is in the `v0.9.0` tag,
 spec 0.8 in the `v0.8.0` tag, spec 0.7 in the `v0.7.0` tag, spec 0.6 in the `v0.6.0` tag, spec
 0.5 in the `v0.5.0` tag, spec 0.4 in the `v0.4.0` tag, spec 0.3 in the `v0.3.0` tag, spec 0.2 in
@@ -2130,6 +2131,277 @@ later event with the same `origin` is a copy, and it does not count.
 
 The vectors in `conformance/events/` give valid and invalid events, and the events of one log
 that count.
+
+### 4.20 Review API
+
+The **review API** (#649) gives the review step over HTTP. A program reads the open tasks of a
+store and writes answers, as a person does on the review page (docs/design/review.md). The
+formats `task@1` and `answer@2` are those of that design. This section changes no decision and
+no receipt.
+
+**Version and compatibility.** The API is `groundgate-review/1`. Each path starts with `/v1/`,
+and each JSON response has the member `"api": "groundgate-review/1"`. A later release of
+version 1 can add an operation, a member of a response, a request member that a client can
+leave out, and an error code. It does not remove or rename an operation, a member or an error
+code, and it does not change the type or the meaning of one. Such a change is version 2, under
+`/v2/`. So a client ignores a response member that it does not know, and it reads an error code
+that it does not know by its HTTP status.
+
+The service keeps no state outside the store. It reads the store again for each request, and
+its only write is the append of one answer record. Its start values are the store, a
+`review-policy@1` object for `agree` and the leads, and the issuers or the static token. It also
+makes one random key at its start, for the task IDs below. The key is in memory only.
+
+**The claim.** Each request has one header `Authorization: Bearer <claim>`, with one space. A
+claim is three parts with `.` between them: a header, a payload and a signature, each in
+base64url (RFC 4648 §5) with no `=`. The header and the payload are JSON objects in UTF-8. The
+signature is HMAC-SHA-256 over the ASCII bytes of the first two parts and the `.` between them,
+with the secret of the issuer. This is the JWS compact form of RFC 7515 with `HS256`.
+
+The service has a list of issuers. Each issuer has a name and a secret of 32 bytes or more.
+`now` is the time of the service in whole seconds since 1970-01-01T00:00:00Z. The check goes in
+this order, and the first step that fails gives the error:
+
+1. A request with no `Authorization` header gives `no_claim`.
+2. These give `bad_claim`: two `Authorization` headers; a value that is not `Bearer`, one
+   space and the claim; a claim of more than 4096 bytes; a claim that does not have three
+   parts; a part that is empty or is not base64url with no `=`; a header or a payload that is
+   not a JSON object; a header whose `alg` is not `HS256`; a header with a member other than
+   `alg` and `typ`; a `typ` other than `JWT`.
+3. An `iss` that is not the name of an issuer of the service gives `unknown_issuer`.
+4. A signature that is not the signature of step 2 with the secret of that issuer gives
+   `bad_claim`. The comparison takes the same time for each signature.
+5. An `aud` other than the string `groundgate-review` gives `bad_claim`.
+6. An `exp` that is not an integer gives `bad_claim`. An `exp` of `now` or less gives
+   `expired_claim`.
+7. An `nbf` that is not an integer, or that is more than `now`, gives `bad_claim`. A claim can
+   leave `nbf` out.
+8. `sub` is the **actor**. A `sub` that is not a string in NFC of 1 to 128 characters with a
+   character that is not a space gives `bad_claim`. So does a `sub` with a lone surrogate.
+
+The check ignores each other member of the payload. An integer is a JSON number with no
+fraction and no exponent. The service keeps no list of the claims that it saw, so a claim is
+good for each request until its `exp`. The issuer chooses a short time.
+
+**The static token.** For a local run, a service can have one static token in place of the
+issuers. The token has 32 to 512 characters from `A` to `Z`, `a` to `z`, `0` to `9`, `-`, `.`,
+`_` and `~`. The request sends it as `Authorization: Bearer <token>`. Step 1 applies. Two
+headers, or a value that is not `Bearer`, one space and the token, give `bad_claim`. The actor
+is the reviewer name that the person gave at the start. Such a service is for one local user:
+each holder of the token answers as that name.
+
+**Requests.** The service binds to `127.0.0.1` only. It checks each request in this order: the
+`Host` header, the claim, the path, the method, and then the query or the body. A `Host` other
+than `127.0.0.1:<port>` gives `wrong_host`. So a request with no claim gets no data and no
+word on a path. A POST has `Content-Type: application/json`, a `Content-Length` of digits only,
+and a body of at most 65536 bytes that is one JSON object. The service checks them in this
+order. A task ID in a path is `task:` and 64 lowercase hex digits, as it is, with no percent
+escape. Only the list takes a query. A query on another path gives `bad_request`.
+
+**Errors.** An error is a response with the HTTP status of its code and this body:
+
+```json
+{"api": "groundgate-review/1", "error": {"code": "expired_claim", "message": "the claim expired"}}
+```
+
+`message` is text for a person, and a release can change it. `correction_rejected` and
+`codes_not_kept` add `codes` to the error object, a list of reason codes. A response with status
+401 has the header `WWW-Authenticate: Bearer`, and a response with status 405 has `Allow`.
+
+| Code | Status | Cause |
+|---|---|---|
+| `wrong_host` | 421 | The `Host` header is not `127.0.0.1:<port>`. |
+| `no_claim` | 401 | The request has no `Authorization` header. |
+| `bad_claim` | 401 | The claim or the static token fails a step above. |
+| `unknown_issuer` | 401 | The service does not have the issuer of the claim. |
+| `expired_claim` | 401 | The claim is past its `exp`. |
+| `not_found` | 404 | No operation has this path, or the ID names no task of the API. |
+| `method_not_allowed` | 405 | The path has an operation, but not for this method. |
+| `bad_request` | 400 | The query, the cursor or the body does not have the form of the operation. |
+| `unsupported_media_type` | 415 | The body of a POST is not `application/json`. |
+| `length_required` | 411 | A POST has no `Content-Length` of digits only. |
+| `body_too_large` | 413 | The body has more than 65536 bytes. |
+| `bad_answer` | 400 | The answer breaks its task. |
+| `correction_rejected` | 409 | The gate rejects the correction. `codes` has its codes. |
+| `codes_not_kept` | 409 | The correction has a code that `codes_kept` does not have. `codes` lists each one. |
+| `parts_disagree` | 409 | The value does not agree with the scale or the sign in the text. |
+| `log_refused` | 409 | The answer log cannot take the record, for example when another writer holds it. |
+| `server_error` | 500 | The service failed. The response gives no store data. |
+
+**The tasks of the API** are the `task@1` objects of the store that their packet gives, when
+the receipt of the packet matches its inputs. Three kinds of task are not tasks of the API in
+version 1, and they get no task ID:
+
+- a calibrate label task (docs/design/review.md §11);
+- a task with the mode `audit` and the item `closed_set`;
+- a model text task of a packet that has a task with the mode `audit`.
+
+A statement of a model text can state the value that a blind task of its packet hides, and each
+actor gets each task of the API. So the API gives a model text task only when no task of its
+packet has the mode `audit`. An answer does not change this: the rule reads the tasks of the
+packet, not their answers.
+
+A task is **open** for an actor when the actor has no answer to it and no answer settles its
+slot under the review policy of the service (docs/design/review.md §6).
+
+A task with the mode `audit` is a **blind task**. The actor gets the document, the field and
+the key, and never the proposed value (§4.18). No response gives its value, its unit, its
+evidence, its places, its codes, its item or its question, and no response gives the outcome of
+the gate for its slot. This applies before and after the answer.
+
+**No key of the store.** A key of the store is `sha256:` and the 64 hex digits of a hash of an
+object. The object of a blind task holds the proposed value, and so does its packet. The key of
+each other task of that packet is a hash over the packet key. With one of these keys, a person
+could make the object for each guess of the value and compare the hashes, with no request. So
+no response gives a key of the store, and none gives a hash over data of the store:
+
+- Each task has a **task ID**: `task:` and the 64 lowercase hex digits of HMAC-SHA-256 over the
+  ASCII bytes `groundgate-review-task/1:` and then the task key, with the random key of the
+  service. The key has 32 bytes. A task ID is good only while that service runs.
+- A task key is not a task ID. A path with a task key gives `not_found`, and a cursor or a body
+  with a task key gives `bad_request`.
+- The service does not look for the ID of a request in the store. It makes the ID of each task
+  of the API and compares each one with the ID of the request. So each ID that names no task
+  needs the same reads of the store, and the time of the response tells nothing of the store.
+- The `body` of a task leaves out each member whose value is a key of the store, at each depth:
+  its `packet`, and the `key` of the `model_text` of a model text task. A list item that is a
+  key of the store is null.
+- The response of an answer gives no packet key and no entry hash, and its `record` has no
+  `task`.
+- An error message gives no key of the store.
+
+**No index of the receipt.** A `task@1` object names each choice by its `decision`, the index
+of a decision in the receipt, and its `slot` lists these indexes. The receipt sorts its
+decisions by `candidate_sha256` (§5). So the indexes of one task tell where each other candidate
+of the packet is in that order, and the candidate of a blind task is one of them. A person
+could test a guess of the proposed value against these indexes. So no response gives an index
+of the receipt:
+
+- The `slot` of a `body` has no `decisions`.
+- Each choice of a `body` has `choice` in place of `decision`: the number of the choice in its
+  task, from 1, in the order of the task.
+- An answer names a choice by that number, and the service finds the decision.
+- The `record` of an answer response has `choice` in place of `decision`.
+
+**A limit of the blind task.** The answer to a blind task is independent only when its actor
+gets nothing that depends on the hidden candidates of the packet. Version 1 gives each task of
+a packet to each actor, so it does not hold this in each case (#703). The rules of this section
+close four known paths: a key of the store, the time of a `not_found`, an index of the receipt,
+and a statement of a model text. One known path is open. The gate check of a correction
+(docs/design/review.md §6.2) reads the candidates of the other slots. If a relation of the
+schema (§3.4) joins the slot of the correction with the slot of a blind task, the outcome of
+the correction changes with the hidden candidate. Example: the schema has the relation
+`total = part`, and the two tasks are blind. With the hidden values 10 and 10, a correction of
+`total` to 10 gives 201. With the hidden values 20 and 20, the same correction gives
+`codes_not_kept` with `RELATION_FAILED`. So an actor can test a guess of a hidden value. A full
+fix keeps the blind tasks of a packet apart from each other task of an actor, and gives the
+check of a correction no hidden candidate (#703).
+
+**GET /v1/tasks** lists the open tasks of the actor. The order is the code point order of
+`document`, then of the field, then of the key with null first, then of the task ID. The order uses
+only members of the list. The query can have `limit`, an integer from 1 to 200 in digits only, and
+`cursor`. Without `limit`, the limit is 50. A query member that is not one of these two, or that
+occurs two times, gives `bad_request`.
+
+```json
+{"api": "groundgate-review/1", "actor": "ana",
+ "tasks": [{"task": "task:...", "document": "inv-0007", "mode": "review", "field": "total",
+            "key": null}],
+ "next": null}
+```
+
+`task` is the task ID. `document` is the document id of the receipt (§5) as text for a person, or
+an empty string. `next` is the cursor of the next page: a string when more open tasks come after
+the last task of this page, and null if not. A client sends it back as it is, in `cursor`. The
+cursor is the ID of the last task of the page, and the next page starts after that task in the
+order. A cursor that is not the ID of a task of the API gives `bad_request`. A task that gets an
+answer between two requests leaves the list, and one walk never gives a task two times.
+
+**GET /v1/tasks/{task}** gives one task, open or not.
+
+```json
+{"api": "groundgate-review/1", "task": "task:...", "document": "inv-0007", "mode": "review",
+ "field": "total", "key": null, "definition": "The total of the invoice.", "answered": null,
+ "body": {"format": "task@1", "...": "..."}, "statements": null}
+```
+
+`definition` is the description of the field in the schema, or null. `answered` is the verdict of
+the latest answer of the actor to this task, or null. `body` is the `task@1` object of the store
+without each key of the store and each index of the receipt, with its question, its choices, its
+evidence and its places. For a blind task, `body` is null.
+
+Each choice of a `body` also has `source` and `ref`, from its decision in the receipt (§5).
+`source` is `document` when the `evidence` of the choice is a span of the document. It is
+`reference` when the evidence is a span of a reference of the packet, and `ref` is then the id
+of that reference. If not, `ref` is null. Version 1 gives the text of the document only. So a
+client reads the `evidence` span against the document text only when `source` is `document`:
+the same offsets of the document are other text for a `reference` choice.
+
+`statements` is null, except for a model text task (docs/design/review.md §7). Such a task holds
+no model text, so the response gives each statement of its `model-text@1` input, in order:
+
+```json
+{"text": "Revenue was $4.2 million.", "cites": [{"start": 18120, "end": 18160}]}
+```
+
+`text` is the text of the statement. `cites` holds each span of the document that the statement
+cites, and it can be empty.
+
+**GET /v1/tasks/{task}/document** gives the text of the document of the task. Each span of the
+task, and each span of an answer, is in UTF-8 bytes of this text (§2.2).
+
+```json
+{"api": "groundgate-review/1", "task": "task:...", "document": "inv-0007", "text": "..."}
+```
+
+**POST /v1/answers** writes one answer of the actor. The body has `task`, a task ID, and
+`verdict`, and it can have these members:
+
+| Member | Form | For |
+|---|---|---|
+| `choice` | An integer from 1, or null | `choose`: the number of the choice in the task. |
+| `span` | `{"start", "end"}` in UTF-8 bytes | `correct` and `adjust_span`: the place of the right value. |
+| `value` | A string of at most 1000 characters, or null | A correction: the value, if the service must not read it from the span. |
+| `parts` | A list of at most 8 objects `{"role", "start", "end"}` | A correction: the role items (§4.6). A role is `sign`, `scale`, `unit`, `field` or `key`. |
+| `codes_kept` | A list of reason codes | A correction: each code that the actor saw and kept. |
+| `parts_seen` | A boolean | A correction: true after `parts_disagree`, to keep the value. |
+| `statements` | A list, or null | A model text task: one `{"statement", "verdict"}` for each statement, in order. `statement` is its index from 0, and `verdict` is `supported`, `unsupported` or `unsure`. |
+| `reason_seen` | A boolean | The measures: true when the actor saw the `codes` of the task before the answer. Without it, false. |
+| `keys`, `ms` | Integers from 0 to 2^31 - 1 | The measures. Without them, 0. |
+
+A body with another member, or with a member of another form, gives `bad_request`. A correction with
+no `span` gives `bad_answer`. So does an answer that is not a correction and has a `span`, a
+`value`, a part or a kept code, an answer with `statements` to a task that is not a model text task,
+and an answer with a `choice` that is not the number of a choice of the task. The service makes the
+record from the body as `groundgate review serve` does, with the actor as the `reviewer`, with
+`person:` and the actor as the proposer of a correction, and with the time of the service. It reads
+the value of a correction from the span when `value` is null or absent. It checks the answer against
+its task, and it runs the gate again for a correction (docs/design/review.md §6.2). Thus the same
+store, the same answer and the same time give the same record through the API and through the page
+of `groundgate review serve`. The record is `answer@2` when the verdict is `wrong`, and `answer@1`
+if not.
+
+A blind task takes only `correct`, `not_in_document` and `unsure`. Each other verdict speaks of
+a value that the actor did not get, and it gives `bad_answer`. So does a `choice`. For a blind task,
+`parts_disagree` comes only from the text and the value of the actor, and never from the
+proposed value.
+
+The response has the status 201:
+
+```json
+{"api": "groundgate-review/1", "actor": "ana", "task": "task:...",
+ "record": {"format": "answer@1", "...": "..."}}
+```
+
+`record` is the new record of the answer log of the packet and the actor, without its `task`
+and without the three members that the store adds. Each of these four is a key of the store or
+a hash over one. The record has `choice`, the number of the choice or null, in place of its
+`decision`. For a blind task, `record` is null, because the candidate of a correction can
+hold the unit of the proposed value. The store has the full record.
+
+The vectors in `conformance/review-api/` give claims and static tokens with the actor or the
+error, the response members of a task, a task ID, the statements of a model text, pages of
+the list, answer bodies, requests that the service refuses, and the status of each error code.
 
 ## 5. Receipt
 

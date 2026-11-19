@@ -1,0 +1,13 @@
+{
+ "name": "answer-bad-array",
+ "kind": "answer",
+ "description": "A body that is not an object.",
+ "blind": false,
+ "body": [
+  "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "confirm"
+ ],
+ "expected": {
+  "error": "bad_request"
+ }
+}

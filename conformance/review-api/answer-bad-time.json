@@ -1,0 +1,14 @@
+{
+ "name": "answer-bad-time",
+ "kind": "answer",
+ "description": "A body cannot give the time.",
+ "blind": false,
+ "body": {
+  "task": "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "confirm",
+  "time": "2026-11-19T12:00:00Z"
+ },
+ "expected": {
+  "error": "bad_request"
+ }
+}

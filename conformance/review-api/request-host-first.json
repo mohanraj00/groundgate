@@ -1,0 +1,15 @@
+{
+ "name": "request-host-first",
+ "kind": "request",
+ "description": "The Host check comes before the claim check.",
+ "method": "GET",
+ "path": "/v1/tasks",
+ "headers": {
+  "Host": "evil.example.test"
+ },
+ "body": null,
+ "expected": {
+  "status": 421,
+  "error": "wrong_host"
+ }
+}

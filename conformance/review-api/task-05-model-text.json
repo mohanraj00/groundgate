@@ -1,0 +1,70 @@
+{
+ "name": "task-05-model-text",
+ "kind": "task",
+ "description": "A model text task holds the key of its model-text@1 input. The body leaves that key out, at its depth, and keeps the count of the statements.",
+ "task": {
+  "format": "task@1",
+  "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+  "slot": {
+   "field": "summary",
+   "key": null,
+   "decisions": []
+  },
+  "item": "model_text",
+  "mode": "review",
+  "template": "model_text@1",
+  "question": "Does the source support each statement of summary?",
+  "parts": [
+   "statement"
+  ],
+  "codes": [],
+  "choices": [],
+  "places": [
+   {
+    "start": 18120,
+    "end": 18160,
+    "page": 41,
+    "box": null
+   }
+  ],
+  "model_text": {
+   "key": "sha256:7777777777777777777777777777777777777777777777777777777777777777",
+   "statements": 2
+  }
+ },
+ "sources": {},
+ "blind_packet": false,
+ "expected": {
+  "served": true,
+  "mode": "review",
+  "field": "summary",
+  "key": null,
+  "body": {
+   "format": "task@1",
+   "slot": {
+    "field": "summary",
+    "key": null
+   },
+   "item": "model_text",
+   "mode": "review",
+   "template": "model_text@1",
+   "question": "Does the source support each statement of summary?",
+   "parts": [
+    "statement"
+   ],
+   "codes": [],
+   "choices": [],
+   "places": [
+    {
+     "start": 18120,
+     "end": 18160,
+     "page": 41,
+     "box": null
+    }
+   ],
+   "model_text": {
+    "statements": 2
+   }
+  }
+ }
+}

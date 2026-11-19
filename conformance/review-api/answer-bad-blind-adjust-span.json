@@ -1,0 +1,13 @@
+{
+ "name": "answer-bad-blind-adjust-span",
+ "kind": "answer",
+ "description": "A blind task does not take adjust_span: the actor did not get a value.",
+ "blind": true,
+ "body": {
+  "task": "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "adjust_span"
+ },
+ "expected": {
+  "error": "bad_answer"
+ }
+}

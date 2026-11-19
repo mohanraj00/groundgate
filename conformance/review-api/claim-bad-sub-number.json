@@ -1,0 +1,20 @@
+{
+ "name": "claim-bad-sub-number",
+ "kind": "claim",
+ "description": "A sub that is a number.",
+ "issuers": [
+  {
+   "issuer": "https://id.example.test",
+   "secret": "cmV2aWV3LWFwaS12ZWN0b3Itc2VjcmV0LUEtMDEyMzQ1Njc4OQ"
+  },
+  {
+   "issuer": "desk",
+   "secret": "cmV2aWV3LWFwaS12ZWN0b3Itc2VjcmV0LUItOTg3NjU0MzIxMA"
+  }
+ ],
+ "now": 1795089600,
+ "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2lkLmV4YW1wbGUudGVzdCIsInN1YiI6NywiYXVkIjoiZ3JvdW5kZ2F0ZS1yZXZpZXciLCJleHAiOjE3OTUwODk5MDB9.VVwGxQFo_g0V7MCQTALAHjsiiCWKeBvN36k1-MTTqRo",
+ "expected": {
+  "error": "bad_claim"
+ }
+}

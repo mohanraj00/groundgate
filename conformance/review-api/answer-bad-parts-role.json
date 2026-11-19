@@ -1,0 +1,24 @@
+{
+ "name": "answer-bad-parts-role",
+ "kind": "answer",
+ "description": "A part with the role amount.",
+ "blind": false,
+ "body": {
+  "task": "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "correct",
+  "span": {
+   "start": 1,
+   "end": 5
+  },
+  "parts": [
+   {
+    "role": "amount",
+    "start": 7,
+    "end": 9
+   }
+  ]
+ },
+ "expected": {
+  "error": "bad_request"
+ }
+}

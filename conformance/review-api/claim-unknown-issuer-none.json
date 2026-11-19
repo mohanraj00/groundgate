@@ -1,0 +1,20 @@
+{
+ "name": "claim-unknown-issuer-none",
+ "kind": "claim",
+ "description": "A payload with no iss.",
+ "issuers": [
+  {
+   "issuer": "https://id.example.test",
+   "secret": "cmV2aWV3LWFwaS12ZWN0b3Itc2VjcmV0LUEtMDEyMzQ1Njc4OQ"
+  },
+  {
+   "issuer": "desk",
+   "secret": "cmV2aWV3LWFwaS12ZWN0b3Itc2VjcmV0LUItOTg3NjU0MzIxMA"
+  }
+ ],
+ "now": 1795089600,
+ "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhbmEiLCJhdWQiOiJncm91bmRnYXRlLXJldmlldyIsImV4cCI6MTc5NTA4OTkwMH0.lS5deI6cYEuOPaNPEmM7F0_k2fE84u1cPqgDU__gNdQ",
+ "expected": {
+  "error": "unknown_issuer"
+ }
+}

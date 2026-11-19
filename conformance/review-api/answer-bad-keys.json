@@ -1,0 +1,14 @@
+{
+ "name": "answer-bad-keys",
+ "kind": "answer",
+ "description": "keys of 2^31.",
+ "blind": false,
+ "body": {
+  "task": "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "confirm",
+  "keys": 2147483648
+ },
+ "expected": {
+  "error": "bad_request"
+ }
+}

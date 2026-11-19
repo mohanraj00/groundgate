@@ -1,0 +1,15 @@
+{
+ "name": "request-method-options",
+ "kind": "request",
+ "description": "OPTIONS with no claim, as a browser sends before a request from another site.",
+ "method": "OPTIONS",
+ "path": "/v1/answers",
+ "headers": {
+  "Host": "127.0.0.1:{port}"
+ },
+ "body": null,
+ "expected": {
+  "status": 401,
+  "error": "no_claim"
+ }
+}

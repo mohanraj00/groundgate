@@ -1,0 +1,20 @@
+{
+ "name": "claim-unknown-issuer",
+ "kind": "claim",
+ "description": "An issuer that the service does not have, with the secret of the first issuer.",
+ "issuers": [
+  {
+   "issuer": "https://id.example.test",
+   "secret": "cmV2aWV3LWFwaS12ZWN0b3Itc2VjcmV0LUEtMDEyMzQ1Njc4OQ"
+  },
+  {
+   "issuer": "desk",
+   "secret": "cmV2aWV3LWFwaS12ZWN0b3Itc2VjcmV0LUItOTg3NjU0MzIxMA"
+  }
+ ],
+ "now": 1795089600,
+ "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL290aGVyLmV4YW1wbGUudGVzdCIsInN1YiI6ImFuYSIsImF1ZCI6Imdyb3VuZGdhdGUtcmV2aWV3IiwiZXhwIjoxNzk1MDg5OTAwfQ.a6Va8prE9Ztg3vfpWY1q87mAsk9I6sLxLsMXcDzwm-Q",
+ "expected": {
+  "error": "unknown_issuer"
+ }
+}

@@ -1,0 +1,14 @@
+{
+ "name": "answer-bad-statements",
+ "kind": "answer",
+ "description": "statements that is an object.",
+ "blind": false,
+ "body": {
+  "task": "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "confirm",
+  "statements": {}
+ },
+ "expected": {
+  "error": "bad_request"
+ }
+}

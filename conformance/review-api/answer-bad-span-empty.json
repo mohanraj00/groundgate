@@ -1,0 +1,17 @@
+{
+ "name": "answer-bad-span-empty",
+ "kind": "answer",
+ "description": "A span with no byte.",
+ "blind": false,
+ "body": {
+  "task": "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "correct",
+  "span": {
+   "start": 5,
+   "end": 5
+  }
+ },
+ "expected": {
+  "error": "bad_request"
+ }
+}

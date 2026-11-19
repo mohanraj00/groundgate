@@ -1,0 +1,13 @@
+{
+ "name": "answer-04-wrong",
+ "kind": "answer",
+ "description": "The verdict wrong.",
+ "blind": false,
+ "body": {
+  "task": "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "wrong"
+ },
+ "expected": {
+  "valid": true
+ }
+}

@@ -1,0 +1,13 @@
+{
+ "name": "answer-07-blind-not-in-document",
+ "kind": "answer",
+ "description": "A blind task takes not_in_document.",
+ "blind": true,
+ "body": {
+  "task": "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "not_in_document"
+ },
+ "expected": {
+  "valid": true
+ }
+}

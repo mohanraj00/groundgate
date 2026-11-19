@@ -1,0 +1,34 @@
+{
+ "name": "answer-03-correct",
+ "kind": "answer",
+ "description": "A correction with each member.",
+ "blind": false,
+ "body": {
+  "task": "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "correct",
+  "choice": null,
+  "span": {
+   "start": 18120,
+   "end": 18125
+  },
+  "value": "4200000",
+  "parts": [
+   {
+    "role": "scale",
+    "start": 17002,
+    "end": 17025
+   }
+  ],
+  "codes_kept": [
+   "SCALE_WORD"
+  ],
+  "parts_seen": true,
+  "statements": null,
+  "reason_seen": true,
+  "keys": 3,
+  "ms": 8400
+ },
+ "expected": {
+  "valid": true
+ }
+}

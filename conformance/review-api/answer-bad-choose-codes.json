@@ -1,0 +1,17 @@
+{
+ "name": "answer-bad-choose-codes",
+ "kind": "answer",
+ "description": "A kept code in an answer that is not a correction.",
+ "blind": false,
+ "body": {
+  "task": "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "choose",
+  "choice": 1,
+  "codes_kept": [
+   "SCALE_WORD"
+  ]
+ },
+ "expected": {
+  "error": "bad_answer"
+ }
+}

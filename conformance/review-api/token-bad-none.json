@@ -1,0 +1,11 @@
+{
+ "name": "token-bad-none",
+ "kind": "token",
+ "description": "A request with no Authorization header.",
+ "token": "local-token-0123456789-abcdefghijklmnopqrstuvwxyz",
+ "reviewer": "ana",
+ "authorization": null,
+ "expected": {
+  "error": "no_claim"
+ }
+}

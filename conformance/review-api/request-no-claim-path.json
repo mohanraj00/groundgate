@@ -1,0 +1,15 @@
+{
+ "name": "request-no-claim-path",
+ "kind": "request",
+ "description": "The claim check comes before the path check: a request with no claim gets no word on a path.",
+ "method": "GET",
+ "path": "/v2/tasks",
+ "headers": {
+  "Host": "127.0.0.1:{port}"
+ },
+ "body": null,
+ "expected": {
+  "status": 401,
+  "error": "no_claim"
+ }
+}

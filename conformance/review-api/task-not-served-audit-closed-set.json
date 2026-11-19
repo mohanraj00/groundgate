@@ -1,0 +1,62 @@
+{
+ "name": "task-not-served-audit-closed-set",
+ "kind": "task",
+ "description": "An audit task for a closed set is not a task of the API in version 1: its answer has no member for an option.",
+ "task": {
+  "format": "task@1",
+  "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+  "slot": {
+   "field": "net_income",
+   "key": null,
+   "decisions": [
+    4
+   ]
+  },
+  "item": "closed_set",
+  "mode": "audit",
+  "template": "closed_set@1",
+  "question": "Is net income $310,000 (written 310, in thousands)?",
+  "parts": [
+   "amount",
+   "scale",
+   "sign",
+   "unit",
+   "field"
+  ],
+  "codes": [],
+  "choices": [
+   {
+    "decision": 4,
+    "value": "310000",
+    "unit": "USD",
+    "shown": "$310,000 (written 310, in thousands)",
+    "evidence": {
+     "start": 18240,
+     "end": 18243
+    }
+   }
+  ],
+  "places": [
+   {
+    "start": 18240,
+    "end": 18243,
+    "page": 41,
+    "box": [
+     72.0,
+     334.5,
+     90.0,
+     345.0
+    ]
+   }
+  ],
+  "options": [
+   "annual",
+   "quarterly"
+  ]
+ },
+ "sources": {},
+ "blind_packet": false,
+ "expected": {
+  "served": false
+ }
+}

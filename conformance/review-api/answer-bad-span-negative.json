@@ -1,0 +1,17 @@
+{
+ "name": "answer-bad-span-negative",
+ "kind": "answer",
+ "description": "A span that starts before 0.",
+ "blind": false,
+ "body": {
+  "task": "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "correct",
+  "span": {
+   "start": -1,
+   "end": 5
+  }
+ },
+ "expected": {
+  "error": "bad_request"
+ }
+}

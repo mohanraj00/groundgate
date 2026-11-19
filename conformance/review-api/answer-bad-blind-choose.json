@@ -1,0 +1,13 @@
+{
+ "name": "answer-bad-blind-choose",
+ "kind": "answer",
+ "description": "A blind task does not take choose: the actor did not get a value.",
+ "blind": true,
+ "body": {
+  "task": "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "choose"
+ },
+ "expected": {
+  "error": "bad_answer"
+ }
+}

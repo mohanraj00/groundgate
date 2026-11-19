@@ -1,0 +1,18 @@
+{
+ "name": "answer-bad-parts-seen",
+ "kind": "answer",
+ "description": "parts_seen that is a string.",
+ "blind": false,
+ "body": {
+  "task": "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "correct",
+  "span": {
+   "start": 1,
+   "end": 5
+  },
+  "parts_seen": "yes"
+ },
+ "expected": {
+  "error": "bad_request"
+ }
+}

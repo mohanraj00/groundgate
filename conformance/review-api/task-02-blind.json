@@ -1,0 +1,67 @@
+{
+ "name": "task-02-blind",
+ "kind": "task",
+ "description": "An audit task is blind. The response gives the field and the key, and no body: no value, no unit, no evidence, no place, no code, no item and no question.",
+ "task": {
+  "format": "task@1",
+  "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+  "slot": {
+   "field": "net_income",
+   "key": null,
+   "decisions": [
+    4
+   ]
+  },
+  "item": "number",
+  "mode": "audit",
+  "template": "number@1",
+  "question": "Is net income $310,000 (written 310, in thousands)?",
+  "parts": [
+   "amount",
+   "scale",
+   "sign",
+   "unit",
+   "field"
+  ],
+  "codes": [],
+  "choices": [
+   {
+    "decision": 4,
+    "value": "310000",
+    "unit": "USD",
+    "shown": "$310,000 (written 310, in thousands)",
+    "evidence": {
+     "start": 18240,
+     "end": 18243
+    }
+   }
+  ],
+  "places": [
+   {
+    "start": 18240,
+    "end": 18243,
+    "page": 41,
+    "box": [
+     72.0,
+     334.5,
+     90.0,
+     345.0
+    ]
+   }
+  ]
+ },
+ "sources": {
+  "4": {
+   "source": "document",
+   "ref": null
+  }
+ },
+ "blind_packet": false,
+ "expected": {
+  "served": true,
+  "mode": "audit",
+  "field": "net_income",
+  "key": null,
+  "body": null
+ }
+}

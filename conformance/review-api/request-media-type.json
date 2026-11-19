@@ -1,0 +1,17 @@
+{
+ "name": "request-media-type",
+ "kind": "request",
+ "description": "A POST body that is not application/json.",
+ "method": "POST",
+ "path": "/v1/answers",
+ "headers": {
+  "Host": "127.0.0.1:{port}",
+  "Authorization": "Bearer local-token-0123456789-abcdefghijklmnopqrstuvwxyz",
+  "Content-Type": "text/plain"
+ },
+ "body": "{}",
+ "expected": {
+  "status": 415,
+  "error": "unsupported_media_type"
+ }
+}

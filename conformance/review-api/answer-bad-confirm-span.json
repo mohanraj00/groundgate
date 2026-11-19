@@ -1,0 +1,17 @@
+{
+ "name": "answer-bad-confirm-span",
+ "kind": "answer",
+ "description": "A span in an answer that is not a correction.",
+ "blind": false,
+ "body": {
+  "task": "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "confirm",
+  "span": {
+   "start": 1,
+   "end": 5
+  }
+ },
+ "expected": {
+  "error": "bad_answer"
+ }
+}

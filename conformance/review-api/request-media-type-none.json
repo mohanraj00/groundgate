@@ -1,0 +1,16 @@
+{
+ "name": "request-media-type-none",
+ "kind": "request",
+ "description": "A POST with no Content-Type.",
+ "method": "POST",
+ "path": "/v1/answers",
+ "headers": {
+  "Host": "127.0.0.1:{port}",
+  "Authorization": "Bearer local-token-0123456789-abcdefghijklmnopqrstuvwxyz"
+ },
+ "body": "{}",
+ "expected": {
+  "status": 415,
+  "error": "unsupported_media_type"
+ }
+}

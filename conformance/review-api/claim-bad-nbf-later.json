@@ -1,0 +1,20 @@
+{
+ "name": "claim-bad-nbf-later",
+ "kind": "claim",
+ "description": "An nbf of now + 1.",
+ "issuers": [
+  {
+   "issuer": "https://id.example.test",
+   "secret": "cmV2aWV3LWFwaS12ZWN0b3Itc2VjcmV0LUEtMDEyMzQ1Njc4OQ"
+  },
+  {
+   "issuer": "desk",
+   "secret": "cmV2aWV3LWFwaS12ZWN0b3Itc2VjcmV0LUItOTg3NjU0MzIxMA"
+  }
+ ],
+ "now": 1795089600,
+ "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2lkLmV4YW1wbGUudGVzdCIsInN1YiI6ImFuYSIsImF1ZCI6Imdyb3VuZGdhdGUtcmV2aWV3IiwiZXhwIjoxNzk1MDg5OTAwLCJuYmYiOjE3OTUwODk2MDF9.N2H0RYd9YKsnuQGqcRnOL8CbUjXtkr_b7zYMkhmthfE",
+ "expected": {
+  "error": "bad_claim"
+ }
+}

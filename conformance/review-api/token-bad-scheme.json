@@ -1,0 +1,11 @@
+{
+ "name": "token-bad-scheme",
+ "kind": "token",
+ "description": "The token with no scheme.",
+ "token": "local-token-0123456789-abcdefghijklmnopqrstuvwxyz",
+ "reviewer": "ana",
+ "authorization": "local-token-0123456789-abcdefghijklmnopqrstuvwxyz",
+ "expected": {
+  "error": "bad_claim"
+ }
+}

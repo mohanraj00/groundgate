@@ -1,0 +1,12 @@
+{
+ "name": "answer-bad-no-task",
+ "kind": "answer",
+ "description": "A body with no task.",
+ "blind": false,
+ "body": {
+  "verdict": "confirm"
+ },
+ "expected": {
+  "error": "bad_request"
+ }
+}

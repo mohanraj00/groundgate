@@ -1,0 +1,14 @@
+{
+ "name": "answer-bad-reason-seen",
+ "kind": "answer",
+ "description": "reason_seen that is a number.",
+ "blind": false,
+ "body": {
+  "task": "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "confirm",
+  "reason_seen": 0
+ },
+ "expected": {
+  "error": "bad_request"
+ }
+}

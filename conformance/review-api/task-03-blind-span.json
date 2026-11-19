@@ -1,0 +1,60 @@
+{
+ "name": "task-03-blind-span",
+ "kind": "task",
+ "description": "An audit task for a long span is blind too, so the response does not say that the proposed evidence is long.",
+ "task": {
+  "format": "task@1",
+  "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+  "slot": {
+   "field": "indication",
+   "key": null,
+   "decisions": [
+    0
+   ]
+  },
+  "item": "span",
+  "mode": "audit",
+  "template": "span@1",
+  "question": "Is the indication the text \"Treatment of ... in adults\"?",
+  "parts": [
+   "start",
+   "end",
+   "field"
+  ],
+  "codes": [],
+  "choices": [
+   {
+    "decision": 0,
+    "value": "Treatment of moderate pain in adults",
+    "unit": null,
+    "shown": "\"Treatment of ... in adults\"",
+    "evidence": {
+     "start": 40,
+     "end": 76
+    }
+   }
+  ],
+  "places": [
+   {
+    "start": 40,
+    "end": 76,
+    "page": null,
+    "box": null
+   }
+  ]
+ },
+ "sources": {
+  "0": {
+   "source": "document",
+   "ref": null
+  }
+ },
+ "blind_packet": false,
+ "expected": {
+  "served": true,
+  "mode": "audit",
+  "field": "indication",
+  "key": null,
+  "body": null
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "name": "request-answer-task-key",
+ "kind": "request",
+ "description": "An answer with a task key in place of a task ID.",
+ "method": "POST",
+ "path": "/v1/answers",
+ "headers": {
+  "Host": "127.0.0.1:{port}",
+  "Authorization": "Bearer local-token-0123456789-abcdefghijklmnopqrstuvwxyz",
+  "Content-Type": "application/json"
+ },
+ "body": "{\"task\": \"sha256:0000000000000000000000000000000000000000000000000000000000000000\", \"verdict\": \"unsure\"}",
+ "expected": {
+  "status": 400,
+  "error": "bad_request"
+ }
+}

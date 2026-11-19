@@ -1,0 +1,16 @@
+{
+ "name": "request-document-unknown",
+ "kind": "request",
+ "description": "The document of a key that names no task.",
+ "method": "GET",
+ "path": "/v1/tasks/task:0000000000000000000000000000000000000000000000000000000000000000/document",
+ "headers": {
+  "Host": "127.0.0.1:{port}",
+  "Authorization": "Bearer local-token-0123456789-abcdefghijklmnopqrstuvwxyz"
+ },
+ "body": null,
+ "expected": {
+  "status": 404,
+  "error": "not_found"
+ }
+}

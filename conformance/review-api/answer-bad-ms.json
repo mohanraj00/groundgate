@@ -1,0 +1,14 @@
+{
+ "name": "answer-bad-ms",
+ "kind": "answer",
+ "description": "ms below 0.",
+ "blind": false,
+ "body": {
+  "task": "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "confirm",
+  "ms": -1
+ },
+ "expected": {
+  "error": "bad_request"
+ }
+}

@@ -1,0 +1,53 @@
+{
+ "name": "page-bad-limit-sign",
+ "kind": "page",
+ "description": "A limit with a sign.",
+ "entries": [
+  {
+   "task": "task:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "document": "inv-0002",
+   "field": "total",
+   "key": null,
+   "open": true
+  },
+  {
+   "task": "task:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+   "document": "inv-0001",
+   "field": "total",
+   "key": null,
+   "open": true
+  },
+  {
+   "task": "task:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+   "document": "inv-0001",
+   "field": "rate",
+   "key": "standard",
+   "open": true
+  },
+  {
+   "task": "task:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+   "document": "inv-0001",
+   "field": "rate",
+   "key": null,
+   "open": true
+  },
+  {
+   "task": "task:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+   "document": "inv-0001",
+   "field": "rate",
+   "key": "express",
+   "open": false
+  },
+  {
+   "task": "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+   "document": "inv-0001",
+   "field": "rate",
+   "key": "express",
+   "open": true
+  }
+ ],
+ "query": "limit=+2",
+ "expected": {
+  "error": "bad_request"
+ }
+}

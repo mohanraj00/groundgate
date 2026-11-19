@@ -58,6 +58,33 @@ Files in `audit/` are blind audit vectors (SPEC §4.18). `kind` names what a vec
   `unscored`, the count of its admitted values with no label, and its `status`. `expected.rate`
   is the next rate.
 
+Files in `review-api/` are review API vectors (SPEC §4.20). `kind` names what a vector checks:
+
+- `claim`: the `issuers` of a service, each with its secret in base64url, the time `now`, and
+  the value of the `Authorization` header, or null for no header. `expected` gives the `actor`
+  or the `error` code.
+- `token`: the static `token` and the `reviewer` of a service, and the `Authorization` value.
+- `task`: one `task@1` object, and `sources`: the `source` and the `ref` of each decision of
+  the task in the receipt, by its index. `blind_packet` is true when the packet of the task has
+  a task with the mode `audit`. `expected.served` is false for a task that is not a
+  task of the API. If not, `expected` gives the members of the task response that come from the task. The
+  `body` has no key of the store and no index of the receipt, and a blind task has a null
+  `body`.
+- `task-id`: the `key` of a service in hex and a `task` key. `expected.id` is the task ID.
+- `statements`: one `model-text@1` object. `expected.statements` is the `statements` member of
+  the task response.
+- `page`: the tasks of the API in one store as `entries`, each with its task ID in `task` and
+  with `open`, and the `query` of the list. `expected` gives the task IDs of the page and
+  `next`, or the `error` code.
+- `answer`: the `body` of an answer and `blind`, true for a blind task. `expected.valid` is
+  true, or `expected.error` is the code. The vector checks the form of the body and the
+  verdicts of a blind task. It does not check the answer against a task.
+- `request`: one request to a service with the static token of the `token` vectors, the reviewer
+  `ana` and an empty store. A runner puts the port in place of `{port}`. A `body` goes with its
+  `Content-Length` unless `headers` gives one. `expected` gives the `status`, and the `error`
+  code or the response `body`.
+- `errors`: the HTTP status of each error code.
+
 Files in `invalid/` are invalid packets. An implementation must refuse them (SPEC §2) and emit no
 receipt.
 

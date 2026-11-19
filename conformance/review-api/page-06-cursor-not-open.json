@@ -1,0 +1,56 @@
+{
+ "name": "page-06-cursor-not-open",
+ "kind": "page",
+ "description": "The cursor can be a task that is not open now. The page starts after its place in the order.",
+ "entries": [
+  {
+   "task": "task:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "document": "inv-0002",
+   "field": "total",
+   "key": null,
+   "open": true
+  },
+  {
+   "task": "task:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+   "document": "inv-0001",
+   "field": "total",
+   "key": null,
+   "open": true
+  },
+  {
+   "task": "task:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+   "document": "inv-0001",
+   "field": "rate",
+   "key": "standard",
+   "open": true
+  },
+  {
+   "task": "task:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+   "document": "inv-0001",
+   "field": "rate",
+   "key": null,
+   "open": true
+  },
+  {
+   "task": "task:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+   "document": "inv-0001",
+   "field": "rate",
+   "key": "express",
+   "open": false
+  },
+  {
+   "task": "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+   "document": "inv-0001",
+   "field": "rate",
+   "key": "express",
+   "open": true
+  }
+ ],
+ "query": "cursor=task:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc&limit=1",
+ "expected": {
+  "tasks": [
+   "task:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+  ],
+  "next": "task:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+ }
+}

@@ -1,0 +1,13 @@
+{
+ "name": "answer-08-blind-unsure",
+ "kind": "answer",
+ "description": "A blind task takes unsure.",
+ "blind": true,
+ "body": {
+  "task": "task:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "unsure"
+ },
+ "expected": {
+  "valid": true
+ }
+}

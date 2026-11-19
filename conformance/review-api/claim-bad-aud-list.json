@@ -1,0 +1,20 @@
+{
+ "name": "claim-bad-aud-list",
+ "kind": "claim",
+ "description": "An aud that is a list.",
+ "issuers": [
+  {
+   "issuer": "https://id.example.test",
+   "secret": "cmV2aWV3LWFwaS12ZWN0b3Itc2VjcmV0LUEtMDEyMzQ1Njc4OQ"
+  },
+  {
+   "issuer": "desk",
+   "secret": "cmV2aWV3LWFwaS12ZWN0b3Itc2VjcmV0LUItOTg3NjU0MzIxMA"
+  }
+ ],
+ "now": 1795089600,
+ "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2lkLmV4YW1wbGUudGVzdCIsInN1YiI6ImFuYSIsImF1ZCI6WyJncm91bmRnYXRlLXJldmlldyJdLCJleHAiOjE3OTUwODk5MDB9.p-LuS2NGRq-Qtf73D_bm5h77Ag5AaEsD91A-KIppgkQ",
+ "expected": {
+  "error": "bad_claim"
+ }
+}

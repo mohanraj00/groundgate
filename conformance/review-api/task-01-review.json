@@ -1,0 +1,145 @@
+{
+ "name": "task-01-review",
+ "kind": "task",
+ "description": "A review task. The body has no packet key: that key is a hash over each candidate of the packet, and so over the proposed value of a blind task of the same packet. It has no index of the receipt: the slot has no decisions, and each choice has its number in the task. Each choice has the source of its evidence.",
+ "task": {
+  "format": "task@1",
+  "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+  "slot": {
+   "field": "total_revenue",
+   "key": "2025",
+   "decisions": [
+    3,
+    7
+   ]
+  },
+  "item": "number",
+  "mode": "review",
+  "template": "number@1",
+  "question": "Which amount is total revenue for 2025?",
+  "parts": [
+   "amount",
+   "scale",
+   "sign",
+   "unit",
+   "field",
+   "key"
+  ],
+  "codes": [
+   "CONFLICTING_CANDIDATES"
+  ],
+  "choices": [
+   {
+    "decision": 3,
+    "value": "4200000",
+    "unit": "USD",
+    "shown": "$4,200,000 (written 4,200, in thousands)",
+    "evidence": {
+     "start": 18120,
+     "end": 18125
+    }
+   },
+   {
+    "decision": 7,
+    "value": "4200",
+    "unit": "USD",
+    "shown": "$4,200",
+    "evidence": {
+     "start": 18120,
+     "end": 18125
+    }
+   }
+  ],
+  "places": [
+   {
+    "start": 18120,
+    "end": 18125,
+    "page": 41,
+    "box": [
+     72.0,
+     310.5,
+     101.2,
+     321.0
+    ]
+   }
+  ]
+ },
+ "sources": {
+  "3": {
+   "source": "document",
+   "ref": null
+  },
+  "7": {
+   "source": "document",
+   "ref": null
+  }
+ },
+ "blind_packet": false,
+ "expected": {
+  "served": true,
+  "mode": "review",
+  "field": "total_revenue",
+  "key": "2025",
+  "body": {
+   "format": "task@1",
+   "slot": {
+    "field": "total_revenue",
+    "key": "2025"
+   },
+   "item": "number",
+   "mode": "review",
+   "template": "number@1",
+   "question": "Which amount is total revenue for 2025?",
+   "parts": [
+    "amount",
+    "scale",
+    "sign",
+    "unit",
+    "field",
+    "key"
+   ],
+   "codes": [
+    "CONFLICTING_CANDIDATES"
+   ],
+   "choices": [
+    {
+     "choice": 1,
+     "value": "4200000",
+     "unit": "USD",
+     "shown": "$4,200,000 (written 4,200, in thousands)",
+     "evidence": {
+      "start": 18120,
+      "end": 18125
+     },
+     "source": "document",
+     "ref": null
+    },
+    {
+     "choice": 2,
+     "value": "4200",
+     "unit": "USD",
+     "shown": "$4,200",
+     "evidence": {
+      "start": 18120,
+      "end": 18125
+     },
+     "source": "document",
+     "ref": null
+    }
+   ],
+   "places": [
+    {
+     "start": 18120,
+     "end": 18125,
+     "page": 41,
+     "box": [
+      72.0,
+      310.5,
+      101.2,
+      321.0
+     ]
+    }
+   ]
+  }
+ }
+}
