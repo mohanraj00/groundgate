@@ -2,7 +2,7 @@
 
 This file is not koodam. It is a fake of the parts of the contract that this example uses, for
 the koodam version in ``CONTRACT``. It lets the example and its seam test run with no cluster.
-The seam test replaces it with the released koodam version when that version has a tag.
+``cluster.py`` runs the example on koodam itself.
 
 The stand-in does these steps for one Agent manifest:
 

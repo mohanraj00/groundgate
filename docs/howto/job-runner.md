@@ -238,5 +238,6 @@ folder. Give each job its own file for the packet key, or collect the keys in th
 
 [`examples/koodam-agent`](../../examples/koodam-agent/README.md) is an optional example. It runs
 the same job as a koodam Agent run. The model calls go through the gateway of the run, the run
-has a spend record, and the status of the run holds the digest of `packet.txt`. groundgate does
-not need koodam.
+has a spend record, and the status of the run holds the digest of `packet.txt`. The example pins
+the koodam release `v0.4.0`, and one script runs it in a kind cluster. groundgate does not need
+koodam.
