@@ -4,26 +4,54 @@ This example is optional. groundgate does not need koodam. The example shows one
 job of [`examples/job-runner`](../job-runner/README.md) runs as a koodam Agent run, the model
 calls go through the gateway of the run, and the receipt verifies after the pod ends.
 
-**This example runs on a stand-in, not on koodam.** The example pins koodam `v0.4.0`. That version
-has no tag yet, and koodam `v0.3.0` has no run identity and no output digest.
-[`standin.py`](standin.py) is a local fake of the parts of the Agent run contract that the
-example uses. When koodam `v0.4.0` has a tag, the seam test starts the run on that version.
+The example pins the koodam release `v0.4.0`, which is the commit `1a8c3a1`. An earlier release
+has no run identity and no output digest. [`cluster.py`](cluster.py) holds the pins: the Helm
+chart and the controller image of the release, each with its digest.
 
 | File | Content |
 |---|---|
 | [`agent.json`](agent.json) | The Agent manifest. `kubectl` reads JSON as it reads YAML. |
 | [`agent_job.py`](agent_job.py) | The job. It sends each model call to the gateway of the run. |
-| [`standin.py`](standin.py) | The stand-in for the Agent run contract. |
+| [`cluster.py`](cluster.py) | It runs the example on koodam in a new kind cluster, then it verifies the receipt. |
+| [`standin.py`](standin.py) | A local stand-in for the Agent run contract, for a run with no cluster. |
 | [`run.py`](run.py) | It runs the example on the stand-in, then it verifies the receipt. |
 
-## Run the example
+## Run the example on koodam
+
+You need `docker`, `kind`, `kubectl` and `helm`, and a network connection for the images. The run
+takes some minutes.
+
+```bash
+uv run python examples/koodam-agent/cluster.py
+```
+
+The script does these steps:
+
+1. It makes a new kind cluster with its own kubeconfig file. Your kubeconfig does not change.
+2. It builds the job image and loads it into the cluster. The image holds groundgate, and the
+   two example folders below `/job`.
+3. It installs the koodam chart with the bundled gateway. The gateway has one mock model with
+   the model name of the manifest. The mock model gives the recorded reply of
+   [`replies.json`](../job-runner/replies.json), so no model runs.
+4. It makes a namespace and the volume claim `invoice-data`, and it copies `input/` to the
+   volume.
+5. It applies the manifest, with the job image in `spec.image`. It waits until the run ends and
+   the status of the Agent has the usage.
+6. It copies the volume to a local folder. It compares `status.output.sha256` with the SHA-256
+   digest of `packet.txt`, then it runs `groundgate verify` on the store.
+7. It deletes the cluster.
+
+The script prints the status of the Agent, then `receipt verified`. The run admits two facts from
+the synthetic invoice: `total_due` and `sales_tax`.
+
+## Run the example with no cluster
 
 ```bash
 uv run python examples/koodam-agent/run.py
 ```
 
-The script prints the status of the run, then `receipt verified`. The run admits two facts from
-the synthetic invoice: `total_due` and `sales_tax`.
+This script uses the stand-in, not koodam. It prints the status of the run, then
+`receipt verified`.
 
 ## What the run gives
 
@@ -44,9 +72,18 @@ run identity names one receipt, and `groundgate verify` checks that receipt from
 The run identity and the usage summary are not inputs of the receipt. The job does not read
 `KOODAM_RUN_ID`. Two runs with the same model replies give the same store, byte for byte, and
 a local run with the recorded replies gives that store too.
-`tests/test_job_runner_koodam.py` checks this.
+
+`tests/test_job_runner_koodam.py` checks this on the stand-in in each test run. It checks the
+same on koodam when the environment variable `GROUNDGATE_KOODAM` is `1`:
+
+```bash
+GROUNDGATE_KOODAM=1 uv run pytest tests/test_job_runner_koodam.py
+```
 
 ## What the stand-in does
+
+[`standin.py`](standin.py) is not koodam. It is a local fake of the parts of the Agent run
+contract of koodam `v0.4.0` that the example uses.
 
 1. It checks the manifest: the kind, `image`, `command`, one of `model` and `models`, `budget`,
    and no `image` or `command` in the `agent` container of `podTemplate`.
@@ -64,14 +101,19 @@ a local run with the recorded replies gives that store too.
 The stand-in has no image, no pod, no budget limit, no price table and no network policy. Its
 spend is a made-up price for each word, not a cost.
 
-## On a cluster
+## On your cluster
 
-These steps are not tested here until the seam test runs on koodam `v0.4.0`.
+`cluster.py` does these steps on a kind cluster. On a cluster with koodam `v0.4.0`, do them by
+hand:
 
 1. Build an image that holds groundgate, and the two example folders below `/job`. Put its name
    in `spec.image`.
-2. Make the volume claim `invoice-data`, and copy `input/` to its root.
-3. Apply the manifest: `kubectl apply -f examples/koodam-agent/agent.json`.
-4. After the run ends, read `status.output.sha256` of the Agent. Compare it with the SHA-256
+2. Make sure that the gateway has the model of `spec.model`.
+3. Make the volume claim `invoice-data`, and copy `input/` to its root.
+4. Apply the manifest: `kubectl apply -f examples/koodam-agent/agent.json`.
+5. After the run ends, read `status.output.sha256` of the Agent. Compare it with the SHA-256
    digest of `packet.txt` on the volume.
-5. Run `groundgate verify --store store "$(cat packet.txt)"` on the volume.
+6. Run `groundgate verify --store store "$(cat packet.txt)"` on the volume.
+
+The sidecar that computes the digest does not run as the user of the job. Thus `packet.txt` and
+its folder must permit a read by other users.
