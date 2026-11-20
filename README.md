@@ -370,14 +370,19 @@ a changed document, schema, policy, candidate or outcome.
   against a target of 40% or less
   ([bench/requested4/development-646/RESULTS.md](bench/requested4/development-646/RESULTS.md)).
   0.15 adds the document-family profile (#639) and its measure on a gold set of your own
-  (#640). I did not run a bench set for 0.15 or for 0.16, so these are still the numbers of
-  0.14. 0.16 seals 76 labels for a held-out regulatory text family (#641). Its claim split is
-  not run yet (#686).
+  (#640). I did not run `bench/requested4` for 0.15, 0.16 or 0.17, so these are still the
+  numbers of 0.14. 0.16 seals 76 labels for a held-out regulatory text family (#641). 0.17 runs
+  its 9 held-out parts one time (#686): 28 right admitted values, 6 escapes and 4 reviews on
+  50 slots, a miss rate of 28.21% and a one-sided 95% upper bound of 31.89% on the admitted
+  error rate ([bench/regulatory/RESULTS.md](bench/regulatory/RESULTS.md)).
 
 ## Status
 
-Alpha. groundgate 0.16.0 implements spec v0.12. [CHANGELOG.md](CHANGELOG.md) lists what each version
-changes, with its measure. 0.16 adds the `facts@2` export with review results and text selectors
+Alpha. groundgate 0.17.0 implements spec v0.12. [CHANGELOG.md](CHANGELOG.md) lists what each version
+changes, with its measure. 0.17 adds the review API over HTTP with blind audit tasks (#649), a
+standalone review and audit page on that API (#647), a guide for a run under a job runner
+(#594), a bound by characters for the term scans of `calibrate events suggest` (#685), and the
+held-out claim of the regulatory text family (#686). 0.16 adds the `facts@2` export with review results and text selectors
 (#675), a blind audit sample with an adaptive rate (#643), calibration events from an outside
 approver (#642), the source format in `reading@2` (#570), the status of each built-in kind pack
 in `groundgate pack list` (#648), and the held-out regulatory text family (#641). 0.15 adds document-family profiles (#639) and `groundgate calibrate
