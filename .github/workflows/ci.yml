@@ -251,6 +251,27 @@ jobs:
           $run04 groundgate-calibrate report --work bench/sec/work-field --check
           $run04 groundgate-calibrate report --work bench/sec/work-key --check
           $run04 python bench/sec/sec.py results --check
+  # The koodam job is not required, so ci-ok does not collect it. groundgate does not need koodam,
+  # and a registry of the example must not stop a merge.
+  koodam:
+    needs: changes
+    if: needs.changes.outputs.code == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
+      - run: uv sync --python 3.12
+      # The runner image has docker, kind, kubectl and helm. The example pins the chart and the
+      # images of koodam by digest.
+      - name: The example job runs on the pinned koodam release in a kind cluster
+        env:
+          GROUNDGATE_KOODAM: "1"
+        run: uv run pytest tests/test_job_runner_koodam.py -rs
   # The required check. Add each project job to needs. A skipped job passes. A failed or cancelled job fails.
   ci-ok:
     needs: [changes, check, lint, test, package, langextract]
