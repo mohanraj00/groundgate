@@ -159,7 +159,7 @@ def test_verify_passes_on_the_store_after_the_run_ends(
         "total_due": ("289.8", "USD", "admitted"),
     }
     usage = status["usage"]
-    assert (usage["calls"], usage["failedCalls"]) == (1, 0)
+    assert usage["calls"] == 1 and "failedCalls" not in usage
     assert [m["model"] for m in usage["models"]] == ["invoice-model"]
 
 
@@ -188,5 +188,5 @@ def test_a_run_with_no_reply_fails_and_has_no_output(standin_run: AgentRun) -> N
     status, storage = standin_run("failed", [])
     assert status["phase"] == "Failed"
     assert status["output"] == {"path": "/data/packet.txt", "reason": "NotFound"}
-    assert status["usage"]["failedCalls"] == 1
+    assert status["usage"]["failedCalls"] == 1 and "calls" not in status["usage"]
     assert not (storage / "store").exists()
