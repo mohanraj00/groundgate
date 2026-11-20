@@ -2,7 +2,7 @@
 
 This file is not koodam. It is a fake of the parts of the contract that this example uses, for
 the koodam version in ``CONTRACT``. It lets the example and its seam test run with no cluster.
-The seam test replaces it with the released koodam version when that version has a tag.
+``cluster.py`` runs the example on koodam itself.
 
 The stand-in does these steps for one Agent manifest:
 
@@ -120,15 +120,19 @@ class _Gateway:
         """The usage summary of the run, in the form of ``status.usage``."""
 
         def summary(calls: list[tuple[str, bool, int, int]]) -> dict[str, Any]:
-            tokens_in = sum(c[2] for c in calls)
-            tokens_out = sum(c[3] for c in calls)
-            return {
-                "spend": str((tokens_in + tokens_out) * TOKEN_PRICE),
-                "calls": len(calls),
-                "failedCalls": sum(c[1] for c in calls),
+            # The counts and the tokens are of the successful calls. A zero count is not in
+            # the status.
+            good = [c for c in calls if not c[1]]
+            tokens_in = sum(c[2] for c in good)
+            tokens_out = sum(c[3] for c in good)
+            counts = {
+                "calls": len(good),
+                "failedCalls": len(calls) - len(good),
                 "inputTokens": tokens_in,
                 "outputTokens": tokens_out,
             }
+            spend = str((tokens_in + tokens_out) * TOKEN_PRICE)
+            return {"spend": spend, **{name: n for name, n in counts.items() if n}}
 
         with self._lock:
             calls = list(self._calls)

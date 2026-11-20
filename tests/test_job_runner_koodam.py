@@ -1,8 +1,11 @@
 """The seam test of examples/koodam-agent: a groundgate job as a koodam Agent run (#594).
 
-The test pins one koodam version in ``KOODAM``. That version has no tag yet, so ``agent_run``
-uses the local stand-in of ``examples/koodam-agent/standin.py``. When the version has a tag,
-``agent_run`` starts the run on that version, and the checks stay the same."""
+The test pins one koodam release in ``KOODAM``. ``agent_run`` starts each run two times: on the
+local stand-in of ``examples/koodam-agent/standin.py``, and on the koodam release in a kind
+cluster (``examples/koodam-agent/cluster.py``). The checks are the same for the two.
+
+The run on koodam needs docker, kind, kubectl, helm and a network connection, and it takes some
+minutes. Thus it runs only when the environment variable ``GROUNDGATE_KOODAM`` is ``1``."""
 
 from __future__ import annotations
 
@@ -10,11 +13,13 @@ import copy
 import hashlib
 import importlib.util
 import json
+import os
 import re
+import secrets
 import shutil
 import subprocess
 import sys
-from collections.abc import Callable
+from collections.abc import Callable, Iterator
 from pathlib import Path
 from typing import Any
 
@@ -31,11 +36,20 @@ if not EXAMPLE.is_dir():  # the sdist holds the tests, and not the examples
     pytest.skip("the examples are not here", allow_module_level=True)
 # The koodam version of the seam. It is a release version, not a branch and not a pre-release.
 KOODAM = "v0.4.0"
+# The commit of the release tag.
+COMMIT = "1a8c3a133c4155e1120268109e7436d07cbcb095"
 
-_spec = importlib.util.spec_from_file_location("koodam_agent_standin", EXAMPLE / "standin.py")
-assert _spec is not None and _spec.loader is not None
-standin = importlib.util.module_from_spec(_spec)
-_spec.loader.exec_module(standin)
+
+def _load(name: str) -> Any:
+    spec = importlib.util.spec_from_file_location("koodam_agent_" + name, EXAMPLE / f"{name}.py")
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+standin = _load("standin")
+cluster = _load("cluster")
 
 MANIFEST = json.loads((EXAMPLE / "agent.json").read_text(encoding="utf-8"))
 REPLIES = json.loads((JOB / "replies.json").read_text(encoding="utf-8"))
@@ -43,10 +57,19 @@ REPLIES = json.loads((JOB / "replies.json").read_text(encoding="utf-8"))
 AgentRun = Callable[..., tuple[dict[str, Any], Path]]
 
 
+@pytest.fixture(scope="module")
+def koodam() -> Iterator[Any]:
+    """The koodam release in a new kind cluster, for all tests of this file."""
+    if os.environ.get("GROUNDGATE_KOODAM") != "1":
+        pytest.skip("set GROUNDGATE_KOODAM=1 to run on koodam in a kind cluster")
+    assert cluster.missing_tools() == []
+    with cluster.Koodam(MANIFEST["spec"]["model"], REPLIES[0]) as running:
+        yield running
+
+
 @pytest.fixture
-def agent_run(tmp_path: Path) -> AgentRun:
-    """Start one Agent run on new storage, and return its status and the storage folder after
-    the run ends. This function is the seam: it is the only part that knows the stand-in."""
+def standin_run(tmp_path: Path) -> AgentRun:
+    """Start one Agent run on the stand-in, with new storage."""
 
     def start(name: str, replies: list[str] = REPLIES) -> tuple[dict[str, Any], Path]:
         storage = tmp_path / name
@@ -57,6 +80,25 @@ def agent_run(tmp_path: Path) -> AgentRun:
     return start
 
 
+@pytest.fixture(params=["stand-in", "koodam"])
+def agent_run(request: pytest.FixtureRequest, tmp_path: Path) -> AgentRun:
+    """Start one Agent run on new storage, and return its status and the storage folder after
+    the run ends. This function is the seam: it is the only part that knows the runner."""
+    if request.param == "stand-in":
+        start: AgentRun = request.getfixturevalue("standin_run")
+        return start
+    running = request.getfixturevalue("koodam")
+
+    def on_koodam(name: str) -> tuple[dict[str, Any], Path]:
+        storage = tmp_path / name
+        status = running.run_agent(
+            MANIFEST, JOB / "input", storage, "invoice-" + secrets.token_hex(3)
+        )
+        return status, storage
+
+    return on_koodam
+
+
 def tree(folder: Path) -> dict[str, bytes]:
     return {
         path.relative_to(folder).as_posix(): path.read_bytes()
@@ -65,10 +107,18 @@ def tree(folder: Path) -> dict[str, bytes]:
     }
 
 
-def test_the_pin_is_a_release_version_and_the_stand_in_names_it() -> None:
+def test_the_pin_is_a_release_version_with_digests() -> None:
     assert re.fullmatch(r"v\d+\.\d+\.\d+", KOODAM)
-    assert standin.CONTRACT == KOODAM
-    assert KOODAM in (EXAMPLE / "README.md").read_text(encoding="utf-8")
+    assert (cluster.KOODAM, cluster.COMMIT, standin.CONTRACT) == (KOODAM, COMMIT, KOODAM)
+    version = re.escape(KOODAM.removeprefix("v"))
+    digest = "@sha256:[0-9a-f]{64}"
+    assert re.fullmatch(
+        f"oci://ghcr\\.io/mohanraj00/charts/koodam:{version}{digest}", cluster.CHART
+    )
+    assert re.fullmatch(version + digest, cluster.CONTROLLER_TAG)
+    assert re.fullmatch(r"python:[0-9.]+-slim" + digest, cluster.PYTHON)
+    readme = (EXAMPLE / "README.md").read_text(encoding="utf-8")
+    assert KOODAM in readme and COMMIT[:7] in readme
 
 
 def test_the_manifest_follows_the_contract() -> None:
@@ -109,7 +159,7 @@ def test_verify_passes_on_the_store_after_the_run_ends(
         "total_due": ("289.8", "USD", "admitted"),
     }
     usage = status["usage"]
-    assert (usage["calls"], usage["failedCalls"]) == (1, 0)
+    assert usage["calls"] == 1 and "failedCalls" not in usage
     assert [m["model"] for m in usage["models"]] == ["invoice-model"]
 
 
@@ -134,9 +184,9 @@ def test_the_run_identity_and_the_spend_are_not_inputs(agent_run: AgentRun, tmp_
     }
 
 
-def test_a_run_with_no_reply_fails_and_has_no_output(agent_run: AgentRun) -> None:
-    status, storage = agent_run("failed", [])
+def test_a_run_with_no_reply_fails_and_has_no_output(standin_run: AgentRun) -> None:
+    status, storage = standin_run("failed", [])
     assert status["phase"] == "Failed"
     assert status["output"] == {"path": "/data/packet.txt", "reason": "NotFound"}
-    assert status["usage"]["failedCalls"] == 1
+    assert status["usage"]["failedCalls"] == 1 and "calls" not in status["usage"]
     assert not (storage / "store").exists()
