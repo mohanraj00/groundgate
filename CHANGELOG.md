@@ -27,11 +27,9 @@ closed set task has no blind answer (#696), and each request reads each object o
 (#697).
 
 The review page does not show the option list of a closed set task (#704), and it does not
-answer a model text task. The seam test of the job runner guide runs against a local stand-in
-of the job runner, because the version that it pins has no tag yet.
-
-- Job runner pin: v0.4.0 (to come). This line is open until the seam test of #594 runs on that
-  tag.
+answer a model text task. Each test run does the seam test of the job runner guide on a local
+stand-in of the job runner. The run on the release of the job runner needs a kind cluster and
+`GROUNDGATE_KOODAM=1`, and no required CI job does it.
 
 The review API:
 
@@ -83,6 +81,9 @@ Job runner:
   store. `examples/job-runner` is the job of the page, with one recorded model reply.
   `examples/koodam-agent` runs the same job as an Agent run of one job runner. The change adds
   no code to `src/` (#594).
+- Job runner pin: `v0.4.0`. The example and its seam test pin this release and the commit of
+  its tag. The seam test starts each run two times, with the same checks: on the local
+  stand-in, and on the release in a kind cluster (#708).
 
 Calibration:
 
