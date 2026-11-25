@@ -1,0 +1,191 @@
+{
+ "name": "receipt-07-places-completeness-outline",
+ "description": "A packet with places, a completeness and an outline. The receipt has `places_sha256`, `completeness` and `outline_sha256`. Each decision of the passage field has `passage_sha256` and then `locator`. The locator is null for the section that has no word in the places.",
+ "document": "1 Scope\nThis lease covers one flat.\n\n2 Rent\nThe rent is $900.\nThe tenant pays on day 1.\n\n3 Term\nThe term is 12 months.\n",
+ "schema": {
+  "fields": {
+   "section": {
+    "type": "passage",
+    "multiple": true
+   }
+  }
+ },
+ "policy": null,
+ "completeness": {
+  "status": "complete",
+  "missing": []
+ },
+ "outline": [
+  {
+   "level": 1,
+   "start": 0,
+   "end": 7
+  },
+  {
+   "level": 1,
+   "start": 37,
+   "end": 43
+  },
+  {
+   "level": 1,
+   "start": 89,
+   "end": 95
+  }
+ ],
+ "places": [
+  [
+   39,
+   43,
+   1,
+   8000,
+   11000,
+   10600,
+   12200
+  ],
+  [
+   56,
+   61,
+   1,
+   15000,
+   12400,
+   18200,
+   13600
+  ],
+  [
+   66,
+   72,
+   3,
+   9500,
+   7200,
+   13000,
+   8400
+  ],
+  [
+   91,
+   95,
+   3,
+   8000,
+   9800,
+   10900,
+   11000
+  ],
+  [
+   111,
+   118,
+   3,
+   17500,
+   11200,
+   21800,
+   12400
+  ]
+ ],
+ "candidates": [
+  {
+   "id": "p1",
+   "field": "section",
+   "value": "2",
+   "evidence": [
+    {
+     "start": 37,
+     "end": 87
+    }
+   ]
+  },
+  {
+   "id": "p2",
+   "field": "section",
+   "value": "1",
+   "evidence": [
+    {
+     "start": 0,
+     "end": 35
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "receipt": {
+   "groundgate": "0.12",
+   "document": {
+    "id": null,
+    "sha256": "sha256:940cee4c28e46dceddecd382eb2765ec1c2a1dc7a208833d6bd901b960f7e812",
+    "source": null,
+    "doubt_sha256": null
+   },
+   "references": [],
+   "packs": [],
+   "places_sha256": "sha256:3ad6a140161389c2c44c6ae314c7b2dd503ff8573edcc7cd5298d59ac9472550",
+   "completeness": {
+    "status": "complete",
+    "missing": []
+   },
+   "outline_sha256": "sha256:86568dd8368bc828349f3aff6aeee8f9956498b12f7aae0e244fa572bdbd1d39",
+   "schema_sha256": "sha256:540f383787e4500530588ec8f83a792e5a0e875d9b86952634e82ae774bdfb92",
+   "policy_sha256": "sha256:92f2e20399c00a6cff7da2c08bac06bb108a3a46fd92e60b981295103a8a6f4e",
+   "decisions": [
+    {
+     "candidate_id": "p1",
+     "candidate_sha256": "sha256:0e0f784b841985c7a36a56f3c42e871c3986da53f9c54282df8725e75923efe2",
+     "field": "section",
+     "key": null,
+     "proposer": null,
+     "outcome": "admitted",
+     "codes": [],
+     "value": "2",
+     "unit": null,
+     "source": "document",
+     "ref": null,
+     "url": null,
+     "evidence": {
+      "start": 37,
+      "end": 87
+     },
+     "parts": [],
+     "missing": [],
+     "packs": [],
+     "passage_sha256": "sha256:00fb2a97abd8c32e9a9e67653ae88f45a5e05f58e746fa99e677498830c87c0b",
+     "locator": {
+      "page": 1,
+      "box": [
+       8000,
+       11000,
+       18200,
+       13600
+      ]
+     }
+    },
+    {
+     "candidate_id": "p2",
+     "candidate_sha256": "sha256:82a486d43e98f2ca00ef2b1a149a96be1f6c534d03bdf53e0f7409e5c701846d",
+     "field": "section",
+     "key": null,
+     "proposer": null,
+     "outcome": "admitted",
+     "codes": [],
+     "value": "1",
+     "unit": null,
+     "source": "document",
+     "ref": null,
+     "url": null,
+     "evidence": {
+      "start": 0,
+      "end": 35
+     },
+     "parts": [],
+     "missing": [],
+     "packs": [],
+     "passage_sha256": "sha256:33e8a061f55ddb4c6d4bc18b6f7380c6ee7f3d01b298b11430d1d3e7bb99fa53",
+     "locator": null
+    }
+   ],
+   "coverage": [],
+   "judgments": [],
+   "summary": {
+    "admitted": 2,
+    "needs_verification": 0,
+    "rejected": 0
+   },
+   "receipt_sha256": "sha256:cbc8a72f1d3903fe3c562b34ff022db7c1fb09278697d121ba028df233084d50"
+  }
+ }
+}

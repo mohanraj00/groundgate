@@ -1,0 +1,264 @@
+{
+ "name": "receipt-09-records-checks",
+ "description": "A record field in a document set with two checks. The receipt has the members `records` and `checks`, the reference in the set has `set`, and each decision of a member field has `record`. The record of the corrigendum replaces the record of the price list.",
+ "document": "Price list 2026\nB-200 Bracket $12.50\n",
+ "schema": {
+  "fields": {
+   "items": {
+    "type": "record",
+    "members": {
+     "code": {
+      "type": "string",
+      "required": true
+     },
+     "unit_price": {
+      "unit": "USD",
+      "required": true
+     }
+    }
+   }
+  },
+  "checks": [
+   {
+    "id": "corrigendum",
+    "check": "replace",
+    "field": "items",
+    "member": "code"
+   },
+   {
+    "id": "one_code",
+    "check": "unique",
+    "field": "items",
+    "member": "code"
+   }
+  ]
+ },
+ "policy": null,
+ "references": [
+  {
+   "id": "corrigendum",
+   "text": "Corrigendum 2026\nB-200 Bracket $14.00\n",
+   "set": 1
+  }
+ ],
+ "candidates": [
+  {
+   "id": "e1",
+   "field": "items.code",
+   "value": "B-200",
+   "record": "p1",
+   "evidence": [
+    {
+     "start": 16,
+     "end": 21,
+     "text": "B-200"
+    }
+   ]
+  },
+  {
+   "id": "e2",
+   "field": "items.unit_price",
+   "value": "12.50",
+   "unit": "USD",
+   "record": "p1",
+   "evidence": [
+    {
+     "start": 30,
+     "end": 36,
+     "text": "$12.50"
+    }
+   ]
+  },
+  {
+   "id": "e3",
+   "field": "items.code",
+   "value": "B-200",
+   "record": "s1",
+   "evidence": [
+    {
+     "ref": "corrigendum",
+     "source": "reference",
+     "start": 17,
+     "end": 22,
+     "text": "B-200"
+    }
+   ]
+  },
+  {
+   "id": "e4",
+   "field": "items.unit_price",
+   "value": "14.00",
+   "unit": "USD",
+   "record": "s1",
+   "evidence": [
+    {
+     "ref": "corrigendum",
+     "source": "reference",
+     "start": 31,
+     "end": 37,
+     "text": "$14.00"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "receipt": {
+   "groundgate": "0.12",
+   "document": {
+    "id": null,
+    "sha256": "sha256:1034ce7bef60f65ee5f0f2c53b6b37314793f9ba97428a31692773a73ec13f59",
+    "source": null,
+    "doubt_sha256": null
+   },
+   "references": [
+    {
+     "id": "corrigendum",
+     "sha256": "sha256:a31a837bdfd1beaa67217a7d26adc89c5da65524c1af56c04bb3f8d547328168",
+     "source": null,
+     "set": 1
+    }
+   ],
+   "packs": [],
+   "schema_sha256": "sha256:3860e6f0ee287fdd2be0ee86dd35e8a89071a11deeddd74f92bb77127b99ef93",
+   "policy_sha256": "sha256:92f2e20399c00a6cff7da2c08bac06bb108a3a46fd92e60b981295103a8a6f4e",
+   "decisions": [
+    {
+     "candidate_id": "e1",
+     "candidate_sha256": "sha256:0538bf3805379138d7c1523859f38f9d01f337bbbac736858175bc174fba5010",
+     "field": "items.code",
+     "key": null,
+     "proposer": null,
+     "outcome": "admitted",
+     "codes": [],
+     "value": "B-200",
+     "unit": null,
+     "source": "document",
+     "ref": null,
+     "url": null,
+     "evidence": {
+      "start": 16,
+      "end": 21
+     },
+     "parts": [],
+     "missing": [],
+     "packs": [],
+     "record": "p1"
+    },
+    {
+     "candidate_id": "e4",
+     "candidate_sha256": "sha256:852fe725aa7350efce6793bb80b4292148beb526f9312cccac1b7fda5499e4b3",
+     "field": "items.unit_price",
+     "key": null,
+     "proposer": null,
+     "outcome": "admitted",
+     "codes": [],
+     "value": "14",
+     "unit": "USD",
+     "source": "reference",
+     "ref": "corrigendum",
+     "url": null,
+     "evidence": {
+      "start": 31,
+      "end": 37
+     },
+     "parts": [],
+     "missing": [],
+     "packs": [],
+     "record": "s1"
+    },
+    {
+     "candidate_id": "e2",
+     "candidate_sha256": "sha256:dd389223f3b3491d55e9ff9183fc86529cd3f90d857ad31d671e22f1961b0094",
+     "field": "items.unit_price",
+     "key": null,
+     "proposer": null,
+     "outcome": "admitted",
+     "codes": [],
+     "value": "12.5",
+     "unit": "USD",
+     "source": "document",
+     "ref": null,
+     "url": null,
+     "evidence": {
+      "start": 30,
+      "end": 36
+     },
+     "parts": [],
+     "missing": [],
+     "packs": [],
+     "record": "p1"
+    },
+    {
+     "candidate_id": "e3",
+     "candidate_sha256": "sha256:fd869bbb72f7de7c6b1d853aca4eedca1b75db886c7780ae518795f229143ef9",
+     "field": "items.code",
+     "key": null,
+     "proposer": null,
+     "outcome": "admitted",
+     "codes": [],
+     "value": "B-200",
+     "unit": null,
+     "source": "reference",
+     "ref": "corrigendum",
+     "url": null,
+     "evidence": {
+      "start": 17,
+      "end": 22
+     },
+     "parts": [],
+     "missing": [],
+     "packs": [],
+     "record": "s1"
+    }
+   ],
+   "coverage": [],
+   "judgments": [],
+   "records": [
+    {
+     "field": "items",
+     "record": "p1",
+     "outcome": "admitted",
+     "codes": [],
+     "source": "document",
+     "ref": null,
+     "replaced": true,
+     "members": {
+      "code": "B-200",
+      "unit_price": "12.5"
+     }
+    },
+    {
+     "field": "items",
+     "record": "s1",
+     "outcome": "admitted",
+     "codes": [],
+     "source": "reference",
+     "ref": "corrigendum",
+     "replaced": false,
+     "members": {
+      "code": "B-200",
+      "unit_price": "14"
+     }
+    }
+   ],
+   "checks": [
+    {
+     "id": "corrigendum",
+     "holds": true,
+     "records": []
+    },
+    {
+     "id": "one_code",
+     "holds": true,
+     "records": []
+    }
+   ],
+   "summary": {
+    "admitted": 4,
+    "needs_verification": 0,
+    "rejected": 0
+   },
+   "receipt_sha256": "sha256:6e971f47bee888c0a0a01760d5472391ba5d32089be1852fdd5a74fc77d42cbf"
+  }
+ }
+}

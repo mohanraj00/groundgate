@@ -1,0 +1,73 @@
+{
+ "name": "receipt-01-required-members",
+ "description": "The smallest receipt: a packet with no optional input. The receipt has only the required members, and its decision has only the required members.",
+ "document": "Fee\t$90\n",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "c1",
+   "field": "fee",
+   "value": 90,
+   "unit": "USD",
+   "evidence": {
+    "start": 4,
+    "end": 7,
+    "text": "$90"
+   }
+  }
+ ],
+ "expected": {
+  "receipt": {
+   "groundgate": "0.12",
+   "document": {
+    "id": null,
+    "sha256": "sha256:cbd02fccd43c505a7dd1fcd59c13c9797fc97cb53b47530f30a6d70a7a080153",
+    "source": null,
+    "doubt_sha256": null
+   },
+   "references": [],
+   "packs": [],
+   "schema_sha256": "sha256:87306d860a7e8a7c3f77337827836e8824fa801bdb882c404c48f9d2a9ebdf88",
+   "policy_sha256": "sha256:92f2e20399c00a6cff7da2c08bac06bb108a3a46fd92e60b981295103a8a6f4e",
+   "decisions": [
+    {
+     "candidate_id": "c1",
+     "candidate_sha256": "sha256:336a689f5645daa747644f26170d6026c9bc6c9d2f63c546bfa07eaac59354a1",
+     "field": "fee",
+     "key": null,
+     "proposer": null,
+     "outcome": "admitted",
+     "codes": [],
+     "value": "90",
+     "unit": "USD",
+     "source": "document",
+     "ref": null,
+     "url": null,
+     "evidence": {
+      "start": 4,
+      "end": 7
+     },
+     "parts": [],
+     "missing": [],
+     "packs": []
+    }
+   ],
+   "coverage": [],
+   "judgments": [],
+   "summary": {
+    "admitted": 1,
+    "needs_verification": 0,
+    "rejected": 0
+   },
+   "receipt_sha256": "sha256:9fe04c97d82a2cedec6574c22a7ffef29c114bc125c344cbc94f583de1fa858b"
+  }
+ }
+}

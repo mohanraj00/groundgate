@@ -1,0 +1,176 @@
+{
+ "name": "receipt-10-rejected-early",
+ "description": "Candidates that an early step rejects. A decision reports what the candidate gives: `candidate_id` only for a string or an integer, `field` only for a string, the canonical value only when the field is in the schema and the value parses, and the cited span and its source when the evidence is well-formed.",
+ "document": "Fee\t$90\n",
+ "schema": {
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  "not an object",
+  {
+   "id": [
+    "a"
+   ],
+   "field": "price",
+   "value": "7",
+   "unit": "mg"
+  },
+  {
+   "id": 7,
+   "field": "fee",
+   "value": "n/a",
+   "unit": "USD"
+  },
+  {
+   "id": "r4",
+   "field": "fee",
+   "value": 90,
+   "unit": "USD"
+  },
+  {
+   "id": "r5",
+   "field": "fee",
+   "value": 90,
+   "unit": "EUR",
+   "evidence": {
+    "start": 4,
+    "end": 7,
+    "text": "$90"
+   }
+  }
+ ],
+ "expected": {
+  "receipt": {
+   "groundgate": "0.12",
+   "document": {
+    "id": null,
+    "sha256": "sha256:cbd02fccd43c505a7dd1fcd59c13c9797fc97cb53b47530f30a6d70a7a080153",
+    "source": null,
+    "doubt_sha256": null
+   },
+   "references": [],
+   "packs": [],
+   "schema_sha256": "sha256:87306d860a7e8a7c3f77337827836e8824fa801bdb882c404c48f9d2a9ebdf88",
+   "policy_sha256": "sha256:92f2e20399c00a6cff7da2c08bac06bb108a3a46fd92e60b981295103a8a6f4e",
+   "decisions": [
+    {
+     "candidate_id": "r5",
+     "candidate_sha256": "sha256:38b224f3e79842e5312a82ade742d1b4a0e0e7c42795e5e1deb0abe14063cd80",
+     "field": "fee",
+     "key": null,
+     "proposer": null,
+     "outcome": "rejected",
+     "codes": [
+      "UNIT_INVALID"
+     ],
+     "value": "90",
+     "unit": "EUR",
+     "source": "document",
+     "ref": null,
+     "url": null,
+     "evidence": {
+      "start": 4,
+      "end": 7
+     },
+     "parts": [],
+     "missing": [],
+     "packs": []
+    },
+    {
+     "candidate_id": null,
+     "candidate_sha256": "sha256:741b7f54725144e8dc555594086a53dfe9455c64e087a435b49adcb2d48df9d4",
+     "field": "price",
+     "key": null,
+     "proposer": null,
+     "outcome": "rejected",
+     "codes": [
+      "FIELD_UNKNOWN"
+     ],
+     "value": null,
+     "unit": "mg",
+     "source": null,
+     "ref": null,
+     "url": null,
+     "evidence": null,
+     "parts": [],
+     "missing": [],
+     "packs": []
+    },
+    {
+     "candidate_id": null,
+     "candidate_sha256": "sha256:df90ab1ab19aad2f9fd825f7c9ede756ac5c4aef69060a5986b76a1b7bd7b72d",
+     "field": null,
+     "key": null,
+     "proposer": null,
+     "outcome": "rejected",
+     "codes": [
+      "CANDIDATE_INVALID"
+     ],
+     "value": null,
+     "unit": null,
+     "source": null,
+     "ref": null,
+     "url": null,
+     "evidence": null,
+     "parts": [],
+     "missing": [],
+     "packs": []
+    },
+    {
+     "candidate_id": 7,
+     "candidate_sha256": "sha256:dfa721a7d764ec949bc454a15c98f3349cc35d3747c5074c196b50093c550089",
+     "field": "fee",
+     "key": null,
+     "proposer": null,
+     "outcome": "rejected",
+     "codes": [
+      "NULL_STRING_LITERAL"
+     ],
+     "value": null,
+     "unit": "USD",
+     "source": null,
+     "ref": null,
+     "url": null,
+     "evidence": null,
+     "parts": [],
+     "missing": [],
+     "packs": []
+    },
+    {
+     "candidate_id": "r4",
+     "candidate_sha256": "sha256:f7102b81cd68debaf542ad33ba6a448bebb706aff62a206a5f2d921502e36df4",
+     "field": "fee",
+     "key": null,
+     "proposer": null,
+     "outcome": "rejected",
+     "codes": [
+      "NO_EVIDENCE"
+     ],
+     "value": "90",
+     "unit": "USD",
+     "source": null,
+     "ref": null,
+     "url": null,
+     "evidence": null,
+     "parts": [],
+     "missing": [],
+     "packs": []
+    }
+   ],
+   "coverage": [],
+   "judgments": [],
+   "summary": {
+    "admitted": 0,
+    "needs_verification": 0,
+    "rejected": 5
+   },
+   "receipt_sha256": "sha256:bd001c2b7af54ff9fd60a87301dc831479076f171cea8f782b82454dd31985e4"
+  }
+ }
+}

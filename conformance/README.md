@@ -85,6 +85,25 @@ Files in `review-api/` are review API vectors (SPEC §4.20). `kind` names what a
   code or the response `body`.
 - `errors`: the HTTP status of each error code.
 
+Files in `receipts/` are receipt vectors (SPEC §5). Each one is a packet with its full receipt:
+
+- the inputs of `vectors/`, and `document_id`, `profile`, `pin` and `places` where a vector
+  gives them. A vector with a `profile` has no `schema`, `policy` or `packs`;
+- `expected.receipt`: the receipt, with each member and `receipt_sha256`. An implementation
+  gives the same object. The order of the members in the file is not part of the contract.
+
+Each member of the receipt is written by hand in `build.py`: each decision with its spans, the
+schema and the policy after defaults, and the lists in receipt order. The script only adds the
+digests of SPEC §6 with `hashlib`, and sorts the decisions and the judgments by
+`candidate_sha256`. The vectors hold each member of the tables of SPEC §5.
+`receipt-01-required-members` has only the members that are always present.
+
+A receipt vector does not change. `receipts/SHA256SUMS` lists the SHA-256 of each file, and
+`tests/test_conformance.py` fails when a file changes, is removed or is not in the list. Check
+a copy with `shasum -a 256 -c SHA256SUMS` in `receipts/`. A release that keeps the spec version
+only adds vectors: add the file and one line to the list, and change no other line. Do not
+write the list from a script.
+
 Files in `invalid/` are invalid packets. An implementation must refuse them (SPEC §2) and emit no
 receipt.
 

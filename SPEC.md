@@ -155,6 +155,9 @@ that are not null, also as a member of a record (§4.12). A field template (§4.
 options. Step 5 rejects a value that is not an option (§3). Each other check stays: the value
 must still be in the cited text (step 10). After defaults, a field has the member `options`
 only when its options are not null, so the digest of a schema with no options does not change.
+Each other default of the list above is a member of each field after defaults, also of a
+`passage` field (§4.17) and of a member of a record (§4.12). A `record` field after defaults has
+`type`, `members` and `required`, and `description` when the field gives it. `units` is `{}` after defaults when the schema gives none.
 The packet is invalid when `options` breaks one of these rules.
 
 A `passage` field (#638) holds a citable section of the document, such as one numbered section
@@ -2426,7 +2429,75 @@ the list, answer bodies, requests that the service refuses, and the status of ea
  "receipt_sha256": "sha256:..."}
 ```
 
-`document.source` is the document source, or null. `document.doubt_sha256` is the digest of the
+**The members (#717).** The tables below list each member of a receipt and of a decision.
+A member that is **always** present has a value in each receipt of this spec version. Each other
+member is present only with the input that its row names, so a packet without that input keeps
+its receipt. A receipt has no other member. The text after the tables gives the value of each
+member. The reference implementation writes the members in the order of the tables. That order
+is not part of the contract: a receipt is a JSON object, and each digest reads canonical JSON
+(§6). A digest is `sha256:` and 64 lowercase hex digits. Each sort of strings in this section
+is in code point order.
+
+Receipt members:
+
+| Member | Type | Present | Value and order |
+|---|---|---|---|
+| `groundgate` | string | always | The spec version, `0.12`. |
+| `document` | object | always | `id`, `sha256`, `source` and `doubt_sha256`. Each one is always present. |
+| `references` | list | always | One entry for each reference of the packet, sorted by `id`. |
+| `packs` | list | always | One entry for each pack that the packet reads besides the base pack, sorted by `id`. |
+| `profile` | object | the packet gives a profile (§4.10) | `id`, `version` and `sha256`. |
+| `pin` | object | the packet gives a source pin (§4.14) | The pin after defaults without `groundgate_pin`, and `sha256`. |
+| `places_sha256` | digest | the packet gives places (§4.15), also an empty list | The digest of the places. |
+| `completeness` | object | the packet gives a completeness (§4.16) | `status` and `missing`. |
+| `outline_sha256` | digest | the packet gives an outline (§4.17), also an empty list | The digest of the outline. |
+| `schema_sha256` | digest | always | The digest of the schema after defaults (§2.3). |
+| `policy_sha256` | digest | always | The digest of the policy after defaults (§2.4). |
+| `decisions` | list | always | One decision for each candidate, sorted by `candidate_sha256`, then by input position. |
+| `coverage` | list | always | One `{"field", "code"}` for each coverage finding (§3.3), sorted by `field`. |
+| `judgments` | list | always | One entry for each judgment that applied (§2.6), sorted by `candidate_sha256`, then by the input position of the candidate, then by `question`. |
+| `relations` | list | the schema has one or more relations (§3.4) | One entry for each relation that applied at a relation key, sorted by `id`, then by `key`. |
+| `records` | list | the schema has a `record` field (§4.12) | One line for each record, sorted by `field`, then by `record`. |
+| `checks` | list | the schema has one or more checks (§4.13) | One entry for each check, sorted by `id`. |
+| `summary` | object | always | `admitted`, `needs_verification` and `rejected`: the count of the decisions with each outcome, as integers. |
+| `receipt_sha256` | digest | always | The digest of kind `receipt` over the receipt without this member. |
+
+Decision members:
+
+| Member | Type | Present | Value |
+|---|---|---|---|
+| `candidate_id` | string, integer or null | always | The candidate's `id` when it is a string or an integer. Otherwise null. A boolean is not an integer. |
+| `candidate_sha256` | digest | always | The digest of the candidate as given (§2.5). |
+| `field` | string or null | always | The candidate's `field` when it is a string. Otherwise null. |
+| `key` | string or null | always | The candidate's `key` on a keyed field. |
+| `proposer` | string or null | always | The candidate's `proposer`. |
+| `outcome` | string | always | `admitted`, `needs_verification` or `rejected`. |
+| `codes` | list of strings | always | The reason codes, in the order given below. |
+| `value` | string or null | always | The canonical value. |
+| `unit` | string or null | always | The candidate's `unit`. |
+| `source` | string or null | always | `document`, `reference`, `external` or `knowledge`. |
+| `ref` | string or null | always | The id of a reference. |
+| `url` | string or null | always | The URL of an external item. |
+| `evidence` | object or null | always | `start` and `end`, in UTF-8 bytes. |
+| `parts` | list | always | One `{"role", "start", "end", "passed"}` for each listed role item. |
+| `missing` | list of strings | always | The missing parts. |
+| `packs` | list of strings | always | The ids of the packs that the decision read, sorted. |
+| `evidence_units` | object | the decision has a number token and its unit check does not pass (below) | `token`, `next`, `per`, `headers`, `statements` and `currency`. |
+| `record` | string | the decision is of a member field (§4.12), and its candidate has a non-blank `record` string | The record id. |
+| `passage_sha256` | digest or null | the decision is of a `passage` field (§4.17) | The digest of the passage text, or null for a rejected decision. |
+| `locator` | object or null | the packet gives places (§4.15) | `page` and `box`, or null. |
+
+Three entries of a list have a member that is not always present:
+
+| Member | Entry of | Present |
+|---|---|---|
+| `set` | `references` | the reference is in the document set (§4.13) |
+| `answer` | `judgments` | the question is `key` |
+| `cut` | `headers` of `evidence_units` | the form is cut |
+
+`document.id` is the document id that the caller gives, or null. It is a label of the app:
+groundgate copies it and reads nothing from it. Give a string: the reference implementation
+does not check the type. `document.source` is the document source, or null. `document.doubt_sha256` is the digest of the
 packet's doubt list (§2.1), or null when the list is empty, so a receipt shows which doubt spans
 its decisions read (spec 0.12, #535). `references` lists each reference as
 `{"id", "sha256", "source"}`, sorted by `id`. A reference in the document set (§4.13) also has
@@ -2464,6 +2535,12 @@ is a string, otherwise `null`. `proposer` is the candidate's `proposer` when it 
 string, otherwise `null` (spec 0.12, #509). A decision of a member field (§4.12) whose
 candidate has a non-blank `record` string has the member `record`, with that string. Other
 decisions do not have the member.
+
+A rejected decision reports what its candidate gives. `candidate_id` and `field` follow the
+table above, so a candidate that is not an object gives null for both. `unit` is the candidate's
+`unit` when it is a string. `value` is the canonical value only when `field` names a field of the
+schema and the value parses as its type. `key` is the candidate's `key` only when that field has
+`keys` and the key is a string.
 
 - `source` is the kind of the item that the decision rests on: the value item's on the checked
   path from step 9 on, the deciding item's on the outside path, and for a candidate rejected
@@ -2566,6 +2643,45 @@ When the schema has checks (§4.13), the receipt has a member `checks`: each che
 check gave a code, in code point order. `holds` is true when the list is empty. A receipt of a
 schema without checks has no `checks` member. `receipt_sha256` is the digest of kind `receipt` over the receipt without its
 `receipt_sha256` key.
+
+**Compatibility (#717).** The receipt of a packet is a function of the packet and of the spec
+version. A release that keeps the spec version gives the same receipt to each packet that an
+earlier release with that spec version accepts: each member is equal, and `receipt_sha256` is
+the same. So a receipt that one release made verifies with each later release of the same spec
+version.
+
+A release that keeps the spec version can add only these:
+
+- an optional input of the packet, or an optional member or value of an input, that each earlier
+  release refuses as an invalid packet;
+- an optional member of the receipt, of a decision or of an entry of a list, that is present
+  only when the packet uses such an input;
+- a reason code that only a packet with such an input can get.
+
+The column "Present" of the tables names that input for each optional member. The members
+`profile`, `pin`, `places_sha256`, `completeness`, `outline_sha256`, `records`, `checks`,
+`record`, `passage_sha256` and `locator` came into spec 0.12 in this way, with groundgate 0.15.0.
+
+Each other change of a receipt changes a decision, and it needs a new spec version:
+
+- another outcome, another code or another value of a member for a packet that an earlier
+  release accepts;
+- a member that is present for such a packet, and was not present before;
+- a member that is removed or renamed, or that gets another type;
+- another order of a list, or another digest rule;
+- a refusal of a packet that an earlier release accepts;
+- a fourth outcome.
+
+A program that reads receipts must accept a member that it does not know and a code that it
+does not know. It must not accept an outcome other than the three of §1.
+
+**Receipt vectors (#717).** Each vector under `conformance/receipts/` gives a packet and its
+full receipt. An implementation conforms to this section when it gives the receipt of each
+vector: each member is equal, and `receipt_sha256` is the same. An implementation that does not
+read profiles, pins or places leaves out the vectors that give one. The vectors hold each
+member of the tables above one or more times, and the vector `receipt-01-required-members` has
+only the members that are always present. A release that keeps the spec version only adds
+receipt vectors. It does not change a vector and does not remove one.
 
 ### 5.1 Admitted facts export
 
