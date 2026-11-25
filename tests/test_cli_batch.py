@@ -160,17 +160,41 @@ def test_batch_counts_every_code_on_every_decision(
     assert "| ADMITTED_BY_POLICY | 3 |" in capsys.readouterr().out
 
 
-@pytest.mark.parametrize("folder", ["candidates", "judgments"])
+def test_batch_stores_doubt_for_each_document(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    store = tmp_path / "store"
+    args = _batch(tmp_path, {"a": [CANDIDATE], "z": [CANDIDATE]})
+    doubt_dir = tmp_path / "doubt"
+    doubt_dir.mkdir()
+    doubt = [{"start": 7, "end": 9, "confidence": 0.5}]
+    _json(doubt_dir / "a.json", doubt)
+    _json(doubt_dir / "z.json", [])
+
+    assert main([*args, "--doubt", str(doubt_dir), "--store", str(store)]) == 0
+    capsys.readouterr()
+    output = tmp_path / "out"
+    summary = json.loads((output / "summary.json").read_bytes())
+    assert summary["totals"]["codes"] == {"READ_DOUBT": 1}
+    for doc, spans in (("a", doubt), ("z", [])):
+        receipt = json.loads((output / f"{doc}.json").read_bytes())
+        expected = gg.admit(TEXT, SCHEMA, [CANDIDATE], document_id=doc, doubt=spans)
+        assert receipt == expected.to_dict()
+        assert main(["verify", "--store", str(store), summary["documents"][doc]["packet"]]) == 0
+        assert capsys.readouterr().out == "receipt verified\n"
+
+
+@pytest.mark.parametrize("folder", ["candidates", "judgments", "doubt"])
 @pytest.mark.parametrize("alias", ["direct", "parent", "symlink"])
 def test_batch_rejects_output_folder_matching_input(
     tmp_path: Path, capsys: pytest.CaptureFixture[str], folder: str, alias: str
 ) -> None:
     args = _batch(tmp_path, {"a": [CANDIDATE], "z": []})
-    if folder == "judgments":
+    if folder != "candidates":
         (tmp_path / folder).mkdir()
         for doc in ("a", "z"):
             _json(tmp_path / folder / f"{doc}.json", [])
-        args += ["--judgments", str(tmp_path / folder)]
+        args += [f"--{folder}", str(tmp_path / folder)]
     input_folder = tmp_path / folder
     before = {path.name: path.read_bytes() for path in input_folder.iterdir()}
     output_folder = input_folder

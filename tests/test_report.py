@@ -490,3 +490,35 @@ def test_report_verifies_a_receipt_with_a_doubt_list() -> None:
     assert receipt["decisions"][0]["codes"] == ["READ_DOUBT"]
     assert "receipt verified" in render(receipt, DOC, CANDS[:1], schema=SCHEMA, doubt=doubt)
     assert "does not match" in render(receipt, DOC, CANDS[:1], schema=SCHEMA)
+
+
+def test_cli_report_with_a_doubt_list(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    doc, schema, cands = tmp_path / "doc.txt", tmp_path / "schema.json", tmp_path / "cands.json"
+    doc.write_text(DOC, encoding="utf-8")
+    schema.write_text(json.dumps(SCHEMA))
+    cands.write_text(json.dumps(CANDS[:1]))
+    word = ev("$7,000")
+    doubt = tmp_path / "doubt.json"
+    doubt.write_text(json.dumps([{"start": word["start"], "end": word["end"], "confidence": 0.5}]))
+    receipt = tmp_path / "receipt.json"
+    inputs = list(map(str, (doc, schema, cands)))
+    store = ["--store", str(tmp_path / "store")]
+    assert main(["admit", *inputs, "--doubt", str(doubt), *store, "-o", str(receipt)]) == 0
+    packet = capsys.readouterr().out.strip()
+
+    args = ["report", str(receipt), *inputs]
+    assert main([*args, "--doubt", str(doubt)]) == 0
+    assert "receipt verified" in capsys.readouterr().out
+    assert main(args) == 1
+    captured = capsys.readouterr()
+    assert "mismatch: document differs" in captured.err
+    assert captured.out == ""
+
+    assert main(["report", *store, packet]) == 0
+    assert "receipt verified" in capsys.readouterr().out
+    with pytest.raises(SystemExit) as exc:
+        main(["report", *store, packet, "--doubt", str(doubt)])
+    assert exc.value.code == 2
+    assert "with --store, report gets each input from the packet: remove --doubt" in (
+        capsys.readouterr().err
+    )
