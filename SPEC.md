@@ -325,7 +325,7 @@ without judgments.
 | `search_region` | no | Span of the document within which quotes are found and re-anchoring may look (§3.1, §4.6). Default: the whole document. |
 | `confidence` | no | Number in [0, 1]. |
 | `proposer` | no | A non-blank string that names who proposed the candidate, for example a model or `structure` (spec 0.12, #509). The decision records it. |
-| `id` | no | Caller's identifier, echoed in the decision. |
+| `id` | no | Caller's identifier, echoed in the decision as `candidate_id` when it is a string or an integer. For each other type, `candidate_id` is null (§5). |
 
 Other keys are allowed and ignored by the checks (for example a model's own score); they are covered
 by `candidate_sha256`, the digest of kind `candidate` over the candidate object as given.
@@ -2662,9 +2662,10 @@ A release that keeps the spec version can add only these:
   only when the packet uses such an input;
 - a reason code that only a packet with such an input can get.
 
-The column "Present" of the tables names that input for each optional member. The members
-`profile`, `pin`, `places_sha256`, `completeness`, `outline_sha256`, `records`, `checks`,
-`record`, `passage_sha256` and `locator` came into spec 0.12 in this way, with groundgate 0.15.0.
+The column "Present" of the tables names that input for each optional member that came in this
+way. The members `profile`, `pin`, `places_sha256`, `completeness`, `outline_sha256`, `records`,
+`checks`, `record`, `passage_sha256`, `locator` and the member `set` of an entry of `references`
+came into spec 0.12 in this way, with groundgate 0.15.0.
 
 Each other change of a receipt changes a decision, and it needs a new spec version:
 

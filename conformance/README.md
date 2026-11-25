@@ -87,22 +87,32 @@ Files in `review-api/` are review API vectors (SPEC §4.20). `kind` names what a
 
 Files in `receipts/` are receipt vectors (SPEC §5). Each one is a packet with its full receipt:
 
-- the inputs of `vectors/`, and `document_id`, `profile`, `pin` and `places` where a vector
-  gives them. A vector with a `profile` has no `schema`, `policy` or `packs`;
+- the inputs of `vectors/`, and `document_id`, `doubt`, `profile`, `pin` and `places` where a
+  vector gives them. A vector with a `profile` has no `schema`, `policy` or `packs`;
 - `expected.receipt`: the receipt, with each member and `receipt_sha256`. An implementation
   gives the same object. The order of the members in the file is not part of the contract.
 
 Each member of the receipt is written by hand in `build.py`: each decision with its spans, the
-schema and the policy after defaults, and the lists in receipt order. The script only adds the
-digests of SPEC §6 with `hashlib`, and sorts the decisions and the judgments by
-`candidate_sha256`. The vectors hold each member of the tables of SPEC §5.
-`receipt-01-required-members` has only the members that are always present.
+schema and the policy after defaults, and the lists in receipt order. The script does four
+things, and none of them is a run of groundgate:
+
+- it adds the digests of SPEC §6, the profile digest (§4.10) and the pin digest (§4.14) with
+  `hashlib`;
+- it sorts the decisions and the judgments by `candidate_sha256`;
+- it copies `document.id` and `document.source` from the packet;
+- it applies four presence rules of SPEC §5: `answer` only for the question `key`, a null
+  `doubt_sha256` for an empty list, and `places_sha256` and `outline_sha256` only when the
+  packet gives the input.
+
+The vectors hold each member of the tables of SPEC §5. `receipt-01-required-members` has only
+the members that are always present.
 
 A receipt vector does not change. `receipts/SHA256SUMS` lists the SHA-256 of each file, and
-`tests/test_conformance.py` fails when a file changes, is removed or is not in the list. Check
-a copy with `shasum -a 256 -c SHA256SUMS` in `receipts/`. A release that keeps the spec version
-only adds vectors: add the file and one line to the list, and change no other line. Do not
-write the list from a script.
+`tests/test_conformance.py` fails when a file changes, is not in the list, or is removed while
+its line stays. The test cannot see a file that is removed together with its line: the review
+of this level 1 path sees that. Check a copy with `shasum -a 256 -c SHA256SUMS` in `receipts/`.
+A release that keeps the spec version only adds vectors: add the file and one line to the list,
+and change no other line. Do not write the list from a script.
 
 Files in `invalid/` are invalid packets. An implementation must refuse them (SPEC §2) and emit no
 receipt.
