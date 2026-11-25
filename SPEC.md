@@ -2934,7 +2934,8 @@ Formats of the calibration tools, in [docs/calibrate.md](docs/calibrate.md):
 | `groundgate_gold`, `groundgate-gold/1` | 1 | "The gold set, format 1" |
 | `groundgate_split`, `groundgate-split/1` | 1 | "The split file, format 1" and "The output" |
 | `groundgate_calibration_report` | 1 | "The output" |
-| `groundgate_audit`, `groundgate_audit_pick` | 1 | "The audit set, format 1" and "The log and the pick" |
+| `groundgate_audit` | 1 | "The audit set, format 1" |
+| `groundgate_audit_pick` | 1 | "The log and the pick" describes the pick. Only the code names this member of the output of `audit pick`: `src/groundgate/calibrate/audit.py`. |
 | `groundgate-audit-set/1` | 1 | The prefix of the digest of an audit set. Only the code defines it: `src/groundgate/calibrate/audit.py`. |
 | `groundgate_profile_drafts` | 1 | "The drafts" |
 
@@ -2971,7 +2972,7 @@ Formats of the review step, in [docs/design/review.md](docs/design/review.md):
 |---|---|---|
 | `review-policy@1` | 1 | review.md §5.1 |
 | `task@1` | 1 | review.md §5.2 |
-| `number@1`, `span@1` | 1 | review.md §5.2 and §7: the template of a task. `text@1` is also a template. |
+| `number@1`, `span@1` | 1 | review.md §5.2: the `template` of a task. `text@1` is also a template. |
 | `answer@1` | 1 | review.md §5.3 |
 | `answer@2` | 2 | review.md §5.3 |
 | `resolution@1` | 1 | review.md §5.4 |

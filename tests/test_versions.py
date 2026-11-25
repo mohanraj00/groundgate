@@ -47,9 +47,15 @@ def _code_names() -> set[str]:
     return found
 
 
+def _formats_section() -> str:
+    """The text of SPEC §8.5, up to the next heading."""
+    rest = SPEC.split("\n### 8.5 The formats\n", 1)[1]
+    return re.split(r"^#{2,3} ", rest, maxsplit=1, flags=re.M)[0]
+
+
 def _listed_names() -> set[str]:
     """Each name in the first column of the tables of SPEC §8.5."""
-    section = SPEC.split("\n### 8.5 The formats\n", 1)[1]
+    section = _formats_section()
     names: set[str] = set()
     for line in section.splitlines():
         if line.startswith("| `"):
@@ -72,8 +78,7 @@ def test_the_extraction_finds_each_form_of_a_format_name() -> None:
 
 def test_the_version_column_agrees_with_the_name() -> None:
     """A name with ``@N`` or ``/N`` holds its version, and its row gives the same number."""
-    section = SPEC.split("\n### 8.5 The formats\n", 1)[1]
-    for line in section.splitlines():
+    for line in _formats_section().splitlines():
         if not line.startswith("| `"):
             continue
         names, version = (cell.strip() for cell in line.split("|")[1:3])
