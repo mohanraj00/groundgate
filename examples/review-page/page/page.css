@@ -4,6 +4,7 @@ section { margin-block: var(--mu-space-4, 1rem); }
 #detail > mu-text { display: block; margin-block: var(--mu-space-2, 0.5rem); }
 .picks, .actions { display: flex; flex-wrap: wrap; gap: var(--mu-space-2, 0.5rem); padding: 0; list-style: none; }
 .choice { border-inline-start: 2px solid var(--mu-color-border, currentColor); padding-inline-start: var(--mu-space-3, 0.75rem); margin-block: var(--mu-space-3, 0.75rem); }
+.options { white-space: pre-wrap; overflow-wrap: anywhere; }
 blockquote { margin: var(--mu-space-2, 0.5rem) 0; white-space: pre-wrap; }
 mark { font-weight: 700; }
 h2, p { overflow-wrap: anywhere; }
