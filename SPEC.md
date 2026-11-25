@@ -2538,9 +2538,13 @@ decisions do not have the member.
 
 A rejected decision reports what its candidate gives. `candidate_id` and `field` follow the
 table above, so a candidate that is not an object gives null for both. `unit` is the candidate's
-`unit` when it is a string. `value` is the canonical value only when `field` names a field of the
-schema and the value parses as its type. `key` is the candidate's `key` only when that field has
-`keys` and the key is a string.
+`unit` when it is a string. `value` is not null only when `field` names a field of the schema
+and the candidate's value is a string or an integer that reads for the type of the field. On a
+`number` or `integer` field it is the canonical decimal of a value that reads as a number
+(§4.1), also for a fraction on an `integer` field, which step 4 rejects. On a `date` field it is
+a date in the normal form (§4.11). On a `string` or `passage` field it is a string that is not
+blank, after whitespace normalisation (§4.4). `key` is the candidate's `key` only when that
+field has `keys` and the key is a string.
 
 - `source` is the kind of the item that the decision rests on: the value item's on the checked
   path from step 9 on, the deciding item's on the outside path, and for a candidate rejected

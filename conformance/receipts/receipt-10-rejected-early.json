@@ -1,6 +1,6 @@
 {
  "name": "receipt-10-rejected-early",
- "description": "Candidates that an early step rejects. A decision reports what the candidate gives: `candidate_id` only for a string or an integer, `field` only for a string, the canonical value only when the field is in the schema and the value parses, and the cited span and its source when the evidence is well-formed.",
+ "description": "Candidates that an early step rejects. A decision reports what the candidate gives: `candidate_id` only for a string or an integer, `field` only for a string, the canonical value only when the field is in the schema and the value reads as a number, and the cited span and its source when the evidence is well-formed. A fraction on an integer field reads as a number, so its decision has the value.",
  "document": "Fee\t$90\n",
  "schema": {
   "fields": {
@@ -43,6 +43,12 @@
     "end": 7,
     "text": "$90"
    }
+  },
+  {
+   "id": "r6",
+   "field": "fee",
+   "value": "90.50",
+   "unit": "USD"
   }
  ],
  "expected": {
@@ -78,6 +84,26 @@
       "start": 4,
       "end": 7
      },
+     "parts": [],
+     "missing": [],
+     "packs": []
+    },
+    {
+     "candidate_id": "r6",
+     "candidate_sha256": "sha256:621fd523dc999996b7d48327e7cf6f5afd337a0f56871eac9ba0db6a511ccbbb",
+     "field": "fee",
+     "key": null,
+     "proposer": null,
+     "outcome": "rejected",
+     "codes": [
+      "TYPE_INVALID"
+     ],
+     "value": "90.5",
+     "unit": "USD",
+     "source": null,
+     "ref": null,
+     "url": null,
+     "evidence": null,
      "parts": [],
      "missing": [],
      "packs": []
@@ -168,9 +194,9 @@
    "summary": {
     "admitted": 0,
     "needs_verification": 0,
-    "rejected": 5
+    "rejected": 6
    },
-   "receipt_sha256": "sha256:bd001c2b7af54ff9fd60a87301dc831479076f171cea8f782b82454dd31985e4"
+   "receipt_sha256": "sha256:27d91b103a7341341042817d11b89c42cb823d2160e992259b6f97bed6589008"
   }
  }
 }

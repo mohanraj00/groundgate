@@ -9759,8 +9759,9 @@ receipt_vector(
     "receipt-10-rejected-early",
     "Candidates that an early step rejects. A decision reports what the candidate gives: "
     "`candidate_id` only for a string or an integer, `field` only for a string, the canonical "
-    "value only when the field is in the schema and the value parses, and the cited span and "
-    "its source when the evidence is well-formed.",
+    "value only when the field is in the schema and the value reads as a number, and the cited "
+    "span and its source when the evidence is well-formed. A fraction on an integer field "
+    "reads as a number, so its decision has the value.",
     {"document": FEE_LINE, "schema": {"fields": {"fee": USD}}, "policy": None,
      "candidates": [
          "not an object",
@@ -9768,13 +9769,15 @@ receipt_vector(
          {"id": 7, "field": "fee", "value": "n/a", "unit": "USD"},
          {"id": "r4", "field": "fee", "value": 90, "unit": "USD"},
          {"id": "r5", "field": "fee", "value": 90, "unit": "EUR",
-          "evidence": {"start": 4, "end": 7, "text": "$90"}}]},
+          "evidence": {"start": 4, "end": 7, "text": "$90"}},
+         {"id": "r6", "field": "fee", "value": "90.50", "unit": "USD"}]},
     [decided(None, None, "rejected", ["CANDIDATE_INVALID"], None, None, None, None),
      decided(None, "price", "rejected", ["FIELD_UNKNOWN"], None, "mg", None, None),
      decided(7, "fee", "rejected", ["NULL_STRING_LITERAL"], None, "USD", None, None),
      decided("r4", "fee", "rejected", ["NO_EVIDENCE"], "90", "USD", None, None),
-     decided("r5", "fee", "rejected", ["UNIT_INVALID"], "90", "EUR", "document", (4, 7))],
-    (0, 0, 5),
+     decided("r5", "fee", "rejected", ["UNIT_INVALID"], "90", "EUR", "document", (4, 7)),
+     decided("r6", "fee", "rejected", ["TYPE_INVALID"], "90.5", "USD", None, None)],
+    (0, 0, 6),
     {"fields": {"fee": after(type="integer", unit="USD")}, "units": {}},
 )  # fmt: skip
 
