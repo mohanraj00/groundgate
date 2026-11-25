@@ -41,7 +41,7 @@ def test_core_only_page_runs_in_a_fresh_interpreter() -> None:
     code = "".join(body for lang, body in blocks if lang == "python")
     shown = "".join(
         body
-        for (lang, body), (before, _) in zip(blocks[1:], blocks)
+        for (lang, body), (before, _) in zip(blocks[1:], blocks[:-1], strict=True)
         if lang == "text" and before == "python"
     )
     run = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, check=True)

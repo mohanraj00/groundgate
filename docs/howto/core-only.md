@@ -37,9 +37,7 @@ import groundgate as gg
 
 text = unicodedata.normalize(
     "NFC",
-    "INVOICE 4471\n"
-    "Net amount: $12,400. Tax: $992.\n"
-    "Total due: $13,392 within 30 days.\n",
+    "INVOICE 4471\nNet amount: $12,400. Tax: $992.\nTotal due: $13,392 within 30 days.\n",
 )
 schema = {
     "fields": {
