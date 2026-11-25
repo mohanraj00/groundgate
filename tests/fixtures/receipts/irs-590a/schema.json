@@ -1,0 +1,179 @@
+{
+  "fields": {
+    "ira_limit_2025": {
+      "type": "integer",
+      "unit": "USD",
+      "comparator": "eq",
+      "minimum": "0",
+      "required": true
+    },
+    "ira_limit_age_50_2025": {
+      "type": "integer",
+      "unit": "USD",
+      "comparator": "eq",
+      "minimum": "0",
+      "required": true
+    },
+    "traditional_phaseout_joint_2025_start": {
+      "type": "integer",
+      "unit": "USD",
+      "comparator": "gt",
+      "minimum": "0",
+      "required": true
+    },
+    "traditional_phaseout_joint_2025_end": {
+      "type": "integer",
+      "unit": "USD",
+      "comparator": "lt",
+      "minimum": "0",
+      "required": true
+    },
+    "traditional_phaseout_single_2025_start": {
+      "type": "integer",
+      "unit": "USD",
+      "comparator": "gt",
+      "minimum": "0",
+      "required": true
+    },
+    "traditional_phaseout_single_2025_end": {
+      "type": "integer",
+      "unit": "USD",
+      "comparator": "lt",
+      "minimum": "0",
+      "required": true
+    },
+    "spousal_phaseout_2025_start": {
+      "type": "integer",
+      "unit": "USD",
+      "comparator": "gt",
+      "minimum": "0",
+      "required": true
+    },
+    "spousal_phaseout_2025_end": {
+      "type": "integer",
+      "unit": "USD",
+      "comparator": "lt",
+      "minimum": "0",
+      "required": true
+    },
+    "roth_phaseout_joint_2025_start": {
+      "type": "integer",
+      "unit": "USD",
+      "comparator": "ge",
+      "minimum": "0",
+      "required": true
+    },
+    "roth_phaseout_joint_2025_end": {
+      "type": "integer",
+      "unit": "USD",
+      "comparator": "ge",
+      "minimum": "0",
+      "required": true
+    },
+    "roth_phaseout_single_2025_start": {
+      "type": "integer",
+      "unit": "USD",
+      "comparator": "ge",
+      "minimum": "0",
+      "required": true
+    },
+    "roth_phaseout_single_2025_end": {
+      "type": "integer",
+      "unit": "USD",
+      "comparator": "ge",
+      "minimum": "0",
+      "required": true
+    },
+    "ira_limit_2026": {
+      "type": "integer",
+      "unit": "USD",
+      "comparator": "eq",
+      "minimum": "0",
+      "required": true
+    },
+    "ira_limit_age_50_2026": {
+      "type": "integer",
+      "unit": "USD",
+      "comparator": "eq",
+      "minimum": "0",
+      "required": true
+    },
+    "traditional_phaseout_joint_2026_start": {
+      "type": "integer",
+      "unit": "USD",
+      "comparator": "gt",
+      "minimum": "0",
+      "required": true
+    },
+    "traditional_phaseout_joint_2026_end": {
+      "type": "integer",
+      "unit": "USD",
+      "comparator": "lt",
+      "minimum": "0",
+      "required": true
+    },
+    "traditional_phaseout_single_2026_start": {
+      "type": "integer",
+      "unit": "USD",
+      "comparator": "gt",
+      "minimum": "0",
+      "required": true
+    },
+    "traditional_phaseout_single_2026_end": {
+      "type": "integer",
+      "unit": "USD",
+      "comparator": "lt",
+      "minimum": "0",
+      "required": true
+    },
+    "spousal_phaseout_2026_start": {
+      "type": "integer",
+      "unit": "USD",
+      "comparator": "gt",
+      "minimum": "0",
+      "required": true
+    },
+    "spousal_phaseout_2026_end": {
+      "type": "integer",
+      "unit": "USD",
+      "comparator": "lt",
+      "minimum": "0",
+      "required": true
+    },
+    "roth_phaseout_joint_2026_start": {
+      "type": "integer",
+      "unit": "USD",
+      "comparator": "ge",
+      "minimum": "0",
+      "required": true
+    },
+    "roth_phaseout_joint_2026_end": {
+      "type": "integer",
+      "unit": "USD",
+      "comparator": "ge",
+      "minimum": "0",
+      "required": true
+    },
+    "roth_phaseout_single_2026_start": {
+      "type": "integer",
+      "unit": "USD",
+      "comparator": "ge",
+      "minimum": "0",
+      "required": true
+    },
+    "roth_phaseout_single_2026_end": {
+      "type": "integer",
+      "unit": "USD",
+      "comparator": "ge",
+      "minimum": "0",
+      "required": true
+    },
+    "trump_account_pilot_contribution": {
+      "type": "integer",
+      "unit": "USD",
+      "comparator": "eq",
+      "minimum": "0",
+      "required": true
+    }
+  }
+}

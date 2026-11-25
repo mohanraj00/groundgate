@@ -992,10 +992,19 @@ decision shows up as a problem. A judgment that did not apply is not in the rece
 to it changes nothing.
 
 **Versions.** A receipt names the spec version it was decided under, and `verify` accepts only the
-version it implements. A groundgate that implements spec 0.11 reports a 0.10 receipt as one problem
-and checks nothing more. So pin the groundgate version where you keep receipts. To verify an old
-receipt, install the release for its spec version in a separate environment, for example
-`pip install groundgate==0.2.0` for spec 0.2.
+version it implements. A later release with the same spec version verifies the receipt: 0.17.0
+verifies a receipt of 0.14.0, because both implement spec 0.12. A groundgate that implements spec
+0.12 reports a 0.11 receipt as one problem and checks nothing more. The problem names the last
+release that implements spec 0.11. To verify that receipt, run that release in a separate
+environment, with the receipt and its inputs:
+
+```bash
+uvx --from 'groundgate==0.11.0' groundgate verify receipt.json doc.txt schema.json candidates.json
+```
+
+So keep the inputs of each packet with its receipt. [SPEC §8.6](../SPEC.md#86-a-receipt-of-another-spec-version)
+has the rule and the release of each spec version. From 1.0, each 1.x release verifies each
+receipt of spec 1.0. An older release gets no corrections, so use it only for this check.
 
 ## Store
 

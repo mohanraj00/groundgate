@@ -417,7 +417,8 @@ clear a key flag or add doubt, with no model call in the decision. 0.3 brought a
 (#51), abbreviation dots that no longer end a sentence for qualifiers (#63, #77), Indian digit
 grouping (#59), ASCII digits (#94), and keys that stop at a label line (#52) or read a table by its
 lines (#87). A receipt names the spec version it was decided under, and only that version verifies
-it.
+it. A later release with the same spec version verifies it too. For a receipt of an older spec
+version, `verify` names the release to install ([SPEC §8.6](SPEC.md#86-a-receipt-of-another-spec-version)).
 
 [Locale packs](docs/design/locale-packs.md) for number formats outside English are a design,
 not yet code. Of the [hybrid decisions](docs/design/hybrid-decisions.md) design, 0.4 has the

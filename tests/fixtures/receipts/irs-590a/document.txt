@@ -1,0 +1,224 @@
+Publication 590-A
+
+Contributions
+to Individual
+Retirement
+Arrangements
+(IRAs)
+
+For use in preparing
+2025 Returns
+
+Get forms and other information faster and easier at:
+• IRS.gov (English)
+• IRS.gov/Spanish (Español)
+• IRS.gov/Chinese (中文)
+
+• IRS.gov/Korean (한국어)
+• IRS.gov/Russian (Pусский)
+• IRS.gov/Vietnamese (Tiếng Việt)
+
+Contents
+
+Future Developments . . . . . . . . . . . . . . . . . . . . . . . 1
+
+What’s New for 2025 . . . . . . . . . . . . . . . . . . . . . . . . 1
+
+What’s New for 2026 . . . . . . . . . . . . . . . . . . . . . . . . 2
+
+Reminders . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2
+
+Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3
+
+Chapter 1. Traditional IRAs . . . . . . . . . . . . . . . . . . 6
+Who Can Open a Traditional IRA? . . . . . . . . . . . . 6
+When Can a Traditional IRA Be Opened? . . . . . . . 7
+How Can a Traditional IRA Be Opened? . . . . . . . . 7
+How Much Can Be Contributed? . . . . . . . . . . . . . 9
+When Can Contributions Be Made? . . . . . . . . . . 10
+How Much Can You Deduct? . . . . . . . . . . . . . . . 11
+What if You Inherit an IRA? . . . . . . . . . . . . . . . . 21
+Can You Move Retirement Plan Assets? . . . . . . . 21
+When Can You Withdraw or Use Assets? . . . . . . 31
+What Acts Result in Penalties or Additional
+
+Taxes? . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 33
+
+Chapter 2. Roth IRAs . . . . . . . . . . . . . . . . . . . . . 38
+What Is a Roth IRA? . . . . . . . . . . . . . . . . . . . . . 39
+When Can a Roth IRA Be Opened? . . . . . . . . . . 39
+Can You Contribute to a Roth IRA? . . . . . . . . . . . 39
+Can You Move Amounts Into a Roth IRA? . . . . . . 44
+
+Chapter 3. Retirement Savings Contributions
+
+Credit (Saver's Credit)
+
+. . . . . . . . . . . . . . . . . . 46
+
+How To Get Tax Help . . . . . . . . . . . . . . . . . . . . . . . 48
+
+Appendices . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 52
+
+Index . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 60
+
+Future Developments
+For the latest information about developments related to
+Pub. 590-A, such as legislation enacted after it was
+published, go to IRS.gov/Pub590A.
+
+What’s New for 2025
+IRA contribution limit for 2025. For 2025, the IRA con-
+tribution limit remains $7,000 ($8,000 for individuals age
+50 or older).
+Trump account and new Form 4547. Recent legislation
+allows parents, guardians, and other authorized individu-
+als to elect to establish a new type of individual retirement
+account, called a Trump account, for the exclusive benefit
+of certain children. If the child was born after 2024 and be-
+fore 2029, is a U.S. citizen, and meets certain other re-
+quirements, the authorized individual may also elect to re-
+ceive a $1,000 pilot program contribution to the child’s
+Trump account. Both elections can be made on Form
+
+Jan 15, 2026
+
+Publication 590-A (2025) Catalog Number 66302J
+Department of the Treasury Internal Revenue Service www.irs.gov
+4547, which can be filed at the same time as the author-
+ized individual’s 2025 income tax return. For more infor-
+mation on Trump accounts, and to learn how to make
+these elections, see Form 4547 and its instructions.
+
+Modified AGI limit for traditional IRA contributions.
+For 2025, if you are covered by a retirement plan at work,
+your deduction for contributions to a traditional IRA is re-
+duced (phased out) if your modified AGI is:
+
+• More than $126,000 but less than $146,000 for a mar-
+ried couple filing a joint return or a qualifying surviving
+spouse,
+
+• More than $79,000 but less than $89,000 for a single
+
+individual or head of household, or
+
+• Less than $10,000 for a married individual filing a sep-
+
+arate return.
+
+Modified AGI limit for certain married individuals.
+If you are married and your spouse is covered by a retire-
+ment plan at work and you aren’t, and you live with your
+spouse or file a joint return, your deduction is phased out if
+your modified AGI is more than $236,000 (up from
+$230,000 for 2024) but less than $246,000 (up from
+$240,000 for 2024). If your modified AGI is $246,000 or
+more, you can’t take a deduction for contributions to a tra-
+ditional IRA.
+
+Modified AGI limit for Roth IRA contributions. For
+2025, your Roth IRA contribution limit is reduced (phased
+out) in the following situations.
+
+• Your filing status is married filing jointly or qualifying
+surviving spouse and your modified AGI is at least
+$236,000. You can’t make a Roth IRA contribution if
+your modified AGI is $246,000 or more.
+
+• Your filing status is single, head of household, or mar-
+ried filing separately and you didn’t live with your
+spouse at any time in 2025 and your modified AGI is at
+least $150,000. You can’t make a Roth IRA contribu-
+tion if your modified AGI is $165,000 or more.
+
+• Your filing status is married filing separately, you lived
+with your spouse at any time during the year, and your
+modified AGI is more than zero. You can’t make a Roth
+IRA contribution if your modified AGI is $10,000 or
+more.
+
+What’s New for 2026
+IRA contribution limit increased for 2026. Beginning
+in 2026, the IRA contribution limit is increased to $7,500
+($8,600 for individuals age 50 or older) from $7,000
+($8,000 for individuals age 50 or older).
+
+Modified AGI limit for traditional IRA contributions in-
+creased. For 2026, if you are covered by a retirement
+plan at work, your deduction for contributions to a tradi-
+tional IRA is reduced (phased out) if your modified AGI is:
+• More than $129,000 but less than $149,000 for a mar-
+ried couple filing a joint return or a qualifying surviving
+spouse,
+
+• More than $81,000 but less than $91,000 for a single
+
+individual or head of household, or
+
+• Less than $10,000 for a married individual filing a sep-
+
+arate return.
+
+Modified AGI limit for certain married individuals
+increased. If you are married and your spouse is covered
+by a retirement plan at work and you aren’t, and you live
+with your spouse or file a joint return, your deduction is
+phased out if your modified AGI is more than $242,000
+(up from $236,000 for 2025) but less than $252,000 (up
+from $246,000 for 2025). If your modified AGI is $252,000
+or more, you can’t take a deduction for contributions to a
+traditional IRA.
+Modified AGI limit for Roth IRA contributions in-
+creased. For 2026, your Roth IRA contribution limit is re-
+duced (phased out) in the following situations.
+• Your filing status is married filing jointly or qualifying
+surviving spouse and your modified AGI is at least
+$242,000. You can’t make a Roth IRA contribution if
+your modified AGI is $252,0000 or more.
+
+• Your filing status is single, head of household, or mar-
+ried filing separately and you didn’t live with your
+spouse at any time in 2026 and your modified AGI is at
+least $153,000. You can’t make a Roth IRA contribu-
+tion if your modified AGI is $168,000 or more.
+
+• Your filing status is married filing separately, you lived
+with your spouse at any time during the year, and your
+modified AGI is more than zero. You can’t make a Roth
+IRA contribution if your modified AGI is $10,000 or
+more.
+
+Reminders
+Qualified tuition program rollover to a Roth IRA. Be-
+ginning with distributions made after December 31, 2023,
+a beneficiary of a section 529 qualified tuition program is
+permitted to roll over a distribution from a section 529 ac-
+count into a Roth IRA for the beneficiary if certain require-
+ments are met. See Qualified tuition program rollover to a
+Roth IRA, later.
+Increase in required minimum distribution age. Indi-
+viduals who reach age 72 after December 31, 2022, may
+delay receiving
+their required minimum distributions
+(RMDs) until April 1 of the year following the year in which
+they turn age 73.
+Qualified disaster tax relief. The special rules that pro-
+vide for tax-favored withdrawals and repayments from cer-
+tain qualified plans for taxpayers who suffered an eco-
+nomic loss as a result of a qualified disaster were made
+permanent by the SECURE 2.0 Act of 2022.
+
+A qualified disaster is a major disaster that occurred on
+or after January 26, 2021, and was declared by the Presi-
+dent after December 27, 2020, under section 401 of the
+Robert T. Stafford Disaster Relief and Emergency Act. For
+more information, see Disaster-Related Relief in Pub.
+590-B, Distributions
+Individual Retirement
+from
+Arrangements (IRAs).
+
+2
+
+Publication 590-A (2025)

@@ -231,18 +231,18 @@ print(check.problems)
 
 ```text
 False
-('receipt was decided under spec 0.4; this groundgate implements 0.12',)
+('receipt was decided under spec 0.4; this groundgate implements 0.12. groundgate 0.4.0 implements spec 0.4: verify the receipt with that release (SPEC 8.6)',)
 ```
 
-`verify` checks nothing more. So pin the groundgate release that decided the receipts in the
-environment that keeps them. For spec 0.11, that is:
+`verify` checks nothing more, and the problem names the release that verifies the receipt. Run
+that release in a separate environment, with the receipt and its inputs. For spec 0.4:
 
 ```bash
-pip install "groundgate==0.11.0"
+uvx --from 'groundgate==0.4.0' groundgate verify receipt.json doc.txt schema.json candidates.json
 ```
 
-To verify an old receipt, install the release for its spec version in a separate environment.
-For spec 0.4, that is `groundgate==0.4.0`.
+A later release with the same spec version verifies a receipt with no other step. The rule and
+the release of each spec version are in [SPEC §8.6](../../SPEC.md#86-a-receipt-of-another-spec-version).
 
 ## 7. What a person checks
 
