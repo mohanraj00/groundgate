@@ -1011,7 +1011,8 @@ receipt of spec 1.0. An older release gets no corrections, so use it only for th
 A store keeps the objects and the logs of groundgate: documents, packets, receipts, review
 answers and deletions. `groundgate.store.FolderStore` keeps them in a folder. An app with other
 storage can write its own backend with the five operations of the `Store` protocol: `put`,
-`get`, `append`, `read` and `forget`. [docs/design/store.md](design/store.md) gives the design.
+`get`, `append`, `read` and `forget`. [SPEC §9](../SPEC.md#9-the-store-contract) is the contract of a store, and
+[docs/design/store.md](design/store.md) gives the design.
 
 A backend proves that it meets the store contract with the vectors in
 [conformance/store/vectors.json](../conformance/store/vectors.json). Each vector is a sequence of

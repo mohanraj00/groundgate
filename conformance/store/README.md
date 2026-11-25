@@ -1,7 +1,8 @@
 # Store contract vectors
 
-`vectors.json` is the store contract (docs/design/store.md §6) as language-agnostic vectors. A
-store backend in any language runs them to prove that it meets the contract. A Python backend
+`vectors.json` is the store contract ([SPEC §9](../../SPEC.md#9-the-store-contract)) as
+language-agnostic vectors. A store backend in any language runs them to prove that it meets the
+contract. A Python backend
 can run `groundgate.store.contract.CHECKS` instead: these checks run the same vectors.
 
 The vectors are written by hand in `groundgate.store.contract.vectors`. `build.py` gives that
@@ -28,6 +29,28 @@ sha256sum vectors.json
 
 Record the version and the SHA-256 with your runner. The report gives the SHA-256 of the file
 that it ran, so you can compare the two.
+
+## What the next release can change
+
+A release only adds vectors (SPEC §9.7). So a backend that passes the file of one release passes
+the same vectors in the file of each later release with the same `format`:
+
+- The `steps` of a vector `id` never change: each input, and each `result` or `error`, stays.
+- No vector is removed.
+- A release can add a vector, for example for a new kind or a new log word. A backend that you
+  pinned to an older file does not know the new vector. Take the new file when you want the new
+  rule.
+- `about` and `check` are not steps. A release can change the sentence of a vector.
+- The bytes of the file change when a release adds a vector, so the SHA-256 of the file changes
+  too. Pin the file for the report, and use the lock below to compare two files.
+- A change of the steps of a vector, or a removed vector, needs the format
+  `groundgate-store-vectors@2`. A runner stops on a `format` that it does not know.
+
+`vectors.lock` has one line for each vector: the SHA-256, two spaces and the `id`. The SHA-256
+is over the UTF-8 of the canonical JSON (RFC 8785) of the `steps` list of the vector, as lowercase
+hex digits. `tests/test_store_contract.py` fails when the steps of a vector change, when a
+vector is removed, or when a vector has no line. For a new vector, the test prints the line to
+add. Add that line by hand at the end, and change no other line.
 
 ## The file
 

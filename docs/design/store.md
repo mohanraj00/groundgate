@@ -8,6 +8,11 @@ Code issue 4 is built: `RunResult.save(store)` (#405) and `RunResult.load(store,
 The rest is not built. The note changes no decision and no receipt.
 [review.md](review.md) (#287) keeps its data here. The last section lists the code issues.
 
+**This note is history.** The contract of a store is [SPEC §9](../../SPEC.md#9-the-store-contract)
+(#719): the key (§4 here), the manifest (§5), the interface (§6) and the rules (§8). If this note
+and SPEC §9 differ, SPEC §9 is right. This note keeps the reasons, the options, the folder store
+(§7) and the full procedure of `store forget` (§8).
+
 ## 1. The answers in short
 
 | Question (#288) | My answer | Section |
@@ -53,6 +58,8 @@ I choose A. If a view becomes slow, a SQLite index can come later as a view.
 
 ## 4. The key
 
+The contract text is SPEC §9.1 and §9.2.
+
 ```text
 key = "sha256:" + hex(SHA-256("groundgate-object/1:" + kind + "\0" + bytes))
 ```
@@ -96,6 +103,8 @@ new key. The store prefix changes only when the key scheme changes.
   format does not change.
 
 ## 5. The manifest
+
+The contract text is SPEC §9.3.
 
 The runner header is the manifest of a run, and I do not change it. But two steps have no run:
 `read` before an extraction, and an app that calls `admit` with its own extractor. So I add two
@@ -174,6 +183,8 @@ The packet holds no review data, because the packet never changes and answers co
 and resolutions name the packet, and the answer logs of a packet are filed under its key.
 
 ## 6. The interface
+
+The contract text is SPEC §9.4 and §9.5.
 
 | Operation | Use |
 |---|---|
@@ -332,6 +343,8 @@ A `splits` log that the store cannot read, or that `review measures` refuses, gi
 also if it changes during the build.
 
 ## 8. Rules
+
+The contract text is SPEC §9.6. The procedure of `store forget` in rule 3 is only here.
 
 1. **Name objects only by their digest.** A path or a name from a document, a reply, a manifest
    or a request never becomes a file path. That data is untrusted. A key must match

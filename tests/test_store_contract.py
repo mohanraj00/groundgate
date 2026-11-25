@@ -13,6 +13,7 @@ from typing import Any
 
 import pytest
 
+from groundgate.canonical import jcs
 from groundgate.store import (
     FolderStore,
     NotFound,
@@ -219,3 +220,85 @@ def test_the_python_only_cases_stay() -> None:
 
     with pytest.raises(AssertionError, match="read"):
         contract.check_bad_logs(ListLog)
+
+
+# ------------------------------------------------- the lock of the vectors (SPEC §9.7, #719)
+LOCK = HERE / "vectors.lock"
+
+
+def _steps_digest(steps: object) -> str:
+    """The SHA-256 of the UTF-8 of the canonical JSON of the steps of one vector."""
+    return hashlib.sha256(jcs(steps).encode("utf-8")).hexdigest()
+
+
+def _lock_problems(lock: str, vectors: list[dict[str, Any]]) -> list[str]:
+    """Compare the vectors with ``vectors.lock``: a vector whose steps changed, a vector that
+    is removed, a vector that the list does not name, with the line to add for it, and an
+    ``id`` that two vectors or two lines have."""
+    problems = []
+    locked: dict[str, str] = {}
+    for line in lock.splitlines():
+        digest, name = line.split("  ", 1)
+        if name in locked:
+            problems.append(f"{name} has two lines in vectors.lock")
+        locked[name] = digest
+    current: dict[str, str] = {}
+    for v in vectors:
+        if v["id"] in current:
+            problems.append(f"two vectors have the id {v['id']}")
+        current[v["id"]] = _steps_digest(v["steps"])
+    for name, digest in locked.items():
+        if name not in current:
+            problems.append(f"{name} is removed")
+        elif current[name] != digest:
+            problems.append(f"the steps of {name} changed")
+    for name, digest in current.items():
+        if name not in locked:
+            problems.append(f"{name} is not in vectors.lock: add the line '{digest}  {name}'")
+    return problems
+
+
+def _file_vectors() -> list[dict[str, Any]]:
+    vectors: list[dict[str, Any]] = json.loads(FILE.read_text("ascii"))["vectors"]
+    return vectors
+
+
+def test_the_steps_of_a_vector_do_not_change() -> None:
+    """A release only adds store vectors (SPEC §9.7). A new vector gets a line in
+    ``conformance/store/vectors.lock``, and a line never changes."""
+    lock = LOCK.read_text("ascii")
+    assert len(lock.splitlines()) >= 49
+    assert _lock_problems(lock, _file_vectors()) == []
+
+
+def test_the_lock_finds_a_changed_a_removed_and_a_new_vector() -> None:
+    lock, vectors = LOCK.read_text("ascii"), _file_vectors()
+    first, second = vectors[0], vectors[1]
+    step = {**first["steps"][0], "kind": "prompt@1"}
+    changed = [{**first, "steps": [step, *first["steps"][1:]]}, *vectors[1:]]
+    assert _lock_problems(lock, changed) == [f"the steps of {first['id']} changed"]
+    result = {**first, "steps": [*first["steps"][:-1], {**first["steps"][-1], "result": None}]}
+    assert _lock_problems(lock, [result, *vectors[1:]]) == [f"the steps of {first['id']} changed"]
+    removed = [v for v in vectors if v is not second]
+    assert _lock_problems(lock, removed) == [f"{second['id']} is removed"]
+    new = {"id": "put-get/new", "check": "check_put_get", "about": "new", "steps": []}
+    digest = _steps_digest([])
+    assert _lock_problems(lock, [*vectors, new]) == [
+        f"put-get/new is not in vectors.lock: add the line '{digest}  put-get/new'"
+    ]
+    twice = [*vectors, {**first, "steps": []}]
+    assert _lock_problems(lock, twice) == [
+        f"two vectors have the id {first['id']}",
+        f"the steps of {first['id']} changed",
+    ]
+    line = lock.splitlines()[0]
+    assert _lock_problems(lock + line + "\n", vectors) == [
+        f"{line.split('  ', 1)[1]} has two lines in vectors.lock"
+    ]
+
+
+def test_the_lock_ignores_the_text_of_a_vector() -> None:
+    """``about`` and ``check`` are not steps: a clearer sentence changes no line."""
+    lock, vectors = LOCK.read_text("ascii"), _file_vectors()
+    reworded = [{**v, "about": v["about"] + " More words.", "check": "other"} for v in vectors]
+    assert _lock_problems(lock, reworded) == []
