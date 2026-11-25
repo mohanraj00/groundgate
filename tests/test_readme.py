@@ -31,3 +31,18 @@ def test_guide_key_span_example_prints_what_the_guide_shows() -> None:
         [sys.executable, "-c", code.group(1)], capture_output=True, text=True, check=True
     )
     assert run.stdout == shown[1]
+
+
+def test_core_only_page_runs_in_a_fresh_interpreter() -> None:
+    """The core-only page runs in its own interpreter. CI runs this file against a wheel with no
+    extra installed, so the page needs only the core."""
+    page = README.parent / "docs" / "howto" / "core-only.md"
+    blocks = re.findall(r"^```(\w*)\n(.*?)^```$", page.read_text(encoding="utf-8"), re.M | re.S)
+    code = "".join(body for lang, body in blocks if lang == "python")
+    shown = "".join(
+        body
+        for (lang, body), (before, _) in zip(blocks[1:], blocks[:-1], strict=True)
+        if lang == "text" and before == "python"
+    )
+    run = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, check=True)
+    assert run.stdout == shown

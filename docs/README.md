@@ -9,6 +9,7 @@ page for your task.
 | Task | Page |
 |---|---|
 | Write a schema for your documents | [schema.md](schema.md) |
+| Use only the core: admit, verify and the receipt | [howto/core-only.md](howto/core-only.md) |
 | Check your own model's extractions, end to end | [howto/own-model.md](howto/own-model.md) |
 | Send the reasons back to the extractor and decide again | [howto/feedback.md](howto/feedback.md) |
 | Check values in financial tables | [howto/tables.md](howto/tables.md) |

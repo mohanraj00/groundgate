@@ -126,6 +126,9 @@ The core has no dependencies. `groundgate[pdf]` adds pdfminer.six for PDF text,
 schema, a how-to guide for each task, and [the reference](docs/guide.md). An evidence item can also give UTF-8 byte offsets
 (`start`, `end`), and it can cite the sign, scale, unit, field or key of the value (spec 0.5).
 
+If your app has its own reader, model loop and review queue, you need only `admit`, `verify` and
+the receipt. [docs/howto/core-only.md](docs/howto/core-only.md) shows that path with no extra.
+
 ### With your own model
 
 `gg.extractor_schema(schema)` turns your schema into a JSON Schema for the model's structured
