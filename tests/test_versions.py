@@ -10,7 +10,7 @@ from groundgate.canonical import SPEC_VERSION
 
 REPO = Path(__file__).parent.parent
 SPEC = (REPO / "SPEC.md").read_text(encoding="utf-8")
-AT = re.compile(r"[a-z][a-z0-9-]*@[0-9]+")  # facts@2
+AT = re.compile(r"[a-z][a-z0-9_-]*@[0-9]+")  # facts@2, closed_set@1
 PREFIX = re.compile(r"groundgate(?:-[a-z]+)+/[0-9]+")  # groundgate-pack/1
 MEMBER = re.compile(r"groundgate_[a-z_]+")  # groundgate_pack
 # Strings of the code that have the form of a format name and name no format.

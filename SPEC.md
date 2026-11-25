@@ -2864,6 +2864,9 @@ the spec version that the release implements. Before 1.0:
 - a release that only corrects a fault, and changes no receipt and no format, takes the next
   patch number.
 
+These rules hold from release 0.14.0. Three earlier patch releases added a command or a public
+name and kept the minor number: 0.5.1, 0.5.2 and 0.6.1.
+
 This document does not yet give the package version of a new spec version from 1.0 on (#710).
 
 ### 8.3 The version of a format
@@ -2972,7 +2975,11 @@ Formats of the review step, in [docs/design/review.md](docs/design/review.md):
 |---|---|---|
 | `review-policy@1` | 1 | review.md §5.1 |
 | `task@1` | 1 | review.md §5.2 |
-| `number@1`, `span@1` | 1 | review.md §5.2: the `template` of a task. `text@1` is also a template. |
+| `number@1` | 1 | review.md §5.2: the `template` of a task. `text@1` is also a template. |
+| `span@1` | 1 | review.md §13: the `template` of a task |
+| `closed_set@1` | 1 | review.md §7: the `template` of a task for a closed set |
+| `model_text@1` | 1 | review.md §7.1: the `template` of a task for a model text |
+| `calibrate_field@1`, `calibrate_key@1` | 1 | review.md §11: the `template` of a calibration task |
 | `answer@1` | 1 | review.md §5.3 |
 | `answer@2` | 2 | review.md §5.3 |
 | `resolution@1` | 1 | review.md §5.4 |
