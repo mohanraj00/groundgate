@@ -94,7 +94,8 @@ def test_verify_names_a_receipt_from_another_spec_version() -> None:
     r["groundgate"] = "0.1"
     result = gg.verify(r, DOC, SCHEMA, CANDS)
     assert result.problems == (
-        "receipt was decided under spec 0.1; this groundgate implements 0.12",
+        "receipt was decided under spec 0.1; this groundgate implements 0.12. groundgate 0.1.0 "
+        "implements spec 0.1: verify the receipt with that release (SPEC 8.6)",
     )
 
 

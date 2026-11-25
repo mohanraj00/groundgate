@@ -45,6 +45,7 @@ from .places import Places, check_places
 from .profile import check_profile
 from .records import Value
 from .records import decide as decide_records
+from .releases import release_of
 from .text import (
     SCALED_DIGITS,
     HeadingIndex,
@@ -2404,7 +2405,9 @@ def verify(
     ``document_source``, ``packs`` and ``doubt``. The result has ``ok`` and
     ``problems``: ``(True, ())`` when every byte re-derives. A receipt from another spec version
     gives one problem and no further
-    checks. Raises ``PacketError`` when ``receipt`` is not a JSON object or an input is invalid.
+    checks. The problem names the published release that implements that version, when there
+    is one (SPEC §8.6). Raises ``PacketError`` when ``receipt`` is not a JSON object or an
+    input is invalid.
 
     ``verify`` finds each pack that the receipt names by its id, version and digest: a built-in
     pack, then a pack in ``packs``, then a pack file in the folder ``pack_dir``. The folder is
@@ -2425,7 +2428,11 @@ def verify(
     _check_integers(receipt, "receipt")
     if (version := receipt.get("groundgate")) != SPEC_VERSION:
         problem = f"receipt was decided under spec {version}; this groundgate implements "
-        return Verification(False, (problem + SPEC_VERSION,))
+        problem += SPEC_VERSION
+        if (release := release_of(version)) is not None:  # SPEC §8.6
+            problem += f". groundgate {release} implements spec {version}: verify the receipt"
+            problem += " with that release (SPEC 8.6)"
+        return Verification(False, (problem,))
     problems = []
     body = {k: v for k, v in receipt.items() if k != "receipt_sha256"}
     if digest("receipt", body) != receipt.get("receipt_sha256"):

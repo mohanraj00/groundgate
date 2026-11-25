@@ -9339,6 +9339,469 @@ REVIEW_API.append({
     },
 })  # fmt: skip
 
+# ------------------------------------------------------------- receipts (SPEC §5, #717)
+# A receipt vector is a packet with its full receipt. Each member of the expected receipt is
+# written by hand from SPEC §5: each decision with its spans, the schema and the policy after
+# defaults, and the lists in receipt order. This script only adds the digests of SPEC §6 with
+# hashlib, and sorts the decisions and the judgments by `candidate_sha256`. The data is ASCII
+# with integers and short decimals, so sorted json.dumps is JCS here. `main` stops on other
+# data.
+
+RECEIPTS: list[dict[str, Any]] = []
+FINANCE_SHA = "sha256:822c91124cbd23f29e683873975d4f3f85f2207dbbb02ca3664f0ef74848162b"  # §4.8
+
+
+def after(**members: Any) -> dict[str, Any]:
+    """A field after the defaults of SPEC §2.3, with the members that ``members`` gives."""
+    return {"aliases": None, "columns": None, "comparator": "eq", "keys": None, "markers": None,
+            "maximum": None, "minimum": None, "multiple": False, "required": False,
+            "type": "number", "unit": None, **members}  # fmt: skip
+
+
+def decided(cid: Any, field: str | None, outcome: str, codes: list[str], value: str | None,
+            unit: str | None, source: str | None, span: tuple[int, int] | None,
+            **members: Any) -> dict[str, Any]:  # fmt: skip
+    """One decision of a receipt (SPEC §5), written by hand. ``span`` is the evidence span.
+    ``members`` replaces a member, or adds an optional member after `packs`. `main` adds
+    `candidate_sha256`."""
+    return {"candidate_id": cid, "field": field, "key": None, "proposer": None,
+            "outcome": outcome, "codes": codes, "value": value, "unit": unit, "source": source,
+            "ref": None, "url": None,
+            "evidence": None if span is None else {"start": span[0], "end": span[1]},
+            "parts": [], "missing": [], "packs": [], **members}  # fmt: skip
+
+
+def part(role: str, start: int, end: int, passed: bool = True) -> dict[str, Any]:
+    return {"role": role, "start": start, "end": end, "passed": passed}
+
+
+def receipt_vector(name: str, description: str, packet: dict[str, Any],
+                   decisions: list[dict[str, Any]], summary: tuple[int, int, int],
+                   schema_after: dict[str, Any] | None = None,
+                   policy_after: dict[str, Any] = PROFILE_POLICY, **members: Any) -> None:  # fmt: skip
+    """``packet`` holds the inputs: `document`, `candidates` and each optional input.
+    ``decisions`` is in candidate order. ``members`` gives the other receipt members that are
+    not empty: `references` as (id, source) or (id, source, set), in receipt order, `packs`,
+    `judgments` as (candidate id, question, answer, p), `coverage`, `profile`, `pin`,
+    `completeness`, `relations`, `records` and `checks`."""
+    RECEIPTS.append({"name": name, "description": description, "packet": packet,
+                     "decisions": decisions, "summary": summary, "schema_after": schema_after,
+                     "policy_after": policy_after, "members": members})  # fmt: skip
+
+
+def receipt_of(r: dict[str, Any]) -> dict[str, Any]:
+    """The vector file of one receipt vector: the packet with offsets, and the receipt."""
+    packet, given = dict(r["packet"]), r["members"]
+    doc = packet["document"]
+    texts = {ref["id"]: ref["text"] for ref in packet.get("references", [])}
+    packet["candidates"] = [
+        {k: resolve(doc, val, texts) if k == "evidence" else val for k, val in cand.items()}
+        if isinstance(cand, dict)
+        else cand
+        for cand in packet["candidates"]
+    ]
+    for key in ("doubt", "outline"):
+        if key in packet:
+            packet[key] = resolve(doc, packet[key])
+    shas = [spec_digest("candidate", cand) for cand in packet["candidates"]]
+    ids = [cand.get("id") if isinstance(cand, dict) else None for cand in packet["candidates"]]
+    decisions = []
+    for i, (d, sha) in enumerate(zip(r["decisions"], shas, strict=True)):
+        first, *rest = d.items()
+        decisions.append((sha, i, dict([first, ("candidate_sha256", sha), *rest])))
+    judgments = []
+    for cid, question, answer, p in given.get("judgments", []):
+        position = ids.index(cid)
+        line = {"candidate_sha256": shas[position], "question": question}
+        if question == "key":
+            line["answer"] = answer
+        judgments.append((shas[position], position, question, {**line, "p": p}))
+    doubt = packet.get("doubt")
+    receipt: dict[str, Any] = {
+        "groundgate": "0.12",
+        "document": {"id": packet.get("document_id"),
+                     "sha256": spec_digest("document", {"text": doc}),
+                     "source": packet.get("document_source"),
+                     "doubt_sha256": spec_digest("doubt", {"doubt": doubt}) if doubt else None},
+        "references": [
+            {"id": rid, "sha256": spec_digest("reference", {"text": texts[rid]}),
+             "source": source, **({"set": at[0]} if at else {})}
+            for rid, source, *at in given.get("references", [])
+        ],
+        "packs": given.get("packs", []),
+    }  # fmt: skip
+    for key in ("profile", "pin"):
+        if key in given:
+            receipt[key] = given[key]
+    if "places" in packet:
+        receipt["places_sha256"] = spec_digest("places", {"places": packet["places"]})
+    if "completeness" in given:
+        receipt["completeness"] = given["completeness"]
+    if "outline" in packet:
+        receipt["outline_sha256"] = spec_digest("outline", {"outline": packet["outline"]})
+    receipt["schema_sha256"] = spec_digest("schema", r["schema_after"])
+    receipt["policy_sha256"] = spec_digest("policy", r["policy_after"])
+    receipt["decisions"] = [d for _, _, d in sorted(decisions, key=lambda x: x[:2])]
+    receipt["coverage"] = given.get("coverage", [])
+    receipt["judgments"] = [line for *_, line in sorted(judgments, key=lambda x: x[:3])]
+    for key in ("relations", "records", "checks"):
+        if key in given:
+            receipt[key] = given[key]
+    admitted, review, rejected = r["summary"]
+    receipt["summary"] = {"admitted": admitted, "needs_verification": review,
+                          "rejected": rejected}  # fmt: skip
+    receipt["receipt_sha256"] = spec_digest("receipt", receipt)
+    out = {"name": r["name"], "description": r["description"], **packet,
+           "expected": {"receipt": receipt}}  # fmt: skip
+    text = json.dumps(out, ensure_ascii=False)
+    if not text.isascii() or any(isinstance(x, float) and x == int(x) for x in _numbers(out)):
+        raise SystemExit(f"{r['name']}: sorted json.dumps is not JCS for this data")
+    return out
+
+
+def _numbers(obj: Any) -> list[Any]:
+    if isinstance(obj, dict):
+        return [x for v in obj.values() for x in _numbers(v)]
+    if isinstance(obj, list):
+        return [x for v in obj for x in _numbers(v)]
+    return [obj] if isinstance(obj, (int, float)) and not isinstance(obj, bool) else []
+
+
+FEE_LINE = "Fee\t$90\n"
+receipt_vector(
+    "receipt-01-required-members",
+    "The smallest receipt: a packet with no optional input. The receipt has only the required "
+    "members, and its decision has only the required members.",
+    {"document": FEE_LINE, "schema": {"fields": {"fee": USD}}, "policy": None,
+     "candidates": [{"id": "c1", "field": "fee", "value": 90, "unit": "USD",
+                     "evidence": {"start": 4, "end": 7, "text": "$90"}}]},
+    [decided("c1", "fee", "admitted", [], "90", "USD", "document", (4, 7))],
+    (1, 0, 0),
+    {"fields": {"fee": after(type="integer", unit="USD")}, "units": {}},
+)  # fmt: skip
+
+OUTCOMES = "Revenue was 5,200 in 2025.\nFee\t$90\n"
+receipt_vector(
+    "receipt-02-outcomes",
+    "The three outcomes in one receipt, with a document id and a document source. The decision "
+    "in review has `missing` and `evidence_units`, the admitted decision has a part and a "
+    "proposer, and the rejected decision keeps its cited span. A required field with no "
+    "candidate gives a coverage finding.",
+    {"document": OUTCOMES, "document_id": "report-7",
+     "document_source": "https://example.org/report",
+     "schema": {"fields": {"revenue": {"unit": "USD", "aliases": ["Revenue"]},
+                           "fee": {**USD, "aliases": ["Fee"]},
+                           "tax": {**USD, "required": True}}},
+     "policy": None,
+     "candidates": [
+         {"id": "o1", "field": "revenue", "value": "5200", "unit": "USD",
+          "evidence": [{"start": 12, "end": 17, "text": "5,200"}]},
+         {"id": "o2", "field": "fee", "value": 90, "unit": "USD", "proposer": "model-a",
+          "evidence": [q("$90"), q("Fee", role="field")]},
+         {"id": "o3", "field": "fee", "value": 95, "unit": "USD",
+          "evidence": [{"start": 31, "end": 34, "text": "$90"}]}]},
+    [decided("o1", "revenue", "needs_verification", ["PART_MISSING"], "5200", "USD", "document",
+             (12, 17), missing=["unit"],
+             evidence_units={"token": {"start": 12, "end": 17}, "next": [], "per": False,
+                             "headers": [], "statements": [], "currency": []}),
+     decided("o2", "fee", "admitted", [], "90", "USD", "document", (31, 34),
+             proposer="model-a", parts=[part("field", 27, 30)]),
+     decided("o3", "fee", "rejected", ["VALUE_NOT_IN_EVIDENCE"], "95", "USD", "document",
+             (31, 34))],
+    (1, 1, 1),
+    {"fields": {"revenue": after(unit="USD", aliases=["Revenue"]),
+                "fee": after(type="integer", unit="USD", aliases=["Fee"]),
+                "tax": after(type="integer", unit="USD", required=True)}, "units": {}},
+    coverage=[{"field": "tax", "code": "REQUIRED_FIELD_MISSING"}],
+)  # fmt: skip
+
+receipt_vector(
+    "receipt-03-evidence-units-cut",
+    "A header form that is longer than the limit is cut, and its entry in `evidence_units` has "
+    "the member `cut`. The scale item is a part.",
+    {"document": "\tABCDEFGHIJKLMNOPQRST$m\nRevenue\t5,200\n",
+     "schema": {"fields": {"usd": {"unit": "USD", "aliases": ["Revenue"]}}}, "policy": None,
+     "candidates": [{"id": "w15", "field": "usd", "value": "5200000000", "unit": "USD",
+                     "evidence": [{"start": 32, "end": 37, "text": "5,200"},
+                                  {"role": "scale", "text": "$m"}]}]},
+    [decided("w15", "usd", "needs_verification", ["PART_MISSING", "VALUE_DERIVED"],
+             "5200000000", "USD", "document", (32, 37), parts=[part("scale", 21, 23)],
+             missing=["unit"],
+             evidence_units={"token": {"start": 32, "end": 37}, "next": [], "per": False,
+                             "headers": [{"form": "KLMNOPQRST$", "allows": [], "cut": True}],
+                             "statements": [], "currency": []})],
+    (0, 1, 0),
+    {"fields": {"usd": after(unit="USD", aliases=["Revenue"])}, "units": {}},
+)  # fmt: skip
+
+NOTICE = "Notice: the late fee is $25.\n"
+receipt_vector(
+    "receipt-04-sources",
+    "The four sources of a decision: the document, a reference with `ref`, an external item "
+    "with `url`, and knowledge. The receipt lists the references by id and the built-in pack "
+    "`finance`. Only the decision whose candidate holds a word of the pack names the pack.",
+    {"document": "Annual fee: $90\n",
+     "schema": {"packs": [{"id": "finance", "version": "1.0.0"}],
+                "fields": {"fee": USD, "late_fee": USD, "deposit": USD, "net_income": USD}},
+     "policy": {"sources": {"external": {"allow": ["https://example.org/"]}}},
+     "references": [{"id": "notice", "text": NOTICE, "source": "https://example.org/notice"},
+                    {"id": "annex", "text": "Annex: none.\n"}],
+     "candidates": [
+         {"id": "s1", "field": "fee", "value": 90, "unit": "USD",
+          "evidence": [{"start": 12, "end": 15, "text": "$90"}]},
+         {"id": "s2", "field": "late_fee", "value": 25, "unit": "USD",
+          "evidence": [{"source": "reference", "ref": "notice", "start": 24, "end": 27,
+                        "text": "$25"}]},
+         {"id": "s3", "field": "deposit", "value": 500, "unit": "USD",
+          "evidence": [{"source": "external", "url": "https://example.org/terms",
+                        "retrieved": "2026-11-01", "text": "The deposit is $500."}]},
+         {"id": "s4", "field": "net_income", "value": "-71000", "unit": "USD",
+          "evidence": [{"source": "knowledge",
+                        "text": "The net loss was $71,000 in 2024."}]}]},
+    [decided("s1", "fee", "admitted", [], "90", "USD", "document", (12, 15)),
+     decided("s2", "late_fee", "admitted", [], "25", "USD", "reference", (24, 27),
+             ref="notice"),
+     decided("s3", "deposit", "admitted", ["ADMITTED_BY_POLICY"], "500", "USD", "external",
+             None, url="https://example.org/terms"),
+     decided("s4", "net_income", "needs_verification", ["EVIDENCE_STATED"], "-71000", "USD",
+             "knowledge", None, packs=["finance"])],
+    (3, 1, 0),
+    {"fields": {name: after(type="integer", unit="USD")
+                for name in ("fee", "late_fee", "deposit", "net_income")},
+     "units": {}, "packs": [{"id": "finance", "version": "1.0.0", "sha256": FINANCE_SHA}]},
+    {**PROFILE_POLICY, "sources": {"external": {"allow": ["https://example.org/"],
+                                                "other": "review"},
+                                   "knowledge": "review"}},
+    references=[("annex", None), ("notice", "https://example.org/notice")],
+    packs=[{"id": "finance", "type": "vocabulary", "version": "1.0.0", "sha256": FINANCE_SHA}],
+)  # fmt: skip
+
+DOSES = (
+    "2 DOSAGE AND ADMINISTRATION\nTake 20 mg tablets with water.\n\n"
+    "2.1 Hypertension\nThe recommended starting dose is 10 mg once daily. "
+    "The maximum dose is 40 mg daily.\n\n"
+    "2.2 Heart Failure\nThe recommended starting dose is 5 mg once daily, taken with diuretics.\n\n"
+    "2.3 Acute Myocardial Infarction\nGive 5 mg within 24 hours. "
+    "In patients who also have heart failure, start at 2.5 mg."
+)
+DOSE_JUDGE = {"id": "jev", "digest": "jev-1.13.0", "clear": {"KEY_NOT_AT_VALUE": 0.9},
+              "doubt": {"field_match": 0.2}}  # fmt: skip
+receipt_vector(
+    "receipt-05-keys-judgments-doubt",
+    "Keyed fields with recorded judgments and a doubt list. Each decision has its `key`, and "
+    "`key` stays in `missing` after a judgment clears the flag. The receipt lists each "
+    "judgment that applied, with `answer` only for the question `key`, and the digest of the "
+    "doubt list.",
+    {"document": DOSES,
+     "schema": {"fields": {"max_dose": KEYED_MG, "adjusted_dose": KEYED_MG}},
+     "policy": {"judge": DOSE_JUDGE},
+     "doubt": [q("water", 1, NO_TEXT, confidence=0.3)],
+     "candidates": [
+         {"id": "b1", "field": "adjusted_dose", "value": "2.5", "unit": "mg",
+          "key": "acute myocardial infarction",
+          "evidence": {"start": 362, "end": 368, "text": "2.5 mg"}},
+         {"id": "b2", "field": "max_dose", "value": "40", "unit": "mg", "key": "heart failure",
+          "evidence": {"start": 148, "end": 153, "text": "40 mg"}}],
+     "judgments": [j("b1", "key", 0.99, "acute myocardial infarction"),
+                   j("b1", "field_match", 0.1),
+                   j("b2", "field_match", 0.5),
+                   j("b2", "key", 0.99, "heart failure")]},
+    [decided("b1", "adjusted_dose", "needs_verification", ["MODEL_DOUBT", "MODEL_CLEARED"],
+             "2.5", "mg", "document", (362, 368), key="acute myocardial infarction",
+             missing=["key"]),
+     decided("b2", "max_dose", "admitted", ["MODEL_CLEARED"], "40", "mg", "document",
+             (148, 153), key="heart failure", missing=["key"])],
+    (1, 1, 0),
+    {"fields": {"max_dose": after(unit="mg", keys=CONDITIONS),
+                "adjusted_dose": after(unit="mg", keys=CONDITIONS)}, "units": {}},
+    {**PROFILE_POLICY, "judge": DOSE_JUDGE},
+    judgments=[("b1", "key", "acute myocardial infarction", 0.99),
+               ("b1", "field_match", None, 0.1),
+               ("b2", "field_match", None, 0.5),
+               ("b2", "key", "heart failure", 0.99)],
+)  # fmt: skip
+
+FETCHED_BODY = {"groundgate_pin": 1, "source_sha256": SOURCE_A, "url": STANDARD_URL,
+                "retrieved": "2026-11-09", "edition": "2024 revision 2", "origin": "fetched",
+                "label": None}  # fmt: skip
+receipt_vector(
+    "receipt-06-profile-pin",
+    "A packet with a profile and a source pin. The receipt has the members `profile` and "
+    "`pin`, each with its digest. The profile gives the schema and the policy.",
+    {"document": FEE_LINE, "profile": profile(), "pin": FETCHED,
+     "candidates": [{"id": "p1", "field": "fee", "value": 90, "unit": "USD",
+                     "evidence": [q("$90"), q("Fee", role="field")]}]},
+    [decided("p1", "fee", "admitted", [], "90", "USD", "document", (4, 7),
+             parts=[part("field", 0, 3)])],
+    (1, 0, 0),
+    {"fields": {"fee": PROFILE_FIELD}, "units": {}},
+    profile={"id": "fees-test", "version": "1.0.0",
+             "sha256": _sha("groundgate-profile/1:", profile_body())},
+    pin={"source_sha256": SOURCE_A, "url": STANDARD_URL, "retrieved": "2026-11-09",
+         "edition": "2024 revision 2", "origin": "fetched", "label": None,
+         "sha256": _sha("groundgate-pin/1:", FETCHED_BODY)},
+)  # fmt: skip
+
+FLAT = (
+    "1 Scope\nThis lease covers one flat.\n\n"
+    "2 Rent\nThe rent is $900.\nThe tenant pays on day 1.\n\n"
+    "3 Term\nThe term is 12 months.\n"
+)
+FLAT_1 = "1 Scope\nThis lease covers one flat."
+FLAT_2 = "2 Rent\nThe rent is $900.\nThe tenant pays on day 1."
+receipt_vector(
+    "receipt-07-places-completeness-outline",
+    "A packet with places, a completeness and an outline. The receipt has `places_sha256`, "
+    "`completeness` and `outline_sha256`. Each decision of the passage field has "
+    "`passage_sha256` and then `locator`. The locator is null for the section that has no word "
+    "in the places.",
+    {"document": FLAT,
+     "schema": {"fields": {"section": {"type": "passage", "multiple": True}}}, "policy": None,
+     "completeness": {"status": "complete", "missing": []},
+     "outline": [q("1 Scope", 1, NO_TEXT, level=1), q("2 Rent", 1, NO_TEXT, level=1),
+                 q("3 Term", 1, NO_TEXT, level=1)],
+     "places": [[39, 43, 1, 8000, 11000, 10600, 12200], [56, 61, 1, 15000, 12400, 18200, 13600],
+                [66, 72, 3, 9500, 7200, 13000, 8400], [91, 95, 3, 8000, 9800, 10900, 11000],
+                [111, 118, 3, 17500, 11200, 21800, 12400]],
+     "candidates": [{"id": "p1", "field": "section", "value": "2",
+                     "evidence": [q(FLAT_2, 1, NO_TEXT)]},
+                    {"id": "p2", "field": "section", "value": "1",
+                     "evidence": [q(FLAT_1, 1, NO_TEXT)]}]},
+    [decided("p1", "section", "admitted", [], "2", None, "document", (37, 87),
+             passage_sha256=spec_digest("passage", {"text": FLAT_2}),
+             locator={"page": 1, "box": [8000, 11000, 18200, 13600]}),
+     decided("p2", "section", "admitted", [], "1", None, "document", (0, 35),
+             passage_sha256=spec_digest("passage", {"text": FLAT_1}), locator=None)],
+    (2, 0, 0),
+    # A passage field gives only four members, and the schema with defaults holds each default
+    # member (SPEC §2.3, §4.17).
+    {"fields": {"section": after(type="passage", multiple=True)}, "units": {}},
+    completeness={"status": "complete", "missing": []},
+)  # fmt: skip
+
+receipt_vector(
+    "receipt-08-relations",
+    "A schema with a relation. The receipt has the member `relations`, with the difference and "
+    "the allowance as canonical decimals. The allowance is half of the place of each of the "
+    "three values.",
+    {"document": "Total: $100. Rent: $60. Fees: $40.\n",
+     "schema": {"fields": {"total": USD, "rent": USD, "fees": USD},
+                "relations": [{"id": "sum", "total": "total",
+                               "parts": [{"field": "rent"}, {"field": "fees"}]}]},
+     "policy": None,
+     "candidates": [
+         {"id": "t1", "field": "total", "value": 100, "unit": "USD", "evidence": [q("$100")]},
+         {"id": "t2", "field": "rent", "value": 60, "unit": "USD", "evidence": [q("$60")]},
+         {"id": "t3", "field": "fees", "value": 40, "unit": "USD", "evidence": [q("$40")]}]},
+    [decided("t1", "total", "admitted", [], "100", "USD", "document", (7, 11)),
+     decided("t2", "rent", "admitted", [], "60", "USD", "document", (19, 22)),
+     decided("t3", "fees", "admitted", [], "40", "USD", "document", (30, 33))],
+    (3, 0, 0),
+    {"fields": {name: after(type="integer", unit="USD") for name in ("total", "rent", "fees")},
+     "units": {},
+     "relations": [{"id": "sum", "total": "total",
+                    "parts": [{"field": "rent", "factor": "1"},
+                              {"field": "fees", "factor": "1"}],
+                    "tolerance": "0"}]},
+    relations=[{"id": "sum", "key": None, "holds": True, "difference": "0",
+                "allowance": "1.5"}],
+)  # fmt: skip
+
+SET_CHECKS = [{"id": "corrigendum", "check": "replace", "field": "items", "member": "code"},
+              {"id": "one_code", "check": "unique", "field": "items", "member": "code"}]  # fmt: skip
+receipt_vector(
+    "receipt-09-records-checks",
+    "A record field in a document set with two checks. The receipt has the members `records` "
+    "and `checks`, the reference in the set has `set`, and each decision of a member field has "
+    "`record`. The record of the corrigendum replaces the record of the price list.",
+    {"document": "Price list 2026\nB-200 Bracket $12.50\n",
+     "schema": {"fields": {"items": {"type": "record", "members": {
+                    "code": {"type": "string", "required": True},
+                    "unit_price": {"unit": "USD", "required": True}}}},
+                "checks": SET_CHECKS},
+     "policy": None,
+     "references": [{"id": "corrigendum", "text": "Corrigendum 2026\nB-200 Bracket $14.00\n",
+                     "set": 1}],
+     "candidates": [
+         {"id": "e1", "field": "items.code", "value": "B-200", "record": "p1",
+          "evidence": [q("B-200")]},
+         {"id": "e2", "field": "items.unit_price", "value": "12.50", "unit": "USD",
+          "record": "p1", "evidence": [q("$12.50")]},
+         {"id": "e3", "field": "items.code", "value": "B-200", "record": "s1",
+          "evidence": [q("B-200", ref="corrigendum", source="reference")]},
+         {"id": "e4", "field": "items.unit_price", "value": "14.00", "unit": "USD",
+          "record": "s1", "evidence": [q("$14.00", ref="corrigendum", source="reference")]}]},
+    [decided("e1", "items.code", "admitted", [], "B-200", None, "document", (16, 21),
+             record="p1"),
+     decided("e2", "items.unit_price", "admitted", [], "12.5", "USD", "document", (30, 36),
+             record="p1"),
+     decided("e3", "items.code", "admitted", [], "B-200", None, "reference", (17, 22),
+             ref="corrigendum", record="s1"),
+     decided("e4", "items.unit_price", "admitted", [], "14", "USD", "reference", (31, 37),
+             ref="corrigendum", record="s1")],
+    (4, 0, 0),
+    {"fields": {"items": {"type": "record", "required": False, "members": {
+        "code": after(type="string", required=True),
+        "unit_price": after(unit="USD", required=True)}}},
+     "units": {}, "checks": SET_CHECKS},
+    references=[("corrigendum", None, 1)],
+    records=[{"field": "items", "record": "p1", "outcome": "admitted", "codes": [],
+              "source": "document", "ref": None, "replaced": True,
+              "members": {"code": "B-200", "unit_price": "12.5"}},
+             {"field": "items", "record": "s1", "outcome": "admitted", "codes": [],
+              "source": "reference", "ref": "corrigendum", "replaced": False,
+              "members": {"code": "B-200", "unit_price": "14"}}],
+    checks=[{"id": "corrigendum", "holds": True, "records": []},
+            {"id": "one_code", "holds": True, "records": []}],
+)  # fmt: skip
+
+receipt_vector(
+    "receipt-10-rejected-early",
+    "Candidates that an early step rejects. A decision reports what the candidate gives: "
+    "`candidate_id` only for a string or an integer, `field` only for a string, the canonical "
+    "value only when the field is in the schema and the value reads as a number, and the cited "
+    "span and its source when the evidence is well-formed. A fraction on an integer field "
+    "reads as a number, so its decision has the value.",
+    {"document": FEE_LINE, "schema": {"fields": {"fee": USD}}, "policy": None,
+     "candidates": [
+         "not an object",
+         {"id": ["a"], "field": "price", "value": "7", "unit": "mg"},
+         {"id": 7, "field": "fee", "value": "n/a", "unit": "USD"},
+         {"id": "r4", "field": "fee", "value": 90, "unit": "USD"},
+         {"id": "r5", "field": "fee", "value": 90, "unit": "EUR",
+          "evidence": {"start": 4, "end": 7, "text": "$90"}},
+         {"id": "r6", "field": "fee", "value": "90.50", "unit": "USD"}]},
+    [decided(None, None, "rejected", ["CANDIDATE_INVALID"], None, None, None, None),
+     decided(None, "price", "rejected", ["FIELD_UNKNOWN"], None, "mg", None, None),
+     decided(7, "fee", "rejected", ["NULL_STRING_LITERAL"], None, "USD", None, None),
+     decided("r4", "fee", "rejected", ["NO_EVIDENCE"], "90", "USD", None, None),
+     decided("r5", "fee", "rejected", ["UNIT_INVALID"], "90", "EUR", "document", (4, 7)),
+     decided("r6", "fee", "rejected", ["TYPE_INVALID"], "90.5", "USD", None, None)],
+    (0, 0, 6),
+    {"fields": {"fee": after(type="integer", unit="USD")}, "units": {}},
+)  # fmt: skip
+
+receipt_vector(
+    "receipt-11-evidence-units-heading",
+    "A header and a currency statement that do not agree with the unit of the field. The "
+    "`evidence_units` of the decision names the header form with the codes that it allows, the "
+    "statement and the heading currency. The header entry has no `cut` member.",
+    {"document": "The figures are presented in Australian dollars.\n\t$m\t$m\n"
+                 "Revenue\t5,200\t4,900\n",
+     "schema": {"fields": {"usd": {"unit": "USD", "aliases": ["Revenue"]}}}, "policy": None,
+     "candidates": [{"id": "w2", "field": "usd", "value": "4900000000", "unit": "USD",
+                     "evidence": [{"start": 70, "end": 75, "text": "4,900"},
+                                  {"role": "scale", "text": "$m"}]}]},
+    [decided("w2", "usd", "needs_verification", ["PART_MISSING", "VALUE_DERIVED"],
+             "4900000000", "USD", "document", (70, 75), parts=[part("scale", 53, 55)],
+             missing=["unit"],
+             evidence_units={"token": {"start": 70, "end": 75}, "next": [], "per": False,
+                             "headers": [{"form": "$", "allows": DOLLARS}],
+                             "statements": ["AUD"], "currency": ["AUD"]})],
+    (0, 1, 0),
+    {"fields": {"usd": after(unit="USD", aliases=["Revenue"])}, "units": {}},
+)  # fmt: skip
+
 
 def main() -> None:
     out_dir = HERE / "vectors"
@@ -9534,12 +9997,20 @@ def main() -> None:
         (api_dir / f"{r['name']}.json").write_text(
             json.dumps(r, indent=1, ensure_ascii=False) + "\n"
         )
+    receipt_dir = HERE / "receipts"
+    receipt_dir.mkdir(exist_ok=True)
+    for old in receipt_dir.glob("*.json"):
+        old.unlink()
+    for r in RECEIPTS:
+        (receipt_dir / f"{r['name']}.json").write_text(
+            json.dumps(receipt_of(r), indent=1, ensure_ascii=False) + "\n"
+        )
     print(
         f"wrote {len(VECTORS)} vectors, {len(INVALID)} invalid packets, "
         f"{len(PROFILES)} profile vectors, {len(PINS)} pin vectors, "
         f"{len(PLACES)} places vectors, {len(EXPORTS)} export vectors, "
-        f"{len(AUDITS)} audit vectors, {len(EVENTS)} event vectors and "
-        f"{len(REVIEW_API)} review API vectors"
+        f"{len(AUDITS)} audit vectors, {len(EVENTS)} event vectors, "
+        f"{len(REVIEW_API)} review API vectors and {len(RECEIPTS)} receipt vectors"
     )
 
 

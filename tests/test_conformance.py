@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 from collections import defaultdict
 from pathlib import Path
@@ -220,3 +221,108 @@ def test_every_code_has_two_vectors() -> None:
     for code in every:
         assert len(files[code]) >= 2, f"{code} appears in {sorted(files[code])}"
     assert set(files) <= every
+
+
+# --------------------------------------------------------------- receipt vectors (SPEC §5, #717)
+RECEIPTS = sorted((ROOT / "receipts").glob("*.json"))
+RECEIPT_INPUTS = (
+    "references", "document_source", "packs", "doubt", "profile", "pin", "places",
+    "completeness", "outline",
+)  # fmt: skip
+
+
+def _receipt_args(v: dict[str, Any]) -> tuple[tuple[Any, ...], dict[str, Any]]:
+    args = (v["document"], v.get("schema"), v["candidates"], v.get("policy"))
+    return args, {k: v[k] for k in RECEIPT_INPUTS if k in v}
+
+
+@pytest.mark.parametrize("path", RECEIPTS, ids=lambda p: p.stem)
+def test_receipt_vector(path: Path) -> None:
+    v = _load(path)
+    want = v["expected"]["receipt"]
+    args, extra = _receipt_args(v)
+    js = v.get("judgments")
+    got = gg.admit(*args, v.get("document_id"), js, **extra).to_dict()
+    assert got == want
+    body = {k: member for k, member in want.items() if k != "receipt_sha256"}
+    assert gg.digest("receipt", body) == want["receipt_sha256"]
+    assert gg.verify(want, *args, js, **extra).ok
+
+
+def _member_table(heading: str) -> dict[str, str]:
+    """The member table of SPEC §5 under ``heading``: each member with its "Present" cell."""
+    spec = (ROOT.parent / "SPEC.md").read_text(encoding="utf-8")
+    lines = spec.split(f"\n{heading}\n\n", 1)[1].split("\n\n", 1)[0].splitlines()
+    column = [cell.strip() for cell in lines[0].strip("|").split("|")].index("Present")
+    rows = [[cell.strip() for cell in line.strip("|").split("|")] for line in lines[2:]]
+    return {row[0].strip("`"): row[column] for row in rows}
+
+
+def _entries(receipt: dict[str, Any], member: str) -> list[dict[str, Any]]:
+    """The entries of the receipt that can hold the entry member ``member`` (SPEC §5)."""
+    if member == "set":
+        return list(receipt["references"])
+    if member == "answer":
+        return list(receipt["judgments"])
+    units = [d["evidence_units"] for d in receipt["decisions"] if "evidence_units" in d]
+    return [header for unit in units for header in unit["headers"]]
+
+
+def test_receipt_vectors_hold_each_member_of_the_tables() -> None:
+    """The vectors hold each member of the tables of SPEC §5 and no other member. A member
+    that is always present is in each receipt, and each other member is absent one or more
+    times."""
+    receipts = [_load(path)["expected"]["receipt"] for path in RECEIPTS]
+    decisions = [d for receipt in receipts for d in receipt["decisions"]]
+    for heading, objects in (("Receipt members:", receipts), ("Decision members:", decisions)):
+        table = _member_table(heading)
+        assert {key for obj in objects for key in obj} == set(table)
+        for member, present in table.items():
+            holders = sum(member in obj for obj in objects)
+            if present == "always":
+                assert holders == len(objects), member
+            else:
+                assert 0 < holders < len(objects), member
+    entry_table = _member_table("Three entries of a list have a member that is not always present:")
+    assert set(entry_table) == {"set", "answer", "cut"}
+    for member in entry_table:
+        entries = [entry for receipt in receipts for entry in _entries(receipt, member)]
+        assert 0 < sum(member in entry for entry in entries) < len(entries), member
+    smallest = _load(ROOT / "receipts" / "receipt-01-required-members.json")["expected"]["receipt"]
+    always = {m for m, present in _member_table("Receipt members:").items() if present == "always"}
+    assert set(smallest) == always
+    always = {m for m, present in _member_table("Decision members:").items() if present == "always"}
+    assert all(set(d) == always for d in smallest["decisions"])
+
+
+def _lock_problems(sums: str, files: dict[str, bytes]) -> list[str]:
+    """Compare the receipt vectors with ``SHA256SUMS``: each problem of a vector that changed,
+    that is not there, or that the list does not name (SPEC §5)."""
+    locked = dict(reversed(line.split("  ", 1)) for line in sums.splitlines())
+    problems = [f"{name} is not in SHA256SUMS" for name in sorted(set(files) - set(locked))]
+    for name, digest in sorted(locked.items()):
+        if name not in files:
+            problems.append(f"{name} is removed")
+        elif hashlib.sha256(files[name]).hexdigest() != digest:
+            problems.append(f"{name} is changed")
+    return problems
+
+
+def test_receipt_vectors_do_not_change() -> None:
+    """A release that keeps the spec version only adds receipt vectors (SPEC §5). A new vector
+    gets a line in ``conformance/receipts/SHA256SUMS``, and a line never changes."""
+    sums = (ROOT / "receipts" / "SHA256SUMS").read_text(encoding="utf-8")
+    files = {path.name: path.read_bytes() for path in RECEIPTS}
+    assert len(files) >= 11
+    assert _lock_problems(sums, files) == []
+
+
+def test_receipt_lock_finds_a_changed_a_removed_and_an_unlisted_vector() -> None:
+    sums = (ROOT / "receipts" / "SHA256SUMS").read_text(encoding="utf-8")
+    files = {path.name: path.read_bytes() for path in RECEIPTS}
+    first, second, *_ = sorted(files)
+    changed = {**files, first: files[first] + b" "}
+    assert _lock_problems(sums, changed) == [f"{first} is changed"]
+    removed = {name: data for name, data in files.items() if name != second}
+    assert _lock_problems(sums, removed) == [f"{second} is removed"]
+    assert _lock_problems(sums, {**files, "new.json": b"{}"}) == ["new.json is not in SHA256SUMS"]

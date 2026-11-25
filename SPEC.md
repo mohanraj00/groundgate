@@ -11,7 +11,7 @@ groundgate 0.11.0 and is in the `v0.11.0` tag. Spec 0.10 is in the `v0.10.0` tag
 spec 0.8 in the `v0.8.0` tag, spec 0.7 in the `v0.7.0` tag, spec 0.6 in the `v0.6.0` tag, spec
 0.5 in the `v0.5.0` tag, spec 0.4 in the `v0.4.0` tag, spec 0.3 in the `v0.3.0` tag, spec 0.2 in
 the `v0.2.0` tag, and spec 0.1 in the `v0.1.0` tag. Any change to how
-a candidate is decided is a new version with a new version string. An implementation conforms if
+a candidate is decided is a new version with a new version string (§8). An implementation conforms if
 it produces the outcome, codes and missing parts of every decision, the parts and the evidence
 units where a vector gives them, the coverage findings, and the relation results where a vector
 gives them, in every vector
@@ -155,6 +155,9 @@ that are not null, also as a member of a record (§4.12). A field template (§4.
 options. Step 5 rejects a value that is not an option (§3). Each other check stays: the value
 must still be in the cited text (step 10). After defaults, a field has the member `options`
 only when its options are not null, so the digest of a schema with no options does not change.
+Each other default of the list above is a member of each field after defaults, also of a
+`passage` field (§4.17) and of a member of a record (§4.12). A `record` field after defaults has
+`type`, `members` and `required`, and `description` when the field gives it. `units` is `{}` after defaults when the schema gives none.
 The packet is invalid when `options` breaks one of these rules.
 
 A `passage` field (#638) holds a citable section of the document, such as one numbered section
@@ -322,7 +325,7 @@ without judgments.
 | `search_region` | no | Span of the document within which quotes are found and re-anchoring may look (§3.1, §4.6). Default: the whole document. |
 | `confidence` | no | Number in [0, 1]. |
 | `proposer` | no | A non-blank string that names who proposed the candidate, for example a model or `structure` (spec 0.12, #509). The decision records it. |
-| `id` | no | Caller's identifier, echoed in the decision. |
+| `id` | no | Caller's identifier, echoed in the decision as `candidate_id` when it is a string or an integer. For each other type, `candidate_id` is null (§5). |
 
 Other keys are allowed and ignored by the checks (for example a model's own score); they are covered
 by `candidate_sha256`, the digest of kind `candidate` over the candidate object as given.
@@ -2426,7 +2429,75 @@ the list, answer bodies, requests that the service refuses, and the status of ea
  "receipt_sha256": "sha256:..."}
 ```
 
-`document.source` is the document source, or null. `document.doubt_sha256` is the digest of the
+**The members (#717).** The tables below list each member of a receipt and of a decision.
+A member that is **always** present has a value in each receipt of this spec version. Each other
+member is present only with the input that its row names, so a packet without that input keeps
+its receipt. A receipt has no other member. The text after the tables gives the value of each
+member. The reference implementation writes the members in the order of the tables. That order
+is not part of the contract: a receipt is a JSON object, and each digest reads canonical JSON
+(§6). A digest is `sha256:` and 64 lowercase hex digits. Each sort of strings in this section
+is in code point order.
+
+Receipt members:
+
+| Member | Type | Present | Value and order |
+|---|---|---|---|
+| `groundgate` | string | always | The spec version, `0.12`. |
+| `document` | object | always | `id`, `sha256`, `source` and `doubt_sha256`. Each one is always present. |
+| `references` | list | always | One entry for each reference of the packet, sorted by `id`. |
+| `packs` | list | always | One entry for each pack that the packet reads besides the base pack, sorted by `id`. |
+| `profile` | object | the packet gives a profile (§4.10) | `id`, `version` and `sha256`. |
+| `pin` | object | the packet gives a source pin (§4.14) | The pin after defaults without `groundgate_pin`, and `sha256`. |
+| `places_sha256` | digest | the packet gives places (§4.15), also an empty list | The digest of the places. |
+| `completeness` | object | the packet gives a completeness (§4.16) | `status` and `missing`. |
+| `outline_sha256` | digest | the packet gives an outline (§4.17), also an empty list | The digest of the outline. |
+| `schema_sha256` | digest | always | The digest of the schema after defaults (§2.3). |
+| `policy_sha256` | digest | always | The digest of the policy after defaults (§2.4). |
+| `decisions` | list | always | One decision for each candidate, sorted by `candidate_sha256`, then by input position. |
+| `coverage` | list | always | One `{"field", "code"}` for each coverage finding (§3.3), sorted by `field`. |
+| `judgments` | list | always | One entry for each judgment that applied (§2.6), sorted by `candidate_sha256`, then by the input position of the candidate, then by `question`. |
+| `relations` | list | the schema has one or more relations (§3.4) | One entry for each relation that applied at a relation key, sorted by `id`, then by `key`. |
+| `records` | list | the schema has a `record` field (§4.12) | One line for each record, sorted by `field`, then by `record`. |
+| `checks` | list | the schema has one or more checks (§4.13) | One entry for each check, sorted by `id`. |
+| `summary` | object | always | `admitted`, `needs_verification` and `rejected`: the count of the decisions with each outcome, as integers. |
+| `receipt_sha256` | digest | always | The digest of kind `receipt` over the receipt without this member. |
+
+Decision members:
+
+| Member | Type | Present | Value |
+|---|---|---|---|
+| `candidate_id` | string, integer or null | always | The candidate's `id` when it is a string or an integer. Otherwise null. A boolean is not an integer. |
+| `candidate_sha256` | digest | always | The digest of the candidate as given (§2.5). |
+| `field` | string or null | always | The candidate's `field` when it is a string. Otherwise null. |
+| `key` | string or null | always | The candidate's `key` on a keyed field. |
+| `proposer` | string or null | always | The candidate's `proposer`. |
+| `outcome` | string | always | `admitted`, `needs_verification` or `rejected`. |
+| `codes` | list of strings | always | The reason codes, in the order given below. |
+| `value` | string or null | always | The canonical value. |
+| `unit` | string or null | always | The candidate's `unit`. |
+| `source` | string or null | always | `document`, `reference`, `external` or `knowledge`. |
+| `ref` | string or null | always | The id of a reference. |
+| `url` | string or null | always | The URL of an external item. |
+| `evidence` | object or null | always | `start` and `end`, in UTF-8 bytes. |
+| `parts` | list | always | One `{"role", "start", "end", "passed"}` for each listed role item. |
+| `missing` | list of strings | always | The missing parts. |
+| `packs` | list of strings | always | The ids of the packs that the decision read, sorted. |
+| `evidence_units` | object | the decision has a number token and its unit check does not pass (below) | `token`, `next`, `per`, `headers`, `statements` and `currency`. |
+| `record` | string | the decision is of a member field (§4.12), and its candidate has a non-blank `record` string | The record id. |
+| `passage_sha256` | digest or null | the decision is of a `passage` field (§4.17) | The digest of the passage text, or null for a rejected decision. |
+| `locator` | object or null | the packet gives places (§4.15) | `page` and `box`, or null. |
+
+Three entries of a list have a member that is not always present:
+
+| Member | Entry of | Present |
+|---|---|---|
+| `set` | `references` | the reference is in the document set (§4.13) |
+| `answer` | `judgments` | the question is `key` |
+| `cut` | `headers` of `evidence_units` | the form is cut |
+
+`document.id` is the document id that the caller gives, or null. It is a label of the app:
+groundgate copies it and reads nothing from it. Give a string: the reference implementation
+does not check the type. `document.source` is the document source, or null. `document.doubt_sha256` is the digest of the
 packet's doubt list (§2.1), or null when the list is empty, so a receipt shows which doubt spans
 its decisions read (spec 0.12, #535). `references` lists each reference as
 `{"id", "sha256", "source"}`, sorted by `id`. A reference in the document set (§4.13) also has
@@ -2464,6 +2535,16 @@ is a string, otherwise `null`. `proposer` is the candidate's `proposer` when it 
 string, otherwise `null` (spec 0.12, #509). A decision of a member field (§4.12) whose
 candidate has a non-blank `record` string has the member `record`, with that string. Other
 decisions do not have the member.
+
+A rejected decision reports what its candidate gives. `candidate_id` and `field` follow the
+table above, so a candidate that is not an object gives null for both. `unit` is the candidate's
+`unit` when it is a string. `value` is not null only when `field` names a field of the schema
+and the candidate's value is a string or an integer that reads for the type of the field. On a
+`number` or `integer` field it is the canonical decimal of a value that reads as a number
+(§4.1), also for a fraction on an `integer` field, which step 4 rejects. On a `date` field it is
+a date in the normal form (§4.11). On a `string` or `passage` field it is a string that is not
+blank, after whitespace normalisation (§4.4). `key` is the candidate's `key` only when that
+field has `keys` and the key is a string.
 
 - `source` is the kind of the item that the decision rests on: the value item's on the checked
   path from step 9 on, the deciding item's on the outside path, and for a candidate rejected
@@ -2566,6 +2647,46 @@ When the schema has checks (§4.13), the receipt has a member `checks`: each che
 check gave a code, in code point order. `holds` is true when the list is empty. A receipt of a
 schema without checks has no `checks` member. `receipt_sha256` is the digest of kind `receipt` over the receipt without its
 `receipt_sha256` key.
+
+**Compatibility (#717).** The receipt of a packet is a function of the packet and of the spec
+version. A release that keeps the spec version gives the same receipt to each packet that an
+earlier release with that spec version accepts: each member is equal, and `receipt_sha256` is
+the same. So a receipt that one release made verifies with each later release of the same spec
+version.
+
+A release that keeps the spec version can add only these:
+
+- an optional input of the packet, or an optional member or value of an input, that each earlier
+  release refuses as an invalid packet;
+- an optional member of the receipt, of a decision or of an entry of a list, that is present
+  only when the packet uses such an input;
+- a reason code that only a packet with such an input can get.
+
+The column "Present" of the tables names that input for each optional member that came in this
+way. The members `profile`, `pin`, `places_sha256`, `completeness`, `outline_sha256`, `records`,
+`checks`, `record`, `passage_sha256`, `locator` and the member `set` of an entry of `references`
+came into spec 0.12 in this way, with groundgate 0.15.0.
+
+Each other change of a receipt changes a decision, and it needs a new spec version:
+
+- another outcome, another code or another value of a member for a packet that an earlier
+  release accepts;
+- a member that is present for such a packet, and was not present before;
+- a member that is removed or renamed, or that gets another type;
+- another order of a list, or another digest rule;
+- a refusal of a packet that an earlier release accepts;
+- a fourth outcome.
+
+A program that reads receipts must accept a member that it does not know and a code that it
+does not know. It must not accept an outcome other than the three of §1.
+
+**Receipt vectors (#717).** Each vector under `conformance/receipts/` gives a packet and its
+full receipt. An implementation conforms to this section when it gives the receipt of each
+vector: each member is equal, and `receipt_sha256` is the same. An implementation that does not
+read profiles, pins or places leaves out the vectors that give one. The vectors hold each
+member of the tables above one or more times, and the vector `receipt-01-required-members` has
+only the members that are always present. A release that keeps the spec version only adds
+receipt vectors. It does not change a vector and does not remove one.
 
 ### 5.1 Admitted facts export
 
@@ -2705,3 +2826,456 @@ relation of §3.4 is the one exception, and it never admits a value), the
 subject of the document (groundgate assumes one subject per document), and PDF geometry (page and
 bounding box) as evidence. Adapters may convert richer evidence into spans. Number formats other
 than English and Indian grouping, and digits other than 0 to 9 (#60).
+
+## 8. Versions
+
+groundgate has three kinds of version (#718): the spec version, the package version and the
+version of each format. Each one changes for its own reason.
+
+### 8.1 The spec version
+
+The spec version names the decisions: the function from a packet to its receipt. It is
+`MAJOR.MINOR`, and this document is version 0.12. A receipt holds it in the member `groundgate`
+(§5), and each digest of §6 holds it in the prefix `groundgate/0.12:`. So a receipt of one spec
+version is never equal to a receipt of another.
+
+A release gets a new spec version when it changes the receipt of a packet that the spec version
+before it accepts. §5 lists these changes under "Compatibility": another outcome, another code
+or another value of a member, a member that was not present, a removed or renamed member,
+another type, another order of a list, another digest rule, a refusal of the packet, and a
+fourth outcome. Before 1.0, a new spec version takes the next minor number, so 0.13 follows
+0.12. From 1.0, a new spec version takes the next major number, and its minor number is 0, so
+2.0 follows 1.0 (§8.6).
+
+A release keeps the spec version when it only adds, as §5 permits: an optional input that
+earlier releases refuse, an optional member that is present only with that input, and a code
+that only such a packet can get. A section that changes no receipt also keeps it, such as §4.18
+to §4.20. The first paragraph of this document then names the package release that added each
+part. groundgate 0.15.0, 0.16.0 and 0.17.0 each added to spec 0.12 in this way.
+
+### 8.2 The package version
+
+The package version is `MAJOR.MINOR.PATCH`, as in [SemVer](https://semver.org). It is the
+version of the code and of the text of this document. The changelog entry of each release names
+the spec version that the release implements. Before 1.0:
+
+- a release with a new spec version takes the next minor number;
+- a release that adds an input, a member, a code, a format, a command or a public name takes
+  the next minor number;
+- a release that only corrects a fault, and changes no receipt and no format, takes the next
+  patch number.
+
+These rules hold from release 0.14.0. Three earlier patch releases added a command or a public
+name and kept the minor number: 0.5.1, 0.5.2 and 0.6.1.
+
+From 1.0, the major number of the package is the major number of the spec version (§8.6):
+
+- a release with a new spec version takes the next major number;
+- a release that adds takes the next minor number;
+- a release that only corrects a fault takes the next patch number.
+
+### 8.3 The version of a format
+
+A **format** is a named form of data that groundgate reads or writes: a pack, a profile, an
+export, a store object, a view, a line of a log, or an API. Each format has its own version,
+apart from the spec version and the package version. The version is a positive integer, with
+one exception: the layout format has the version `0.1`. A format name has one of three forms:
+
+- `name@N`: a kind of the store, or the `format` member of a file, such as `facts@2`;
+- `groundgate-name/N`: the prefix of a digest, such as `groundgate-pack/1:`, or the name of an
+  API or of a record, such as `groundgate-review/1`;
+- a member `groundgate_name` that holds the version, such as `"groundgate_pack": 1`.
+
+A release keeps the version of a format when it only adds to it: a member that a writer can
+leave out, or a value that a release before it refuses. Each object that was valid stays valid,
+with the same meaning and the same digest. A release gives the format its next version when it
+removes or renames a member, changes the type or the meaning of a member, makes a member
+required, or changes the bytes that a digest of the format reads. The version before keeps its
+name, so `facts@1` and `facts@2` are two formats, and a release says in its changelog when it
+stops reading or writing one. The text that defines a format can give a stricter rule, as §4.20
+does for the review API.
+
+A new format, or a new version of a format, changes the spec version only when it changes the
+receipt of a packet (§8.1).
+
+### 8.4 Which change gives which version
+
+"New" in the column of the spec version is the next minor number before 1.0, and the next major
+number from 1.0. The package version has one column for each of the two periods.
+
+| Change | Spec version | Package before 1.0 | Package from 1.0 | Format version |
+|---|---|---|---|---|
+| Another decision or another receipt for a packet that the spec version accepts | new | next minor | next major | no change |
+| A new optional input of the packet | no change | next minor | next minor | no change |
+| A new optional member of a receipt, present only with a new input | no change | next minor | next minor | no change |
+| A new reason code that only a packet with a new input can get | no change | next minor | next minor | no change |
+| A new reason code that a packet without a new input can get | new | next minor | next major | no change |
+| A new optional member of an export or of another format | no change | next minor | next minor | no change |
+| A removed, renamed or required member of a format, or another type or meaning of a member | no change | next minor | next minor | next version of the format |
+| A new format | no change | next minor | next minor | version 1 |
+| A corrected fault that changes no receipt and no format | no change | next patch | next patch | no change |
+
+A change of a format that also changes the receipt of a packet is in the first row.
+
+### 8.5 The formats
+
+These are the formats of the reference implementation and the text that defines each one. A name with `@N`
+or `/N` holds its version. `tests/test_versions.py` fails when the code has a format name that
+is not in these tables, or when a table has a name that the code does not have.
+
+Formats that this document defines:
+
+| Format | Version | Defined in |
+|---|---|---|
+| `groundgate_pack`, `groundgate-pack/1` | 1 | §4.7 to §4.9. The second name is the prefix of the pack digest. |
+| `groundgate_profile`, `groundgate-profile/1` | 1 | §4.10. The second name is the prefix of the profile digest. |
+| `groundgate_pin`, `groundgate-pin/1` | 1 | §4.14. The second name is the prefix of the pin digest. |
+| `groundgate_audit_task`, `groundgate_audit_label` | 1 | §4.18 |
+| `groundgate-blind-audit/1` | 1 | §4.18, the prefix of the hash of the pick |
+| `groundgate_calibration_event` | 1 | §4.19 |
+| `groundgate-review/1` | 1 | §4.20 |
+| `groundgate-review-task/1` | 1 | §4.20, the prefix of the hash of a task ID |
+| `facts@1` | 1 | §5.1 |
+| `facts@2` | 2 | §5.2 |
+
+Formats of the calibration tools, in [docs/calibrate.md](docs/calibrate.md):
+
+| Format | Version | Defined in |
+|---|---|---|
+| `groundgate_gold`, `groundgate-gold/1` | 1 | "The gold set, format 1" |
+| `groundgate_split`, `groundgate-split/1` | 1 | "The split file, format 1" and "The output" |
+| `groundgate_calibration_report` | 1 | "The output" |
+| `groundgate_audit` | 1 | "The audit set, format 1" |
+| `groundgate_audit_pick` | 1 | "The log and the pick" describes the pick. Only the code names this member of the output of `audit pick`: `src/groundgate/calibrate/audit.py`. |
+| `groundgate-audit-set/1` | 1 | The prefix of the digest of an audit set. Only the code defines it: `src/groundgate/calibrate/audit.py`. |
+| `groundgate_profile_drafts` | 1 | "The drafts" |
+
+Kinds of the store, in §9. "store.md" is the design note, [docs/design/store.md](docs/design/store.md):
+
+| Format | Version | Defined in |
+|---|---|---|
+| `groundgate-object/1` | 1 | §9.1, the prefix of each store key |
+| `source@1`, `text@1`, `layout@1` | 1 | §9.2 |
+| `reading@1` | 1 | §9.3. A release from 0.14 reads it and writes `reading@2`. |
+| `reading@2` | 2 | §9.3 |
+| `document@1` | 1 | [docs/design/document-model.md](docs/design/document-model.md) §4.1 |
+| `schema@1`, `policy@1`, `reference@1`, `pack@1` | 1 | §9.2 |
+| `candidates@1`, `judgments@1`, `doubt@1` | 1 | §9.2 |
+| `pin@1`, `places@1`, `completeness@1`, `outline@1` | 1 | §9.2 |
+| `receipt@1` | 1 | §9.2. The bytes are the receipt of §5. |
+| `packet@1` | 1 | §9.3 |
+| `prompt@1`, `reply@1`, `admission@1` | 1 | §9.2 and [docs/design/runner.md](docs/design/runner.md) §8 |
+| `reviewer@1`, `set@1` | 1 | §9.5: the kind of the key of a name |
+
+The kind of a log entry is the first word of the log name and `-entry@1`, for example
+`answers-entry@1` (§9.5).
+
+The runner and the reader. They are not part of this specification:
+
+| Format | Version | Defined in |
+|---|---|---|
+| `groundgate-run/6` | 6 | [docs/design/runner.md](docs/design/runner.md) §8. The store kind of the record is `run@6`. |
+| `groundgate_layout` | `0.1` | [docs/design/document-model.md](docs/design/document-model.md) §3 |
+
+Formats of the review step, in [docs/design/review.md](docs/design/review.md):
+
+| Format | Version | Defined in |
+|---|---|---|
+| `review-policy@1` | 1 | review.md §5.1 |
+| `task@1` | 1 | review.md §5.2 |
+| `number@1` | 1 | review.md §5.2: the `template` of a task. `text@1` is also a template. |
+| `span@1` | 1 | review.md §13: the `template` of a task |
+| `closed_set@1` | 1 | review.md §7: the `template` of a task for a closed set |
+| `model_text@1` | 1 | review.md §7.1: the `template` of a task for a model text |
+| `calibrate_field@1`, `calibrate_key@1` | 1 | review.md §11: the `template` of a calibration task |
+| `answer@1` | 1 | review.md §5.3 |
+| `answer@2` | 2 | review.md §5.3 |
+| `resolution@1` | 1 | review.md §5.4 |
+| `model-text@1` | 1 | review.md §7.1 |
+| `groundgate-audit/1` | 1 | review.md §6.3, the prefix of the hash of the audit pick |
+| `groundgate_review_issuers` | 1 | [docs/howto/review-api.md](docs/howto/review-api.md) |
+
+Views and reports:
+
+| Format | Version | Defined in |
+|---|---|---|
+| `review-queue@1`, `latest-resolutions@1`, `review-measures@1`, `calibrate-labels@1` | 1 | store.md §7.4 |
+| `reading-cache@1` | 1 | store.md §7.4 describes the view `views/readings.json`. Only the code names the format: `src/groundgate/store/maintain.py`. |
+| `groundgate-store-vectors@1`, `store-report@1` | 1 | [conformance/store/README.md](conformance/store/README.md) |
+
+### 8.6 A receipt of another spec version
+
+`verify` checks a receipt only with the decisions of its own spec version (#710). Each digest of
+the receipt holds that version in its prefix (§6), so no other version can derive it again.
+
+1. **The same spec version.** A release verifies each receipt that an earlier release with the
+   same spec version made. This follows from §5: a release that keeps the spec version gives
+   the same receipt to each packet that an earlier release accepts.
+2. **The 1.0 line.** From 1.0, a new spec version takes the next major number, and the package
+   takes the same major number. So each release 1.y.z implements spec 1.0 and verifies each
+   receipt of spec 1.0. A change of the receipt of an accepted packet waits for spec 2.0, in
+   package 2.0.0.
+3. **Another spec version.** `verify` gives one problem and checks nothing more. The problem
+   names the spec version of the receipt. When the version is an earlier one of the table
+   below, the problem also names the last release that implements it. That release verifies the
+   receipt. Install it in a separate environment, and give it the receipt and the inputs. For a
+   later version, or a value that is not a version of the table, the problem names no release.
+4. **Before and after 1.0.** Rule 3 is the rule for each receipt of a spec version before 1.0,
+   also after the 1.0 release, because the version string of spec 1.0 changes each digest. It is
+   also the rule for a receipt of spec 1.0 after the 2.0.0 release.
+
+So keep, with each receipt, the inputs of its packet and the spec version. The receipt holds
+the spec version. This command verifies a receipt of spec 0.11:
+
+```bash
+uvx --from 'groundgate==0.11.0' groundgate verify receipt.json doc.txt schema.json candidates.json
+```
+
+These are the releases on PyPI that implement each spec version:
+
+| Spec version | Releases | Last release |
+|---|---|---|
+| 0.1 | 0.1.0 | 0.1.0 |
+| 0.2 | 0.2.0 | 0.2.0 |
+| 0.3 | 0.3.0 | 0.3.0 |
+| 0.4 | 0.4.0 | 0.4.0 |
+| 0.5 | 0.5.0 to 0.5.2 | 0.5.2 |
+| 0.6 | 0.6.0 and 0.6.1 | 0.6.1 |
+| 0.7 | 0.7.0 | 0.7.0 |
+| 0.8 | 0.8.0 | 0.8.0 |
+| 0.9 | 0.9.0 | 0.9.0 |
+| 0.10 | 0.10.0 | 0.10.0 |
+| 0.11 | 0.11.0 | 0.11.0 |
+| 0.12 | 0.14.0 and later | this release |
+
+The tags `v0.12.0` and `v0.13.0` also implement spec 0.11. They are not on PyPI.
+
+A release of an earlier spec version gets no corrections, also not for a security fault
+([SECURITY.md](SECURITY.md)). Use it only to verify the receipts of your own archive.
+
+## 9. The store contract
+
+A **store** keeps the objects and the logs of groundgate: documents, packets, receipts and
+review answers (#288). This section is the contract of a store (#719): the key, the kinds, the
+manifest, the five operations, the logs and the rules. A backend in any language meets the
+contract when it passes the vectors of §9.7.
+[docs/design/store.md](docs/design/store.md) is the design note. It gives the reasons, the
+options and the folder store of the reference implementation. If the note and this section
+differ, this section is right.
+
+The core does not read a store: `admit` and `verify` take and give plain values. So this
+section changes no decision and no receipt.
+
+### 9.1 The key
+
+An **object** is a string of bytes with a kind. Its key is
+
+`key = "sha256:" + hex(SHA-256("groundgate-object/1:" + kind + "\0" + bytes))`
+
+where the prefix and the kind are ASCII. The prefix names the key scheme, not the spec version,
+so the same bytes keep their key in each spec version. A key matches `sha256:[0-9a-f]{64}`.
+
+A **kind** is a name, `@` and a version, such as `text@1`. The name starts with a lowercase
+ASCII letter and has 1 to 63 lowercase ASCII letters, digits and `-`. The version is an integer
+from 1 with 1 to 9 digits and no leading zero. So `Text@1`, `text`, `text@0`, `a/b@1` and the
+empty string are not kinds. The version of a kind is the version of its format (§8.3), not the
+spec version.
+
+### 9.2 The bytes of each kind
+
+`put` refuses bytes that break the rule of their kind, so one object has one key:
+
+| Kind | Bytes |
+|---|---|
+| `source@1` | Any bytes: the exact source file. |
+| `text@1` | UTF-8 in NFC: the text of a document. |
+| `prompt@1`, `reply@1` | UTF-8: the exact strings of a model call. |
+| `run@N` | The run record of runner version N. Each line is one canonical JSON object (§6) and ends with a line break. |
+| each other kind | One canonical JSON value (§6), with no byte after it. |
+
+Canonical JSON has no duplicate member, no number that is not in its shortest form, and no
+`NaN`. These are the kinds of JSON that the reference implementation reads or writes:
+
+| Kind | Value |
+|---|---|
+| `layout@1` | The pages and the word boxes of a source. |
+| `document@1` | The document model ([docs/design/document-model.md](docs/design/document-model.md) §4.1). |
+| `reading@1`, `reading@2` | A reading (§9.3). |
+| `schema@1`, `policy@1`, `reference@1` | The object that `admit` took (§2.3, §2.4, §2.1). |
+| `pack@1` | A pack of the app (§4.8, §4.9). A built-in pack is not in the store. |
+| `candidates@1`, `judgments@1`, `doubt@1` | The list that `admit` took (§2.5, §2.6, §2.1). |
+| `pin@1`, `places@1`, `completeness@1`, `outline@1` | The source pin (§4.14), the places (§4.15), the completeness (§4.16) and the outline (§4.17) of a packet. |
+| `receipt@1` | The receipt (§5). |
+| `packet@1` | A packet (§9.3). |
+| `admission@1` | An admission packet of the runner ([docs/design/runner.md](docs/design/runner.md) §8). |
+| `review-policy@1`, `task@1`, `resolution@1`, `model-text@1` | The objects of the review step ([docs/design/review.md](docs/design/review.md) §5 and §7.1). |
+
+### 9.3 The manifest
+
+Two objects name the other objects of one step by their keys, so no data is copied.
+
+A **reading** names what `read` made from one source:
+
+```json
+{"format": "reading@2",
+ "source": "sha256:...",
+ "reader": {"name": "groundgate.read", "version": "0.17.0"},
+ "options": {"pages": null},
+ "text": "sha256:...", "layout": "sha256:...", "document": null,
+ "warnings": ["page 1: dropped 3 words drawn outside the visible page"],
+ "completeness": {"status": "complete", "missing": []},
+ "source_format": "pdf"}
+```
+
+`source` and `text` are the keys of a `source@1` and a `text@1` object. `layout` is the key of
+a `layout@1` object, or null for a source with no layout, such as a text file. `document` is the
+key of a `document@1` object, or null. `warnings` holds the warnings of the reader in their
+order. `completeness` (§4.16) and `source_format` are optional: a reading has `completeness`
+from release 0.15.0 and `source_format` from release 0.16.0. `reading@1` has only the members
+`format`, `source`, `reader`, `options`, `text`, `layout` and `document`.
+
+A **packet** names the inputs and the receipt of one `admit` call:
+
+```json
+{"format": "packet@1", "spec": "0.12",
+ "document": {"id": "lease-0417", "source": null, "text": "sha256:..."},
+ "reading": "sha256:...",
+ "schema": "sha256:...", "policy": "sha256:...",
+ "references": ["sha256:..."], "packs": ["sha256:..."],
+ "candidates": "sha256:...", "judgments": null,
+ "receipt": "sha256:...", "run": "sha256:..."}
+```
+
+- `spec` is the spec version of the receipt (§8.1).
+- `document.id`, `policy`, `reading`, `judgments` and `run` can be null. A null `policy` is an
+  `admit` call with no policy. `run` is the key of the run record.
+- `packs` names only the packs of the app. The receipt names the built-in packs.
+- A packet has the member `doubt`, `pin`, `places`, `completeness` or `outline` only when the
+  `admit` call had that input: the key of a `doubt@1`, `pin@1`, `places@1`, `completeness@1`
+  or `outline@1` object. A packet without the input has no such member, so it keeps its key.
+
+The packet key is the one handle that a user keeps. A packet never changes, so it holds no
+review data: a task, a resolution and an answer log name the packet.
+
+### 9.4 The operations
+
+A store has five operations:
+
+| Operation | Result |
+|---|---|
+| `put(kind, bytes)` | The key. Equal bytes of one kind give the same key, and the store keeps one copy. |
+| `get(kind, key)` | The bytes. |
+| `append(log, record)` | The head of the log: the `entry_sha256` of the new record. |
+| `read(log)` | The records of the log, in order. |
+| `forget(key, reason)` | Nothing. The object is removed, and the deletion is recorded. |
+
+An operation that fails gives an error of one of three classes: **invalid** for bad input,
+**not-found** for an absent object, and **store-error** for each other failure of the store. A
+not-found error is also a store error.
+
+- `put` is invalid for a string that is not a kind (§9.1), and for bytes that break the rule of
+  the kind (§9.2).
+- `get` and `forget` are invalid for a key that does not match `sha256:[0-9a-f]{64}`. So a
+  path, a name and a key with capital letters never reach the storage.
+- `get` of a key that is not in the store is not-found. `get` calculates the key again from the
+  kind and the bytes, and fails with a store error on a difference. So `get` with another kind
+  than the kind of `put` fails.
+- `append` and `read` are invalid for a log name that breaks §9.5. `append` is invalid for a
+  record that is not a JSON object, for a record with the member `sequence`, `previous` or
+  `entry_sha256`, and for the log `deleted`, which only `forget` writes.
+- `read` of a log with no record gives an empty list. `read` checks each link of the chain
+  (§9.5), and fails with a store error on a record that breaks it.
+- `forget` is invalid for an empty reason. Then the object stays, and the log `deleted` does
+  not change. `forget` of a key that is not in the store is not-found and adds no record, so a
+  second `forget` of one key is not-found.
+- After `forget`, `get` of the key is not-found. `put` of the same bytes gives the same key
+  again, and the deletion record stays. A `forget` of that key then removes the object again
+  and adds a second deletion record.
+
+### 9.5 The logs
+
+The five operations only add to a **log**: no operation changes or removes a record. A log
+name is a fixed word and zero, one or two keys:
+
+| Log name | Records |
+|---|---|
+| `("answers", packet, reviewer)` | The answers of one reviewer to the tasks of one packet. `reviewer` is the key of kind `reviewer@1` over the UTF-8 of the reviewer name. |
+| `("splits", set)` | The splits of one set of documents. `set` is the key of kind `set@1` over the UTF-8 of the set name. |
+| `("events", profile)` | The calibration events of one profile (§4.19). `profile` is the profile digest. |
+| `("deleted",)` | The deletions of the store. |
+
+Each key of a log name matches `sha256:[0-9a-f]{64}`. A reviewer name and a set name are NFC.
+So a name never becomes a path. Each other word, each other count of keys, and a value that is
+not a list of strings is an invalid log name.
+
+A record is the JSON object that `append` got, plus three members:
+
+- `sequence`: 1 for the first record of the log, then 2, 3 and so on;
+- `previous`: null for the first record, then the `entry_sha256` of the record before it;
+- `entry_sha256`: the key (§9.1) of kind `W-entry@1` over the UTF-8 of the canonical JSON of
+  the record with `sequence` and `previous`, and without `entry_sha256`. `W` is the word of
+  the log name, so the kind is `answers-entry@1` for an answer log.
+
+A deletion record has the members `key`, `reason` and `time`, plus the three chain members.
+`time` is a UTC time with seconds, such as `2026-10-20T09:30:00Z`. `forget(key, reason)` adds
+no other member.
+
+### 9.6 The rules
+
+1. **Name objects only by their digest.** A path or a name from a document, a reply, a manifest
+   or a request never becomes a path of the storage. That data is untrusted.
+2. **Version each format.** A new version is a new kind, such as `reading@2` (§8.3). A key never
+   gets a new meaning.
+3. **Plan for deletion.** Documents can be private, and an app can have to delete them. These
+   kinds hold the text of a document, and the command `groundgate store forget` removes them
+   for a packet:
+   `source@1`, `text@1`, `layout@1`, `document@1`, `reference@1`, `candidates@1`, `prompt@1`,
+   `reply@1`, `admission@1`, `model-text@1` and `places@1`. The command also removes the run
+   record `run@N` of the packet when one of its lines holds text of the document. It removes
+   the record too when the text of the document is not in the store, or when it cannot read
+   the text or the schema, because then it cannot compare the lines with the text. A run
+   record stays when the command cannot read its lines, or when its bytes do not match its
+   key: only the record names its prompts, replies and admissions. Then the command prints
+   `unchecked`, removes the rest and exits 1. Each other kind of §9.2 holds digests, values,
+   offsets, codes and questions, and no document text other than the values. Those objects
+   stay, with the answer logs. `groundgate store forget --all` removes those objects and the
+   logs of the packet too, but an object that another packet names stays. An object of a kind
+   of the list above, and a run record that holds text, get no such protection, with or
+   without `--all`. The same text has one key, so two packets can name one object: the
+   command removes that object for the two packets. The full procedure of the command, with
+   the steps for a run record that stays, is in the design note, §8.
+4. **Do not store page images.** No kind holds a crop of a page.
+5. **Encryption at rest belongs to the app.** The contract does not ask for it.
+6. **Use one layout for review and calibrate.** A review answer becomes a calibration label
+   with no conversion.
+
+The folder layout, the locks, a torn last line of a log, the views and the `run_keys` of a
+deletion record are rules of the folder store of the reference implementation (the design note,
+§7). They are not part of this contract. The folder store also has two methods that are not
+operations of the contract, and `groundgate store forget --all` uses them: `forget_log` removes
+a log, and `forget_records` removes records of a splits log or an events log and writes the
+other records as a new chain. Each one adds a deletion record with the member `log` in place of
+`key`, and `forget_records` adds the count `records`.
+
+### 9.7 The vectors and compatibility
+
+[`conformance/store/vectors.json`](conformance/store/vectors.json) holds the contract as
+vectors, in the format `groundgate-store-vectors@1`. Each vector has an `id` and a list of
+`steps`: one operation with its inputs and its expected result or error class.
+[conformance/store/README.md](conformance/store/README.md) defines the file, the runner and
+the report. A backend meets the contract when each vector passes on a new, empty store.
+
+A release only adds to this contract, as §8.3 permits for a format:
+
+- A release only adds vectors. The steps of a vector `id` never change: each input, and each
+  expected result or error class, stays. No vector is removed.
+- A release can add a kind, a log word and an optional member of a reading or of a packet. A
+  vector for one of these is a new vector.
+- A change of the steps of a vector, a removed vector, another key formula, or another result
+  or error class for an input that a vector fixes needs the next version of the file format,
+  `groundgate-store-vectors@2`.
+
+So a backend that passes the vectors of one release passes the same vectors of each later
+release with the same file format. `conformance/store/vectors.lock` lists the SHA-256 of the
+steps of each vector, and a test fails when the steps of a vector change, when a vector is
+removed, or when a vector is not in the list.

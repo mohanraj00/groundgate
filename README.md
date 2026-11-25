@@ -318,7 +318,8 @@ evidence there and records `EVIDENCE_REANCHORED`. Other info codes say how a fac
 value in a table), `ADMITTED_BY_POLICY` (the policy admits its outside evidence) and
 `MODEL_CLEARED` (a recorded judgment cleared `KEY_NOT_AT_VALUE`).
 
-The rules are in [SPEC.md](SPEC.md). [conformance/](conformance) holds 57 language-neutral
+The rules are in [SPEC.md](SPEC.md). [SPEC §8](SPEC.md#8-versions) says which change gives a new
+spec version, a new package version or a new version of a format. [conformance/](conformance) holds 57 language-neutral
 vectors that pin every code, and 38 invalid packets that an implementation must refuse, so another
 implementation can prove it agrees.
 
@@ -421,7 +422,8 @@ clear a key flag or add doubt, with no model call in the decision. 0.3 brought a
 (#51), abbreviation dots that no longer end a sentence for qualifiers (#63, #77), Indian digit
 grouping (#59), ASCII digits (#94), and keys that stop at a label line (#52) or read a table by its
 lines (#87). A receipt names the spec version it was decided under, and only that version verifies
-it.
+it. A later release with the same spec version verifies it too. For a receipt of an older spec
+version, `verify` names the release to install ([SPEC §8.6](SPEC.md#86-a-receipt-of-another-spec-version)).
 
 [Locale packs](docs/design/locale-packs.md) for number formats outside English are a design,
 not yet code. Of the [hybrid decisions](docs/design/hybrid-decisions.md) design, 0.4 has the

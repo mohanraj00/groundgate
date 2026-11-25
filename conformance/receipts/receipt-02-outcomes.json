@@ -1,0 +1,195 @@
+{
+ "name": "receipt-02-outcomes",
+ "description": "The three outcomes in one receipt, with a document id and a document source. The decision in review has `missing` and `evidence_units`, the admitted decision has a part and a proposer, and the rejected decision keeps its cited span. A required field with no candidate gives a coverage finding.",
+ "document": "Revenue was 5,200 in 2025.\nFee\t$90\n",
+ "document_id": "report-7",
+ "document_source": "https://example.org/report",
+ "schema": {
+  "fields": {
+   "revenue": {
+    "unit": "USD",
+    "aliases": [
+     "Revenue"
+    ]
+   },
+   "fee": {
+    "type": "integer",
+    "unit": "USD",
+    "aliases": [
+     "Fee"
+    ]
+   },
+   "tax": {
+    "type": "integer",
+    "unit": "USD",
+    "required": true
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "o1",
+   "field": "revenue",
+   "value": "5200",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 12,
+     "end": 17,
+     "text": "5,200"
+    }
+   ]
+  },
+  {
+   "id": "o2",
+   "field": "fee",
+   "value": 90,
+   "unit": "USD",
+   "proposer": "model-a",
+   "evidence": [
+    {
+     "start": 31,
+     "end": 34,
+     "text": "$90"
+    },
+    {
+     "role": "field",
+     "start": 27,
+     "end": 30,
+     "text": "Fee"
+    }
+   ]
+  },
+  {
+   "id": "o3",
+   "field": "fee",
+   "value": 95,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 31,
+     "end": 34,
+     "text": "$90"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "receipt": {
+   "groundgate": "0.12",
+   "document": {
+    "id": "report-7",
+    "sha256": "sha256:0dcd9e08ea62096df24e2ba89db4dfeeae540dabe3d73a5e50b50c8854a79cbf",
+    "source": "https://example.org/report",
+    "doubt_sha256": null
+   },
+   "references": [],
+   "packs": [],
+   "schema_sha256": "sha256:fabdf15288eeb2d162b48528447fb738c86b284bd98731091e5120da9066e555",
+   "policy_sha256": "sha256:92f2e20399c00a6cff7da2c08bac06bb108a3a46fd92e60b981295103a8a6f4e",
+   "decisions": [
+    {
+     "candidate_id": "o3",
+     "candidate_sha256": "sha256:0d4f9abfc7ba37a44cd95cddb86320e256fa14b3771a5ed82b339577928eda82",
+     "field": "fee",
+     "key": null,
+     "proposer": null,
+     "outcome": "rejected",
+     "codes": [
+      "VALUE_NOT_IN_EVIDENCE"
+     ],
+     "value": "95",
+     "unit": "USD",
+     "source": "document",
+     "ref": null,
+     "url": null,
+     "evidence": {
+      "start": 31,
+      "end": 34
+     },
+     "parts": [],
+     "missing": [],
+     "packs": []
+    },
+    {
+     "candidate_id": "o1",
+     "candidate_sha256": "sha256:45bd31082564016ed196e3386a6a423e37f5f7f2ee94fcbeb8d9a8e6bcbb3995",
+     "field": "revenue",
+     "key": null,
+     "proposer": null,
+     "outcome": "needs_verification",
+     "codes": [
+      "PART_MISSING"
+     ],
+     "value": "5200",
+     "unit": "USD",
+     "source": "document",
+     "ref": null,
+     "url": null,
+     "evidence": {
+      "start": 12,
+      "end": 17
+     },
+     "parts": [],
+     "missing": [
+      "unit"
+     ],
+     "packs": [],
+     "evidence_units": {
+      "token": {
+       "start": 12,
+       "end": 17
+      },
+      "next": [],
+      "per": false,
+      "headers": [],
+      "statements": [],
+      "currency": []
+     }
+    },
+    {
+     "candidate_id": "o2",
+     "candidate_sha256": "sha256:f9d2680f1f4dcc9de67c9b3ef1d974fae1663ad7e4a2f0dd03376251f9b4b615",
+     "field": "fee",
+     "key": null,
+     "proposer": "model-a",
+     "outcome": "admitted",
+     "codes": [],
+     "value": "90",
+     "unit": "USD",
+     "source": "document",
+     "ref": null,
+     "url": null,
+     "evidence": {
+      "start": 31,
+      "end": 34
+     },
+     "parts": [
+      {
+       "role": "field",
+       "start": 27,
+       "end": 30,
+       "passed": true
+      }
+     ],
+     "missing": [],
+     "packs": []
+    }
+   ],
+   "coverage": [
+    {
+     "field": "tax",
+     "code": "REQUIRED_FIELD_MISSING"
+    }
+   ],
+   "judgments": [],
+   "summary": {
+    "admitted": 1,
+    "needs_verification": 1,
+    "rejected": 1
+   },
+   "receipt_sha256": "sha256:110a500d6527c75eb60a1ef35c58eb05dc59a9b2799b679f1aed665cc8b92570"
+  }
+ }
+}

@@ -1,0 +1,117 @@
+{
+ "name": "receipt-06-profile-pin",
+ "description": "A packet with a profile and a source pin. The receipt has the members `profile` and `pin`, each with its digest. The profile gives the schema and the policy.",
+ "document": "Fee\t$90\n",
+ "profile": {
+  "groundgate_profile": 1,
+  "id": "fees-test",
+  "version": "1.0.0",
+  "schema": {
+   "fields": {
+    "fee": {
+     "type": "integer",
+     "unit": "USD",
+     "aliases": [
+      "Fee"
+     ]
+    }
+   }
+  }
+ },
+ "pin": {
+  "groundgate_pin": 1,
+  "source_sha256": "sha256:0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a",
+  "url": "https://example.org/standard.pdf",
+  "retrieved": "2026-11-09",
+  "edition": "2024 revision 2",
+  "origin": "fetched"
+ },
+ "candidates": [
+  {
+   "id": "p1",
+   "field": "fee",
+   "value": 90,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 4,
+     "end": 7,
+     "text": "$90"
+    },
+    {
+     "role": "field",
+     "start": 0,
+     "end": 3,
+     "text": "Fee"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "receipt": {
+   "groundgate": "0.12",
+   "document": {
+    "id": null,
+    "sha256": "sha256:cbd02fccd43c505a7dd1fcd59c13c9797fc97cb53b47530f30a6d70a7a080153",
+    "source": null,
+    "doubt_sha256": null
+   },
+   "references": [],
+   "packs": [],
+   "profile": {
+    "id": "fees-test",
+    "version": "1.0.0",
+    "sha256": "sha256:b5d757dc89507b249c824b49cc696ae63f3139012571021abe9bf179a9eb2af7"
+   },
+   "pin": {
+    "source_sha256": "sha256:0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a",
+    "url": "https://example.org/standard.pdf",
+    "retrieved": "2026-11-09",
+    "edition": "2024 revision 2",
+    "origin": "fetched",
+    "label": null,
+    "sha256": "sha256:802727e1d933e09b712987759451632b7282807afe04ad92563a99f0bfcce54e"
+   },
+   "schema_sha256": "sha256:fd55ea4d89a50b2c207fa066e1d1bc03b27b0d53b4b3cfee1f859a75e49f4f2e",
+   "policy_sha256": "sha256:92f2e20399c00a6cff7da2c08bac06bb108a3a46fd92e60b981295103a8a6f4e",
+   "decisions": [
+    {
+     "candidate_id": "p1",
+     "candidate_sha256": "sha256:d0be0059a8c9e4804b12538d8fc2de117ff8572c25a938e17831eb45cfc55db4",
+     "field": "fee",
+     "key": null,
+     "proposer": null,
+     "outcome": "admitted",
+     "codes": [],
+     "value": "90",
+     "unit": "USD",
+     "source": "document",
+     "ref": null,
+     "url": null,
+     "evidence": {
+      "start": 4,
+      "end": 7
+     },
+     "parts": [
+      {
+       "role": "field",
+       "start": 0,
+       "end": 3,
+       "passed": true
+      }
+     ],
+     "missing": [],
+     "packs": []
+    }
+   ],
+   "coverage": [],
+   "judgments": [],
+   "summary": {
+    "admitted": 1,
+    "needs_verification": 0,
+    "rejected": 0
+   },
+   "receipt_sha256": "sha256:dd6b0d74ba0ed7989afda10279154b16f4270cfb824aeb104e7cdd3f5af61147"
+  }
+ }
+}

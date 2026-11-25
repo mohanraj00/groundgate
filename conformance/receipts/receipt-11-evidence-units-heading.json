@@ -1,0 +1,120 @@
+{
+ "name": "receipt-11-evidence-units-heading",
+ "description": "A header and a currency statement that do not agree with the unit of the field. The `evidence_units` of the decision names the header form with the codes that it allows, the statement and the heading currency. The header entry has no `cut` member.",
+ "document": "The figures are presented in Australian dollars.\n\t$m\t$m\nRevenue\t5,200\t4,900\n",
+ "schema": {
+  "fields": {
+   "usd": {
+    "unit": "USD",
+    "aliases": [
+     "Revenue"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "w2",
+   "field": "usd",
+   "value": "4900000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 70,
+     "end": 75,
+     "text": "4,900"
+    },
+    {
+     "role": "scale",
+     "text": "$m"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "receipt": {
+   "groundgate": "0.12",
+   "document": {
+    "id": null,
+    "sha256": "sha256:c54f98f7603a47362d3a5b7ef0bce9b1a6a6a3508eae83f86d2df1f08947c969",
+    "source": null,
+    "doubt_sha256": null
+   },
+   "references": [],
+   "packs": [],
+   "schema_sha256": "sha256:531607d84a8e5cf8422ba14e0223b57dd4085bdf3a627974529acab72d998a6d",
+   "policy_sha256": "sha256:92f2e20399c00a6cff7da2c08bac06bb108a3a46fd92e60b981295103a8a6f4e",
+   "decisions": [
+    {
+     "candidate_id": "w2",
+     "candidate_sha256": "sha256:34259ce3652b7e9d377db5212ff94b5880955704b2f30a3e6025a353aa6f0755",
+     "field": "usd",
+     "key": null,
+     "proposer": null,
+     "outcome": "needs_verification",
+     "codes": [
+      "PART_MISSING",
+      "VALUE_DERIVED"
+     ],
+     "value": "4900000000",
+     "unit": "USD",
+     "source": "document",
+     "ref": null,
+     "url": null,
+     "evidence": {
+      "start": 70,
+      "end": 75
+     },
+     "parts": [
+      {
+       "role": "scale",
+       "start": 53,
+       "end": 55,
+       "passed": true
+      }
+     ],
+     "missing": [
+      "unit"
+     ],
+     "packs": [],
+     "evidence_units": {
+      "token": {
+       "start": 70,
+       "end": 75
+      },
+      "next": [],
+      "per": false,
+      "headers": [
+       {
+        "form": "$",
+        "allows": [
+         "AUD",
+         "CAD",
+         "HKD",
+         "NZD",
+         "SGD",
+         "USD"
+        ]
+       }
+      ],
+      "statements": [
+       "AUD"
+      ],
+      "currency": [
+       "AUD"
+      ]
+     }
+    }
+   ],
+   "coverage": [],
+   "judgments": [],
+   "summary": {
+    "admitted": 0,
+    "needs_verification": 1,
+    "rejected": 0
+   },
+   "receipt_sha256": "sha256:32f806105978a81d8f63cc7c65b97dc8e376ad0170fa733bb813796324a21c69"
+  }
+ }
+}
