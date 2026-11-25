@@ -2950,25 +2950,25 @@ Formats of the calibration tools, in [docs/calibrate.md](docs/calibrate.md):
 | `groundgate-audit-set/1` | 1 | The prefix of the digest of an audit set. Only the code defines it: `src/groundgate/calibrate/audit.py`. |
 | `groundgate_profile_drafts` | 1 | "The drafts" |
 
-Kinds of the store, in [docs/design/store.md](docs/design/store.md) §4:
+Kinds of the store, in §9. "store.md" is the design note, [docs/design/store.md](docs/design/store.md):
 
 | Format | Version | Defined in |
 |---|---|---|
-| `groundgate-object/1` | 1 | store.md §4, the prefix of each store key |
-| `source@1`, `text@1`, `layout@1` | 1 | store.md §4 |
-| `reading@1` | 1 | store.md §5.1. A release from 0.14 reads it and writes `reading@2`. |
-| `reading@2` | 2 | store.md §5.1 |
+| `groundgate-object/1` | 1 | §9.1, the prefix of each store key |
+| `source@1`, `text@1`, `layout@1` | 1 | §9.2 |
+| `reading@1` | 1 | §9.3. A release from 0.14 reads it and writes `reading@2`. |
+| `reading@2` | 2 | §9.3 |
 | `document@1` | 1 | [docs/design/document-model.md](docs/design/document-model.md) §4.1 |
-| `schema@1`, `policy@1`, `reference@1`, `pack@1` | 1 | store.md §4 |
-| `candidates@1`, `judgments@1`, `doubt@1` | 1 | store.md §4 |
-| `pin@1`, `places@1`, `completeness@1`, `outline@1` | 1 | store.md §4 |
-| `receipt@1` | 1 | store.md §4. The bytes are the receipt of §5. |
-| `packet@1` | 1 | store.md §5.2 |
-| `prompt@1`, `reply@1`, `admission@1` | 1 | store.md §4 and [docs/design/runner.md](docs/design/runner.md) §8 |
-| `reviewer@1`, `set@1` | 1 | store.md §6: the kind of the key of a name |
+| `schema@1`, `policy@1`, `reference@1`, `pack@1` | 1 | §9.2 |
+| `candidates@1`, `judgments@1`, `doubt@1` | 1 | §9.2 |
+| `pin@1`, `places@1`, `completeness@1`, `outline@1` | 1 | §9.2 |
+| `receipt@1` | 1 | §9.2. The bytes are the receipt of §5. |
+| `packet@1` | 1 | §9.3 |
+| `prompt@1`, `reply@1`, `admission@1` | 1 | §9.2 and [docs/design/runner.md](docs/design/runner.md) §8 |
+| `reviewer@1`, `set@1` | 1 | §9.5: the kind of the key of a name |
 
 The kind of a log entry is the first word of the log name and `-entry@1`, for example
-`answers-entry@1` ([conformance/store/README.md](conformance/store/README.md)).
+`answers-entry@1` (§9.5).
 
 The runner and the reader. They are not part of this specification:
 
@@ -3052,3 +3052,213 @@ The tags `v0.12.0` and `v0.13.0` also implement spec 0.11. They are not on PyPI.
 
 A release of an earlier spec version gets no corrections, also not for a security fault
 ([SECURITY.md](SECURITY.md)). Use it only to verify the receipts of your own archive.
+
+## 9. The store contract
+
+A **store** keeps the objects and the logs of groundgate: documents, packets, receipts and
+review answers (#288). This section is the contract of a store (#719): the key, the kinds, the
+manifest, the five operations, the logs and the rules. A backend in any language meets the
+contract when it passes the vectors of §9.7.
+[docs/design/store.md](docs/design/store.md) is the design note. It gives the reasons, the
+options and the folder store of the reference implementation. If the note and this section
+differ, this section is right.
+
+The core does not read a store: `admit` and `verify` take and give plain values. So this
+section changes no decision and no receipt.
+
+### 9.1 The key
+
+An **object** is a string of bytes with a kind. Its key is
+
+`key = "sha256:" + hex(SHA-256("groundgate-object/1:" + kind + "\0" + bytes))`
+
+where the prefix and the kind are ASCII. The prefix names the key scheme, not the spec version,
+so the same bytes keep their key in each spec version. A key matches `sha256:[0-9a-f]{64}`.
+
+A **kind** is a name, `@` and a version, such as `text@1`. The name starts with a lowercase
+ASCII letter and has 1 to 63 lowercase ASCII letters, digits and `-`. The version is an integer
+from 1 with 1 to 9 digits and no leading zero. So `Text@1`, `text`, `text@0`, `a/b@1` and the
+empty string are not kinds. The version of a kind is the version of its format (§8.3), not the
+spec version.
+
+### 9.2 The bytes of each kind
+
+`put` refuses bytes that break the rule of their kind, so one object has one key:
+
+| Kind | Bytes |
+|---|---|
+| `source@1` | Any bytes: the exact source file. |
+| `text@1` | UTF-8 in NFC: the text of a document. |
+| `prompt@1`, `reply@1` | UTF-8: the exact strings of a model call. |
+| `run@N` | The run record of runner version N. Each line is one canonical JSON object (§6) and ends with a line break. |
+| each other kind | One canonical JSON value (§6), with no byte after it. |
+
+Canonical JSON has no duplicate member, no number that is not in its shortest form, and no
+`NaN`. These are the kinds of JSON that the reference implementation writes:
+
+| Kind | Value |
+|---|---|
+| `layout@1` | The pages and the word boxes of a source. |
+| `document@1` | The document model ([docs/design/document-model.md](docs/design/document-model.md) §4.1). |
+| `reading@1`, `reading@2` | A reading (§9.3). |
+| `schema@1`, `policy@1`, `reference@1` | The object that `admit` took (§2.3, §2.4, §2.1). |
+| `pack@1` | A pack of the app (§4.8, §4.9). A built-in pack is not in the store. |
+| `candidates@1`, `judgments@1`, `doubt@1` | The list that `admit` took (§2.5, §2.6, §2.1). |
+| `pin@1`, `places@1`, `completeness@1`, `outline@1` | The source pin (§4.14), the places (§4.15), the completeness (§4.16) and the outline (§4.17) of a packet. |
+| `receipt@1` | The receipt (§5). |
+| `packet@1` | A packet (§9.3). |
+| `admission@1` | An admission packet of the runner ([docs/design/runner.md](docs/design/runner.md) §8). |
+| `review-policy@1`, `task@1`, `resolution@1`, `model-text@1` | The objects of the review step ([docs/design/review.md](docs/design/review.md) §5 and §7.1). |
+
+### 9.3 The manifest
+
+Two objects name the other objects of one step by their keys, so no data is copied.
+
+A **reading** names what `read` made from one source:
+
+```json
+{"format": "reading@2",
+ "source": "sha256:...",
+ "reader": {"name": "groundgate.read", "version": "0.17.0"},
+ "options": {"pages": null},
+ "text": "sha256:...", "layout": "sha256:...", "document": null,
+ "warnings": ["page 1: dropped 3 words drawn outside the visible page"],
+ "completeness": {"status": "complete", "missing": []},
+ "source_format": "pdf"}
+```
+
+`source`, `text` and `layout` are the keys of a `source@1`, a `text@1` and a `layout@1` object.
+`document` is the key of a `document@1` object, or null. `warnings` holds the warnings of the
+reader in their order. `completeness` (§4.16) and `source_format` are optional: a reading of an
+earlier release has neither. `reading@1` has the same members without `warnings`.
+
+A **packet** names the inputs and the receipt of one `admit` call:
+
+```json
+{"format": "packet@1", "spec": "0.12",
+ "document": {"id": "lease-0417", "source": null, "text": "sha256:..."},
+ "reading": "sha256:...",
+ "schema": "sha256:...", "policy": "sha256:...",
+ "references": ["sha256:..."], "packs": ["sha256:..."],
+ "candidates": "sha256:...", "judgments": null,
+ "receipt": "sha256:...", "run": "sha256:..."}
+```
+
+- `spec` is the spec version of the receipt (§8.1).
+- `reading`, `judgments` and `run` can be null. `run` is the key of the run record.
+- `packs` names only the packs of the app. The receipt names the built-in packs.
+- A packet has the member `doubt`, `pin`, `places`, `completeness` or `outline` only when the
+  `admit` call had that input: the key of a `doubt@1`, `pin@1`, `places@1`, `completeness@1`
+  or `outline@1` object. A packet without the input has no such member, so it keeps its key.
+
+The packet key is the one handle that a user keeps. A packet never changes, so it holds no
+review data: a task, a resolution and an answer log name the packet.
+
+### 9.4 The operations
+
+A store has five operations:
+
+| Operation | Result |
+|---|---|
+| `put(kind, bytes)` | The key. Equal bytes of one kind give the same key, and the store keeps one copy. |
+| `get(kind, key)` | The bytes. |
+| `append(log, record)` | The head of the log: the `entry_sha256` of the new record. |
+| `read(log)` | The records of the log, in order. |
+| `forget(key, reason)` | Nothing. The object is removed, and the deletion is recorded. |
+
+An operation that fails gives an error of one of three classes: **invalid** for bad input,
+**not-found** for an absent object, and **store-error** for each other failure of the store. A
+not-found error is also a store error.
+
+- `put` is invalid for a string that is not a kind (§9.1), and for bytes that break the rule of
+  the kind (§9.2).
+- `get` and `forget` are invalid for a key that does not match `sha256:[0-9a-f]{64}`. So a
+  path, a name and a key with capital letters never reach the storage.
+- `get` of a key that is not in the store is not-found. `get` calculates the key again from the
+  kind and the bytes, and fails with a store error on a difference. So `get` with another kind
+  than the kind of `put` fails.
+- `append` and `read` are invalid for a log name that breaks §9.5. `append` is invalid for a
+  record that is not a JSON object, for a record with the member `sequence`, `previous` or
+  `entry_sha256`, and for the log `deleted`, which only `forget` writes.
+- `read` of a log with no record gives an empty list. `read` checks each link of the chain
+  (§9.5), and fails with a store error on a record that breaks it.
+- `forget` is invalid for an empty reason. Then the object stays, and the log `deleted` does
+  not change. `forget` of a key that is not in the store is not-found and adds no record, so a
+  second `forget` of one key is not-found.
+- After `forget`, `get` of the key is not-found. `put` of the same bytes gives the same key
+  again, and the deletion record stays.
+
+### 9.5 The logs
+
+A **log** only grows. A log name is a fixed word and zero, one or two keys:
+
+| Log name | Records |
+|---|---|
+| `("answers", packet, reviewer)` | The answers of one reviewer to the tasks of one packet. `reviewer` is the key of kind `reviewer@1` over the UTF-8 of the reviewer name. |
+| `("splits", set)` | The splits of one set of documents. `set` is the key of kind `set@1` over the UTF-8 of the set name. |
+| `("events", profile)` | The calibration events of one profile (§4.19). `profile` is the profile digest. |
+| `("deleted",)` | The deletions of the store. |
+
+Each key of a log name matches `sha256:[0-9a-f]{64}`. A reviewer name and a set name are NFC.
+So a name never becomes a path. Each other word, each other count of keys, and a value that is
+not a list of strings is an invalid log name.
+
+A record is the JSON object that `append` got, plus three members:
+
+- `sequence`: 1 for the first record of the log, then 2, 3 and so on;
+- `previous`: null for the first record, then the `entry_sha256` of the record before it;
+- `entry_sha256`: the key (§9.1) of kind `W-entry@1` over the UTF-8 of the canonical JSON of
+  the record with `sequence` and `previous`, and without `entry_sha256`. `W` is the word of
+  the log name, so the kind is `answers-entry@1` for an answer log.
+
+A deletion record has the members `key`, `reason` and `time`, plus the three chain members.
+`time` is a UTC time with seconds, such as `2026-10-20T09:30:00Z`. `forget(key, reason)` adds
+no other member.
+
+### 9.6 The rules
+
+1. **Name objects only by their digest.** A path or a name from a document, a reply, a manifest
+   or a request never becomes a path of the storage. That data is untrusted.
+2. **Version each format.** A new version is a new kind, such as `answer@2` (§8.3). A key never
+   gets a new meaning.
+3. **Plan for deletion.** Documents can be private, and an app can have to delete them. These
+   kinds hold the text of a document, and the command `groundgate store forget` removes them
+   for a packet:
+   `source@1`, `text@1`, `layout@1`, `document@1`, `reference@1`, `candidates@1`, `prompt@1`,
+   `reply@1`, `admission@1`, `model-text@1` and `places@1`. Each other kind of §9.2 holds
+   digests, values, offsets, codes and questions, and no document text other than the values.
+   Those objects stay, with the answer logs. `groundgate store forget --all` removes each
+   object and each log of the packet that no other packet needs. The full procedure of the
+   command is in the design note, §8.
+4. **Do not store page images.** No kind holds a crop of a page.
+5. **Encryption at rest belongs to the app.** The contract does not ask for it.
+6. **Use one layout for review and calibrate.** A review answer becomes a calibration label
+   with no conversion.
+
+The folder layout, the locks, a torn last line of a log, the views and the `run_keys` of a
+deletion record are rules of the folder store of the reference implementation (the design note,
+§7). They are not part of this contract.
+
+### 9.7 The vectors and compatibility
+
+[`conformance/store/vectors.json`](conformance/store/vectors.json) holds the contract as
+vectors, in the format `groundgate-store-vectors@1`. Each vector has an `id` and a list of
+`steps`: one operation with its inputs and its expected result or error class.
+[conformance/store/README.md](conformance/store/README.md) defines the file, the runner and
+the report. A backend meets the contract when each vector passes on a new, empty store.
+
+A release only adds to this contract, as §8.3 permits for a format:
+
+- A release only adds vectors. The steps of a vector `id` never change: each input, and each
+  expected result or error class, stays. No vector is removed.
+- A release can add a kind, a log word and an optional member of a reading or of a packet. A
+  vector for one of these is a new vector.
+- A change of the steps of a vector, a removed vector, another key formula, or another result
+  or error class for an input that a vector fixes needs the next version of the file format,
+  `groundgate-store-vectors@2`. From 1.0, such a change also takes the next major number of the
+  package (§8.2).
+
+So a backend that passes the vectors of one release passes the same vectors of each later
+release with the same file format. `conformance/store/vectors.lock` lists the SHA-256 of the
+steps of each vector, and a test fails when the steps of a vector change, when a vector is
+removed, or when a vector is not in the list.
