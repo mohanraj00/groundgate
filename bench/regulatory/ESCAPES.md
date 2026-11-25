@@ -76,7 +76,8 @@ column header, and an empty grade cell. The model left out this row. The 4 admit
 the other 4 rows, in their order, and each member value is right.
 
 SPEC §4.12 reads only the records that the candidates name. No rule compares the records with
-the rows of the table. So the gate admits each true row, but the set of rows is not the table.
+the rows of the table. So the 4 admitted records are true rows, but the set of rows is not the
+table.
 
 A reader can say that the `GL BP` row is a second header row. The XML has it in `TBODY`, the
 field rule says "the body rows", and the two blind passes agree on it. So I do not count it as a
@@ -106,9 +107,9 @@ structure gets no candidate, so a true empty cell stays null.
 
 - An admitted `passage` is the whole section of the outline that the reader gives. It includes
   each note that the outline does not mark as a heading.
-- An admitted `record` is a true row: each member value that is not null passed the checks. A
-  null member does not say that the cell is empty. The admitted records are not always all the
-  rows of the table.
+- Each member value of an admitted `record` that is not null passed its own checks. The gate
+  does not check that these values come from one row. A null member does not say that the cell
+  is empty. The admitted records are not always all the rows of the table.
 - `number` had 0 escapes in this run, on 7 admitted values.
 
 The bounds of this run are in [RESULTS.md](RESULTS.md). The fixes of #735 and #736 change the
