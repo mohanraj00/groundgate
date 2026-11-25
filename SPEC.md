@@ -3238,9 +3238,12 @@ no other member.
    key: only the record names its prompts, replies and admissions. Then the command prints
    `unchecked`, removes the rest and exits 1. Each other kind of §9.2 holds digests, values,
    offsets, codes and questions, and no document text other than the values. Those objects
-   stay, with the answer logs. `groundgate store forget --all` removes each object and each
-   log of the packet that no other packet needs. The full procedure of the command, with the
-   steps for a run record that stays, is in the design note, §8.
+   stay, with the answer logs. `groundgate store forget --all` removes those objects and the
+   logs of the packet too, but an object that another packet names stays. An object of a kind
+   of the list above, and a run record that holds text, get no such protection, with or
+   without `--all`. The same text has one key, so two packets can name one object: the
+   command removes that object for the two packets. The full procedure of the command, with
+   the steps for a run record that stays, is in the design note, §8.
 4. **Do not store page images.** No kind holds a crop of a page.
 5. **Encryption at rest belongs to the app.** The contract does not ask for it.
 6. **Use one layout for review and calibrate.** A review answer becomes a calibration label
