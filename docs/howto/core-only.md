@@ -90,7 +90,7 @@ from pathlib import Path
 
 folder = Path(tempfile.mkdtemp()) / "invoice-4471"
 folder.mkdir()
-(folder / "doc.txt").write_text(text, encoding="utf-8")
+(folder / "doc.txt").write_bytes(text.encode("utf-8"))
 for name, obj in [
     ("schema", schema),
     ("candidates", candidates),
@@ -100,8 +100,9 @@ for name, obj in [
     (folder / f"{name}.json").write_text(json.dumps(obj, ensure_ascii=False), encoding="utf-8")
 ```
 
-Write `doc.txt` as UTF-8 and read it back the same way. Do not let the platform change the line
-ends: the receipt holds the digest of the exact text.
+Write `doc.txt` as bytes and read it back as bytes. Text mode in Python changes `\r\n` to `\n`
+when it reads, and the receipt holds the digest of the exact text, so a text with `\r\n` would
+not verify.
 
 ## 4. Verify the receipt later
 
@@ -110,7 +111,7 @@ def load(name):
     return json.loads((folder / f"{name}.json").read_text(encoding="utf-8"))
 
 
-kept = (folder / "doc.txt").read_text(encoding="utf-8")
+kept = (folder / "doc.txt").read_bytes().decode("utf-8")
 check = gg.verify(load("receipt"), kept, load("schema"), load("candidates"), doubt=load("doubt"))
 print(check.ok)
 
