@@ -11,7 +11,7 @@ groundgate 0.11.0 and is in the `v0.11.0` tag. Spec 0.10 is in the `v0.10.0` tag
 spec 0.8 in the `v0.8.0` tag, spec 0.7 in the `v0.7.0` tag, spec 0.6 in the `v0.6.0` tag, spec
 0.5 in the `v0.5.0` tag, spec 0.4 in the `v0.4.0` tag, spec 0.3 in the `v0.3.0` tag, spec 0.2 in
 the `v0.2.0` tag, and spec 0.1 in the `v0.1.0` tag. Any change to how
-a candidate is decided is a new version with a new version string. An implementation conforms if
+a candidate is decided is a new version with a new version string (§8). An implementation conforms if
 it produces the outcome, codes and missing parts of every decision, the parts and the evidence
 units where a vector gives them, the coverage findings, and the relation results where a vector
 gives them, in every vector
@@ -2826,3 +2826,171 @@ relation of §3.4 is the one exception, and it never admits a value), the
 subject of the document (groundgate assumes one subject per document), and PDF geometry (page and
 bounding box) as evidence. Adapters may convert richer evidence into spans. Number formats other
 than English and Indian grouping, and digits other than 0 to 9 (#60).
+
+## 8. Versions
+
+groundgate has three kinds of version (#718): the spec version, the package version and the
+version of each format. Each one changes for its own reason.
+
+### 8.1 The spec version
+
+The spec version names the decisions: the function from a packet to its receipt. It is
+`MAJOR.MINOR`, and this document is version 0.12. A receipt holds it in the member `groundgate`
+(§5), and each digest of §6 holds it in the prefix `groundgate/0.12:`. So a receipt of one spec
+version is never equal to a receipt of another.
+
+A release gets a new spec version when it changes the receipt of a packet that the spec version
+before it accepts. §5 lists these changes under "Compatibility": another outcome, another code
+or another value of a member, a member that was not present, a removed or renamed member,
+another type, another order of a list, another digest rule, a refusal of the packet, and a
+fourth outcome. Before 1.0, a new spec version takes the next minor number, so 0.13 follows
+0.12.
+
+A release keeps the spec version when it only adds, as §5 permits: an optional input that
+earlier releases refuse, an optional member that is present only with that input, and a code
+that only such a packet can get. A section that changes no receipt also keeps it, such as §4.18
+to §4.20. The first paragraph of this document then names the package release that added each
+part. groundgate 0.15.0, 0.16.0 and 0.17.0 each added to spec 0.12 in this way.
+
+### 8.2 The package version
+
+The package version is `MAJOR.MINOR.PATCH`, as in [SemVer](https://semver.org). It is the
+version of the code and of the text of this document. The changelog entry of each release names
+the spec version that the release implements. Before 1.0:
+
+- a release with a new spec version takes the next minor number;
+- a release that adds an input, a member, a code, a format, a command or a public name takes
+  the next minor number;
+- a release that only corrects a fault, and changes no receipt and no format, takes the next
+  patch number.
+
+These rules hold from release 0.14.0. Three earlier patch releases added a command or a public
+name and kept the minor number: 0.5.1, 0.5.2 and 0.6.1.
+
+This document does not yet give the package version of a new spec version from 1.0 on (#710).
+
+### 8.3 The version of a format
+
+A **format** is a named form of data that groundgate reads or writes: a pack, a profile, an
+export, a store object, a view, a line of a log, or an API. Each format has its own version,
+apart from the spec version and the package version. The version is a positive integer, with
+one exception: the layout format has the version `0.1`. A format name has one of three forms:
+
+- `name@N`: a kind of the store, or the `format` member of a file, such as `facts@2`;
+- `groundgate-name/N`: the prefix of a digest, such as `groundgate-pack/1:`, or the name of an
+  API or of a record, such as `groundgate-review/1`;
+- a member `groundgate_name` that holds the version, such as `"groundgate_pack": 1`.
+
+A release keeps the version of a format when it only adds to it: a member that a writer can
+leave out, or a value that a release before it refuses. Each object that was valid stays valid,
+with the same meaning and the same digest. A release gives the format its next version when it
+removes or renames a member, changes the type or the meaning of a member, makes a member
+required, or changes the bytes that a digest of the format reads. The version before keeps its
+name, so `facts@1` and `facts@2` are two formats, and a release says in its changelog when it
+stops reading or writing one. The text that defines a format can give a stricter rule, as §4.20
+does for the review API.
+
+A new format, or a new version of a format, changes the spec version only when it changes the
+receipt of a packet (§8.1).
+
+### 8.4 Which change gives which version
+
+| Change | Spec version | Package version before 1.0 | Format version |
+|---|---|---|---|
+| Another decision or another receipt for a packet that the spec version accepts | next minor | next minor | no change |
+| A new optional input of the packet | no change | next minor | no change |
+| A new optional member of a receipt, present only with a new input | no change | next minor | no change |
+| A new reason code that only a packet with a new input can get | no change | next minor | no change |
+| A new reason code that a packet without a new input can get | next minor | next minor | no change |
+| A new optional member of an export or of another format | no change | next minor | no change |
+| A removed, renamed or required member of a format, or another type or meaning of a member | no change | next minor | next version of the format |
+| A new format | no change | next minor | version 1 |
+| A corrected fault that changes no receipt and no format | no change | next patch | no change |
+
+A change of a format that also changes the receipt of a packet is in the first row.
+
+### 8.5 The formats
+
+These are the formats of the reference implementation and the text that defines each one. A name with `@N`
+or `/N` holds its version. `tests/test_versions.py` fails when the code has a format name that
+is not in these tables, or when a table has a name that the code does not have.
+
+Formats that this document defines:
+
+| Format | Version | Defined in |
+|---|---|---|
+| `groundgate_pack`, `groundgate-pack/1` | 1 | §4.7 to §4.9. The second name is the prefix of the pack digest. |
+| `groundgate_profile`, `groundgate-profile/1` | 1 | §4.10. The second name is the prefix of the profile digest. |
+| `groundgate_pin`, `groundgate-pin/1` | 1 | §4.14. The second name is the prefix of the pin digest. |
+| `groundgate_audit_task`, `groundgate_audit_label` | 1 | §4.18 |
+| `groundgate-blind-audit/1` | 1 | §4.18, the prefix of the hash of the pick |
+| `groundgate_calibration_event` | 1 | §4.19 |
+| `groundgate-review/1` | 1 | §4.20 |
+| `groundgate-review-task/1` | 1 | §4.20, the prefix of the hash of a task ID |
+| `facts@1` | 1 | §5.1 |
+| `facts@2` | 2 | §5.2 |
+
+Formats of the calibration tools, in [docs/calibrate.md](docs/calibrate.md):
+
+| Format | Version | Defined in |
+|---|---|---|
+| `groundgate_gold`, `groundgate-gold/1` | 1 | "The gold set, format 1" |
+| `groundgate_split`, `groundgate-split/1` | 1 | "The split file, format 1" and "The output" |
+| `groundgate_calibration_report` | 1 | "The output" |
+| `groundgate_audit` | 1 | "The audit set, format 1" |
+| `groundgate_audit_pick` | 1 | "The log and the pick" describes the pick. Only the code names this member of the output of `audit pick`: `src/groundgate/calibrate/audit.py`. |
+| `groundgate-audit-set/1` | 1 | The prefix of the digest of an audit set. Only the code defines it: `src/groundgate/calibrate/audit.py`. |
+| `groundgate_profile_drafts` | 1 | "The drafts" |
+
+Kinds of the store, in [docs/design/store.md](docs/design/store.md) §4:
+
+| Format | Version | Defined in |
+|---|---|---|
+| `groundgate-object/1` | 1 | store.md §4, the prefix of each store key |
+| `source@1`, `text@1`, `layout@1` | 1 | store.md §4 |
+| `reading@1` | 1 | store.md §5.1. A release from 0.14 reads it and writes `reading@2`. |
+| `reading@2` | 2 | store.md §5.1 |
+| `document@1` | 1 | [docs/design/document-model.md](docs/design/document-model.md) §4.1 |
+| `schema@1`, `policy@1`, `reference@1`, `pack@1` | 1 | store.md §4 |
+| `candidates@1`, `judgments@1`, `doubt@1` | 1 | store.md §4 |
+| `pin@1`, `places@1`, `completeness@1`, `outline@1` | 1 | store.md §4 |
+| `receipt@1` | 1 | store.md §4. The bytes are the receipt of §5. |
+| `packet@1` | 1 | store.md §5.2 |
+| `prompt@1`, `reply@1`, `admission@1` | 1 | store.md §4 and [docs/design/runner.md](docs/design/runner.md) §8 |
+| `reviewer@1`, `set@1` | 1 | store.md §6: the kind of the key of a name |
+
+The kind of a log entry is the first word of the log name and `-entry@1`, for example
+`answers-entry@1` ([conformance/store/README.md](conformance/store/README.md)).
+
+The runner and the reader. They are not part of this specification:
+
+| Format | Version | Defined in |
+|---|---|---|
+| `groundgate-run/6` | 6 | [docs/design/runner.md](docs/design/runner.md) §8. The store kind of the record is `run@6`. |
+| `groundgate_layout` | `0.1` | [docs/design/document-model.md](docs/design/document-model.md) §3 |
+
+Formats of the review step, in [docs/design/review.md](docs/design/review.md):
+
+| Format | Version | Defined in |
+|---|---|---|
+| `review-policy@1` | 1 | review.md §5.1 |
+| `task@1` | 1 | review.md §5.2 |
+| `number@1` | 1 | review.md §5.2: the `template` of a task. `text@1` is also a template. |
+| `span@1` | 1 | review.md §13: the `template` of a task |
+| `closed_set@1` | 1 | review.md §7: the `template` of a task for a closed set |
+| `model_text@1` | 1 | review.md §7.1: the `template` of a task for a model text |
+| `calibrate_field@1`, `calibrate_key@1` | 1 | review.md §11: the `template` of a calibration task |
+| `answer@1` | 1 | review.md §5.3 |
+| `answer@2` | 2 | review.md §5.3 |
+| `resolution@1` | 1 | review.md §5.4 |
+| `model-text@1` | 1 | review.md §7.1 |
+| `groundgate-audit/1` | 1 | review.md §6.3, the prefix of the hash of the audit pick |
+| `groundgate_review_issuers` | 1 | [docs/howto/review-api.md](docs/howto/review-api.md) |
+
+Views and reports:
+
+| Format | Version | Defined in |
+|---|---|---|
+| `review-queue@1`, `latest-resolutions@1`, `review-measures@1`, `calibrate-labels@1` | 1 | store.md §7.4 |
+| `reading-cache@1` | 1 | store.md §7.4 describes the view `views/readings.json`. Only the code names the format: `src/groundgate/store/maintain.py`. |
+| `groundgate-store-vectors@1`, `store-report@1` | 1 | [conformance/store/README.md](conformance/store/README.md) |
