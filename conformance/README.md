@@ -1,5 +1,25 @@
 # Conformance vectors
 
+Each folder holds one kind of language-agnostic vector:
+
+| Folder | Vectors | SPEC |
+|---|---|---|
+| `vectors/` | Packets and their decisions. Each reason code is in at least two of them. | §2, §3 |
+| `invalid/` | Invalid packets that an implementation must refuse. | §2 |
+| `profiles/` | Profile vectors. | §4.10 |
+| `pins/` | Source pin vectors. | §4.14 |
+| `places/` | Places vectors. | §4.15 |
+| `exports/` | Export vectors. | §5.2 |
+| `audit/` | Blind audit vectors. | §4.18 |
+| `events/` | Calibration event vectors. | §4.19 |
+| `review-api/` | Review API vectors. | §4.20 |
+| `receipts/` | Packets with their full receipts. | §5 |
+| `store/` | The store contract, in one file. | §9 |
+
+`uv run python conformance/build.py` writes every folder except `store/`, and prints how many
+vectors of each kind it wrote. `store/` has its own script and its own
+[README](store/README.md). The sections below define the files of each folder.
+
 Each file in `vectors/` is a complete, language-agnostic test case:
 
 - `document`: NFC text;
@@ -57,6 +77,13 @@ Files in `audit/` are blind audit vectors (SPEC §4.18). `kind` names what a vec
   labels cover. Each route has `admitted`, the count of its admitted values with a label,
   `unscored`, the count of its admitted values with no label, and its `status`. `expected.rate`
   is the next rate.
+
+Files in `events/` are calibration event vectors (SPEC §4.19). `kind` names what a vector checks:
+
+- `event`: one `event`. `expected.valid` is true for a valid event.
+- `log`: a `profile` and the `records` of its events log, without the chain members.
+  `expected.valid` is true for a valid log, and `expected.counted` lists the origin id of each
+  event that counts, in log order. An invalid log has an empty `counted`.
 
 Files in `review-api/` are review API vectors (SPEC §4.20). `kind` names what a vector checks:
 
@@ -116,6 +143,9 @@ and change no other line. Do not write the list from a script.
 
 Files in `invalid/` are invalid packets. An implementation must refuse them (SPEC §2) and emit no
 receipt.
+
+`store/vectors.json` is the store contract (SPEC §9.7) as vectors. [store/README.md](store/README.md)
+defines the file, the runner and the report.
 
 The expectations are written by hand in `build.py`. The script only converts quotes into byte offsets,
 independently of groundgate. After editing a vector, re-run it and commit the JSON:
