@@ -383,8 +383,9 @@ a changed document, schema, policy, candidate or outcome.
   error rate ([bench/regulatory/RESULTS.md](bench/regulatory/RESULTS.md)).
 - **An admitted passage or table is not checked as a whole.** An admitted `passage` is the whole
   section of the reader's outline, with each note that the outline does not mark as a heading.
-  Each admitted `record` is a true row. But the gate does not check that the records are all the
-  rows of the table, and a null member does not say that the cell is empty. In the regulatory
+  Each member value of an admitted `record` that is not null passed its own checks. But the gate
+  does not check that these values come from one row, or that the records are all the rows of the
+  table. A null member does not say that the cell is empty. In the regulatory
   held-out run of 0.17, 4 of 22 admitted passages and 2 of 5 admitted tables were escapes. The
   one-sided 95% upper bounds on the admitted error rate are 36.91% for `passage` and 81.07% for
   `record`. `number` had 0 escapes on 7 admitted values. The causes are in

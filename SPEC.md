@@ -1695,8 +1695,9 @@ record never stays admitted alone.
 **What an admitted record says (#709).** This paragraph changes no decision. Each member value
 of an admitted record that is not null passed the checks of its member field. A null member
 says that no value of that member passed. It does not say that the cell in the source is empty.
-The gate reads only the records that the candidates name. So it does not check that the records
-are all the rows of a table. An app that needs the whole table, or an empty cell, gets that from
+The gate checks each member value alone. It does not check that the member values of one record
+come from the same row. The gate reads only the records that the candidates name. So it does not
+check that the records are all the rows of a table. An app that needs the whole table, or an empty cell, gets that from
 the structure of the table, or sends the table to review (#736).
 
 ### 4.13 Document sets (step 15)
