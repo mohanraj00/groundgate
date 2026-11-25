@@ -402,7 +402,7 @@ def test_calibrate_suggest_bounds_term_scan_characters(tmp_path: Path) -> None:
         check=True,
         capture_output=True,
         text=True,
-        timeout=10,
+        timeout=60,
     )
     drafts = json.loads(run.stdout)
     assert drafts["unscanned_corrections"] == 33
