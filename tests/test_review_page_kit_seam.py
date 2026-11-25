@@ -299,6 +299,60 @@ def test_the_page_answers_a_task_without_the_kit(tmp_path: Path, browser: Browse
     assert out["controls"] == ["button"] and "plain controls" in out["note"]
 
 
+CLOSED_SET_STEPS = """
+(async () => {
+  const wait = (ms) => new Promise((done) => setTimeout(done, ms));
+  const until = async (test) => {
+    for (let i = 0; i < 300 && !test(); i += 1) await wait(50);
+  };
+  await until(() => document.body.dataset.state === 'ready');
+  const control = document.querySelector('li[data-field=status]').firstElementChild;
+  (control.shadowRoot?.querySelector('button') ?? control).click();
+  await until(() => document.querySelectorAll('.choice').length === 2);
+  return JSON.stringify({
+    kit: document.body.dataset.kit,
+    options: [...document.querySelectorAll('#detail .options li')].map((item) => item.textContent),
+  });
+})()
+"""
+
+
+@pytest.mark.parametrize("with_kit", [False, True], ids=["without-kit", "with-kit"])
+def test_the_page_shows_all_closed_set_options(
+    tmp_path: Path, browser: Browser, request: pytest.FixtureRequest, with_kit: bool
+) -> None:
+    from groundgate.review.tasks import write_tasks
+    from groundgate.store.packets import admit_packet
+
+    long_option = "approved with conditions " + "A" * 12000 + "Z"
+    options = ["approved\u0085in full", long_option, "rejected"]
+    schema = {"fields": {"status": {"type": "string", "options": options}}}
+    candidates = [
+        {
+            "id": "c1",
+            "field": "status",
+            "value": "approved in full",
+            "evidence": [{"text": "approved in full"}],
+        },
+        {"id": "c2", "field": "status", "value": "rejected", "evidence": [{"text": "rejected"}]},
+    ]
+    document = "Status: approved in full. Previous status: rejected.\n"
+    root = tmp_path / "store"
+    with FolderStore(root) as store:
+        packet, _ = admit_packet(store, document, schema, candidates, None, "policy-0001")
+        ((_, task),) = write_tasks(store, packet, run.REVIEW_POLICY).tasks
+    assert task["item"] == "closed_set" and len(task["choices"]) == 2
+
+    kit = request.getfixturevalue("pinned_kit") if with_kit else None
+    out = drive(browser, root, kit, CLOSED_SET_STEPS)
+    assert out["kit"] == ("true" if with_kit else "false")
+    assert out["options"] == [
+        "approved\u0085in full (proposed)",
+        long_option,
+        "rejected (proposed)",
+    ]
+
+
 # A review task with two values that cite a reference text of the packet, and one value that
 # cites the document.
 REFERENCE_STEPS = """

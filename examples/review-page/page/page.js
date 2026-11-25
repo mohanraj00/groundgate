@@ -23,7 +23,7 @@ const NO_PASSAGE = 'The page cannot show the passage of this value. Its evidence
   + 'document. It can be in a reference text, and the API gives the text of the document only.';
 
 // The page clips a message and a cell of the list. It never clips a text that tells one value
-// or one task from another: a choice, a question, a definition, and the heading of a task.
+// or one task from another: an option, a choice, a question, a definition, or a task heading.
 const clip = (text, max) => (text.length > max ? `${text.slice(0, max - 1)}…` : text);
 // The text element of the kit takes this many characters at most.
 const KIT_TEXT = 10000;
@@ -193,8 +193,20 @@ async function open(entry, number) {
     parts.text(detail, `Audit: find the value of ${clip(task.field, 200)} in the document. The page does not `
       + 'show a proposed value. Select the value in the document, with its scale word.', 'strong');
   } else {
-    parts.text(detail, task.body.question, 'strong');
-    const choices = task.body.choices;
+    const { item, question, choices, options } = task.body;
+    parts.text(detail, question, 'strong');
+    if (item === 'closed_set') {
+      add(detail, 'h3', 'Field options');
+      const list = add(detail, 'ul', '', { class: 'options' });
+      const proposed = new Set(choices.map((choice) => choice.value));
+      for (const option of options) {
+        if (option === null) continue; // The API can redact an option.
+        const row = add(list, 'li', option);
+        // Choice values already have the whitespace normalised as in SPEC §3 step 5.
+        const value = option.replace(/[\p{White_Space}\u001c-\u001f]+/gu, ' ').replace(/^ | $/g, '');
+        if (proposed.has(value)) add(row, 'strong', ' (proposed)');
+      }
+    }
     // The evidence of a choice can be a span of a reference text, and the API gives the text of
     // the document only. Each choice names its source. So the page shows a passage only for the
     // source `document`: the same offsets in the document are other text for another source.
