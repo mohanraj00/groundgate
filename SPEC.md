@@ -2844,7 +2844,8 @@ before it accepts. §5 lists these changes under "Compatibility": another outcom
 or another value of a member, a member that was not present, a removed or renamed member,
 another type, another order of a list, another digest rule, a refusal of the packet, and a
 fourth outcome. Before 1.0, a new spec version takes the next minor number, so 0.13 follows
-0.12.
+0.12. From 1.0, a new spec version takes the next major number, and its minor number is 0, so
+2.0 follows 1.0 (§8.6).
 
 A release keeps the spec version when it only adds, as §5 permits: an optional input that
 earlier releases refuse, an optional member that is present only with that input, and a code
@@ -2867,7 +2868,14 @@ the spec version that the release implements. Before 1.0:
 These rules hold from release 0.14.0. Three earlier patch releases added a command or a public
 name and kept the minor number: 0.5.1, 0.5.2 and 0.6.1.
 
-This document does not yet give the package version of a new spec version from 1.0 on (#710).
+From 1.0, the major number of the package is the major number of the spec version (§8.6):
+
+- a release with a new spec version takes the next major number;
+- a release that adds takes the next minor number;
+- a release that only corrects a fault takes the next patch number.
+
+A release that stops reading a version of a format that a release of the same major number
+wrote also takes the next major number.
 
 ### 8.3 The version of a format
 
@@ -2895,17 +2903,21 @@ receipt of a packet (§8.1).
 
 ### 8.4 Which change gives which version
 
-| Change | Spec version | Package version before 1.0 | Format version |
-|---|---|---|---|
-| Another decision or another receipt for a packet that the spec version accepts | next minor | next minor | no change |
-| A new optional input of the packet | no change | next minor | no change |
-| A new optional member of a receipt, present only with a new input | no change | next minor | no change |
-| A new reason code that only a packet with a new input can get | no change | next minor | no change |
-| A new reason code that a packet without a new input can get | next minor | next minor | no change |
-| A new optional member of an export or of another format | no change | next minor | no change |
-| A removed, renamed or required member of a format, or another type or meaning of a member | no change | next minor | next version of the format |
-| A new format | no change | next minor | version 1 |
-| A corrected fault that changes no receipt and no format | no change | next patch | no change |
+"New" in the column of the spec version is the next minor number before 1.0, and the next major
+number from 1.0. The package version has one column for each of the two periods.
+
+| Change | Spec version | Package before 1.0 | Package from 1.0 | Format version |
+|---|---|---|---|---|
+| Another decision or another receipt for a packet that the spec version accepts | new | next minor | next major | no change |
+| A new optional input of the packet | no change | next minor | next minor | no change |
+| A new optional member of a receipt, present only with a new input | no change | next minor | next minor | no change |
+| A new reason code that only a packet with a new input can get | no change | next minor | next minor | no change |
+| A new reason code that a packet without a new input can get | new | next minor | next major | no change |
+| A new optional member of an export or of another format | no change | next minor | next minor | no change |
+| A removed, renamed or required member of a format, or another type or meaning of a member | no change | next minor | next minor | next version of the format |
+| A release stops reading a version of a format | no change | next minor | next major | no change |
+| A new format | no change | next minor | next minor | version 1 |
+| A corrected fault that changes no receipt and no format | no change | next patch | next patch | no change |
 
 A change of a format that also changes the receipt of a packet is in the first row.
 
@@ -2994,3 +3006,52 @@ Views and reports:
 | `review-queue@1`, `latest-resolutions@1`, `review-measures@1`, `calibrate-labels@1` | 1 | store.md §7.4 |
 | `reading-cache@1` | 1 | store.md §7.4 describes the view `views/readings.json`. Only the code names the format: `src/groundgate/store/maintain.py`. |
 | `groundgate-store-vectors@1`, `store-report@1` | 1 | [conformance/store/README.md](conformance/store/README.md) |
+
+### 8.6 A receipt of another spec version
+
+`verify` checks a receipt only with the decisions of its own spec version (#710). Each digest of
+the receipt holds that version in its prefix (§6), so no other version can derive it again.
+
+1. **The same spec version.** A release verifies each receipt that an earlier release with the
+   same spec version made. This follows from §5: a release that keeps the spec version gives
+   the same receipt to each packet that an earlier release accepts.
+2. **The 1.0 line.** From 1.0, a new spec version takes the next major number, and the package
+   takes the same major number. So each release 1.y.z implements spec 1.0 and verifies each
+   receipt of spec 1.0. A change of the receipt of an accepted packet waits for spec 2.0, in
+   package 2.0.0.
+3. **Another spec version.** `verify` gives one problem and checks nothing more. The problem
+   names the spec version of the receipt. When a published release implements that version,
+   the problem also names the last one. That release verifies the receipt. Install it in a
+   separate environment, and give it the receipt and the inputs.
+4. **Before and after 1.0.** Rule 3 is the rule for each receipt of a spec version before 1.0,
+   also after the 1.0 release, because the version string of spec 1.0 changes each digest. It is
+   also the rule for a receipt of spec 1.0 after the 2.0.0 release.
+
+So keep, with each receipt, the inputs of its packet and the spec version. The receipt holds
+the spec version. This command verifies a receipt of spec 0.11:
+
+```bash
+uvx --from 'groundgate==0.11.0' groundgate verify receipt.json doc.txt schema.json candidates.json
+```
+
+These are the releases on PyPI that implement each spec version:
+
+| Spec version | Releases | Last release |
+|---|---|---|
+| 0.1 | 0.1.0 | 0.1.0 |
+| 0.2 | 0.2.0 | 0.2.0 |
+| 0.3 | 0.3.0 | 0.3.0 |
+| 0.4 | 0.4.0 | 0.4.0 |
+| 0.5 | 0.5.0 to 0.5.2 | 0.5.2 |
+| 0.6 | 0.6.0 and 0.6.1 | 0.6.1 |
+| 0.7 | 0.7.0 | 0.7.0 |
+| 0.8 | 0.8.0 | 0.8.0 |
+| 0.9 | 0.9.0 | 0.9.0 |
+| 0.10 | 0.10.0 | 0.10.0 |
+| 0.11 | 0.11.0 | 0.11.0 |
+| 0.12 | 0.14.0 and later | this release |
+
+The tags `v0.12.0` and `v0.13.0` also implement spec 0.11. They are not on PyPI.
+
+A release of an earlier spec version gets no corrections, also not for a security fault
+([SECURITY.md](SECURITY.md)). Use it only to verify the receipts of your own archive.
