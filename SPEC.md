@@ -2874,9 +2874,6 @@ From 1.0, the major number of the package is the major number of the spec versio
 - a release that adds takes the next minor number;
 - a release that only corrects a fault takes the next patch number.
 
-A release that stops reading a version of a format that a release of the same major number
-wrote also takes the next major number.
-
 ### 8.3 The version of a format
 
 A **format** is a named form of data that groundgate reads or writes: a pack, a profile, an
@@ -2915,7 +2912,6 @@ number from 1.0. The package version has one column for each of the two periods.
 | A new reason code that a packet without a new input can get | new | next minor | next major | no change |
 | A new optional member of an export or of another format | no change | next minor | next minor | no change |
 | A removed, renamed or required member of a format, or another type or meaning of a member | no change | next minor | next minor | next version of the format |
-| A release stops reading a version of a format | no change | next minor | next major | no change |
 | A new format | no change | next minor | next minor | version 1 |
 | A corrected fault that changes no receipt and no format | no change | next patch | next patch | no change |
 
@@ -3020,9 +3016,10 @@ the receipt holds that version in its prefix (§6), so no other version can deri
    receipt of spec 1.0. A change of the receipt of an accepted packet waits for spec 2.0, in
    package 2.0.0.
 3. **Another spec version.** `verify` gives one problem and checks nothing more. The problem
-   names the spec version of the receipt. When a published release implements that version,
-   the problem also names the last one. That release verifies the receipt. Install it in a
-   separate environment, and give it the receipt and the inputs.
+   names the spec version of the receipt. When the version is an earlier one of the table
+   below, the problem also names the last release that implements it. That release verifies the
+   receipt. Install it in a separate environment, and give it the receipt and the inputs. For a
+   later version, or a value that is not a version of the table, the problem names no release.
 4. **Before and after 1.0.** Rule 3 is the rule for each receipt of a spec version before 1.0,
    also after the 1.0 release, because the version string of spec 1.0 changes each digest. It is
    also the rule for a receipt of spec 1.0 after the 2.0.0 release.
