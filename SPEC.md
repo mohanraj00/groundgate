@@ -3230,12 +3230,17 @@ no other member.
    kinds hold the text of a document, and the command `groundgate store forget` removes them
    for a packet:
    `source@1`, `text@1`, `layout@1`, `document@1`, `reference@1`, `candidates@1`, `prompt@1`,
-   `reply@1`, `admission@1`, `model-text@1` and `places@1`. The command also removes a run
-   record `run@N` when one of its lines holds text of the document, or when the command cannot
-   check that. Each other kind of §9.2 holds digests, values, offsets, codes and questions, and
-   no document text other than the values. Those objects stay, with the answer logs. `groundgate store forget --all` removes each
-   object and each log of the packet that no other packet needs. The full procedure of the
-   command is in the design note, §8.
+   `reply@1`, `admission@1`, `model-text@1` and `places@1`. The command also removes the run
+   record `run@N` of the packet when one of its lines holds text of the document. It removes
+   the record too when the text of the document is not in the store, or when it cannot read
+   the text or the schema, because then it cannot compare the lines with the text. A run
+   record stays when the command cannot read its lines, or when its bytes do not match its
+   key: only the record names its prompts, replies and admissions. Then the command prints
+   `unchecked`, removes the rest and exits 1. Each other kind of §9.2 holds digests, values,
+   offsets, codes and questions, and no document text other than the values. Those objects
+   stay, with the answer logs. `groundgate store forget --all` removes each object and each
+   log of the packet that no other packet needs. The full procedure of the command, with the
+   steps for a run record that stays, is in the design note, §8.
 4. **Do not store page images.** No kind holds a crop of a page.
 5. **Encryption at rest belongs to the app.** The contract does not ask for it.
 6. **Use one layout for review and calibrate.** A review answer becomes a calibration label
