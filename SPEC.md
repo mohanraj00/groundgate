@@ -3094,7 +3094,7 @@ spec version.
 | each other kind | One canonical JSON value (§6), with no byte after it. |
 
 Canonical JSON has no duplicate member, no number that is not in its shortest form, and no
-`NaN`. These are the kinds of JSON that the reference implementation writes:
+`NaN`. These are the kinds of JSON that the reference implementation reads or writes:
 
 | Kind | Value |
 |---|---|
@@ -3127,10 +3127,12 @@ A **reading** names what `read` made from one source:
  "source_format": "pdf"}
 ```
 
-`source`, `text` and `layout` are the keys of a `source@1`, a `text@1` and a `layout@1` object.
-`document` is the key of a `document@1` object, or null. `warnings` holds the warnings of the
-reader in their order. `completeness` (§4.16) and `source_format` are optional: a reading of an
-earlier release has neither. `reading@1` has the same members without `warnings`.
+`source` and `text` are the keys of a `source@1` and a `text@1` object. `layout` is the key of
+a `layout@1` object, or null for a source with no layout, such as a text file. `document` is the
+key of a `document@1` object, or null. `warnings` holds the warnings of the reader in their
+order. `completeness` (§4.16) and `source_format` are optional: a reading has `completeness`
+from release 0.15.0 and `source_format` from release 0.16.0. `reading@1` has only the members
+`format`, `source`, `reader`, `options`, `text`, `layout` and `document`.
 
 A **packet** names the inputs and the receipt of one `admit` call:
 
@@ -3145,7 +3147,8 @@ A **packet** names the inputs and the receipt of one `admit` call:
 ```
 
 - `spec` is the spec version of the receipt (§8.1).
-- `reading`, `judgments` and `run` can be null. `run` is the key of the run record.
+- `document.id`, `policy`, `reading`, `judgments` and `run` can be null. A null `policy` is an
+  `admit` call with no policy. `run` is the key of the run record.
 - `packs` names only the packs of the app. The receipt names the built-in packs.
 - A packet has the member `doubt`, `pin`, `places`, `completeness` or `outline` only when the
   `admit` call had that input: the key of a `doubt@1`, `pin@1`, `places@1`, `completeness@1`
@@ -3186,11 +3189,13 @@ not-found error is also a store error.
   not change. `forget` of a key that is not in the store is not-found and adds no record, so a
   second `forget` of one key is not-found.
 - After `forget`, `get` of the key is not-found. `put` of the same bytes gives the same key
-  again, and the deletion record stays.
+  again, and the deletion record stays. A `forget` of that key then removes the object again
+  and adds a second deletion record.
 
 ### 9.5 The logs
 
-A **log** only grows. A log name is a fixed word and zero, one or two keys:
+The five operations only add to a **log**: no operation changes or removes a record. A log
+name is a fixed word and zero, one or two keys:
 
 | Log name | Records |
 |---|---|
@@ -3219,15 +3224,16 @@ no other member.
 
 1. **Name objects only by their digest.** A path or a name from a document, a reply, a manifest
    or a request never becomes a path of the storage. That data is untrusted.
-2. **Version each format.** A new version is a new kind, such as `answer@2` (§8.3). A key never
+2. **Version each format.** A new version is a new kind, such as `reading@2` (§8.3). A key never
    gets a new meaning.
 3. **Plan for deletion.** Documents can be private, and an app can have to delete them. These
    kinds hold the text of a document, and the command `groundgate store forget` removes them
    for a packet:
    `source@1`, `text@1`, `layout@1`, `document@1`, `reference@1`, `candidates@1`, `prompt@1`,
-   `reply@1`, `admission@1`, `model-text@1` and `places@1`. Each other kind of §9.2 holds
-   digests, values, offsets, codes and questions, and no document text other than the values.
-   Those objects stay, with the answer logs. `groundgate store forget --all` removes each
+   `reply@1`, `admission@1`, `model-text@1` and `places@1`. The command also removes a run
+   record `run@N` when one of its lines holds text of the document, or when the command cannot
+   check that. Each other kind of §9.2 holds digests, values, offsets, codes and questions, and
+   no document text other than the values. Those objects stay, with the answer logs. `groundgate store forget --all` removes each
    object and each log of the packet that no other packet needs. The full procedure of the
    command is in the design note, §8.
 4. **Do not store page images.** No kind holds a crop of a page.
@@ -3237,7 +3243,11 @@ no other member.
 
 The folder layout, the locks, a torn last line of a log, the views and the `run_keys` of a
 deletion record are rules of the folder store of the reference implementation (the design note,
-§7). They are not part of this contract.
+§7). They are not part of this contract. The folder store also has two methods that are not
+operations of the contract, and `groundgate store forget --all` uses them: `forget_log` removes
+a log, and `forget_records` removes records of a splits log or an events log and writes the
+other records as a new chain. Each one adds a deletion record with the member `log` in place of
+`key`, and `forget_records` adds the count `records`.
 
 ### 9.7 The vectors and compatibility
 
@@ -3255,8 +3265,7 @@ A release only adds to this contract, as §8.3 permits for a format:
   vector for one of these is a new vector.
 - A change of the steps of a vector, a removed vector, another key formula, or another result
   or error class for an input that a vector fixes needs the next version of the file format,
-  `groundgate-store-vectors@2`. From 1.0, such a change also takes the next major number of the
-  package (§8.2).
+  `groundgate-store-vectors@2`.
 
 So a backend that passes the vectors of one release passes the same vectors of each later
 release with the same file format. `conformance/store/vectors.lock` lists the SHA-256 of the

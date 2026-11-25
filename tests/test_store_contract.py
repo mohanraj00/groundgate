@@ -233,13 +233,20 @@ def _steps_digest(steps: object) -> str:
 
 def _lock_problems(lock: str, vectors: list[dict[str, Any]]) -> list[str]:
     """Compare the vectors with ``vectors.lock``: a vector whose steps changed, a vector that
-    is removed, and a vector that the list does not name, with the line to add for it."""
+    is removed, a vector that the list does not name, with the line to add for it, and an
+    ``id`` that two vectors or two lines have."""
+    problems = []
     locked: dict[str, str] = {}
     for line in lock.splitlines():
         digest, name = line.split("  ", 1)
+        if name in locked:
+            problems.append(f"{name} has two lines in vectors.lock")
         locked[name] = digest
-    current = {v["id"]: _steps_digest(v["steps"]) for v in vectors}
-    problems = []
+    current: dict[str, str] = {}
+    for v in vectors:
+        if v["id"] in current:
+            problems.append(f"two vectors have the id {v['id']}")
+        current[v["id"]] = _steps_digest(v["steps"])
     for name, digest in locked.items():
         if name not in current:
             problems.append(f"{name} is removed")
@@ -278,6 +285,15 @@ def test_the_lock_finds_a_changed_a_removed_and_a_new_vector() -> None:
     digest = _steps_digest([])
     assert _lock_problems(lock, [*vectors, new]) == [
         f"put-get/new is not in vectors.lock: add the line '{digest}  put-get/new'"
+    ]
+    twice = [*vectors, {**first, "steps": []}]
+    assert _lock_problems(lock, twice) == [
+        f"two vectors have the id {first['id']}",
+        f"the steps of {first['id']} changed",
+    ]
+    line = lock.splitlines()[0]
+    assert _lock_problems(lock + line + "\n", vectors) == [
+        f"{line.split('  ', 1)[1]} has two lines in vectors.lock"
     ]
 
 
