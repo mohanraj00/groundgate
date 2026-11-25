@@ -276,6 +276,7 @@ def _parser() -> argparse.ArgumentParser:
     r = sub.add_parser("report", help="verify a receipt, then render an HTML review page")
     r.add_argument("receipt", help="the receipt JSON, or the packet key with --store")
     inputs(r)
+    doubt_option(r)
     pack_dir(r)
     store_option(r, "get the receipt, each input and the layout of the packet PACKET")
     r.add_argument("--layout", help="layout JSON from read, to show page numbers")
@@ -608,7 +609,7 @@ def main(argv: list[str] | None = None) -> int:
             "completeness": _json(args.completeness) if args.completeness else None,
             "outline": _outline(_json(args.outline), text) if args.outline else None,
         }
-        if args.command in ("admit", "verify") and args.doubt is not None:
+        if args.doubt is not None:
             extra["doubt"] = _doubt(args.doubt, text)
         if args.layout and args.command in ("admit", "verify"):
             extra["places"] = _layout_places(_json(args.layout), text)
@@ -710,7 +711,7 @@ def _verify_inputs(parser: argparse.ArgumentParser, args: argparse.Namespace) ->
             ("--pin", args.pin is not None),
             ("--completeness", args.completeness is not None),
             ("--outline", args.outline is not None),
-            ("--doubt", args.command == "verify" and args.doubt is not None),
+            ("--doubt", args.doubt is not None),
             ("--layout", args.command == "verify" and args.layout is not None),
             ("--pack", bool(args.pack)),
         )

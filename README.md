@@ -173,7 +173,7 @@ settings that make a check fail every time, or pass for the wrong key or field
 [examples/irs-590a](examples/irs-590a) runs the whole pipeline on an IRS publication with cached model output, so it reproduces without an API key.
 
 For a scanned PDF, I save the doubt list with `read --ocr --document doc.json` and pass
-`--doubt doc.json` to both `admit` and `verify`. A JSON array of doubt spans works too.
+`--doubt doc.json` to `admit`, `verify` and `report`. A JSON array of doubt spans works too.
 
 For a batch, `--docs` holds `<doc>.txt` files and `--candidates` holds matching `<doc>.json`
 candidate arrays. If I give `--doubt DIR`, I put a matching `<doc>.json` doubt list or document
