@@ -68,7 +68,7 @@ class Tracker:
         if self.stopped:
             return
         if len(self.stack) >= MAX_DEPTH or len(self.nodes) >= MAX_NODES:
-            self.stopped = True  # the open nodes never close, so ``finish`` drops them
+            self.stopped = True
             return
         parent = self.stack[-1][1] if self.stack else None
         if parent is not None and self.nodes[parent].kind == "block":
@@ -120,7 +120,7 @@ class Tracker:
 
     def close(self, tag: str) -> None:
         """Close the innermost open ``tag`` and each element above it. An end tag with no open
-        element is ignored. After a stop, nothing closes, so no span ends in the wrong place."""
+        element is ignored. After a stop, all end tags are ignored."""
         if self.stopped or not any(t == tag for t, _ in self.stack):
             return
         while self.stack:
@@ -141,10 +141,18 @@ class Tracker:
                 return
 
     def done(self) -> list[Raw]:
-        """The nodes. At the end of the text, each open element closes. After a stop, each open
-        element stays open, so ``finish`` drops it."""
-        while self.stack and not self.stopped:
-            self.close(self.stack[-1][0])
+        """The nodes. At the end of the text, each open element closes. After a stop, keep only
+        the span of the outermost open table through the end of the text. The end of the table
+        is unknown, so the line rule must skip all text that the table could hold."""
+        if self.stopped:
+            for _, n in self.stack:
+                if self.nodes[n].kind == "table":
+                    self.nodes[n].end = self.position()
+                    self.emptied.add(n)
+                    break
+        else:
+            while self.stack:
+                self.close(self.stack[-1][0])
         # The document keeps no scope. A th with scope="row" in a row of data cells is the
         # label of its row, so it is a header. A th with scope="col" there heads the cells
         # below it, not its row, so it gets null. In a row of headers, each is the reverse.

@@ -841,6 +841,26 @@ def test_the_text_of_a_dropped_table_is_not_a_line(tmp_path: Path, hidden: str) 
     assert not any(c.get("proposer") == "structure" for c in result.candidates)
 
 
+def test_the_text_of_a_table_open_at_the_depth_limit_is_not_a_line(tmp_path: Path) -> None:
+    html = "<table><tr><td>" + "<div>" * 254 + "Revenue: 999"
+    doc = document(tmp_path, html)
+    result = run(doc, PLAIN, policy=ADMIT)
+    assert result.candidates == []
+
+
+def test_only_lines_before_the_open_table_count_at_the_node_limit(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setattr("groundgate.read.nodes.MAX_NODES", 7)
+    html = (
+        "<p>Revenue: 5</p><table><tr><td>Revenue: 999"
+        "<table><tr><td><div>Revenue: 888</div></td></tr></table></td></tr></table>"
+        "<p>Revenue: 777</p>"
+    )
+    result = run(document(tmp_path, html), PLAIN, policy=ADMIT)
+    assert [c["value"] for c in result.candidates] == ["5"]
+
+
 @pytest.mark.parametrize("change", ["columns", "rows", "row in a node"])
 def test_loaded_places_that_do_not_follow_the_text_give_nothing(
     tmp_path: Path, change: str
