@@ -407,7 +407,7 @@ with the packs, and then:
 A built-in version stays in every later wheel of the same spec version, also when it is retired.
 A receipt of an older spec version needs the wheel of that version, as today (SPEC, intro). That
 wheel holds its own built-in packs, so `pip install groundgate==X` is enough for them. The rule
-for old receipts after an upgrade is gap 9 of #277, and it is not in this note.
+for old receipts after an upgrade is in [SPEC §8.6](../../SPEC.md#86-a-receipt-of-another-spec-version).
 
 For its own packs, the app keeps each pack file that a receipt names. I advise a folder of files
 with the digest in the name, next to the receipts. The how-to of issue 6 shows this.

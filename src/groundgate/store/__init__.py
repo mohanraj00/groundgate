@@ -1,9 +1,10 @@
-"""The store (docs/design/store.md): objects that never change and logs that only grow.
+"""The store (SPEC §9): objects that never change and logs that only grow.
 
 The key of an object is SHA-256 over ``groundgate-object/1:``, the kind, a zero byte and the
-exact bytes (§4). A store has five operations: ``put``, ``get``, ``append``, ``read`` and
-``forget`` (§6). ``FolderStore`` keeps the data in a folder (§7). The core (``admit``,
-``verify``) does not import this package.
+exact bytes (SPEC §9.1). A store has five operations: ``put``, ``get``, ``append``, ``read`` and
+``forget`` (SPEC §9.4). ``FolderStore`` keeps the data in a folder by the rules of the folder
+store in docs/design/store.md §7. A section number with no document name in this module is a
+section of that design note. The core (``admit``, ``verify``) does not import this package.
 """
 
 from __future__ import annotations

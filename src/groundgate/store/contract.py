@@ -1,4 +1,4 @@
-"""The contract tests of a store (docs/design/store.md §6).
+"""The contract tests of a store (SPEC §9.7).
 
 The contract is a list of language-agnostic vectors. ``conformance/store/vectors.json`` holds
 them as JSON, and ``conformance/store/README.md`` tells a backend in another language how to run

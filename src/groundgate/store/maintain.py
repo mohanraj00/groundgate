@@ -1,11 +1,13 @@
-"""Check, rebuild and forget in a folder store (docs/design/store.md §7.4, §8, §12 issue 3).
+"""Check, rebuild and forget in a folder store (SPEC §9.5, §9.6; docs/design/store.md §7.4, §8).
 
 ``check`` reads each object and each log of a ``FolderStore``. It finds the kind of each object
-from its key, checks each object that a packet, a reading or a run names, checks each chain and
-the view of each splits log (§10), compares the inputs of a packet with the inputs that its run
-header names, and looks for document text in each run record. ``rebuild`` builds the views
-again from the objects and logs. ``forget_packet`` removes the objects of a packet that §8 rule
-3 lists as "Removed", or with ``everything`` each object and log of the packet.
+from its key, checks each object that a packet, a reading or a run names, checks each chain
+(SPEC §9.5) and the view of each splits log (§10), compares the inputs of a packet with the
+inputs that its run header names, and looks for document text in each run record (§12 issue 3).
+``rebuild`` builds the views again from the objects and logs (§7.4). ``forget_packet`` removes
+the objects of a packet whose kinds SPEC §9.6 rule 3 lists, or with ``everything`` each object
+and log of the packet (§8). A section number with no document name in this module is a section
+of docs/design/store.md.
 
 The store data is untrusted. These functions build no path from it: each path comes from a key
 that matches ``sha256:[0-9a-f]{64}`` or from a fixed word.

@@ -1,4 +1,4 @@
-"""Readings and packets in a store (docs/design/store.md §5, §9).
+"""Readings and packets in a store (SPEC §9.3; verify and report: docs/design/store.md §9).
 
 ``put_reading`` reads a file and writes the source, the text, the layout and a ``reading@2``
 object. ``admit_packet`` runs ``admit`` and writes the inputs, the receipt and a ``packet@1``
