@@ -381,6 +381,16 @@ a changed document, schema, policy, candidate or outcome.
   its 9 held-out parts one time (#686): 28 right admitted values, 6 escapes and 4 reviews on
   50 slots, a miss rate of 28.21% and a one-sided 95% upper bound of 31.89% on the admitted
   error rate ([bench/regulatory/RESULTS.md](bench/regulatory/RESULTS.md)).
+- **An admitted passage or table is not checked as a whole.** An admitted `passage` is the whole
+  section of the reader's outline, with each note that the outline does not mark as a heading.
+  Each admitted `record` is a true row. But the gate does not check that the records are all the
+  rows of the table, and a null member does not say that the cell is empty. In the regulatory
+  held-out run of 0.17, 4 of 22 admitted passages and 2 of 5 admitted tables were escapes. The
+  one-sided 95% upper bounds on the admitted error rate are 36.91% for `passage` and 81.07% for
+  `record`. `number` had 0 escapes on 7 admitted values. The causes are in
+  [bench/regulatory/ESCAPES.md](bench/regulatory/ESCAPES.md), and the fixes are #735 and #736.
+  If a passage or a table must be exact, send it to review until a new held-out measure
+  supports admission.
 
 ## Status
 
