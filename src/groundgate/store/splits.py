@@ -1,4 +1,4 @@
-"""The ``splits`` log of #383 (docs/design/store.md §10).
+"""The ``splits`` log of #383 (SPEC §9.5; the view: docs/design/store.md §10).
 
 A set has one ``splits`` log, filed under the store key of its name (``set_key``). Each record
 is ``{"set": NAME, "document": KEY, "split": NAME}``, where ``document`` is the source key, or
@@ -9,7 +9,8 @@ output for the document.
 document two splits, the view fails, and each tool that reads it stops. ``write_split`` adds
 only the records that the log does not have, and it adds none if the log already gives one of
 the documents another split. The log is untrusted input, so a message shows its values with
-no control character.
+no control character. A section number with no document name in this module is a section of
+docs/design/store.md.
 """
 
 from __future__ import annotations
