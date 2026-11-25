@@ -1,0 +1,211 @@
+{
+ "name": "receipt-05-keys-judgments-doubt",
+ "description": "Keyed fields with recorded judgments and a doubt list. Each decision has its `key`, and `key` stays in `missing` after a judgment clears the flag. The receipt lists each judgment that applied, with `answer` only for the question `key`, and the digest of the doubt list.",
+ "document": "2 DOSAGE AND ADMINISTRATION\nTake 20 mg tablets with water.\n\n2.1 Hypertension\nThe recommended starting dose is 10 mg once daily. The maximum dose is 40 mg daily.\n\n2.2 Heart Failure\nThe recommended starting dose is 5 mg once daily, taken with diuretics.\n\n2.3 Acute Myocardial Infarction\nGive 5 mg within 24 hours. In patients who also have heart failure, start at 2.5 mg.",
+ "schema": {
+  "fields": {
+   "max_dose": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   },
+   "adjusted_dose": {
+    "type": "number",
+    "unit": "mg",
+    "keys": [
+     "hypertension",
+     "heart failure",
+     "acute myocardial infarction"
+    ]
+   }
+  }
+ },
+ "policy": {
+  "judge": {
+   "id": "jev",
+   "digest": "jev-1.13.0",
+   "clear": {
+    "KEY_NOT_AT_VALUE": 0.9
+   },
+   "doubt": {
+    "field_match": 0.2
+   }
+  }
+ },
+ "doubt": [
+  {
+   "confidence": 0.3,
+   "start": 52,
+   "end": 57
+  }
+ ],
+ "candidates": [
+  {
+   "id": "b1",
+   "field": "adjusted_dose",
+   "value": "2.5",
+   "unit": "mg",
+   "key": "acute myocardial infarction",
+   "evidence": {
+    "start": 362,
+    "end": 368,
+    "text": "2.5 mg"
+   }
+  },
+  {
+   "id": "b2",
+   "field": "max_dose",
+   "value": "40",
+   "unit": "mg",
+   "key": "heart failure",
+   "evidence": {
+    "start": 148,
+    "end": 153,
+    "text": "40 mg"
+   }
+  }
+ ],
+ "judgments": [
+  {
+   "candidate_id": "b1",
+   "question": "key",
+   "judge": {
+    "id": "jev",
+    "digest": "jev-1.13.0"
+   },
+   "answer": "acute myocardial infarction",
+   "p": 0.99
+  },
+  {
+   "candidate_id": "b1",
+   "question": "field_match",
+   "judge": {
+    "id": "jev",
+    "digest": "jev-1.13.0"
+   },
+   "p": 0.1
+  },
+  {
+   "candidate_id": "b2",
+   "question": "field_match",
+   "judge": {
+    "id": "jev",
+    "digest": "jev-1.13.0"
+   },
+   "p": 0.5
+  },
+  {
+   "candidate_id": "b2",
+   "question": "key",
+   "judge": {
+    "id": "jev",
+    "digest": "jev-1.13.0"
+   },
+   "answer": "heart failure",
+   "p": 0.99
+  }
+ ],
+ "expected": {
+  "receipt": {
+   "groundgate": "0.12",
+   "document": {
+    "id": null,
+    "sha256": "sha256:ca1e3ecfa3f2aa3948a7bdcaaa7aef798ca59e3624b36ba2915a7f49059ad3a9",
+    "source": null,
+    "doubt_sha256": "sha256:69655e282af461ab65c541a5e5e2aa356ae97e5cb13740e0c869a410f32b1923"
+   },
+   "references": [],
+   "packs": [],
+   "schema_sha256": "sha256:25bca12b34d116af0da28877a430702b2c8794a381c7eaa3aa50b60a1a91e476",
+   "policy_sha256": "sha256:3f61c16da9f13e6af5d05500d681f4cfde6741aa2ef5303dd025f54498472383",
+   "decisions": [
+    {
+     "candidate_id": "b1",
+     "candidate_sha256": "sha256:cca9a2734ebf118e39aafce04c19c0c8a0764f269d9d991f50ff388a504a8294",
+     "field": "adjusted_dose",
+     "key": "acute myocardial infarction",
+     "proposer": null,
+     "outcome": "needs_verification",
+     "codes": [
+      "MODEL_DOUBT",
+      "MODEL_CLEARED"
+     ],
+     "value": "2.5",
+     "unit": "mg",
+     "source": "document",
+     "ref": null,
+     "url": null,
+     "evidence": {
+      "start": 362,
+      "end": 368
+     },
+     "parts": [],
+     "missing": [
+      "key"
+     ],
+     "packs": []
+    },
+    {
+     "candidate_id": "b2",
+     "candidate_sha256": "sha256:f50a28e099a6659fc6e6d908b9c4ab0e7a64d1e3c689c8737940491b0d650d2b",
+     "field": "max_dose",
+     "key": "heart failure",
+     "proposer": null,
+     "outcome": "admitted",
+     "codes": [
+      "MODEL_CLEARED"
+     ],
+     "value": "40",
+     "unit": "mg",
+     "source": "document",
+     "ref": null,
+     "url": null,
+     "evidence": {
+      "start": 148,
+      "end": 153
+     },
+     "parts": [],
+     "missing": [
+      "key"
+     ],
+     "packs": []
+    }
+   ],
+   "coverage": [],
+   "judgments": [
+    {
+     "candidate_sha256": "sha256:cca9a2734ebf118e39aafce04c19c0c8a0764f269d9d991f50ff388a504a8294",
+     "question": "field_match",
+     "p": 0.1
+    },
+    {
+     "candidate_sha256": "sha256:cca9a2734ebf118e39aafce04c19c0c8a0764f269d9d991f50ff388a504a8294",
+     "question": "key",
+     "answer": "acute myocardial infarction",
+     "p": 0.99
+    },
+    {
+     "candidate_sha256": "sha256:f50a28e099a6659fc6e6d908b9c4ab0e7a64d1e3c689c8737940491b0d650d2b",
+     "question": "field_match",
+     "p": 0.5
+    },
+    {
+     "candidate_sha256": "sha256:f50a28e099a6659fc6e6d908b9c4ab0e7a64d1e3c689c8737940491b0d650d2b",
+     "question": "key",
+     "answer": "heart failure",
+     "p": 0.99
+    }
+   ],
+   "summary": {
+    "admitted": 1,
+    "needs_verification": 1,
+    "rejected": 0
+   },
+   "receipt_sha256": "sha256:ccc7cf78dd4634d8d497adc5526749a7c52a0fde9345cb49ba3cbd36baacb0c2"
+  }
+ }
+}

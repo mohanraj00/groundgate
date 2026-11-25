@@ -1,0 +1,174 @@
+{
+ "name": "receipt-08-relations",
+ "description": "A schema with a relation. The receipt has the member `relations`, with the difference and the allowance as canonical decimals. The allowance is half of the place of each of the three values.",
+ "document": "Total: $100. Rent: $60. Fees: $40.\n",
+ "schema": {
+  "fields": {
+   "total": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "rent": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "fees": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  },
+  "relations": [
+   {
+    "id": "sum",
+    "total": "total",
+    "parts": [
+     {
+      "field": "rent"
+     },
+     {
+      "field": "fees"
+     }
+    ]
+   }
+  ]
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "t1",
+   "field": "total",
+   "value": 100,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 7,
+     "end": 11,
+     "text": "$100"
+    }
+   ]
+  },
+  {
+   "id": "t2",
+   "field": "rent",
+   "value": 60,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 19,
+     "end": 22,
+     "text": "$60"
+    }
+   ]
+  },
+  {
+   "id": "t3",
+   "field": "fees",
+   "value": 40,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 30,
+     "end": 33,
+     "text": "$40"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "receipt": {
+   "groundgate": "0.12",
+   "document": {
+    "id": null,
+    "sha256": "sha256:0926c0310cf46ccc418a4b0b562069e643664dbbb6a625d042e9b3f98f395039",
+    "source": null,
+    "doubt_sha256": null
+   },
+   "references": [],
+   "packs": [],
+   "schema_sha256": "sha256:e44d76a286f424d0163d9e5a3329e174e1a31430ef8e9a2870689762cbe6aafd",
+   "policy_sha256": "sha256:92f2e20399c00a6cff7da2c08bac06bb108a3a46fd92e60b981295103a8a6f4e",
+   "decisions": [
+    {
+     "candidate_id": "t2",
+     "candidate_sha256": "sha256:18ad74ba47b3a5cb4e43d26a24d674c55d4a11da904d57ea763094accc15e86d",
+     "field": "rent",
+     "key": null,
+     "proposer": null,
+     "outcome": "admitted",
+     "codes": [],
+     "value": "60",
+     "unit": "USD",
+     "source": "document",
+     "ref": null,
+     "url": null,
+     "evidence": {
+      "start": 19,
+      "end": 22
+     },
+     "parts": [],
+     "missing": [],
+     "packs": []
+    },
+    {
+     "candidate_id": "t3",
+     "candidate_sha256": "sha256:77b833ef1c0f58f3883d5bd601bb221dd6196e2fb5be73780fba06230fac0a3d",
+     "field": "fees",
+     "key": null,
+     "proposer": null,
+     "outcome": "admitted",
+     "codes": [],
+     "value": "40",
+     "unit": "USD",
+     "source": "document",
+     "ref": null,
+     "url": null,
+     "evidence": {
+      "start": 30,
+      "end": 33
+     },
+     "parts": [],
+     "missing": [],
+     "packs": []
+    },
+    {
+     "candidate_id": "t1",
+     "candidate_sha256": "sha256:aa78b34bc6b5d6eba376839d9f0db1d7f24aef75fa1bc1607641d3c5197dafd0",
+     "field": "total",
+     "key": null,
+     "proposer": null,
+     "outcome": "admitted",
+     "codes": [],
+     "value": "100",
+     "unit": "USD",
+     "source": "document",
+     "ref": null,
+     "url": null,
+     "evidence": {
+      "start": 7,
+      "end": 11
+     },
+     "parts": [],
+     "missing": [],
+     "packs": []
+    }
+   ],
+   "coverage": [],
+   "judgments": [],
+   "relations": [
+    {
+     "id": "sum",
+     "key": null,
+     "holds": true,
+     "difference": "0",
+     "allowance": "1.5"
+    }
+   ],
+   "summary": {
+    "admitted": 3,
+    "needs_verification": 0,
+    "rejected": 0
+   },
+   "receipt_sha256": "sha256:4fe67a47d9e5db83b3047ae2cd8d9a06342aa4b917b81cbc157c0142c1f68469"
+  }
+ }
+}

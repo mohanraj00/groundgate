@@ -1,0 +1,110 @@
+{
+ "name": "receipt-03-evidence-units-cut",
+ "description": "A header form that is longer than the limit is cut, and its entry in `evidence_units` has the member `cut`. The scale item is a part.",
+ "document": "\tABCDEFGHIJKLMNOPQRST$m\nRevenue\t5,200\n",
+ "schema": {
+  "fields": {
+   "usd": {
+    "unit": "USD",
+    "aliases": [
+     "Revenue"
+    ]
+   }
+  }
+ },
+ "policy": null,
+ "candidates": [
+  {
+   "id": "w15",
+   "field": "usd",
+   "value": "5200000000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 32,
+     "end": 37,
+     "text": "5,200"
+    },
+    {
+     "role": "scale",
+     "text": "$m"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "receipt": {
+   "groundgate": "0.12",
+   "document": {
+    "id": null,
+    "sha256": "sha256:84d932fa21f3f4d9f75d21dde2b3cd7b7f884959251a22c6bc3b02f17117b23c",
+    "source": null,
+    "doubt_sha256": null
+   },
+   "references": [],
+   "packs": [],
+   "schema_sha256": "sha256:531607d84a8e5cf8422ba14e0223b57dd4085bdf3a627974529acab72d998a6d",
+   "policy_sha256": "sha256:92f2e20399c00a6cff7da2c08bac06bb108a3a46fd92e60b981295103a8a6f4e",
+   "decisions": [
+    {
+     "candidate_id": "w15",
+     "candidate_sha256": "sha256:44f6c63662a233cac634e35fd7ac832c358bef7b5831ed1534e77f35ab731a40",
+     "field": "usd",
+     "key": null,
+     "proposer": null,
+     "outcome": "needs_verification",
+     "codes": [
+      "PART_MISSING",
+      "VALUE_DERIVED"
+     ],
+     "value": "5200000000",
+     "unit": "USD",
+     "source": "document",
+     "ref": null,
+     "url": null,
+     "evidence": {
+      "start": 32,
+      "end": 37
+     },
+     "parts": [
+      {
+       "role": "scale",
+       "start": 21,
+       "end": 23,
+       "passed": true
+      }
+     ],
+     "missing": [
+      "unit"
+     ],
+     "packs": [],
+     "evidence_units": {
+      "token": {
+       "start": 32,
+       "end": 37
+      },
+      "next": [],
+      "per": false,
+      "headers": [
+       {
+        "form": "KLMNOPQRST$",
+        "allows": [],
+        "cut": true
+       }
+      ],
+      "statements": [],
+      "currency": []
+     }
+    }
+   ],
+   "coverage": [],
+   "judgments": [],
+   "summary": {
+    "admitted": 0,
+    "needs_verification": 1,
+    "rejected": 0
+   },
+   "receipt_sha256": "sha256:7c7a33c13e8071535142386dd2647b815ff1fc3ce1728c5edfac08f8304fc1e9"
+  }
+ }
+}

@@ -1,0 +1,234 @@
+{
+ "name": "receipt-04-sources",
+ "description": "The four sources of a decision: the document, a reference with `ref`, an external item with `url`, and knowledge. The receipt lists the references by id and the built-in pack `finance`. Only the decision whose candidate holds a word of the pack names the pack.",
+ "document": "Annual fee: $90\n",
+ "schema": {
+  "packs": [
+   {
+    "id": "finance",
+    "version": "1.0.0"
+   }
+  ],
+  "fields": {
+   "fee": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "late_fee": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "deposit": {
+    "type": "integer",
+    "unit": "USD"
+   },
+   "net_income": {
+    "type": "integer",
+    "unit": "USD"
+   }
+  }
+ },
+ "policy": {
+  "sources": {
+   "external": {
+    "allow": [
+     "https://example.org/"
+    ]
+   }
+  }
+ },
+ "references": [
+  {
+   "id": "notice",
+   "text": "Notice: the late fee is $25.\n",
+   "source": "https://example.org/notice"
+  },
+  {
+   "id": "annex",
+   "text": "Annex: none.\n"
+  }
+ ],
+ "candidates": [
+  {
+   "id": "s1",
+   "field": "fee",
+   "value": 90,
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 12,
+     "end": 15,
+     "text": "$90"
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "field": "late_fee",
+   "value": 25,
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "reference",
+     "ref": "notice",
+     "start": 24,
+     "end": 27,
+     "text": "$25"
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "field": "deposit",
+   "value": 500,
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "external",
+     "url": "https://example.org/terms",
+     "retrieved": "2026-11-01",
+     "text": "The deposit is $500."
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "field": "net_income",
+   "value": "-71000",
+   "unit": "USD",
+   "evidence": [
+    {
+     "source": "knowledge",
+     "text": "The net loss was $71,000 in 2024."
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "receipt": {
+   "groundgate": "0.12",
+   "document": {
+    "id": null,
+    "sha256": "sha256:740c579754b22d959094cc23feee5828d5ffa55064e0cb20267df0e745c574ad",
+    "source": null,
+    "doubt_sha256": null
+   },
+   "references": [
+    {
+     "id": "annex",
+     "sha256": "sha256:ea4e8674365b1a03552bd558bc174e4d0975d85c0348015e21d967b6b1354abc",
+     "source": null
+    },
+    {
+     "id": "notice",
+     "sha256": "sha256:d28ec995757aa050fe826ac04f95a4f03a9e56bfc7a97f70682a7ea158e094e2",
+     "source": "https://example.org/notice"
+    }
+   ],
+   "packs": [
+    {
+     "id": "finance",
+     "type": "vocabulary",
+     "version": "1.0.0",
+     "sha256": "sha256:822c91124cbd23f29e683873975d4f3f85f2207dbbb02ca3664f0ef74848162b"
+    }
+   ],
+   "schema_sha256": "sha256:7c740c15802f3c3f7e2a3264729f0b941b8829b582254493d474fa33fdde0d9e",
+   "policy_sha256": "sha256:d54bb904a3de257ec2de25c2784e996dd798a8722efbf7dcce0bf7d65c3f95a6",
+   "decisions": [
+    {
+     "candidate_id": "s3",
+     "candidate_sha256": "sha256:13a50e67ca88f05379f8b1a186c0de5780b3742930be0ea19a786fcc893852cd",
+     "field": "deposit",
+     "key": null,
+     "proposer": null,
+     "outcome": "admitted",
+     "codes": [
+      "ADMITTED_BY_POLICY"
+     ],
+     "value": "500",
+     "unit": "USD",
+     "source": "external",
+     "ref": null,
+     "url": "https://example.org/terms",
+     "evidence": null,
+     "parts": [],
+     "missing": [],
+     "packs": []
+    },
+    {
+     "candidate_id": "s2",
+     "candidate_sha256": "sha256:4534ab5234e3472a107c84cef57bfaefee6df8d23490111f09fef47c646b3400",
+     "field": "late_fee",
+     "key": null,
+     "proposer": null,
+     "outcome": "admitted",
+     "codes": [],
+     "value": "25",
+     "unit": "USD",
+     "source": "reference",
+     "ref": "notice",
+     "url": null,
+     "evidence": {
+      "start": 24,
+      "end": 27
+     },
+     "parts": [],
+     "missing": [],
+     "packs": []
+    },
+    {
+     "candidate_id": "s1",
+     "candidate_sha256": "sha256:8cb80942e571e422903815091f03dd8c9e3d0c32aaf5305c6ca56eccc59b9bd1",
+     "field": "fee",
+     "key": null,
+     "proposer": null,
+     "outcome": "admitted",
+     "codes": [],
+     "value": "90",
+     "unit": "USD",
+     "source": "document",
+     "ref": null,
+     "url": null,
+     "evidence": {
+      "start": 12,
+      "end": 15
+     },
+     "parts": [],
+     "missing": [],
+     "packs": []
+    },
+    {
+     "candidate_id": "s4",
+     "candidate_sha256": "sha256:cc0d50f5f8ad5d9dae7068c09209f5ff489df6b374ff2284769275202de76c10",
+     "field": "net_income",
+     "key": null,
+     "proposer": null,
+     "outcome": "needs_verification",
+     "codes": [
+      "EVIDENCE_STATED"
+     ],
+     "value": "-71000",
+     "unit": "USD",
+     "source": "knowledge",
+     "ref": null,
+     "url": null,
+     "evidence": null,
+     "parts": [],
+     "missing": [],
+     "packs": [
+      "finance"
+     ]
+    }
+   ],
+   "coverage": [],
+   "judgments": [],
+   "summary": {
+    "admitted": 3,
+    "needs_verification": 1,
+    "rejected": 0
+   },
+   "receipt_sha256": "sha256:dc09805a80f35eb5149fba83bc40de65b4f0b7703d568bfc8d5cb2eada474abf"
+  }
+ }
+}
