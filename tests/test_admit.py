@@ -12,6 +12,7 @@ from timing import assert_linear
 
 import groundgate as gg
 from groundgate.cli import main
+from groundgate.read import reader
 
 DOC = "The contribution limit remains $7,000 ($8,000 for individuals age 50 or older)."
 SCHEMA: dict[str, Any] = {
@@ -258,6 +259,38 @@ def test_cli_admit_and_verify(tmp_path: Path, capsys: pytest.CaptureFixture[str]
 
     bad = _write(tmp_path, "bad.txt", "Café")
     assert main(["admit", bad, schema, cands]) == 2
+
+
+def test_cli_admit_and_verify_with_ocr_doubt(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    source = _write(tmp_path, "source.txt", DOC)
+    doc = str(tmp_path / "doc.txt")
+    schema = _write(tmp_path, "schema.json", SCHEMA)
+    cands = _write(tmp_path, "cands.json", CANDS[:1])
+    word = ev("$7,000")
+    doubt = [{"start": word["start"], "end": word["end"], "confidence": 0.5}]
+    doubt_file = _write(tmp_path, "doubt.json", doubt)
+    model_file = tmp_path / "document.json"
+    assert main(["read", source, "--document", str(model_file), "-o", doc]) == 0
+    model = json.loads(model_file.read_bytes())
+    _write(tmp_path, model_file.name, {**model, "reader": reader("5.3.0"), "doubt": doubt})
+
+    out = tmp_path / "receipt.json"
+    for path in (doubt_file, str(model_file)):
+        assert main(["admit", doc, schema, cands, "--doubt", path, "-o", str(out)]) == 0
+        receipt = json.loads(out.read_bytes())
+        assert receipt == gg.admit(DOC, SCHEMA, CANDS[:1], doubt=doubt).to_dict()
+        (decision,) = receipt["decisions"]
+        assert (decision["outcome"], decision["codes"]) == ("needs_verification", ["READ_DOUBT"])
+        assert main(["verify", str(out), doc, schema, cands, "--doubt", path]) == 0
+        assert capsys.readouterr().out == "receipt verified\n"
+
+    assert main(["verify", str(out), doc, schema, cands]) == 1
+    assert "document differs" in capsys.readouterr().err
+    other = _write(tmp_path, "other.txt", DOC.replace("$7,000", "$6,000"))
+    assert main(["admit", other, schema, cands, "--doubt", str(model_file)]) == 2
+    assert "--doubt: the member text is not the key of this text" in capsys.readouterr().err
 
 
 @pytest.mark.parametrize(

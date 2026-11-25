@@ -204,8 +204,17 @@ def _parser() -> argparse.ArgumentParser:
             help="a vocabulary pack that the schema names (SPEC §4.8); repeat for each pack",
         )
 
+    def doubt_option(p: argparse.ArgumentParser, *, batch: bool = False) -> None:
+        p.add_argument(
+            "--doubt",
+            metavar="FILE",
+            help="the doubt list as JSON (SPEC §2.1), or the document model from read --document"
+            + ("; a folder of matching <doc>.json files in batch mode" if batch else ""),
+        )
+
     a = sub.add_parser("admit", help="decide candidates and write a receipt")
     inputs(a, batch=True)
+    doubt_option(a, batch=True)
     a.add_argument("--document-id")
     a.add_argument("-o", "--output", help="write the receipt here instead of stdout")
     a.add_argument("--docs", help="folder of <doc>.txt files")
@@ -244,6 +253,7 @@ def _parser() -> argparse.ArgumentParser:
     v = sub.add_parser("verify", help="re-derive a receipt from its inputs and compare")
     v.add_argument("receipt", help="the receipt JSON, or the packet key with --store")
     inputs(v)
+    doubt_option(v)
     pack_dir(v)
     v.add_argument("--layout", metavar="FILE", help="the layout JSON that admit got")
     store_option(v, "get the receipt and each input of the packet PACKET")
@@ -598,6 +608,8 @@ def main(argv: list[str] | None = None) -> int:
             "completeness": _json(args.completeness) if args.completeness else None,
             "outline": _outline(_json(args.outline), text) if args.outline else None,
         }
+        if args.command in ("admit", "verify") and args.doubt is not None:
+            extra["doubt"] = _doubt(args.doubt, text)
         if args.layout and args.command in ("admit", "verify"):
             extra["places"] = _layout_places(_json(args.layout), text)
         if args.command == "admit" and args.store is not None:
@@ -698,6 +710,7 @@ def _verify_inputs(parser: argparse.ArgumentParser, args: argparse.Namespace) ->
             ("--pin", args.pin is not None),
             ("--completeness", args.completeness is not None),
             ("--outline", args.outline is not None),
+            ("--doubt", args.command == "verify" and args.doubt is not None),
             ("--layout", args.command == "verify" and args.layout is not None),
             ("--pack", bool(args.pack)),
         )
@@ -741,6 +754,20 @@ def _layout_places(layout_dict: Any, text: str) -> list[list[int]]:
     if layout.document_sha256 != digest("document", {"text": text}):
         raise PacketError("the layout was extracted from a different document")
     return layout_places(layout)
+
+
+def _doubt(path: str, text: str) -> list[Any]:
+    given = _json(path)
+    if isinstance(given, list):
+        return given  # admit checks the spans against the text
+    if not isinstance(given, dict):
+        raise PacketError("--doubt must be a JSON list or a document@1 object")
+    from .read.document import Document, DocumentError
+
+    try:
+        return Document.from_dict(given, text).doubt
+    except DocumentError as exc:
+        raise PacketError(f"--doubt: {exc}") from exc
 
 
 @contextlib.contextmanager
@@ -991,13 +1018,14 @@ def _check_packet() -> Any:
 
 
 def _batch_admit(args: argparse.Namespace) -> int:
-    for folder in (args.docs, args.batch_candidates, args.judgments):
+    for folder in (args.docs, args.batch_candidates, args.judgments, args.doubt):
         if folder is not None and not Path(folder).is_dir():
             raise ValueError(f"{folder}: expected a folder")
     resolved_output = Path(args.out).resolve()
     for option, folder in (
         ("--candidates", args.batch_candidates),
         ("--judgments", args.judgments),
+        ("--doubt", args.doubt),
     ):
         if folder is not None and resolved_output == Path(folder).resolve():
             raise ValueError(f"--out must not be the same folder as {option}: {resolved_output}")
@@ -1028,13 +1056,19 @@ def _batch_admit(args: argparse.Namespace) -> int:
                 raise ValueError(
                     f"{judgments_path} is not there; write [] for a document with no judgments"
                 )
+        if args.doubt is not None:
+            doubt_path = Path(args.doubt) / f"{path.stem}.json"
+            if not doubt_path.is_file():
+                raise ValueError(
+                    f"{doubt_path} is not there; write [] for a document with no doubt spans"
+                )
 
     schema = _json(args.batch_schema)
     policy = _json(args.policy) if args.policy else None
     references = _json(args.references) if args.references else None
     packs = [load_pack(f) for f in args.pack]
     receipts: dict[str, Any] = {}
-    inputs: dict[str, tuple[str, Any, Any]] = {}
+    inputs: dict[str, tuple[str, Any, Any, list[Any] | None]] = {}
     documents: dict[str, Any] = {}
     outcomes = Counter({"admitted": 0, "needs_verification": 0, "rejected": 0})
     codes: Counter[str] = Counter()
@@ -1045,6 +1079,11 @@ def _batch_admit(args: argparse.Namespace) -> int:
             candidates = _json(str(Path(args.batch_candidates) / f"{doc}.json"))
             judgments = _json(str(Path(args.judgments) / f"{doc}.json")) if args.judgments else None
             text = _text(str(path))
+            doubt = (
+                _doubt(str(Path(args.doubt) / f"{doc}.json"), text)
+                if args.doubt is not None
+                else None
+            )
             receipt = decide(
                 text,
                 schema,
@@ -1055,6 +1094,7 @@ def _batch_admit(args: argparse.Namespace) -> int:
                 references=references,
                 document_source=args.document_source,
                 packs=packs,
+                doubt=doubt,
             )
         except (PacketError, ValueError, OSError) as e:
             raise ValueError(f"{path.name}: {e}") from e
@@ -1062,7 +1102,7 @@ def _batch_admit(args: argparse.Namespace) -> int:
         doc_codes.update(code for _, code in receipt.coverage)
         body = receipt.to_dict()
         receipts[doc] = body
-        inputs[doc] = (text, candidates, judgments)
+        inputs[doc] = (text, candidates, judgments, doubt)
         documents[doc] = {"outcomes": body["summary"], "codes": dict(sorted(doc_codes.items()))}
         outcomes.update(body["summary"])
         codes.update(doc_codes)
@@ -1072,7 +1112,7 @@ def _batch_admit(args: argparse.Namespace) -> int:
         from .store.packets import admit_packet
 
         with _store(args.store, make=True) as store:
-            for doc, (text, candidates, judgments) in inputs.items():
+            for doc, (text, candidates, judgments, doubt) in inputs.items():
                 try:
                     packet, _ = admit_packet(
                         store,
@@ -1085,6 +1125,7 @@ def _batch_admit(args: argparse.Namespace) -> int:
                         references=references,
                         document_source=args.document_source,
                         packs=packs,
+                        doubt=doubt,
                     )
                 except ValueError as e:  # PacketError is a ValueError
                     raise ValueError(f"{doc}.txt: {e}") from e

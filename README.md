@@ -172,8 +172,13 @@ settings that make a check fail every time, or pass for the wrong key or field
 ([Check a schema](docs/schema.md#check-a-schema)).
 [examples/irs-590a](examples/irs-590a) runs the whole pipeline on an IRS publication with cached model output, so it reproduces without an API key.
 
+For a scanned PDF, I save the doubt list with `read --ocr --document doc.json` and pass
+`--doubt doc.json` to both `admit` and `verify`. A JSON array of doubt spans works too.
+
 For a batch, `--docs` holds `<doc>.txt` files and `--candidates` holds matching `<doc>.json`
-candidate arrays. `--out` receives one receipt per document and `summary.json` with outcome and
+candidate arrays. If I give `--doubt DIR`, I put a matching `<doc>.json` doubt list or document
+model in that folder for each document. I use `[]` for a document with no doubt spans.
+`--out` receives one receipt per document and `summary.json` with outcome and
 code counts per document and in total, and the CLI prints the totals. With `--store DIR`, each
 document also gets a packet, and `summary.json` names its key. The
 [guide](docs/guide.md#command-line) describes missing and empty candidate files, shared policy
@@ -355,9 +360,9 @@ a changed document, schema, policy, candidate or outcome.
   [guide](docs/guide.md#how-values-are-read) lists what is read. Locale packs for other formats
   are a design ([docs/design/locale-packs.md](docs/design/locale-packs.md), #60).
 - **OCR is opt-in.** `groundgate read --ocr` OCRs a scanned PDF page with the `tesseract` program.
-  It is off by default, because an OCR word can be wrong and `admit` does not read the confidence
-  of each word in the `document@1` doubt list. Thus a value on low-confidence text is not sent to
-  review yet. English only, no tables from a scan, and at most 200 OCR pages in one read.
+  OCR reads English only, extracts no table structure from scans, and reads at most 200 pages
+  in one run. When I give `admit` the doubt list, a candidate that cites a word with confidence
+  below `policy.min_read_confidence` gets `READ_DOUBT` and goes to review.
 - **No model calls in the decision.** groundgate never asks an LLM whether an LLM was right.
   Since spec 0.4, it reads a judge's answers only as recorded inputs, so a receipt still re-derives
   byte for byte. This judge block is experimental: its one measure on real extractor output is the key
