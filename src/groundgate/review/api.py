@@ -18,7 +18,10 @@ The service keeps no state outside the store. It opens the store for each reques
 same record.
 
 A task with the mode ``audit`` is blind: no response gives its value, its unit, its evidence,
-its places, its codes, its item or its question (SPEC §4.18).
+its places, its codes, its item or its question (SPEC §4.18). The other tasks of a packet can
+give data that depends on its hidden candidate, so ``group`` gives each actor one group of the
+tasks of a packet: one blind task, or the other tasks. The check of a correction of a blind task
+reads no candidate of another blind task (``left_out``).
 
 No response gives a key of the store. A store key is a hash of its content, and the object of
 a blind task holds the proposed value. So does its packet, and the key of each other task of
@@ -71,6 +74,8 @@ __all__ = [
     "check_body",
     "check_claim",
     "check_static",
+    "group",
+    "left_out",
     "list_page",
     "no_keys",
     "read_issuers",
@@ -102,6 +107,7 @@ STATUS = {
     "unknown_issuer": 401,
     "expired_claim": 401,
     "not_found": 404,
+    "not_assigned": 403,
     "method_not_allowed": 405,
     "bad_request": 400,
     "unsupported_media_type": 415,
@@ -324,24 +330,18 @@ def no_keys(value: Any) -> Any:
 
 
 def task_view(
-    task: Mapping[str, Any],
-    sources: Mapping[int, Mapping[str, Any]] | Sequence[Any] = (),
-    blind_packet: bool = False,
+    task: Mapping[str, Any], sources: Mapping[int, Mapping[str, Any]] | Sequence[Any] = ()
 ) -> dict[str, Any] | None:
     """The members of a task response that come from the ``task@1`` object, or None for a task
-    that is not a task of the API: a calibrate label task, an audit task for a closed set, and
-    a model text task when ``blind_packet`` is true. ``blind_packet`` says that the packet of
-    the task has a task with the mode ``audit``: a statement of the model text can state the
-    value that such a task hides. ``sources`` holds the decisions of the receipt, by their
-    index: each choice gets the ``source`` and the ``ref`` of its decision.
+    that is not a task of the API: a calibrate label task and an audit task for a closed set.
+    ``sources`` holds the decisions of the receipt, by their index: each choice gets the
+    ``source`` and the ``ref`` of its decision.
 
     The ``body`` has no key of the store and no index of the receipt: its slot has no
     ``decisions``, and each choice has ``choice``, its number in the task, in place of
     ``decision``. A task with the mode ``audit`` is blind, so its ``body`` is None."""
     blind = task["mode"] == "audit"
     if task["template"] in QUESTIONS or (blind and task["item"] == "closed_set"):
-        return None
-    if blind_packet and task["item"] == "model_text":
         return None
     body = None
     if not blind:
@@ -381,6 +381,63 @@ def _source(
         "source": source if isinstance(source, str) else None,
         "ref": ref if isinstance(ref, str) else None,
     }
+
+
+def _blind_order(task: Mapping[str, Any]) -> tuple[str, bool, str, str]:
+    """The order of the blind tasks of a packet: the field, the key with null first, the ID."""
+    return task["field"], task["key"] is not None, task["key"] or "", task["task"]
+
+
+def group(
+    tasks: Sequence[Mapping[str, Any]],
+    logs: Mapping[str, Sequence[Mapping[str, Any]]],
+    actor: str,
+    agree: int,
+) -> list[str]:
+    """The group of ``actor`` for one packet (SPEC §4.20), as the names of its tasks in the
+    order of ``tasks``. ``tasks`` holds each task of the API of the packet as ``task``, its ID,
+    ``field``, ``key`` and ``blind``. ``logs`` holds the records of each actor with the ID of
+    their task in ``task``, and ``agree`` is the member of the review policy.
+
+    1. The first record of the actor for a task of ``tasks`` fixes the group: the task, if it
+       is blind, and the review group if not.
+    2. With no such record, the group is the first blind task that has fewer than ``agree``
+       other actors with a record for it whose verdict is not ``unsure``.
+    3. If not, the group is the review group: each task that is not blind.
+
+    The count reads each record, not the latest answer, so it never goes down. Thus an actor
+    with no record changes only from a blind task to a later blind task or to the review group,
+    and never from the review group to a blind task."""
+    by_name = {t["task"]: t for t in tasks}
+    review = [t["task"] for t in tasks if not t["blind"]]
+    for record in logs.get(actor, []):
+        first = by_name.get(record.get("task"))
+        if first is not None:
+            return [first["task"]] if first["blind"] else review
+    for t in sorted((t for t in tasks if t["blind"]), key=_blind_order):
+        actors = {
+            name
+            for name, records in logs.items()
+            if name != actor
+            and any(r.get("task") == t["task"] and r.get("verdict") != "unsure" for r in records)
+        }
+        if len(actors) < agree:
+            return [t["task"]]
+    return review
+
+
+def left_out(tasks: Sequence[Mapping[str, Any]], task: str) -> list[int]:
+    """The receipt indexes of the decisions that the check of a correction of ``task`` leaves
+    out, in addition to those of its own slot (SPEC §4.20). ``tasks`` holds each task of the
+    packet in the store as ``task``, ``mode`` and ``decisions``. For a blind task, these are the
+    decisions of each other task with the mode ``audit``, so the outcome of the check does not
+    depend on a hidden candidate. Each other task leaves out none."""
+    mine = [t for t in tasks if t["task"] == task]
+    if not mine or mine[0]["mode"] != "audit":
+        return []
+    return sorted(
+        {d for t in tasks if t["task"] != task and t["mode"] == "audit" for d in t["decisions"]}
+    )
 
 
 def task_id(key: bytes, task_key: str) -> str:
@@ -574,15 +631,27 @@ class Service:
             return self._review(store, "groundgate").skipped
 
     def tasks(self, actor: str, query: str = "") -> dict[str, Any]:
-        """GET /v1/tasks: one page of the open tasks of the actor."""
+        """GET /v1/tasks: one page of the open tasks of the group of the actor. A blind task is
+        open until the actor answers it: whether an answer settles its slot comes from the
+        resolution, and the resolution reads each candidate."""
         from ..store import FolderStore
 
         with FolderStore(self.root) as store:
-            entries = [
-                {"task": self._id(tk), "document": doc.document, "mode": view["mode"],
-                 "field": view["field"], "key": view["key"], "open": tk in doc.open}
-                for tk, doc, view in self._served(self._review(store, actor))
-            ]  # fmt: skip
+            review = self._review(store, actor)
+            answered: dict[str, set[object]] = {}
+            entries = []
+            for tk, doc, view, mine in self._served(review, actor):
+                if not mine:
+                    continue
+                if doc.key not in answered:
+                    own = review._logs(doc.key).get(actor, [])
+                    answered[doc.key] = {r.get("task") for r in own}
+                blind = view["mode"] == "audit"
+                entries.append(
+                    {"task": self._id(tk), "document": doc.document, "mode": view["mode"],
+                     "field": view["field"], "key": view["key"],
+                     "open": tk not in answered[doc.key] if blind else tk in doc.open}
+                )  # fmt: skip
         page, cursor = list_page(entries, query)
         return {
             "api": API,
@@ -595,38 +664,68 @@ class Service:
         """The ID of a task in a response. No response gives the task key."""
         return task_id(self._id_key, key)
 
-    def _served(self, review: Review) -> Iterator[tuple[str, Any, dict[str, Any]]]:
-        """The task key, the document and the view of each task of the API."""
-        for doc in review.docs.values():
-            # the tasks of the packet in the store, with or without an answer
-            blind_packet = any(
-                doc.by_key[key][1]["mode"] == "audit" for key in doc.tasks if key in doc.by_key
-            )
-            for key in doc.tasks:
-                view = None
-                if key not in doc.labels:
-                    decisions = doc.packet.receipt["decisions"]
-                    view = task_view(doc.by_key[key][1], decisions, blind_packet)
+    def _views(self, doc: Any) -> list[tuple[str, dict[str, Any]]]:
+        """The task key and the view of each task of the API of one packet."""
+        out = []
+        decisions = doc.packet.receipt["decisions"]
+        for key in doc.tasks:  # the tasks of the packet in the store, with or without an answer
+            if key not in doc.labels:
+                view = task_view(doc.by_key[key][1], decisions)
                 if view is not None:
-                    yield key, doc, view
+                    out.append((key, view))
+        return out
+
+    def _group(
+        self, review: Review, doc: Any, actor: str, views: list[tuple[str, dict[str, Any]]]
+    ) -> set[str]:
+        """The task keys of the group of the actor for the packet of ``doc``, from the answer
+        logs of the store (SPEC §4.20). The order of the blind tasks uses the task IDs, not the
+        task keys: a task key is a hash over the packet."""
+        ids = {key: self._id(key) for key, _ in views}
+        tasks = [
+            {"task": ids[key], "field": view["field"], "key": view["key"],
+             "blind": view["mode"] == "audit"}
+            for key, view in views
+        ]  # fmt: skip
+        logs = {
+            name: [{"task": ids.get(r["task"]), "verdict": r.get("verdict")}
+                   for r in records if isinstance(r.get("task"), str)]
+            for name, records in review._logs(doc.key).items()
+        }  # fmt: skip
+        named = set(group(tasks, logs, actor, self.policy["agree"]))
+        return {key for key, _ in views if ids[key] in named}
+
+    def _served(
+        self, review: Review, actor: str
+    ) -> Iterator[tuple[str, Any, dict[str, Any], bool]]:
+        """The task key, the document and the view of each task of the API, and true when the
+        task is in the group of the actor."""
+        for doc in review.docs.values():
+            views = self._views(doc)
+            mine = self._group(review, doc, actor, views)
+            for key, view in views:
+                yield key, doc, view, key in mine
 
     def _one(
         self, store: Any, actor: str, name: str
     ) -> tuple[Review, str, Any, Any, dict[str, Any]]:
-        """The review, the task key, the document, the slot and the view of the task of the API
-        that the ID ``name`` names.
+        """The review, the task key, the document, the slot and the view of the task of the
+        group of the actor that the ID ``name`` names.
 
         The service makes the ID of each task of the API and compares it with ``name``. It
         never looks for ``name`` in the store. So each ID that names no task needs the same
-        reads of the store, and the time of the ``not_found`` tells nothing of the store."""
+        reads of the store, and the time of the ``not_found`` tells nothing of the store. A task
+        of the API outside the group of the actor gives ``not_assigned``."""
         review = self._review(store, actor)
         found = None
-        for key, doc, view in self._served(review):
+        for key, doc, view, mine in self._served(review, actor):
             if hmac.compare_digest(self._id(key), name):
-                found = review, key, doc, doc.by_key[key][0], view
+                found = review, key, doc, doc.by_key[key][0], view, mine
         if found is None:
             raise ApiError("not_found", "the ID names no task of the API")
-        return found
+        if not found[5]:
+            raise ApiError("not_assigned", "the task is not in the group of the actor")
+        return found[:5]
 
     def task(self, actor: str, name: str) -> dict[str, Any]:
         """GET /v1/tasks/{task}: one task. A blind task has no body."""
@@ -659,13 +758,23 @@ class Service:
             return {"api": API, "task": name, "document": doc.document, "text": doc.units.text}
 
     def answer(self, actor: str, body: object) -> dict[str, Any]:
-        """POST /v1/answers: check one answer, and append it to the answer log of the actor."""
-        from ..store import FolderStore
+        """POST /v1/answers: check one answer, and append it to the answer log of the actor.
+
+        The service takes the lock of that log before it reads the group again, and keeps it
+        until the append. So two answers of the actor at the same time cannot go to two
+        groups."""
+        from ..store import FolderStore, StoreError, reviewer_key
 
         checked = check_body(body)
         name = checked["task"]
         with FolderStore(self.root) as store:
             review, key, doc, _, view = self._one(store, actor, name)
+            try:
+                store.take(("answers", doc.key, reviewer_key(actor)))
+            except StoreError as exc:
+                raise ApiError("log_refused", "the answer log cannot take the answer now") from exc
+            if key not in self._group(review, doc, actor, self._views(doc)):
+                raise ApiError("not_assigned", "the task is not in the group of the actor")
             blind = view["mode"] == "audit"
             if blind:
                 check_body(body, blind=True)
@@ -698,7 +807,12 @@ class Service:
                 start, end = u16(p)
                 page["parts"].append({"role": p["role"], "start": start, "end": end})
             try:
-                record, _ = review.write(page, blind)
+                stored = [
+                    {"task": k, "mode": doc.by_key[k][1]["mode"],
+                     "decisions": list(doc.by_key[k][0].decisions)}
+                    for k in doc.tasks if k in doc.by_key
+                ]  # fmt: skip
+                record, _ = review.write(page, blind, hide=left_out(stored, key))
             except Refused as exc:
                 code = exc.kind or ("not_found" if exc.code == 404 else "bad_answer")
                 codes = exc.codes if code in ("correction_rejected", "codes_not_kept") else None

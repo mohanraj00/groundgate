@@ -38,7 +38,9 @@ as the reviewer `ana`. Keep the token out of the store folder and out of your sh
 ## 2. List the tasks, read one, and answer it
 
 This example makes a store with one invoice, starts the server in the same process, and calls it
-with `urllib`. The server is the one that `groundgate review api` starts.
+with `urllib`. The server is the one that `groundgate review api` starts. The invoice gives a
+review task and a blind audit task. Each field goes in its own packet, because an actor who gets
+a blind task of a packet gets no other task of that packet (section 3).
 
 ```python
 import json
@@ -95,8 +97,11 @@ policy = {
 }
 root = Path(tempfile.mkdtemp()) / "store"
 with FolderStore(root) as store:
-    packet, _ = admit_packet(store, text, schema, candidates, None, "inv-0007")
-    write_tasks(store, packet, policy)
+    for field in ("total", "tax"):
+        one = {"fields": {field: schema["fields"][field]}}
+        given = [c for c in candidates if c["field"] == field]
+        packet, _ = admit_packet(store, text, one, given, None, "inv-0007")
+        write_tasks(store, packet, policy)
 
 token = "a-local-token-of-32-characters-or-more"
 service = api.Service(root, api.read_token(token, "ana"))
@@ -163,8 +168,8 @@ Which amount is total?
 
 For a model text task, the response also has `statements`: the text of each statement and the
 spans of the document that it cites. An answer to it has the verdict `confirm` and one
-`{"statement", "verdict"}` for each statement. The API gives a model text task only when its
-packet has no audit task: a statement can state the value that a blind task hides.
+`{"statement", "verdict"}` for each statement. A model text task is a review task of its packet
+for the groups of section 3: a statement can state the value that a blind task hides.
 
 An answer names its task and its verdict. `choose` gives the number of the right choice: here
 choice 2, because the invoice gives the total in thousands. The response has the record that
@@ -192,6 +197,13 @@ The `tax` task has the mode `audit`: the gate admitted the value, and the audit 
 a task is blind. The API gives the document, the field and the key, and never the proposed value.
 Its `body` is null. No response gives its value, its evidence, its question or the outcome of the
 gate.
+
+An actor gets one group of the tasks of each packet. Each blind task of a packet is a group, and
+the other tasks of the packet are the review group. The first answer of the actor to the packet
+fixes its group. With no answer, the actor gets the first blind task that has fewer than `agree`
+answers from other actors, and then the review group. A task outside the group gives the error
+`not_assigned` (403), and the list does not show it. So the answer to a blind task does not
+depend on a value that the actor saw in another task of the packet.
 
 A blind task takes three verdicts: `correct`, `not_in_document` and `unsure`. For `correct`, send
 the span of the value that you found in the document. The service reads the value from the span,

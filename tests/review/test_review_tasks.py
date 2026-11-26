@@ -439,6 +439,12 @@ class _Small:
     def read(self, log: tuple[str, ...]) -> list[Any]:
         return self.inner.read(log)
 
+    def object_keys(self) -> tuple[list[str], list[str]]:
+        return self.inner.object_keys()
+
+    def object_bytes(self, k: str) -> bytes:
+        return self.inner.object_bytes(k)
+
     def put(self, kind: str, data: bytes) -> str:
         if len(data) > self.max_bytes:
             raise ValueError(f"the {kind} object is larger than max_bytes")

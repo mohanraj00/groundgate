@@ -12,7 +12,7 @@ The answer logs are untrusted input. An answer that breaks its task stops the re
 
 from __future__ import annotations
 
-from collections.abc import Callable, Mapping, Sequence
+from collections.abc import Callable, Collection, Mapping, Sequence
 from dataclasses import dataclass
 from typing import Any
 
@@ -525,8 +525,10 @@ def _read(
     decisions: Sequence[Mapping[str, Any]],
     run: Correct,
     cache: dict[tuple[str, str], _Correction],
+    hide: Collection[int] = (),
 ) -> _Answer:
-    """Run ``admit`` for a checked correction (§6.2), and read its decision."""
+    """Run ``admit`` for a checked correction (§6.2), and read its decision. ``hide`` is as for
+    ``_correct``."""
     slot, task, verdict, kept = c.slot, c.task, c.verdict, c.kept
     assert c.candidate is not None
 
@@ -535,7 +537,7 @@ def _read(
 
     field = schema.fields[slot.field]
     if c.memo not in cache:
-        cache[c.memo] = _correct(slot, c.candidate, packet, decisions, run, fail)
+        cache[c.memo] = _correct(slot, c.candidate, packet, decisions, run, fail, hide)
     correction = cache[c.memo]
     found = correction.decision
     if found["outcome"] != "rejected" and (
@@ -562,11 +564,14 @@ def _correct(
     decisions: Sequence[Mapping[str, Any]],
     run: Correct,
     fail: Callable[[str], AnswerError],
+    hide: Collection[int] = (),
 ) -> _Correction:
     """Run ``admit`` for a correction (§6.2): the candidates of the packet without those of the
     slot and with the person's candidate, and the judgments without those of the removed
-    candidates."""
-    removed = {decisions[i]["candidate_sha256"] for i in slot.decisions}
+    candidates. ``hide`` holds the receipt indexes of more decisions whose candidates the call
+    leaves out: the review API gives the other blind tasks of the packet (SPEC §4.20). The
+    resolution gives none."""
+    removed = {decisions[i]["candidate_sha256"] for i in (*slot.decisions, *hide)}
     kept, gone = [], set()
     for c in packet.candidates:
         if digest("candidate", c) in removed:

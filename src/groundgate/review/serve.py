@@ -937,12 +937,16 @@ class Review:
         self.write(body)
         return self.queue()
 
-    def write(self, body: Mapping[str, Any], blind: bool = False) -> tuple[dict[str, Any], str]:
+    def write(
+        self, body: Mapping[str, Any], blind: bool = False, hide: Collection[int] = ()
+    ) -> tuple[dict[str, Any], str]:
         """Check an answer against its task (§9 rule 8), then append it to the answer log of the
         reviewer. A correction counts only when the gate does not reject it and the person kept
         each code that is not informational (§6.2). The result is the record and its
         ``entry_sha256``. With ``blind``, the person did not get the choices of the task, so no
-        message speaks of them."""
+        message speaks of them. ``hide`` holds the receipt indexes of the decisions whose
+        candidates the check leaves out too: for a blind task of the review API, the decisions
+        of the other blind tasks (SPEC §4.20). The resolution still reads each candidate."""
         from ..store import StoreError, reviewer_key
 
         tk, doc, slot, task = self._task(body.get("task"))
@@ -988,7 +992,7 @@ class Review:
                              chained=False, labels=doc.labels)  # fmt: skip
             if checked.answer is None:
                 read = _read(checked, doc.schema, doc.packet, decisions,
-                             _admit_only(doc.packet), {})  # fmt: skip
+                             _admit_only(doc.packet), {}, hide)  # fmt: skip
                 assert read.correction is not None
                 d = read.correction.decision
                 extra = [c for c in kept if c not in d["codes"]]
