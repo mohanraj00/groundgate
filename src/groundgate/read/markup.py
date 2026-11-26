@@ -185,13 +185,15 @@ def html_text(source: str) -> str:
     return p.w.result()
 
 
-def html_nodes(source: str) -> tuple[str, list[Raw]]:
-    """The NFC text of ``html_text`` and its nodes, with code point offsets into that text."""
+def html_nodes(source: str) -> tuple[str, list[Raw], Raw | None]:
+    """The NFC text of ``html_text``, its nodes and the open table at a stop, if present."""
     p = _HTML(nodes=True)
     p.feed(source)
     p.close()
     assert p.nodes is not None
-    return _final(p.w, p.nodes.done())
+    raws = p.nodes.done()
+    open_table = p.nodes.open_table_at_stop
+    return (*_final(p.w, raws, open_table), open_table)
 
 
 def _local(tag: object) -> str:
@@ -203,14 +205,16 @@ def xml_text(data: bytes) -> str:
     return _xml(data, None).result()
 
 
-def xml_nodes(data: bytes) -> tuple[str, list[Raw]]:
-    """The NFC text of ``xml_text`` and its nodes, with code point offsets into that text. An SPL
-    document (HL7 v3) gives headings from its section titles, and lists. Other XML gives
+def xml_nodes(data: bytes) -> tuple[str, list[Raw], Raw | None]:
+    """The NFC text of ``xml_text``, its nodes and the open table at a stop, if present. An
+    SPL document (HL7 v3) gives headings from its section titles, and lists. Other XML gives
     paragraphs and the tables of the HTML names."""
     w = _Writer()
     nodes = Tracker(lambda: w.size)
     _xml(data, nodes, w)
-    return _final(w, nodes.done())
+    raws = nodes.done()
+    open_table = nodes.open_table_at_stop
+    return (*_final(w, raws, open_table), open_table)
 
 
 def _xml(data: bytes, nodes: Tracker | None, w: _Writer | None = None) -> _Writer:
@@ -349,9 +353,9 @@ def _open_html(nodes: Tracker, tag: str, attrs: list[tuple[str, str | None]]) ->
     nodes.open(tag, role, "markup", members)
 
 
-def _final(w: _Writer, raws: list[Raw]) -> tuple[str, list[Raw]]:
-    """Move the raw offsets of ``raws`` into the NFC text of ``w``. If a composition crosses an
-    offset, the document gets no nodes; the text stays the same."""
+def _final(w: _Writer, raws: list[Raw], open_table: Raw | None = None) -> tuple[str, list[Raw]]:
+    """Give the NFC text and node offsets in code points. If a composition crosses an offset,
+    keep only the open table at a stop, if present."""
     import unicodedata
 
     raw = "".join(w.out)
@@ -363,8 +367,14 @@ def _final(w: _Writer, raws: list[Raw]) -> tuple[str, list[Raw]]:
     closed = [r for r in raws if r.end >= 0]
     moved = nfc_map(text, [kept(p) for r in closed for p in (r.start, r.end)])
     if moved is None:
-        return final, []
-    for r in raws:
-        if r.end >= 0:
-            r.start, r.end = moved[kept(r.start)], moved[kept(r.end)]
+        if open_table is None:
+            return final, []
+        # The writer starts a table on a new line, so its start survives NFC. If the offset
+        # cannot be mapped, include the whole text in the unknown span.
+        moved = nfc_map(text, [kept(open_table.start)])
+        open_table.start = moved[kept(open_table.start)] if moved is not None else 0
+        open_table.end = len(final)
+        return final, [open_table]
+    for r in closed:
+        r.start, r.end = moved[kept(r.start)], moved[kept(r.end)]
     return final, raws

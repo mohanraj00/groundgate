@@ -267,6 +267,12 @@ nothing too. In "[5]" the 5 can be a footnote mark, and in "(5)" it can be a neg
 A line with a tab gives nothing, because a tab can split the line into cells. Such a line
 still counts as a match of its field, so another line of that field gives nothing too.
 
+When the HTML or XML node tracker stops at a limit, it keeps the outermost open table through
+the end of the text and drops its descendants. The document records `groundgate.read+open-table`
+as its reader name when that span holds text, so a saved run keeps the same rule. The structure
+reader scans those lines in the same way as other lines. Each match counts toward its field's
+ambiguity, and no line in the span proposes a value.
+
 ## 9. The agreement rule
 
 The model and the structure reader make different errors. When both propose a field:
@@ -360,7 +366,8 @@ checks a layout, and it refuses the object at the first fault:
 - the format, the members of each kind, and keys that match `sha256:[0-9a-f]{64}`;
 - integer offsets within the text bytes and on character boundaries;
 - the order, the nesting and the parent kinds of section 4.2;
-- a limit on the number of nodes, as the store has a byte limit.
+- at most 131,072 nodes and 256 levels of nesting. When the markup tracker stops at a limit,
+  it keeps an open table as described in section 8.
 
 The lookup uses sorted starts and `bisect`, so a large document costs time in proportion to its
 nodes, not to their square.

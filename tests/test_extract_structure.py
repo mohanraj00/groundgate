@@ -15,6 +15,7 @@ from groundgate.extract import structure as structure_module
 from groundgate.extract.structure import propose
 from groundgate.model import Schema
 from groundgate.read.document import Document, read_document
+from groundgate.read.nodes import MAX_DEPTH
 from groundgate.store import FolderStore
 
 KEYED = {
@@ -848,7 +849,7 @@ def test_the_text_of_a_table_open_at_the_depth_limit_is_not_a_line(tmp_path: Pat
     assert result.candidates == []
 
 
-def test_only_lines_before_the_open_table_count_at_the_node_limit(
+def test_lines_in_the_open_table_tail_block_a_proposal_at_the_node_limit(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     monkeypatch.setattr("groundgate.read.nodes.MAX_NODES", 7)
@@ -858,7 +859,27 @@ def test_only_lines_before_the_open_table_count_at_the_node_limit(
         "<p>Revenue: 777</p>"
     )
     result = run(document(tmp_path, html), PLAIN, policy=ADMIT)
-    assert [c["value"] for c in result.candidates] == ["5"]
+    assert result.candidates == []
+
+
+@pytest.mark.parametrize(
+    ("later", "expected"),
+    [pytest.param("Revenue: 5", [], id="conflict"), pytest.param("Notes", ["999"], id="no match")],
+)
+def test_a_line_before_the_depth_limit_depends_on_matches_in_the_tail(
+    tmp_path: Path, later: str, expected: list[str]
+) -> None:
+    html = (
+        "<p>Revenue: 999</p><table><tr><td>"
+        + "<div>" * MAX_DEPTH
+        + "Notes"
+        + "</div>" * MAX_DEPTH
+        + f"</td></tr></table><p>{later}</p>"
+    )
+    doc = document(tmp_path, html)
+    result = run(doc, PLAIN, policy=ADMIT)
+    assert [c["value"] for c in result.candidates] == expected
+    assert replay(result.record, result.artifacts, doc, PLAIN, ADMIT).ok
 
 
 @pytest.mark.parametrize("change", ["columns", "rows", "row in a node"])

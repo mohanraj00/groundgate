@@ -391,7 +391,12 @@ def _table(
 
 
 def _lines(
-    data: bytes, tables: list[Node], names: dict[str, set[str]], found: _Found, schema: Schema
+    data: bytes,
+    tables: list[Node],
+    names: dict[str, set[str]],
+    found: _Found,
+    schema: Schema,
+    open_table_start: int | None,
 ) -> None:
     starts = [t.start for t in tables]
     ends: list[int] = []
@@ -403,8 +408,10 @@ def _lines(
         colon = line.find(b":")
         if colon < 0:
             continue
-        before = bisect_right(starts, start + len(line)) - 1
-        if before >= 0 and ends[before] > start:
+        end = start + len(line)
+        unknown = open_table_start is not None and end > open_table_start
+        before = bisect_right(starts, end) - 1
+        if not unknown and before >= 0 and ends[before] > start:
             continue
         who = names.get(_name(line[:colon].decode("utf-8")))
         if who is None or len(who) != 1:
@@ -412,8 +419,7 @@ def _lines(
         field = schema.fields[next(iter(who))]
         if field.keys is not None:
             continue
-        label = _trim(data, start, start + colon)
-        value = _trim(data, start + colon + 1, start + len(line))
+        value = _trim(data, start + colon + 1, end)
         if value[0] == value[1]:
             continue
         text = data[value[0] : value[1]].decode("utf-8")
@@ -422,10 +428,10 @@ def _lines(
         # match, so a second line of the same field does not become the only match.
         # A tab can split the line into cells that the text does not mark. The line still counts.
         target = found.setdefault((field.name, None), [])
-        if ":" in text or b"\t" in line:
+        if unknown or ":" in text or b"\t" in line:
             target.append(None)
             continue
-        places = {"value": value, "field": label}
+        places = {"value": value, "field": _trim(data, start, start + colon)}
         bases = {"value": "layout", "field": "layout"}
         target.append(_candidate(field, None, text, places, bases))
 
@@ -451,7 +457,7 @@ def propose(text: str, document: Document | None, schema: Schema) -> list[Json]:
         nested = _nested(document)
         for table in tables:
             _table(document, table, data, names, keys_of, nested, found, schema)
-    _lines(data, tables, names, found, schema)
+    _lines(data, tables, names, found, schema, document.open_table_start if document else None)
 
     # Sort by field name, not by schema order: a saved schema is canonical JSON, so its fields
     # load in sorted order, and replay must give the same candidate IDs (#510). The keys of a

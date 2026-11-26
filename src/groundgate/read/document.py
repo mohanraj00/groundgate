@@ -25,13 +25,23 @@ from typing import Any
 
 from ..canonical import jcs
 from ..completeness import completeness_of
-from . import HTML_SUFFIXES, OFFICE_SUFFIXES, TEXT_SUFFIXES, Extracted, ReadError, _decode, reader
+from . import (
+    HTML_SUFFIXES,
+    OFFICE_SUFFIXES,
+    READER,
+    TEXT_SUFFIXES,
+    Extracted,
+    ReadError,
+    _decode,
+    reader,
+)
 from .layout import Layout
 from .nodes import MAX_DEPTH, MAX_NODES, PARENTS, Raw, chars_of_bytes, finish
 
 __all__ = ["FORMAT", "Document", "DocumentError", "Match", "Node", "read_document"]
 
 FORMAT = "document@1"
+_OPEN_TABLE_READER = f"{READER}+open-table"
 KINDS = tuple(PARENTS)
 BASES = ("markup", "rules", "layout")
 _KEY = re.compile(r"sha256:[0-9a-f]{64}")
@@ -114,6 +124,13 @@ class Document:
     @property
     def doubt(self) -> list[dict[str, Any]]:
         return [dict(d) for d in self._obj["doubt"]]
+
+    @property
+    def open_table_start(self) -> int | None:
+        """The byte start of the unknown table span after a tracker stop, if there is one."""
+        if self._obj["reader"]["name"] != _OPEN_TABLE_READER:
+            return None
+        return self.nodes[-1].start if self.nodes and self.nodes[-1].kind == "table" else 0
 
     def to_dict(self) -> dict[str, Any]:
         return {**self._obj, "nodes": [n.to_dict() for n in self.nodes]}
@@ -380,6 +397,7 @@ def read_document(
     options = {"pages": None if pages is None else list(pages)}
     source = path.read_bytes() if data is None else data
     raws: list[Raw] = []
+    open_table: Raw | None = None
     doubt: list[dict[str, Any]] = []
     if suffix == ".pdf":
         from ..canonical import digest, is_nfc
@@ -408,13 +426,13 @@ def read_document(
             from .markup import xml_nodes
 
             try:
-                text, raws = xml_nodes(source)
+                text, raws, open_table = xml_nodes(source)
             except ET.ParseError as e:
                 raise ReadError(f"{path}: not well-formed XML ({e})") from e
         elif suffix in HTML_SUFFIXES:
             from .markup import html_nodes
 
-            text, raws = html_nodes(_decode(source, path))
+            text, raws, open_table = html_nodes(_decode(source, path))
         elif suffix in OFFICE_SUFFIXES:
             from .office import office_nodes
 
@@ -428,13 +446,17 @@ def read_document(
         extracted = Extracted(text, warnings=empty, completeness=completeness_of(text))
     from ..store import key
 
+    nodes = finish(extracted.text, raws)
+    read_by = reader(extracted.ocr)
+    if open_table is not None and open_table.start < open_table.end:
+        read_by["name"] = _OPEN_TABLE_READER
     obj = {
         "format": FORMAT,
         "source": key("source@1", source),
-        "reader": reader(extracted.ocr),
+        "reader": read_by,
         "options": options,
         "text": key("text@1", extracted.text.encode("utf-8")),
-        "nodes": finish(extracted.text, raws),
+        "nodes": nodes,
         "doubt": doubt,
     }
     return extracted, Document.from_dict(obj, extracted.text)

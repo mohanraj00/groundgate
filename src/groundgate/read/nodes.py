@@ -62,7 +62,8 @@ class Tracker:
         self.tables: dict[int, _Grid] = {}
         self.budget = GRID_BUDGET
         self.stopped = False
-        self.emptied: set[int] = set()  # tables that keep no rows and no cells
+        self.emptied: set[int] = set()  # tables stripped of descendants, including at a stop
+        self.open_table_at_stop: Raw | None = None
 
     def open(self, tag: str, role: str, basis: str, members: dict[str, Any] | None = None) -> None:
         if self.stopped:
@@ -143,12 +144,13 @@ class Tracker:
     def done(self) -> list[Raw]:
         """The nodes. At the end of the text, each open element closes. After a stop, keep only
         the span of the outermost open table through the end of the text. The end of the table
-        is unknown, so the line rule must skip all text that the table could hold."""
+        is unknown, so its lines can make a field ambiguous but cannot propose a value."""
         if self.stopped:
             for _, n in self.stack:
                 if self.nodes[n].kind == "table":
                     self.nodes[n].end = self.position()
                     self.emptied.add(n)
+                    self.open_table_at_stop = self.nodes[n]
                     break
         else:
             while self.stack:
