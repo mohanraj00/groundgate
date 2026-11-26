@@ -100,6 +100,7 @@ class Document:
         self._obj = dict(obj)
         self.text = text
         self.nodes = nodes
+        self._verified_reading: tuple[object, ...] | None = None
         self._data = text.encode("utf-8")
         self._starts = [n.start for n in nodes]
         self._children: dict[int | None, list[Node]] = {}
@@ -138,6 +139,27 @@ class Document:
     def to_json(self) -> bytes:
         """The canonical JSON of the object (RFC 8785), so the same reading has the same bytes."""
         return jcs(self.to_dict()).encode("utf-8")
+
+    def _reading_identity(self) -> tuple[object, ...]:
+        read_by = self.reader
+        pages = self.options["pages"]
+        return (
+            self.source,
+            read_by["name"],
+            read_by["version"],
+            None if pages is None else tuple(pages),
+            self.text,
+            self.nodes,
+        )
+
+    def _tables_verified(self) -> bool:
+        # The loader accepted numeric headers in earlier runs. A numeric header can
+        # compare equal to a boolean, but it is not a match for a fresh reading.
+        return (
+            self._verified_reading is not None
+            and self._verified_reading == self._reading_identity()
+            and all(node.header is None or isinstance(node.header, bool) for node in self.nodes)
+        )
 
     # Lookups (§7)
 
@@ -215,9 +237,15 @@ class Document:
     # The loader (§12)
 
     @classmethod
-    def from_dict(cls, obj: object, text: str) -> Document:
+    def from_dict(
+        cls, obj: object, text: str, *, source: tuple[str | Path, bytes] | None = None
+    ) -> Document:
         """Check ``obj`` against ``text`` and give the document. The object is untrusted, as it
-        can come from a store or a file. Raises ``DocumentError`` at the first fault."""
+        can come from a store or a file. Raises ``DocumentError`` at the first format fault.
+
+        Give ``source=(path, data)`` to check the reading for table proposals. The path suffix
+        selects the format. The reader uses the bytes in ``data``. A missing or different source
+        leaves the document usable without table proposals."""
         if not isinstance(text, str) or not unicodedata.is_normalized("NFC", text):
             raise DocumentError("the text must be an NFC string")
         if not isinstance(obj, Mapping):
@@ -249,7 +277,29 @@ class Document:
         if len(raw) > MAX_NODES:
             raise DocumentError(f"more than {MAX_NODES} nodes")
         nodes = tuple(_check_nodes(raw, data))
-        return cls({k: obj[k] for k in _TOP if k != "nodes"}, text, nodes)
+        document = cls({k: obj[k] for k in _TOP if k != "nodes"}, text, nodes)
+        if source is not None and document._matches_source(*source):
+            document._verified_reading = document._reading_identity()
+        return document
+
+    def _matches_source(self, path: str | Path, data: bytes) -> bool:
+        from ..store import key
+
+        if not isinstance(data, bytes) or self.source != key("source@1", data):
+            return False
+        read_by = self.reader
+        ocr = read_by["name"] == f"{READER}+tesseract"
+        ocr_version = read_by["version"].partition("+tesseract.")[2] if ocr else ""
+        expected = reader(ocr_version or None)
+        if read_by["name"] == _OPEN_TABLE_READER:
+            expected["name"] = _OPEN_TABLE_READER
+        if read_by != expected:
+            return False
+        try:
+            _, fresh = read_document(path, self.options["pages"], ocr=ocr, data=data)
+        except (ValueError, LookupError, ImportError, OSError, RecursionError):
+            return False
+        return fresh._reading_identity() == self._reading_identity()
 
 
 def _integer(value: object) -> bool:
@@ -459,7 +509,9 @@ def read_document(
         "nodes": nodes,
         "doubt": doubt,
     }
-    return extracted, Document.from_dict(obj, extracted.text)
+    document = Document.from_dict(obj, extracted.text)
+    document._verified_reading = document._reading_identity()
+    return extracted, document
 
 
 def _paragraphs(text: str) -> list[Raw]:

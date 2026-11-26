@@ -8,6 +8,13 @@ spec version, and receipts name the spec version they were decided under.
 - When the markup tracker stops inside a table, the reader keeps the outermost open table
   through the end of the text. A matching line in that span counts toward ambiguity for its
   field and gives no proposal (#629).
+- The structure reader proposes from the tables of a loaded `document@1` only when the host
+  gives its source. Give `source=(path, data)` to `Document.from_dict`. The loader reads the
+  source again with the recorded reader and compares the text and all nodes. If the source is
+  missing or the reading differs, the reader skips every table of that object, and line
+  candidates do not change. A document from `read_document` is checked. A new run records
+  `structure_tables: false` when it skips the tables, and a replay uses the setting of the
+  original run (#628).
 
 ## 0.17.0 (2026-11-19)
 

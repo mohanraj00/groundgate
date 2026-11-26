@@ -18,7 +18,7 @@ from groundgate.extract.structure import propose
 from groundgate.model import Schema
 from groundgate.read.document import Document, read_document
 from groundgate.read.nodes import MAX_DEPTH
-from groundgate.store import FolderStore
+from groundgate.store import FolderStore, key
 
 KEYED = {
     "fields": {"revenue": {"type": "integer", "aliases": ["Revenue"], "keys": ["2024", "2023"]}}
@@ -163,8 +163,8 @@ def test_a_null_header_gives_nothing(tmp_path: Path) -> None:
         if node["kind"] == "cell":
             node["header"] = None
     null = Document.from_dict(obj, doc.text)
-    assert propose(null.text, null, Schema.from_dict(KEYED)) == []
-    assert propose(null.text, null, Schema.from_dict(PLAIN)) == []
+    assert propose(null.text, null, Schema.from_dict(KEYED), _use_tables=True) == []
+    assert propose(null.text, null, Schema.from_dict(PLAIN), _use_tables=True) == []
 
 
 @pytest.mark.parametrize(
@@ -220,7 +220,9 @@ def test_a_large_loaded_span_or_position_does_not_cost_time(tmp_path: Path) -> N
             node["rows"] = 2**52
     loaded = Document.from_dict(obj, doc.text)
     assert [
-        c for c in propose(loaded.text, loaded, Schema.from_dict(KEYED)) if c["key"] == "2023"
+        c
+        for c in propose(loaded.text, loaded, Schema.from_dict(KEYED), _use_tables=True)
+        if c["key"] == "2023"
     ] == []
 
 
@@ -532,6 +534,92 @@ def test_many_keyed_rows_under_one_header_each_find_their_value(tmp_path: Path) 
 ADMIT = {"proposers": {"structure": "admit"}}
 
 
+@pytest.mark.parametrize(
+    "given", ["matching", "missing", "wrong bytes", "wrong reader", "unreadable", "numeric header"]
+)
+def test_a_loaded_document_checks_its_source_and_replays(tmp_path: Path, given: str) -> None:
+    doc = document(
+        tmp_path, TWO_COLUMNS + "<table><tr><td>Units: 8</td></tr></table><p>Units: 9</p>"
+    )
+    schema = {
+        "fields": {
+            **PLAIN["fields"],
+            "units": {"type": "integer", "aliases": ["Units"]},
+        }
+    }
+    path = tmp_path / "doc.html"
+    data = path.read_bytes()
+    path.unlink()  # The supplied bytes are enough for the reader and for a later replay.
+    obj = doc.to_dict()
+    if given == "wrong bytes":
+        data = b"<!-- same text and nodes -->" + data
+    if given == "wrong reader":
+        obj["reader"] = {**doc.reader, "version": "0.0.0"}
+    if given == "unreadable":
+        path = path.with_suffix(".xml")
+        data = b'<?xml version="1.0" encoding="unknown"?><table/>'
+        obj["source"] = key("source@1", data)
+    if given == "numeric header":
+        cell = next(n for n in obj["nodes"] if n["kind"] == "cell")
+        assert cell["header"] is False
+        cell["header"] = 0
+    loaded = Document.from_dict(obj, doc.text, source=None if given == "missing" else (path, data))
+    result = run(loaded, schema, policy=ADMIT)
+    expected = [("units", "9")]
+    if given == "matching":
+        expected.insert(0, ("revenue", "5"))
+        assert result.receipt.to_dict() == run(doc, schema, policy=ADMIT).receipt.to_dict()
+    assert [(c["field"], c["value"]) for c in result.candidates] == expected
+    assert replay(result.record, result.artifacts, loaded, schema, ADMIT).ok
+    folder = tmp_path / "run"
+    result.write(folder)
+    assert RunResult.read(folder).candidates == result.candidates
+    store = FolderStore(tmp_path / "store")
+    assert RunResult.load(store, result.save(store)).candidates == result.candidates
+
+
+@pytest.mark.parametrize(
+    "change", ["swapped cell", "missing cell", "missing edge cell", "table start"]
+)
+def test_a_loaded_document_with_changed_nodes_skips_its_tables(tmp_path: Path, change: str) -> None:
+    doc = document(
+        tmp_path,
+        "<table><tr><td>Cost</td><td>Revenue</td><td>5</td></tr></table>"
+        "<table><tr><td>Profit</td><td>7</td></tr></table><p>Units: 9</p>",
+    )
+    schema = {
+        "fields": {
+            **PLAIN["fields"],
+            "profit": {"type": "integer", "aliases": ["Profit"]},
+            "units": {"type": "integer", "aliases": ["Units"]},
+        }
+    }
+    obj = doc.to_dict()
+    table, row, cost, revenue, value = obj["nodes"][:5]
+    if change == "swapped cell":
+        cost["column"], revenue["column"] = revenue["column"], cost["column"]
+    else:
+        gone = revenue if change == "missing cell" else cost
+        obj["nodes"].remove(gone)
+        for node in obj["nodes"][gone["id"] :]:
+            node["id"] -= 1
+            if node["parent"] is not None and node["parent"] > gone["id"]:
+                node["parent"] -= 1
+        if gone is cost:
+            row["start"] = revenue["start"]
+            revenue["column"], value["column"] = 0, 1
+        if change == "table start":
+            table["start"] = row["start"]
+    path = tmp_path / "doc.html"
+    loaded = Document.from_dict(obj, doc.text, source=(path, path.read_bytes()))
+    assert [
+        (c["field"], c["value"]) for c in propose(doc.text, loaded, Schema.from_dict(schema))
+    ] == [("units", "9")]
+    result = run(loaded, schema, policy=ADMIT)
+    assert [(c["field"], c["value"]) for c in result.candidates] == [("units", "9")]
+    assert replay(result.record, result.artifacts, loaded, schema, ADMIT).ok
+
+
 def test_a_loaded_span_over_the_path_gives_nothing(tmp_path: Path) -> None:
     """A loaded object can put a spanned cell over a place of the grid. No path is clear."""
     html = (
@@ -545,7 +633,7 @@ def test_a_loaded_span_over_the_path_gives_nothing(tmp_path: Path) -> None:
         if node["kind"] == "cell" and node["row"] == 2 and node["column"] == 1:
             node.update(row=0, rows=3)
     loaded = Document.from_dict(obj, doc.text)
-    assert propose(loaded.text, loaded, Schema.from_dict(KEYED)) == []
+    assert propose(loaded.text, loaded, Schema.from_dict(KEYED), _use_tables=True) == []
     result = run(loaded, policy=ADMIT)
     assert not any(c.get("proposer") == "structure" for c in result.candidates)
 
@@ -668,7 +756,7 @@ def test_a_loaded_table_with_text_outside_its_cells_gives_nothing(
             node["start"] = cost["end"] + 1
     loaded = Document.from_dict(obj, document(tmp_path, html).text)
     schema = {"fields": {"revenue": {"type": "integer", "aliases": ["Revenue"], "keys": ["2024"]}}}
-    assert propose(loaded.text, loaded, Schema.from_dict(schema)) == []
+    assert propose(loaded.text, loaded, Schema.from_dict(schema), _use_tables=True) == []
     result = run(loaded, schema, policy=ADMIT)
     assert not any(c.get("proposer") == "structure" for c in result.candidates)
 
@@ -693,7 +781,7 @@ def test_a_loaded_row_that_leaves_out_text_of_the_table_gives_nothing(
             kept = [n for n in obj["nodes"] if n["kind"] == "cell"]
             node["start"], node["end"] = kept[0]["start"], kept[-1]["end"]
     loaded = Document.from_dict(obj, document(tmp_path, html).text)
-    assert propose(loaded.text, loaded, Schema.from_dict(PLAIN)) == []
+    assert propose(loaded.text, loaded, Schema.from_dict(PLAIN), _use_tables=True) == []
     result = run(loaded, PLAIN, policy=ADMIT)
     assert not any(c.get("proposer") == "structure" for c in result.candidates)
 
@@ -931,7 +1019,7 @@ def test_loaded_places_that_do_not_follow_the_text_give_nothing(
     else:
         by[1, 2]["row"] = 3
     loaded = Document.from_dict(obj, doc.text)
-    assert propose(loaded.text, loaded, Schema.from_dict(KEYED)) == []
+    assert propose(loaded.text, loaded, Schema.from_dict(KEYED), _use_tables=True) == []
     result = run(loaded, policy=ADMIT)
     assert not any(c.get("proposer") == "structure" for c in result.candidates)
 

@@ -436,13 +436,16 @@ def _lines(
         target.append(_candidate(field, None, text, places, bases))
 
 
-def propose(text: str, document: Document | None, schema: Schema) -> list[Json]:
+def propose(
+    text: str, document: Document | None, schema: Schema, *, _use_tables: bool | None = None
+) -> list[Json]:
     """The candidates of the reader, with no ``id`` and no ``proposer``: the runner sets them.
 
     Each candidate has the extra member ``basis``, the basis of each cell that it cites by role.
     ``admit`` ignores this member (SPEC §2.5). A plain text has no cells, so only its lines can
     match, and the basis of a line is always ``layout``. The candidates are in the order of
-    their field name, then in the order of the keys of the field."""
+    their field name, then in the order of the keys of the field. The runner passes its
+    checked table setting, or the original setting during replay."""
     names: dict[str, set[str]] = {}
     keys_of: dict[str, dict[str, list[str]]] = {}  # field -> key form -> keys, in schema order
     for name, field in schema.fields.items():
@@ -453,7 +456,9 @@ def propose(text: str, document: Document | None, schema: Schema) -> list[Json]:
     data = text.encode("utf-8")
     found: _Found = {}
     tables = [] if document is None else document.of_kind("table")
-    if document is not None:
+    if _use_tables is None:
+        _use_tables = document is not None and document._tables_verified()
+    if document is not None and tables and _use_tables:
         nested = _nested(document)
         for table in tables:
             _table(document, table, data, names, keys_of, nested, found, schema)

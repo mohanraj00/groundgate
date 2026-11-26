@@ -372,11 +372,17 @@ checks a layout, and it refuses the object at the first fault:
 The lookup uses sorted starts and `bisect`, so a large document costs time in proportion to its
 nodes, not to their square.
 
-These checks do not prove that the reader made the nodes. A loaded object can describe a valid
-table that the reader would not make from the source, for example a table that starts after a
-cell of text. The structure reader trusts the table nodes of each `document@1` that it gets. If
-a host loads an object from a party that it does not trust, do not configure `structure` as
-`admit` for that run. #628 adds a check of a loaded object against its source.
+I replay a saved run with the same candidates as the original run. If the source check kept
+the structure reader from using tables, the document input records `structure_tables: false`.
+Earlier records used the tables, so a replay of an earlier record still uses them. This rule
+applies only to replay of the recorded run. A new run checks its own input.
+
+A fresh read can propose from its tables. For a loaded object, the host can give
+`source=(path, data)` to `Document.from_dict`. The path suffix selects the source format.
+The bytes must match the `source` key. I read them with the recorded reader and options and
+compare the text and all nodes. If the source is missing, the read is unavailable, or the
+result differs, the structure reader skips every table in the object. The line reader still
+uses the same text and table spans.
 
 ## 13. The measure
 

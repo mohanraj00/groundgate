@@ -586,10 +586,13 @@ before the first call, when the structure reader proposes at least one candidate
 admission object holds the exact candidates. The runner gives them the ids `s1`, `s2` and so on,
 and it sets `proposer` itself. It starts no repair for them, and they do not stop the targeted
 search for their field, because such a candidate needs another proposer. Replay runs the reader
-again and compares the line, as it compares a prompt. If the reader proposes more candidates
-than `max_candidates_per_reply`, the run writes a `limit` line with the status
-`structure_candidate_limit` and stops incomplete before admission. So a change to what the reader proposes
-needs a new runner version. A run with no such policy has the same record as before.
+again and compares the line, as it compares a prompt. It uses the original run's table setting
+as described in [document-model.md](document-model.md) §12. A run that skips unverified tables
+records `structure_tables: false` in the document input. If the reader proposes more
+candidates than `max_candidates_per_reply`, the run writes a `limit` line with the status
+`structure_candidate_limit` and stops incomplete before admission. A change to the reader's
+proposals for the same table setting needs a new runner version. A run with no such policy has
+the same record as before.
 
 `RunResult.write(folder)` checks every key and refuses an existing log before it writes. It
 writes each object to `folder/objects/<hex>` first and the log to `folder/run.jsonl` last. Each
