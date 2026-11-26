@@ -379,7 +379,9 @@ I read them with the recorded reader and options and compare the text and all no
 object names the OCR reader, I skip the read unless the host also gives `ocr=True`. An OCR
 source check costs the same as a fresh `read_document(..., ocr=True)` with its page and time
 limits. If the source is missing, the read is skipped or unavailable, or the result differs,
-the structure reader skips every table. The line reader still uses the same text and table spans.
+I treat the tables as unverified. An unverified table gives no proposal. Its matches still count
+toward ambiguity, so a line that matches the same field gives no proposal either. A field that
+matches only in lines can still give a proposal. The line reader uses the same text and table spans.
 
 The structure reader is a proposer in the runner, and the runner is not part of the
 specification ([SPEC §2.4](../../SPEC.md#24-policy)). `admit` decides the same candidates as
@@ -387,8 +389,9 @@ before, so the spec version and the conformance vectors stay the same. A run wit
 `structure: admit` on a loaded document without its source admits no value from a table,
 because the reader proposes none.
 
-I record `structure_tables: false` in the document input when a new run skips unverified
-tables. The record alone sets table use on replay. A record from before #628 has no such
+I record `structure_tables: false` in the document input when a new run reads unverified
+tables. On replay, `false` counts table matches toward ambiguity and gives no table proposals,
+even if the document has since passed a source check. A record from before #628 has no such
 member and replays with tables even if the document has never passed a source check. A new
 run that allows tables also omits the member. A successful replay proves that the run can be
 reproduced from its record. The host must establish trust in the tables separately. If the

@@ -280,6 +280,8 @@ def _table(
     nested: set[int],
     found: _Found,
     schema: Schema,
+    *,
+    allow_proposals: bool,
 ) -> None:
     cells: list[Node] = []
     last = -1
@@ -322,7 +324,7 @@ def _table(
         field: Field, key: str | None, label: Node, header: Node | None, value: Node | None
     ) -> None:
         target = found.setdefault((field.name, key), [])
-        if value is None or value.start == value.end:
+        if not allow_proposals or value is None or value.start == value.end:
             target.append(None)
             return
         places = {"value": (value.start, value.end), "field": (label.start, label.end)}
@@ -444,8 +446,9 @@ def propose(
     Each candidate has the extra member ``basis``, the basis of each cell that it cites by role.
     ``admit`` ignores this member (SPEC §2.5). A plain text has no cells, so only its lines can
     match, and the basis of a line is always ``layout``. The candidates are in the order of
-    their field name, then in the order of the keys of the field. The runner passes its
-    checked table setting, or the original setting during replay."""
+    their field name, then in the order of the keys of the field. Unverified table matches
+    count toward ambiguity and give no proposals. The runner passes its checked table setting,
+    or the original setting during replay."""
     names: dict[str, set[str]] = {}
     keys_of: dict[str, dict[str, list[str]]] = {}  # field -> key form -> keys, in schema order
     for name, field in schema.fields.items():
@@ -458,10 +461,20 @@ def propose(
     tables = [] if document is None else document.of_kind("table")
     if _use_tables is None:
         _use_tables = document is not None and document._tables_verified()
-    if document is not None and tables and _use_tables:
+    if document is not None and tables:
         nested = _nested(document)
         for table in tables:
-            _table(document, table, data, names, keys_of, nested, found, schema)
+            _table(
+                document,
+                table,
+                data,
+                names,
+                keys_of,
+                nested,
+                found,
+                schema,
+                allow_proposals=_use_tables,
+            )
     _lines(data, tables, names, found, schema, document.open_table_start if document else None)
 
     # Sort by field name, not by schema order: a saved schema is canonical JSON, so its fields

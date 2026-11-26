@@ -536,6 +536,35 @@ def test_many_keyed_rows_under_one_header_each_find_their_value(tmp_path: Path) 
 ADMIT = {"proposers": {"structure": "admit"}}
 
 
+def test_an_unverified_table_match_blocks_a_line_proposal(tmp_path: Path) -> None:
+    doc = document(
+        tmp_path, "<table><tr><td>Revenue</td><td>5</td></tr></table><p>Revenue: 999</p>"
+    )
+    loaded = Document.from_dict(doc.to_dict(), doc.text)
+    result = run(loaded, PLAIN, policy=ADMIT)
+    assert result.candidates == []
+    assert result.record[0]["inputs"]["document"]["structure_tables"] is False
+    assert run(doc, PLAIN, policy=ADMIT).candidates == []
+    assert replay(result.record, result.artifacts, doc, PLAIN, ADMIT).ok
+
+
+def test_a_line_only_field_keeps_its_proposal_with_an_unverified_table(tmp_path: Path) -> None:
+    doc = document(tmp_path, "<table><tr><td>Revenue</td><td>5</td></tr></table><p>Cost: 3</p>")
+    schema = {"fields": {**PLAIN["fields"], "cost": {"type": "integer", "aliases": ["Cost"]}}}
+    loaded = Document.from_dict(doc.to_dict(), doc.text)
+    result = run(loaded, schema, policy=ADMIT)
+    assert [(c["field"], c["value"]) for c in result.candidates] == [("cost", "3")]
+    path = tmp_path / "doc.html"
+    verified = Document.from_dict(doc.to_dict(), doc.text, source=(path, path.read_bytes()))
+    candidates = propose(verified.text, verified, Schema.from_dict(schema))
+    assert [(c["field"], c["value"], spans(verified, c)) for c in candidates] == [
+        ("cost", "3", {"value": "3", "field": "Cost"}),
+        ("revenue", "5", {"value": "5", "field": "Revenue"}),
+    ]
+    assert candidates[1]["basis"] == {"value": "markup", "field": "markup"}
+    assert replay(result.record, result.artifacts, verified, schema, ADMIT).ok
+
+
 @pytest.mark.parametrize(
     "given", ["matching", "missing", "wrong bytes", "wrong reader", "unreadable", "numeric header"]
 )

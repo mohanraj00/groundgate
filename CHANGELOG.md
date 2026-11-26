@@ -12,11 +12,11 @@ spec version, and receipts name the spec version they were decided under.
   To keep them, give `source=(path, data)` to `Document.from_dict` or read the source with
   `read_document`. The loader checks that the source reproduces the text and nodes. For an OCR
   reading, the host must also give `ocr=True` to `Document.from_dict` to run the check.
-  Line proposals still use the same text and table spans. So a run with `structure: admit` on
-  a loaded document without its source admits no value from a table. The spec version and the
-  conformance vectors stay the same. The runner and its structure reader are not part of the
-  specification ([SPEC §2.4](SPEC.md#24-policy)), and `admit` decides the same candidates as
-  before.
+  An unverified table gives no proposal. Its matches still count toward ambiguity, so a line
+  that matches the same field gives no proposal either. A field that matches only in lines can
+  still give a proposal. The spec version and the conformance vectors stay the same. The runner
+  and its structure reader are not part of the specification ([SPEC §2.4](SPEC.md#24-policy)),
+  and `admit` decides the same candidates as before.
 
 ## 0.17.0 (2026-11-19)
 
