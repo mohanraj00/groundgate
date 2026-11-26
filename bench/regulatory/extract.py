@@ -22,7 +22,7 @@ Json = dict[str, Any]
 UNITS = {k.casefold(): k for k in sorted(Schema.from_dict({"fields": {}}).units)}
 UNITS.update({"$": "USD", "dollars": "USD", "percent": "%"})
 UNIT_CODES = [None, *sorted(set(UNITS.values()))]
-SOURCE_NOTE = re.compile(r"\s*\[[^\[\]]*\bFR\b[^\[\]]*\]\s*\Z")
+NOTE_TAGS = {"SECAUTH", "CITA", "EDNOTE"}
 NUMBERS = FIELDS["table_value"][1]
 COLUMNS = 64
 
@@ -34,9 +34,9 @@ with a "slots" list, with exactly one answer per slot. Each answer has "slot" an
 
 For "value" status, include the following members for the kind of the slot.
 - Passage: "heading" is the section number or defined term. "quote" is the entire
-  contiguous span from that heading or term to the end of its passage, including
-  the heading and any trailing source note. Copy the reader text with its wording
-  and punctuation. The section text request needs the whole named section.
+  span from that heading or term to the end of its passage. For a section text
+  request, stop at the end of the section body. Copy the wording and punctuation
+  of the reader text.
 - Number: "value" is a decimal string without commas. "unit" is the currency or
   unit stated for the cell, or null. "evidence" is an object with a "value" quote
   from the cell and, if the unit is stated separately, a "unit" quote from the
@@ -178,6 +178,34 @@ class Section:
     start: int  # UTF-8 byte offset in the part
     outline: list[Json]  # UTF-8 byte offsets in the section
     tables: dict[str, Table | None]
+    note_start: int | None = None
+
+
+def split_trailing_notes(sec: ET.Element) -> tuple[ET.Element, list[ET.Element]]:
+    body = copy.copy(sec)
+    while len(body):
+        child = body[-1]
+        if child.tag not in NOTE_TAGS or (child.tail or "").strip():
+            break
+        del body[-1]
+    return body, sec[len(body) :]
+
+
+def note_entry(body: ET.Element, notes: list[ET.Element], text: str, name: str) -> Json | None:
+    prefix = copy.copy(body)
+    for note in notes:
+        prefix.append(note)
+        if not fragment(note).strip():
+            continue
+        # The same note text can also occur in the body.
+        before = fragment(body).rstrip()
+        through = fragment(prefix).rstrip()
+        note_text = through[len(before) :].lstrip()
+        if not note_text or not through.startswith(before) or not text.startswith(through):
+            raise ValueError(f"cannot locate a trailing note: {name}")
+        start = len(through) - len(note_text)
+        return {"start": len(through[:start].encode()), "end": len(through.encode()), "level": 1}
+    return None
 
 
 def section_views(text: str, raw: bytes, slots: list[Json]) -> dict[str, Section]:
@@ -188,37 +216,47 @@ def section_views(text: str, raw: bytes, slots: list[Json]) -> dict[str, Section
         name = head(sec)
         if name not in wanted:
             continue
-        body = fragment(sec)
-        at = text.find(body)
-        if name in views or at < 0 or text.find(body, at + 1) >= 0:
+        section_text = fragment(sec)
+        at = text.find(section_text)
+        if name in views or at < 0 or text.find(section_text, at + 1) >= 0:
             raise ValueError(f"cannot locate one pinned section: {name}")
         heading = sec.find("HEAD")
         assert heading is not None  # sections() requires HEAD
         title = fragment(heading)
-        if not body.startswith(title):
+        if not section_text.startswith(title):
             raise ValueError(f"cannot locate section heading: {name}")
         outline = [{"start": 0, "end": len(title.encode()), "level": 1}]
+        body_element, notes = split_trailing_notes(sec)
         if name in terms:
             cursor = len(title)
-            for paragraph in sec.iter("P"):
+            for paragraph in body_element.iter("P"):
                 first = next(iter(paragraph), None)
                 if first is None or first.tag != "I" or (paragraph.text or "").strip():
                     continue
                 if not text_of(first).rstrip(".,:; "):
                     continue
                 term = fragment(first)
-                pos = body.find(fragment(paragraph), cursor)
-                if pos < 0 or not body.startswith(term, pos):
+                pos = section_text.find(fragment(paragraph), cursor)
+                if pos < 0 or not section_text.startswith(term, pos):
                     raise ValueError(f"cannot locate a definition heading: {name}")
-                start = len(body[:pos].encode())
+                start = len(section_text[:pos].encode())
                 outline.append({"start": start, "end": start + len(term.encode()), "level": 2})
                 cursor = pos + len(term)
+        boundary = note_entry(body_element, notes, section_text, name)
+        if boundary is not None:
+            outline.append(boundary)
         tables = {
-            s["slot"]: read_table(sec, s["request"], body)
+            s["slot"]: read_table(sec, s["request"], section_text)
             for s in slots
             if s["kind"] == "record" and s["request"]["section"] == name
         }
-        views[name] = Section(body, len(text[:at].encode()), outline, tables)
+        views[name] = Section(
+            section_text,
+            len(text[:at].encode()),
+            outline,
+            tables,
+            note_start=None if boundary is None else boundary["start"],
+        )
     if views.keys() != wanted:
         raise ValueError("a requested section is missing from the XML")
     return views
@@ -352,7 +390,11 @@ def candidates(slot: Json, answer: Json, view: Section, index: int) -> list[Json
                     for k in ("heading", "quote")), slot)  # fmt: skip
         item = quote_item(answer["quote"], view, "value", absolute=False)
         if "start" in item:
-            item.pop("text")  # the quote matched every non-whitespace character of the span
+            if view.note_start is not None and item["start"] >= view.note_start:
+                # Use the note only as a passage limit.
+                del item["start"], item["end"]
+            else:
+                item.pop("text")  # the quote matched every non-whitespace character of the span
         return [candidate | {"value": answer["heading"], "evidence": [item]}]
     allowed = {"value", "evidence"} | ({"unit"} if kind == "number" else set())
     require(set(answer) == base | allowed and isinstance(answer["value"], str), slot)
@@ -376,4 +418,4 @@ def passage_value(view: Section, span: tuple[int, int]) -> str:
     body = view.text.encode()[heading_end : span[1]].decode()
     if span[0] != 0:
         body = body.lstrip(".,:; \t\n\r")
-    return SOURCE_NOTE.sub("", body).strip()
+    return body.strip()
