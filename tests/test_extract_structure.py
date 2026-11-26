@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import ast
 import json
+import subprocess
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -15,6 +17,7 @@ from groundgate.extract import structure as structure_module
 from groundgate.extract.structure import propose
 from groundgate.model import Schema
 from groundgate.read.document import Document, read_document
+from groundgate.read.nodes import MAX_DEPTH
 from groundgate.store import FolderStore
 
 KEYED = {
@@ -839,6 +842,76 @@ def test_the_text_of_a_dropped_table_is_not_a_line(tmp_path: Path, hidden: str) 
     assert found(tmp_path, html, PLAIN) == []
     result = run(document(tmp_path, html), PLAIN, policy=ADMIT)
     assert not any(c.get("proposer") == "structure" for c in result.candidates)
+
+
+def test_the_text_of_a_table_open_at_the_depth_limit_is_not_a_line(tmp_path: Path) -> None:
+    html = "<table><tr><td>" + "<div>" * 254 + "Revenue: 999"
+    doc = document(tmp_path, html)
+    result = run(doc, PLAIN, policy=ADMIT)
+    assert result.candidates == []
+
+
+@pytest.mark.parametrize("suffix", ["html", "xml"])
+def test_a_table_open_at_the_depth_limit_survives_composition_at_a_cell_end(
+    tmp_path: Path, suffix: str
+) -> None:
+    path = tmp_path / f"doc.{suffix}"
+    source = (
+        "<div>Lead<table><tr><td>e</td>\u0301<td>"
+        + "<div>" * MAX_DEPTH
+        + "Revenue: 999  "
+        + "</div>" * MAX_DEPTH
+        + "</td></tr></table></div>"
+    )
+    path.write_text(source, encoding="utf-8")
+    code = (
+        "import sys; from groundgate.read.document import read_document; "
+        "print(read_document(sys.argv[1])[1].to_json().decode())"
+    )
+    done = subprocess.run(
+        [sys.executable, "-c", code, str(path)], capture_output=True, timeout=5, check=False
+    )
+    assert done.returncode == 0, done.stderr.decode()
+    doc = Document.from_dict(json.loads(done.stdout), "Lead\n\né\nRevenue: 999")
+    assert len(doc.nodes) == 1
+    table = doc.nodes[0]
+    assert table.kind == "table" and table.parent is None
+    assert doc.open_table_start == table.start == len(b"Lead\n\n")
+    assert table.end == len(doc.text.encode())
+    assert run(doc, PLAIN, policy=ADMIT).candidates == []
+
+
+def test_lines_in_the_open_table_tail_block_a_proposal_at_the_node_limit(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setattr("groundgate.read.nodes.MAX_NODES", 7)
+    html = (
+        "<p>Revenue: 5</p><table><tr><td>Revenue: 999"
+        "<table><tr><td><div>Revenue: 888</div></td></tr></table></td></tr></table>"
+        "<p>Revenue: 777</p>"
+    )
+    result = run(document(tmp_path, html), PLAIN, policy=ADMIT)
+    assert result.candidates == []
+
+
+@pytest.mark.parametrize(
+    ("later", "expected"),
+    [pytest.param("Revenue: 5", [], id="conflict"), pytest.param("Notes", ["999"], id="no match")],
+)
+def test_a_line_before_the_depth_limit_depends_on_matches_in_the_tail(
+    tmp_path: Path, later: str, expected: list[str]
+) -> None:
+    html = (
+        "<p>Revenue: 999</p><table><tr><td>"
+        + "<div>" * MAX_DEPTH
+        + "Notes"
+        + "</div>" * MAX_DEPTH
+        + f"</td></tr></table><p>{later}</p>"
+    )
+    doc = document(tmp_path, html)
+    result = run(doc, PLAIN, policy=ADMIT)
+    assert [c["value"] for c in result.candidates] == expected
+    assert replay(result.record, result.artifacts, doc, PLAIN, ADMIT).ok
 
 
 @pytest.mark.parametrize("change", ["columns", "rows", "row in a node"])

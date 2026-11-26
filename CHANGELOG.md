@@ -3,6 +3,12 @@
 Versions follow [SemVer](https://semver.org). A change to how any candidate is decided is a new
 spec version, and receipts name the spec version they were decided under.
 
+## Unreleased
+
+- When the markup tracker stops inside a table, the reader keeps the outermost open table
+  through the end of the text. A matching line in that span counts toward ambiguity for its
+  field and gives no proposal (#629).
+
 ## 0.17.0 (2026-11-19)
 
 Spec 0.12, with no change to a decision and no change to a receipt. 0.17 is the release for

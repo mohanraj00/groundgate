@@ -62,13 +62,14 @@ class Tracker:
         self.tables: dict[int, _Grid] = {}
         self.budget = GRID_BUDGET
         self.stopped = False
-        self.emptied: set[int] = set()  # tables that keep no rows and no cells
+        self.emptied: set[int] = set()  # tables stripped of descendants, including at a stop
+        self.open_table_at_stop: Raw | None = None
 
     def open(self, tag: str, role: str, basis: str, members: dict[str, Any] | None = None) -> None:
         if self.stopped:
             return
         if len(self.stack) >= MAX_DEPTH or len(self.nodes) >= MAX_NODES:
-            self.stopped = True  # the open nodes never close, so ``finish`` drops them
+            self.stopped = True
             return
         parent = self.stack[-1][1] if self.stack else None
         if parent is not None and self.nodes[parent].kind == "block":
@@ -120,7 +121,7 @@ class Tracker:
 
     def close(self, tag: str) -> None:
         """Close the innermost open ``tag`` and each element above it. An end tag with no open
-        element is ignored. After a stop, nothing closes, so no span ends in the wrong place."""
+        element is ignored. After a stop, all end tags are ignored."""
         if self.stopped or not any(t == tag for t, _ in self.stack):
             return
         while self.stack:
@@ -141,10 +142,19 @@ class Tracker:
                 return
 
     def done(self) -> list[Raw]:
-        """The nodes. At the end of the text, each open element closes. After a stop, each open
-        element stays open, so ``finish`` drops it."""
-        while self.stack and not self.stopped:
-            self.close(self.stack[-1][0])
+        """The nodes. At the end of the text, each open element closes. After a stop, keep only
+        the span of the outermost open table through the end of the text. The end of the table
+        is unknown, so its lines can make a field ambiguous but cannot propose a value."""
+        if self.stopped:
+            for _, n in self.stack:
+                if self.nodes[n].kind == "table":
+                    self.nodes[n].end = self.position()
+                    self.emptied.add(n)
+                    self.open_table_at_stop = self.nodes[n]
+                    break
+        else:
+            while self.stack:
+                self.close(self.stack[-1][0])
         # The document keeps no scope. A th with scope="row" in a row of data cells is the
         # label of its row, so it is a header. A th with scope="col" there heads the cells
         # below it, not its row, so it gets null. In a row of headers, each is the reverse.
@@ -351,9 +361,13 @@ def finish(text: str, raws: list[Raw]) -> list[dict[str, Any]]:
     Each span loses the whitespace at its two ends. A node is dropped when it did not close, when
     its span is empty (an empty cell keeps a zero-width span inside its row), or when it breaks
     the order, the nesting or the parent kinds of §4.2. The children of a dropped node get the
-    nearest node above it as parent. The first MAX_NODES nodes stay.
+    nearest node above it as parent. A parent index must name an earlier raw node, or no nodes
+    are returned. The first MAX_NODES nodes stay.
     """
-    for raw in raws:  # trim each span in place; a node that did not close goes
+    for n, raw in enumerate(raws):
+        if raw.parent is not None and not 0 <= raw.parent < n:
+            return []
+        # Trim each span in place. A node that did not close goes.
         s, e = raw.start, raw.end
         if not raw.keep or e < s:
             raw.keep = False
