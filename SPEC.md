@@ -2339,9 +2339,9 @@ candidate.
 
 **The check of a correction of a blind task** reads no other candidate of the packet. The
 service runs the gate again for a correction (docs/design/review.md §6.2). For a correction of
-a blind task, the `admit` call keeps only the candidates of the slot of the task, and their
-judgments. It leaves out every other candidate of the packet, also the candidates of the review
-group. A candidate of a review task is hidden from an actor of a blind task, and a relation
+a blind task, the `admit` call has only the candidate of the correction. As for each
+correction, it leaves out the candidates of the slot of the task. It also leaves out every other
+candidate of the packet, also the candidates of the review group. A candidate of a review task is hidden from an actor of a blind task, and a relation
 (§3.4) can join it to the blind field. A failed correction writes no record, so an actor could
 try a value again and again. Thus the outcome of the check depends on no hidden candidate, also
 while `review tasks` has written only some of the tasks of a packet. Example: the text is

@@ -436,7 +436,8 @@ def left_out(tasks: Sequence[Mapping[str, Any]], task: str, count: int) -> list[
     mine = [t for t in tasks if t["task"] == task]
     if not mine or mine[0]["mode"] != "audit":
         return []
-    return [d for d in range(count) if d not in set(mine[0]["decisions"])]
+    own = set(mine[0]["decisions"])
+    return [d for d in range(count) if d not in own]
 
 
 def task_id(key: bytes, task_key: str) -> str:
