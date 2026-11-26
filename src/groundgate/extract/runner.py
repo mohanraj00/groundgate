@@ -588,9 +588,11 @@ def _checked(document: Document) -> Document:
     """A copy of ``document`` that the run owns, checked as the loader checks an untrusted object,
     with its text against the text key (docs/design/document-model.md §10, §12)."""
     try:
-        return Document.from_dict(document.to_dict(), document.text)
+        checked = Document.from_dict(document.to_dict(), document.text)
     except (DocumentError, KeyError, TypeError) as exc:
         raise ExtractInputError(f"the document is not valid: {exc}") from None
+    checked._verified_reading = document._verified_reading
+    return checked
 
 
 def _file(path: Path, limit: int) -> bytes:
@@ -1134,10 +1136,12 @@ class _Engine:
         document_source: str | None,
         references: list[Json],
         empty: Receipt,
-        document: Document | None = None,
+        document: Document | None,
+        use_tables: bool,
     ) -> None:
         self.text, self.schema, self.policy = text, schema, policy
         self.document = document
+        self.use_tables = use_tables
         # Each admit of the run takes the doubt of the document (SPEC 3.3 READ_DOUBT, #573).
         self.doubt = None if document is None else document.doubt
         self.citations = None if document is None else _Citations(document)
@@ -1164,6 +1168,8 @@ class _Engine:
                 document_key=_key("document", body),
                 reader=document.reader,
             )
+            if not use_tables:
+                named["structure_tables"] = False
         self.event(
             kind="header",
             runner=_VERSION,
@@ -1688,7 +1694,7 @@ class _Engine:
         model wrote them. Replay runs the reader again and compares the admission line."""
         if _STRUCTURE not in self.policy.proposers:
             return True
-        found = propose(self.text, self.document, self.schema)
+        found = propose(self.text, self.document, self.schema, _use_tables=self.use_tables)
         if not found:
             return True
         # One batch of the reader is bound as one model reply is, so a wide table cannot ask
@@ -2450,6 +2456,7 @@ def _run(
     document_source: str | None = None,
     references: Sequence[object] | None = None,
     replay_ceiling: int | None = None,
+    replay_tables: bool | None = None,
     packs: Sequence[object] = (),
 ) -> RunResult:
     """Validate inputs, with an optional replay-only allocation ceiling."""
@@ -2496,6 +2503,9 @@ def _run(
         raise ExtractInputError("inputs must be encodable as UTF-8") from None
     if not s.fields:
         raise ExtractInputError("schema must request at least one field")
+    use_tables = True
+    if document is not None and _STRUCTURE in p.proposers:
+        use_tables = document._tables_verified() if replay_tables is None else replay_tables
     engine = _Engine(
         text,
         s,
@@ -2508,6 +2518,7 @@ def _run(
         valid_refs,
         empty,
         document,
+        use_tables,
     )
     if replay_ceiling is not None:
         engine.candidate_limit = min(engine.candidate_limit, replay_ceiling)
@@ -2620,8 +2631,13 @@ def _replay(
         ):
             raise ValueError("invalid recorded chunk plan")
         document = _checked(text) if isinstance(text, Document) else None
-        if (document is None) != (header["inputs"]["document"]["kind"] == "text"):
+        named = header["inputs"]["document"]
+        if (document is None) != (named["kind"] == "text"):
             raise ValueError("a run on a document replays with its document")
+        # A saved run keeps its original table behavior. Older records used tables.
+        use_tables = named.get("structure_tables", True)
+        if not isinstance(use_tables, bool):
+            raise ValueError("invalid recorded structure_tables")
         body = document.text if document is not None else cast(str, text)
         bound = replace(settings, max_calls=min(settings.max_calls, evidence_bound))
         planned = _plan(body, document, bound)
@@ -2665,9 +2681,10 @@ def _replay(
             policy=policy,
             run_policy=settings,
             replay_ceiling=ceiling,
+            replay_tables=use_tables,
             references=references,
-            document_id=header["inputs"]["document"]["id"],
-            document_source=header["inputs"]["document"]["source"],
+            document_id=named["id"],
+            document_source=named["source"],
             packs=packs,
         )
         if cursor != len(calls) or jcs(result.record) != jcs(saved):

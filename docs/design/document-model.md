@@ -372,11 +372,35 @@ checks a layout, and it refuses the object at the first fault:
 The lookup uses sorted starts and `bisect`, so a large document costs time in proportion to its
 nodes, not to their square.
 
-These checks do not prove that the reader made the nodes. A loaded object can describe a valid
-table that the reader would not make from the source, for example a table that starts after a
-cell of text. The structure reader trusts the table nodes of each `document@1` that it gets. If
-a host loads an object from a party that it does not trust, do not configure `structure` as
-`admit` for that run. #628 adds a check of a loaded object against its source.
+A fresh read can propose from its tables and its lines. A loaded `document@1` gives no
+structure proposal by default (#628). The host can give `source=(path, data)` to
+`Document.from_dict` to check the reading. The path suffix selects the source format. The
+bytes must match the `source` key. I read them with the recorded reader and options and
+compare the text, all nodes and the doubt. If the object names the OCR reader, I skip the read
+unless the host also gives `ocr=True`. An OCR source check costs the same as a fresh
+`read_document(..., ocr=True)` with its page and time limits. If the source is missing, the
+read is skipped or unavailable, or the result differs, I treat the reading as unverified.
+
+If the reading of a loaded document is not verified, the structure reader proposes nothing for
+that document. This includes its lines. The line reader skips each table span, so the nodes
+decide which text it reads, and the nodes of a loaded object are untrusted. The reviews of #628
+found five forms of node that hide a line and make a wrong line value the only match. The last
+form removes each table node, so a rule that looks at the table nodes cannot find it. A plain
+text input has no nodes, so its line candidates do not change.
+
+The structure reader is a proposer in the runner, and the runner is not part of the
+specification ([SPEC §2.4](../../SPEC.md#24-policy)). `admit` decides the same candidates as
+before, so the spec version and the conformance vectors stay the same. A run with
+`structure: admit` on a loaded document that is not verified admits no value from the
+structure reader, because the reader proposes none.
+
+I record `structure_tables: false` in the document input when a new run has a reading that is
+not verified. On replay, `false` gives no structure proposal, even if the document has since passed
+a source check. A record from before #628 has no such member and replays with tables even if
+the document has never passed a source check. A new run that allows tables also omits the
+member. A successful replay proves that the run can be reproduced from its record. The host
+must establish trust in the tables separately. If the host does not trust a record, it must
+not trust its candidates either.
 
 ## 13. The measure
 

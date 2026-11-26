@@ -586,10 +586,22 @@ before the first call, when the structure reader proposes at least one candidate
 admission object holds the exact candidates. The runner gives them the ids `s1`, `s2` and so on,
 and it sets `proposer` itself. It starts no repair for them, and they do not stop the targeted
 search for their field, because such a candidate needs another proposer. Replay runs the reader
-again and compares the line, as it compares a prompt. If the reader proposes more candidates
-than `max_candidates_per_reply`, the run writes a `limit` line with the status
-`structure_candidate_limit` and stops incomplete before admission. So a change to what the reader proposes
-needs a new runner version. A run with no such policy has the same record as before.
+again and compares the line, as it compares a prompt. It uses the original run's table setting
+as described in [document-model.md](document-model.md) §12. A run on a reading that is not verified
+records `structure_tables: false` in the document input. If the reader proposes more
+candidates than `max_candidates_per_reply`, the run writes a `limit` line with the status
+`structure_candidate_limit` and stops incomplete before admission. A run with no structure
+proposer in its policy has the same record as before.
+
+The runner version names the replay contract of a record: this runner must replay each record
+of its version. A change that stops this runner from replaying an old record needs a new runner
+version. A new member that an old record does not have needs no new version, if a record
+without the member replays as before. A new version also makes each saved record of the old
+version fail replay, so I do not make one for an optional member. `structure_tables` is such a
+member (#628), so the runner stays `groundgate-run/6`. An earlier runner does not know the
+member. It compares the whole rebuilt record, so its replay of a record with
+`structure_tables: false` fails as "run differs from replay". It does not replay the run with
+other candidates.
 
 `RunResult.write(folder)` checks every key and refuses an existing log before it writes. It
 writes each object to `folder/objects/<hex>` first and the log to `folder/run.jsonl` last. Each
