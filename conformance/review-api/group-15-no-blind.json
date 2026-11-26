@@ -1,0 +1,28 @@
+{
+ "name": "group-15-no-blind",
+ "kind": "group",
+ "description": "A packet with no blind task has the review group only.",
+ "tasks": [
+  {
+   "task": "a",
+   "field": "total_revenue",
+   "key": "2025",
+   "blind": false
+  },
+  {
+   "task": "d",
+   "field": "summary",
+   "key": null,
+   "blind": false
+  }
+ ],
+ "logs": {},
+ "actor": "ana",
+ "agree": 1,
+ "expected": {
+  "group": [
+   "a",
+   "d"
+  ]
+ }
+}

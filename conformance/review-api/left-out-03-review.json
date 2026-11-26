@@ -1,0 +1,44 @@
+{
+ "name": "left-out-03-review",
+ "kind": "left-out",
+ "description": "A correction of a review task leaves out no other candidate.",
+ "tasks": [
+  {
+   "task": "t",
+   "mode": "audit",
+   "item": "number",
+   "decisions": [
+    0
+   ]
+  },
+  {
+   "task": "p",
+   "mode": "audit",
+   "item": "number",
+   "decisions": [
+    1
+   ]
+  },
+  {
+   "task": "r",
+   "mode": "review",
+   "item": "number",
+   "decisions": [
+    2,
+    3
+   ]
+  },
+  {
+   "task": "s",
+   "mode": "audit",
+   "item": "closed_set",
+   "decisions": [
+    4
+   ]
+  }
+ ],
+ "task": "r",
+ "expected": {
+  "decisions": []
+ }
+}

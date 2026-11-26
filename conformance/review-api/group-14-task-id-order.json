@@ -1,0 +1,27 @@
+{
+ "name": "group-14-task-id-order",
+ "kind": "group",
+ "description": "Two blind tasks with the same field and key come in the order of the task ID.",
+ "tasks": [
+  {
+   "task": "h2",
+   "field": "rate",
+   "key": null,
+   "blind": true
+  },
+  {
+   "task": "h1",
+   "field": "rate",
+   "key": null,
+   "blind": true
+  }
+ ],
+ "logs": {},
+ "actor": "ana",
+ "agree": 1,
+ "expected": {
+  "group": [
+   "h1"
+  ]
+ }
+}

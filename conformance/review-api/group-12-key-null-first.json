@@ -1,0 +1,33 @@
+{
+ "name": "group-12-key-null-first",
+ "kind": "group",
+ "description": "The order takes the key with null first.",
+ "tasks": [
+  {
+   "task": "e",
+   "field": "rate",
+   "key": "standard",
+   "blind": true
+  },
+  {
+   "task": "f",
+   "field": "rate",
+   "key": null,
+   "blind": true
+  },
+  {
+   "task": "g",
+   "field": "rate",
+   "key": "express",
+   "blind": true
+  }
+ ],
+ "logs": {},
+ "actor": "ana",
+ "agree": 1,
+ "expected": {
+  "group": [
+   "f"
+  ]
+ }
+}

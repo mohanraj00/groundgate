@@ -1,0 +1,28 @@
+{
+ "name": "left-out-04-one-blind",
+ "kind": "left-out",
+ "description": "A packet with one blind task leaves out no other candidate.",
+ "tasks": [
+  {
+   "task": "t",
+   "mode": "audit",
+   "item": "number",
+   "decisions": [
+    0
+   ]
+  },
+  {
+   "task": "r",
+   "mode": "review",
+   "item": "number",
+   "decisions": [
+    2,
+    3
+   ]
+  }
+ ],
+ "task": "t",
+ "expected": {
+  "decisions": []
+ }
+}

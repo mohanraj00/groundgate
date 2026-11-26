@@ -1,0 +1,46 @@
+{
+ "name": "group-10-agree-two",
+ "kind": "group",
+ "description": "With agree 2, one other actor is not enough, so b needs ana.",
+ "tasks": [
+  {
+   "task": "a",
+   "field": "total_revenue",
+   "key": "2025",
+   "blind": false
+  },
+  {
+   "task": "b",
+   "field": "part",
+   "key": null,
+   "blind": true
+  },
+  {
+   "task": "c",
+   "field": "total",
+   "key": null,
+   "blind": true
+  },
+  {
+   "task": "d",
+   "field": "summary",
+   "key": null,
+   "blind": false
+  }
+ ],
+ "logs": {
+  "ben": [
+   {
+    "task": "b",
+    "verdict": "correct"
+   }
+  ]
+ },
+ "actor": "ana",
+ "agree": 2,
+ "expected": {
+  "group": [
+   "b"
+  ]
+ }
+}

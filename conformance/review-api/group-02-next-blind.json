@@ -1,0 +1,46 @@
+{
+ "name": "group-02-next-blind",
+ "kind": "group",
+ "description": "ben answered b, so b has agree actors. The group is c.",
+ "tasks": [
+  {
+   "task": "a",
+   "field": "total_revenue",
+   "key": "2025",
+   "blind": false
+  },
+  {
+   "task": "b",
+   "field": "part",
+   "key": null,
+   "blind": true
+  },
+  {
+   "task": "c",
+   "field": "total",
+   "key": null,
+   "blind": true
+  },
+  {
+   "task": "d",
+   "field": "summary",
+   "key": null,
+   "blind": false
+  }
+ ],
+ "logs": {
+  "ben": [
+   {
+    "task": "b",
+    "verdict": "correct"
+   }
+  ]
+ },
+ "actor": "ana",
+ "agree": 1,
+ "expected": {
+  "group": [
+   "c"
+  ]
+ }
+}

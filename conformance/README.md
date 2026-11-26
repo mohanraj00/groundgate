@@ -92,8 +92,7 @@ Files in `review-api/` are review API vectors (SPEC §4.20). `kind` names what a
   or the `error` code.
 - `token`: the static `token` and the `reviewer` of a service, and the `Authorization` value.
 - `task`: one `task@1` object, and `sources`: the `source` and the `ref` of each decision of
-  the task in the receipt, by its index. `blind_packet` is true when the packet of the task has
-  a task with the mode `audit`. `expected.served` is false for a task that is not a
+  the task in the receipt, by its index. `expected.served` is false for a task that is not a
   task of the API. If not, `expected` gives the members of the task response that come from the task. The
   `body` has no key of the store and no index of the receipt, and a blind task has a null
   `body`.
@@ -106,6 +105,12 @@ Files in `review-api/` are review API vectors (SPEC §4.20). `kind` names what a
 - `answer`: the `body` of an answer and `blind`, true for a blind task. `expected.valid` is
   true, or `expected.error` is the code. The vector checks the form of the body and the
   verdicts of a blind task. It does not check the answer against a task.
+- `group`: the `tasks` of the API of one packet, each with its ID in `task`, `field`, `key` and
+  `blind`, the records of each actor in `logs` with the `task` and the `verdict`, the `actor` and
+  `agree`. `expected.group` gives the tasks of the group of the actor, in the order of `tasks`.
+- `left-out`: the `tasks` of one packet in the store, each with `task`, `mode` and the receipt
+  indexes of its `decisions`, and the `task` of a correction. `expected.decisions` gives the
+  indexes that the check leaves out, in addition to those of its own slot.
 - `request`: one request to a service with the static token of the `token` vectors, the reviewer
   `ana` and an empty store. A runner puts the port in place of `{port}`. A `body` goes with its
   `Content-Length` unless `headers` gives one. `expected` gives the `status`, and the `error`

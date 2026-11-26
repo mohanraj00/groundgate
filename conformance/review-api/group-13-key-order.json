@@ -1,0 +1,40 @@
+{
+ "name": "group-13-key-order",
+ "kind": "group",
+ "description": "After null, the order is the code point order of the key.",
+ "tasks": [
+  {
+   "task": "e",
+   "field": "rate",
+   "key": "standard",
+   "blind": true
+  },
+  {
+   "task": "f",
+   "field": "rate",
+   "key": null,
+   "blind": true
+  },
+  {
+   "task": "g",
+   "field": "rate",
+   "key": "express",
+   "blind": true
+  }
+ ],
+ "logs": {
+  "ben": [
+   {
+    "task": "f",
+    "verdict": "correct"
+   }
+  ]
+ },
+ "actor": "ana",
+ "agree": 1,
+ "expected": {
+  "group": [
+   "g"
+  ]
+ }
+}

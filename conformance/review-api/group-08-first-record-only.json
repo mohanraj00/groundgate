@@ -1,0 +1,50 @@
+{
+ "name": "group-08-first-record-only",
+ "kind": "group",
+ "description": "The first record fixes the group. The page can write a record for another task to the same log, and it does not change the group.",
+ "tasks": [
+  {
+   "task": "a",
+   "field": "total_revenue",
+   "key": "2025",
+   "blind": false
+  },
+  {
+   "task": "b",
+   "field": "part",
+   "key": null,
+   "blind": true
+  },
+  {
+   "task": "c",
+   "field": "total",
+   "key": null,
+   "blind": true
+  },
+  {
+   "task": "d",
+   "field": "summary",
+   "key": null,
+   "blind": false
+  }
+ ],
+ "logs": {
+  "ana": [
+   {
+    "task": "c",
+    "verdict": "correct"
+   },
+   {
+    "task": "a",
+    "verdict": "confirm"
+   }
+  ]
+ },
+ "actor": "ana",
+ "agree": 1,
+ "expected": {
+  "group": [
+   "c"
+  ]
+ }
+}

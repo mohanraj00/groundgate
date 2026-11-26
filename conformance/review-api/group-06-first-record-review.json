@@ -1,0 +1,47 @@
+{
+ "name": "group-06-first-record-review",
+ "kind": "group",
+ "description": "The first record of ana is for the review task, so the group is the review group, also when b needs an actor.",
+ "tasks": [
+  {
+   "task": "a",
+   "field": "total_revenue",
+   "key": "2025",
+   "blind": false
+  },
+  {
+   "task": "b",
+   "field": "part",
+   "key": null,
+   "blind": true
+  },
+  {
+   "task": "c",
+   "field": "total",
+   "key": null,
+   "blind": true
+  },
+  {
+   "task": "d",
+   "field": "summary",
+   "key": null,
+   "blind": false
+  }
+ ],
+ "logs": {
+  "ana": [
+   {
+    "task": "a",
+    "verdict": "confirm"
+   }
+  ]
+ },
+ "actor": "ana",
+ "agree": 1,
+ "expected": {
+  "group": [
+   "a",
+   "d"
+  ]
+ }
+}

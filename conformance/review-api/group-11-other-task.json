@@ -1,0 +1,46 @@
+{
+ "name": "group-11-other-task",
+ "kind": "group",
+ "description": "A record for a task that is not a task of the API, such as a calibrate label task, does not fix the group.",
+ "tasks": [
+  {
+   "task": "a",
+   "field": "total_revenue",
+   "key": "2025",
+   "blind": false
+  },
+  {
+   "task": "b",
+   "field": "part",
+   "key": null,
+   "blind": true
+  },
+  {
+   "task": "c",
+   "field": "total",
+   "key": null,
+   "blind": true
+  },
+  {
+   "task": "d",
+   "field": "summary",
+   "key": null,
+   "blind": false
+  }
+ ],
+ "logs": {
+  "ana": [
+   {
+    "task": "z",
+    "verdict": "correct"
+   }
+  ]
+ },
+ "actor": "ana",
+ "agree": 1,
+ "expected": {
+  "group": [
+   "b"
+  ]
+ }
+}

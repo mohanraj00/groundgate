@@ -1,0 +1,53 @@
+{
+ "name": "group-03-review-group",
+ "kind": "group",
+ "description": "Each blind task has agree actors, so the group is the review group: the review task and the model text task.",
+ "tasks": [
+  {
+   "task": "a",
+   "field": "total_revenue",
+   "key": "2025",
+   "blind": false
+  },
+  {
+   "task": "b",
+   "field": "part",
+   "key": null,
+   "blind": true
+  },
+  {
+   "task": "c",
+   "field": "total",
+   "key": null,
+   "blind": true
+  },
+  {
+   "task": "d",
+   "field": "summary",
+   "key": null,
+   "blind": false
+  }
+ ],
+ "logs": {
+  "ben": [
+   {
+    "task": "b",
+    "verdict": "correct"
+   }
+  ],
+  "cy": [
+   {
+    "task": "c",
+    "verdict": "not_in_document"
+   }
+  ]
+ },
+ "actor": "ana",
+ "agree": 1,
+ "expected": {
+  "group": [
+   "a",
+   "d"
+  ]
+ }
+}

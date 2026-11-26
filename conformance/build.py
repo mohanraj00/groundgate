@@ -8887,13 +8887,12 @@ AUDIT_TASK = {
 
 def task_vector(name: str, description: str, task: dict[str, Any],
                 expected: dict[str, Any] | None,
-                sources: dict[str, Any] | None = None, blind_packet: bool = False) -> None:  # fmt: skip
+                sources: dict[str, Any] | None = None) -> None:  # fmt: skip
     """``expected`` holds the members of GET /v1/tasks/{task} that come from the task object, or
     None for a task that is not a task of the API. ``sources`` gives the ``source`` and the
-    ``ref`` of each decision of the task in the receipt, by its index. ``blind_packet`` says
-    that the packet of the task has a task with the mode ``audit``."""
+    ``ref`` of each decision of the task in the receipt, by its index."""
     REVIEW_API.append({"name": f"task-{name}", "kind": "task", "description": description,
-                       "task": task, "sources": sources or {}, "blind_packet": blind_packet,
+                       "task": task, "sources": sources or {},
                        "expected": {"served": expected is not None,
                                     **(expected or {})}})  # fmt: skip
 
@@ -8991,20 +8990,6 @@ task_vector("07-reference", "Decision 7 cites a reference of the packet. Its cho
                  {**REVIEW_BODY["choices"][1], "source": "reference", "ref": "price-list"},
              ]}},
             {"3": IN_DOCUMENT, "7": {"source": "reference", "ref": "price-list"}})  # fmt: skip
-task_vector("08-review-blind-packet", "A review task of a packet that has a blind task is a "
-            "task of the API, with the same body.",
-            REVIEW_TASK, {"mode": "review", "field": "total_revenue", "key": "2025",
-                          "body": REVIEW_BODY},
-            sources={"3": IN_DOCUMENT, "7": IN_DOCUMENT}, blind_packet=True)  # fmt: skip
-task_vector(
-    "not-served-model-text-blind-packet",
-    "A statement of a model text can state the "
-    "value that a blind task of its packet hides. So a model text task of a packet "
-    "that has a task with the mode audit is not a task of the API.",
-    MODEL_TEXT_TASK,
-    None,
-    blind_packet=True,
-)
 task_vector("not-served-calibrate-field", "A calibrate label task is not a task of the API.",
             {**AUDIT_TASK, "template": "calibrate_field@1"}, None)  # fmt: skip
 task_vector("not-served-calibrate-key", "A calibrate key task is not a task of the API.",
@@ -9036,6 +9021,120 @@ REVIEW_API.append({
         {"text": "The lease ends in 2030.", "cites": []},
     ]},
 })  # fmt: skip
+
+# The group of an actor (SPEC §4.20, #703). Each blind task of a packet is a group, and the other
+# tasks of the API of the packet are the review group. The letters stand for the task IDs. The
+# expected group is written by hand from the three steps, in the order of ``tasks``.
+GROUP_TASKS = [
+    {"task": "a", "field": "total_revenue", "key": "2025", "blind": False},
+    {"task": "b", "field": "part", "key": None, "blind": True},
+    {"task": "c", "field": "total", "key": None, "blind": True},
+    {"task": "d", "field": "summary", "key": None, "blind": False},  # a model text task
+]
+
+
+def group_vector(name: str, description: str, logs: dict[str, list[Any]], group: list[str],
+                 tasks: list[dict[str, Any]] | None = None, agree: int = 1) -> None:  # fmt: skip
+    """``logs`` gives the records of each actor, with the letter of the task and the verdict.
+    ``group`` is the group of the actor ana, by the letters of its tasks."""
+    REVIEW_API.append({"name": f"group-{name}", "kind": "group", "description": description,
+                       "tasks": GROUP_TASKS if tasks is None else tasks, "logs": logs,
+                       "actor": "ana", "agree": agree,
+                       "expected": {"group": group}})  # fmt: skip
+
+
+def rec(task: str, verdict: str) -> dict[str, str]:
+    return {"task": task, "verdict": verdict}
+
+
+group_vector(
+    "01-first-blind",
+    "With no record, the group is the first blind task that needs an "
+    "actor. part comes before total in the code point order of the field.",
+    {},
+    ["b"],
+)
+group_vector("02-next-blind", "ben answered b, so b has agree actors. The group is c.",
+             {"ben": [rec("b", "correct")]}, ["c"])  # fmt: skip
+group_vector("03-review-group", "Each blind task has agree actors, so the group is the review "
+             "group: the review task and the model text task.",
+             {"ben": [rec("b", "correct")], "cy": [rec("c", "not_in_document")]},
+             ["a", "d"])  # fmt: skip
+group_vector("04-unsure", "An answer unsure counts as no answer, so b needs an actor still.",
+             {"ben": [rec("b", "unsure")], "cy": [rec("c", "correct")]}, ["b"])  # fmt: skip
+group_vector("05-unsure-later", "A record that is not unsure counts, also when a later unsure "
+             "answer replaces it. So the count never goes down.",
+             {"ben": [rec("b", "correct"), rec("b", "unsure")]}, ["c"])  # fmt: skip
+group_vector("06-first-record-review", "The first record of ana is for the review task, so the "
+             "group is the review group, also when b needs an actor.",
+             {"ana": [rec("a", "confirm")]}, ["a", "d"])  # fmt: skip
+group_vector("07-first-record-blind", "The first record of ana is for b. A later answer to b "
+             "replaces it, and the group stays b.",
+             {"ana": [rec("b", "unsure"), rec("b", "correct")]}, ["b"])  # fmt: skip
+group_vector("08-first-record-only", "The first record fixes the group. The page can write a "
+             "record for another task to the same log, and it does not change the group.",
+             {"ana": [rec("c", "correct"), rec("a", "confirm")]}, ["c"])  # fmt: skip
+group_vector("09-own-record-past-agree", "ana has a record for b, so the group is b, also when "
+             "ben answered b first.",
+             {"ben": [rec("b", "correct")], "ana": [rec("b", "correct")]}, ["b"])  # fmt: skip
+group_vector("10-agree-two", "With agree 2, one other actor is not enough, so b needs ana.",
+             {"ben": [rec("b", "correct")]}, ["b"], agree=2)  # fmt: skip
+group_vector("11-other-task", "A record for a task that is not a task of the API, such as a "
+             "calibrate label task, does not fix the group.",
+             {"ana": [rec("z", "correct")]}, ["b"])  # fmt: skip
+KEYED = [
+    {"task": "e", "field": "rate", "key": "standard", "blind": True},
+    {"task": "f", "field": "rate", "key": None, "blind": True},
+    {"task": "g", "field": "rate", "key": "express", "blind": True},
+]
+group_vector("12-key-null-first", "The order takes the key with null first.", {}, ["f"],
+             tasks=KEYED)  # fmt: skip
+group_vector("13-key-order", "After null, the order is the code point order of the key.",
+             {"ben": [rec("f", "correct")]}, ["g"], tasks=KEYED)  # fmt: skip
+group_vector("14-task-id-order", "Two blind tasks with the same field and key come in the order "
+             "of the task ID.", {}, ["h1"],
+             tasks=[{"task": "h2", "field": "rate", "key": None, "blind": True},
+                    {"task": "h1", "field": "rate", "key": None, "blind": True}])  # fmt: skip
+group_vector("15-no-blind", "A packet with no blind task has the review group only.", {},
+             ["a", "d"], tasks=[GROUP_TASKS[0], GROUP_TASKS[3]])  # fmt: skip
+group_vector("16-no-review", "A packet with no review task has no review group, so an actor "
+             "gets no task after the blind tasks have agree actors.",
+             {"ben": [rec("b", "correct")], "cy": [rec("c", "correct")]}, [],
+             tasks=[GROUP_TASKS[1], GROUP_TASKS[2]])  # fmt: skip
+
+# The decisions that the check of a correction leaves out, in addition to the decisions of its
+# own slot (SPEC §4.20, #703). For a blind task, they are the decisions of each other task of
+# the packet in the store with the mode audit, also one that is not a task of the API.
+LEFT_OUT_TASKS = [
+    {"task": "t", "mode": "audit", "item": "number", "decisions": [0]},
+    {"task": "p", "mode": "audit", "item": "number", "decisions": [1]},
+    {"task": "r", "mode": "review", "item": "number", "decisions": [2, 3]},
+    {"task": "s", "mode": "audit", "item": "closed_set", "decisions": [4]},
+]
+
+
+def left_out_vector(name: str, description: str, task: str, decisions: list[int],
+                    tasks: list[dict[str, Any]] | None = None) -> None:  # fmt: skip
+    REVIEW_API.append({"name": f"left-out-{name}", "kind": "left-out",
+                       "description": description,
+                       "tasks": LEFT_OUT_TASKS if tasks is None else tasks, "task": task,
+                       "expected": {"decisions": decisions}})  # fmt: skip
+
+
+left_out_vector(
+    "01-blind", "A correction of the blind task t reads no candidate of p or s.", "t", [1, 4]
+)
+left_out_vector("02-blind-other", "The same holds for p: it leaves out t and s.", "p", [0, 4])
+left_out_vector(
+    "03-review", "A correction of a review task leaves out no other candidate.", "r", []
+)
+left_out_vector(
+    "04-one-blind",
+    "A packet with one blind task leaves out no other candidate.",
+    "t",
+    [],
+    tasks=[LEFT_OUT_TASKS[0], LEFT_OUT_TASKS[2]],
+)
 
 # The tasks of the API in one store, in no order. ``task`` is the task ID. ``open`` is false
 # for a task that the actor answered or that an answer settles.
@@ -9332,7 +9431,8 @@ REVIEW_API.append({
     "description": "The HTTP status of each error code of version 1.",
     "expected": {
         "wrong_host": 421, "no_claim": 401, "bad_claim": 401, "unknown_issuer": 401,
-        "expired_claim": 401, "not_found": 404, "method_not_allowed": 405, "bad_request": 400,
+        "expired_claim": 401, "not_found": 404, "not_assigned": 403, "method_not_allowed": 405,
+        "bad_request": 400,
         "unsupported_media_type": 415, "length_required": 411, "body_too_large": 413,
         "bad_answer": 400, "correction_rejected": 409, "codes_not_kept": 409,
         "parts_disagree": 409, "log_refused": 409, "server_error": 500,

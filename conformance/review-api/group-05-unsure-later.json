@@ -1,0 +1,50 @@
+{
+ "name": "group-05-unsure-later",
+ "kind": "group",
+ "description": "A record that is not unsure counts, also when a later unsure answer replaces it. So the count never goes down.",
+ "tasks": [
+  {
+   "task": "a",
+   "field": "total_revenue",
+   "key": "2025",
+   "blind": false
+  },
+  {
+   "task": "b",
+   "field": "part",
+   "key": null,
+   "blind": true
+  },
+  {
+   "task": "c",
+   "field": "total",
+   "key": null,
+   "blind": true
+  },
+  {
+   "task": "d",
+   "field": "summary",
+   "key": null,
+   "blind": false
+  }
+ ],
+ "logs": {
+  "ben": [
+   {
+    "task": "b",
+    "verdict": "correct"
+   },
+   {
+    "task": "b",
+    "verdict": "unsure"
+   }
+  ]
+ },
+ "actor": "ana",
+ "agree": 1,
+ "expected": {
+  "group": [
+   "c"
+  ]
+ }
+}

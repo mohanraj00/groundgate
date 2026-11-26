@@ -1,0 +1,38 @@
+{
+ "name": "group-16-no-review",
+ "kind": "group",
+ "description": "A packet with no review task has no review group, so an actor gets no task after the blind tasks have agree actors.",
+ "tasks": [
+  {
+   "task": "b",
+   "field": "part",
+   "key": null,
+   "blind": true
+  },
+  {
+   "task": "c",
+   "field": "total",
+   "key": null,
+   "blind": true
+  }
+ ],
+ "logs": {
+  "ben": [
+   {
+    "task": "b",
+    "verdict": "correct"
+   }
+  ],
+  "cy": [
+   {
+    "task": "c",
+    "verdict": "correct"
+   }
+  ]
+ },
+ "actor": "ana",
+ "agree": 1,
+ "expected": {
+  "group": []
+ }
+}
