@@ -2234,6 +2234,7 @@ escape. Only the list takes a query. A query on another path gives `bad_request`
 | `unknown_issuer` | 401 | The service does not have the issuer of the claim. |
 | `expired_claim` | 401 | The claim is past its `exp`. |
 | `not_found` | 404 | No operation has this path, or the ID names no task of the API. |
+| `not_assigned` | 403 | The task is a task of the API, but not in the group of the actor. |
 | `method_not_allowed` | 405 | The path has an operation, but not for this method. |
 | `bad_request` | 400 | The query, the cursor or the body does not have the form of the operation. |
 | `unsupported_media_type` | 415 | The body of a POST is not `application/json`. |
@@ -2247,25 +2248,112 @@ escape. Only the list takes a query. A query on another path gives `bad_request`
 | `server_error` | 500 | The service failed. The response gives no store data. |
 
 **The tasks of the API** are the `task@1` objects of the store that their packet gives, when
-the receipt of the packet matches its inputs. Three kinds of task are not tasks of the API in
+the receipt of the packet matches its inputs. Two kinds of task are not tasks of the API in
 version 1, and they get no task ID:
 
 - a calibrate label task (docs/design/review.md §11);
-- a task with the mode `audit` and the item `closed_set`;
-- a model text task of a packet that has a task with the mode `audit`.
-
-A statement of a model text can state the value that a blind task of its packet hides, and each
-actor gets each task of the API. So the API gives a model text task only when no task of its
-packet has the mode `audit`. An answer does not change this: the rule reads the tasks of the
-packet, not their answers.
-
-A task is **open** for an actor when the actor has no answer to it and no answer settles its
-slot under the review policy of the service (docs/design/review.md §6).
+- a task with the mode `audit` and the item `closed_set`.
 
 A task with the mode `audit` is a **blind task**. The actor gets the document, the field and
 the key, and never the proposed value (§4.18). No response gives its value, its unit, its
 evidence, its places, its codes, its item or its question, and no response gives the outcome of
 the gate for its slot. This applies before and after the answer.
+
+**Groups.** The answer to a blind task is independent only when its actor gets nothing that
+depends on the hidden candidates of the packet. The other tasks of a packet can give such data.
+For example, a code of a choice of a review task can come from a relation (§3.4) with a hidden
+candidate, and so can the outcome of the check of a correction. So the service gives each actor
+one group of the tasks of a packet:
+
+- Each blind task of the packet is a group with one task.
+- The other tasks of the API of the packet are one group, the **review group**. A model text
+  task is in the review group.
+
+The **group of an actor** for a packet comes from the answer logs of the packet in the store:
+
+1. If the answer log of the actor has a record for a task of the API of the packet, the group
+   is the group of the task of the first such record.
+2. If not, the group is the first blind task, in the order below, that has fewer than `agree`
+   other actors with a record for it whose verdict is not `unsure`. `agree` is the member of
+   the review policy of the service.
+3. If no blind task agrees with step 2, the group is the review group.
+
+The order of the blind tasks of a packet is the code point order of the field, then of the key
+with null first, then of the task ID.
+
+The actor gets only the tasks of its group. The list gives no other task of the packet. A
+request for another task of the API, for its document or for an answer to it, gives
+`not_assigned`. The service compares the ID of the request with the ID of each task of the API
+before it reads the group, as for `not_found`.
+
+The steps read only the store, so the service keeps no other state. The rule holds after an
+answer, and after a later answer that replaces it:
+
+- The first record of the actor fixes the group. A log keeps each record, so a later record
+  does not change the group.
+- Before its first record, an actor can get another group at a later request, but only from a
+  blind task to a blind task after it in the order, or to the review group. Step 2 counts
+  records, and a log keeps each record, so the count never goes down. A blind task gives no
+  data that depends on a hidden candidate, so a change from it takes no such data to the next
+  group. With the same `agree` (below), a change from the review group to a blind task does
+  not occur.
+- The service takes the lock of the answer log of the actor (§7) before it reads the group for
+  an answer, and keeps it until the append. So two answers of one actor at the same time
+  cannot go to two groups. The second one gives `log_refused`.
+- If the service cannot read an answer log of the packet, the actor has no group for the
+  packet at that request. The list gives no task of the packet, and each task of the API of
+  the packet gives `not_assigned`. A read can see a torn last line while another writer
+  appends (§9), and a log left out would remove the records of its actor from the count of
+  step 2.
+
+**A limit: keep `agree` the same.** Do not change the member `agree` of the review policy of the
+service while a blind task of the store has fewer than `agree` actors with a record that is
+not `unsure`. A read writes no record, so the store does not show that an actor without a record
+got the review group. If the service starts again with a higher `agree`, step 2 can give such an
+actor a blind task of the same packet, after it read the review group. A lower `agree` is safe:
+it moves an actor with no record only to a later group.
+
+A new blind task of a packet could go to an actor who got the review group. So the review group
+of a packet never comes before its blind tasks:
+
+- `groundgate review tasks` writes each task with the mode `audit` before the other tasks. It
+  writes no new task with the mode `audit` for a packet that has a task in the store with
+  another mode. It stops with an error before a write. A new audit sample needs a new packet.
+  Run one `review tasks` at a time for a packet.
+- The service lists the objects of the store two times for each request. The second listing
+  starts after the first one ends. The tasks of the API are the tasks of the first listing,
+  and each task with the mode `audit` that only the second listing gives. A listing reads each
+  object folder at a different time, so it can give a task without a task that the writer
+  wrote before it. If the first listing gives a task of the review group, its blind tasks were
+  in the store before the second listing started.
+
+The cost is more actors. With `agree` 1, the first actor of a packet with one blind task gets
+the blind task, and the next actor gets the review group. With a static token, the one actor
+gets the blind tasks first. `review serve` gives each task, with the value of an audit task.
+
+A task is **open** for an actor when it is in the group of the actor, the actor has no answer
+to it, and, for a task that is not blind, no answer settles its slot under the review policy of
+the service (docs/design/review.md §6). A blind task stays open until the actor answers it.
+Whether an answer settles its slot comes from the resolution, and the resolution reads each
+candidate.
+
+**The check of a correction of a blind task** reads no other candidate of the packet. The
+service runs the gate again for a correction (docs/design/review.md §6.2). For a correction of
+a blind task, the `admit` call has only the candidate of the correction. As for each
+correction, it leaves out the candidates of the slot of the task. It also leaves out every other
+candidate of the packet, also the candidates of the review group. A candidate of a review task is hidden from an actor of a blind task, and a relation
+(§3.4) can join it to the blind field. A failed correction writes no record, so an actor could
+try a value again and again. Thus the outcome of the check depends on no hidden candidate, also
+while `review tasks` has written only some of the tasks of a packet. Example: the text is
+`Total 10. Total 20. Part 10. Part 20.`, the integer fields are `total` and `part`, the schema
+has the relation `total = part`, and the task of `total` is blind. A correction of `total` with
+the span of the first `10` gives 201 when the hidden value of `part` is 10, and also when it is
+20. This is true when the task of `part` is blind, and also when it is a review task.
+
+The resolution still reads each candidate (docs/design/review.md §6.2). So a correction of a
+blind task that the API takes can count as no answer in the resolution, for example when the
+relation fails with the hidden candidate. Then it removes the admitted value, as an answer that
+does not count does (docs/design/review.md §6.3, point 7), and the slot stays open.
 
 **No key of the store.** A key of the store is `sha256:` and the 64 hex digits of a hash of an
 object. The object of a blind task holds the proposed value, and so does its packet. The key of
@@ -2301,20 +2389,6 @@ of the receipt:
 - An answer names a choice by that number, and the service finds the decision.
 - The `record` of an answer response has `choice` in place of `decision`.
 
-**A limit of the blind task.** The answer to a blind task is independent only when its actor
-gets nothing that depends on the hidden candidates of the packet. Version 1 gives each task of
-a packet to each actor, so it does not hold this in each case (#703). The rules of this section
-close four known paths: a key of the store, the time of a `not_found`, an index of the receipt,
-and a statement of a model text. One known path is open. The gate check of a correction
-(docs/design/review.md §6.2) reads the candidates of the other slots. If a relation of the
-schema (§3.4) joins the slot of the correction with the slot of a blind task, the outcome of
-the correction changes with the hidden candidate. Example: the schema has the relation
-`total = part`, and the two tasks are blind. With the hidden values 10 and 10, a correction of
-`total` to 10 gives 201. With the hidden values 20 and 20, the same correction gives
-`codes_not_kept` with `RELATION_FAILED`. So an actor can test a guess of a hidden value. A full
-fix keeps the blind tasks of a packet apart from each other task of an actor, and gives the
-check of a correction no hidden candidate (#703).
-
 **GET /v1/tasks** lists the open tasks of the actor. The order is the code point order of
 `document`, then of the field, then of the key with null first, then of the task ID. The order uses
 only members of the list. The query can have `limit`, an integer from 1 to 200 in digits only, and
@@ -2332,10 +2406,12 @@ occurs two times, gives `bad_request`.
 an empty string. `next` is the cursor of the next page: a string when more open tasks come after
 the last task of this page, and null if not. A client sends it back as it is, in `cursor`. The
 cursor is the ID of the last task of the page, and the next page starts after that task in the
-order. A cursor that is not the ID of a task of the API gives `bad_request`. A task that gets an
-answer between two requests leaves the list, and one walk never gives a task two times.
+order. A cursor that is not the ID of a task of the API gives `bad_request`. A cursor can name a
+task that is not in the group of the actor now, because the group of an actor with no record
+can change between two pages. A task that gets an answer between two requests leaves the list,
+and one walk never gives a task two times.
 
-**GET /v1/tasks/{task}** gives one task, open or not.
+**GET /v1/tasks/{task}** gives one task of the group of the actor, open or not.
 
 ```json
 {"api": "groundgate-review/1", "task": "task:...", "document": "inv-0007", "mode": "review",
@@ -2396,8 +2472,9 @@ record from the body as `groundgate review serve` does, with the actor as the `r
 the value of a correction from the span when `value` is null or absent. It checks the answer against
 its task, and it runs the gate again for a correction (docs/design/review.md §6.2). Thus the same
 store, the same answer and the same time give the same record through the API and through the page
-of `groundgate review serve`. The record is `answer@2` when the verdict is `wrong`, and `answer@1`
-if not.
+of `groundgate review serve`, when the two take the answer. For a blind task, the check of the API
+leaves out more candidates (see above), so the API and the page can take different answers. The
+record is `answer@2` when the verdict is `wrong`, and `answer@1` if not.
 
 A blind task takes only `correct`, `not_in_document` and `unsure`. Each other verdict speaks of
 a value that the actor did not get, and it gives `bad_answer`. So does a `choice`. For a blind task,
@@ -2419,7 +2496,8 @@ hold the unit of the proposed value. The store has the full record.
 
 The vectors in `conformance/review-api/` give claims and static tokens with the actor or the
 error, the response members of a task, a task ID, the statements of a model text, pages of
-the list, answer bodies, requests that the service refuses, and the status of each error code.
+the list, answer bodies, the group of an actor, the candidates that the check of a correction
+leaves out, requests that the service refuses, and the status of each error code.
 
 ## 5. Receipt
 

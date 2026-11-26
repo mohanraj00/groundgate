@@ -471,7 +471,7 @@ def test_a_review_answer_to_the_packet_does_not_stop_the_split(tmp_path: Path) -
     cli.main(["sample", "--work", str(work), "--docs", str(d), "--candidates", str(c),
               "--schema", str(s), "--question", "field", "--store", str(store)])  # fmt: skip
     pk = next(iter(json.loads((work / "tasks.json").read_text()).values()))["packet"]
-    every = {"format": "review-policy@1", "audit": {"rate": "1", "seed": "s"}, "agree": 1,
+    every = {"format": "review-policy@1", "audit": {"rate": "0", "seed": ""}, "agree": 1,
              "leads": [], "rejected": True}  # fmt: skip
     with FolderStore(store) as fs:
         review_task = write_tasks(fs, pk, every).tasks[0][0]

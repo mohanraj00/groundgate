@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import bisect
 import hashlib
+import json
 import math
 import re
 from collections.abc import Mapping, Sequence
@@ -500,6 +501,29 @@ def checked_packet(
     return packet, Schema.from_dict(packet.schema, packet.packs), layout, ()
 
 
+def _stored_tasks(store: Any, packet_key: str) -> dict[str, object]:
+    """The key and the ``mode`` of each ``task@1`` object of ``store`` that names
+    ``packet_key``."""
+    from ..store import StoreError, key
+
+    keys, _ = store.object_keys()
+    found: dict[str, object] = {}
+    for k in keys:
+        try:
+            data = store.object_bytes(k)
+        except StoreError:
+            continue
+        if key("task@1", data) != k:
+            continue
+        try:
+            task = json.loads(data)
+        except (ValueError, RecursionError):
+            continue
+        if isinstance(task, dict) and task.get("packet") == packet_key:
+            found[k] = task.get("mode")
+    return found
+
+
 def write_tasks(
     store: Any,
     packet_key: str,
@@ -512,7 +536,13 @@ def write_tasks(
 
     ``model_text`` is a ``model-text@1`` object of the app that names the packet (§7). It is
     checked and written to the store, and its task comes last. A bad object raises
-    ``PacketError`` before a write."""
+    ``PacketError`` before a write.
+
+    The tasks with the mode ``audit`` are written first, before the other tasks. A new
+    task with the mode ``audit`` for a packet that has a task in the store with another mode
+    raises ``ValueError`` before a write. The review API gives each actor one group of the
+    tasks of a packet, and a new blind task could go to an actor who got the other tasks
+    (SPEC §4.20)."""
     from ..store import MAX_BYTES, check_bytes
     from .model_text import FORMAT, check_model_text, model_text_task, stored_model_texts
 
@@ -547,6 +577,14 @@ def write_tasks(
     ]
     for mkey, mt in sorted(found, key=lambda x: (x[1]["name"], x[0])):
         tasks.append(model_text_task(packet_key, mkey, mt, layout))
+    stored = _stored_tasks(store, packet_key)
+    if set(stored.values()) - {"audit"} and any(
+        t["mode"] == "audit" and key("task@1", jcs(t).encode("utf-8")) not in stored for t in tasks
+    ):
+        raise ValueError(
+            "the store has review tasks of this packet, and this policy gives a new audit "
+            "task: a new audit sample needs a new packet"
+        )
     encoded = []
     for t in tasks:  # each check of put, before any write
         data = jcs(t).encode("utf-8")
@@ -556,4 +594,7 @@ def write_tasks(
         encoded.append((data, t))
     if given is not None:
         store.put(FORMAT, given)
-    return Written([(store.put("task@1", data), t) for data, t in encoded])
+    # the audit tasks first: a reader never gets the review group before its blind tasks
+    order = sorted(range(len(encoded)), key=lambda i: encoded[i][1]["mode"] != "audit")
+    keys = {i: store.put("task@1", encoded[i][0]) for i in order}
+    return Written([(keys[i], t) for i, (_, t) in enumerate(encoded)])

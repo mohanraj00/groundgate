@@ -5,6 +5,15 @@ spec version, and receipts name the spec version they were decided under.
 
 ## Unreleased
 
+- The review API gives each actor one group of the tasks of a packet: one blind task, or the
+  other tasks. The first answer of an actor fixes its group. The check of a correction of a
+  blind task reads no other candidate of the packet. So no response to an actor who answers
+  a blind task depends on a hidden candidate. A model text task is a task of the API again, in
+  the other group. The new error code `not_assigned` (403) refuses a task outside the group.
+  `review tasks` writes the audit tasks first, and adds no audit task to a packet that has
+  review tasks. An answer log that the store cannot read gives the actor no group of its
+  packet. Do not change `agree` of the review policy of a live store: a higher value can give a
+  blind task to an actor who read the other group (#703).
 - When the markup tracker stops inside a table, the reader keeps the outermost open table
   through the end of the text. A matching line in that span counts toward ambiguity for its
   field and gives no proposal (#629).

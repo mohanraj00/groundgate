@@ -9,6 +9,7 @@
   "unknown_issuer": 401,
   "expired_claim": 401,
   "not_found": 404,
+  "not_assigned": 403,
   "method_not_allowed": 405,
   "bad_request": 400,
   "unsupported_media_type": 415,

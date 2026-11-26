@@ -283,8 +283,14 @@ class Review:
 
         keys, _ = self.store.object_keys()
         self._inputs = all_model_texts(self.store)
+        # A listing reads each object folder at a different time, so it can give a task without
+        # a task that was written before it. `review tasks` writes the audit tasks of a packet
+        # before its other tasks. So a second listing gives each blind task of a review task of
+        # the first listing, and the review group never comes before its blind tasks (§4.20).
+        later, _ = self.store.object_keys()
+        first = set(keys)
         found: dict[str, list[str]] = {}
-        for k in keys:
+        for k in [*keys, *(k for k in later if k not in first)]:
             if self._only is not None and k not in self._only:
                 continue  # before the read: the review API loads one task for each request
             try:
@@ -297,7 +303,9 @@ class Review:
                 task = json.loads(data)
             except (ValueError, RecursionError):  # deep nesting fits in a store object
                 continue
-            pk = task.get("packet") if isinstance(task, dict) else None
+            if not isinstance(task, dict) or (k not in first and task.get("mode") != "audit"):
+                continue
+            pk = task.get("packet")
             if isinstance(pk, str) and _KEY.fullmatch(pk):
                 found.setdefault(pk, []).append(k)
         for pk in sorted(found):
@@ -381,9 +389,11 @@ class Review:
                 doc.kind, doc.html = "html", text
         return doc
 
-    def _logs(self, pk: str) -> dict[str, list[dict[str, Any]]]:
+    def _logs(self, pk: str, strict: bool = False) -> dict[str, list[dict[str, Any]]]:
         """The answer log of each reviewer of the packet. A log whose records name another
-        reviewer than its file is left out, and so is a log that the store cannot read."""
+        reviewer than its file is left out. A log that the store cannot read is left out too,
+        or, with ``strict``, raises ``StoreError``: the group of an actor must count each log
+        (SPEC §4.20)."""
         from ..store import StoreError, reviewer_key
 
         names, _ = self.store.log_names()
@@ -394,6 +404,8 @@ class Review:
             try:
                 records = self.store.read(log)
             except StoreError:
+                if strict:
+                    raise
                 continue
             name = records[0].get("reviewer") if records else None
             if not isinstance(name, str):
@@ -937,12 +949,16 @@ class Review:
         self.write(body)
         return self.queue()
 
-    def write(self, body: Mapping[str, Any], blind: bool = False) -> tuple[dict[str, Any], str]:
+    def write(
+        self, body: Mapping[str, Any], blind: bool = False, hide: Collection[int] = ()
+    ) -> tuple[dict[str, Any], str]:
         """Check an answer against its task (§9 rule 8), then append it to the answer log of the
         reviewer. A correction counts only when the gate does not reject it and the person kept
         each code that is not informational (§6.2). The result is the record and its
         ``entry_sha256``. With ``blind``, the person did not get the choices of the task, so no
-        message speaks of them."""
+        message speaks of them. ``hide`` holds the receipt indexes of the decisions whose
+        candidates the check leaves out too: for a blind task of the review API, the decisions
+        of the other blind tasks (SPEC §4.20). The resolution still reads each candidate."""
         from ..store import StoreError, reviewer_key
 
         tk, doc, slot, task = self._task(body.get("task"))
@@ -988,7 +1004,7 @@ class Review:
                              chained=False, labels=doc.labels)  # fmt: skip
             if checked.answer is None:
                 read = _read(checked, doc.schema, doc.packet, decisions,
-                             _admit_only(doc.packet), {})  # fmt: skip
+                             _admit_only(doc.packet), {}, hide)  # fmt: skip
                 assert read.correction is not None
                 d = read.correction.decision
                 extra = [c for c in kept if c not in d["codes"]]

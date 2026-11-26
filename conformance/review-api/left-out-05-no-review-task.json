@@ -1,0 +1,26 @@
+{
+ "name": "left-out-05-no-review-task",
+ "kind": "left-out",
+ "description": "Before review tasks writes the review tasks, the check keeps no other candidate.",
+ "count": 6,
+ "tasks": [
+  {
+   "task": "t",
+   "mode": "audit",
+   "item": "number",
+   "decisions": [
+    0
+   ]
+  }
+ ],
+ "task": "t",
+ "expected": {
+  "decisions": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ]
+ }
+}

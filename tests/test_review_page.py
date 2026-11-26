@@ -81,31 +81,34 @@ def kit(tmp_path: Path) -> Path:
 
 
 @pytest.fixture
-def page(tmp_path: Path, kit: Path) -> Iterator[tuple[Path, str, int]]:
-    """The page and the API on the store of the made-up invoice: the store, the packet key and
-    the port of the page."""
+def page(tmp_path: Path, kit: Path) -> Iterator[tuple[Path, tuple[str, str], int]]:
+    """The page and the API on the store of the made-up invoice: the store, the two packet keys
+    and the port of the page."""
     root = tmp_path / "store"
-    packet = run.fixture_store(root)
+    packets = run.fixture_store(root)
     api_httpd, page_httpd, url = run.start(root, kit, "ana", TOKEN)
     try:
         assert url == f"http://127.0.0.1:{page_httpd.server_port}/#{TOKEN}"
-        yield root, packet, page_httpd.server_port
+        yield root, packets, page_httpd.server_port
     finally:
         for httpd in (api_httpd, page_httpd):
             httpd.shutdown()
             httpd.server_close()
 
 
-def records(root: Path, packet: str) -> list[dict[str, Any]]:
+def records(root: Path, packets: tuple[str, str]) -> list[dict[str, Any]]:
+    """The records of ana in the log of the review packet, then in the log of the audit packet."""
     with FolderStore(root) as store:
-        return store.read(("answers", packet, reviewer_key("ana")))
+        return [r for p in packets for r in store.read(("answers", p, reviewer_key("ana")))]
 
 
-def test_an_answer_and_an_audit_answer_through_the_page(page: tuple[Path, str, int]) -> None:
+def test_an_answer_and_an_audit_answer_through_the_page(
+    page: tuple[Path, tuple[str, str], int],
+) -> None:
     """The calls that page.js makes, through the origin of the page: the list, a task with its
     document, and an answer. The store gets one answer to the review task and one to the audit
     task, and no response for the audit task shows the proposed value."""
-    root, packet, port = page
+    root, packets, port = page
     status, _, body = get(port, "/v1/tasks?limit=200")
     listed = json.loads(body)
     assert status == 200 and listed["api"] == run.API == api.API and listed["actor"] == "ana"
@@ -144,15 +147,17 @@ def test_an_answer_and_an_audit_answer_through_the_page(page: tuple[Path, str, i
             assert word not in text, (word, text)
     # no response gives a key of the store: a key is a hash over the proposed value
     for text in seen:
-        assert hidden[0][7:].encode("ascii") not in text and packet[7:].encode("ascii") not in text
+        assert hidden[0][7:].encode("ascii") not in text
+        for key in packets:
+            assert key[7:].encode("ascii") not in text
         assert b"sha256" not in text
-    written = records(root, packet)
+    written = records(root, packets)
     assert [r["verdict"] for r in written] == ["choose", "correct"]
     assert written[1]["candidate"]["value"] == "310000"
 
 
 def test_the_page_server_gives_the_page_and_only_the_served_folders_of_the_kit(
-    page: tuple[Path, str, int],
+    page: tuple[Path, tuple[str, str], int],
 ) -> None:
     _, _, port = page
     served = {
@@ -205,7 +210,9 @@ def test_the_page_does_not_need_the_kit(tmp_path: Path) -> None:
             httpd.server_close()
 
 
-def test_the_page_server_sends_each_api_request_as_it_is(page: tuple[Path, str, int]) -> None:
+def test_the_page_server_sends_each_api_request_as_it_is(
+    page: tuple[Path, tuple[str, str], int],
+) -> None:
     """The API does each check. The page server adds no claim and changes no answer."""
     _, _, port = page
     status, headers, body = get(port, "/v1/tasks", token=None)

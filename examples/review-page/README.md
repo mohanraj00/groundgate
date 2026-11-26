@@ -20,7 +20,9 @@ The command does four steps:
    `git` and the network one time. If git cannot get the kit, the command says so, and the page
    draws plain controls.
 2. It makes a store with one made-up invoice in a temporary folder. The invoice gives one review
-   task and one audit task.
+   task and one audit task, each in its own packet. An actor who gets a blind task of a packet
+   gets no other task of that packet (SPEC §4.20), so one packet cannot give the two tasks to
+   one reviewer.
 3. It starts the review API with a static token, and the page server. Each one binds to
    `127.0.0.1` only.
 4. It prints the start URL. The URL has the token after `#`, so the browser does not send the

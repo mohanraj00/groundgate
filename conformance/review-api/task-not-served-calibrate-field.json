@@ -51,7 +51,6 @@
   ]
  },
  "sources": {},
- "blind_packet": false,
  "expected": {
   "served": false
  }

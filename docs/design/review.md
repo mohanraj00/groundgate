@@ -640,23 +640,32 @@ the contract: the operations, the errors and the claim check. This section gives
   reference, and the offsets alone do not tell. Each choice has the `source` and the `ref` of
   its decision. Version 1 gives the document text only, so a client shows a passage only for
   the source `document`. The text of a reference is not in version 1 (#702).
-- **Three kinds of task are not in version 1.** A calibrate label task shows its value on
+- **Two kinds of task are not in version 1.** A calibrate label task shows its value on
   purpose, and `calibrate label` serves it. An audit task for a closed set has no blind answer,
-  because `answer@2` has no member for an option. A model text task is not a task of the API
-  when its packet has a task with the mode `audit`. A statement of a model text can state the
-  value that the blind task hides, and each actor gets each task of the API. So a person could
-  copy the value of the model in place of an independent label. The rule reads the tasks of
-  the packet in the store, so it needs no state and an answer does not change it. The cost:
-  with an audit rate above 0, most packets have an audit task, and `review serve` is then the
-  way to answer their model text tasks. A rule for each actor needs an assignment of tasks to
-  actors, which version 1 does not have.
-- **A limit of the blind task.** Each rule above closes one path from the data of a packet to
-  the hidden value of a blind task. They do not close the class, because the API gives each
-  task of a packet to each actor, and the gate check of a correction reads the candidates of
-  the other slots (section 6.2). With a relation between two slots, the outcome of a correction
-  changes with the hidden candidate of the related slot, so an actor can test a guess. SPEC
-  §4.20 records this limit. The full fix needs an assignment of tasks to actors, which is state
-  that version 1 does not have, and a correction check with no hidden candidate (#703).
+  because `answer@2` has no member for an option.
+- **Each actor gets one group of a packet (#703).** Each rule above closed one path from the
+  data of a packet to the hidden value of a blind task. They did not close the class. A review
+  task can have a code from a relation with the hidden candidate, a statement of a model text
+  can state the hidden value, and the outcome of the check of a correction can change with it.
+  So the service gives each actor one group of the tasks of a packet: one blind task, or the
+  other tasks. SPEC §4.20 has the steps. The state is the answer logs: the first record of an
+  actor fixes its group, and an actor with no record gets the first blind task that has fewer
+  than `agree` actors, and then the other tasks. The count reads each record, so it never goes
+  down, and an actor never changes from the other tasks to a blind task. Thus a model text task
+  is a task of the API again, in the review group. The service takes the lock of the log of the
+  actor before it reads the group for an answer, so two answers at the same time cannot go to
+  two groups. A new blind task in a packet would break the rule for an actor who got the other
+  tasks, so `review tasks` adds no audit task to a packet that has tasks. The cost: a packet
+  with a blind task needs more actors, and an actor cannot choose its group.
+- **The check of a blind correction reads no hidden candidate.** For a correction of a blind
+  task, the `admit` call of section 6.2 has only the candidate of the correction. It leaves out
+  each other candidate of the packet, also the candidates of the review tasks, because a
+  relation can join one to the blind field.
+  So the outcome of the check does not depend on a hidden value. The resolution
+  still reads each candidate and does not trust the server. So a blind correction that the API
+  takes can count as no answer in the resolution, for example when a relation fails with the
+  hidden candidate. Under point 7 of section 6.3, it then removes the admitted value, and a
+  person looks at the slot again.
 - **Small on purpose.** Version 1 has four operations. It has no reason, no check without a
   write, no word boxes, no crop and no HTML frame. A page on this API (#647) can add an
   operation in version 1, because an addition is compatible.

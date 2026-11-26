@@ -259,7 +259,7 @@ def answer_two_tasks(browser: Browser, tmp_path: Path, kit: Path | None) -> dict
     """Load the page, do the steps, and check what each mode of the page must do: the texts of
     the page, the blind audit task, and the two answers in the store."""
     root = tmp_path / "store"
-    packet = run.fixture_store(root)
+    packets = run.fixture_store(root)
     out = drive(browser, root, kit, STEPS)
     assert out["start"] == "Reviewer: ana. Open tasks: 2."
     assert "invoice-0007" in out["table"] and "audit" in out["table"]
@@ -275,8 +275,15 @@ def answer_two_tasks(browser: Browser, tmp_path: Path, kit: Path | None) -> dict
     assert "The answer is in the store." in out["end"]
     # the store has the two answers of the buttons
     with FolderStore(root) as store:
-        written = store.read(("answers", packet, reviewer_key("ana")))
-    assert [(r["verdict"], r["decision"]) for r in written] == [("choose", 2), ("correct", None)]
+        written = [r for p in packets for r in store.read(("answers", p, reviewer_key("ana")))]
+        keys, _ = store.object_keys()
+        objects = [store.object_bytes(k) for k in keys]
+    (review,) = [json.loads(b) for b in objects if b'"mode":"review"' in b.replace(b" ", b"")]
+    chosen = next(c["decision"] for c in review["choices"] if c["value"] == "4200000")
+    assert [(r["verdict"], r["decision"]) for r in written] == [
+        ("choose", chosen),
+        ("correct", None),
+    ]
     assert written[1]["candidate"]["value"] == "310000"
     return out
 

@@ -56,8 +56,10 @@ KIT_TYPES = {".js": "text/javascript", ".json": "application/json", ".css": "tex
 MAX_BODY = 64 * 1024
 GIT_SECONDS = 120
 
-# A made-up invoice. The first field has two candidates, so it gives a review task. The gate
-# admits the tax, and the audit rate of 1 gives it an audit task, which is blind.
+# A made-up invoice. The total has two candidates, so it gives a review task. The gate admits
+# the tax, and the audit rate of 1 gives it an audit task, which is blind. An actor gets a blind
+# task of a packet and no other task of that packet (SPEC §4.20). So each field goes in its own
+# packet, and one reviewer gets the two tasks.
 TEXT = "Invoice 0007\nTotal due: 4,200 thousand USD\nTax: 310 thousand USD\nDue date: not given\n"
 SCHEMA = {
     "fields": {
@@ -79,17 +81,24 @@ def _span(words: str) -> dict[str, Any]:
     return {"start": start, "end": start + len(words.encode("utf-8")), "text": words}
 
 
-def fixture_store(root: Path) -> str:
-    """Make a store with the invoice and its two tasks. The result is the packet key."""
-    candidates = [
-        {"id": "c1", "field": "total", "value": "4200000", "evidence": _span("4,200 thousand")},
-        {"id": "c2", "field": "total", "value": "4200", "evidence": _span("4,200 thousand")},
-        {"id": "c3", "field": "tax", "value": "310000", "evidence": _span("310 thousand")},
-    ]
+def fixture_store(root: Path) -> tuple[str, str]:
+    """Make a store with the invoice and its two tasks. The result is the key of the packet of
+    the review task and the key of the packet of the audit task."""
+    candidates = {
+        "total": [
+            {"id": "c1", "field": "total", "value": "4200000", "evidence": _span("4,200 thousand")},
+            {"id": "c2", "field": "total", "value": "4200", "evidence": _span("4,200 thousand")},
+        ],
+        "tax": [{"id": "c3", "field": "tax", "value": "310000", "evidence": _span("310 thousand")}],
+    }
+    packets = []
     with FolderStore(root) as store:
-        packet, _ = admit_packet(store, TEXT, SCHEMA, candidates, None, "invoice-0007")
-        write_tasks(store, packet, REVIEW_POLICY)
-    return packet
+        for field, proposed in candidates.items():
+            schema = {"fields": {field: SCHEMA["fields"][field]}}
+            packet, _ = admit_packet(store, TEXT, schema, proposed, None, "invoice-0007")
+            write_tasks(store, packet, REVIEW_POLICY)
+            packets.append(packet)
+    return packets[0], packets[1]
 
 
 def _git(folder: Path, *args: str) -> str:

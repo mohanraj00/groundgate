@@ -1,0 +1,50 @@
+{
+ "name": "group-07-first-record-blind",
+ "kind": "group",
+ "description": "The first record of ana is for b. A later answer to b replaces it, and the group stays b.",
+ "tasks": [
+  {
+   "task": "a",
+   "field": "total_revenue",
+   "key": "2025",
+   "blind": false
+  },
+  {
+   "task": "b",
+   "field": "part",
+   "key": null,
+   "blind": true
+  },
+  {
+   "task": "c",
+   "field": "total",
+   "key": null,
+   "blind": true
+  },
+  {
+   "task": "d",
+   "field": "summary",
+   "key": null,
+   "blind": false
+  }
+ ],
+ "logs": {
+  "ana": [
+   {
+    "task": "b",
+    "verdict": "unsure"
+   },
+   {
+    "task": "b",
+    "verdict": "correct"
+   }
+  ]
+ },
+ "actor": "ana",
+ "agree": 1,
+ "expected": {
+  "group": [
+   "b"
+  ]
+ }
+}

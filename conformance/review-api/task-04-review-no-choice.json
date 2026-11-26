@@ -24,7 +24,6 @@
   "places": []
  },
  "sources": {},
- "blind_packet": false,
  "expected": {
   "served": true,
   "mode": "review",

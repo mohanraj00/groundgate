@@ -1,0 +1,39 @@
+{
+ "name": "group-01-first-blind",
+ "kind": "group",
+ "description": "With no record, the group is the first blind task that needs an actor. part comes before total in the code point order of the field.",
+ "tasks": [
+  {
+   "task": "a",
+   "field": "total_revenue",
+   "key": "2025",
+   "blind": false
+  },
+  {
+   "task": "b",
+   "field": "part",
+   "key": null,
+   "blind": true
+  },
+  {
+   "task": "c",
+   "field": "total",
+   "key": null,
+   "blind": true
+  },
+  {
+   "task": "d",
+   "field": "summary",
+   "key": null,
+   "blind": false
+  }
+ ],
+ "logs": {},
+ "actor": "ana",
+ "agree": 1,
+ "expected": {
+  "group": [
+   "b"
+  ]
+ }
+}
