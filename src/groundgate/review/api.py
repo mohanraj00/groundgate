@@ -21,7 +21,7 @@ A task with the mode ``audit`` is blind: no response gives its value, its unit, 
 its places, its codes, its item or its question (SPEC §4.18). The other tasks of a packet can
 give data that depends on its hidden candidate, so ``group`` gives each actor one group of the
 tasks of a packet: one blind task, or the other tasks. The check of a correction of a blind task
-reads no candidate of another blind task (``left_out``).
+reads no other candidate of the packet (``left_out``).
 
 No response gives a key of the store. A store key is a hash of its content, and the object of
 a blind task holds the proposed value. So does its packet, and the key of each other task of
@@ -407,7 +407,7 @@ def group(
 
     The count reads each record, not the latest answer, so it never goes down. Thus an actor
     with no record changes only from a blind task to a later blind task or to the review group,
-    and never from the review group to a blind task."""
+    and never from the review group to a blind task while ``agree`` stays the same."""
     by_name = {t["task"]: t for t in tasks}
     review = [t["task"] for t in tasks if not t["blind"]]
     for record in logs.get(actor, []):
@@ -430,15 +430,13 @@ def left_out(tasks: Sequence[Mapping[str, Any]], task: str, count: int) -> list[
     """The receipt indexes of the decisions that the check of a correction of ``task`` leaves
     out, in addition to those of its own slot, in order (SPEC §4.20). ``tasks`` holds each task
     of the packet in the store as ``task``, ``mode`` and ``decisions``, and the receipt has
-    ``count`` decisions. For a blind task, these are the decisions of no task with another mode
-    than ``audit``, so the outcome of the check does not depend on a hidden candidate, also
-    while the audit tasks of the packet are written. Each other task leaves out none."""
+    ``count`` decisions. For a blind task, these are each other decision of the receipt, also
+    those of the review tasks: a relation can join a hidden candidate of a review task to the
+    blind field. Each other task leaves out none."""
     mine = [t for t in tasks if t["task"] == task]
     if not mine or mine[0]["mode"] != "audit":
         return []
-    kept = {d for t in tasks if t["mode"] != "audit" for d in t["decisions"]}
-    kept.update(mine[0]["decisions"])
-    return [d for d in range(count) if d not in kept]
+    return [d for d in range(count) if d not in set(mine[0]["decisions"])]
 
 
 def task_id(key: bytes, task_key: str) -> str:

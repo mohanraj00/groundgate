@@ -1,7 +1,7 @@
 {
  "name": "left-out-04-one-blind",
  "kind": "left-out",
- "description": "With one blind task, the check still leaves out each decision in no review task.",
+ "description": "With one blind task and a review task, the check leaves out the candidates of the review task: a relation can join them to the blind field.",
  "count": 6,
  "tasks": [
   {
@@ -26,6 +26,8 @@
  "expected": {
   "decisions": [
    1,
+   2,
+   3,
    4,
    5
   ]

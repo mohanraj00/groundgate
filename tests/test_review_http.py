@@ -1142,6 +1142,71 @@ def test_the_check_of_a_blind_correction_reads_no_candidate_of_an_audit_task_not
     assert seen[0] == seen[1] and seen[0][0] == 201
 
 
+def test_the_check_of_a_blind_correction_reads_no_candidate_of_a_review_task(
+    tmp_path: Path,
+) -> None:
+    """The task of total is blind, and the task of part is a review task: its value has a
+    qualifier. The check of a correction of total leaves out the candidate of part too, so the
+    responses are the same for the hidden values 10 and 20. Before, a guess of 10 gave 201 for
+    10 and ``codes_not_kept`` for 20, and a failed guess writes no record."""
+    text = "Total 10. Total 20. Part about 10. Part about 20."
+    schema = {
+        "fields": {"total": {"type": "integer"}, "part": {"type": "integer"}},
+        "relations": [{"id": "same", "total": "total", "parts": [{"field": "part"}]}],
+    }
+
+    def span(words: str) -> dict[str, Any]:
+        return {"start": text.index(words), "end": text.index(words) + len(words), "text": words}
+
+    seen = []
+    for value in ("10", "20"):
+        candidates = [
+            {"id": "t", "field": "total", "value": value, "evidence": span(f"Total {value}")},
+            {"id": "p", "field": "part", "value": value, "evidence": span(f"Part about {value}")},
+        ]
+        root = tmp_path / value
+        with FolderStore(root) as store:
+            k, _ = admit_packet(store, text, schema, candidates, None, "doc-1", None)
+            tasks = {
+                t["slot"]["field"]: (tk, t["mode"]) for tk, t in write_tasks(store, k, EVERY).tasks
+            }
+        assert {field: mode for field, (_, mode) in tasks.items()} == {
+            "part": "review",
+            "total": "audit",
+        }
+        total = id_of(tasks["total"][0])
+        start = text.index("10")
+        correction = {
+            "task": total,
+            "verdict": "correct",
+            "span": {"start": start, "end": start + 2},
+        }
+        service = Service(root, ISSUERS, EVERY, clock=lambda: CLOCK, id_key=KEY)
+        with serving(api.server(service), {"Authorization": claim()}) as call:
+            listed = [t["task"] for t in json.loads(call("GET", "/v1/tasks")[2])["tasks"]]
+            status, _, body = call("POST", "/v1/answers", correction)
+        seen.append((listed == [total], status, json.loads(body.replace(total, "total"))))
+    assert seen[0] == seen[1] and seen[0][:2] == (True, 201)
+
+
+def test_a_restart_keeps_the_group_while_agree_stays_the_same(tmp_path: Path) -> None:
+    """A read writes no record, so a restart reads the group again from the store. With the
+    same ``agree``, ana keeps the review group. With a higher ``agree``, step 2 gives her the
+    blind task: this is the limit of SPEC §4.20, and an operator keeps ``agree`` the same."""
+    root = tmp_path / "store"
+    _, tasks = make_store(root)
+    fill(root, tasks["net_income"])  # zed takes the blind task, so ana gets the review group
+
+    def fields(policy: dict[str, Any]) -> list[str]:
+        service = Service(root, ISSUERS, policy, clock=lambda: CLOCK, id_key=KEY)
+        with serving(api.server(service), {"Authorization": claim()}) as call:
+            return [t["field"] for t in json.loads(call("GET", "/v1/tasks")[2])["tasks"]]
+
+    assert fields(EVERY) == ["revenue"]
+    assert fields(EVERY) == ["revenue"]  # a restart with the same agree
+    assert fields({**EVERY, "agree": 2}) == ["net_income"]  # the limit
+
+
 def test_a_cursor_holds_when_the_group_of_the_actor_changes_between_two_pages(
     tmp_path: Path,
 ) -> None:

@@ -2295,7 +2295,8 @@ answer, and after a later answer that replaces it:
   blind task to a blind task after it in the order, or to the review group. Step 2 counts
   records, and a log keeps each record, so the count never goes down. A blind task gives no
   data that depends on a hidden candidate, so a change from it takes no such data to the next
-  group. A change from the review group to a blind task does not occur.
+  group. With the same `agree` (below), a change from the review group to a blind task does
+  not occur.
 - The service takes the lock of the answer log of the actor (§7) before it reads the group for
   an answer, and keeps it until the append. So two answers of one actor at the same time
   cannot go to two groups. The second one gives `log_refused`.
@@ -2304,6 +2305,13 @@ answer, and after a later answer that replaces it:
   the packet gives `not_assigned`. A read can see a torn last line while another writer
   appends (§9), and a log left out would remove the records of its actor from the count of
   step 2.
+
+**A limit: keep `agree` the same.** Do not change the member `agree` of the review policy of the
+service while a blind task of the store has fewer than `agree` actors with a record that is
+not `unsure`. A read writes no record, so the store does not show that an actor without a record
+got the review group. If the service starts again with a higher `agree`, step 2 can give such an
+actor a blind task of the same packet, after it read the review group. A lower `agree` is safe:
+it moves an actor with no record only to a later group.
 
 A new blind task of a packet could go to an actor who got the review group. So the review group
 of a packet never comes before its blind tasks:
@@ -2329,18 +2337,18 @@ the service (docs/design/review.md §6). A blind task stays open until the actor
 Whether an answer settles its slot comes from the resolution, and the resolution reads each
 candidate.
 
-**The check of a correction of a blind task** reads no candidate of another blind task. The
+**The check of a correction of a blind task** reads no other candidate of the packet. The
 service runs the gate again for a correction (docs/design/review.md §6.2). For a correction of
-a blind task, the `admit` call keeps only the candidates of the tasks of the packet in the store
-with another mode than `audit`, and their judgments. It leaves out each other candidate of the
-packet. So the outcome of the check does not depend on a hidden candidate, and also not while
-`review tasks` has written only some of the audit tasks of a packet: a candidate of an audit
-task that is not in the store yet is in no other task, and `review tasks` writes the other tasks
-after the audit tasks. Example: the text is
+a blind task, the `admit` call keeps only the candidates of the slot of the task, and their
+judgments. It leaves out every other candidate of the packet, also the candidates of the review
+group. A candidate of a review task is hidden from an actor of a blind task, and a relation
+(§3.4) can join it to the blind field. A failed correction writes no record, so an actor could
+try a value again and again. Thus the outcome of the check depends on no hidden candidate, also
+while `review tasks` has written only some of the tasks of a packet. Example: the text is
 `Total 10. Total 20. Part 10. Part 20.`, the integer fields are `total` and `part`, the schema
-has the relation `total = part`, and the two tasks are blind. A correction of `total` with the
-span of the first `10` gives 201 when the hidden values are 10 and 10, and also when they are 20
-and 20.
+has the relation `total = part`, and the task of `total` is blind. A correction of `total` with
+the span of the first `10` gives 201 when the hidden value of `part` is 10, and also when it is
+20. This is true when the task of `part` is blind, and also when it is a review task.
 
 The resolution still reads each candidate (docs/design/review.md §6.2). So a correction of a
 blind task that the API takes can count as no answer in the resolution, for example when the

@@ -9103,8 +9103,8 @@ group_vector("16-no-review", "A packet with no review task has no review group, 
              tasks=[GROUP_TASKS[1], GROUP_TASKS[2]])  # fmt: skip
 
 # The decisions that the check of a correction leaves out, in addition to the decisions of its
-# own slot (SPEC §4.20, #703). For a blind task, they are the decisions of each other task of
-# the packet in the store with the mode audit, also one that is not a task of the API.
+# own slot (SPEC §4.20, #703). For a blind task, they are each other decision of the receipt:
+# the decisions of the other blind tasks, of the review tasks, and of no task.
 LEFT_OUT_TASKS = [
     {"task": "t", "mode": "audit", "item": "number", "decisions": [0]},
     {"task": "p", "mode": "audit", "item": "number", "decisions": [1]},
@@ -9125,19 +9125,22 @@ def left_out_vector(name: str, description: str, task: str, decisions: list[int]
 # audit task is not written yet.
 left_out_vector(
     "01-blind",
-    "A correction of the blind task t keeps only the candidates of r.",
+    "A correction of the blind task t keeps no other candidate, also not those of r.",
     "t",
-    [1, 4, 5],
+    [1, 2, 3, 4, 5],
 )
-left_out_vector("02-blind-other", "The same holds for p: it keeps only r.", "p", [0, 4, 5])
+left_out_vector(
+    "02-blind-other", "The same holds for p: it keeps no other candidate.", "p", [0, 2, 3, 4, 5]
+)
 left_out_vector(
     "03-review", "A correction of a review task leaves out no other candidate.", "r", []
 )
 left_out_vector(
     "04-one-blind",
-    "With one blind task, the check still leaves out each decision in no review task.",
+    "With one blind task and a review task, the check leaves out the candidates of the review "
+    "task: a relation can join them to the blind field.",
     "t",
-    [1, 4, 5],
+    [1, 2, 3, 4, 5],
     tasks=[LEFT_OUT_TASKS[0], LEFT_OUT_TASKS[2]],
 )
 left_out_vector(

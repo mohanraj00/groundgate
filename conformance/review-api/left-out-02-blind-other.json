@@ -1,7 +1,7 @@
 {
  "name": "left-out-02-blind-other",
  "kind": "left-out",
- "description": "The same holds for p: it keeps only r.",
+ "description": "The same holds for p: it keeps no other candidate.",
  "count": 6,
  "tasks": [
   {
@@ -42,6 +42,8 @@
  "expected": {
   "decisions": [
    0,
+   2,
+   3,
    4,
    5
   ]

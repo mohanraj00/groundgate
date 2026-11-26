@@ -1,7 +1,7 @@
 {
  "name": "left-out-01-blind",
  "kind": "left-out",
- "description": "A correction of the blind task t keeps only the candidates of r.",
+ "description": "A correction of the blind task t keeps no other candidate, also not those of r.",
  "count": 6,
  "tasks": [
   {
@@ -42,6 +42,8 @@
  "expected": {
   "decisions": [
    1,
+   2,
+   3,
    4,
    5
   ]
