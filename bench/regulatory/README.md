@@ -124,9 +124,11 @@ from its receipt. The local calibration report has both measures. The manifest r
 profile, the code and profile digests, and the transport version, model and effort.
 
 Each request includes the named section of the pinned reader text. I use the headings and
-defined terms in the XML to form the passage outline. The scorer strips the heading and
-the trailing source note from an admitted passage. A table counts as one value and keeps
-its row order, column names and empty cells.
+defined terms in the XML to form the passage outline. I add an entry at the first trailing
+`SECAUTH`, `CITA` or `EDNOTE` element. This entry has the same level as the section heading.
+The gate ends the section at the last character of its body (SPEC §4.17). The scorer uses
+the admitted span after the heading. A table counts as one value and keeps its row order,
+column names and empty cells. A new held-out measure of `section_text` is open in #735.
 
 The held-out command checks the freeze before any model call. It reserves one run in
 `heldout-run.json` and records each reply before admission. A repeat command can reuse

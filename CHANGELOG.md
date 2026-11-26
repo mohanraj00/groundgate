@@ -5,6 +5,9 @@ spec version, and receipts name the spec version they were decided under.
 
 ## Unreleased
 
+- The regulatory bench ends a section passage before its trailing authority, source or
+  editorial notes. The passage outline uses the position of the first trailing note in
+  the XML. The scorer uses the admitted span after the heading (#735).
 - The regulatory bench uses the position of each body row as its record ID. The
   structure reader proposes each cell with text. A missing row, a missing match
   for a cell with ordinary text, or a table that the reader cannot read goes to

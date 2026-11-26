@@ -18,14 +18,16 @@ from bench.regulatory.slots import SCHEMA
 from bench.requested.run_set import CachedTransportError, CacheError
 
 FEE = "§ 1.1 Fees."
+FEE_BODY = "The fee is $5 starting on January 2, 2025."
 DEFINITIONS = "§ 1.2 Definitions."
 ROWS = "§ 1.3 Rates."
 TABLE = "Rates"
 XML = f"""<DIV5 TYPE="PART"><HEAD>Part 1</HEAD>
 <DIV8 TYPE="SECTION"><HEAD>{FEE}</HEAD>
-<P>The fee is $5 starting on January 2, 2025.</P><CITA>[12 FR 34]</CITA></DIV8>
+<P>{FEE_BODY}</P><CITA>[12 FR 34]</CITA></DIV8>
 <DIV8 TYPE="SECTION"><HEAD>{DEFINITIONS}</HEAD>
-<P><I>Person.</I> A human being.</P><P><I>Other.</I> A different person.</P></DIV8>
+<P><I>Person.</I> A human being.</P><P><I>Other.</I> A different person.</P>
+<EDNOTE><P><I>Note.</I> See the next section.</P></EDNOTE></DIV8>
 <DIV8 TYPE="SECTION"><HEAD>{ROWS}</HEAD>
 <TABLE><CAPTION>{TABLE}</CAPTION><THEAD><TR><TH>Code</TH><TH>Rate</TH></TR></THEAD>
 <TBODY><TR><TD>Alpha</TD><TD>33</TD></TR>
@@ -33,7 +35,7 @@ XML = f"""<DIV5 TYPE="PART"><HEAD>Part 1</HEAD>
 TEXT = read("part.xml", data=XML).text.encode()
 TRANSPORT = {"id": "fake", "model": "fixed", "effort": "medium", "version": "1"}
 REQUESTS = [
-    ("section_text", FEE, {}, "The fee is $5 starting on January 2, 2025.", None),
+    ("section_text", FEE, {}, FEE_BODY, None),
     ("definition", DEFINITIONS, {"term": "Person"}, "A human being.", None),
     ("table_value", FEE, {"row": 1}, "5.0", "$"),
     ("effective_date", FEE, {}, "2025-01-02", None),
@@ -103,11 +105,10 @@ class Client:
     def __call__(self, prompt):
         self.prompts.append(prompt)
         body = json.loads(prompt.removeprefix(run.extract.INSTRUCTIONS))
-        source = body["sections"]
         assert body["citation"] == "Part 1"
         assert "labels" not in body
         answers = [
-            {"heading": "1.1", "quote": source[FEE]},
+            {"heading": "1.1", "quote": f"{FEE}\n\n{FEE_BODY}"},
             {"heading": "Person", "quote": "Person. A human being."},
             {"value": "5", "unit": "USD", "evidence": {"value": "$5"}},
             {"value": "2025-01-02", "evidence": {"value": "January 2, 2025"}},
@@ -244,6 +245,51 @@ def test_malformed_reply_counts_as_misses(project):
     result = json.loads((directory / "results.json").read_text())
     assert result["total"]["invalid"] == result["total"]["missed"] == 5
     assert result["total"]["admitted_error_upper_95"] == upper_95(0, 40)
+
+
+@pytest.mark.parametrize(
+    ("notes", "first_note"),
+    [
+        ("<SECAUTH>(Act 1)</SECAUTH>", "(Act 1)"),
+        ("<CITA>[12 FR 34]</CITA>", "[12 FR 34]"),
+        ("<EDNOTE><P>Editorial Note. Text.</P></EDNOTE>", "Editorial Note. Text."),
+        ("<CITA>[12 FR 34]</CITA><EDNOTE>Editorial Note. Text.</EDNOTE>", "[12 FR 34]"),
+    ],
+    ids=["authority", "source", "editorial", "source-and-editorial"],
+)
+def test_passage_ends_before_trailing_notes(notes, first_note):
+    body = "The café pays the fee.\n\n[12 FR 34]\n\nSee [12 FR 34]"
+    xml = f"""<DIV5 TYPE="PART"><HEAD>Part 1</HEAD>
+    <DIV8 TYPE="SECTION"><HEAD>{FEE}</HEAD><P>The café pays the fee.</P>
+    <CITA>[12 FR 34]</CITA><P>See [12 FR 34]</P>{notes}</DIV8>
+    </DIV5>""".encode()
+    slot = {
+        "slot": "r001",
+        "field": "section_text",
+        "kind": "passage",
+        "request": {"section": FEE},
+    }
+    text = read("part.xml", data=xml).text
+    view = run.extract.section_views(text, xml, [slot])[FEE]
+    quote = f"{FEE}\n\n{body}"
+    end = len(quote.encode())
+    start = end + len(b"\n\n")
+    assert view.outline[-1] == {"start": start, "end": start + len(first_note.encode()), "level": 1}
+    profile = run.extract.base_profile(SCHEMA)
+
+    def decide(heading, quote):
+        answer = {"slot": "r001", "status": "value", "heading": heading, "quote": quote}
+        items = run.extract.candidates(slot, answer, view, 0)
+        receipt = run.gg.admit(view.text, None, items, profile=profile, outline=view.outline)
+        return receipt.decisions[0]
+
+    decision = decide("1.1", quote)
+    assert decision.outcome == "admitted"
+    assert decision.evidence == (0, end)
+    assert run.extract.passage_value(view, decision.evidence) == body
+    assert "PASSAGE_OVERRUN" in decide("1.1", view.text).codes
+    note_quote = view.text.encode()[start:].decode()
+    assert "PASSAGE_NOT_AT_HEADING" in decide(first_note.split()[0], note_quote).codes
 
 
 def table_reply(xml, rows, monkeypatch):
