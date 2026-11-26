@@ -381,8 +381,11 @@ source check costs the same as a fresh `read_document(..., ocr=True)` with its p
 limits. If the source is missing, the read is skipped or unavailable, or the result differs,
 the structure reader skips every table. The line reader still uses the same text and table spans.
 
-The structure reader is a proposer. `admit` decides the candidates it receives, so the spec
-version and conformance vectors stay the same. [SPEC §1](../../SPEC.md#1-purpose)
+The structure reader is a proposer in the runner, and the runner is not part of the
+specification ([SPEC §2.4](../../SPEC.md#24-policy)). `admit` decides the same candidates as
+before, so the spec version and the conformance vectors stay the same. A run with
+`structure: admit` on a loaded document without its source admits no value from a table,
+because the reader proposes none.
 
 I record `structure_tables: false` in the document input when a new run skips unverified
 tables. The record alone sets table use on replay. A record from before #628 has no such

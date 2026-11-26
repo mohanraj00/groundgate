@@ -12,9 +12,11 @@ spec version, and receipts name the spec version they were decided under.
   To keep them, give `source=(path, data)` to `Document.from_dict` or read the source with
   `read_document`. The loader checks that the source reproduces the text and nodes. For an OCR
   reading, the host must also give `ocr=True` to `Document.from_dict` to run the check.
-  Line proposals still use the same text and table spans. I kept the spec version and
-  conformance vectors because the structure reader only proposes candidates. `admit` decides
-  the candidates it receives ([SPEC §1](SPEC.md#1-purpose)).
+  Line proposals still use the same text and table spans. So a run with `structure: admit` on
+  a loaded document without its source admits no value from a table. The spec version and the
+  conformance vectors stay the same. The runner and its structure reader are not part of the
+  specification ([SPEC §2.4](SPEC.md#24-policy)), and `admit` decides the same candidates as
+  before.
 
 ## 0.17.0 (2026-11-19)
 

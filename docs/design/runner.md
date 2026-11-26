@@ -593,11 +593,15 @@ candidates than `max_candidates_per_reply`, the run writes a `limit` line with t
 `structure_candidate_limit` and stops incomplete before admission. A run with no structure
 proposer in its policy has the same record as before.
 
-I kept `groundgate-run/6` for #628 because an old record has no `structure_tables` member and
-replays as before. The old runner ignores the member and still proposes from tables when the
-policy enables the structure reader. This can change the candidates. Replay fails for a new
-record with `structure_tables: false` even if the candidates match. The old runner compares
-the entire rebuilt record, and its header omits the member.
+The runner version names the replay contract of a record: this runner must replay each record
+of its version. A change that stops this runner from replaying an old record needs a new runner
+version. A new member that an old record does not have needs no new version, if a record
+without the member replays as before. A new version also makes each saved record of the old
+version fail replay, so I do not make one for an optional member. `structure_tables` is such a
+member (#628), so the runner stays `groundgate-run/6`. An earlier runner does not know the
+member. It compares the whole rebuilt record, so its replay of a record with
+`structure_tables: false` fails as "run differs from replay". It does not replay the run with
+other candidates.
 
 `RunResult.write(folder)` checks every key and refuses an existing log before it writes. It
 writes each object to `folder/objects/<hex>` first and the log to `folder/run.jsonl` last. Each
