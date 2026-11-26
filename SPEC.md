@@ -1692,6 +1692,14 @@ that passed is admitted. After step 15, each decision that passed, of a record t
 admitted, gets the flag `RECORD_NOT_ADMITTED` (§3.3). So a value of an incomplete or doubtful
 record never stays admitted alone.
 
+**What an admitted record says (#709).** This paragraph changes no decision. Each member value
+of an admitted record that is not null passed the checks of its member field. A null member
+says that no value of that member passed. It does not say that the cell in the source is empty.
+The gate checks each member value alone. It does not check that the member values of one record
+come from the same row. The gate reads only the records that the candidates name. So it does not
+check that the records are all the rows of a table. An app that needs the whole table, or an empty cell, gets that from
+the structure of the table, or sends the table to review (#736).
+
 ### 4.13 Document sets (step 15)
 
 A **document set** (#613) is the document and the later documents that amend it, such as a price
@@ -1971,6 +1979,13 @@ source. A packet with no completeness, or with `complete`, gets no flag from thi
 **The receipt.** The `evidence` of the decision is the span of the passage. Each decision of a
 passage field also has the member `passage_sha256`: the digest (§6) of kind `passage` over
 `{"text": <the text of the span>}` when the outcome is not `rejected`, else null.
+
+**What an admitted passage says (#709).** This paragraph changes no decision. An admitted
+passage is the span from its heading to the end of its section, and the outline gives the
+sections. The gate checks the start, the label and the end of the span. It does not check the
+text between them. So a note, a citation or other text that the outline does not mark as a
+heading is in the passage. To end a section before such text, the reader gives an outline entry
+at the start of that text (#735).
 
 ### 4.18 Blind audit sample
 
