@@ -212,7 +212,7 @@ def reviewing(tmp_path: Path) -> Iterator[tuple[Path, str, dict[str, str], Call]
     k, tasks = make_store(root)
     fill(root, tasks["net_income"])
     service = Service(root, ISSUERS, clock=lambda: CLOCK, id_key=KEY)
-    with serving(api.server(service), {"Authorization": claim()}) as call:
+    with serving(api.server(service, first_agree=1), {"Authorization": claim()}) as call:
         yield root, k, tasks, call
 
 
@@ -320,12 +320,12 @@ def run_start_vector(v: dict[str, Any], root: Path) -> dict[str, Any]:
     before = answer_logs(root)
     got: dict[str, Any] = {}
     try:
-        with store.review_api(v["agree"]):
+        with store.review_api(v["agree"], first_agree=v.get("first_agree")):
             pass
     except StoreError as exc:
         got["error"] = str(exc)
     assert answer_logs(root) == before
-    got["agree"] = recorded_agree(root)
+    got["agree"] = recorded_agree(root) if (root / "state" / "review-api").exists() else None
     return got
 
 
@@ -370,21 +370,31 @@ def test_start_refuses_a_torn_key_or_a_missing_or_changed_state_object(tmp_path:
     assert pointer.read_text(encoding="ascii") == name
 
 
-def test_start_refuses_an_increase_with_an_empty_log_or_bad_log_path(tmp_path: Path) -> None:
+@pytest.mark.parametrize(
+    ("recorded", "error"),
+    [(None, "the store has answers and no recorded agree"), (1, "the store has an answer log")],
+)
+def test_start_refuses_an_empty_log_or_bad_log_path(
+    tmp_path: Path, recorded: int | None, error: str
+) -> None:
     store = FolderStore(tmp_path)
-    with store.review_api(1):
-        pass
+    if recorded is not None:
+        with store.review_api(recorded):
+            pass
     folder = tmp_path / "logs" / "answers" / ("0" * 64)
     folder.mkdir(parents=True)
     log = folder / ("0" * 64 + ".jsonl")
     log.touch()
-    with pytest.raises(StoreError, match="the store has an answer log"), store.review_api(2):
-        pytest.fail("the store accepted an increase with an empty log")
+    with pytest.raises(StoreError, match=error), store.review_api(2):
+        pytest.fail("the store accepted the start with an empty log")
     log.unlink()
     log.mkdir()
     with pytest.raises(StoreError, match="cannot check for an answer log"), store.review_api(2):
-        pytest.fail("the store accepted an increase with a bad log path")
-    assert recorded_agree(tmp_path) == 1
+        pytest.fail("the store accepted the start with a bad log path")
+    if recorded is None:
+        assert not (tmp_path / "state" / "review-api").exists()
+    else:
+        assert recorded_agree(tmp_path) == recorded
 
 
 # The read operations
@@ -1155,7 +1165,7 @@ def test_the_check_of_a_blind_correction_reads_no_hidden_candidate(tmp_path: Pat
             "span": {"start": start, "end": start + 2},
         }
         service = Service(root, ISSUERS, clock=lambda: CLOCK, id_key=KEY)
-        with serving(api.server(service), {"Authorization": claim()}) as call:
+        with serving(api.server(service, first_agree=1), {"Authorization": claim()}) as call:
             responses = [
                 call("GET", "/v1/tasks"),
                 call("GET", f"/v1/tasks/{total}"),
@@ -1285,6 +1295,8 @@ def test_a_restart_keeps_the_review_group_when_agree_stays_the_same_or_goes_down
     """A read writes no record. The server refuses an increase before ana can get a blind task."""
     root = tmp_path / "store"
     k, tasks = make_store(root)
+    with FolderStore(root).review_api(2):
+        pass
     fill(root, tasks["net_income"])
     fill(root, tasks["net_income"], "ben")
 
@@ -1621,6 +1633,46 @@ def test_review_api_refuses_a_higher_agree_before_it_serves(
     assert "Recorded agree is 1. New agree is 2." in err
     assert recorded_agree(root) == 1
     assert len(starts) == 1
+
+
+def test_review_api_records_the_previous_agree_once(
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+    monkeypatch: pytest.MonkeyPatch,
+    unbound_server: None,
+) -> None:
+    root = tmp_path / "store"
+    _, tasks = make_store(root)
+    fill(root, tasks["net_income"])
+    before = answer_logs(root)
+    token = tmp_path / "token"
+    token.write_text(TOKEN + "\n", encoding="utf-8")
+    policy = tmp_path / "policy.json"
+    policy.write_text(json.dumps({**EVERY, "agree": 2}), encoding="utf-8")
+    starts = []
+    monkeypatch.setattr(ThreadingHTTPServer, "serve_forever", lambda server: starts.append(server))
+    args = ["review", "api", "--store", str(root), "--token-file", str(token), "--reviewer", "ana"]
+    higher = [*args, "--policy", str(policy)]
+    option = ["--first-agree", "1"]
+    pointer = root / "state" / "review-api"
+
+    assert main(higher) == 2
+    out, err = capsys.readouterr()
+    assert not out and "the store has answers and no recorded agree" in err
+    assert main([*higher, *option]) == 2
+    out, err = capsys.readouterr()
+    assert not out and "--first-agree must equal the policy agree (2)." in err
+    assert not starts and not pointer.exists()
+
+    assert main([*args, *option]) == 0
+    assert recorded_agree(root) == 1
+    capsys.readouterr()
+    assert main([*args, *option]) == 2
+    out, err = capsys.readouterr()
+    assert not out and "--first-agree requires a store with no recorded agree." in err
+    assert main(args) == 0
+    assert len(starts) == 2
+    assert recorded_agree(root) == 1 and answer_logs(root) == before
 
 
 def test_review_api_checks_its_arguments(tmp_path: Path, capsys: Any) -> None:

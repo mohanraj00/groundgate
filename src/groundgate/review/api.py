@@ -847,7 +847,9 @@ class Service:
 # The server
 
 
-def server(service: Service, port: int = 0) -> ThreadingHTTPServer:
+def server(
+    service: Service, port: int = 0, *, first_agree: int | None = None
+) -> ThreadingHTTPServer:
     """The review API on 127.0.0.1. Port 0 takes a free port.
     Close the server to unlock the store."""
     from ..store import FolderStore
@@ -961,7 +963,9 @@ def server(service: Service, port: int = 0) -> ThreadingHTTPServer:
             super().__init__(("127.0.0.1", port), Handler)
             try:
                 store = FolderStore(service.root)
-                self._store_use.enter_context(store.review_api(service._policy["agree"]))
+                self._store_use.enter_context(
+                    store.review_api(service._policy["agree"], first_agree=first_agree)
+                )
             except BaseException:
                 self.server_close()
                 raise

@@ -2306,13 +2306,23 @@ answer, and after a later answer that replaces it:
   step 2.
 
 **The stored value of `agree`.** Before the service takes a request, it checks the recorded
-value of `agree` in the store. If there is no record of the value, the service writes its
-value, also when the store has answer logs. If the new value is the same or lower, the
-service replaces the recorded value. If the new value is higher, the service replaces the
-recorded value only when the store has no answer log. One answer log is sufficient to stop
-the start, also if the log is empty. The error gives the recorded value and the new value.
-If the service cannot read or validate the record, or cannot tell if there is an answer log
-when it checks an increase, it stops with an error. A refused start keeps the recorded value.
+value of `agree` in the store.
+
+- With `--first-agree N`, `groundgate review api` records N only if the store has no
+  record and N equals `agree` in the policy for this start. Otherwise, the service stops
+  with an error. To make the first record on a store with an answer log, the operator
+  must use this option and give the value that the store used before.
+- Without `--first-agree`, if the store has no record and no answer log, the service
+  records the policy value. If the store has an answer log and no record, the service
+  stops with an error. The error says that the store has answers and no recorded `agree`.
+- If the store has a record and the operator starts without `--first-agree`, the service
+  records the new value if it is the same or lower. If the new value is higher, the service
+  records it only when the store has no answer log. If an answer log stops the start, the
+  error gives the recorded value and the new value.
+
+These checks include empty answer logs. If the service cannot read or validate the record,
+it stops with an error. If a start requires a check for answer logs and the service cannot
+do the check, it stops with an error. A refused start makes no change to the record.
 
 The store object has kind `review-api-state@1`. Its value is a JSON object with only the
 member `agree`, an integer of 1 or more. In the folder store, `state/review-api` holds the

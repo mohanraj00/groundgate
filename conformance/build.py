@@ -9111,12 +9111,17 @@ def start_vector(
     agree: int,
     answer_log: bool,
     expected: dict[str, Any],
+    *,
+    first_agree: int | None = None,
 ) -> None:
-    REVIEW_API.append({
+    vector = {
         "name": f"start-{name}", "kind": "start", "description": description,
         "recorded_agree": recorded_agree, "agree": agree, "answer_log": answer_log,
         "expected": expected,
-    })  # fmt: skip
+    }  # fmt: skip
+    if first_agree is not None:
+        vector["first_agree"] = first_agree
+    REVIEW_API.append(vector)
 
 
 start_vector("01-same", "The same value is permitted with an answer log.",
@@ -9129,8 +9134,22 @@ start_vector("03-higher-with-log", "An answer log stops a start with a higher va
               "New agree is 2. Use a new store to increase agree."})  # fmt: skip
 start_vector("04-higher-without-log", "A higher value is permitted if there is no answer log.",
              1, 2, False, {"agree": 2})  # fmt: skip
-start_vector("05-no-record", "The first start records the value, also with an answer log.",
-             None, 2, True, {"agree": 2})  # fmt: skip
+start_vector("05-no-record", "An answer log stops a first start without the option.",
+             None, 2, True,
+             {"agree": None, "error": "the store has answers and no recorded agree. "
+              "Use --first-agree N with the previous value."})  # fmt: skip
+start_vector("06-first-agree", "With an answer log, the option records the previous value.",
+             None, 1, True, {"agree": 1}, first_agree=1)  # fmt: skip
+start_vector("07-no-record-or-log", "With no answer log, the first start records the value.",
+             None, 2, False, {"agree": 2})  # fmt: skip
+start_vector("08-first-agree-mismatch", "The option must give the policy value.",
+             None, 2, True,
+             {"agree": None, "error": "--first-agree must equal the policy agree (2)."},
+             first_agree=1)  # fmt: skip
+start_vector("09-first-agree-with-record", "A recorded value stops a start with the option.",
+             2, 2, True,
+             {"agree": 2, "error": "--first-agree requires a store with no recorded agree."},
+             first_agree=2)  # fmt: skip
 
 # The decisions that the check of a correction leaves out, in addition to the decisions of its
 # own slot (SPEC §4.20, #703). For a blind task, they are each other decision of the receipt:

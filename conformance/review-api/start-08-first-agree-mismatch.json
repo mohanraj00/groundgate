@@ -1,0 +1,13 @@
+{
+ "name": "start-08-first-agree-mismatch",
+ "kind": "start",
+ "description": "The option must give the policy value.",
+ "recorded_agree": null,
+ "agree": 2,
+ "answer_log": true,
+ "expected": {
+  "agree": null,
+  "error": "--first-agree must equal the policy agree (2)."
+ },
+ "first_agree": 1
+}

@@ -1,11 +1,12 @@
 {
  "name": "start-05-no-record",
  "kind": "start",
- "description": "The first start records the value, also with an answer log.",
+ "description": "An answer log stops a first start without the option.",
  "recorded_agree": null,
  "agree": 2,
  "answer_log": true,
  "expected": {
-  "agree": 2
+  "agree": null,
+  "error": "the store has answers and no recorded agree. Use --first-agree N with the previous value."
  }
 }

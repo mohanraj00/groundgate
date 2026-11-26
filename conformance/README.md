@@ -108,9 +108,11 @@ Files in `review-api/` are review API vectors (SPEC §4.20). `kind` names what a
 - `group`: the `tasks` of the API of one packet, each with its ID in `task`, `field`, `key` and
   `blind`, the records of each actor in `logs` with the `task` and the `verdict`, the `actor` and
   `agree`. `expected.group` gives the tasks of the group of the actor, in the order of `tasks`.
-- `start`: `recorded_agree` is null before the first start. `agree` is the value for the new
-  start. `answer_log` is true when there is an answer log. `expected.agree` gives the value in
-  the store after the start or refusal. `expected.error` gives the message for a refusal.
+- `start` checks the value of `agree` at server start. `recorded_agree` is null if there is
+  no record. `agree` gives the policy value. `answer_log` is true if there is an answer
+  log. `first_agree` gives the value of `--first-agree` if the vector uses the option.
+  `expected.agree` gives the value in the store after the start or refusal. It is null if
+  there is no record. `expected.error` gives the message for a refusal.
 - `left-out`: the `count` of the decisions of the receipt, the `tasks` of one packet in the
   store, each with `task`, `mode` and the receipt indexes of its `decisions`, and the `task` of
   a correction. `expected.decisions` gives the indexes that the check leaves out, in addition to

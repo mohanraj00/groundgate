@@ -697,16 +697,16 @@ class FolderStore:
         return self._file(folder / name, f"views/{name}")
 
     @contextlib.contextmanager
-    def review_api(self, agree: int) -> Iterator[None]:
+    def review_api(self, agree: int, *, first_agree: int | None = None) -> Iterator[None]:
         """Record the value of agree and hold the store for one review API server."""
         if type(agree) is not int or agree < 1:
             raise ValueError("agree must be an integer of 1 or more")
         folder = self._folder(["state"], make=True)
         with self._hold(folder, "review-api"):
-            self._record_review_agree(folder, agree)
+            self._record_review_agree(folder, agree, first_agree)
             yield
 
-    def _record_review_agree(self, folder: Path, agree: int) -> None:
+    def _record_review_agree(self, folder: Path, agree: int, first_agree: int | None) -> None:
         path = folder / "review-api"
         rel = "state/review-api"
         recorded: int | None = None
@@ -727,9 +727,19 @@ class FolderStore:
         except (StoreError, ValueError, OSError) as exc:
             raise StoreError(f"cannot read the review API state at {rel}: {exc}") from exc
 
-        if recorded is not None and agree > recorded:
+        if first_agree is not None:
+            if recorded is not None:
+                raise StoreError("--first-agree requires a store with no recorded agree.")
+            if type(first_agree) is not int or first_agree != agree:
+                raise StoreError(f"--first-agree must equal the policy agree ({agree}).")
+        elif recorded is None or agree > recorded:
             names, problems = self.log_names()
             if any(name[0] == "answers" for name in names):
+                if recorded is None:
+                    raise StoreError(
+                        "the store has answers and no recorded agree. "
+                        "Use --first-agree N with the previous value."
+                    )
                 raise StoreError(
                     f"the store has an answer log. Recorded agree is {recorded}. "
                     f"New agree is {agree}. Use a new store to increase agree."

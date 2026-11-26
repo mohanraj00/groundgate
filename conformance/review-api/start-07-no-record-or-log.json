@@ -1,0 +1,11 @@
+{
+ "name": "start-07-no-record-or-log",
+ "kind": "start",
+ "description": "With no answer log, the first start records the value.",
+ "recorded_agree": null,
+ "agree": 2,
+ "answer_log": false,
+ "expected": {
+  "agree": 2
+ }
+}
