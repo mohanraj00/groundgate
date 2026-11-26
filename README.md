@@ -322,9 +322,12 @@ value in a table), `ADMITTED_BY_POLICY` (the policy admits its outside evidence)
 `MODEL_CLEARED` (a recorded judgment cleared `KEY_NOT_AT_VALUE`).
 
 The rules are in [SPEC.md](SPEC.md). [SPEC §8](SPEC.md#8-versions) says which change gives a new
-spec version, a new package version or a new version of a format. [conformance/](conformance) holds 57 language-neutral
-vectors that pin every code, and 38 invalid packets that an implementation must refuse, so another
-implementation can prove it agrees.
+spec version, a new package version or a new version of a format. [conformance/](conformance) holds
+language-neutral vectors, so another implementation can prove it agrees: vectors that pin every
+code, invalid packets that an implementation must refuse, and vectors for profiles, source pins,
+places, exports, blind audits, calibration events, the review API, full receipts and the store
+contract. [conformance/README.md](conformance/README.md) describes each kind, and
+`uv run python conformance/build.py` prints how many vectors of each kind it wrote.
 
 ## Receipts
 
