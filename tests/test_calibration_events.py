@@ -5,6 +5,8 @@ are written by hand."""
 from __future__ import annotations
 
 import json
+import os
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -28,6 +30,7 @@ PROFILE = json.loads((FIXTURE / "profile.json").read_text("utf-8"))
 TEXT = (FIXTURE / "invoice.txt").read_text("utf-8")
 DIGEST = "sha256:982dd1d45fbd207c9e35803016652bbc56cc0c0d9fd5918ef7d794c1e6e1b18e"
 PACKET = "sha256:cd6842292fea8fc33b6d67004b5eda3a24a8d195e6e02f9d58e35f21f819ee07"
+ENTELOS_HOST = "github.com/mohanraj00/entelos/src/lifecycle-core"
 
 
 def of(kind: str) -> list[Any]:
@@ -161,6 +164,114 @@ def test_the_events_steps(tmp_path: Path, capsys: pytest.CaptureFixture[str]) ->
         records = store.read(("events", DIGEST))
         assert len(records) == 3 and check(store).findings == []
         assert load_packet(store, PACKET).receipt  # suggest changed nothing in the store
+
+
+def _entelos_events(
+    checkout: Path, work: Path, facts: dict[tuple[str, str], dict[str, Any]]
+) -> list[dict[str, Any]]:
+    module = work / "entelos-seam"
+    shutil.copytree(Path(__file__).with_name("entelos-seam"), module)
+    lifecycle = checkout.resolve() / "src" / "lifecycle-core"
+    assert (lifecycle / "go.mod").is_file(), "Set GROUNDGATE_ENTELOS to the release checkout."
+    go_env = {**os.environ, "GOWORK": "off"}
+    subprocess.run(
+        ["go", "mod", "edit", "-replace", f"{ENTELOS_HOST}={lifecycle}"],
+        cwd=module,
+        env=go_env,
+        check=True,
+        timeout=30,
+    )
+    cited = []
+    for (fact_digest, receipt_digest), fact in facts.items():
+        citation = fact["citation"]
+        cited.append({
+            "fact_id": fact["field"], "decision_digest": fact_digest,
+            "receipt_digest": receipt_digest, "packet_digest": PACKET,
+            "source_kind": citation["source"], "source_digest": citation["source_sha256"],
+            "text_digest": citation["text_sha256"],
+            "spans": [{key: citation["span"][key] for key in ("start", "end")}],
+            "outcome": "admitted", "codes": [],
+            "data": {key: fact[key] for key in ("field", "key", "value", "unit")},
+        })  # fmt: skip
+    evidence = work / "evidence.json"
+    evidence.write_text(jcs({
+        "format": "entelos.evidence/1",
+        "producer": {"id": "groundgate", "version": "1", "digest_scheme": "groundgate/facts@1"},
+        "facts": cited,
+    }), "utf-8")  # fmt: skip
+    output = work / "decisions.jsonl"
+    subprocess.run(
+        ["go", "run", ".", "-evidence", str(evidence), "-out", str(output)],
+        cwd=module,
+        env=go_env,
+        check=True,
+        timeout=120,
+    )
+    return [json.loads(line) for line in output.read_text("utf-8").splitlines()]
+
+
+def test_entelos_decision_events(tmp_path: Path) -> None:
+    checkout = os.environ.get("GROUNDGATE_ENTELOS")
+    if not checkout:
+        pytest.skip("Set GROUNDGATE_ENTELOS to a checkout of entelos v0.7.0.")
+    root = tmp_path / "store"
+    _store(root)
+    with FolderStore(root) as store:
+        export = admitted_facts(store, load_packet(store, PACKET))
+    by_field = {fact["field"]: fact for fact in export["facts"]}
+    facts = {
+        (events.fact_sha256(fact), fact["citation"]["receipt_sha256"]): fact
+        for fact in (by_field["tax"], by_field["shipping"], by_field["total"])
+    }
+    decisions = _entelos_events(Path(checkout), tmp_path, facts)
+    assert [e["disposition"] for e in decisions] == ["approve", "reject", "correct"]
+    assert len({e["decision_ref"] for e in decisions}) == 3
+
+    profile = check_profile(PROFILE)
+    records = []
+    for e in decisions:
+        assert e["format"] == "entelos.decision-event/1" and e["blind"] is False
+        fact = facts[e["fact_digest"], e["evidence_receipt_digest"]]
+        records.append(events.check_event({
+            "groundgate_calibration_event": 1, "decision": e["disposition"],
+            "profile": profile.sha256, "packet_sha256": export["packet_sha256"],
+            "receipt_sha256": e["evidence_receipt_digest"], "fact_sha256": e["fact_digest"],
+            "field": fact["field"], "key": fact["key"], "value": fact["value"],
+            "corrected": e.get("corrected_value"),
+            "actor": {"human": "person", "model": "program", "policy": "program"}[e["actor_kind"]],
+            "origin": {"system": "entelos", "id": e["decision_ref"]}, "date": None,
+        }))  # fmt: skip
+
+    expected = events.read_file(FIXTURE / "events.jsonl")
+    origins = {
+        want["origin"]["id"]: {"system": "entelos", "id": e["decision_ref"]}
+        for want, e in zip(expected, decisions, strict=True)
+    }
+    assert records == [
+        {**want, "origin": origins[want["origin"]["id"]], "date": None} for want in expected
+    ]
+    input_file = tmp_path / "calibration.jsonl"
+    input_file.write_text("".join(jcs(record) + "\n" for record in records), "utf-8")
+    first, replay = tmp_path / "first.json", tmp_path / "replay.json"
+    add = ["events", "add", "--store", str(root), "--events", str(input_file)]
+    profile_file = FIXTURE / "profile.json"
+    suggest = ["events", "suggest", "--store", str(root), "--profile", str(profile_file)]
+    main(add)
+    main([*suggest, "--out", str(first)])
+    main(add)
+    main([*suggest, "--out", str(replay)])
+
+    with FolderStore(root) as store:
+        assert len(store.read(("events", profile.sha256))) == 3
+        assert events.read_events(store, profile.sha256) == records
+    assert first.read_bytes() == replay.read_bytes()
+    assert json.loads(first.read_bytes()) == {
+        **WANT_DRAFTS,
+        "drafts": [
+            {**draft, "origin": origins[draft["origin"]["id"]]} if "origin" in draft else draft
+            for draft in WANT_DRAFTS["drafts"]
+        ],
+    }
 
 
 def test_suggest_reads_only_the_events_of_its_profile_version(tmp_path: Path) -> None:

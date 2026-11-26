@@ -511,3 +511,23 @@ such a packet gives no term. `suggest` scans the packet text once for each packe
 and right value, and for at most 1024 of them. It budgets 67,108,864 packet text characters
 across those scans and charges the full packet length for each pair. `unscanned_corrections`
 counts the corrections skipped by either bound, which give no term.
+
+### Test with entelos
+
+The optional `entelos` CI job uses the release tag `v0.7.0` and checks its commit. The test
+gives three exported groundgate facts to the Go Host. It reads one approval, one rejection
+and one correction. All three events have `blind: false`.
+
+The test uses the fact and receipt digests to find each original fact and make one
+`calibration_event@1` record. Each proposal cites one fact, so the record uses the decision
+reference as `origin.id`. The export has no date, so `date` is null. The test adds the records
+to the store and checks that two runs of `events suggest` give identical drafts.
+
+To run the test locally, install Go 1.27.2 and set `GROUNDGATE_ENTELOS` to the release
+checkout. The test adds a `replace` directive to a temporary copy of `go.mod` to use this
+checkout. The test skips when this variable has no value.
+
+```bash
+GROUNDGATE_ENTELOS="/path/to/entelos-v0.7.0" \
+  uv run pytest tests/test_calibration_events.py::test_entelos_decision_events -rs
+```
