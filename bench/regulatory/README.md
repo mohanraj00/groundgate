@@ -136,3 +136,9 @@ no admitted value. The command opens the full label seal after admission, writes
 `results.json` and renders `RESULTS.md` from it. Once the result exists the command refuses
 another run. If the report is missing, I can render it again from the existing result with
 `uv run python -m bench.regulatory.run report`.
+
+## Escapes
+
+[ESCAPES.md](ESCAPES.md) has the cause of each of the 6 escapes of the held-out run (#709) and
+the fix issues. `RESULTS.md` has no link to it, because `run report` refuses a report that is
+not the exact render of `results.json`.
