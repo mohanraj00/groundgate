@@ -565,6 +565,31 @@ def test_an_unverified_empty_table_node_blocks_a_line_proposal(tmp_path: Path) -
     assert run(loaded, PLAIN, policy=ADMIT).candidates == []
 
 
+def test_a_loaded_document_without_its_table_nodes_gives_no_proposal(tmp_path: Path) -> None:
+    doc = document(
+        tmp_path, "<table><tr><td>Revenue</td><td>5</td></tr></table><p>Revenue: 999</p>"
+    )
+    obj = doc.to_dict()
+    obj["nodes"] = [n for n in obj["nodes"] if n["parent"] is None and n["kind"] != "table"]
+    for i, node in enumerate(obj["nodes"]):
+        node["id"] = i
+    path = tmp_path / "doc.html"
+    loaded = Document.from_dict(obj, doc.text, source=(path, path.read_bytes()))
+    assert loaded.of_kind("table") == [] and not loaded._tables_verified()
+    assert propose(loaded.text, loaded, Schema.from_dict(PLAIN)) == []
+    result = run(loaded, PLAIN, policy=ADMIT)
+    assert result.candidates == []
+    assert result.record[0]["inputs"]["document"]["structure_tables"] is False
+
+
+def test_a_loaded_document_with_no_table_proposes_only_when_verified(tmp_path: Path) -> None:
+    doc = document(tmp_path, "<p>Revenue: 5</p>")
+    path = tmp_path / "doc.html"
+    assert run(Document.from_dict(doc.to_dict(), doc.text), PLAIN, policy=ADMIT).candidates == []
+    verified = Document.from_dict(doc.to_dict(), doc.text, source=(path, path.read_bytes()))
+    assert [c["value"] for c in run(verified, PLAIN, policy=ADMIT).candidates] == ["5"]
+
+
 def test_an_unverified_table_blocks_each_proposal_of_its_document(tmp_path: Path) -> None:
     doc = document(tmp_path, "<table><tr><td>Revenue</td><td>5</td></tr></table><p>Cost: 3</p>")
     schema = {"fields": {**PLAIN["fields"], "cost": {"type": "integer", "aliases": ["Cost"]}}}

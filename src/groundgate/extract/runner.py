@@ -2504,7 +2504,7 @@ def _run(
     if not s.fields:
         raise ExtractInputError("schema must request at least one field")
     use_tables = True
-    if document is not None and _STRUCTURE in p.proposers and document.of_kind("table"):
+    if document is not None and _STRUCTURE in p.proposers:
         use_tables = document._tables_verified() if replay_tables is None else replay_tables
     engine = _Engine(
         text,

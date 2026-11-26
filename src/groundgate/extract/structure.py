@@ -444,9 +444,9 @@ def propose(
     Each candidate has the extra member ``basis``, the basis of each cell that it cites by role.
     ``admit`` ignores this member (SPEC §2.5). A plain text has no cells, so only its lines can
     match, and the basis of a line is always ``layout``. The candidates are in the order of
-    their field name, then in the order of the keys of the field. If the document has a table
-    that is not verified, the reader proposes nothing: the line reader skips the table spans,
-    so it trusts the table nodes too (#628). The runner passes its checked table setting, or
+    their field name, then in the order of the keys of the field. If the reading of the document
+    is not verified, the reader proposes nothing: the nodes decide which text the line reader
+    reads, so it trusts them too (#628). The runner passes its checked table setting, or
     the original setting during replay."""
     names: dict[str, set[str]] = {}
     keys_of: dict[str, dict[str, list[str]]] = {}  # field -> key form -> keys, in schema order
@@ -460,7 +460,7 @@ def propose(
     tables = [] if document is None else document.of_kind("table")
     if _use_tables is None:
         _use_tables = document is not None and document._tables_verified()
-    if tables and not _use_tables:
+    if document is not None and not _use_tables:
         return []
     if document is not None and tables:
         nested = _nested(document)

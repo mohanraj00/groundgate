@@ -587,7 +587,7 @@ admission object holds the exact candidates. The runner gives them the ids `s1`,
 and it sets `proposer` itself. It starts no repair for them, and they do not stop the targeted
 search for their field, because such a candidate needs another proposer. Replay runs the reader
 again and compares the line, as it compares a prompt. It uses the original run's table setting
-as described in [document-model.md](document-model.md) §12. A run with unverified tables
+as described in [document-model.md](document-model.md) §12. A run on a reading that is not verified
 records `structure_tables: false` in the document input. If the reader proposes more
 candidates than `max_candidates_per_reply`, the run writes a `limit` line with the status
 `structure_candidate_limit` and stops incomplete before admission. A run with no structure
