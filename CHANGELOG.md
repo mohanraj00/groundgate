@@ -5,6 +5,10 @@ spec version, and receipts name the spec version they were decided under.
 
 ## Unreleased
 
+- The regulatory bench uses the position of each body row as its record ID. The
+  structure reader proposes each cell with text. A missing row, a missing match
+  for a cell with ordinary text, or a table that the reader cannot read goes to
+  review (#736 cause 1).
 - The review API gives each actor one group of the tasks of a packet: one blind task, or the
   other tasks. The first answer of an actor fixes its group. The check of a correction of a
   blind task reads no other candidate of the packet. So no response to an actor who answers

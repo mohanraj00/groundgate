@@ -137,6 +137,24 @@ no admitted value. The command opens the full label seal after admission, writes
 another run. If the report is missing, I can render it again from the existing result with
 `uv run python -m bench.regulatory.run report`.
 
+## Table checks after 0.17
+
+For `table_rows`, I read the requested table from the pinned XML. I use the cell quotes to
+find each model row in the table body. The record ID starts at 1 and gives the position of
+the row in the body.
+
+The structure reader proposes each cell that has text. The family profile sets the
+`structure` proposer to `corroborate` (SPEC §2.4). If the model omits a row or a cell with
+text, a structure candidate that passes the evidence checks gets `NOT_CORROBORATED`. The
+table goes to review. A cell that is empty in the source has no structure candidate and
+stays null. If the reader cannot read the body, or if the quotes cannot identify a row,
+the table goes to review. If a cell spans rows, I check each record on its own. A quote
+for that cell can then confirm the cell in only one record.
+
+SPEC step 3 rejects a candidate for `n/a` with `NULL_STRING_LITERAL`. A table can still
+pass with a null member for that cell (#736 cause 2). A new held-out measure is still open
+in #736. The published results are from the sealed 0.17 run.
+
 ## Escapes
 
 [ESCAPES.md](ESCAPES.md) has the cause of each of the 6 escapes of the held-out run (#709) and

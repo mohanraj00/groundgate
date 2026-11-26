@@ -391,6 +391,9 @@ def admit(
             view = part.views[slot["request"]["section"]]
             answer = replies[part.id].get(key, {})
             number += kind == "number"
+            if kind == "record":
+                outputs[key] = admit_table(part.id, slot, answer, view.tables[key], profile)
+                continue
             try:
                 items = extract.candidates(slot, answer, view, number)
             except extract.ReplyError:
@@ -405,14 +408,11 @@ def admit(
             receipt = gg.admit(
                 view.text, None, items, document_id=part.id, profile=profile, outline=view.outline
             )
-            if kind == "passage":
-                d = receipt.decisions[0]
-                value = None
-                if d.outcome == "admitted" and d.evidence is not None:
-                    value = extract.passage_value(view, d.evidence)
-                outputs[key] = score.Answer(d.outcome, value)
-            else:
-                outputs[key] = record_answer(receipt, answer, slot["request"]["columns"])
+            d = receipt.decisions[0]
+            value = None
+            if d.outcome == "admitted" and d.evidence is not None:
+                value = extract.passage_value(view, d.evidence)
+            outputs[key] = score.Answer(d.outcome, value)
         receipt = gg.admit(
             part.text, None, [c for cs in scalars.values() for c in cs],
             document_id=part.id, profile=profile,
@@ -425,16 +425,35 @@ def admit(
     return outputs, proposals
 
 
-def record_answer(receipt: gg.Receipt, answer: Json, columns: list[str]) -> score.Answer:
-    rows = {row.record: row for row in receipt.records or ()}
-    order = [str(i) for i in range(1, len(answer["rows"]) + 1)]
-    if any(row.outcome == "needs_verification" for row in rows.values()):
+def admit_table(
+    document_id: str, slot: Json, answer: Json, table: extract.Table | None, profile: Json
+) -> score.Answer:
+    if table is None:
         return score.Answer("needs_verification")
-    if any(i not in rows or rows[i].outcome != "admitted" for i in order):
-        return score.Answer()
+    try:
+        items = extract.record_candidates(slot, answer, table)
+    except extract.ReplyError:
+        return score.Answer(invalid=True)
+    if items is None:
+        return score.Answer("needs_verification")
+    packets = [items]
+    if table.spans_rows:
+        # Keep evidence that spans rows from confirming a value in another record.
+        by_record: dict[str, list[Json]] = defaultdict(list)
+        for item in items:
+            by_record[item["record"]].append(item)
+        packets = list(by_record.values())
+    rows = {}
+    for packet in packets:
+        receipt = gg.admit(table.text, None, packet, document_id=document_id, profile=profile)
+        rows.update({row.record: row for row in receipt.records or ()})
+    order = [str(i) for i in range(1, len(table.rows) + 1)]
+    if any(n not in rows or rows[n].outcome != "admitted" for n in order):
+        return score.Answer("needs_verification")
+    columns = slot["request"]["columns"]
     value = []
-    for i in order:
-        members = dict(rows[i].members)
+    for n in order:
+        members = dict(rows[n].members)
         value.append({name: members[extract.column(c)] for c, name in enumerate(columns)})
     return score.Answer("admitted", value)
 
