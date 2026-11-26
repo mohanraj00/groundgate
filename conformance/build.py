@@ -9116,25 +9116,38 @@ LEFT_OUT_TASKS = [
 def left_out_vector(name: str, description: str, task: str, decisions: list[int],
                     tasks: list[dict[str, Any]] | None = None) -> None:  # fmt: skip
     REVIEW_API.append({"name": f"left-out-{name}", "kind": "left-out",
-                       "description": description,
+                       "description": description, "count": 6,
                        "tasks": LEFT_OUT_TASKS if tasks is None else tasks, "task": task,
                        "expected": {"decisions": decisions}})  # fmt: skip
 
 
+# The receipt has 6 decisions. Decision 5 is in no task: the sample did not pick it, or its
+# audit task is not written yet.
 left_out_vector(
-    "01-blind", "A correction of the blind task t reads no candidate of p or s.", "t", [1, 4]
+    "01-blind",
+    "A correction of the blind task t keeps only the candidates of r.",
+    "t",
+    [1, 4, 5],
 )
-left_out_vector("02-blind-other", "The same holds for p: it leaves out t and s.", "p", [0, 4])
+left_out_vector("02-blind-other", "The same holds for p: it keeps only r.", "p", [0, 4, 5])
 left_out_vector(
     "03-review", "A correction of a review task leaves out no other candidate.", "r", []
 )
 left_out_vector(
     "04-one-blind",
-    "A packet with one blind task leaves out no other candidate.",
+    "With one blind task, the check still leaves out each decision in no review task.",
     "t",
-    [],
+    [1, 4, 5],
     tasks=[LEFT_OUT_TASKS[0], LEFT_OUT_TASKS[2]],
 )
+left_out_vector(
+    "05-no-review-task",
+    "Before review tasks writes the review tasks, the check keeps no other candidate.",
+    "t",
+    [1, 2, 3, 4, 5],
+    tasks=[LEFT_OUT_TASKS[0]],
+)
+
 
 # The tasks of the API in one store, in no order. ``task`` is the task ID. ``open`` is false
 # for a task that the actor answered or that an answer settles.

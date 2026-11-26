@@ -264,7 +264,7 @@ def test_vector(path: Path, empty: Call) -> None:
         elif kind == "group":
             got = {"group": api.group(v["tasks"], v["logs"], v["actor"], v["agree"])}
         elif kind == "left-out":
-            got = {"decisions": api.left_out(v["tasks"], v["task"])}
+            got = {"decisions": api.left_out(v["tasks"], v["task"], v["count"])}
         elif kind == "errors":
             got = api.STATUS
         else:
@@ -1087,6 +1087,80 @@ def test_the_check_of_a_blind_correction_reads_no_hidden_candidate(tmp_path: Pat
     assert [status for status, _ in seen[0]] == [200, 200, 201, 200, 200]
     # the resolution reads the hidden candidate of part: the value 10 holds with 10 only
     assert statuses[0] != statuses[1]
+
+
+def test_the_check_of_a_blind_correction_reads_no_candidate_of_an_audit_task_not_written_yet(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """``review tasks`` stops after the audit task of part, before the audit task of total. The
+    check of a correction of part keeps only the candidates of the review tasks in the store,
+    so the responses are the same for the hidden values 10 and 20."""
+    text = "Total 10. Total 20. Part 10. Part 20."
+    schema = {
+        "fields": {"total": {"type": "integer"}, "part": {"type": "integer"}},
+        "relations": [{"id": "same", "total": "total", "parts": [{"field": "part"}]}],
+    }
+
+    def span(words: str) -> dict[str, Any]:
+        return {"start": text.index(words), "end": text.index(words) + len(words), "text": words}
+
+    put = FolderStore.put
+    fields: list[str] = []
+
+    def stops(self: FolderStore, kind: str, data: bytes) -> str:
+        if kind == "task@1":
+            fields.append(json.loads(data)["slot"]["field"])
+            if len(fields) == 2:
+                raise OSError("the disk is full")
+        return put(self, kind, data)
+
+    seen = []
+    for value in ("10", "20"):
+        candidates = [
+            {"id": "t", "field": "total", "value": value, "evidence": span(f"Total {value}")},
+            {"id": "p", "field": "part", "value": value, "evidence": span(f"Part {value}")},
+        ]
+        root, fields[:] = tmp_path / value, []
+        with FolderStore(root) as store:
+            k, _ = admit_packet(store, text, schema, candidates, None, "doc-1", None)
+            monkeypatch.setattr(FolderStore, "put", stops)
+            with pytest.raises(OSError, match="disk"):
+                write_tasks(store, k, EVERY)
+            monkeypatch.setattr(FolderStore, "put", put)
+        assert fields == ["part", "total"]  # the store has the audit task of part only
+        service = Service(root, ISSUERS, clock=lambda: CLOCK, id_key=KEY)
+        with serving(api.server(service), {"Authorization": claim()}) as call:
+            ((task,),) = [[t["task"] for t in json.loads(call("GET", "/v1/tasks")[2])["tasks"]]]
+            start = text.index("Part 10") + 5
+            correction = {
+                "task": task,
+                "verdict": "correct",
+                "span": {"start": start, "end": start + 2},
+            }
+            status, _, body = call("POST", "/v1/answers", correction)
+        seen.append((status, json.loads(body.replace(task, "part"))))
+    assert seen[0] == seen[1] and seen[0][0] == 201
+
+
+def test_a_cursor_holds_when_the_group_of_the_actor_changes_between_two_pages(
+    tmp_path: Path,
+) -> None:
+    """The cursor of the first page is the blind task of doc-1. zed then answers it, so the
+    group of ana for doc-1 is the review group, and the cursor names a task outside it."""
+    root = tmp_path / "store"
+    _, first = make_store(root, document="doc-1")
+    make_store(root, document="doc-2")
+    service = Service(root, ISSUERS, clock=lambda: CLOCK, id_key=KEY)
+    with serving(api.server(service), {"Authorization": claim()}) as call:
+        page = json.loads(call("GET", "/v1/tasks?limit=1")[2])
+        assert [(t["document"], t["field"]) for t in page["tasks"]] == [("doc-1", "net_income")]
+        assert page["next"] == id_of(first["net_income"])
+        fill(root, first["net_income"])
+        status, _, body = call("GET", f"/v1/tasks?limit=1&cursor={page['next']}")
+        assert status == 200
+        listed = json.loads(body)["tasks"]
+        assert [(t["document"], t["field"]) for t in listed] == [("doc-1", "revenue")]
+        assert error(call("GET", f"/v1/tasks/{page['next']}")) == (403, "not_assigned")
 
 
 def test_review_tasks_writes_no_new_audit_task_for_a_packet_with_tasks(tmp_path: Path) -> None:

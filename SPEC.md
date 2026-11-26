@@ -2331,9 +2331,12 @@ candidate.
 
 **The check of a correction of a blind task** reads no candidate of another blind task. The
 service runs the gate again for a correction (docs/design/review.md §6.2). For a correction of
-a blind task, the `admit` call also leaves out the candidates of each other task of the packet
-in the store with the mode `audit`, and the judgments of those candidates. So the outcome of the
-check does not depend on a hidden candidate. Example: the text is
+a blind task, the `admit` call keeps only the candidates of the tasks of the packet in the store
+with another mode than `audit`, and their judgments. It leaves out each other candidate of the
+packet. So the outcome of the check does not depend on a hidden candidate, and also not while
+`review tasks` has written only some of the audit tasks of a packet: a candidate of an audit
+task that is not in the store yet is in no other task, and `review tasks` writes the other tasks
+after the audit tasks. Example: the text is
 `Total 10. Total 20. Part 10. Part 20.`, the integer fields are `total` and `part`, the schema
 has the relation `total = part`, and the two tasks are blind. A correction of `total` with the
 span of the first `10` gives 201 when the hidden values are 10 and 10, and also when they are 20
@@ -2395,8 +2398,10 @@ occurs two times, gives `bad_request`.
 an empty string. `next` is the cursor of the next page: a string when more open tasks come after
 the last task of this page, and null if not. A client sends it back as it is, in `cursor`. The
 cursor is the ID of the last task of the page, and the next page starts after that task in the
-order. A cursor that is not the ID of a task of the API gives `bad_request`. A task that gets an
-answer between two requests leaves the list, and one walk never gives a task two times.
+order. A cursor that is not the ID of a task of the API gives `bad_request`. A cursor can name a
+task that is not in the group of the actor now, because the group of an actor with no record
+can change between two pages. A task that gets an answer between two requests leaves the list,
+and one walk never gives a task two times.
 
 **GET /v1/tasks/{task}** gives one task of the group of the actor, open or not.
 

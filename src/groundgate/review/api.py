@@ -426,18 +426,19 @@ def group(
     return review
 
 
-def left_out(tasks: Sequence[Mapping[str, Any]], task: str) -> list[int]:
+def left_out(tasks: Sequence[Mapping[str, Any]], task: str, count: int) -> list[int]:
     """The receipt indexes of the decisions that the check of a correction of ``task`` leaves
-    out, in addition to those of its own slot (SPEC §4.20). ``tasks`` holds each task of the
-    packet in the store as ``task``, ``mode`` and ``decisions``. For a blind task, these are the
-    decisions of each other task with the mode ``audit``, so the outcome of the check does not
-    depend on a hidden candidate. Each other task leaves out none."""
+    out, in addition to those of its own slot, in order (SPEC §4.20). ``tasks`` holds each task
+    of the packet in the store as ``task``, ``mode`` and ``decisions``, and the receipt has
+    ``count`` decisions. For a blind task, these are the decisions of no task with another mode
+    than ``audit``, so the outcome of the check does not depend on a hidden candidate, also
+    while the audit tasks of the packet are written. Each other task leaves out none."""
     mine = [t for t in tasks if t["task"] == task]
     if not mine or mine[0]["mode"] != "audit":
         return []
-    return sorted(
-        {d for t in tasks if t["task"] != task and t["mode"] == "audit" for d in t["decisions"]}
-    )
+    kept = {d for t in tasks if t["mode"] != "audit" for d in t["decisions"]}
+    kept.update(mine[0]["decisions"])
+    return [d for d in range(count) if d not in kept]
 
 
 def task_id(key: bytes, task_key: str) -> str:
@@ -641,16 +642,16 @@ class Service:
             answered: dict[str, set[object]] = {}
             entries = []
             for tk, doc, view, mine in self._served(review, actor):
-                if not mine:
-                    continue
                 if doc.key not in answered:
                     own = review._logs(doc.key).get(actor, [])
                     answered[doc.key] = {r.get("task") for r in own}
                 blind = view["mode"] == "audit"
+                # A task outside the group is never open, but a cursor can name it: the group
+                # of an actor with no record can change between two pages.
                 entries.append(
                     {"task": self._id(tk), "document": doc.document, "mode": view["mode"],
                      "field": view["field"], "key": view["key"],
-                     "open": tk not in answered[doc.key] if blind else tk in doc.open}
+                     "open": mine and (tk not in answered[doc.key] if blind else tk in doc.open)}
                 )  # fmt: skip
         page, cursor = list_page(entries, query)
         return {
@@ -819,7 +820,8 @@ class Service:
                      "decisions": list(doc.by_key[k][0].decisions)}
                     for k in doc.tasks if k in doc.by_key
                 ]  # fmt: skip
-                record, _ = review.write(page, blind, hide=left_out(stored, key))
+                hide = left_out(stored, key, len(doc.packet.receipt["decisions"]))
+                record, _ = review.write(page, blind, hide=hide)
             except Refused as exc:
                 code = exc.kind or ("not_found" if exc.code == 404 else "bad_answer")
                 codes = exc.codes if code in ("correction_rejected", "codes_not_kept") else None

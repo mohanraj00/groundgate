@@ -1,7 +1,8 @@
 {
  "name": "left-out-04-one-blind",
  "kind": "left-out",
- "description": "A packet with one blind task leaves out no other candidate.",
+ "description": "With one blind task, the check still leaves out each decision in no review task.",
+ "count": 6,
  "tasks": [
   {
    "task": "t",
@@ -23,6 +24,10 @@
  ],
  "task": "t",
  "expected": {
-  "decisions": []
+  "decisions": [
+   1,
+   4,
+   5
+  ]
  }
 }

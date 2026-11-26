@@ -2,6 +2,7 @@
  "name": "left-out-03-review",
  "kind": "left-out",
  "description": "A correction of a review task leaves out no other candidate.",
+ "count": 6,
  "tasks": [
   {
    "task": "t",

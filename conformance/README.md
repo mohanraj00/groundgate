@@ -108,9 +108,10 @@ Files in `review-api/` are review API vectors (SPEC §4.20). `kind` names what a
 - `group`: the `tasks` of the API of one packet, each with its ID in `task`, `field`, `key` and
   `blind`, the records of each actor in `logs` with the `task` and the `verdict`, the `actor` and
   `agree`. `expected.group` gives the tasks of the group of the actor, in the order of `tasks`.
-- `left-out`: the `tasks` of one packet in the store, each with `task`, `mode` and the receipt
-  indexes of its `decisions`, and the `task` of a correction. `expected.decisions` gives the
-  indexes that the check leaves out, in addition to those of its own slot.
+- `left-out`: the `count` of the decisions of the receipt, the `tasks` of one packet in the
+  store, each with `task`, `mode` and the receipt indexes of its `decisions`, and the `task` of
+  a correction. `expected.decisions` gives the indexes that the check leaves out, in addition to
+  those of its own slot, in order.
 - `request`: one request to a service with the static token of the `token` vectors, the reviewer
   `ana` and an empty store. A runner puts the port in place of `{port}`. A `body` goes with its
   `Content-Length` unless `headers` gives one. `expected` gives the `status`, and the `error`

@@ -658,8 +658,9 @@ the contract: the operations, the errors and the claim check. This section gives
   tasks, so `review tasks` adds no audit task to a packet that has tasks. The cost: a packet
   with a blind task needs more actors, and an actor cannot choose its group.
 - **The check of a blind correction reads no hidden candidate.** For a correction of a blind
-  task, the `admit` call of section 6.2 also leaves out the candidates of each other blind task
-  of the packet. So the outcome of the check does not depend on a hidden value. The resolution
+  task, the `admit` call of section 6.2 keeps only the candidates of the review tasks of the
+  packet in the store. So the outcome of the check does not depend on a hidden value, also while
+  `review tasks` writes the audit tasks of the packet. The resolution
   still reads each candidate and does not trust the server. So a blind correction that the API
   takes can count as no answer in the resolution, for example when a relation fails with the
   hidden candidate. Under point 7 of section 6.3, it then removes the admitted value, and a

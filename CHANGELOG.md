@@ -12,7 +12,7 @@ spec version, and receipts name the spec version they were decided under.
   the other group. The new error code `not_assigned` (403) refuses a task outside the group.
   `review tasks` writes the audit tasks first, and adds no audit task to a packet that has
   review tasks. An answer log that the store cannot read gives the actor no group of its
-  packet (#703).
+  packet. The check of a blind correction keeps only the candidates of the review tasks (#703).
 - When the markup tracker stops inside a table, the reader keeps the outermost open table
   through the end of the text. A matching line in that span counts toward ambiguity for its
   field and gives no proposal (#629).

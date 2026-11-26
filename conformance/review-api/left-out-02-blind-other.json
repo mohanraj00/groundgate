@@ -1,7 +1,8 @@
 {
  "name": "left-out-02-blind-other",
  "kind": "left-out",
- "description": "The same holds for p: it leaves out t and s.",
+ "description": "The same holds for p: it keeps only r.",
+ "count": 6,
  "tasks": [
   {
    "task": "t",
@@ -41,7 +42,8 @@
  "expected": {
   "decisions": [
    0,
-   4
+   4,
+   5
   ]
  }
 }
