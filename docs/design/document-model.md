@@ -372,30 +372,35 @@ checks a layout, and it refuses the object at the first fault:
 The lookup uses sorted starts and `bisect`, so a large document costs time in proportion to its
 nodes, not to their square.
 
-A fresh read can propose from its tables. A loaded `document@1` gives no table proposals by
-default (#628). The host can give `source=(path, data)` to `Document.from_dict` to check the
-reading. The path suffix selects the source format. The bytes must match the `source` key.
-I read them with the recorded reader and options and compare the text, all nodes and the doubt. If the
-object names the OCR reader, I skip the read unless the host also gives `ocr=True`. An OCR
-source check costs the same as a fresh `read_document(..., ocr=True)` with its page and time
-limits. If the source is missing, the read is skipped or unavailable, or the result differs,
-I treat the tables as unverified. An unverified table gives no proposal. Its matches still count
-toward ambiguity, so a line that matches the same field gives no proposal either. A field that
-matches only in lines can still give a proposal. The line reader uses the same text and table spans.
+A fresh read can propose from its tables. A loaded `document@1` with a table gives no
+structure proposal by default (#628). The host can give `source=(path, data)` to
+`Document.from_dict` to check the reading. The path suffix selects the source format. The
+bytes must match the `source` key. I read them with the recorded reader and options and
+compare the text, all nodes and the doubt. If the object names the OCR reader, I skip the read
+unless the host also gives `ocr=True`. An OCR source check costs the same as a fresh
+`read_document(..., ocr=True)` with its page and time limits. If the source is missing, the
+read is skipped or unavailable, or the result differs, I treat the tables as unverified.
+
+If a document has a table that is not verified, the structure reader proposes nothing for that
+document. This includes its lines. The line reader skips each table span, so a table node can
+hide a line, and the nodes of a loaded object are untrusted. A rule that keeps the line
+candidates must find each form of node that hides a line, and the reviews of #628 found four
+such forms. A loaded document with no table node keeps its line candidates, because no text is
+hidden from the line reader.
 
 The structure reader is a proposer in the runner, and the runner is not part of the
 specification ([SPEC §2.4](../../SPEC.md#24-policy)). `admit` decides the same candidates as
 before, so the spec version and the conformance vectors stay the same. A run with
-`structure: admit` on a loaded document without its source admits no value from a table,
-because the reader proposes none.
+`structure: admit` on a loaded document with an unverified table admits no value from the
+structure reader, because the reader proposes none.
 
-I record `structure_tables: false` in the document input when a new run reads unverified
-tables. On replay, `false` counts table matches toward ambiguity and gives no table proposals,
-even if the document has since passed a source check. A record from before #628 has no such
-member and replays with tables even if the document has never passed a source check. A new
-run that allows tables also omits the member. A successful replay proves that the run can be
-reproduced from its record. The host must establish trust in the tables separately. If the
-host does not trust a record, it must not trust its candidates either.
+I record `structure_tables: false` in the document input when a new run has unverified
+tables. On replay, `false` gives no structure proposal, even if the document has since passed
+a source check. A record from before #628 has no such member and replays with tables even if
+the document has never passed a source check. A new run that allows tables also omits the
+member. A successful replay proves that the run can be reproduced from its record. The host
+must establish trust in the tables separately. If the host does not trust a record, it must
+not trust its candidates either.
 
 ## 13. The measure
 

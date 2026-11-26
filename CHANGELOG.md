@@ -8,15 +8,16 @@ spec version, and receipts name the spec version they were decided under.
 - When the markup tracker stops inside a table, the reader keeps the outermost open table
   through the end of the text. A matching line in that span counts toward ambiguity for its
   field and gives no proposal (#629).
-- A host that loads a `document@1` without `source=` now gets no table proposals (#628).
-  To keep them, give `source=(path, data)` to `Document.from_dict` or read the source with
-  `read_document`. The loader checks that the source reproduces the text, the nodes and the doubt. For an OCR
-  reading, the host must also give `ocr=True` to `Document.from_dict` to run the check.
-  An unverified table gives no proposal. Its matches still count toward ambiguity, so a line
-  that matches the same field gives no proposal either. A field that matches only in lines can
-  still give a proposal. The spec version and the conformance vectors stay the same. The runner
-  and its structure reader are not part of the specification ([SPEC §2.4](SPEC.md#24-policy)),
-  and `admit` decides the same candidates as before.
+- A host that loads a `document@1` with a table and without `source=` now gets no proposal
+  from the structure reader for that document, from its tables or from its lines (#628). The
+  line reader skips the table spans, so it trusts the table nodes too. To keep the proposals,
+  give `source=(path, data)` to `Document.from_dict` or read the source with `read_document`.
+  The loader checks that the source reproduces the text, the nodes and the doubt. For an OCR
+  reading, the host must also give `ocr=True` to `Document.from_dict` to run the check. A
+  loaded document with no table node keeps its line proposals. The spec version and the
+  conformance vectors stay the same. The runner and its structure reader are not part of the
+  specification ([SPEC §2.4](SPEC.md#24-policy)), and `admit` decides the same candidates as
+  before.
 
 ## 0.17.0 (2026-11-19)
 

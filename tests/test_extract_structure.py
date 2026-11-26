@@ -548,12 +548,30 @@ def test_an_unverified_table_match_blocks_a_line_proposal(tmp_path: Path) -> Non
     assert replay(result.record, result.artifacts, doc, PLAIN, ADMIT).ok
 
 
-def test_a_line_only_field_keeps_its_proposal_with_an_unverified_table(tmp_path: Path) -> None:
+def test_an_unverified_empty_table_node_blocks_a_line_proposal(tmp_path: Path) -> None:
+    doc = document(
+        tmp_path, "<table><tr><td>Revenue</td><td>5</td></tr></table><p>Revenue: 999</p>"
+    )
+    obj = doc.to_dict()
+    table = obj["nodes"][0]
+    assert table["kind"] == "table"
+    obj["nodes"] = [table] + [n for n in obj["nodes"] if n["parent"] is None and n is not table]
+    for i, node in enumerate(obj["nodes"]):
+        node["id"] = i
+    path = tmp_path / "doc.html"
+    loaded = Document.from_dict(obj, doc.text, source=(path, path.read_bytes()))
+    assert not loaded._tables_verified()
+    assert propose(loaded.text, loaded, Schema.from_dict(PLAIN)) == []
+    assert run(loaded, PLAIN, policy=ADMIT).candidates == []
+
+
+def test_an_unverified_table_blocks_each_proposal_of_its_document(tmp_path: Path) -> None:
     doc = document(tmp_path, "<table><tr><td>Revenue</td><td>5</td></tr></table><p>Cost: 3</p>")
     schema = {"fields": {**PLAIN["fields"], "cost": {"type": "integer", "aliases": ["Cost"]}}}
     loaded = Document.from_dict(doc.to_dict(), doc.text)
     result = run(loaded, schema, policy=ADMIT)
-    assert [(c["field"], c["value"]) for c in result.candidates] == [("cost", "3")]
+    # The line reader skips the table spans, so it trusts the table nodes too (#628).
+    assert result.candidates == []
     path = tmp_path / "doc.html"
     verified = Document.from_dict(doc.to_dict(), doc.text, source=(path, path.read_bytes()))
     candidates = propose(verified.text, verified, Schema.from_dict(schema))
@@ -596,9 +614,9 @@ def test_a_loaded_document_checks_its_source_and_replays(tmp_path: Path, given: 
         cell["header"] = 0
     loaded = Document.from_dict(obj, doc.text, source=None if given == "missing" else (path, data))
     result = run(loaded, schema, policy=ADMIT)
-    expected = [("units", "9")]
+    expected = []
     if given == "matching":
-        expected.insert(0, ("revenue", "5"))
+        expected = [("revenue", "5"), ("units", "9")]
         assert result.receipt.to_dict() == run(doc, schema, policy=ADMIT).receipt.to_dict()
     assert [(c["field"], c["value"]) for c in result.candidates] == expected
     assert replay(result.record, result.artifacts, loaded, schema, ADMIT).ok
@@ -685,11 +703,9 @@ def test_a_loaded_document_with_changed_nodes_skips_its_tables(tmp_path: Path, c
             table["start"] = row["start"]
     path = tmp_path / "doc.html"
     loaded = Document.from_dict(obj, doc.text, source=(path, path.read_bytes()))
-    assert [
-        (c["field"], c["value"]) for c in propose(doc.text, loaded, Schema.from_dict(schema))
-    ] == [("units", "9")]
+    assert propose(doc.text, loaded, Schema.from_dict(schema)) == []
     result = run(loaded, schema, policy=ADMIT)
-    assert [(c["field"], c["value"]) for c in result.candidates] == [("units", "9")]
+    assert result.candidates == []
     assert replay(result.record, result.artifacts, loaded, schema, ADMIT).ok
 
 
