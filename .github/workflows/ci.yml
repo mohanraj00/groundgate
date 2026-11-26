@@ -272,6 +272,41 @@ jobs:
         env:
           GROUNDGATE_KOODAM: "1"
         run: uv run pytest tests/test_job_runner_koodam.py -rs
+  # The entelos job is optional. It runs separately from ci-ok.
+  entelos:
+    needs: changes
+    if: needs.changes.outputs.code == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: mohanraj00/entelos
+          ref: refs/tags/v0.7.0
+          path: _entelos
+          persist-credentials: false
+      - name: Check the commit of the release tag
+        working-directory: _entelos
+        run: |
+          if [ "$(git rev-parse HEAD)" != 935059139a3e47237f0703c30c8aab8407a29aee ]; then
+            echo 'The commit of entelos v0.7.0 does not match the pin.' >&2
+            exit 1
+          fi
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: '1.27.2'
+          cache: false
+      - uses: astral-sh/setup-uv@1db35dd8eee11c5894872e0b383ae6c406cf738d # v10.4.0
+      - run: uv sync --python 3.12
+      - name: Test the decision events of the release
+        env:
+          GROUNDGATE_ENTELOS: ${{ github.workspace }}/_entelos
+        run: uv run pytest tests/test_calibration_events.py::test_entelos_decision_events -rs
   # The required check. Add each project job to needs. A skipped job passes. A failed or cancelled job fails.
   ci-ok:
     needs: [changes, check, lint, test, package, langextract]

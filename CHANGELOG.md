@@ -5,6 +5,9 @@ spec version, and receipts name the spec version they were decided under.
 
 ## Unreleased
 
+- An optional CI job reads decision events from entelos v0.7.0. The test makes one
+  `calibration_event@1` record for each approval, rejection and correction. A replay gives
+  the same profile drafts (#677).
 - The regulatory bench ends a section passage before its trailing authority, source or
   editorial notes. The passage outline uses the position of the first trailing note in
   the XML. The scorer uses the admitted span after the heading (#735).
