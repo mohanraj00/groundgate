@@ -10,7 +10,7 @@ spec version, and receipts name the spec version they were decided under.
   field and gives no proposal (#629).
 - A host that loads a `document@1` without `source=` now gets no table proposals (#628).
   To keep them, give `source=(path, data)` to `Document.from_dict` or read the source with
-  `read_document`. The loader checks that the source reproduces the text and nodes. For an OCR
+  `read_document`. The loader checks that the source reproduces the text, the nodes and the doubt. For an OCR
   reading, the host must also give `ocr=True` to `Document.from_dict` to run the check.
   An unverified table gives no proposal. Its matches still count toward ambiguity, so a line
   that matches the same field gives no proposal either. A field that matches only in lines can

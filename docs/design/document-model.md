@@ -375,7 +375,7 @@ nodes, not to their square.
 A fresh read can propose from its tables. A loaded `document@1` gives no table proposals by
 default (#628). The host can give `source=(path, data)` to `Document.from_dict` to check the
 reading. The path suffix selects the source format. The bytes must match the `source` key.
-I read them with the recorded reader and options and compare the text and all nodes. If the
+I read them with the recorded reader and options and compare the text, all nodes and the doubt. If the
 object names the OCR reader, I skip the read unless the host also gives `ocr=True`. An OCR
 source check costs the same as a fresh `read_document(..., ocr=True)` with its page and time
 limits. If the source is missing, the read is skipped or unavailable, or the result differs,

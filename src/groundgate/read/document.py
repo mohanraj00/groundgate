@@ -150,6 +150,7 @@ class Document:
             None if pages is None else tuple(pages),
             self.text,
             self.nodes,
+            jcs(self._obj["doubt"]),  # the doubt goes to admit, so a check compares it too
         )
 
     def _tables_verified(self) -> bool:

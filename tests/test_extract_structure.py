@@ -631,6 +631,26 @@ def test_a_loaded_document_only_checks_an_ocr_source_with_opt_in(
     assert [c["value"] for c in run(loaded, policy=ADMIT).candidates] == ["5", "4"]
 
 
+def test_a_loaded_ocr_document_without_its_doubt_skips_its_tables(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    doc = document(tmp_path, TABLE)
+    data = (tmp_path / "doc.html").read_bytes()
+    path = tmp_path / "doc.pdf"
+    obj = doc.to_dict()
+    obj["reader"] = reader("5.0.0")
+    obj["doubt"] = [{"start": 0, "end": len(doc.text.encode()), "confidence": 0.5}]
+    fresh = Document.from_dict(obj, doc.text)
+    read = Mock(return_value=(Extracted(doc.text, ocr="5.0.0"), fresh))
+    monkeypatch.setattr("groundgate.read.document.read_document", read)
+
+    obj["doubt"] = []  # the object drops the doubt of the fresh reading
+    loaded = Document.from_dict(obj, doc.text, source=(path, data), ocr=True)
+    read.assert_called_once_with(path, None, ocr=True, data=data)
+    assert not loaded._tables_verified()
+    assert run(loaded, policy=ADMIT).candidates == []
+
+
 @pytest.mark.parametrize(
     "change", ["swapped cell", "missing cell", "missing edge cell", "table start"]
 )
