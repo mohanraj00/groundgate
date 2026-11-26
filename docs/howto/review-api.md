@@ -35,6 +35,22 @@ curl -H "Authorization: Bearer $(cat token.txt)" http://127.0.0.1:8649/v1/tasks
 The server binds to `127.0.0.1` only. It is for one local user: each holder of the token answers
 as the reviewer `ana`. Keep the token out of the store folder and out of your shell history.
 
+At start, the server checks `agree` in the policy against the recorded value in the store.
+You can keep or lower the recorded value. You can increase it only if the store has no answer
+log. This check includes empty answer logs. If the store has no record and no answer log, the
+server uses the policy value. When the check passes, the server records the value in a
+`review-api-state@1` object and saves the object key in `state/review-api`.
+
+If the store has an answer log and no record of `agree`, set `agree` in the policy to the
+value the store used before. Use `--first-agree N` with that same value for N. In Python,
+use `api.server(service, first_agree=N)`. Use the option only for the start that makes
+the first record. The review page example also accepts `--first-agree N` and uses a policy
+with `agree` set to 1.
+
+The server uses `state/review-api.lock` to permit one review API server per store.
+If a crash leaves this file in the store, the next start stops with an error.
+Delete this file only when no review API server runs on this store.
+
 ## 2. List the tasks, read one, and answer it
 
 This example makes a store with one invoice, starts the server in the same process, and calls it

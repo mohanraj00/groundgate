@@ -380,6 +380,13 @@ def _parser() -> argparse.ArgumentParser:
         help="a review-policy@1 JSON file for agree and leads; without it, agree 1 and no lead",
     )
     ra.add_argument(
+        "--first-agree",
+        metavar="N",
+        type=int,
+        help="record the previous agree for a store with no record. N must equal agree "
+        "in the policy",
+    )
+    ra.add_argument(
         "--port", type=int, default=0, help="the port; 0 (the default) takes a free one"
     )
     ms = steps.add_parser(
@@ -958,13 +965,13 @@ def _review_api(args: argparse.Namespace) -> int:
         service = Service(args.store, auth, policy)
         for line in service.skipped():
             print(f"skipped: {line}", file=sys.stderr)
-    httpd = server(service, args.port)
-    print(
-        f"The review API {API} is on http://127.0.0.1:{httpd.server_port}/v1/. "
-        "Press Ctrl-C to stop.",
-        flush=True,
-    )
+        httpd = server(service, args.port, first_agree=args.first_agree)
     try:
+        print(
+            f"The review API {API} is on http://127.0.0.1:{httpd.server_port}/v1/. "
+            "Press Ctrl-C to stop.",
+            flush=True,
+        )
         httpd.serve_forever()
     except KeyboardInterrupt:
         pass

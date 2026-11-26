@@ -24,7 +24,17 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from ..canonical import SPEC_VERSION, digest, jcs
-from . import KEY, FolderStore, NotFound, StoreError, Torn, _canonical, check_bytes, key
+from . import (
+    _REVIEW_API_STATE,
+    KEY,
+    FolderStore,
+    NotFound,
+    StoreError,
+    Torn,
+    _canonical,
+    check_bytes,
+    key,
+)
 from .packets import _READING, READINGS, packet_members, printable, reading2_names
 
 __all__ = ["Report", "check", "forget_packet", "rebuild"]
@@ -48,6 +58,7 @@ KINDS = (
     "prompt@1",
     "reply@1",
     "review-policy@1",
+    _REVIEW_API_STATE,
     "task@1",
     "resolution@1",
     "document@1",

@@ -1,0 +1,11 @@
+{
+ "name": "start-04-higher-without-log",
+ "kind": "start",
+ "description": "A higher value is permitted if there is no answer log.",
+ "recorded_agree": 1,
+ "agree": 2,
+ "answer_log": false,
+ "expected": {
+  "agree": 2
+ }
+}

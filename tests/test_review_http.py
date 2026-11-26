@@ -31,7 +31,8 @@ from groundgate.review.api import ApiError, Issuers, Service, Static
 from groundgate.review.resolve import write_resolution
 from groundgate.review.serve import TOKEN_HEADER, Review
 from groundgate.review.tasks import write_tasks
-from groundgate.store import FolderStore, reviewer_key
+from groundgate.store import FolderStore, Locked, StoreError, reviewer_key
+from groundgate.store import key as object_key
 from groundgate.store.packets import admit_packet
 
 VECTORS = sorted((Path(__file__).parent.parent / "conformance" / "review-api").glob("*.json"))
@@ -211,7 +212,7 @@ def reviewing(tmp_path: Path) -> Iterator[tuple[Path, str, dict[str, str], Call]
     k, tasks = make_store(root)
     fill(root, tasks["net_income"])
     service = Service(root, ISSUERS, clock=lambda: CLOCK, id_key=KEY)
-    with serving(api.server(service), {"Authorization": claim()}) as call:
+    with serving(api.server(service, first_agree=1), {"Authorization": claim()}) as call:
         yield root, k, tasks, call
 
 
@@ -232,7 +233,7 @@ def empty(tmp_path_factory: pytest.TempPathFactory) -> Iterator[Call]:
 
 
 @pytest.mark.parametrize("path", VECTORS, ids=lambda p: p.stem)
-def test_vector(path: Path, empty: Call) -> None:
+def test_vector(path: Path, request: pytest.FixtureRequest) -> None:
     v = json.loads(path.read_text("utf-8"))
     kind, expected = v["kind"], v["expected"]
     got: Any
@@ -263,12 +264,15 @@ def test_vector(path: Path, empty: Call) -> None:
             got = {"id": api.task_id(bytes.fromhex(v["key"]), v["task"])}
         elif kind == "group":
             got = {"group": api.group(v["tasks"], v["logs"], v["actor"], v["agree"])}
+        elif kind == "start":
+            got = run_start_vector(v, request.getfixturevalue("tmp_path"))
         elif kind == "left-out":
             got = {"decisions": api.left_out(v["tasks"], v["task"], v["count"])}
         elif kind == "errors":
             got = api.STATUS
         else:
             assert kind == "request"
+            empty: Call = request.getfixturevalue("empty")
             response = empty(v["method"], v["path"], v["body"], v["headers"])
             got = {"status": response[0]}
             if "error" in expected:
@@ -284,8 +288,8 @@ def test_vector(path: Path, empty: Call) -> None:
 def test_the_vectors_cover_each_kind_and_each_error_of_the_claim_check() -> None:
     vectors = [json.loads(p.read_text("utf-8")) for p in VECTORS]
     assert {v["kind"] for v in vectors} == {
-        "claim", "token", "task", "task-id", "statements", "page", "answer", "group", "left-out",
-        "request", "errors",
+        "claim", "token", "task", "task-id", "statements", "page", "answer", "group", "start",
+        "left-out", "request", "errors",
     }  # fmt: skip
     claims = {v["expected"].get("error") for v in vectors if v["kind"] == "claim"}
     assert claims == {None, "no_claim", "bad_claim", "unknown_issuer", "expired_claim"}
@@ -295,6 +299,102 @@ def test_the_vectors_cover_each_kind_and_each_error_of_the_claim_check() -> None
         None, "wrong_host", "no_claim", "bad_claim", "not_found", "method_not_allowed",
         "bad_request", "unsupported_media_type", "length_required", "body_too_large",
     }  # fmt: skip
+
+
+# The recorded value of agree
+
+
+def recorded_agree(root: Path) -> int:
+    name = (root / "state" / "review-api").read_text(encoding="ascii")
+    return json.loads(FolderStore(root).get("review-api-state@1", name))["agree"]
+
+
+def run_start_vector(v: dict[str, Any], root: Path) -> dict[str, Any]:
+    store = FolderStore(root)
+    if v["recorded_agree"] is not None:
+        with store.review_api(v["recorded_agree"]):
+            pass
+    if v["answer_log"]:
+        _, tasks = make_store(root)
+        fill(root, tasks["net_income"])
+    before = answer_logs(root)
+    got: dict[str, Any] = {}
+    try:
+        with store.review_api(v["agree"], first_agree=v.get("first_agree")):
+            pass
+    except StoreError as exc:
+        got["error"] = str(exc)
+    assert answer_logs(root) == before
+    got["agree"] = recorded_agree(root) if (root / "state" / "review-api").exists() else None
+    return got
+
+
+@pytest.mark.parametrize(
+    "data",
+    [b'{"agree":', b'{"agree":true}', b'{"agree":1.0}', b'{"agree":0}', b'{"agree":1,"x":2}'],
+)
+def test_start_refuses_invalid_review_api_state(tmp_path: Path, data: bytes) -> None:
+    store = FolderStore(tmp_path)
+    with store.review_api(1):
+        pass
+    state_key = object_key("review-api-state@1", data)[7:]
+    objects = tmp_path / "objects" / state_key[:2]
+    objects.mkdir(exist_ok=True)
+    (objects / state_key[2:]).write_bytes(data)
+    pointer = tmp_path / "state" / "review-api"
+    pointer.write_text("sha256:" + state_key, encoding="ascii")
+
+    with pytest.raises(StoreError, match="cannot read the review API state"), store.review_api(1):
+        pytest.fail("the store accepted invalid state")
+    assert pointer.read_text(encoding="ascii") == "sha256:" + state_key
+
+
+def test_start_refuses_a_torn_key_or_a_missing_or_changed_state_object(tmp_path: Path) -> None:
+    store = FolderStore(tmp_path)
+    with store.review_api(1):
+        pass
+    pointer = tmp_path / "state" / "review-api"
+    name = pointer.read_text(encoding="ascii")
+    obj = tmp_path / "objects" / name[7:9] / name[9:]
+
+    pointer.write_text(name[:-1], encoding="ascii")
+    with pytest.raises(StoreError, match="cannot read the review API state"), store.review_api(2):
+        pytest.fail("the store accepted a torn key")
+    pointer.write_text(name, encoding="ascii")
+    obj.write_bytes(b'{"agree":2}')
+    with pytest.raises(StoreError, match="does not match its key"), store.review_api(2):
+        pytest.fail("the store accepted a changed object")
+    obj.unlink()
+    with pytest.raises(StoreError, match="cannot read the review API state"), store.review_api(2):
+        pytest.fail("the store accepted a missing object")
+    assert pointer.read_text(encoding="ascii") == name
+
+
+@pytest.mark.parametrize(
+    ("recorded", "error"),
+    [(None, "the store has answers and no recorded agree"), (1, "the store has an answer log")],
+)
+def test_start_refuses_an_empty_log_or_bad_log_path(
+    tmp_path: Path, recorded: int | None, error: str
+) -> None:
+    store = FolderStore(tmp_path)
+    if recorded is not None:
+        with store.review_api(recorded):
+            pass
+    folder = tmp_path / "logs" / "answers" / ("0" * 64)
+    folder.mkdir(parents=True)
+    log = folder / ("0" * 64 + ".jsonl")
+    log.touch()
+    with pytest.raises(StoreError, match=error), store.review_api(2):
+        pytest.fail("the store accepted the start with an empty log")
+    log.unlink()
+    log.mkdir()
+    with pytest.raises(StoreError, match="cannot check for an answer log"), store.review_api(2):
+        pytest.fail("the store accepted the start with a bad log path")
+    if recorded is None:
+        assert not (tmp_path / "state" / "review-api").exists()
+    else:
+        assert recorded_agree(tmp_path) == recorded
 
 
 # The read operations
@@ -1065,7 +1165,7 @@ def test_the_check_of_a_blind_correction_reads_no_hidden_candidate(tmp_path: Pat
             "span": {"start": start, "end": start + 2},
         }
         service = Service(root, ISSUERS, clock=lambda: CLOCK, id_key=KEY)
-        with serving(api.server(service), {"Authorization": claim()}) as call:
+        with serving(api.server(service, first_agree=1), {"Authorization": claim()}) as call:
             responses = [
                 call("GET", "/v1/tasks"),
                 call("GET", f"/v1/tasks/{total}"),
@@ -1189,22 +1289,28 @@ def test_the_check_of_a_blind_correction_reads_no_candidate_of_a_review_task(
     assert seen[0] == seen[1] and seen[0][:2] == (True, 201)
 
 
-def test_a_restart_keeps_the_group_while_agree_stays_the_same(tmp_path: Path) -> None:
-    """A read writes no record, so a restart reads the group again from the store. With the
-    same ``agree``, ana keeps the review group. With a higher ``agree``, step 2 gives her the
-    blind task: this is the limit of SPEC §4.20, and an operator keeps ``agree`` the same."""
+def test_a_restart_keeps_the_review_group_when_agree_stays_the_same_or_goes_down(
+    tmp_path: Path, unbound_server: None
+) -> None:
+    """A read writes no record. The server refuses an increase before ana can get a blind task."""
     root = tmp_path / "store"
-    _, tasks = make_store(root)
-    fill(root, tasks["net_income"])  # zed takes the blind task, so ana gets the review group
+    k, tasks = make_store(root)
+    with FolderStore(root).review_api(2):
+        pass
+    fill(root, tasks["net_income"])
+    fill(root, tasks["net_income"], "ben")
 
-    def fields(policy: dict[str, Any]) -> list[str]:
-        service = Service(root, ISSUERS, policy, clock=lambda: CLOCK, id_key=KEY)
-        with serving(api.server(service), {"Authorization": claim()}) as call:
-            return [t["field"] for t in json.loads(call("GET", "/v1/tasks")[2])["tasks"]]
+    def fields(agree: int) -> list[str]:
+        service = Service(root, ISSUERS, {**EVERY, "agree": agree}, clock=lambda: CLOCK, id_key=KEY)
+        with api.server(service):
+            return [t["field"] for t in service.tasks("ana")["tasks"]]
 
-    assert fields(EVERY) == ["revenue"]
-    assert fields(EVERY) == ["revenue"]  # a restart with the same agree
-    assert fields({**EVERY, "agree": 2}) == ["net_income"]  # the limit
+    assert fields(2) == ["revenue"]
+    assert fields(2) == ["revenue"]
+    assert fields(1) == ["revenue"]
+    assert not records(root, k, "ana")
+    with pytest.raises(StoreError, match=r"Recorded agree is 1\. New agree is 3\."):
+        fields(3)
 
 
 def test_a_cursor_holds_when_the_group_of_the_actor_changes_between_two_pages(
@@ -1396,7 +1502,7 @@ def test_the_service_keeps_no_state_outside_the_store(tmp_path: Path) -> None:
         revenue = id_of(tasks["revenue"])
         body = {"task": revenue, "verdict": "unsure"}
         assert call("POST", "/v1/answers", body)[0] == 201
-        assert list(root.rglob("*.lock")) == []
+        assert list((root / "logs").rglob("*.lock")) == []
         # another writer appends to the same log: the page server, as ana
         httpd, store, token = page_server(root)
         with store, serving(httpd, token) as page:
@@ -1414,7 +1520,20 @@ def test_the_service_keeps_no_state_outside_the_store(tmp_path: Path) -> None:
         assert answered == "choose"
         assert call("POST", "/v1/answers", body)[0] == 201
     assert [r["verdict"] for r in records(root, k)] == ["unsure", "choose", "unsure"]
-    assert vars(service).keys() == {"root", "auth", "policy", "_clock", "_id_key"}
+    assert vars(service).keys() == {"root", "auth", "_policy", "_clock", "_id_key"}
+
+
+def test_service_policy_returns_a_copy(tmp_path: Path) -> None:
+    policy = {**EVERY, "audit": {**EVERY["audit"]}, "leads": ["ana"]}
+    service = Service(tmp_path, ISSUERS, policy)
+    snapshot = service.policy
+    assert snapshot == policy
+    snapshot["agree"] = 2
+    snapshot["audit"]["seed"] = "other"
+    snapshot["leads"].append("bea")
+    assert service.policy == policy
+    with pytest.raises(AttributeError):
+        service.policy = snapshot
 
 
 def test_a_packet_that_does_not_match_its_receipt_gives_no_task(tmp_path: Path) -> None:
@@ -1480,6 +1599,97 @@ def test_a_failure_of_the_service_gives_no_store_data(tmp_path: Path) -> None:
 
 
 # The command
+
+
+@pytest.fixture
+def unbound_server(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Run the start and close steps with no port."""
+    monkeypatch.setattr(ThreadingHTTPServer, "server_bind", lambda server: None)
+    monkeypatch.setattr(ThreadingHTTPServer, "server_activate", lambda server: None)
+    monkeypatch.setattr(ThreadingHTTPServer, "server_port", 0, raising=False)
+
+
+def test_a_second_server_cannot_change_agree_while_the_first_runs(
+    tmp_path: Path, unbound_server: None
+) -> None:
+    with api.server(Service(tmp_path, ISSUERS, {**EVERY, "agree": 2})):
+        with pytest.raises(
+            Locked,
+            match=r"state/review-api\.lock exists\. Delete this file only when no review API "
+            r"server runs on this store\.",
+        ):
+            api.server(Service(tmp_path, ISSUERS)).server_close()
+        assert recorded_agree(tmp_path) == 2
+    with api.server(Service(tmp_path, ISSUERS)):
+        assert recorded_agree(tmp_path) == 1
+
+
+def test_review_api_refuses_a_higher_agree_before_it_serves(
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+    monkeypatch: pytest.MonkeyPatch,
+    unbound_server: None,
+) -> None:
+    root = tmp_path / "store"
+    _, tasks = make_store(root)
+    token = tmp_path / "token"
+    token.write_text(TOKEN + "\n", encoding="utf-8")
+    policy = tmp_path / "policy.json"
+    policy.write_text(json.dumps({**EVERY, "agree": 2}), encoding="utf-8")
+    starts = []
+    monkeypatch.setattr(ThreadingHTTPServer, "serve_forever", lambda server: starts.append(server))
+    args = ["review", "api", "--store", str(root), "--token-file", str(token), "--reviewer", "ana"]
+    assert main(args) == 0
+    assert recorded_agree(root) == 1
+    fill(root, tasks["net_income"])
+    capsys.readouterr()
+
+    assert main([*args, "--policy", str(policy)]) == 2
+    out, err = capsys.readouterr()
+    assert not out
+    assert "Recorded agree is 1. New agree is 2." in err
+    assert recorded_agree(root) == 1
+    assert len(starts) == 1
+
+
+def test_review_api_records_the_previous_agree_once(
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+    monkeypatch: pytest.MonkeyPatch,
+    unbound_server: None,
+) -> None:
+    root = tmp_path / "store"
+    _, tasks = make_store(root)
+    fill(root, tasks["net_income"])
+    before = answer_logs(root)
+    token = tmp_path / "token"
+    token.write_text(TOKEN + "\n", encoding="utf-8")
+    policy = tmp_path / "policy.json"
+    policy.write_text(json.dumps({**EVERY, "agree": 2}), encoding="utf-8")
+    starts = []
+    monkeypatch.setattr(ThreadingHTTPServer, "serve_forever", lambda server: starts.append(server))
+    args = ["review", "api", "--store", str(root), "--token-file", str(token), "--reviewer", "ana"]
+    higher = [*args, "--policy", str(policy)]
+    option = ["--first-agree", "1"]
+    pointer = root / "state" / "review-api"
+
+    assert main(higher) == 2
+    out, err = capsys.readouterr()
+    assert not out and "the store has answers and no recorded agree" in err
+    assert main([*higher, *option]) == 2
+    out, err = capsys.readouterr()
+    assert not out and "--first-agree must equal the policy agree (2)." in err
+    assert not starts and not pointer.exists()
+
+    assert main([*args, *option]) == 0
+    assert recorded_agree(root) == 1
+    capsys.readouterr()
+    assert main([*args, *option]) == 2
+    out, err = capsys.readouterr()
+    assert not out and "--first-agree requires a store with no recorded agree." in err
+    assert main(args) == 0
+    assert len(starts) == 2
+    assert recorded_agree(root) == 1 and answer_logs(root) == before
 
 
 def test_review_api_checks_its_arguments(tmp_path: Path, capsys: Any) -> None:

@@ -657,6 +657,18 @@ the contract: the operations, the errors and the claim check. This section gives
   two groups. A new blind task in a packet would break the rule for an actor who got the other
   tasks, so `review tasks` adds no audit task to a packet that has tasks. The cost: a packet
   with a blind task needs more actors, and an actor cannot choose its group.
+- **The store records `agree` at start.** The review API writes a `review-api-state@1` object
+  and saves its key in `state/review-api`. If the store has no answer log, the first start
+  records the policy value. If the store has an answer log, also an empty one, and no
+  record, the server stops. Set the policy to the `agree` value the store used before.
+  Start `groundgate review api` with `--first-agree N` and give that same value for N. Use
+  this option only to make the first record. A task read writes no answer. If you give a
+  higher value, the server could give a blind task to an actor who already read the review
+  group. A later start can keep or lower the value. To raise the value when the store has
+  an answer log, use a new store. Keep the old answers with the old value. The server
+  stops if it cannot read or validate the recorded value. Only one review API server can
+  use the store at a time. If a crash leaves `state/review-api.lock`, the next start
+  stops with an error. Delete this file only when no review API server runs on this store.
 - **The check of a blind correction reads no hidden candidate.** For a correction of a blind
   task, the `admit` call of section 6.2 has only the candidate of the correction. It leaves out
   each other candidate of the packet, also the candidates of the review tasks, because a

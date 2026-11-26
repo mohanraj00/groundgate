@@ -1,0 +1,11 @@
+{
+ "name": "start-01-same",
+ "kind": "start",
+ "description": "The same value is permitted with an answer log.",
+ "recorded_agree": 2,
+ "agree": 2,
+ "answer_log": true,
+ "expected": {
+  "agree": 2
+ }
+}

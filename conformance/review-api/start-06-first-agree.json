@@ -1,0 +1,12 @@
+{
+ "name": "start-06-first-agree",
+ "kind": "start",
+ "description": "With an answer log, the option records the previous value.",
+ "recorded_agree": null,
+ "agree": 1,
+ "answer_log": true,
+ "expected": {
+  "agree": 1
+ },
+ "first_agree": 1
+}

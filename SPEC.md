@@ -2165,8 +2165,8 @@ code, and it does not change the type or the meaning of one. Such a change is ve
 `/v2/`. So a client ignores a response member that it does not know, and it reads an error code
 that it does not know by its HTTP status.
 
-The service keeps no state outside the store. It reads the store again for each request, and
-its only write is the append of one answer record. Its start values are the store, a
+The service keeps no state outside the store. It reads the store again for each request.
+An answer request can append one answer record. Its start values are the store, a
 `review-policy@1` object for `agree` and the leads, and the issuers or the static token. It also
 makes one random key at its start, for the task IDs below. The key is in memory only.
 
@@ -2295,8 +2295,7 @@ answer, and after a later answer that replaces it:
   blind task to a blind task after it in the order, or to the review group. Step 2 counts
   records, and a log keeps each record, so the count never goes down. A blind task gives no
   data that depends on a hidden candidate, so a change from it takes no such data to the next
-  group. With the same `agree` (below), a change from the review group to a blind task does
-  not occur.
+  group. With the same or a lower `agree`, an actor in the review group stays in that group.
 - The service takes the lock of the answer log of the actor (§7) before it reads the group for
   an answer, and keeps it until the append. So two answers of one actor at the same time
   cannot go to two groups. The second one gives `log_refused`.
@@ -2306,12 +2305,37 @@ answer, and after a later answer that replaces it:
   appends (§9), and a log left out would remove the records of its actor from the count of
   step 2.
 
-**A limit: keep `agree` the same.** Do not change the member `agree` of the review policy of the
-service while a blind task of the store has fewer than `agree` actors with a record that is
-not `unsure`. A read writes no record, so the store does not show that an actor without a record
-got the review group. If the service starts again with a higher `agree`, step 2 can give such an
-actor a blind task of the same packet, after it read the review group. A lower `agree` is safe:
-it moves an actor with no record only to a later group.
+**The stored value of `agree`.** Before the service takes a request, it checks the recorded
+value of `agree` in the store.
+
+- With `--first-agree N`, `groundgate review api` records N only if the store has no
+  record and N equals `agree` in the policy for this start. Otherwise, the service stops
+  with an error. To make the first record on a store with an answer log, the operator
+  must use this option and give the value that the store used before.
+- Without `--first-agree`, if the store has no record and no answer log, the service
+  records the policy value. If the store has an answer log and no record, the service
+  stops with an error. The error says that the store has answers and no recorded `agree`.
+- If the store has a record and the operator starts without `--first-agree`, the service
+  records the new value if it is the same or lower. If the new value is higher, the service
+  records it only when the store has no answer log. If an answer log stops the start, the
+  error gives the recorded value and the new value.
+
+These checks include empty answer logs. If the service cannot read or validate the record,
+it stops with an error. If a start requires a check for answer logs and the service cannot
+do the check, it stops with an error. A refused start makes no change to the record.
+
+The store object has kind `review-api-state@1`. Its value is a JSON object with only the
+member `agree`, an integer of 1 or more. In the folder store, `state/review-api` holds the
+key of the current object as ASCII, with no line break. The service writes the object first
+and replaces the key file in one step. The folder store permits one review API server at a
+time. The server holds `state/review-api.lock` from before the check until it stops.
+If a crash leaves this file in the store, the next start stops with an error.
+Delete this file only when no review API server runs on this store.
+
+To use a higher `agree` on a store with an answer log, start with a new store. This keeps the
+old answers and their record of `agree` together. A task read writes no record. The service
+cannot tell which actors already read the review group. A higher value could give those
+actors a blind task of the same packet.
 
 A new blind task of a packet could go to an actor who got the review group. So the review group
 of a packet never comes before its blind tasks:
@@ -2496,8 +2520,9 @@ hold the unit of the proposed value. The store has the full record.
 
 The vectors in `conformance/review-api/` give claims and static tokens with the actor or the
 error, the response members of a task, a task ID, the statements of a model text, pages of
-the list, answer bodies, the group of an actor, the candidates that the check of a correction
-leaves out, requests that the service refuses, and the status of each error code.
+the list, answer bodies, the group of an actor, the checks of `agree` at start, the candidates
+that the check of a correction leaves out, requests that the service refuses, and the status
+of each error code.
 
 ## 5. Receipt
 
@@ -3057,6 +3082,7 @@ Kinds of the store, in §9. "store.md" is the design note, [docs/design/store.md
 | `pin@1`, `places@1`, `completeness@1`, `outline@1` | 1 | §9.2 |
 | `receipt@1` | 1 | §9.2. The bytes are the receipt of §5. |
 | `packet@1` | 1 | §9.3 |
+| `review-api-state@1` | 1 | §4.20 |
 | `prompt@1`, `reply@1`, `admission@1` | 1 | §9.2 and [docs/design/runner.md](docs/design/runner.md) §8 |
 | `reviewer@1`, `set@1` | 1 | §9.5: the kind of the key of a name |
 
@@ -3202,6 +3228,7 @@ Canonical JSON has no duplicate member, no number that is not in its shortest fo
 | `packet@1` | A packet (§9.3). |
 | `admission@1` | An admission packet of the runner ([docs/design/runner.md](docs/design/runner.md) §8). |
 | `review-policy@1`, `task@1`, `resolution@1`, `model-text@1` | The objects of the review step ([docs/design/review.md](docs/design/review.md) §5 and §7.1). |
+| `review-api-state@1` | The recorded value of `agree` for the review API (§4.20). |
 
 ### 9.3 The manifest
 

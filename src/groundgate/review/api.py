@@ -50,6 +50,8 @@ import secrets
 import threading
 import unicodedata
 from collections.abc import Callable, Iterable, Iterator, Mapping, Sequence
+from contextlib import ExitStack
+from copy import deepcopy
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -608,11 +610,16 @@ class Service:
     ) -> None:
         self.root = Path(root)
         self.auth = auth
-        self.policy = check_policy(dict(DEFAULT_POLICY) if policy is None else policy)
+        self._policy = deepcopy(check_policy(DEFAULT_POLICY if policy is None else policy))
         self._clock = clock or (lambda: datetime.now(timezone.utc))
         if id_key is not None and len(id_key) < ID_KEY_BYTES:
             raise ValueError(f"the key of the task IDs must have {ID_KEY_BYTES} bytes or more")
         self._id_key = secrets.token_bytes(ID_KEY_BYTES) if id_key is None else id_key
+
+    @property
+    def policy(self) -> dict[str, Any]:
+        """Return a copy of the review policy."""
+        return deepcopy(self._policy)
 
     def actor(self, authorization: Sequence[str]) -> str:
         """The actor of a request, from the value of each of its Authorization headers."""
@@ -621,7 +628,7 @@ class Service:
         return check_claim(authorization, self.auth, int(self._clock().timestamp()))
 
     def _review(self, store: Any, actor: str, only: list[str] | None = None) -> Review:
-        return Review(store, actor, self.policy, clock=self._clock, only=only)
+        return Review(store, actor, self._policy, clock=self._clock, only=only)
 
     def skipped(self) -> list[str]:
         """A line for each packet of the store that gives no task, as ``Review.skipped``."""
@@ -699,7 +706,7 @@ class Service:
                    for r in records if isinstance(r.get("task"), str)]
             for name, records in read.items()
         }  # fmt: skip
-        named = set(group(tasks, logs, actor, self.policy["agree"]))
+        named = set(group(tasks, logs, actor, self._policy["agree"]))
         return {key for key, _ in views if ids[key] in named}
 
     def _served(
@@ -846,8 +853,13 @@ class Service:
 # The server
 
 
-def server(service: Service, port: int = 0) -> ThreadingHTTPServer:
-    """The review API of ``service`` on 127.0.0.1. Port 0 takes a free port."""
+def server(
+    service: Service, port: int = 0, *, first_agree: int | None = None
+) -> ThreadingHTTPServer:
+    """The review API on 127.0.0.1. Port 0 takes a free port.
+    Close the server to unlock the store."""
+    from ..store import FolderStore
+
     lock = threading.Lock()
     host = ""  # 127.0.0.1 and the bound port, set once the server binds
 
@@ -948,6 +960,26 @@ def server(service: Service, port: int = 0) -> ThreadingHTTPServer:
         def log_message(self, *args: Any) -> None:
             pass
 
-    httpd = ThreadingHTTPServer(("127.0.0.1", port), Handler)
+    class Server(ThreadingHTTPServer):
+        # Wait for requests to end before the next server can change agree.
+        daemon_threads = False
+
+        def __init__(self) -> None:
+            self._store_use = ExitStack()
+            super().__init__(("127.0.0.1", port), Handler)
+            try:
+                store = FolderStore(service.root)
+                self._store_use.enter_context(
+                    store.review_api(service._policy["agree"], first_agree=first_agree)
+                )
+            except BaseException:
+                self.server_close()
+                raise
+
+        def server_close(self) -> None:
+            super().server_close()
+            self._store_use.close()
+
+    httpd = Server()
     host = f"127.0.0.1:{httpd.server_port}"
     return httpd

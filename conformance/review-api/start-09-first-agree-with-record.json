@@ -1,0 +1,13 @@
+{
+ "name": "start-09-first-agree-with-record",
+ "kind": "start",
+ "description": "A recorded value stops a start with the option.",
+ "recorded_agree": 2,
+ "agree": 2,
+ "answer_log": true,
+ "expected": {
+  "agree": 2,
+  "error": "--first-agree requires a store with no recorded agree."
+ },
+ "first_agree": 2
+}
