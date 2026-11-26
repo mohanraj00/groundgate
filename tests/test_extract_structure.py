@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import ast
 import json
+import subprocess
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -847,6 +849,36 @@ def test_the_text_of_a_table_open_at_the_depth_limit_is_not_a_line(tmp_path: Pat
     doc = document(tmp_path, html)
     result = run(doc, PLAIN, policy=ADMIT)
     assert result.candidates == []
+
+
+@pytest.mark.parametrize("suffix", ["html", "xml"])
+def test_a_table_open_at_the_depth_limit_survives_composition_at_a_cell_end(
+    tmp_path: Path, suffix: str
+) -> None:
+    path = tmp_path / f"doc.{suffix}"
+    source = (
+        "<div>Lead<table><tr><td>e</td>\u0301<td>"
+        + "<div>" * MAX_DEPTH
+        + "Revenue: 999  "
+        + "</div>" * MAX_DEPTH
+        + "</td></tr></table></div>"
+    )
+    path.write_text(source, encoding="utf-8")
+    code = (
+        "import sys; from groundgate.read.document import read_document; "
+        "print(read_document(sys.argv[1])[1].to_json().decode())"
+    )
+    done = subprocess.run(
+        [sys.executable, "-c", code, str(path)], capture_output=True, timeout=5, check=False
+    )
+    assert done.returncode == 0, done.stderr.decode()
+    doc = Document.from_dict(json.loads(done.stdout), "Lead\n\né\nRevenue: 999")
+    assert len(doc.nodes) == 1
+    table = doc.nodes[0]
+    assert table.kind == "table" and table.parent is None
+    assert doc.open_table_start == table.start == len(b"Lead\n\n")
+    assert table.end == len(doc.text.encode())
+    assert run(doc, PLAIN, policy=ADMIT).candidates == []
 
 
 def test_lines_in_the_open_table_tail_block_a_proposal_at_the_node_limit(

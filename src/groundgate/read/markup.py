@@ -374,6 +374,7 @@ def _final(w: _Writer, raws: list[Raw], open_table: Raw | None = None) -> tuple[
         moved = nfc_map(text, [kept(open_table.start)])
         open_table.start = moved[kept(open_table.start)] if moved is not None else 0
         open_table.end = len(final)
+        open_table.parent = None
         return final, [open_table]
     for r in closed:
         r.start, r.end = moved[kept(r.start)], moved[kept(r.end)]

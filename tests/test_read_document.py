@@ -576,3 +576,17 @@ def test_admit_and_the_core_rules_do_not_import_the_document_model() -> None:
     )
     out = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, check=True)
     assert out.stdout.split("\n")[:2] == ["[]", "False"]
+
+
+def test_finish_returns_no_nodes_for_invalid_parent_indices() -> None:
+    code = """
+from groundgate.read.nodes import Raw, finish
+
+for parents in ((0,), (1,), (-1,), (1, 0)):
+    raws = [Raw("paragraph", "markup", 0, parent=parent, end=1) for parent in parents]
+    assert finish("x", raws) == [], parents
+"""
+    done = subprocess.run(
+        [sys.executable, "-c", code], capture_output=True, text=True, timeout=5, check=False
+    )
+    assert done.returncode == 0, done.stderr

@@ -361,9 +361,13 @@ def finish(text: str, raws: list[Raw]) -> list[dict[str, Any]]:
     Each span loses the whitespace at its two ends. A node is dropped when it did not close, when
     its span is empty (an empty cell keeps a zero-width span inside its row), or when it breaks
     the order, the nesting or the parent kinds of §4.2. The children of a dropped node get the
-    nearest node above it as parent. The first MAX_NODES nodes stay.
+    nearest node above it as parent. A parent index must name an earlier raw node, or no nodes
+    are returned. The first MAX_NODES nodes stay.
     """
-    for raw in raws:  # trim each span in place; a node that did not close goes
+    for n, raw in enumerate(raws):
+        if raw.parent is not None and not 0 <= raw.parent < n:
+            return []
+        # Trim each span in place. A node that did not close goes.
         s, e = raw.start, raw.end
         if not raw.keep or e < s:
             raw.keep = False
