@@ -1096,13 +1096,117 @@ def test_review_tasks_writes_no_new_audit_task_for_a_packet_with_tasks(tmp_path:
     with FolderStore(root) as store:
         assert len(write_tasks(store, k, NO_AUDIT).tasks) == 1  # the same tasks again
         before = store.object_keys()
-        with pytest.raises(ValueError, match="new audit task"):
+        with pytest.raises(ValueError, match="new audit"):
             write_tasks(store, k, EVERY)
         assert store.object_keys() == before
     other = tmp_path / "other"
     k, tasks = make_store(other)
     with FolderStore(other) as store:
         assert {tk for tk, _ in write_tasks(store, k, EVERY).tasks} == set(tasks.values())
+
+
+def test_an_answer_log_that_the_store_cannot_read_gives_no_group(reviewing: Served) -> None:
+    """A read can see a torn last line while another writer appends. A log left out would
+    remove the record of zed from the count, and ana would get the blind task after the review
+    group. So the actor gets no group of the packet until the log reads again."""
+    root, _, tasks, call = reviewing
+    revenue, blind = id_of(tasks["revenue"]), id_of(tasks["net_income"])
+
+    def fields() -> list[str]:
+        return [t["field"] for t in json.loads(call("GET", "/v1/tasks")[2])["tasks"]]
+
+    assert fields() == ["revenue"]
+    ((name, data),) = answer_logs(root).items()  # the log of zed
+    (root / name).write_bytes(data + b'{"format":"answer@1","reviewer":"zed"')
+    assert fields() == []
+    for task in (revenue, blind):
+        assert error(call("GET", f"/v1/tasks/{task}")) == (403, "not_assigned")
+        assert error(call("POST", "/v1/answers", {"task": task, "verdict": "unsure"})) == (
+            403,
+            "not_assigned",
+        )
+    (root / name).write_bytes(data)
+    assert fields() == ["revenue"] and answer_logs(root) == {name: data}
+
+
+def test_the_review_group_never_comes_before_the_blind_tasks_of_its_packet(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """A listing of the store reads each object folder at a different time, so it can give the
+    review task without the blind task. ``review tasks`` writes the audit tasks first, and the
+    service lists the store a second time for the audit tasks."""
+    written: list[str] = []
+    put = FolderStore.put
+
+    def watched(self: FolderStore, kind: str, data: bytes) -> str:
+        if kind == "task@1":
+            written.append(json.loads(data)["mode"])
+        return put(self, kind, data)
+
+    monkeypatch.setattr(FolderStore, "put", watched)
+    root = tmp_path / "store"
+    # the slot of the review task comes first: revenue, then tax
+    schema = {"fields": {"revenue": {"type": "number"}, "tax": {"type": "number"}}}
+    given = [{**c, "field": "tax"} if c["field"] == "net_income" else c for c in CANDIDATES]
+    with FolderStore(root) as store:
+        k, _ = admit_packet(store, TEXT, schema, given, None, "doc-1", None)
+        result = write_tasks(store, k, EVERY).tasks
+    tasks = {t["slot"]["field"]: tk for tk, t in result}
+    assert written == ["audit", "review"]
+    assert [t["mode"] for _, t in result] == ["review", "audit"]  # the result keeps slot order
+
+    hidden: list[str] = []  # the task key that the next listing does not give
+    listing = FolderStore.object_keys
+
+    def partial(self: FolderStore) -> tuple[list[str], list[str]]:
+        keys, problems = listing(self)
+        if hidden:
+            gone = hidden.pop()
+            keys = [x for x in keys if x != gone]
+        return keys, problems
+
+    monkeypatch.setattr(FolderStore, "object_keys", partial)
+    service = Service(root, ISSUERS, clock=lambda: CLOCK, id_key=KEY)
+    with serving(api.server(service), {"Authorization": claim()}) as call:
+        hidden.append(tasks["tax"])
+        listed = json.loads(call("GET", "/v1/tasks")[2])["tasks"]
+        assert not hidden and [t["field"] for t in listed] == ["tax"]
+        hidden.append(tasks["tax"])
+        revenue = call("GET", f"/v1/tasks/{id_of(tasks['revenue'])}")
+        assert not hidden and error(revenue) == (403, "not_assigned")
+
+
+def test_review_tasks_runs_again_after_a_stop_in_its_audit_tasks(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """A stop between two audit tasks leaves no task of the review group, so no actor got that
+    group. A second run then writes the tasks that are not in the store."""
+    root = tmp_path / "store"
+    schema = {"fields": {**SCHEMA["fields"], "year": {"type": "integer"}}}
+    year = {
+        "id": "y1",
+        "field": "year",
+        "value": "2025",
+        "evidence": {**at("2025"), "text": "2025"},
+    }
+    put = FolderStore.put
+    audits: list[int] = []
+
+    def stops(self: FolderStore, kind: str, data: bytes) -> str:
+        if kind == "task@1" and json.loads(data)["mode"] == "audit":
+            audits.append(1)
+            if len(audits) == 2:
+                raise OSError("the disk is full")
+        return put(self, kind, data)
+
+    with FolderStore(root) as store:
+        k, _ = admit_packet(store, TEXT, schema, [*CANDIDATES, year], None, "doc-1", None)
+        monkeypatch.setattr(FolderStore, "put", stops)
+        with pytest.raises(OSError, match="disk"):
+            write_tasks(store, k, EVERY)
+        monkeypatch.setattr(FolderStore, "put", put)
+        modes = [t["mode"] for _, t in write_tasks(store, k, EVERY).tasks]
+    assert sorted(modes) == ["audit", "audit", "review"]
 
 
 def test_a_calibrate_label_task_is_not_a_task_of_the_api(tmp_path: Path) -> None:

@@ -680,17 +680,24 @@ class Service:
     ) -> set[str]:
         """The task keys of the group of the actor for the packet of ``doc``, from the answer
         logs of the store (SPEC §4.20). The order of the blind tasks uses the task IDs, not the
-        task keys: a task key is a hash over the packet."""
+        task keys: a task key is a hash over the packet. If the store cannot read an answer log
+        of the packet, the actor has no group for it at this request."""
         ids = {key: self._id(key) for key, _ in views}
         tasks = [
             {"task": ids[key], "field": view["field"], "key": view["key"],
              "blind": view["mode"] == "audit"}
             for key, view in views
         ]  # fmt: skip
+        from ..store import StoreError
+
+        try:
+            read = review._logs(doc.key, strict=True)
+        except StoreError:  # a torn line while another writer appends: no group now
+            return set()
         logs = {
             name: [{"task": ids.get(r["task"]), "verdict": r.get("verdict")}
                    for r in records if isinstance(r.get("task"), str)]
-            for name, records in review._logs(doc.key).items()
+            for name, records in read.items()
         }  # fmt: skip
         named = set(group(tasks, logs, actor, self.policy["agree"]))
         return {key for key, _ in views if ids[key] in named}

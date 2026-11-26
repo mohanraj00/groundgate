@@ -2299,10 +2299,25 @@ answer, and after a later answer that replaces it:
 - The service takes the lock of the answer log of the actor (§7) before it reads the group for
   an answer, and keeps it until the append. So two answers of one actor at the same time
   cannot go to two groups. The second one gives `log_refused`.
+- If the service cannot read an answer log of the packet, the actor has no group for the
+  packet at that request. The list gives no task of the packet, and each task of the API of
+  the packet gives `not_assigned`. A read can see a torn last line while another writer
+  appends (§9), and a log left out would remove the records of its actor from the count of
+  step 2.
 
-A new blind task of a packet could go to an actor who got the review group. So
-`groundgate review tasks` writes no new task with the mode `audit` for a packet that has a task
-in the store. It stops with an error before a write. A new audit sample needs a new packet.
+A new blind task of a packet could go to an actor who got the review group. So the review group
+of a packet never comes before its blind tasks:
+
+- `groundgate review tasks` writes each task with the mode `audit` before the other tasks. It
+  writes no new task with the mode `audit` for a packet that has a task in the store with
+  another mode. It stops with an error before a write. A new audit sample needs a new packet.
+  Run one `review tasks` at a time for a packet.
+- The service lists the objects of the store two times for each request. The second listing
+  starts after the first one ends. The tasks of the API are the tasks of the first listing,
+  and each task with the mode `audit` that only the second listing gives. A listing reads each
+  object folder at a different time, so it can give a task without a task that the writer
+  wrote before it. If the first listing gives a task of the review group, its blind tasks were
+  in the store before the second listing started.
 
 The cost is more actors. With `agree` 1, the first actor of a packet with one blind task gets
 the blind task, and the next actor gets the review group. With a static token, the one actor
