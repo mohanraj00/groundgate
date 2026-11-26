@@ -273,12 +273,18 @@ def page_server(kit: Path | None, api_port: int, port: int = 0) -> ThreadingHTTP
 
 
 def start(
-    store: Path, kit: Path | None, reviewer: str, token: str, port: int = 0
+    store: Path,
+    kit: Path | None,
+    reviewer: str,
+    token: str,
+    port: int = 0,
+    *,
+    first_agree: int | None = None,
 ) -> tuple[ThreadingHTTPServer, ThreadingHTTPServer, str]:
     """Start the review API and the page server, each on its thread. The result is the two
     servers and the start URL, which holds the token after ``#``."""
     service = api.Service(store, api.read_token(token, reviewer))
-    api_httpd = api.server(service)
+    api_httpd = api.server(service, first_agree=first_agree)
     try:
         page_httpd = page_server(kit, api_httpd.server_port, port)
     except BaseException:
@@ -297,6 +303,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--kit", metavar="DIR", default=str(HERE / ".kit"),
                         help="the folder of the kit checkout")  # fmt: skip
     parser.add_argument("--port", type=int, default=0, help="the port; 0 takes a free one")
+    parser.add_argument(
+        "--first-agree",
+        metavar="N",
+        type=int,
+        help="record the previous agree for a store with no record. N must equal 1 in this example",
+    )
     parser.add_argument("--no-kit", action="store_true", help="draw plain controls: get no kit")
     args = parser.parse_args(argv)
     if args.store:
@@ -310,7 +322,14 @@ def main(argv: list[str] | None = None) -> int:
         print(f"The store with the made-up invoice is in {store}")
     kit = find_kit(None if args.no_kit else Path(args.kit))
     try:
-        servers = start(store, kit, args.reviewer, secrets.token_urlsafe(32), args.port)
+        servers = start(
+            store,
+            kit,
+            args.reviewer,
+            secrets.token_urlsafe(32),
+            args.port,
+            first_agree=args.first_agree,
+        )
     except (ValueError, OSError, StoreError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2

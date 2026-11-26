@@ -16,8 +16,9 @@ spec version, and receipts name the spec version they were decided under.
 - The review API records `agree` at start. If the store has an answer log and no record,
   start with `--first-agree N`. Give the value that the store used before in the option
   and in the policy. An empty answer log also requires this step. After the first record,
-  remove the option. Use a new store to raise `agree` when the store has an answer log
-  (#742).
+  remove the option. Use a new store to raise `agree` when the store has an answer log.
+  If a crash leaves `state/review-api.lock`, the next start stops with an error. Delete this
+  file only when no review API server runs on this store (#742).
 - When the markup tracker stops inside a table, the reader keeps the outermost open table
   through the end of the text. A matching line in that span counts toward ambiguity for its
   field and gives no proposal (#629).

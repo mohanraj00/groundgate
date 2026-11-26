@@ -667,7 +667,8 @@ the contract: the operations, the errors and the claim check. This section gives
   group. A later start can keep or lower the value. To raise the value when the store has
   an answer log, use a new store. Keep the old answers with the old value. The server
   stops if it cannot read or validate the recorded value. Only one review API server can
-  use the store at a time.
+  use the store at a time. If a crash leaves `state/review-api.lock`, the next start
+  stops with an error. Delete this file only when no review API server runs on this store.
 - **The check of a blind correction reads no hidden candidate.** For a correction of a blind
   task, the `admit` call of section 6.2 has only the candidate of the correction. It leaves out
   each other candidate of the packet, also the candidates of the review tasks, because a

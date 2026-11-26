@@ -222,10 +222,14 @@ store/
   logs/events/<profile>.jsonl                the calibration events of #642, one log for each profile digest
   logs/deleted.jsonl                         the deletions
   state/review-api                           the key of the current review API state
+  state/review-api.lock                      the lock of the review API server
   views/...                                  JSON files; delete them at any time
 ```
 
 Each path part is a 64-digit hex digest or a fixed word.
+
+If a crash leaves `state/review-api.lock`, the next start of the review API stops with an error.
+Delete this file only when no review API server runs on this store.
 
 A record of `logs/deleted.jsonl` names one deletion. An object deletion is
 `{"key": "sha256:...", "reason": "...", "time": "2026-10-20T09:30:00Z"}`, and a log deletion has

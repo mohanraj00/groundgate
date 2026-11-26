@@ -51,6 +51,7 @@ import threading
 import unicodedata
 from collections.abc import Callable, Iterable, Iterator, Mapping, Sequence
 from contextlib import ExitStack
+from copy import deepcopy
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -609,11 +610,16 @@ class Service:
     ) -> None:
         self.root = Path(root)
         self.auth = auth
-        self._policy = check_policy(DEFAULT_POLICY if policy is None else policy).copy()
+        self._policy = deepcopy(check_policy(DEFAULT_POLICY if policy is None else policy))
         self._clock = clock or (lambda: datetime.now(timezone.utc))
         if id_key is not None and len(id_key) < ID_KEY_BYTES:
             raise ValueError(f"the key of the task IDs must have {ID_KEY_BYTES} bytes or more")
         self._id_key = secrets.token_bytes(ID_KEY_BYTES) if id_key is None else id_key
+
+    @property
+    def policy(self) -> dict[str, Any]:
+        """Return a copy of the review policy."""
+        return deepcopy(self._policy)
 
     def actor(self, authorization: Sequence[str]) -> str:
         """The actor of a request, from the value of each of its Authorization headers."""

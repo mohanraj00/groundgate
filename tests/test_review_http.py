@@ -1523,6 +1523,19 @@ def test_the_service_keeps_no_state_outside_the_store(tmp_path: Path) -> None:
     assert vars(service).keys() == {"root", "auth", "_policy", "_clock", "_id_key"}
 
 
+def test_service_policy_returns_a_copy(tmp_path: Path) -> None:
+    policy = {**EVERY, "audit": {**EVERY["audit"]}, "leads": ["ana"]}
+    service = Service(tmp_path, ISSUERS, policy)
+    snapshot = service.policy
+    assert snapshot == policy
+    snapshot["agree"] = 2
+    snapshot["audit"]["seed"] = "other"
+    snapshot["leads"].append("bea")
+    assert service.policy == policy
+    with pytest.raises(AttributeError):
+        service.policy = snapshot
+
+
 def test_a_packet_that_does_not_match_its_receipt_gives_no_task(tmp_path: Path) -> None:
     root = tmp_path / "store"
     k, tasks = make_store(root)
@@ -1600,7 +1613,11 @@ def test_a_second_server_cannot_change_agree_while_the_first_runs(
     tmp_path: Path, unbound_server: None
 ) -> None:
     with api.server(Service(tmp_path, ISSUERS, {**EVERY, "agree": 2})):
-        with pytest.raises(Locked, match=r"review-api\.lock"):
+        with pytest.raises(
+            Locked,
+            match=r"state/review-api\.lock exists\. Delete this file only when no review API "
+            r"server runs on this store\.",
+        ):
             api.server(Service(tmp_path, ISSUERS)).server_close()
         assert recorded_agree(tmp_path) == 2
     with api.server(Service(tmp_path, ISSUERS)):

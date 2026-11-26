@@ -580,13 +580,15 @@ class FolderStore:
             return data[size:]
 
     @contextlib.contextmanager
-    def _hold(self, folder: Path, name: str) -> Iterator[None]:
+    def _hold(self, folder: Path, name: str, *, recovery: str | None = None) -> Iterator[None]:
         """Hold ``folder/<name>.lock`` for one operation, then remove it."""
         lock = folder / f"{name}.lock"
         mark = f"{os.getpid()}\n{secrets.token_hex(16)}\n".encode("ascii")
         try:
             fd = os.open(lock, os.O_WRONLY | os.O_CREAT | os.O_EXCL | _NOFOLLOW, self.file_mode)
         except FileExistsError as exc:
+            if recovery is not None:
+                raise Locked(f"{lock} exists. {recovery}") from exc
             raise Locked(f"{lock} exists: {self._holder(lock)}") from exc
         try:
             try:
@@ -702,7 +704,11 @@ class FolderStore:
         if type(agree) is not int or agree < 1:
             raise ValueError("agree must be an integer of 1 or more")
         folder = self._folder(["state"], make=True)
-        with self._hold(folder, "review-api"):
+        with self._hold(
+            folder,
+            "review-api",
+            recovery="Delete this file only when no review API server runs on this store.",
+        ):
             self._record_review_agree(folder, agree, first_agree)
             yield
 

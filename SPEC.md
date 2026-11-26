@@ -2329,6 +2329,8 @@ member `agree`, an integer of 1 or more. In the folder store, `state/review-api`
 key of the current object as ASCII, with no line break. The service writes the object first
 and replaces the key file in one step. The folder store permits one review API server at a
 time. The server holds `state/review-api.lock` from before the check until it stops.
+If a crash leaves this file in the store, the next start stops with an error.
+Delete this file only when no review API server runs on this store.
 
 To use a higher `agree` on a store with an answer log, start with a new store. This keeps the
 old answers and their record of `agree` together. A task read writes no record. The service
