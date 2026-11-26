@@ -102,6 +102,12 @@ def head(sec: ET.Element) -> str:
     return text_of(sec.find("HEAD"))  # type: ignore[arg-type]
 
 
+def table_name(table: ET.Element, number: int, section: str) -> str:
+    caption = table.find("CAPTION")
+    name = text_of(caption) if caption is not None else ""
+    return name or f"table {number} of {section}"
+
+
 def grid(rows: list[ET.Element], tag: str) -> list[list[str]]:
     """The text of each cell of ``rows`` on a grid, with rowspan and colspan filled in."""
     out: list[list[str]] = []
@@ -140,9 +146,7 @@ def tables(root: ET.Element) -> list[dict[str, Any]]:
     found = []
     for sec in sections(root):
         for n, t in enumerate(sec.iter("TABLE"), 1):
-            cap = t.find("CAPTION")
-            name = text_of(cap) if cap is not None and text_of(cap) else ""
-            name = name or f"table {n} of {head(sec)}"
+            name = table_name(t, n, head(sec))
             hrows = [tr for th in t.findall("THEAD") for tr in th.findall("TR")]
             brows = [tr for tb in t.findall("TBODY") for tr in tb.findall("TR")]
             hg, bg = grid(hrows, "TH"), grid(brows, "TD")

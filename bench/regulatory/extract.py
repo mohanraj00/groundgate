@@ -11,10 +11,12 @@ from typing import Any
 
 import groundgate as gg
 from groundgate.model import DATE_FORMATS, Schema
+from groundgate.read import ReadError
+from groundgate.read.document import DocumentError, Node, read_document
 from groundgate.read.markup import xml_text
 from groundgate.text import quote_pattern
 
-from .slots import FIELDS, MAX_ROWS, head, sections, text_of
+from .slots import FIELDS, MAX_ROWS, head, sections, table_name, text_of
 
 Json = dict[str, Any]
 UNITS = {k.casefold(): k for k in sorted(Schema.from_dict({"fields": {}}).units)}
@@ -75,17 +77,99 @@ def base_profile(schema: Json) -> Json:
     return {
         "groundgate_profile": 1,
         "id": "regulatory",
-        "version": "1.0.0",
+        "version": "1.1.0",
         "description": "Requests on pinned regulatory text.",
         "schema": {"fields": fields},
-        "policy": {},
+        "policy": {"proposers": {"structure": "corroborate"}},
     }
 
 
-def fragment(element: ET.Element) -> str:
+def fragment_xml(element: ET.Element) -> bytes:
     node = copy.copy(element)
     node.tail = None
-    return unicodedata.normalize("NFC", xml_text(ET.tostring(node, encoding="utf-8")))
+    return ET.tostring(node, encoding="utf-8")
+
+
+def fragment(element: ET.Element) -> str:
+    return unicodedata.normalize("NFC", xml_text(fragment_xml(element)))
+
+
+@dataclass(frozen=True)
+class TableCell:
+    span: Node
+    row: Node
+
+
+@dataclass
+class Table:
+    text: str
+    rows: list[list[TableCell]]
+    spans_rows: bool
+
+
+def read_table(sec: ET.Element, request: Json, section_text: str) -> Table | None:
+    matches = [
+        table
+        for n, table in enumerate(sec.iter("TABLE"), 1)
+        if table_name(table, n, request["section"]) == request["name"]
+    ]
+    if len(matches) != 1:
+        return None
+    table = matches[0]
+    source_rows = list(table.iter("TR"))
+    body = {row: group for group in table.findall("TBODY") for row in group.findall("TR")}
+    if not 2 <= len(body) <= MAX_ROWS or any(t is not table for t in table.iter("TABLE")):
+        return None
+    try:
+        _, doc = read_document("table.xml", data=fragment_xml(table))
+    except (DocumentError, ReadError):
+        return None
+    nodes = doc.of_kind("table")
+    if doc.open_table_start is not None or len(nodes) != 1 or doc.text not in section_text:
+        return None
+    row_nodes = doc.children(nodes[0].id)
+    if len(row_nodes) != len(source_rows):
+        return None
+    width = len(request["columns"])
+    data = doc.text.encode()
+    grid: dict[int, dict[int, TableCell]] = {
+        n: {} for n, row in enumerate(source_rows) if row in body
+    }
+    spans_rows = False
+    for n, (source_row, row) in enumerate(zip(source_rows, row_nodes, strict=True)):
+        if n not in grid:
+            continue
+        cells = doc.children(row.id)
+        if len(cells) != len(source_row.findall("TD")):
+            return None
+        end = row.start
+        for cell in cells:
+            assert cell.column is not None and cell.rows is not None and cell.columns is not None
+            after_row = n + cell.rows
+            after_col = cell.column + cell.columns
+            if (
+                cell.row != n
+                or after_row > len(source_rows)
+                or after_col > width
+                or data[end : cell.start].decode().strip()
+            ):
+                return None
+            placed = TableCell(cell, row)
+            for r in range(n, after_row):
+                if body.get(source_rows[r]) is not body[source_row]:
+                    return None
+                for c in range(cell.column, after_col):
+                    if c in grid[r]:
+                        return None
+                    grid[r][c] = placed
+            spans_rows |= cell.rows > 1
+            end = cell.end
+        if data[end : row.end].decode().strip():
+            return None
+    if any(len(row) != width for row in grid.values()):
+        return None
+    rows = [[row[c] for c in range(width)] for row in grid.values()]
+    return Table(doc.text, rows, spans_rows)
 
 
 @dataclass
@@ -93,6 +177,7 @@ class Section:
     text: str
     start: int  # UTF-8 byte offset in the part
     outline: list[Json]  # UTF-8 byte offsets in the section
+    tables: dict[str, Table | None]
 
 
 def section_views(text: str, raw: bytes, slots: list[Json]) -> dict[str, Section]:
@@ -128,7 +213,12 @@ def section_views(text: str, raw: bytes, slots: list[Json]) -> dict[str, Section
                 start = len(body[:pos].encode())
                 outline.append({"start": start, "end": start + len(term.encode()), "level": 2})
                 cursor = pos + len(term)
-        views[name] = Section(body, len(text[:at].encode()), outline)
+        tables = {
+            s["slot"]: read_table(sec, s["request"], body)
+            for s in slots
+            if s["kind"] == "record" and s["request"]["section"] == name
+        }
+        views[name] = Section(body, len(text[:at].encode()), outline, tables)
     if views.keys() != wanted:
         raise ValueError("a requested section is missing from the XML")
     return views
@@ -175,6 +265,78 @@ def quote_item(quote: str, view: Section, role: str, *, absolute: bool) -> Json:
     return item
 
 
+def row_matches(row: list[TableCell], quotes: list[re.Pattern[str] | None], data: bytes) -> bool:
+    for cell, quote in zip(row, quotes, strict=True):
+        if quote is None:
+            continue
+        row_start = cell.row.start
+        text = data[row_start : cell.row.end].decode()
+        start = len(data[row_start : cell.span.start].decode())
+        end = len(data[row_start : cell.span.end].decode())
+        if start == end or not any(
+            m.start() <= start and end <= m.end() for m in quote.finditer(text)
+        ):
+            return False
+    return True
+
+
+def cell_candidate(slot: Json, row: int, col: int, cell: Node, value: str, proposer: str) -> Json:
+    return {
+        "id": f"{slot['slot']}.{row}.{col + 1}.{proposer}",
+        "field": f"{slot['field']}.{column(col)}",
+        "record": str(row),
+        "value": value,
+        "proposer": proposer,
+        "evidence": [{"source": "document", "role": "value", "start": cell.start, "end": cell.end}],
+    }
+
+
+def record_candidates(slot: Json, answer: Json, table: Table) -> list[Json] | None:
+    """Build the candidates of a table. Return None if the quotes cannot identify rows."""
+    base = {"slot", "status"}
+    if answer.get("status") == "absent":
+        require(set(answer) == base, slot)
+        rows: list[list[Json | None]] = []
+    else:
+        require(answer.get("status") == "value" and set(answer) == base | {"rows"}, slot)
+        rows = answer["rows"]
+        width = len(slot["request"]["columns"])
+        require(isinstance(rows, list) and 0 < len(rows) <= MAX_ROWS, slot)
+        for row in rows:
+            require(isinstance(row, list) and len(row) == width, slot)
+            for cell in row:
+                if cell is None:
+                    continue
+                require(isinstance(cell, dict) and set(cell) == {"value", "quote"}, slot)
+                require(all(isinstance(v, str) and bool(v.strip()) for v in cell.values()), slot)
+
+    data = table.text.encode()
+    out = []
+    seen = set()
+    for row in rows:
+        quotes = [None if cell is None else quote_pattern(cell["quote"]) for cell in row]
+        if not any(quotes):
+            continue
+        matches = [n for n, source in enumerate(table.rows, 1) if row_matches(source, quotes, data)]
+        if len(matches) != 1 or matches[0] in seen:
+            return None
+        n = matches[0]
+        seen.add(n)
+        for i, cell in enumerate(row):
+            if cell is not None:
+                # The quote contains this cell. Use just the cell as evidence.
+                out.append(cell_candidate(slot, n, i, table.rows[n - 1][i].span,
+                                          cell["value"], "model"))  # fmt: skip
+
+    for n, source in enumerate(table.rows, 1):
+        for i, cell in enumerate(source):
+            cell_node = cell.span
+            if cell_node.start < cell_node.end:
+                value = data[cell_node.start : cell_node.end].decode()
+                out.append(cell_candidate(slot, n, i, cell_node, value, "structure"))
+    return out
+
+
 def candidates(slot: Json, answer: Json, view: Section, index: int) -> list[Json]:
     kind = slot["kind"]
     base = {"slot", "status"}
@@ -192,27 +354,6 @@ def candidates(slot: Json, answer: Json, view: Section, index: int) -> list[Json
         if "start" in item:
             item.pop("text")  # the quote matched every non-whitespace character of the span
         return [candidate | {"value": answer["heading"], "evidence": [item]}]
-    if kind == "record":
-        require(set(answer) == base | {"rows"}, slot)
-        rows = answer["rows"]
-        width = len(slot["request"]["columns"])
-        require(isinstance(rows, list) and 0 < len(rows) <= MAX_ROWS, slot)
-        out = []
-        for n, row in enumerate(rows, 1):
-            require(isinstance(row, list) and len(row) == width, slot)
-            for i, cell in enumerate(row):
-                if cell is None:
-                    continue
-                require(isinstance(cell, dict) and set(cell) == {"value", "quote"}, slot)
-                require(all(isinstance(v, str) and bool(v.strip()) for v in cell.values()), slot)
-                out.append({
-                    "id": f"{slot['slot']}.{n}.{i + 1}",
-                    "field": f"{field}.{column(i)}",
-                    "record": str(n),
-                    "value": cell["value"],
-                    "evidence": [quote_item(cell["quote"], view, "value", absolute=False)],
-                })  # fmt: skip
-        return out
     allowed = {"value", "evidence"} | ({"unit"} if kind == "number" else set())
     require(set(answer) == base | allowed and isinstance(answer["value"], str), slot)
     evidence = answer["evidence"]

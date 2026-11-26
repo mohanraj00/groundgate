@@ -20,15 +20,16 @@ from bench.requested.run_set import CachedTransportError, CacheError
 FEE = "§ 1.1 Fees."
 DEFINITIONS = "§ 1.2 Definitions."
 ROWS = "§ 1.3 Rates."
+TABLE = "Rates"
 XML = f"""<DIV5 TYPE="PART"><HEAD>Part 1</HEAD>
 <DIV8 TYPE="SECTION"><HEAD>{FEE}</HEAD>
 <P>The fee is $5 starting on January 2, 2025.</P><CITA>[12 FR 34]</CITA></DIV8>
 <DIV8 TYPE="SECTION"><HEAD>{DEFINITIONS}</HEAD>
 <P><I>Person.</I> A human being.</P><P><I>Other.</I> A different person.</P></DIV8>
 <DIV8 TYPE="SECTION"><HEAD>{ROWS}</HEAD>
-<TABLE><TR><TH>Code</TH><TH>Rate</TH></TR>
-<TR><TD>Alpha</TD><TD>33</TD></TR>
-<TR><TD>Beta</TD><TD>46</TD></TR></TABLE></DIV8></DIV5>""".encode()
+<TABLE><CAPTION>{TABLE}</CAPTION><THEAD><TR><TH>Code</TH><TH>Rate</TH></TR></THEAD>
+<TBODY><TR><TD>Alpha</TD><TD>33</TD></TR>
+<TR><TD>Beta</TD><TD>46</TD></TR></TBODY></TABLE></DIV8></DIV5>""".encode()
 TEXT = read("part.xml", data=XML).text.encode()
 TRANSPORT = {"id": "fake", "model": "fixed", "effort": "medium", "version": "1"}
 REQUESTS = [
@@ -36,7 +37,7 @@ REQUESTS = [
     ("definition", DEFINITIONS, {"term": "Person"}, "A human being.", None),
     ("table_value", FEE, {"row": 1}, "5.0", "$"),
     ("effective_date", FEE, {}, "2025-01-02", None),
-    ("table_rows", ROWS, {"columns": ["Code", "Rate"]}, [
+    ("table_rows", ROWS, {"name": TABLE, "columns": ["Code", "Rate"]}, [
         {"Code": "Alpha", "Rate": "33"}, {"Code": "Beta", "Rate": "46"},
     ], None),
 ]  # fmt: skip
@@ -243,6 +244,111 @@ def test_malformed_reply_counts_as_misses(project):
     result = json.loads((directory / "results.json").read_text())
     assert result["total"]["invalid"] == result["total"]["missed"] == 5
     assert result["total"]["admitted_error_upper_95"] == upper_95(0, 40)
+
+
+def table_reply(xml, rows, monkeypatch):
+    slot = {
+        "slot": "r001",
+        "field": "table_rows",
+        "kind": "record",
+        "request": {"section": ROWS, "name": TABLE, "columns": ["Code", "Rate"]},
+    }
+    text = read("part.xml", data=xml).text
+    part = run.Part("part", text, [slot], run.extract.section_views(text, xml, [slot]), "")
+    answer = {
+        "slot": "r001", "status": "value",
+        "rows": [[None if v is None else {"value": v, "quote": v} for v in row] for row in rows],
+    }  # fmt: skip
+    receipts = []
+    admit = run.gg.admit
+
+    def capture(*args, **kwargs):
+        receipt = admit(*args, **kwargs)
+        if receipt.records:
+            receipts.append(receipt)
+        return receipt
+
+    monkeypatch.setattr(run.gg, "admit", capture)
+    replies = {"part": run.parse_reply(json.dumps({"slots": [answer]}), [slot])}
+    outputs, _ = run.admit([part], replies, run.extract.base_profile(SCHEMA))
+    return outputs["r001"], receipts
+
+
+def test_missing_body_row_goes_to_review(monkeypatch):
+    xml = XML.replace(b"<TBODY>", b"<TBODY><TR><TD></TD><TD>GL BP</TD></TR>")
+    answer, (receipt,) = table_reply(xml, [("Alpha", "33"), ("Beta", "46")], monkeypatch)
+    assert answer == score.Answer("needs_verification")
+    assert {row.record: row.outcome for row in receipt.records} == {
+        "1": "needs_verification",
+        "2": "admitted",
+        "3": "admitted",
+    }
+    missing = next(d for d in receipt.decisions if d.candidate_id == "r001.1.2.structure")
+    assert "NOT_CORROBORATED" in missing.codes
+    assert any(d.candidate_id == "r001.2.1.model" for d in receipt.decisions)
+
+
+@pytest.mark.parametrize("code", ["Alpha", None])
+def test_null_member_at_cell_with_text_goes_to_review(code, monkeypatch):
+    answer, (receipt,) = table_reply(XML, [(code, None), ("Beta", "46")], monkeypatch)
+    assert answer == score.Answer("needs_verification")
+    missing = next(d for d in receipt.decisions if d.candidate_id == "r001.1.2.structure")
+    assert "NOT_CORROBORATED" in missing.codes
+
+
+def test_full_table_is_admitted_in_source_order(monkeypatch):
+    xml = XML.replace(b"Alpha", "Álpha".encode()).replace(b"<TD>46", b"<TD>33")
+    answer, _ = table_reply(xml, [("Beta", "33"), ("Álpha", "33")], monkeypatch)
+    assert answer == score.Answer(
+        "admitted", [{"Code": "Álpha", "Rate": "33"}, {"Code": "Beta", "Rate": "33"}]
+    )
+
+
+def test_empty_cell_stays_null(monkeypatch):
+    xml = XML.replace(b"<TD>33</TD>", b"<TD></TD>")
+    answer, (receipt,) = table_reply(xml, [("Alpha", None), ("Beta", "46")], monkeypatch)
+    assert answer == score.Answer(
+        "admitted", [{"Code": "Alpha", "Rate": None}, {"Code": "Beta", "Rate": "46"}]
+    )
+    assert not any(d.candidate_id.startswith("r001.1.2.") for d in receipt.decisions)
+
+
+@pytest.mark.parametrize("code", ["Alpha", None])
+def test_cell_that_spans_rows_needs_a_match_in_each_row(code, monkeypatch):
+    xml = XML.replace(b"<TD>Alpha</TD>", b'<TD rowspan="2">Alpha</TD>').replace(
+        b"<TD>Beta</TD>", b""
+    )
+    answer, receipts = table_reply(xml, [("Alpha", "33"), (code, "46")], monkeypatch)
+    if code is not None:
+        assert answer == score.Answer(
+            "admitted", [{"Code": "Alpha", "Rate": "33"}, {"Code": "Alpha", "Rate": "46"}]
+        )
+    else:
+        assert answer == score.Answer("needs_verification")
+        missing = next(
+            d for receipt in receipts for d in receipt.decisions
+            if d.candidate_id == "r001.2.1.structure"
+        )  # fmt: skip
+        assert "NOT_CORROBORATED" in missing.codes
+
+
+def test_unreadable_table_goes_to_review(monkeypatch):
+    xml = XML.replace(b"<TD>33</TD>", b"")
+    answer, receipts = table_reply(xml, [("Alpha", "33"), ("Beta", "46")], monkeypatch)
+    assert answer == score.Answer("needs_verification")
+    assert receipts == []
+
+
+def test_null_literal_stays_null(monkeypatch):
+    # #736 cause 2. SPEC step 3 rejects the structure candidate for n/a.
+    xml = XML.replace(b"<TD>33</TD>", b"<TD>n/a</TD>")
+    answer, (receipt,) = table_reply(xml, [("Alpha", None), ("Beta", "46")], monkeypatch)
+    assert answer == score.Answer(
+        "admitted", [{"Code": "Alpha", "Rate": None}, {"Code": "Beta", "Rate": "46"}]
+    )
+    literal = next(d for d in receipt.decisions if d.candidate_id == "r001.1.2.structure")
+    assert literal.outcome == "rejected"
+    assert "NULL_STRING_LITERAL" in literal.codes
 
 
 def test_score_escapes_misses_reviews_and_bound():
