@@ -1,0 +1,11 @@
+{
+ "name": "start-02-lower",
+ "kind": "start",
+ "description": "A lower value replaces the recorded value with an answer log.",
+ "recorded_agree": 2,
+ "agree": 1,
+ "answer_log": true,
+ "expected": {
+  "agree": 1
+ }
+}

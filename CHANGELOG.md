@@ -12,8 +12,10 @@ spec version, and receipts name the spec version they were decided under.
   the other group. The new error code `not_assigned` (403) refuses a task outside the group.
   `review tasks` writes the audit tasks first, and adds no audit task to a packet that has
   review tasks. An answer log that the store cannot read gives the actor no group of its
-  packet. Do not change `agree` of the review policy of a live store: a higher value can give a
-  blind task to an actor who read the other group (#703).
+  packet (#703).
+- The review API records `agree` at start. If the store has an answer log, a higher value
+  stops the start. The error gives the recorded value and the new value. Use a new store to
+  raise `agree` in this case (#742).
 - When the markup tracker stops inside a table, the reader keeps the outermost open table
   through the end of the text. A matching line in that span counts toward ambiguity for its
   field and gives no proposal (#629).

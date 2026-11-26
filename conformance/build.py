@@ -9102,6 +9102,36 @@ group_vector("16-no-review", "A packet with no review task has no review group, 
              {"ben": [rec("b", "correct")], "cy": [rec("c", "correct")]}, [],
              tasks=[GROUP_TASKS[1], GROUP_TASKS[2]])  # fmt: skip
 
+
+# The check of agree at each start of the review API (SPEC §4.20, #742).
+def start_vector(
+    name: str,
+    description: str,
+    recorded_agree: int | None,
+    agree: int,
+    answer_log: bool,
+    expected: dict[str, Any],
+) -> None:
+    REVIEW_API.append({
+        "name": f"start-{name}", "kind": "start", "description": description,
+        "recorded_agree": recorded_agree, "agree": agree, "answer_log": answer_log,
+        "expected": expected,
+    })  # fmt: skip
+
+
+start_vector("01-same", "The same value is permitted with an answer log.",
+             2, 2, True, {"agree": 2})  # fmt: skip
+start_vector("02-lower", "A lower value replaces the recorded value with an answer log.",
+             2, 1, True, {"agree": 1})  # fmt: skip
+start_vector("03-higher-with-log", "An answer log stops a start with a higher value.",
+             1, 2, True,
+             {"agree": 1, "error": "the store has an answer log. Recorded agree is 1. "
+              "New agree is 2. Use a new store to increase agree."})  # fmt: skip
+start_vector("04-higher-without-log", "A higher value is permitted if there is no answer log.",
+             1, 2, False, {"agree": 2})  # fmt: skip
+start_vector("05-no-record", "The first start records the value, also with an answer log.",
+             None, 2, True, {"agree": 2})  # fmt: skip
+
 # The decisions that the check of a correction leaves out, in addition to the decisions of its
 # own slot (SPEC §4.20, #703). For a blind task, they are each other decision of the receipt:
 # the decisions of the other blind tasks, of the review tasks, and of no task.

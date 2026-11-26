@@ -1,0 +1,11 @@
+{
+ "name": "start-05-no-record",
+ "kind": "start",
+ "description": "The first start records the value, also with an answer log.",
+ "recorded_agree": null,
+ "agree": 2,
+ "answer_log": true,
+ "expected": {
+  "agree": 2
+ }
+}

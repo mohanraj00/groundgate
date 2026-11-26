@@ -36,7 +36,7 @@ from typing import Any
 
 from groundgate.review import api
 from groundgate.review.tasks import write_tasks
-from groundgate.store import FolderStore
+from groundgate.store import FolderStore, StoreError
 from groundgate.store.packets import admit_packet
 
 HERE = Path(__file__).parent
@@ -279,7 +279,11 @@ def start(
     servers and the start URL, which holds the token after ``#``."""
     service = api.Service(store, api.read_token(token, reviewer))
     api_httpd = api.server(service)
-    page_httpd = page_server(kit, api_httpd.server_port, port)
+    try:
+        page_httpd = page_server(kit, api_httpd.server_port, port)
+    except BaseException:
+        api_httpd.server_close()
+        raise
     for httpd in (api_httpd, page_httpd):
         threading.Thread(target=httpd.serve_forever, daemon=True).start()
     return api_httpd, page_httpd, f"http://127.0.0.1:{page_httpd.server_port}/#{token}"
@@ -307,7 +311,7 @@ def main(argv: list[str] | None = None) -> int:
     kit = find_kit(None if args.no_kit else Path(args.kit))
     try:
         servers = start(store, kit, args.reviewer, secrets.token_urlsafe(32), args.port)
-    except (ValueError, OSError) as exc:
+    except (ValueError, OSError, StoreError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2
     print(f"Open {servers[2]} and press Ctrl-C here when you finish.", flush=True)

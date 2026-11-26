@@ -52,6 +52,7 @@ _HEX2 = re.compile(r"[0-9a-f]{2}")
 _HEX62 = re.compile(r"[0-9a-f]{62}")
 _HEX64 = re.compile(r"[0-9a-f]{64}")
 _VIEW = re.compile(r"[a-z][a-z0-9-]{0,62}\.json")
+_REVIEW_API_STATE = "review-api-state@1"
 
 LogName = tuple[str, ...]
 Record = dict[str, Any]
@@ -580,7 +581,7 @@ class FolderStore:
 
     @contextlib.contextmanager
     def _hold(self, folder: Path, name: str) -> Iterator[None]:
-        """Hold the lock of the log ``folder/<name>.jsonl`` for one change, then remove it."""
+        """Hold ``folder/<name>.lock`` for one operation, then remove it."""
         lock = folder / f"{name}.lock"
         mark = f"{os.getpid()}\n{secrets.token_hex(16)}\n".encode("ascii")
         try:
@@ -694,6 +695,53 @@ class FolderStore:
             raise ValueError(f"{_short(name)} is not a view name")
         folder = self._folder(["views"], make=False)
         return self._file(folder / name, f"views/{name}")
+
+    @contextlib.contextmanager
+    def review_api(self, agree: int) -> Iterator[None]:
+        """Record the value of agree and hold the store for one review API server."""
+        if type(agree) is not int or agree < 1:
+            raise ValueError("agree must be an integer of 1 or more")
+        folder = self._folder(["state"], make=True)
+        with self._hold(folder, "review-api"):
+            self._record_review_agree(folder, agree)
+            yield
+
+    def _record_review_agree(self, folder: Path, agree: int) -> None:
+        path = folder / "review-api"
+        rel = "state/review-api"
+        recorded: int | None = None
+        try:
+            try:
+                recorded_key = self._file(path, rel)
+            except NotFound:
+                recorded_key = None
+            if recorded_key is not None:
+                data = self.get(_REVIEW_API_STATE, recorded_key.decode("ascii"))
+                state = _canonical(data.decode("utf-8"), _REVIEW_API_STATE)
+                if not isinstance(state, dict) or set(state) != {"agree"}:
+                    raise ValueError("the state must have only the member agree")
+                value = state["agree"]
+                if type(value) is not int or value < 1:
+                    raise ValueError("the recorded agree must be an integer of 1 or more")
+                recorded = value
+        except (StoreError, ValueError, OSError) as exc:
+            raise StoreError(f"cannot read the review API state at {rel}: {exc}") from exc
+
+        if recorded is not None and agree > recorded:
+            names, problems = self.log_names()
+            if any(name[0] == "answers" for name in names):
+                raise StoreError(
+                    f"the store has an answer log. Recorded agree is {recorded}. "
+                    f"New agree is {agree}. Use a new store to increase agree."
+                )
+            for problem in problems:
+                if problem.startswith(("logs/answers ", "logs/answers/")):
+                    raise StoreError(f"cannot check for an answer log: {problem}")
+
+        data = jcs({"agree": agree}).encode("utf-8")
+        new_key = self.put(_REVIEW_API_STATE, data).encode("ascii")
+        if new_key != recorded_key:
+            self._replace(folder, path, new_key)
 
     def _append(self, log: LogName, record: Record) -> str:
         word, _ = _check_log(log)

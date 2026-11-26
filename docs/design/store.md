@@ -221,6 +221,7 @@ store/
   logs/splits/<set>.jsonl                    the splits of #383, one log for each set
   logs/events/<profile>.jsonl                the calibration events of #642, one log for each profile digest
   logs/deleted.jsonl                         the deletions
+  state/review-api                           the key of the current review API state
   views/...                                  JSON files; delete them at any time
 ```
 
