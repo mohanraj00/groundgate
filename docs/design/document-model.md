@@ -372,17 +372,24 @@ checks a layout, and it refuses the object at the first fault:
 The lookup uses sorted starts and `bisect`, so a large document costs time in proportion to its
 nodes, not to their square.
 
-I replay a saved run with the same candidates as the original run. If the source check kept
-the structure reader from using tables, the document input records `structure_tables: false`.
-Earlier records used the tables, so a replay of an earlier record still uses them. This rule
-applies only to replay of the recorded run. A new run checks its own input.
+A fresh read can propose from its tables. A loaded `document@1` gives no table proposals by
+default (#628). The host can give `source=(path, data)` to `Document.from_dict` to check the
+reading. The path suffix selects the source format. The bytes must match the `source` key.
+I read them with the recorded reader and options and compare the text and all nodes. If the
+object names the OCR reader, I skip the read unless the host also gives `ocr=True`. An OCR
+source check costs the same as a fresh `read_document(..., ocr=True)` with its page and time
+limits. If the source is missing, the read is skipped or unavailable, or the result differs,
+the structure reader skips every table. The line reader still uses the same text and table spans.
 
-A fresh read can propose from its tables. For a loaded object, the host can give
-`source=(path, data)` to `Document.from_dict`. The path suffix selects the source format.
-The bytes must match the `source` key. I read them with the recorded reader and options and
-compare the text and all nodes. If the source is missing, the read is unavailable, or the
-result differs, the structure reader skips every table in the object. The line reader still
-uses the same text and table spans.
+The structure reader is a proposer. `admit` decides the candidates it receives, so the spec
+version and conformance vectors stay the same. [SPEC §1](../../SPEC.md#1-purpose)
+
+I record `structure_tables: false` in the document input when a new run skips unverified
+tables. The record alone sets table use on replay. A record from before #628 has no such
+member and replays with tables even if the document has never passed a source check. A new
+run that allows tables also omits the member. A successful replay proves that the run can be
+reproduced from its record. The host must establish trust in the tables separately. If the
+host does not trust a record, it must not trust its candidates either.
 
 ## 13. The measure
 

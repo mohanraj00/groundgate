@@ -238,14 +238,22 @@ class Document:
 
     @classmethod
     def from_dict(
-        cls, obj: object, text: str, *, source: tuple[str | Path, bytes] | None = None
+        cls,
+        obj: object,
+        text: str,
+        *,
+        source: tuple[str | Path, bytes] | None = None,
+        ocr: bool = False,
     ) -> Document:
         """Check ``obj`` against ``text`` and give the document. The object is untrusted, as it
         can come from a store or a file. Raises ``DocumentError`` at the first format fault.
 
         Give ``source=(path, data)`` to check the reading for table proposals. The path suffix
         selects the format. The reader uses the bytes in ``data``. A missing or different source
-        leaves the document usable without table proposals."""
+        leaves the document usable without table proposals. If the object names the OCR reader,
+        the source check skips the read unless the caller gives ``ocr=True``. An OCR source check
+        costs the same as a fresh ``read_document(..., ocr=True)`` with its page and time limits.
+        """
         if not isinstance(text, str) or not unicodedata.is_normalized("NFC", text):
             raise DocumentError("the text must be an NFC string")
         if not isinstance(obj, Mapping):
@@ -278,25 +286,27 @@ class Document:
             raise DocumentError(f"more than {MAX_NODES} nodes")
         nodes = tuple(_check_nodes(raw, data))
         document = cls({k: obj[k] for k in _TOP if k != "nodes"}, text, nodes)
-        if source is not None and document._matches_source(*source):
+        if source is not None and document._matches_source(*source, ocr=ocr):
             document._verified_reading = document._reading_identity()
         return document
 
-    def _matches_source(self, path: str | Path, data: bytes) -> bool:
+    def _matches_source(self, path: str | Path, data: bytes, *, ocr: bool) -> bool:
         from ..store import key
 
         if not isinstance(data, bytes) or self.source != key("source@1", data):
             return False
         read_by = self.reader
-        ocr = read_by["name"] == f"{READER}+tesseract"
-        ocr_version = read_by["version"].partition("+tesseract.")[2] if ocr else ""
+        use_ocr = read_by["name"] == f"{READER}+tesseract"
+        if use_ocr and not ocr:
+            return False
+        ocr_version = read_by["version"].partition("+tesseract.")[2] if use_ocr else ""
         expected = reader(ocr_version or None)
         if read_by["name"] == _OPEN_TABLE_READER:
             expected["name"] = _OPEN_TABLE_READER
         if read_by != expected:
             return False
         try:
-            _, fresh = read_document(path, self.options["pages"], ocr=ocr, data=data)
+            _, fresh = read_document(path, self.options["pages"], ocr=use_ocr, data=data)
         except (ValueError, LookupError, ImportError, OSError, RecursionError):
             return False
         return fresh._reading_identity() == self._reading_identity()

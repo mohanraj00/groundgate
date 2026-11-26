@@ -590,9 +590,14 @@ again and compares the line, as it compares a prompt. It uses the original run's
 as described in [document-model.md](document-model.md) §12. A run that skips unverified tables
 records `structure_tables: false` in the document input. If the reader proposes more
 candidates than `max_candidates_per_reply`, the run writes a `limit` line with the status
-`structure_candidate_limit` and stops incomplete before admission. A change to the reader's
-proposals for the same table setting needs a new runner version. A run with no such policy has
-the same record as before.
+`structure_candidate_limit` and stops incomplete before admission. A run with no structure
+proposer in its policy has the same record as before.
+
+I kept `groundgate-run/6` for #628 because an old record has no `structure_tables` member and
+replays as before. The old runner ignores the member and still proposes from tables when the
+policy enables the structure reader. This can change the candidates. Replay fails for a new
+record with `structure_tables: false` even if the candidates match. The old runner compares
+the entire rebuilt record, and its header omits the member.
 
 `RunResult.write(folder)` checks every key and refuses an existing log before it writes. It
 writes each object to `folder/objects/<hex>` first and the log to `folder/run.jsonl` last. Each

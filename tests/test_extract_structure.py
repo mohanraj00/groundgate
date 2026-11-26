@@ -8,6 +8,7 @@ import subprocess
 import sys
 from pathlib import Path
 from typing import Any
+from unittest.mock import Mock
 
 import pytest
 
@@ -16,6 +17,7 @@ from groundgate.extract import RunPolicy, RunResult, extract, replay
 from groundgate.extract import structure as structure_module
 from groundgate.extract.structure import propose
 from groundgate.model import Schema
+from groundgate.read import Extracted, reader
 from groundgate.read.document import Document, read_document
 from groundgate.read.nodes import MAX_DEPTH
 from groundgate.store import FolderStore, key
@@ -576,6 +578,28 @@ def test_a_loaded_document_checks_its_source_and_replays(tmp_path: Path, given: 
     assert RunResult.read(folder).candidates == result.candidates
     store = FolderStore(tmp_path / "store")
     assert RunResult.load(store, result.save(store)).candidates == result.candidates
+
+
+def test_a_loaded_document_only_checks_an_ocr_source_with_opt_in(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    doc = document(tmp_path, TABLE)
+    data = (tmp_path / "doc.html").read_bytes()
+    path = tmp_path / "doc.pdf"
+    obj = doc.to_dict()
+    obj["reader"] = reader("5.0.0")
+    fresh = Document.from_dict(obj, doc.text)
+    read = Mock(return_value=(Extracted(doc.text, ocr="5.0.0"), fresh))
+    monkeypatch.setattr("groundgate.read.document.read_document", read)
+
+    loaded = Document.from_dict(obj, doc.text, source=(path, data))
+    read.assert_not_called()
+    assert loaded.to_dict() == obj
+    assert run(loaded, policy=ADMIT).candidates == []
+
+    loaded = Document.from_dict(obj, doc.text, source=(path, data), ocr=True)
+    read.assert_called_once_with(path, None, ocr=True, data=data)
+    assert [c["value"] for c in run(loaded, policy=ADMIT).candidates] == ["5", "4"]
 
 
 @pytest.mark.parametrize(
