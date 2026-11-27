@@ -396,6 +396,39 @@ def test_diagnostic_export_adds_section_without_changing_primary_units_or_bounds
     assert result["diagnostics"]["export_sha256"] == export_sha
     assert "Separate diagnostics" in render_requested(result)
     assert "Separate diagnostics" not in render_requested(original)
+
+    # #381: --check without the local export rescores the primary part and keeps the
+    # committed diagnostics. Both files must still match.
+    folder = tmp_path / "set"
+    scorer = [sys.executable, str(Path(__file__).parents[1] / "score.py"), "--requested"]
+    check = [*scorer, "--set", str(folder), "--split", "heldout", "--check"]
+
+    def commit(results):
+        (folder / "results.json").write_text(json.dumps(results, indent=1, sort_keys=True) + "\n")
+        (folder / "RESULTS.md").write_text(render_requested(results))
+
+    commit(result)
+    plain = subprocess.run(check, capture_output=True, text=True)
+    assert plain.returncode == 0, plain.stderr
+    assert "diagnostics not rescored" in plain.stderr
+    full = [*check, "--diagnostics", str(export), "--diagnostics-sha256", export_sha]
+    pinned = subprocess.run(full, capture_output=True, text=True)
+    assert pinned.returncode == 0, pinned.stderr
+    assert "not rescored" not in pinned.stderr
+    edited = copy.deepcopy(result)
+    edited["diagnostics"]["decision_pair"]["by_view"]["endpoints"]["0.8"]["escapes"] = 7
+    (folder / "results.json").write_text(json.dumps(edited, indent=1, sort_keys=True) + "\n")
+    stale = subprocess.run(check, capture_output=True, text=True)
+    assert stale.returncode != 0 and "out of date: RESULTS.md" in stale.stderr
+    assert subprocess.run(full, capture_output=True, text=True).returncode != 0
+    edited = copy.deepcopy(result)
+    edited["runs"]["baseline"]["total"]["present"] = 3
+    commit(edited)
+    stale = subprocess.run(check, capture_output=True, text=True)
+    assert stale.returncode != 0 and "results.json" in stale.stderr
+    commit(original)
+    assert subprocess.run(check, capture_output=True, text=True).returncode == 0
+
     with pytest.raises(ValueError):
         score_set(tmp_path / "set", "heldout", diagnostics=export)
     output["labels_sha256"] = d.digest(b"different seal")

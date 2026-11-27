@@ -156,6 +156,19 @@ uv run python bench/score.py --requested --set bench/requested --split heldout -
 The manifest is frozen and the labels are sealed. The last two commands also need the cached
 runs in `runs/`; without them they stop.
 
+The diagnostics part of `results.json` and `RESULTS.md` comes from the pinned local export, which
+is not in the repository. Without `--diagnostics`, `--check` rescores the primary part, keeps the
+committed diagnostics, and needs both files to match byte for byte. It says on stderr that it did
+not rescore the diagnostics. To rescore them too, add the export and its digest:
+
+```bash
+uv run python bench/score.py --requested --set bench/requested --split heldout --check \
+    --diagnostics <export> --diagnostics-sha256 <sha256 of the export>
+```
+
+The rescore without `--check` writes only what it scores. Without the export, it removes the
+diagnostics part, so give the export when you rescore this set.
+
 ## Blind label page
 
 I use the original, unchanged PDFs in the approved local source directory:
