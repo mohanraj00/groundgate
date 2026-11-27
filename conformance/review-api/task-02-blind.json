@@ -58,6 +58,7 @@
  },
  "expected": {
   "served": true,
+  "options": null,
   "mode": "audit",
   "field": "net_income",
   "key": null,

@@ -8701,6 +8701,10 @@ for answer_name, answer_text, answer_task, answers, answer_labels in (
      [made_label("ana", "90")]),
     ("12-not-utc", "A time with an offset is not a UTC time, so it gives no day and no label.",
      ANSWER_TASK, [blind_answer("ana", "correct", "90", "2026-11-16T01:00:00+02:00")], []),
+    ("13-option", "A correct answer to a closed set field names one option, and the label "
+     "value is that option (#696).", {**ANSWER_TASK, "field": "billing"},
+     [blind_answer("ana", "correct", "quarterly")],
+     [made_label("ana", "quarterly", field="billing")]),
 ):  # fmt: skip
     AUDITS.append({"name": f"audit-answer-{answer_name}", "kind": "answer",
                    "description": answer_text, "task": answer_task, "answers": answers,
@@ -9063,12 +9067,13 @@ def task_vector(name: str, description: str, task: dict[str, Any],
                 expected: dict[str, Any] | None,
                 sources: dict[str, Any] | None = None) -> None:  # fmt: skip
     """``expected`` holds the members of GET /v1/tasks/{task} that come from the task object, or
-    None for a task that is not a task of the API. ``sources`` gives the ``source`` and the
-    ``ref`` of each decision of the task in the receipt, by its index."""
+    None for a task that is not a task of the API. ``options`` is null when ``expected`` does
+    not give it: only a closed set task has options (#696). ``sources`` gives the ``source``
+    and the ``ref`` of each decision of the task in the receipt, by its index."""
     REVIEW_API.append({"name": f"task-{name}", "kind": "task", "description": description,
                        "task": task, "sources": sources or {},
                        "expected": {"served": expected is not None,
-                                    **(expected or {})}})  # fmt: skip
+                                    **({"options": None, **expected} if expected else {})}})  # fmt: skip
 
 
 IN_DOCUMENT = {"source": "document", "ref": None}
@@ -9168,10 +9173,57 @@ task_vector("not-served-calibrate-field", "A calibrate label task is not a task 
             {**AUDIT_TASK, "template": "calibrate_field@1"}, None)  # fmt: skip
 task_vector("not-served-calibrate-key", "A calibrate key task is not a task of the API.",
             {**AUDIT_TASK, "template": "calibrate_key@1", "choices": []}, None)  # fmt: skip
-task_vector("not-served-audit-closed-set", "An audit task for a closed set is not a task of the "
-            "API in version 1: its answer has no member for an option.",
-            {**AUDIT_TASK, "item": "closed_set", "template": "closed_set@1",
-             "options": ["annual", "quarterly"]}, None)  # fmt: skip
+# A closed set field: the proposed option is annual (#696).
+BILLING_OPTIONS = ["monthly", "quarterly", "annual"]
+CLOSED_AUDIT_TASK = {
+    **AUDIT_TASK, "slot": {"field": "billing", "key": None, "decisions": [2]},
+    "item": "closed_set", "template": "closed_set@1",
+    "question": "Is annual the billing, and does no other option fit?",
+    "parts": ["option", "field"],
+    "choices": [{"decision": 2, "value": "annual", "unit": None, "shown": "annual",
+                 "evidence": {"start": 300, "end": 318}}],
+    "places": [{"start": 300, "end": 318, "page": None, "box": None}],
+    "options": BILLING_OPTIONS,
+}  # fmt: skip
+task_vector("08-blind-closed-set", "An audit task for a closed set is blind. The response gives "
+            "the options of the field in schema order, from the schema, and no body: no "
+            "proposed option, no evidence, no place, no item and no question.",
+            CLOSED_AUDIT_TASK,
+            {"mode": "audit", "field": "billing", "key": None,
+             "options": ["monthly", "quarterly", "annual"], "body": None},
+            {"2": IN_DOCUMENT})  # fmt: skip
+task_vector("09-blind-closed-set-label", "A label task of a closed set field has no decision. "
+            "It gives the same response as the audit task with a decision.",
+            {**CLOSED_AUDIT_TASK, "slot": {"field": "billing", "key": None, "decisions": []},
+             "question": "Which option is the billing?", "parts": ["field"], "choices": [],
+             "places": []},
+            {"mode": "audit", "field": "billing", "key": None,
+             "options": ["monthly", "quarterly", "annual"], "body": None})  # fmt: skip
+task_vector("10-review-closed-set", "A review task for a closed set gives the options in the "
+            "response and in its body. The body marks no option: its choices give the values.",
+            {**CLOSED_AUDIT_TASK, "mode": "review",
+             "slot": {"field": "billing", "key": None, "decisions": [1, 2]},
+             "question": "Which option is the billing?", "parts": ["option", "field"],
+             "codes": ["CONFLICTING_CANDIDATES"],
+             "choices": [{"decision": 1, "value": "monthly", "unit": None, "shown": "monthly",
+                          "evidence": {"start": 280, "end": 298}},
+                         CLOSED_AUDIT_TASK["choices"][0]]},
+            {"mode": "review", "field": "billing", "key": None,
+             "options": ["monthly", "quarterly", "annual"],
+             "body": {"format": "task@1", "slot": {"field": "billing", "key": None},
+                      "item": "closed_set", "mode": "review", "template": "closed_set@1",
+                      "question": "Which option is the billing?", "parts": ["option", "field"],
+                      "codes": ["CONFLICTING_CANDIDATES"],
+                      "choices": [
+                          {"choice": 1, "value": "monthly", "unit": None, "shown": "monthly",
+                           "evidence": {"start": 280, "end": 298}, "source": "document",
+                           "ref": None},
+                          {"choice": 2, "value": "annual", "unit": None, "shown": "annual",
+                           "evidence": {"start": 300, "end": 318}, "source": "document",
+                           "ref": None}],
+                      "places": [{"start": 300, "end": 318, "page": None, "box": None}],
+                      "options": ["monthly", "quarterly", "annual"]}},
+            {"1": IN_DOCUMENT, "2": IN_DOCUMENT})  # fmt: skip
 
 # The statements of a model text. The sign of the euro has 3 bytes, so statement 1 ends at byte
 # 27 and has 25 characters.
@@ -9463,6 +9515,10 @@ answer_vector("05-limits", "The largest keys and ms.",
 answer_vector("06-blind-correct", "A blind task takes a correction.",
               {"task": API_T, "verdict": "correct", "span": {"start": 18240, "end": 18243}},
               blind=True)  # fmt: skip
+answer_vector("09-blind-option", "A blind task of a closed set names one option with correct: "
+              "the value is the option, and the span is the text that gives it (#696).",
+              {"task": API_T, "verdict": "correct", "span": {"start": 280, "end": 298},
+               "value": "quarterly"}, blind=True)  # fmt: skip
 answer_vector("bad-task-key", "A task key is not a task ID.",
               {"task": api_key("b"), "verdict": "unsure"}, "bad_request")  # fmt: skip
 answer_vector("bad-task-short", "A task ID with 63 hex digits.",

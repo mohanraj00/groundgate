@@ -1,0 +1,33 @@
+{
+ "name": "audit-answer-13-option",
+ "kind": "answer",
+ "description": "A correct answer to a closed set field names one option, and the label value is that option (#696).",
+ "task": {
+  "document": "inv-0007",
+  "profile": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "field": "billing",
+  "key": null
+ },
+ "answers": [
+  {
+   "reviewer": "ana",
+   "verdict": "correct",
+   "value": "quarterly",
+   "time": "2026-11-15T10:00:00Z"
+  }
+ ],
+ "expected": {
+  "labels": [
+   {
+    "groundgate_audit_label": 1,
+    "document": "inv-0007",
+    "profile": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "field": "billing",
+    "key": null,
+    "value": "quarterly",
+    "labeler": "ana",
+    "date": "2026-11-15"
+   }
+  ]
+ }
+}

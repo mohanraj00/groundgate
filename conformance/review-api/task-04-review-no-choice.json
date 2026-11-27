@@ -26,6 +26,7 @@
  "sources": {},
  "expected": {
   "served": true,
+  "options": null,
   "mode": "review",
   "field": "auditor",
   "key": null,

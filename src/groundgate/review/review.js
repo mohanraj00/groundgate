@@ -175,7 +175,8 @@ function labelKey(k) {
 const VERDICT_KEYS = { y: "supported", w: "unsupported", u: "unsure" };
 
 // A closed set (review.md section 7): the option list of the field, with the option of
-// each choice marked. A closed set takes no typed value and no new span.
+// each choice marked. A closed set takes no typed value and no new span, except for an audit
+// task: n selects the text of one option and types that option (#696).
 
 function drawOptions() {
   const list = el("ul", "options");
@@ -564,9 +565,13 @@ document.addEventListener("keydown", (ev) => {
     else save("choose", { decision: c.decision });
   } else if (k === "x") save("not_in_document", {});
   else if (k === "u") save("unsure", {});
-  else if (task.options && (k === "n" || k === "s")) {
-    $("outcome").replaceChildren(el("p", "", "The options are a closed list, so this task " +
-      "takes no new value and no new span. Press x if no option is in the document."));
+  else if (task.options && (k === "s" || (k === "n" && task.mode !== "audit"))) {
+    $("outcome").replaceChildren(el("p", "", task.mode === "audit"
+      ? "The options are a closed list, so this task takes no new span for a shown value. " +
+        "Press n to select the text of one option and type that option, or x if no option " +
+        "is in the document."
+      : "The options are a closed list, so this task takes no new value and no new span. " +
+        "Press x if no option is in the document."));
   } else if (k === "n") startCorrection("correct");
   else if (k === "s" && n > 0) startCorrection("adjust_span");
   else if (k === "r") showReason();
