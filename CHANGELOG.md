@@ -62,6 +62,11 @@ spec version, and receipts name the spec version they were decided under.
   the check. A plain text input does not change. The spec version and the conformance vectors
   stay the same. The runner and its structure reader are not part of the specification
   ([SPEC §2.4](SPEC.md#24-policy)), and `admit` decides the same candidates as before.
+- `calibrate promotion` reads one report of `calibrate measure` and its draft profile. It
+  writes the content manifest of a profile promotion of entelos v0.7.0, with the items
+  `measure` and `profile`, and the `entelos.measure/1` summary, with each bound in basis
+  points, rounded up. It refuses a route that is not measured. The optional CI job `entelos`
+  checks one accepted and one refused promotion on the release (#747).
 - The blind audit pick of SPEC §4.18 now asks its tasks in the review step.
   `calibrate audit tasks` writes one label task to the store for each field and key of a
   picked document. A label task has no decision, so it is the same with and without an
