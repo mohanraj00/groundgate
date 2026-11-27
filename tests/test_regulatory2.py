@@ -252,6 +252,25 @@ def test_a_heldout_set_calibrates_on_its_calibration_set(two_sets: Any) -> None:
     assert {f: (first / f).read_bytes() for f in before} == before
 
 
+def test_a_change_to_the_calibration_set_after_the_freeze_stops_the_heldout_run(
+    two_sets: Any,
+) -> None:
+    first, second, source_dir, cache = two_sets
+    run.Benchmark(second, source_dir, cache).calibrate(TRANSPORT, Client())
+    run.Benchmark(second, source_dir, cache).freeze("2026-11-28")
+    frozen = json.loads((second / "manifest.json").read_text())["freeze"]
+    assert (
+        frozen["calibration_set"] == run.Benchmark(second, source_dir, cache).calibration_identity()
+    )
+    manifest = json.loads((first / "manifest.json").read_text())
+    (first / "manifest.json").write_bytes(pretty(manifest | {"note": "changed"}))
+    heldout = Client()
+    with pytest.raises(ValueError, match="calibration set differs from the freeze"):
+        run.Benchmark(second, source_dir, cache).heldout(TRANSPORT, heldout)
+    assert heldout.prompts == []
+    assert not (second / "results.json").exists()
+
+
 def test_a_change_to_the_calibration_set_stops_the_run(two_sets: Any) -> None:
     first, second, source_dir, cache = two_sets
     bench = run.Benchmark(second, source_dir, cache)

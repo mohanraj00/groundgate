@@ -254,13 +254,19 @@ class Benchmark:
             "documents": [{"id": p.id, "prompt_sha256": digest(p.prompt.encode())} for p in parts],
         }
         if self.calibration_set is not None:
-            other = self.calibration_set
-            record["calibration_set"] = {
-                "set_sha256": other.unfrozen,
-                "slots_sha256": digest(other.slots_raw),
-                "labels_sha256": other.manifest["labels"]["sha256"],
-            }
+            record["calibration_set"] = self.calibration_identity()
         return record
+
+    def calibration_identity(self) -> Json | None:
+        """The digests of the calibration set, or None for a set with its own calibration."""
+        other = self.calibration_set
+        if other is None:
+            return None
+        return {
+            "set_sha256": other.unfrozen,
+            "slots_sha256": digest(other.slots_raw),
+            "labels_sha256": other.manifest["labels"]["sha256"],
+        }
 
     def collect(
         self, split: str, parts: list[Part], record: Json, client: Client | None
@@ -322,6 +328,8 @@ class Benchmark:
             raise ValueError("the profile digest differs from the freeze")
         if freeze.get("set_sha256") != self.unfrozen:
             raise ValueError("the set digest differs from the freeze")
+        if freeze.get("calibration_set") != self.calibration_identity():
+            raise ValueError("the calibration set differs from the freeze")
         return freeze, profile
 
     def calibrate(self, transport: Json, client: Client) -> None:
@@ -364,6 +372,8 @@ class Benchmark:
             "calibration_run_sha256": digest(encoded(record)),
             "calibration_measure_sha256": digest(_read(local)),
         }}  # fmt: skip
+        if self.calibration_set is not None:
+            body["freeze"]["calibration_set"] = self.calibration_identity()
         self.check_inputs()
         atomic_text(
             self.directory / "manifest.json",
