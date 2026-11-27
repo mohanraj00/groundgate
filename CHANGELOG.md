@@ -25,6 +25,11 @@ spec version, and receipts name the spec version they were decided under.
   structure reader proposes each cell with text. A missing row, a missing match
   for a cell with ordinary text, or a table that the reader cannot read goes to
   review (#736 cause 1).
+- `bench/regulatory2` is the member list of a second held-out split of the regulatory
+  family: 14 CFR parts that no bench set has, chosen from eCFR metadata only. The
+  regulatory scripts take `--set DIR`. A set with only held-out parts calibrates on the
+  calibration parts of `bench/regulatory`, and its freeze stays in its own manifest. No
+  document body is downloaded before the owner approves the list (#750).
 - The review API gives each actor one group of the tasks of a packet: one blind task, or the
   other tasks. The first answer of an actor fixes its group. The check of a correction of a
   blind task reads no other candidate of the packet. So no response to an actor who answers

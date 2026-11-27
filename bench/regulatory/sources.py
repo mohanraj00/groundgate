@@ -8,6 +8,10 @@ repository), checks it, reads its text with ``groundgate.read``, and writes the 
     uv run python bench/regulatory/sources.py --out DIR            # use the files in DIR
     uv run python bench/regulatory/sources.py --out DIR --fetch    # download them first
 
+``--set DIR`` names another set folder of the same family, for example ``bench/regulatory2``. Its
+``members.json`` gives the point in time, the members, the splits and the owner approval. The
+script refuses a set whose download the owner has not approved.
+
 If ``manifest.json`` already pins a part, a changed XML or a changed reader text fails the run
 before it writes a file, so a rerun cannot change the members or the split. ``--repin`` is only
 for a new freeze that the owner approves. The script also writes the reader text of each part
@@ -31,6 +35,7 @@ import sys
 import time
 import urllib.request
 import xml.etree.ElementTree as ET
+from dataclasses import dataclass
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -69,6 +74,48 @@ NOTICE_REVIEW = (
 _ENGLISH = ("the", "of", "and", "to", "for")
 
 
+Member = tuple[int, int, str, int]
+
+
+@dataclass(frozen=True)
+class SetConfig:
+    """The point in time, the members, the calibration count and the approvals of one set."""
+
+    date: str
+    members: tuple[Member, ...]
+    calibration: int
+    download_approved: str | None
+    notice_review: str | None
+    from_file: bool
+
+
+def set_config(directory: Path) -> SetConfig:
+    """The set of ``directory/members.json``, or the frozen set of this folder if no such file."""
+    path = directory / "members.json"
+    if not path.exists():
+        return SetConfig(DATE, MEMBERS, CALIBRATION, "2026-11-17", NOTICE_REVIEW, False)
+    body = json.loads(path.read_text())
+    if body.get("format") != "regulatory-members/1":
+        raise ValueError(f"{path}: unknown member list format")
+    members = tuple(
+        (int(m["title"]), int(m["part"]), str(m["heading_words"]), int(m["sections"]))
+        for m in body["members"]
+    )
+    splits = body["splits"]
+    if set(splits) - {"calibration", "heldout"} or sum(splits.values()) != len(members):
+        raise ValueError(f"{path}: the split counts do not match the members")
+    if len({member_id(t, p) for t, p, _, _ in members}) != len(members):
+        raise ValueError(f"{path}: a member is listed two times")
+    return SetConfig(
+        body["point_in_time"],
+        members,
+        int(splits.get("calibration", 0)),
+        body.get("download_approved"),
+        body.get("notice_review"),
+        True,
+    )
+
+
 def member_id(title: int, part: int) -> str:
     return f"cfr-{title}-{part}"
 
@@ -77,8 +124,8 @@ def sha(raw: bytes) -> str:
     return "sha256:" + hashlib.sha256(raw).hexdigest()
 
 
-def fetch(title: int, part: int) -> bytes:
-    url = API.format(date=DATE, title=title, part=part)
+def fetch(title: int, part: int, date: str = DATE) -> bytes:
+    url = API.format(date=date, title=title, part=part)
     req = urllib.request.Request(
         url, headers={"User-Agent": "groundgate-bench/1", "Accept-Encoding": "gzip"}
     )
@@ -94,11 +141,12 @@ def split_seed(digests: list[str]) -> str:
     return sha("".join(d + "\n" for d in digests).encode())
 
 
-def split(ids: list[str], seed: str) -> dict[str, str]:
-    """``calibration`` for the CALIBRATION ids with the lowest SHA-256 of seed and id, else
-    ``heldout``."""
+def split(ids: list[str], seed: str, calibration: int | None = None) -> dict[str, str]:
+    """``calibration`` for the ``calibration`` ids (default CALIBRATION) with the lowest SHA-256
+    of seed and id, else ``heldout``."""
+    count = CALIBRATION if calibration is None else calibration
     order = sorted(ids, key=lambda i: hashlib.sha256(f"{seed}\n{i}".encode()).hexdigest())
-    return {i: "calibration" if n < CALIBRATION else "heldout" for n, i in enumerate(order)}
+    return {i: "calibration" if n < count else "heldout" for n, i in enumerate(order)}
 
 
 def reader_code() -> str:
@@ -108,7 +156,15 @@ def reader_code() -> str:
     return sha("".join(lines).encode())
 
 
-def check(title: int, part: int, words: str, listed: int, raw: bytes) -> dict:
+def check(
+    title: int,
+    part: int,
+    words: str,
+    listed: int,
+    raw: bytes,
+    date: str = DATE,
+    review: str | None = NOTICE_REVIEW,
+) -> dict:
     from groundgate.read import read
 
     root = ET.fromstring(raw)
@@ -139,14 +195,14 @@ def check(title: int, part: int, words: str, listed: int, raw: bytes) -> dict:
     if min(english.values()) == 0:
         problems.append("not English text")
     return {
-        "identity": {"citation": citation, "heading": head, "date": DATE},
+        "identity": {"citation": citation, "heading": head, "date": date},
         "sections": len(sections),
         "sections_listed": listed,
         "tables": tables,
         "text_characters": len(text),
         "text_sha256": sha(text.encode()),
         "language": {"language": "English", "word_counts": english},
-        "notice": {"matches": len(notices), "examples": notices[:3], "review": NOTICE_REVIEW},
+        "notice": {"matches": len(notices), "examples": notices[:3], "review": review},
         "problems": problems,
         "text": text,
     }
@@ -156,6 +212,7 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--out", type=Path, required=True, help="local work storage for the XML")
     ap.add_argument("--fetch", action="store_true", help="download each part first")
+    ap.add_argument("--set", type=Path, help="the set folder (default: this folder)")
     ap.add_argument(
         "--repin",
         action="store_true",
@@ -164,26 +221,33 @@ def main(argv: list[str] | None = None) -> int:
     args = ap.parse_args(argv)
     if args.out.resolve().is_relative_to(ROOT) and ".cache" not in args.out.parts:
         ap.error("--out must be outside the repository or under an ignored .cache folder")
+    here = args.set or HERE
+    try:
+        config = set_config(here)
+    except (ValueError, KeyError, TypeError) as exc:
+        ap.error(str(exc))
+    if config.download_approved is None:
+        ap.error(f"{here}: the owner has not approved the download of this member list")
     args.out.mkdir(parents=True, exist_ok=True)
-    manifest_path = HERE / "manifest.json"
+    manifest_path = here / "manifest.json"
     manifest = json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
     pinned = {d["id"]: d for d in manifest.get("documents", [])}
     docs, checks, files, changed = [], [], {}, []
-    for title, part, words, listed in MEMBERS:
+    for title, part, words, listed in config.members:
         path = args.out / f"{member_id(title, part)}.xml"
         if args.fetch:
-            raw = fetch(title, part)
+            raw = fetch(title, part, config.date)
             time.sleep(1)
         else:
             raw = path.read_bytes()
-        c = check(title, part, words, listed, raw)
+        c = check(title, part, words, listed, raw, config.date, config.notice_review)
         text = c.pop("text")
         old = pinned.get(member_id(title, part))
         if old and (old["source_sha256"], old["text_sha256"]) != (sha(raw), c["text_sha256"]):
             changed.append(member_id(title, part))
         files[path] = raw
         files[path.with_suffix(".txt")] = text.encode()
-        url = API.format(date=DATE, title=title, part=part)
+        url = API.format(date=config.date, title=title, part=part)
         checks.append({"id": member_id(title, part), "source": url, **c})
         docs.append({
             "id": member_id(title, part),
@@ -194,10 +258,10 @@ def main(argv: list[str] | None = None) -> int:
             "heading": c["identity"]["heading"],
             "source": url,
             "page": PAGE.format(title=title, part=part),
-            "point_in_time": DATE,
+            "point_in_time": config.date,
             "source_bytes": len(raw),
             "source_sha256": sha(raw),
-            "download_approved": "2026-11-17",
+            "download_approved": config.download_approved,
             "source_retention": "original XML in local work storage; not committed",
             "terms_group": "A",
             "license": "US government work (17 U.S.C. 105): no copyright in the United States.",
@@ -211,16 +275,18 @@ def main(argv: list[str] | None = None) -> int:
         path.write_bytes(raw)
     members = [d for d in docs if d["selection_status"] == "frozen_member"]
     seed = split_seed([d["source_sha256"] for d in members])
-    sides = split([d["id"] for d in members], seed)
+    sides = split([d["id"] for d in members], seed, config.calibration)
     for d in members:
         d["split"] = sides[d["id"]]
     manifest["split_rule"] = {
         "seed": seed,
         "seed_method": "sha256 over the source_sha256 of the members in member order, "
         "one a line with LF",
-        "rule": f"the {CALIBRATION} ids with the lowest sha256(seed LF id) in hex are "
+        "rule": f"the {config.calibration} ids with the lowest sha256(seed LF id) in hex are "
         "calibration; the others are heldout",
     }
+    if config.from_file and config.calibration == 0:
+        manifest["split_rule"]["rule"] = "all members are heldout; the seed draws the slots"
     manifest["reader_text"] = {
         "reader": "groundgate.read (spec 0.12), XML",
         "code_sha256": reader_code(),
@@ -230,10 +296,12 @@ def main(argv: list[str] | None = None) -> int:
         "published.",
     }
     manifest["documents"] = docs
+    if config.from_file:
+        manifest["selection_complete"] = len(members) == len(config.members)
     manifest_path.write_text(json.dumps(manifest, indent=1, ensure_ascii=False) + "\n")
-    (HERE / "source_checks.json").write_text(
+    (here / "source_checks.json").write_text(
         json.dumps(
-            {"format": "regulatory-source-checks/1", "date": DATE, "documents": checks},
+            {"format": "regulatory-source-checks/1", "date": config.date, "documents": checks},
             indent=1,
             ensure_ascii=False,
         )

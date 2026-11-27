@@ -1,0 +1,43 @@
+{
+ "format": "regulatory-members/1",
+ "set": "regulatory2",
+ "issue": "#750",
+ "point_in_time": "2026-11-24",
+ "calibration_set": "bench/regulatory",
+ "splits": {
+  "heldout": 14
+ },
+ "download_approved": null,
+ "notice_review": null,
+ "report_intro": "This split is the second held-out split of the regulatory family (#750). It measures #735 and #736 cause 1. The profile is calibrated on the 5 calibration parts of bench/regulatory.",
+ "selection": {
+  "date": "2026-11-27",
+  "metadata": [
+   "https://www.ecfr.gov/api/versioner/v1/titles.json (up to date as of 2026-11-24)",
+   "https://www.ecfr.gov/api/versioner/v1/structure/2026-11-24/title-{title}.json",
+   "https://www.federalregister.gov/api/v1/documents/{numbers}.json (cfr_references)"
+  ],
+  "rule": "CFR parts with a fee, rate or charge heading, 2 to 150 sections that are not reserved, and section headings that name fees, rates, schedules, definitions or method steps. No part of bench/regulatory, no CFR part that a file under bench/ names, and no part in the cfr_references of the 462 Federal Register documents that bench/ names. One part for each agency where possible.",
+  "body_read": false
+ },
+ "members": [
+  {"title": 9, "part": 130, "heading_words": "USER FEES", "sections": 7, "size": 37727, "reason": "Definitions, and hourly rate and minimum user fees"},
+  {"title": 10, "part": 903, "heading_words": "POWER AND TRANSMISSION RATES", "sections": 12, "size": 24108, "reason": "Definitions, and numbered procedure steps for rate adjustments"},
+  {"title": 12, "part": 8, "heading_words": "ASSESSMENT OF FEES", "sections": 5, "size": 30570, "reason": "Semiannual assessment and fees for special examinations"},
+  {"title": 14, "part": 389, "heading_words": "FEES AND CHARGES FOR SPECIAL SERVICES", "sections": 13, "size": 23005, "reason": "Fees for services and a schedule of processing fees"},
+  {"title": 18, "part": 381, "heading_words": "FEES", "sections": 20, "size": 24257, "reason": "Definitions, annual adjustment of fees, and fees by filing type"},
+  {"title": 21, "part": 1150, "heading_words": "USER FEES", "sections": 9, "size": 15826, "reason": "Definitions, class allocation and assessment sections"},
+  {"title": 22, "part": 22, "heading_words": "SCHEDULE OF FEES FOR CONSULAR SERVICES", "sections": 7, "size": 39626, "reason": "One long schedule of fees"},
+  {"title": 25, "part": 514, "heading_words": "FEES", "sections": 17, "size": 16986, "reason": "Fee rates, a maximum fee rate and the calculation of the annual fee"},
+  {"title": 29, "part": 4006, "heading_words": "PREMIUM RATES", "sections": 7, "size": 29997, "reason": "Definitions, premium rates and the method for unfunded vested benefits"},
+  {"title": 36, "part": 1258, "heading_words": "FEES", "sections": 9, "size": 17271, "reason": "Definitions and the calculation of fees for products"},
+  {"title": 40, "part": 1027, "heading_words": "FEES FOR VEHICLE AND ENGINE COMPLIANCE PROGRAMS", "sections": 11, "size": 36585, "reason": "Fee amounts by certification type, and definitions"},
+  {"title": 43, "part": 3834, "heading_words": "REQUIRED FEES FOR MINING CLAIMS OR SITES", "sections": 9, "size": 5553, "reason": "Short part: maintenance and location fees and their adjustment"},
+  {"title": 49, "part": 594, "heading_words": "SCHEDULE OF FEES AUTHORIZED BY 49 U.S.C. 30141", "sections": 10, "size": 19433, "reason": "Definitions and one fee for each section"},
+  {"title": 49, "part": 1510, "heading_words": "PASSENGER CIVIL AVIATION SECURITY SERVICE FEES", "sections": 11, "size": 15325, "reason": "Definitions and security service fees"}
+ ],
+ "spares": [
+  {"title": 7, "part": 354, "heading_words": "OVERTIME SERVICES", "sections": 5, "size": 272909, "reason": "User fee sections for international and domestic services"},
+  {"title": 8, "part": 286, "heading_words": "IMMIGRATION USER FEE", "sections": 9, "size": 19307, "reason": "Definitions and passenger fees"}
+ ]
+}

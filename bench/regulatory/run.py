@@ -1,4 +1,10 @@
-"""Run the two sealed splits with one recorded reply per part."""
+"""Run the two sealed splits with one recorded reply per part.
+
+``--set DIR`` runs another set folder of the family, for example ``bench/regulatory2``. Its
+``members.json`` gives the split counts. A set with only held-out parts names a calibration
+set there: the calibration and the freeze then use the calibration parts and labels of that
+set, and the freeze goes into the manifest of DIR.
+"""
 
 from __future__ import annotations
 
@@ -86,6 +92,39 @@ def atomic_text(path: Path, body: str, *, replace: bool = False) -> None:
         Path(tmp).unlink(missing_ok=True)
 
 
+@dataclass(frozen=True)
+class SetConfig:
+    splits: dict[str, int]
+    calibration: Path | None
+    intro: str | None
+
+
+def set_config(directory: Path) -> SetConfig:
+    """The split counts, the calibration set and the report intro of a set folder."""
+    path = directory / "members.json"
+    if not path.exists():
+        return SetConfig(SPLITS, None, None)
+    body = _json(_read(path))
+    splits = body.get("splits")
+    if (
+        body.get("format") != "regulatory-members/1"
+        or not isinstance(splits, dict)
+        or not splits
+        or not set(splits) <= set(SPLITS)
+        or any(type(n) is not int or n < 0 for n in splits.values())
+    ):
+        raise ValueError("the member list of the set is not valid")
+    name = body.get("calibration_set")
+    if name is None:
+        if not splits.get("calibration"):
+            raise ValueError("the set needs calibration parts or a calibration set")
+        return SetConfig(splits, None, body.get("report_intro"))
+    calibration = (ROOT / str(name)).resolve()
+    if splits.get("calibration") or calibration == directory.resolve():
+        raise ValueError("a set with a calibration set has only held-out parts")
+    return SetConfig(splits, calibration, body.get("report_intro"))
+
+
 @dataclass
 class Part:
     id: str
@@ -107,6 +146,15 @@ class Benchmark:
         self.manifest = _json(self.manifest_raw)
         self.requests = _json(self.slots_raw)
         self.code = code_digest()
+        config = set_config(directory)
+        self.splits = config.splits
+        self.calibration_set: Benchmark | None = None
+        if config.calibration is not None:
+            self.calibration_set = Benchmark(config.calibration, sources, cache)
+            if self.calibration_set.calibration_set is not None:
+                raise ValueError("the calibration set names a calibration set")
+            if self.calibration_set.requests["schema"] != self.requests["schema"]:
+                raise ValueError("the schema differs from the calibration set")
         body, request = self.manifest, self.requests
         seal = body.get("labels", {})
         if (
@@ -143,7 +191,7 @@ class Benchmark:
             or self.members.keys() != self.slots.keys()
             or any(
                 not PART.fullmatch(d["id"])
-                or d["split"] not in SPLITS
+                or d["split"] not in self.splits
                 or d["selection_status"] != "frozen_member"
                 for d in self.members.values()
             )
@@ -151,11 +199,17 @@ class Benchmark:
             or any(
                 sum(d["split"] == split for d in self.members.values()) != count
                 or sum(s["split"] == split for s in request["slots"]) != body["slots"][split]
-                for split, count in SPLITS.items()
+                for split, count in self.splits.items()
             )
         ):
             raise ValueError("the members or slots differ from the frozen split")
         self.unfrozen = digest(encoded({k: v for k, v in body.items() if k != "freeze"}))
+        if self.calibration_set is not None and self.members.keys() & self.calibration_set.members:
+            raise ValueError("a part is in the set and in its calibration set")
+
+    def calibration_source(self) -> Benchmark:
+        """The set whose calibration parts and labels make the profile of this set."""
+        return self.calibration_set or self
 
     def check_inputs(self) -> None:
         if (
@@ -164,6 +218,8 @@ class Benchmark:
             or self.code != code_digest()
         ):
             raise ValueError("the run inputs changed")
+        if self.calibration_set is not None:
+            self.calibration_set.check_inputs()
 
     def prepare(self, split: str) -> list[Part]:
         parts = []
@@ -186,7 +242,7 @@ class Benchmark:
         return parts
 
     def record(self, split: str, parts: list[Part], transport: Json, profile: Json) -> Json:
-        return {
+        record = {
             "format": "regulatory-run/1",
             "split": split,
             "code_sha256": self.code,
@@ -196,6 +252,20 @@ class Benchmark:
             "profile_sha256": profile_digest(profile),
             "transport": transport,
             "documents": [{"id": p.id, "prompt_sha256": digest(p.prompt.encode())} for p in parts],
+        }
+        if self.calibration_set is not None:
+            record["calibration_set"] = self.calibration_identity()
+        return record
+
+    def calibration_identity(self) -> Json | None:
+        """The digests of the calibration set, or None for a set with its own calibration."""
+        other = self.calibration_set
+        if other is None:
+            return None
+        return {
+            "set_sha256": other.unfrozen,
+            "slots_sha256": digest(other.slots_raw),
+            "labels_sha256": other.manifest["labels"]["sha256"],
         }
 
     def collect(
@@ -258,12 +328,14 @@ class Benchmark:
             raise ValueError("the profile digest differs from the freeze")
         if freeze.get("set_sha256") != self.unfrozen:
             raise ValueError("the set digest differs from the freeze")
+        if freeze.get("calibration_set") != self.calibration_identity():
+            raise ValueError("the calibration set differs from the freeze")
         return freeze, profile
 
     def calibrate(self, transport: Json, client: Client) -> None:
         if "freeze" in self.manifest:
             raise ValueError("the family is already frozen")
-        parts = self.prepare("calibration")
+        parts = self.calibration_source().prepare("calibration")
         profile = extract.base_profile(self.requests["schema"])
         record = self.record("calibration", parts, transport, profile)
         self.collect("calibration", parts, record, client)
@@ -271,14 +343,15 @@ class Benchmark:
     def freeze(self, date: str) -> None:
         if "freeze" in self.manifest:
             raise ValueError("the family is already frozen")
-        parts = self.prepare("calibration")
+        source = self.calibration_source()
+        parts = source.prepare("calibration")
         profile = extract.base_profile(self.requests["schema"])
         saved = _json(_read(self.cache / "calibration" / "run.json"))
         record = self.record("calibration", parts, saved["transport"], profile)
         replies = self.collect("calibration", parts, record, None)
         outputs, proposals = admit(parts, replies, profile)
         slots = [s for p in parts for s in p.slots]
-        labels = self.labels(slots, calibration=True)
+        labels = source.labels(slots, calibration=True)
         gold = calibration_gold(parts, proposals, labels)
         # Measure uses "test" for the packets it scores. These are all claim calibration parts.
         split = {p.id: "test" for p in parts}
@@ -299,6 +372,8 @@ class Benchmark:
             "calibration_run_sha256": digest(encoded(record)),
             "calibration_measure_sha256": digest(_read(local)),
         }}  # fmt: skip
+        if self.calibration_set is not None:
+            body["freeze"]["calibration_set"] = self.calibration_identity()
         self.check_inputs()
         atomic_text(
             self.directory / "manifest.json",
@@ -496,7 +571,7 @@ def calibration_gold(
 
 def render(directory: Path) -> None:
     raw = _read(directory / "results.json")
-    body = score.markdown(_json(raw))
+    body = score.markdown(_json(raw), set_config(directory).intro)
     path = directory / "RESULTS.md"
     if path.exists():
         if _read(path) != body.encode():
@@ -508,8 +583,11 @@ def render(directory: Path) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="step", required=True)
-    for name in ("calibrate", "freeze", "heldout"):
+    for name in ("calibrate", "freeze", "heldout", "report"):
         cmd = sub.add_parser(name)
+        cmd.add_argument("--set", type=Path, default=HERE, help="the set folder")
+        if name == "report":
+            continue
         cmd.add_argument("--sources", type=Path, required=True)
         cmd.add_argument("--cache", type=Path, required=True)
         if name == "freeze":
@@ -517,13 +595,12 @@ def main() -> None:
         else:
             cmd.add_argument("--model", required=True)
             cmd.add_argument("--effort", required=True, choices=judge.EFFORTS)
-    sub.add_parser("report")
     args = parser.parse_args()
     try:
         if args.step == "report":
-            render(HERE)
+            render(args.set)
             return
-        bench = Benchmark(HERE, args.sources, args.cache)
+        bench = Benchmark(args.set, args.sources, args.cache)
         if args.step == "freeze":
             if args.date is None:
                 parser.error("--date must be a real YYYY-MM-DD date")

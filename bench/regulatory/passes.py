@@ -17,8 +17,9 @@ The owner approved this method on 2026-11-17:
     uv run python bench/label/decide.py --sources DIR --work WORK
     uv run python bench/regulatory/passes.py seal --work WORK
 
-WORK is local work storage. The answers stay there until the owner decides the
-disagreements; then the labels are sealed in this folder.
+Each command takes ``--set DIR`` for another set folder of the family, for example
+``bench/regulatory2``. WORK is local work storage. The answers stay there until the owner
+decides the disagreements; then the labels are sealed in the set folder.
 """
 
 from __future__ import annotations
@@ -187,8 +188,9 @@ def load(work: Path, name: str) -> dict[str, Any]:
 
 
 def run(args: argparse.Namespace) -> int:
-    data = json.loads((HERE / "slots.json").read_text())
-    manifest = {d["id"]: d for d in json.loads((HERE / "manifest.json").read_text())["documents"]}
+    here = getattr(args, "set", None) or HERE
+    data = json.loads((here / "slots.json").read_text())
+    manifest = {d["id"]: d for d in json.loads((here / "manifest.json").read_text())["documents"]}
     schema, slots = data["schema"], data["slots"]
     jobs: list[tuple[str, str, list[dict[str, Any]]]] = []  # (harness, out name, slots)
     if args.pass_ in ("a", "b"):
@@ -272,7 +274,8 @@ def norm(kind: str, e: dict[str, Any] | None) -> Any:
 
 
 def compare(args: argparse.Namespace) -> int:
-    slots = json.loads((HERE / "slots.json").read_text())["slots"]
+    here = getattr(args, "set", None) or HERE
+    slots = json.loads((here / "slots.json").read_text())["slots"]
     a, b = load(args.work, "pass-a"), load(args.work, "pass-b")
     ca, cb = load(args.work, "absence-claude"), load(args.work, "absence-codex")
     rows, counts = [], {"agree": 0, "disagree": 0, "invalid": 0, "missing": 0}
@@ -312,8 +315,14 @@ def chosen(row: dict[str, Any], d: dict[str, Any]) -> Any:
 
 def seal(args: argparse.Namespace) -> int:
     """Write labels.json from the agreements and the owner decisions, and its digest to the
-    manifest. Refuses while a slot has no answer or no decision."""
-    slots = json.loads((HERE / "slots.json").read_text())["slots"]
+    manifest. Refuses while a slot has no answer or no decision, and refuses a second seal of a
+    set with a ``members.json``."""
+    here = getattr(args, "set", None) or HERE
+    mpath = here / "manifest.json"
+    if (here / "members.json").exists() and "labels" in json.loads(mpath.read_text()):
+        print(f"{here}: the labels are already sealed")
+        return 1
+    slots = json.loads((here / "slots.json").read_text())["slots"]
     rows = {r["slot"]: r for r in json.loads((args.work / "compare.json").read_text())}
     path = args.work / "decisions.json"
     decided = json.loads(path.read_text()) if path.exists() else {}
@@ -345,8 +354,7 @@ def seal(args: argparse.Namespace) -> int:
         return 1
     raw = (json.dumps({"format": "regulatory-labels/1", "labels": labels}, indent=1,
                       ensure_ascii=False) + "\n").encode()  # fmt: skip
-    (HERE / "labels.json").write_bytes(raw)
-    mpath = HERE / "manifest.json"
+    (here / "labels.json").write_bytes(raw)
     manifest = json.loads(mpath.read_text())
     manifest["labels"] = {
         "file": "labels.json",
@@ -369,9 +377,11 @@ def main(argv: list[str] | None = None) -> int:
     r.add_argument("--work", type=Path, required=True)
     r.add_argument("--workers", type=int, default=4)
     r.add_argument("--ids", nargs="*")
+    r.add_argument("--set", type=Path, help="the set folder (default: this folder)")
     for name in ("compare", "seal"):
         c = sub.add_parser(name)
         c.add_argument("--work", type=Path, required=True)
+        c.add_argument("--set", type=Path, help="the set folder (default: this folder)")
     args = ap.parse_args(argv)
     return {"run": run, "compare": compare, "seal": seal}[args.cmd](args)
 

@@ -1,6 +1,6 @@
 """A local page where the owner decides each disagreement of two blind label passes (#641).
 
-    uv run python bench/label/decide.py --sources DIR --work WORK
+    uv run python bench/label/decide.py --sources DIR --work WORK [--set bench/regulatory2]
 
 The page reads ``WORK/compare.json`` from ``bench/regulatory/passes.py compare``. For each slot
 that the passes do not agree on, it shows the request, the field rule, the reader text of the
@@ -35,13 +35,13 @@ WORK = Path()
 ITEMS: list[dict[str, Any]] = []
 
 
-def items(sources: Path, work: Path) -> list[dict[str, Any]]:
+def items(sources: Path, work: Path, directory: Path | None = None) -> list[dict[str, Any]]:
     """The disagreements, each with its slot and the reader text of its section."""
     import xml.etree.ElementTree as ET
 
     from groundgate.read.markup import xml_text
 
-    data = json.loads((BENCH / "regulatory" / "slots.json").read_text())
+    data = json.loads((directory or BENCH / "regulatory").joinpath("slots.json").read_text())
     slots = {s["slot"]: s for s in data["slots"]}
     texts: dict[tuple[str, str], str] = {}
     out = []
@@ -146,9 +146,10 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--sources", type=Path, required=True)
     ap.add_argument("--work", type=Path, required=True)
     ap.add_argument("--port", type=int, default=8774)
+    ap.add_argument("--set", type=Path, help="the set folder (default: bench/regulatory)")
     args = ap.parse_args(argv)
     WORK = args.work
-    ITEMS = items(args.sources, args.work)
+    ITEMS = items(args.sources, args.work, args.set)
     localweb.serve(Handler, args.port, f"{len(ITEMS)} disagreements")
     return 0
 
