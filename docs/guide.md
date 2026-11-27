@@ -994,8 +994,8 @@ to it changes nothing.
 **Versions.** A receipt names the spec version it was decided under, and `verify` accepts only the
 version it implements. A later release with the same spec version verifies the receipt: 0.17.0
 verifies a receipt of 0.14.0, because both implement spec 0.12. A groundgate that implements spec
-0.12 reports a 0.11 receipt as one problem and checks nothing more. The problem names the last
-release that implements spec 0.11. To verify that receipt, run that release in a separate
+0.13 reports a 0.12 receipt as one problem and checks nothing more. The problem names the last
+release that implements spec 0.12, which is 0.17.0. To verify that receipt, run that release in a separate
 environment, with the receipt and its inputs:
 
 ```bash

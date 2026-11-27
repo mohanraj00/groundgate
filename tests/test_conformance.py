@@ -40,7 +40,7 @@ FLAG_CODES = {
 }  # fmt: skip
 RECORD_CODES = {
     "RECORD_MEMBER_MISSING", "RECORD_MEMBER_CONFLICT", "RECORD_SOURCE_MIXED",
-    "SET_REPLACES_NOTHING", "SET_DUPLICATE", "SET_CONFLICT",
+    "RECORD_MEMBER_REJECTED", "SET_REPLACES_NOTHING", "SET_DUPLICATE", "SET_CONFLICT",
 }  # fmt: skip
 
 
@@ -92,6 +92,8 @@ def test_vector(path: Path) -> None:
         assert len(got_records) == len(v["expected"]["records"])
         for got_line, want_line in zip(got_records, v["expected"]["records"], strict=True):
             assert {k: got_line[k] for k in want_line} == want_line, want_line["record"]
+            # SPEC §5, spec 0.13: only a line with RECORD_MEMBER_REJECTED has `rejected`
+            assert ("rejected" in got_line) == ("rejected" in want_line), want_line["record"]
     else:
         assert "records" not in receipt
     assert receipt.get("checks") == v["expected"].get("checks")
@@ -264,6 +266,8 @@ def _entries(receipt: dict[str, Any], member: str) -> list[dict[str, Any]]:
         return list(receipt["references"])
     if member == "answer":
         return list(receipt["judgments"])
+    if member == "rejected":
+        return list(receipt.get("records", []))
     units = [d["evidence_units"] for d in receipt["decisions"] if "evidence_units" in d]
     return [header for unit in units for header in unit["headers"]]
 
@@ -283,8 +287,8 @@ def test_receipt_vectors_hold_each_member_of_the_tables() -> None:
                 assert holders == len(objects), member
             else:
                 assert 0 < holders < len(objects), member
-    entry_table = _member_table("Three entries of a list have a member that is not always present:")
-    assert set(entry_table) == {"set", "answer", "cut"}
+    entry_table = _member_table("Four entries of a list have a member that is not always present:")
+    assert set(entry_table) == {"set", "answer", "cut", "rejected"}
     for member in entry_table:
         entries = [entry for receipt in receipts for entry in _entries(receipt, member)]
         assert 0 < sum(member in entry for entry in entries) < len(entries), member

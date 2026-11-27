@@ -7143,6 +7143,124 @@ vector(
 )  # fmt: skip
 
 
+# ------------------------------------------------- a rejected corroborate member (spec 0.13, #736)
+TOLL_DOC = "Table 1. Tolls\nLock Toll\nSnell $12.50\nEisenhower n/a\nIroquois free\nBeauharnois\n"
+TOLLS = {"fields": {"tolls": {"type": "record", "members": {
+    "lock": {"type": "string", "required": True},
+    "toll": {"type": "number", "unit": "USD"}}}}}  # fmt: skip
+MRR = "RECORD_MEMBER_REJECTED"
+
+
+def toll(cid: str, member: str, record: str, value: Any, quote: str, proposer: str | None,
+         expect: tuple[str, list[str]] = ADMIT) -> dict[str, Any]:  # fmt: skip
+    """A candidate for the member ``member`` of ``tolls`` in ``record``, from ``proposer``."""
+    unit = "USD" if member == "toll" else None
+    extra = {} if proposer is None else {"proposer": proposer}
+    return c(cid, f"tolls.{member}", value, unit, [q(quote)], by(proposer, expect),
+             record=record, **extra)  # fmt: skip
+
+
+def toll_row(record: str, lock: str, cell: str | None, value: Any = None,
+             expect: tuple[str, list[str]] = ADMIT,
+             cell_expect: tuple[str, list[str]] = ADMIT) -> list[dict[str, Any]]:  # fmt: skip
+    """One table row: the model and the structure reader each give the lock. The model gives the
+    toll ``value`` when it is not None, and the structure reader gives the text ``cell`` of the
+    toll cell when it is not None."""
+    out = [toll(f"m{record}a", "lock", record, lock, lock, "model", expect),
+           toll(f"s{record}a", "lock", record, lock, lock, "structure", expect)]  # fmt: skip
+    if value is not None:
+        out.append(toll(f"m{record}b", "toll", record, value, cell or "", "model", expect))
+    if cell is not None:
+        out.append(toll(f"s{record}b", "toll", record, cell if value is None else value,
+                        cell, "structure", cell_expect))  # fmt: skip
+    return out
+
+
+def toll_line(record: str, lock: str, toll_value: str | None, outcome: str = "admitted",
+              rejected: dict[str, list[str]] | None = None) -> dict[str, Any]:  # fmt: skip
+    """A record line of ``tolls``. ``rejected`` is its member ``rejected`` (spec 0.13)."""
+    want = {"members": {"lock": lock, "toll": toll_value}, "source": "document", "ref": None,
+            "replaced": False}  # fmt: skip
+    if rejected is not None:
+        want["rejected"] = rejected
+    return rec(record, outcome, [MRR] if rejected else [], field="tolls", **want)
+
+
+vector(
+    "170-record-corroborate-null-literal",
+    "The structure reader is a corroborate proposer. It gives each cell with text, and the model "
+    "gives the cells that it reads. In row 2 the toll cell has the text n/a. Step 3 rejects the "
+    "structure candidate with NULL_STRING_LITERAL, and the model gives no toll. The record gets "
+    "RECORD_MEMBER_REJECTED and goes to review, and its member rejected gives the code. Each "
+    "value of row 2 that passed gets RECORD_NOT_ADMITTED. Row 1 is admitted (spec 0.13, #736).",
+    TOLL_DOC,
+    TOLLS,
+    [
+        *toll_row("1", "Snell", "$12.50", "12.50"),
+        *toll_row("2", "Eisenhower", "n/a", expect=RNA,
+                  cell_expect=("rejected", ["NULL_STRING_LITERAL"])),
+    ],
+    policy=STRUCTURE,
+    records=[
+        toll_line("1", "Snell", "12.5"),
+        toll_line("2", "Eisenhower", None, REVIEW, {"toll": ["NULL_STRING_LITERAL"]}),
+    ],
+)  # fmt: skip
+
+vector(
+    "171-record-corroborate-type-invalid",
+    "The toll cell of row 3 has the text free, which is not a number. The structure candidate is "
+    "rejected with TYPE_INVALID, so the record gets RECORD_MEMBER_REJECTED and goes to review. "
+    "The rule reads each rejected candidate of a corroborate proposer at a member, not only a "
+    "null literal (spec 0.13, #736).",
+    TOLL_DOC,
+    TOLLS,
+    [
+        *toll_row("1", "Snell", "$12.50", "12.50"),
+        *toll_row("3", "Iroquois", "free", expect=RNA,
+                  cell_expect=("rejected", ["TYPE_INVALID"])),
+    ],
+    policy=STRUCTURE,
+    records=[
+        toll_line("1", "Snell", "12.5"),
+        toll_line("3", "Iroquois", None, REVIEW, {"toll": ["TYPE_INVALID"]}),
+    ],
+)  # fmt: skip
+
+vector(
+    "172-record-empty-cell",
+    "The toll cell of row 4 is empty, so neither the model nor the structure reader gives a "
+    "candidate for it. No candidate is rejected, and the record is admitted with a null toll, as "
+    "in spec 0.12 (spec 0.13, #736).",
+    TOLL_DOC,
+    TOLLS,
+    [
+        *toll_row("1", "Snell", "$12.50", "12.50"),
+        *toll_row("4", "Beauharnois", None),
+    ],
+    policy=STRUCTURE,
+    records=[toll_line("1", "Snell", "12.5"), toll_line("4", "Beauharnois", None)],
+)  # fmt: skip
+
+vector(
+    "173-record-rejected-admit-proposer",
+    "The policy has a corroborate proposer, but the rejected candidates are not from it. In row "
+    "2 the model gives the text n/a as the toll, and in row 3 a candidate with no proposer gives "
+    "free. Both are rejected, and no structure candidate is given for these cells. The records "
+    "get no code and are admitted with a null toll, as in spec 0.12 (spec 0.13, #736).",
+    TOLL_DOC,
+    TOLLS,
+    [
+        *toll_row("2", "Eisenhower", None),
+        toll("m2b", "toll", "2", "n/a", "n/a", "model", ("rejected", ["NULL_STRING_LITERAL"])),
+        *toll_row("3", "Iroquois", None),
+        toll("x3b", "toll", "3", "free", "free", None, ("rejected", ["TYPE_INVALID"])),
+    ],
+    policy=STRUCTURE,
+    records=[toll_line("2", "Eisenhower", None), toll_line("3", "Iroquois", None)],
+)  # fmt: skip
+
+
 def _items_with(**member: Any) -> dict[str, Any]:
     out = items()
     out["members"] = {**out["members"], **member}
@@ -7244,7 +7362,7 @@ def _sha(prefix: str, obj: Any) -> str:
 
 def spec_digest(kind: str, obj: Any) -> str:
     """The digest of SPEC §6."""
-    return _sha(f"groundgate/0.12:{kind}\0", obj)
+    return _sha(f"groundgate/0.13:{kind}\0", obj)
 
 
 def profile(**members: Any) -> dict[str, Any]:
@@ -9583,7 +9701,7 @@ def receipt_of(r: dict[str, Any]) -> dict[str, Any]:
         judgments.append((shas[position], position, question, {**line, "p": p}))
     doubt = packet.get("doubt")
     receipt: dict[str, Any] = {
-        "groundgate": "0.12",
+        "groundgate": "0.13",
         "document": {"id": packet.get("document_id"),
                      "sha256": spec_digest("document", {"text": doc}),
                      "source": packet.get("document_source"),
@@ -9965,6 +10083,51 @@ receipt_vector(
                              "statements": ["AUD"], "currency": ["AUD"]})],
     (0, 1, 0),
     {"fields": {"usd": after(unit="USD", aliases=["Revenue"])}, "units": {}},
+)  # fmt: skip
+
+TOLL_SCHEMA = {
+    "fields": {
+        "tolls": {
+            "type": "record",
+            "members": {"lock": {"type": "string", "required": True}, "toll": {"unit": "USD"}},
+        }
+    }
+}
+receipt_vector(
+    "receipt-12-record-rejected",
+    "A corroborate proposer gives `n/a` for the toll of a record (spec 0.13, #736). The gate "
+    "rejects it, so the record line has `RECORD_MEMBER_REJECTED` and the member `rejected`, and "
+    "the lock of the record goes to review. The other record line has no member `rejected`.",
+    {"document": "Tolls\nSnell $12.50\nEisenhower n/a\n", "schema": TOLL_SCHEMA,
+     "policy": {"proposers": {"structure": "corroborate"}},
+     "candidates": [
+         {"id": "t1", "field": "tolls.lock", "value": "Snell", "record": "1",
+          "evidence": [q("Snell")]},
+         {"id": "t2", "field": "tolls.toll", "value": "12.50", "unit": "USD", "record": "1",
+          "evidence": [q("$12.50")]},
+         {"id": "t3", "field": "tolls.lock", "value": "Eisenhower", "record": "2",
+          "evidence": [q("Eisenhower")]},
+         {"id": "t4", "field": "tolls.toll", "value": "n/a", "unit": "USD", "record": "2",
+          "proposer": "structure", "evidence": [q("n/a")]}]},
+    [decided("t1", "tolls.lock", "admitted", [], "Snell", None, "document", (6, 11), record="1"),
+     decided("t2", "tolls.toll", "admitted", [], "12.5", "USD", "document", (12, 18),
+             record="1"),
+     decided("t3", "tolls.lock", "needs_verification", ["RECORD_NOT_ADMITTED"], "Eisenhower",
+             None, "document", (19, 29), record="2"),
+     decided("t4", "tolls.toll", "rejected", ["NULL_STRING_LITERAL"], None, "USD", "document",
+             (30, 33), proposer="structure", record="2")],
+    (2, 1, 1),
+    {"fields": {"tolls": {"type": "record", "required": False, "members": {
+        "lock": after(type="string", required=True), "toll": after(unit="USD")}}},
+     "units": {}},
+    {**PROFILE_POLICY, "proposers": {"structure": "corroborate"}},
+    records=[{"field": "tolls", "record": "1", "outcome": "admitted", "codes": [],
+              "source": "document", "ref": None, "replaced": False,
+              "members": {"lock": "Snell", "toll": "12.5"}},
+             {"field": "tolls", "record": "2", "outcome": "needs_verification",
+              "codes": ["RECORD_MEMBER_REJECTED"], "source": "document", "ref": None,
+              "replaced": False, "members": {"lock": "Eisenhower", "toll": None},
+              "rejected": {"toll": ["NULL_STRING_LITERAL"]}}],
 )  # fmt: skip
 
 

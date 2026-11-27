@@ -1,0 +1,181 @@
+{
+ "name": "173-record-rejected-admit-proposer",
+ "description": "The policy has a corroborate proposer, but the rejected candidates are not from it. In row 2 the model gives the text n/a as the toll, and in row 3 a candidate with no proposer gives free. Both are rejected, and no structure candidate is given for these cells. The records get no code and are admitted with a null toll, as in spec 0.12 (spec 0.13, #736).",
+ "document": "Table 1. Tolls\nLock Toll\nSnell $12.50\nEisenhower n/a\nIroquois free\nBeauharnois\n",
+ "schema": {
+  "fields": {
+   "tolls": {
+    "type": "record",
+    "members": {
+     "lock": {
+      "type": "string",
+      "required": true
+     },
+     "toll": {
+      "type": "number",
+      "unit": "USD"
+     }
+    }
+   }
+  }
+ },
+ "policy": {
+  "proposers": {
+   "structure": "corroborate"
+  }
+ },
+ "candidates": [
+  {
+   "id": "m2a",
+   "field": "tolls.lock",
+   "value": "Eisenhower",
+   "evidence": [
+    {
+     "start": 38,
+     "end": 48,
+     "text": "Eisenhower"
+    }
+   ],
+   "record": "2",
+   "proposer": "model"
+  },
+  {
+   "id": "s2a",
+   "field": "tolls.lock",
+   "value": "Eisenhower",
+   "evidence": [
+    {
+     "start": 38,
+     "end": 48,
+     "text": "Eisenhower"
+    }
+   ],
+   "record": "2",
+   "proposer": "structure"
+  },
+  {
+   "id": "m2b",
+   "field": "tolls.toll",
+   "value": "n/a",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 49,
+     "end": 52,
+     "text": "n/a"
+    }
+   ],
+   "record": "2",
+   "proposer": "model"
+  },
+  {
+   "id": "m3a",
+   "field": "tolls.lock",
+   "value": "Iroquois",
+   "evidence": [
+    {
+     "start": 53,
+     "end": 61,
+     "text": "Iroquois"
+    }
+   ],
+   "record": "3",
+   "proposer": "model"
+  },
+  {
+   "id": "s3a",
+   "field": "tolls.lock",
+   "value": "Iroquois",
+   "evidence": [
+    {
+     "start": 53,
+     "end": 61,
+     "text": "Iroquois"
+    }
+   ],
+   "record": "3",
+   "proposer": "structure"
+  },
+  {
+   "id": "x3b",
+   "field": "tolls.toll",
+   "value": "free",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 62,
+     "end": 66,
+     "text": "free"
+    }
+   ],
+   "record": "3"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "proposer": "model"
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "proposer": "structure"
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "NULL_STRING_LITERAL"
+    ],
+    "proposer": "model"
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "proposer": "model"
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "proposer": "structure"
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "TYPE_INVALID"
+    ],
+    "proposer": null
+   }
+  ],
+  "coverage": [],
+  "records": [
+   {
+    "field": "tolls",
+    "record": "2",
+    "outcome": "admitted",
+    "codes": [],
+    "members": {
+     "lock": "Eisenhower",
+     "toll": null
+    },
+    "source": "document",
+    "ref": null,
+    "replaced": false
+   },
+   {
+    "field": "tolls",
+    "record": "3",
+    "outcome": "admitted",
+    "codes": [],
+    "members": {
+     "lock": "Iroquois",
+     "toll": null
+    },
+    "source": "document",
+    "ref": null,
+    "replaced": false
+   }
+  ]
+ }
+}

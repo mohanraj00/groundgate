@@ -385,16 +385,18 @@ def test_unreadable_table_goes_to_review(monkeypatch):
     assert receipts == []
 
 
-def test_null_literal_stays_null(monkeypatch):
-    # #736 cause 2. SPEC step 3 rejects the structure candidate for n/a.
+def test_null_literal_goes_to_review(monkeypatch):
+    # #736 cause 2. SPEC step 3 rejects the structure candidate for n/a, and spec 0.13
+    # sends its record to review with RECORD_MEMBER_REJECTED.
     xml = XML.replace(b"<TD>33</TD>", b"<TD>n/a</TD>")
     answer, (receipt,) = table_reply(xml, [("Alpha", None), ("Beta", "46")], monkeypatch)
-    assert answer == score.Answer(
-        "admitted", [{"Code": "Alpha", "Rate": None}, {"Code": "Beta", "Rate": "46"}]
-    )
+    assert answer == score.Answer("needs_verification")
     literal = next(d for d in receipt.decisions if d.candidate_id == "r001.1.2.structure")
     assert literal.outcome == "rejected"
     assert "NULL_STRING_LITERAL" in literal.codes
+    line = next(r for r in receipt.records if "RECORD_MEMBER_REJECTED" in r.codes)
+    assert line.outcome == "needs_verification"
+    assert dict(line.rejected) == {"c2": ("NULL_STRING_LITERAL",)}
 
 
 def test_score_escapes_misses_reviews_and_bound():

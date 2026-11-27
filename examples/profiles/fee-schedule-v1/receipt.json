@@ -1,8 +1,8 @@
 {
-  "groundgate": "0.12",
+  "groundgate": "0.13",
   "document": {
     "id": "fr-2026-07250-appendix-a",
-    "sha256": "sha256:796020e32bec9e30f867e994d9d61cf3349e240c4a805681fb29b6fa7c240c7a",
+    "sha256": "sha256:11ab4fb6e2ab4fd3d43916f11ab6294337d3c8b5f2f22d5776bfd662f649fa75",
     "source": null,
     "doubt_sha256": null
   },
@@ -11,82 +11,14 @@
   "profile": {
     "id": "fee-schedule",
     "version": "1.0.0",
-    "sha256": "sha256:e688001255373cda0eaf4064da1b0f34e36a8c8720720bc61e9037220cbdce33"
+    "sha256": "sha256:6bcdcddb973f67cb900d77c462b84895bdcb0db52f18641b5506869a3d1f1283"
   },
-  "schema_sha256": "sha256:c9fb9b857d48de2f49ddb5efc3689f9352f25e70499bfd253d1d44af17891257",
-  "policy_sha256": "sha256:c105b3bb73f01e4c8b983392380899c24bb7ce1faaf95798fa966bdb0e8bf607",
+  "schema_sha256": "sha256:c9591ff5ac1d5585e4d250f02a41a33d0369ed4ac51822e717a7c5d938cf1eab",
+  "policy_sha256": "sha256:75210d536303193cf840aa4f398236f42e4c51bdabfd1549c3ffa5f44bca8649",
   "decisions": [
     {
-      "candidate_id": "certification_fee/New fee",
-      "candidate_sha256": "sha256:404e13ad4f1d9a2ec1ab955608fa3aea19d3b76625e4cc972bf7c133b7c4c400",
-      "field": "certification_fee",
-      "key": "New fee",
-      "proposer": null,
-      "outcome": "admitted",
-      "codes": [],
-      "value": "170",
-      "unit": null,
-      "source": "document",
-      "ref": null,
-      "url": null,
-      "evidence": {
-        "start": 630,
-        "end": 637
-      },
-      "parts": [
-        {
-          "role": "field",
-          "start": 565,
-          "end": 601,
-          "passed": true
-        },
-        {
-          "role": "key",
-          "start": 417,
-          "end": 424,
-          "passed": true
-        }
-      ],
-      "missing": [],
-      "packs": []
-    },
-    {
-      "candidate_id": "data_poster_fee/New fee",
-      "candidate_sha256": "sha256:78215465e38f34adda5a2f99bb4df2dd3756f3c934424ffa8d14fbc91f1031df",
-      "field": "data_poster_fee",
-      "key": "New fee",
-      "proposer": null,
-      "outcome": "admitted",
-      "codes": [],
-      "value": "25",
-      "unit": null,
-      "source": "document",
-      "ref": null,
-      "url": null,
-      "evidence": {
-        "start": 851,
-        "end": 856
-      },
-      "parts": [
-        {
-          "role": "field",
-          "start": 784,
-          "end": 795,
-          "passed": true
-        },
-        {
-          "role": "key",
-          "start": 417,
-          "end": 424,
-          "passed": true
-        }
-      ],
-      "missing": [],
-      "packs": []
-    },
-    {
       "candidate_id": "geomagnetic_model_fee/New fee",
-      "candidate_sha256": "sha256:97d10d483bf9b9e441448be2bccb0817ac295bc3044e52fc7cc43c75a2551dd1",
+      "candidate_sha256": "sha256:5398d3715f028b32e556190b1cb84ad947ea0228a2cd78432ee5a8ea71072a59",
       "field": "geomagnetic_model_fee",
       "key": "New fee",
       "proposer": null,
@@ -119,8 +51,76 @@
       "packs": []
     },
     {
+      "candidate_id": "data_poster_fee/New fee",
+      "candidate_sha256": "sha256:8b5555cfd1697736b23ed9f35e1277da40194aacbe00bec77d9f6fce277b99f3",
+      "field": "data_poster_fee",
+      "key": "New fee",
+      "proposer": null,
+      "outcome": "admitted",
+      "codes": [],
+      "value": "25",
+      "unit": null,
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 851,
+        "end": 856
+      },
+      "parts": [
+        {
+          "role": "field",
+          "start": 784,
+          "end": 795,
+          "passed": true
+        },
+        {
+          "role": "key",
+          "start": 417,
+          "end": 424,
+          "passed": true
+        }
+      ],
+      "missing": [],
+      "packs": []
+    },
+    {
+      "candidate_id": "certification_fee/New fee",
+      "candidate_sha256": "sha256:adef45ea43a8e0d70adc7af7ec0283106d75e947315033393dc2c428171d4c47",
+      "field": "certification_fee",
+      "key": "New fee",
+      "proposer": null,
+      "outcome": "admitted",
+      "codes": [],
+      "value": "170",
+      "unit": null,
+      "source": "document",
+      "ref": null,
+      "url": null,
+      "evidence": {
+        "start": 630,
+        "end": 637
+      },
+      "parts": [
+        {
+          "role": "field",
+          "start": 565,
+          "end": 601,
+          "passed": true
+        },
+        {
+          "role": "key",
+          "start": 417,
+          "end": 424,
+          "passed": true
+        }
+      ],
+      "missing": [],
+      "packs": []
+    },
+    {
       "candidate_id": "certification_fee/Current fee",
-      "candidate_sha256": "sha256:ed768930c881fb108cb6204b89b3d5f498f370b0207a821230613170be91c4e7",
+      "candidate_sha256": "sha256:c695245bc35765594922c761e2d610f65e17a21185ece0b341fe8abd2666a7c6",
       "field": "certification_fee",
       "key": "Current fee",
       "proposer": null,
@@ -162,5 +162,5 @@
     "needs_verification": 1,
     "rejected": 0
   },
-  "receipt_sha256": "sha256:a55717eea197877a0a8622df200a15d148db18e6b6ffca82444a0597f16f8ce5"
+  "receipt_sha256": "sha256:c072084bed365f3dfa956e259345078a887c2a781d3a410545546ec4aceb26f0"
 }
