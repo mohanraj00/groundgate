@@ -74,6 +74,7 @@ from ..text import (
     tokens,
     using,
 )
+from .blind import blind_tasks, is_label_task
 from .labels import QUESTIONS, label_tasks
 from .model_text import all_model_texts, check_model_text, model_text_task, statement_views
 from .resolve import (
@@ -228,6 +229,7 @@ class _Doc:
     # the model-text@1 objects of the packet with their keys, and each one by its task key (§7)
     inputs: list[tuple[str, dict[str, Any]]] = field(default_factory=list)
     texts: dict[str, dict[str, Any]] = field(default_factory=dict)
+    held: int = 0  # the label tasks that the page leaves out (SPEC §4.18)
 
 
 def _named(record: Mapping[str, Any]) -> bool:
@@ -258,6 +260,7 @@ class Review:
         *,
         clock: Callable[[], datetime] | None = None,
         only: Collection[str] | None = None,
+        page: bool = True,
     ) -> None:
         if not isinstance(reviewer, str) or not reviewer.strip():
             raise ValueError("a reviewer name must have a character that is not a space")
@@ -273,6 +276,7 @@ class Review:
         self.skipped: list[str] = []
         self.tickets: dict[str, tuple[str, str | None]] = {}  # frame ticket -> packet, value
         self.crops: dict[str, tuple[str, int, tuple[float, ...]]] = {}  # -> source, page, box
+        self._page = page  # False for the review API: it keeps each task and its groups
         self._only = None if only is None else frozenset(only)  # calibrate label: its tasks
         self._load()
 
@@ -314,7 +318,12 @@ class Review:
             except Exception as exc:  # a packet in the store is untrusted input (§9)
                 self.skipped.append(f"packet {pk}: {_printable(str(exc))}")
                 continue
-            other = len(found[pk]) - len(doc.tasks)
+            if doc.held:
+                self.skipped.append(
+                    f"packet {pk}: {doc.held} label tasks of the blind audit, because the packet "
+                    "has other tasks"
+                )
+            other = len(found[pk]) - len(doc.tasks) - doc.held
             if other:
                 self.skipped.append(f"packet {pk}: {other} task objects of another packet")
             self.docs[pk] = doc
@@ -338,6 +347,8 @@ class Review:
             slot = by_slot.get((s["field"], s["key"], tuple(s["decisions"])))
             if slot is not None:
                 by_key[_task_key(t)] = (slot, t)
+        for bkey, found in blind_tasks(pk, schema).items():  # SPEC §4.18: label tasks
+            by_key.setdefault(bkey, found)
         texts: dict[str, dict[str, Any]] = {}
         inputs = self._inputs.get(pk, [])
         for mkey, obj in inputs:  # a bad input raises: the packet gives no task (§9)
@@ -350,6 +361,13 @@ class Review:
             labels = label_tasks(pk, packet.receipt, packet.text, schema,
                                  references=packet.references, layout=layout,
                                  raw_schema=packet.schema)  # fmt: skip
+        tasks = sorted(k for k in set(stored) if k in by_key or k in labels)
+        # SPEC §4.18: a label task is blind. The page gives no group of blind tasks, and each
+        # other task can show a value, such as the choices of a review or an audit task. So the
+        # page gives a label task only when the packet has no other task. The review API keeps
+        # each task: its groups keep the blind tasks apart (§4.20).
+        label = [k for k in tasks if k not in labels and is_label_task(by_key[k][1])]
+        held = label if self._page and len(label) < len(tasks) else []
         document = packet.receipt.get("document", {}).get("id")
         doc = _Doc(
             key=pk,
@@ -359,7 +377,8 @@ class Review:
             units=_Units(packet.text),
             by_key=by_key,
             labels=labels,
-            tasks=sorted(k for k in set(stored) if k in by_key or k in labels),
+            tasks=[k for k in tasks if k not in held],
+            held=len(held),
             ids=[c.get("id") for c in packet.candidates if isinstance(c, Mapping)],
             document="" if document is None else _printable(document),
             inputs=inputs,
@@ -924,8 +943,11 @@ class Review:
             return AnswerError(self.reviewer, None, message)
 
         decisions = doc.packet.receipt["decisions"]
+        # a label task of the blind audit: the check reads the person's candidate only
+        hide = range(len(decisions)) if is_label_task(task) else ()
         try:
-            found = _correct(slot, candidate, doc.packet, decisions, _admit_only(doc.packet), fail)
+            found = _correct(slot, candidate, doc.packet, decisions, _admit_only(doc.packet),
+                             fail, hide)  # fmt: skip
         except AnswerError as exc:
             raise Refused(400, exc.reason) from exc
         d = found.decision
@@ -999,6 +1021,8 @@ class Review:
             record["format"] = "answer@2"
             record["field_keys"] = body.get("field_keys")
         decisions = doc.packet.receipt["decisions"]
+        if is_label_task(task):  # the person's candidate only, as ``audit labels`` reads it
+            hide = range(len(decisions))
         try:
             checked = _check(self.reviewer, record, doc.by_key, doc.schema, doc.ids,
                              chained=False, labels=doc.labels)  # fmt: skip

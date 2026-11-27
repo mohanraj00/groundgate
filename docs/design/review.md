@@ -217,6 +217,38 @@ null in format 1 (section 7).
 | `open` | No value. No answer settles the task yet. |
 | `disputed` | No value. Two reviewers disagree. |
 
+### 5.5 The label tasks of the blind audit
+
+The blind audit of SPEC §4.18 picks whole documents, and each field and key of a picked
+document gets an audit task. `groundgate calibrate audit tasks` writes these tasks to the
+store as **label tasks**:
+
+- A label task is a `task@1` with the mode `audit` and a slot with no decision. It has no
+  choice, no code and no place. The item and the template come from the type of the field, and
+  the question asks for the value, as for a required field with no decision.
+- So a label task is the same for a field with an admitted value and a field with none. The
+  existence of the task tells nothing of the decisions. An audit task of §5.1 is only for an
+  admitted slot, so its existence tells the actor that the gate admitted a value.
+- No other task has the mode `audit` and no decision. A label task is not the task of a slot,
+  so §6.3 point 1 does not apply to it.
+- The command needs the profile of the log entry. A packet does not name its profile, so the
+  profile must decide the text and the candidates of the packet to the decisions of the packet
+  receipt. The command refuses a packet with a review task in the store.
+- A label task takes `correct`, `not_in_document` and `unsure`. Its answer is a label (§6.1
+  rule 9). A closed set task takes no `correct`, so a label task of a closed set field has no
+  answer with a value yet (#696). `groundgate calibrate audit labels` maps the answers to `groundgate_audit_label`
+  records, and `calibrate measure --audit` counts them (SPEC §4.18). The command makes the
+  labels of the label tasks in `labels.jsonl` equal to the current answers. So a later
+  `unsure` takes out the label of an earlier `correct`.
+- The page leaves out the label tasks of a packet that has another task, and its start lines
+  say so. The page has no blind group, and another task can show a value, such as the choices
+  of a review task or an audit task. The review API keeps the label tasks, because its groups
+  keep the blind tasks apart (§4.20).
+- The schema of the packet must be the schema of the profile. The page and the API check a
+  correction to a label task with the person's candidate only, as `audit labels` does.
+
+The review API gives a label task as a blind task, except for a closed set field (#696).
+
 ## 6. The resolution rules
 
 ### 6.1 Answers
@@ -236,12 +268,15 @@ logs. It reads no clock and calls no model. The same inputs give the same bytes.
 6. If two answers disagree, the slot is `disputed`. The latest answer of a lead settles a
    dispute alone. With two or more leads, their latest answers must agree with each other
    (section 6.3, point 4). With no lead, the slot stays `disputed`.
-7. An audit answer that confirms the value keeps the slot `admitted`. Each other answer, except
-   `unsure`, removes the admitted value. Rules 1 to 6 then apply to the answers of the slot.
+7. An audit answer that confirms the value keeps the slot `admitted`. A `correct` answer whose
+   target is the target of the admitted decision also confirms it: a blind actor gives the
+   same value with no view of it. Each other answer, except `unsure`, removes the admitted
+   value. Rules 1 to 6 then apply to the answers of the slot.
 8. `wrong` has no target, so it settles nothing. The slot stays `open` until another answer
    settles it. Under rule 7, `wrong` removes an admitted value.
-9. An answer to a calibrate task is a label, not a review answer. The resolution checks it
-   against its task, and it settles no slot. The measures leave it out.
+9. An answer to a calibrate task or to a label task of the blind audit (§5.5) is a label, not a
+   review answer. The resolution checks it against its task, and it settles no slot. It runs no
+   correction, so it changes no receipt. The measures leave it out.
 
 Under rule 7, the gate is wrong when one person says so. That is safe for the app, because it
 gets no value until the answers settle. The measure counts an escape only when the slot then

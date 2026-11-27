@@ -73,6 +73,13 @@ spec version, and receipts name the spec version they were decided under.
   does not touch keeps its 0.12 result, and its receipt differs only in the version string:
   `groundgate` is 0.13, and the digests that hold the version string change. A receipt of
   spec 0.12 still verifies and replays under the 0.12 rules with 0.17.0 (#736 cause 2).
+- The blind audit pick of SPEC §4.18 now asks its tasks in the review step.
+  `calibrate audit tasks` writes one label task to the store for each field and key of a
+  picked document. A label task has no decision, so it is the same with and without an
+  admitted value. The review API gives it as a blind task, except for a closed set field.
+  `calibrate audit labels` makes a `groundgate_audit_label` of each answer, and
+  `calibrate measure --audit` counts it. A label task settles no slot and changes no receipt.
+  A blind `correct` with the admitted value keeps the slot `admitted` (#695).
 
 ## 0.17.0 (2026-11-19)
 
