@@ -8650,6 +8650,62 @@ audit_rate("07-label-missing", "One route has a label for 39 of its 40 admitted 
            "is a draft.", [(39, 1, "draft"), (12, 0, "measured")], 51, "0.1")  # fmt: skip
 
 
+# The answers to a label task of the blind audit, and the labels that they give (SPEC §4.18,
+# #695). Each label is written by hand: the label members are typed here, not made by a call.
+ANSWER_TASK = {"document": "inv-0007", "profile": PROFILE_A, "field": "total", "key": None}
+DAY_1, DAY_2 = "2026-11-15T10:00:00Z", "2026-11-16T08:30:00Z"
+
+
+def blind_answer(reviewer: str, verdict: str, value: str | None = None,
+                 time: str = DAY_1) -> dict[str, Any]:  # fmt: skip
+    return {"reviewer": reviewer, "verdict": verdict, "value": value, "time": time}
+
+
+def made_label(labeler: str, value: str | None, date: str = "2026-11-15",
+               **members: Any) -> dict[str, Any]:  # fmt: skip
+    return {"groundgate_audit_label": 1, "document": "inv-0007", "profile": PROFILE_A,
+            "field": "total", "key": None, "value": value, "labeler": labeler, "date": date,
+            **members}  # fmt: skip
+
+
+for answer_name, answer_text, answer_task, answers, answer_labels in (
+    ("01-correct", "A correct answer gives the canonical value of the decision of its "
+     "correction.", ANSWER_TASK, [blind_answer("ana", "correct", "90")],
+     [made_label("ana", "90")]),
+    ("02-not-in-document", "not_in_document gives null: the document has no value.",
+     ANSWER_TASK, [blind_answer("ana", "not_in_document")], [made_label("ana", None)]),
+    ("03-unsure", "unsure gives no label.", ANSWER_TASK, [blind_answer("ana", "unsure")], []),
+    ("04-not-counted", "A correction that does not count has no value, so it gives no label.",
+     ANSWER_TASK, [blind_answer("ana", "correct", None)], []),
+    ("05-last-unsure", "The last answer of a reviewer counts: an unsure after a value gives no "
+     "label.", ANSWER_TASK,
+     [blind_answer("ana", "correct", "90"), blind_answer("ana", "unsure", None, DAY_2)], []),
+    ("06-last-value", "The last answer of a reviewer counts, with its day.", ANSWER_TASK,
+     [blind_answer("ana", "not_in_document"), blind_answer("ana", "correct", "95", DAY_2)],
+     [made_label("ana", "95", "2026-11-16")]),
+    ("07-two-agree", "Two reviewers give the same value: one label for each reviewer, in code "
+     "point order of the reviewer.", ANSWER_TASK,
+     [blind_answer("bo", "correct", "90"), blind_answer("ana", "correct", "90", DAY_2)],
+     [made_label("ana", "90", "2026-11-16"), made_label("bo", "90")]),
+    ("08-two-differ", "Two reviewers give different values: no label.", ANSWER_TASK,
+     [blind_answer("ana", "correct", "90"), blind_answer("bo", "not_in_document")], []),
+    ("09-unsure-and-value", "An unsure of one reviewer does not stop the value of another.",
+     ANSWER_TASK, [blind_answer("ana", "unsure"), blind_answer("bo", "correct", "90")],
+     [made_label("bo", "90")]),
+    ("10-key", "A label task of one key gives a label of that key.",
+     {**ANSWER_TASK, "field": "rate", "key": "express"},
+     [blind_answer("ana", "correct", "12.5")],
+     [made_label("ana", "12.5", field="rate", key="express")]),
+    ("11-utc-day", "The date is the day of the UTC time, also with a fraction of a second.",
+     ANSWER_TASK, [blind_answer("ana", "correct", "90", "2026-11-15T23:59:59.5Z")],
+     [made_label("ana", "90")]),
+    ("12-not-utc", "A time with an offset is not a UTC time, so it gives no day and no label.",
+     ANSWER_TASK, [blind_answer("ana", "correct", "90", "2026-11-16T01:00:00+02:00")], []),
+):  # fmt: skip
+    AUDITS.append({"name": f"audit-answer-{answer_name}", "kind": "answer",
+                   "description": answer_text, "task": answer_task, "answers": answers,
+                   "expected": {"labels": answer_labels}})  # fmt: skip
+
 # ------------------------------------------------ calibration events (SPEC §4.19, #642)
 # Each expectation is written by hand. An event is a suggestion, so no vector gives a bound.
 EVENTS: list[dict[str, Any]] = []

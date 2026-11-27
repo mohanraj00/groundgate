@@ -51,7 +51,7 @@ def queue_view(store: Any) -> bytes:
     left out here too."""
     from .serve import Review, _named
 
-    review = Review(store, "store rebuild", DEFAULT_POLICY)
+    review = Review(store, "store rebuild", DEFAULT_POLICY, page=False)
     logs = {pk: review._logs(pk) for pk in review.docs}
     queues = []
     for pkey, policy in policies(store):

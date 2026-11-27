@@ -1,0 +1,33 @@
+{
+ "name": "audit-answer-02-not-in-document",
+ "kind": "answer",
+ "description": "not_in_document gives null: the document has no value.",
+ "task": {
+  "document": "inv-0007",
+  "profile": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "field": "total",
+  "key": null
+ },
+ "answers": [
+  {
+   "reviewer": "ana",
+   "verdict": "not_in_document",
+   "value": null,
+   "time": "2026-11-15T10:00:00Z"
+  }
+ ],
+ "expected": {
+  "labels": [
+   {
+    "groundgate_audit_label": 1,
+    "document": "inv-0007",
+    "profile": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "field": "total",
+    "key": null,
+    "value": null,
+    "labeler": "ana",
+    "date": "2026-11-15"
+   }
+  ]
+ }
+}
