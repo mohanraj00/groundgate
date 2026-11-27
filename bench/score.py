@@ -985,6 +985,15 @@ def main() -> None:
             )
         except (OSError, ValueError, KeyError) as exc:
             ap.error(f"requested-field scoring needs sealed labels and a valid set: {exc}")
+        carried = False
+        if args.check and args.diagnostics is None and (out / "results.json").exists():
+            # The diagnostics come from a pinned local export that is not in the repository
+            # (#381). Without it, the check rescores the primary part and keeps the committed
+            # diagnostics as they are. Both files must still match byte for byte.
+            committed = json.loads((out / "results.json").read_text(encoding="utf-8"))
+            if isinstance(committed, dict) and "diagnostics" in committed:
+                results["diagnostics"] = committed["diagnostics"]
+                carried = True
         outputs = {
             "results.json": json.dumps(results, indent=1, sort_keys=True) + "\n",
             "RESULTS.md": render_requested(results),
@@ -997,6 +1006,12 @@ def main() -> None:
             ]
             if stale:
                 raise SystemExit("out of date: " + ", ".join(stale))
+            if carried:
+                print(
+                    "primary scores checked; diagnostics not rescored: pass --diagnostics and"
+                    " --diagnostics-sha256 to check them",
+                    file=sys.stderr,
+                )
         else:
             out.mkdir(parents=True, exist_ok=True)
             for name, content in outputs.items():
