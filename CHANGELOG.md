@@ -8,6 +8,10 @@ spec version, and receipts name the spec version they were decided under.
 - The benchmark disables web search, apps, browser use and computer use for `codex`. It gives
   `codex` and `claude` only the `PATH`, `HOME` and `CODEX_HOME` environment variables. This change
   applies to new runs only (#422).
+- A requested-field set can name its scoring rule in `score_rule`. Under
+  `requested-score/2`, a not-found on a present slot is a wrong absence, and each slice
+  gives the wrong absences and the absence error. A set without `score_rule` keeps
+  version 1, so no published number changes (#485).
 - `bench/score.py --requested --check` passes on `bench/requested` without the local
   diagnostics export. It rescores the primary part, keeps the committed diagnostics, and
   says that it did not rescore them. With `--diagnostics`, it checks all of it (#381).

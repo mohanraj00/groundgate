@@ -247,8 +247,12 @@ def test_invalid_labels_fail_closed(mutation: str) -> None:
         measure(m, labels, run, "heldout")
 
 
-def cache(directory: Path) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
+def cache(
+    directory: Path, rule: str | None = None
+) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
     m, labels, run = data()
+    if rule is not None:
+        m["score_rule"] = rule
     (directory / "runs").mkdir()
     for name, content in (("manifest.json", m), ("labels.json", labels)):
         (directory / name).write_text(json.dumps(content))
@@ -694,3 +698,88 @@ def test_with_goal_table_replaces_only_the_block() -> None:
     text = f"before\n{GOAL_START}\nold\n{GOAL_END}\nafter\n"
     want = f"before\n{GOAL_START}\n\nnew\n\n{GOAL_END}\nafter\n"
     assert with_goal_table(text, ["new"]) == want
+
+
+def not_found_on_each_state() -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
+    m, labels, run = data()
+    run["documents"][0]["decisions"] = [decision("name", "A B")]
+    run["documents"][0]["not_found"] = [
+        {"field": "name"},
+        {"field": "amount"},
+        {"field": "absent"},
+        {"field": "unclear"},
+    ]
+    return m, labels, run
+
+
+def test_rule_1_gives_a_not_found_on_a_present_slot_no_cost() -> None:
+    m, labels, run = not_found_on_each_state()
+    out = measure(m, labels, run, "heldout")
+    assert out["total"]["absence_hits"] == 1
+    assert "wrong_absences" not in out["total"]
+    assert "absence_error_rate" not in out["total"]
+    m["score_rule"] = "requested-score/1"
+    assert measure(m, labels, run, "heldout") == out
+
+
+def test_rule_2_counts_a_not_found_on_a_present_slot_as_a_wrong_absence() -> None:
+    m, labels, run = not_found_on_each_state()
+    m["score_rule"] = "requested-score/2"
+    out = measure(m, labels, run, "heldout")
+    total = out["total"]
+    # name has its right value admitted and a not_found: still one wrong absence.
+    assert total["wrong_absences"] == 2
+    assert total["absence_hits"] == 1
+    assert total["absence_error_rate"] == {"k": 2, "n": 3, "rate": 2 / 3}
+    assert out["by_field"]["name"]["wrong_absences"] == 1
+    assert out["by_field"]["amount"]["wrong_absences"] == 1
+    # The unclear slot stays excluded, with or without a not_found.
+    assert out["by_field"]["unclear"]["wrong_absences"] == 0
+    assert out["by_field"]["unclear"]["absence_error_rate"]["n"] == 0
+    assert total["reported_absences"] == 3
+    # The other counts are those of version 1.
+    m.pop("score_rule")
+    old = measure(m, labels, run, "heldout")["total"]
+    added = {"reported_absences", "wrong_absences", "absence_error_rate"}
+    assert {k: v for k, v in total.items() if k not in added} == old
+
+
+def test_rule_2_counts_a_not_found_on_an_absent_slot_with_an_admitted_value() -> None:
+    m, labels, run = data()
+    m["score_rule"] = "requested-score/2"
+    run["documents"][0]["decisions"] = [decision("absent", "0")]
+    run["documents"][0]["not_found"] = [{"field": "name"}, {"field": "absent"}]
+    out = measure(m, labels, run, "heldout")
+    # The admitted value is an escape, and the not-found on the absent slot is no wrong absence.
+    assert out["total"]["absence_hits"] == 0 and out["total"]["escapes"] == 1
+    assert out["total"]["absence_error_rate"] == {"k": 1, "n": 2, "rate": 0.5}
+    assert out["by_field"]["absent"]["absence_error_rate"] == {"k": 0, "n": 1, "rate": 0.0}
+
+
+@pytest.mark.parametrize("rule", ["requested-score/3", 2, None, ""])
+def test_unknown_score_rule_is_refused(rule: Any) -> None:
+    m, labels, run = not_found_on_each_state()
+    m["score_rule"] = rule
+    with pytest.raises(ValueError, match="score_rule"):
+        measure(m, labels, run, "heldout")
+
+
+def test_rule_2_results_name_the_rule_and_show_the_wrong_absences(tmp_path: Path) -> None:
+    _, _, run = cache(tmp_path, "requested-score/2")
+    run["documents"][0]["not_found"] = [{"field": "name"}]
+    (tmp_path / "runs/baseline.json").write_text(json.dumps(run))
+    results = score_set(tmp_path, "heldout")
+    assert results["score_rule"] == "requested-score/2"
+    assert results["runs"]["baseline"]["total"]["wrong_absences"] == 1
+    report = render_requested(results)
+    assert "Score rule: `requested-score/2`" in report
+    assert "| Absence hits | Wrong absences | Absence error | Reviews |" in report
+    # Present 3, hits 0, absence hits 0, wrong absences 1, absence error 100%, reviews 0.
+    assert "| 3 | 0 | 0 | 1 | 100.00% | 0 | 3 |" in report
+    plain = tmp_path / "plain"
+    plain.mkdir()
+    cache(plain)
+    old = score_set(plain, "heldout")
+    assert "score_rule" not in old
+    assert "Wrong absences" not in render_requested(old)
+    assert "Score rule" not in render_requested(old)

@@ -842,6 +842,14 @@ def render_requested(results: dict[str, Any]) -> str:
         "without value trials.",
         "",
     ]
+    if "score_rule" in results:
+        # Version 1 sets have no score_rule member, and their RESULTS.md does not change (#485).
+        lines += [
+            "Score rule: `" + results["score_rule"] + "`. A wrong absence is an explicit "
+            "not-found on a present slot. The absence error is wrong absences over all explicit "
+            "not-found entries on absent and present slots.",
+            "",
+        ]
     head = [
         "Slice",
         "Docs",
@@ -882,9 +890,15 @@ def render_requested(results: dict[str, Any]) -> str:
             for k, fields in run["by_kind_field"].items()
             for f, r in fields.items()
         ]
+        wrong = "wrong_absences" in run["total"]
+        columns = head
+        if wrong:
+            at = head.index("Absence hits") + 1
+            columns = [*head[:at], "Wrong absences", "Absence error", *head[at:]]
         rows = []
         for label, r in slices:
             b = r["bounds"]
+            cells = [r["wrong_absences"], percent(r["absence_error_rate"]["rate"])] if wrong else []
             rows.append(
                 [
                     label.replace("|", "\\|"),
@@ -901,6 +915,7 @@ def render_requested(results: dict[str, Any]) -> str:
                     r["present"],
                     r["hits"],
                     r["absence_hits"],
+                    *cells,
                     r["reviews"],
                     r["silent_misses"],
                     r["rejected_right_values"],
@@ -917,7 +932,7 @@ def render_requested(results: dict[str, Any]) -> str:
                     b["effective_errors"],
                 ]
             )
-        lines += table(head, rows)
+        lines += table(columns, rows)
         states = run["document_states"]
         lines += [
             "Run state for each document. An incomplete document stopped at a harness limit or "

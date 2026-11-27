@@ -41,6 +41,14 @@ DOCUMENT_STATES = ("documents", "incomplete", "transport_error", "transport_retr
 # this member keeps its published document_states.
 LIMIT_STATES = ("search_limit_documents", "search_limit_fields")
 SPLIT_METHOD = "family-hash/1"
+# Scoring rule versions (#485). A manifest without `score_rule` is version 1, so the published
+# results of the existing sets do not change. Version 2 also counts a not_found entry on a present
+# slot as a wrong absence, so a run that writes more absences pays for each wrong one.
+SCORE_RULES = ("requested-score/1", "requested-score/2")
+WRONG_ABSENCE_RULE = "requested-score/2"
+# The counters that version 2 adds: each explicit not-found on a non-excluded slot, and each one on
+# a present slot.
+ABSENCE_COUNTERS = ("reported_absences", "wrong_absences")
 
 
 # The runner writes groundgate-run/6 from #554 on, and groundgate-run/5 from #494 to #554. The
@@ -122,8 +130,16 @@ def check_split_rule(manifest: dict[str, Any]) -> None:
             raise ValueError(f"split differs from the split_rule ({expected}): " + ", ".join(wrong))
 
 
-def blank_row() -> dict[str, Any]:
-    return dict.fromkeys(COUNTERS, 0)
+def blank_row(counters: tuple[str, ...] = COUNTERS) -> dict[str, Any]:
+    return dict.fromkeys(counters, 0)
+
+
+def score_rule(manifest: dict[str, Any]) -> str:
+    """The scoring rule version of a set: its manifest `score_rule`, else version 1."""
+    rule = manifest.get("score_rule", SCORE_RULES[0])
+    if rule not in SCORE_RULES:
+        raise ValueError("unknown score_rule: " + json.dumps(rule))
+    return str(rule)
 
 
 def decision_key(raw: Any) -> Any:
@@ -251,6 +267,7 @@ def signature(item: dict[str, Any], field_type: str) -> tuple[str, Any]:
 
 
 def summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    wrong = bool(rows) and "wrong_absences" in rows[0]
     docs: dict[str, dict[str, int]] = defaultdict(lambda: {"admitted": 0, "wrong": 0})
     # A document with only unclear slots still counts in the sample, but adds no trial.
     present = {row["doc"] for row in rows}
@@ -258,7 +275,8 @@ def summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
         if not row["excluded"]:
             docs[row["doc"]]["admitted"] += row["admitted"]
             docs[row["doc"]]["wrong"] += row["escapes"]
-    counts = {name: sum(r[name] for r in rows) for name in COUNTERS}
+    counters = COUNTERS + (ABSENCE_COUNTERS if wrong else ())
+    counts = {name: sum(r[name] for r in rows) for name in counters}
     n, e = counts["admitted"], counts["escapes"]
     effect = max(1, max((d["admitted"] for d in docs.values()), default=0))
     trials = n // effect
@@ -269,29 +287,39 @@ def summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
     admit_docs = sum(d["admitted"] > 0 for d in docs.values())
     wrong_docs = sum(d["wrong"] > 0 for d in docs.values())
     db = upper95(wrong_docs, admit_docs)
-    return counts | {
-        "documents": len(present),
-        "kinds": len({r["kind"] for r in rows if not r["excluded"]}),
-        "documents_with_admits": admit_docs,
-        "admitted_error_rate": ratio(e, n),
-        "miss_rate": ratio(counts["reviews"] + counts["silent_misses"], counts["present"]),
-        "right_value_review_share": ratio(counts["reviews"], counts["present"]),
-        "silent_miss_share": ratio(counts["silent_misses"], counts["present"]),
-        "rejected_right_value_share": ratio(counts["rejected_right_values"], counts["present"]),
-        "no_right_candidate_share": ratio(counts["no_right_candidate"], counts["present"]),
-        "bounds": {
-            "confidence": 0.95,
-            "design_effect": effect,
-            "design_effect_method": "maximum admitted cluster size; default, not estimated",
-            "effective_trials": trials,
-            "effective_errors": errors,
-            "value_upper95": vb,
-            "document_trials": admit_docs,
-            "document_errors": wrong_docs,
-            "document_upper95": db,
-            "combined_upper95": max(vb, db) if vb is not None and db is not None else None,
-        },
-    }
+    extra = {}
+    if wrong:
+        # All explicit not-found entries on non-excluded slots, also on an absent slot with an
+        # admitted value, which version 1 does not count as an absence hit. Version 1 never
+        # fills this rate.
+        extra["absence_error_rate"] = ratio(counts["wrong_absences"], counts["reported_absences"])
+    return (
+        counts
+        | extra
+        | {
+            "documents": len(present),
+            "kinds": len({r["kind"] for r in rows if not r["excluded"]}),
+            "documents_with_admits": admit_docs,
+            "admitted_error_rate": ratio(e, n),
+            "miss_rate": ratio(counts["reviews"] + counts["silent_misses"], counts["present"]),
+            "right_value_review_share": ratio(counts["reviews"], counts["present"]),
+            "silent_miss_share": ratio(counts["silent_misses"], counts["present"]),
+            "rejected_right_value_share": ratio(counts["rejected_right_values"], counts["present"]),
+            "no_right_candidate_share": ratio(counts["no_right_candidate"], counts["present"]),
+            "bounds": {
+                "confidence": 0.95,
+                "design_effect": effect,
+                "design_effect_method": "maximum admitted cluster size; default, not estimated",
+                "effective_trials": trials,
+                "effective_errors": errors,
+                "value_upper95": vb,
+                "document_trials": admit_docs,
+                "document_errors": wrong_docs,
+                "document_upper95": db,
+                "combined_upper95": max(vb, db) if vb is not None and db is not None else None,
+            },
+        }
+    )
 
 
 def measure(
@@ -321,6 +349,7 @@ def measure(
     if set(outputs) - set(doc_ids):
         raise ValueError("run contains unknown documents")
     check_split_rule(manifest)
+    counters = COUNTERS + (ABSENCE_COUNTERS if score_rule(manifest) == WRONG_ABSENCE_RULE else ())
     limited = {"search_limit" in d for d in run_docs}
     if len(limited) > 1:
         raise ValueError("either every run document has a search_limit count or none has")
@@ -385,7 +414,7 @@ def measure(
             spec = fields[name]
             state = slot["status"]
             wanted = values_by_slot[(name, skey)]
-            row = blank_row()
+            row = blank_row(counters)
             row |= {"doc": doc["id"], "kind": doc["kind"], "field": name, "key": skey}
             if state == "unclear":
                 row["excluded"] = 1
@@ -421,6 +450,10 @@ def measure(
             row["admitted"] = len(admitted)
             row["escapes"] = len(admitted - wanted)
             row["catches"] = len(reviewed - wanted - admitted)
+            if "wrong_absences" in row:
+                row["reported_absences"] = int((name, skey) in nf)
+                # A wrong absence counts even when the right value is also admitted.
+                row["wrong_absences"] = int(state == "present" and (name, skey) in nf)
             if state == "absent" and not admitted:
                 row["absence_hits"] = int((name, skey) in nf)
                 row["hits"] += row["absence_hits"]
@@ -450,7 +483,7 @@ def measure(
                 if sig in seen:
                     continue
                 seen.add(sig)
-                row = blank_row()
+                row = blank_row(counters)
                 row |= {"doc": doc["id"], "kind": doc["kind"], "field": name, "key": d.get("key")}
                 row["escapes"] = row["admitted"] = 1
                 rows.append(row)
@@ -562,12 +595,15 @@ def score_set(
         raise ValueError("no cached requested-field runs")
     if len(bindings) != 1:
         raise ValueError("cached runs do not share one configuration and code binding")
+    rule = score_rule(manifest)
     result = {
         "format": "requested-fields/1",
         "labels_sha256": seal,
         "manifest_sha256": "sha256:" + hashlib.sha256(manifest_raw).hexdigest(),
         "runs": scored,
     }
+    if rule != SCORE_RULES[0]:
+        result["score_rule"] = rule
     if (diagnostics is None) != (diagnostics_sha256 is None):
         raise ValueError("diagnostics need an export path and exact digest")
     if diagnostics is not None:
