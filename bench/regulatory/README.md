@@ -153,9 +153,9 @@ stays null. If the reader cannot read the body, or if the quotes cannot identify
 the table goes to review. If a cell spans rows, I check each record on its own. A quote
 for that cell can then confirm the cell in only one record.
 
-SPEC step 3 rejects a candidate for `n/a` with `NULL_STRING_LITERAL`. A table can still
-pass with a null member for that cell (#736 cause 2). A new held-out measure is still open
-in #736. The published results are from the sealed 0.17 run.
+SPEC step 3 rejects a candidate for `n/a` with `NULL_STRING_LITERAL`. Spec 0.13 sends
+the record of that cell to review with `RECORD_MEMBER_REJECTED` (#736 cause 2). A new
+held-out measure is still open in #736. The published results are from the sealed 0.17 run.
 
 ## Escapes
 

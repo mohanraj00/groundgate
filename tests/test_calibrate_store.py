@@ -363,15 +363,17 @@ def test_a_label_task_is_only_for_a_decision_that_the_sample_takes(tmp_path: Pat
     _, c, _ = inputs(tmp_path / "in", 1)
     cands = json.loads((c / "doc0.json").read_text())
     receipt = gg.admit(TEXT, SCHEMA, cands, None).to_dict()
-    # decision 0 is flagged KEY_NOT_AT_VALUE, decision 1 is admitted with a key and no flag
-    assert [(d["outcome"], d["codes"]) for d in receipt["decisions"]] == [
-        ("needs_verification", ["KEY_NOT_AT_VALUE"]), ("admitted", []),
-    ]  # fmt: skip
+    # one decision is flagged KEY_NOT_AT_VALUE, the other is admitted with a key and no flag.
+    # The receipt sorts them by digest, so the test finds the position of each.
+    flags = [(d["outcome"], d["codes"]) for d in receipt["decisions"]]
+    assert sorted(flags) == [("admitted", []), ("needs_verification", ["KEY_NOT_AT_VALUE"])]
+    flagged = flags.index(("needs_verification", ["KEY_NOT_AT_VALUE"]))
+    clean = 1 - flagged
     schema, pk = Schema.from_dict(SCHEMA), "sha256:" + "0" * 64
     with pytest.raises(PacketError, match="not a key item"):
-        label_task(pk, receipt, TEXT, schema, 1, "key", raw_schema=SCHEMA)
+        label_task(pk, receipt, TEXT, schema, clean, "key", raw_schema=SCHEMA)
     with pytest.raises(PacketError, match="not a field item"):
-        label_task(pk, receipt, TEXT, schema, 0, "field", raw_schema=SCHEMA)
+        label_task(pk, receipt, TEXT, schema, flagged, "field", raw_schema=SCHEMA)
     with FolderStore(tmp_path / "store") as s:
         k, _ = admit_packet(s, TEXT, SCHEMA, cands, None, "doc0")
         given = gg.admit(TEXT, SCHEMA, cands, None).to_dict()
@@ -385,11 +387,13 @@ def test_a_label_task_is_only_for_a_decision_that_the_sample_takes(tmp_path: Pat
         from groundgate.canonical import jcs
         from groundgate.store import key as store_key
 
-        handmade = {store_key("task@1", jcs(made[q]).encode()) for q in (("key", 1), ("field", 0))}
+        handmade = {
+            store_key("task@1", jcs(made[q]).encode()) for q in (("key", clean), ("field", flagged))
+        }
         for t in made.values():
             s.put("task@1", jcs(t).encode())
         assert set(label_tasks(k, given, TEXT, schema, raw_schema=SCHEMA)) == {
-            store_key("task@1", jcs(made[q]).encode()) for q in (("key", 0), ("field", 1))
+            store_key("task@1", jcs(made[q]).encode()) for q in (("key", flagged), ("field", clean))
         }
         review = Review(s, "ana")
         httpd, url = serve.server(review, 0)
@@ -397,7 +401,7 @@ def test_a_label_task_is_only_for_a_decision_that_the_sample_takes(tmp_path: Pat
             for tk in handmade:
                 assert call("GET", f"/api/task/{tk}")[0] == 404
                 assert call("POST", "/api/answer", answer(tk, "unsure"))[0] == 404
-            good = store_key("task@1", jcs(made["field", 1]).encode())
+            good = store_key("task@1", jcs(made["field", clean]).encode())
             assert call("POST", "/api/answer", answer(good, "unsure"))[0] == 200
         (record,) = s.read(("answers", k, reviewer_key("ana")))
         chain = {"sequence", "previous", "entry_sha256"}

@@ -53,21 +53,41 @@
  ],
  "expected": {
   "receipt": {
-   "groundgate": "0.12",
+   "groundgate": "0.13",
    "document": {
     "id": null,
-    "sha256": "sha256:cbd02fccd43c505a7dd1fcd59c13c9797fc97cb53b47530f30a6d70a7a080153",
+    "sha256": "sha256:4b7768e90d805e90b345af7673f239d4058888daf7fd3cce671c31d6570674d4",
     "source": null,
     "doubt_sha256": null
    },
    "references": [],
    "packs": [],
-   "schema_sha256": "sha256:87306d860a7e8a7c3f77337827836e8824fa801bdb882c404c48f9d2a9ebdf88",
-   "policy_sha256": "sha256:92f2e20399c00a6cff7da2c08bac06bb108a3a46fd92e60b981295103a8a6f4e",
+   "schema_sha256": "sha256:ae72d3246e635d209aeb442337a54818864f22247a4df9544681dd727ba5f4ca",
+   "policy_sha256": "sha256:5821d11e48837f67639e6db5e307b099d3864324eb6d6c5220b01f5f7f6c4232",
    "decisions": [
     {
+     "candidate_id": "r6",
+     "candidate_sha256": "sha256:555dc461321077fa81dd5999412c08fec47b5fa6a8f21369fc82ef0a9e4c3d41",
+     "field": "fee",
+     "key": null,
+     "proposer": null,
+     "outcome": "rejected",
+     "codes": [
+      "TYPE_INVALID"
+     ],
+     "value": "90.5",
+     "unit": "USD",
+     "source": null,
+     "ref": null,
+     "url": null,
+     "evidence": null,
+     "parts": [],
+     "missing": [],
+     "packs": []
+    },
+    {
      "candidate_id": "r5",
-     "candidate_sha256": "sha256:38b224f3e79842e5312a82ade742d1b4a0e0e7c42795e5e1deb0abe14063cd80",
+     "candidate_sha256": "sha256:72b70818deebc2b6f846b639e823b64f6fa2c916a935acfae3c546c3e2bcac3f",
      "field": "fee",
      "key": null,
      "proposer": null,
@@ -89,48 +109,8 @@
      "packs": []
     },
     {
-     "candidate_id": "r6",
-     "candidate_sha256": "sha256:621fd523dc999996b7d48327e7cf6f5afd337a0f56871eac9ba0db6a511ccbbb",
-     "field": "fee",
-     "key": null,
-     "proposer": null,
-     "outcome": "rejected",
-     "codes": [
-      "TYPE_INVALID"
-     ],
-     "value": "90.5",
-     "unit": "USD",
-     "source": null,
-     "ref": null,
-     "url": null,
-     "evidence": null,
-     "parts": [],
-     "missing": [],
-     "packs": []
-    },
-    {
      "candidate_id": null,
-     "candidate_sha256": "sha256:741b7f54725144e8dc555594086a53dfe9455c64e087a435b49adcb2d48df9d4",
-     "field": "price",
-     "key": null,
-     "proposer": null,
-     "outcome": "rejected",
-     "codes": [
-      "FIELD_UNKNOWN"
-     ],
-     "value": null,
-     "unit": "mg",
-     "source": null,
-     "ref": null,
-     "url": null,
-     "evidence": null,
-     "parts": [],
-     "missing": [],
-     "packs": []
-    },
-    {
-     "candidate_id": null,
-     "candidate_sha256": "sha256:df90ab1ab19aad2f9fd825f7c9ede756ac5c4aef69060a5986b76a1b7bd7b72d",
+     "candidate_sha256": "sha256:76fdecb9c7425da82a42e8f93c304f5fa8d6346917c12f826bf83265b2c84e5e",
      "field": null,
      "key": null,
      "proposer": null,
@@ -149,16 +129,16 @@
      "packs": []
     },
     {
-     "candidate_id": 7,
-     "candidate_sha256": "sha256:dfa721a7d764ec949bc454a15c98f3349cc35d3747c5074c196b50093c550089",
+     "candidate_id": "r4",
+     "candidate_sha256": "sha256:acf3297273e237f49f6d4f0fb07b96c4ce5a27e8b0a8479ec2e55d03e09e4788",
      "field": "fee",
      "key": null,
      "proposer": null,
      "outcome": "rejected",
      "codes": [
-      "NULL_STRING_LITERAL"
+      "NO_EVIDENCE"
      ],
-     "value": null,
+     "value": "90",
      "unit": "USD",
      "source": null,
      "ref": null,
@@ -169,16 +149,36 @@
      "packs": []
     },
     {
-     "candidate_id": "r4",
-     "candidate_sha256": "sha256:f7102b81cd68debaf542ad33ba6a448bebb706aff62a206a5f2d921502e36df4",
+     "candidate_id": null,
+     "candidate_sha256": "sha256:b32610c83cd9f660f8223b0b584499e99825125527a20a9e28bb3ea5bc719daf",
+     "field": "price",
+     "key": null,
+     "proposer": null,
+     "outcome": "rejected",
+     "codes": [
+      "FIELD_UNKNOWN"
+     ],
+     "value": null,
+     "unit": "mg",
+     "source": null,
+     "ref": null,
+     "url": null,
+     "evidence": null,
+     "parts": [],
+     "missing": [],
+     "packs": []
+    },
+    {
+     "candidate_id": 7,
+     "candidate_sha256": "sha256:ccf028ea267dba8014777c42288266768aa859cd2c18b58bde7ccc77abc527e7",
      "field": "fee",
      "key": null,
      "proposer": null,
      "outcome": "rejected",
      "codes": [
-      "NO_EVIDENCE"
+      "NULL_STRING_LITERAL"
      ],
-     "value": "90",
+     "value": null,
      "unit": "USD",
      "source": null,
      "ref": null,
@@ -196,7 +196,7 @@
     "needs_verification": 0,
     "rejected": 6
    },
-   "receipt_sha256": "sha256:27d91b103a7341341042817d11b89c42cb823d2160e992259b6f97bed6589008"
+   "receipt_sha256": "sha256:483abca79439a246a7fa49acdb18bbe3b518ee013d25f4ac94c914b929bded19"
   }
  }
 }

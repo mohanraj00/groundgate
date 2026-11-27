@@ -82,6 +82,7 @@ RECORD = {
     "RECORD_MEMBER_MISSING": "A required member of the record has no value that passed.",
     "RECORD_MEMBER_CONFLICT": "A member of the record has two different values.",
     "RECORD_SOURCE_MIXED": "The values of the record cite two or more texts.",
+    "RECORD_MEMBER_REJECTED": "A cell of the record has text, and the gate rejected its value.",
     "SET_REPLACES_NOTHING": "A later document of the set changes a record that no earlier one has.",
     "SET_DUPLICATE": "Another record of the document set has the same value of the check member.",
     "SET_CONFLICT": "Two documents of the set give this record with different values.",

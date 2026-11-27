@@ -188,10 +188,10 @@ def test_the_example_of_a_conflict(tmp_path: Path) -> None:
     assert task["question"] == "Which amount is revenue?"
     assert task["mode"] == "review" and task["item"] == "number" and task["template"] == "number@1"
     assert task["parts"] == ["amount", "scale", "sign", "unit", "field"]
-    assert task["codes"] == ["CONFLICTING_CANDIDATES", "SCALE_WORD"]
+    assert task["codes"] == ["SCALE_WORD", "CONFLICTING_CANDIDATES"]
     assert [c["shown"] for c in task["choices"]] == [
-        "4,200,000 with no unit (written 4,200, in thousands, positive)",
         "4,200 with no unit (written 4,200, not scaled, positive)",
+        "4,200,000 with no unit (written 4,200, in thousands, positive)",
     ]
     assert task["places"] == [{"start": 12, "end": 26, "page": None, "box": None}]
 

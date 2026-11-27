@@ -150,7 +150,7 @@ def test_the_packet_names_each_input(tmp_path: Path) -> None:
         )
         assert receipt.to_dict()["packs"][0]["id"] == "lac-x-test"
         packet = json.loads(store.get("packet@1", k))
-        assert packet["format"] == "packet@1" and packet["spec"] == "0.12"
+        assert packet["format"] == "packet@1" and packet["spec"] == "0.13"
         assert packet["document"] == {
             "id": "grant-1",
             "source": "https://example.org/grant",
@@ -218,7 +218,7 @@ def doubt(quote: str = "$500", confidence: float = 0.4) -> list[Any]:
 def test_a_packet_keeps_its_doubt_and_verifies_with_it(tmp_path: Path) -> None:
     with FolderStore(tmp_path / "s") as store:
         k, receipt = admit_packet(store, TEXT, SCHEMA, cands(), doubt=doubt())
-        assert "READ_DOUBT" in receipt.decisions[0].codes
+        assert "READ_DOUBT" in next(d for d in receipt.decisions if d.candidate_id == "fee").codes
         packet = json.loads(store.get("packet@1", k))
         assert json.loads(store.get("doubt@1", packet["doubt"])) == doubt()
         found = load_packet(store, k)
