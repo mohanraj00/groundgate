@@ -8,6 +8,7 @@ import json
 import sys
 import threading
 from collections.abc import Iterator
+from itertools import pairwise
 from pathlib import Path
 from typing import Any
 
@@ -381,6 +382,59 @@ def test_extraction_plants() -> None:
 
 
 # ---------------------------------------------------------------------------- codex harness
+
+
+@pytest.mark.parametrize(("provider", "cli"), [("codex", "codex"), ("claude-cli", "claude")])
+def test_propose_cli_flags_and_environment(
+    provider: str, cli: str, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    pytest.importorskip("langextract")
+    import subprocess
+    from unittest.mock import Mock
+
+    import propose
+
+    expected_env = {"PATH": "/test/bin", "HOME": "/test/home", "CODEX_HOME": "/test/codex"}
+    for name, value in expected_env.items():
+        monkeypatch.setenv(name, value)
+    monkeypatch.setenv("TEST_SECRET", "secret")
+
+    out = '{"extractions": []}'
+    if cli == "codex":
+        reply = {"type": "item.completed", "item": {"type": "agent_message", "text": out}}
+    else:
+        reply = {"result": out, "modelUsage": {"m": {}}, "num_turns": 1}
+    run = Mock(
+        side_effect=[
+            subprocess.CompletedProcess([], 0, "test version", ""),
+            subprocess.CompletedProcess([], 0, json.dumps(reply), ""),
+        ]
+    )
+    monkeypatch.setattr(propose.subprocess, "run", run)
+    monkeypatch.setattr(propose, "SET", tmp_path)
+    monkeypatch.setattr(propose, "KEY_SPAN", False)
+    monkeypatch.setattr(propose, "ROLES", False)
+    monkeypatch.setattr(
+        sys, "argv", ["propose.py", "--provider", provider, "--model", "m", "--set", str(tmp_path)]
+    )
+    propose.main()
+    assert propose.CLIModel(provider, "m", 1, None)._one("prompt")[0] == out
+
+    version, extraction = run.call_args_list
+    assert version.args[0] == [cli, "--version"]
+    assert version.kwargs["env"] == extraction.kwargs["env"] == expected_env
+    cmd = extraction.args[0]
+    assert cmd[0] == cli
+    if cli == "codex":
+        options = list(pairwise(cmd))
+        assert ("-c", 'web_search="disabled"') in options
+        assert {value for flag, value in options if flag == "--disable"} == {
+            "apps",
+            "browser_use",
+            "browser_use_external",
+            "computer_use",
+            "in_app_browser",
+        }
 
 
 def test_codex_replies_that_used_a_tool_are_counted(monkeypatch: pytest.MonkeyPatch) -> None:
