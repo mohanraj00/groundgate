@@ -71,8 +71,8 @@ says which mode it is in.
 The kit is not a part of groundgate, and the core does not import it. [kit.json](kit.json) pins
 it by a released tag and by the commit of that tag:
 
-- tag `v0.4.0`
-- commit `715ce6b8db044d9acebc2a35f6a64e48582152ea`
+- tag `v0.7.0`
+- commit `4f399d191a052cdc782dff619b10a427e61d267b`
 
 `run.py` gets the kit with `git fetch` by the commit, not by the tag. Git names a commit by a
 hash of its content, so a moved tag cannot change the files. To use a later release, change the

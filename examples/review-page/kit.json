@@ -1,6 +1,6 @@
 {
   "repository": "https://github.com/mohanraj00/mugham.git",
-  "tag": "v0.4.0",
-  "commit": "715ce6b8db044d9acebc2a35f6a64e48582152ea",
+  "tag": "v0.7.0",
+  "commit": "4f399d191a052cdc782dff619b10a427e61d267b",
   "serve": ["src", "catalog"]
 }
