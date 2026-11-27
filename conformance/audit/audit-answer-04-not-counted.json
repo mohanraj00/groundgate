@@ -1,0 +1,22 @@
+{
+ "name": "audit-answer-04-not-counted",
+ "kind": "answer",
+ "description": "A correction that does not count has no value, so it gives no label.",
+ "task": {
+  "document": "inv-0007",
+  "profile": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "field": "total",
+  "key": null
+ },
+ "answers": [
+  {
+   "reviewer": "ana",
+   "verdict": "correct",
+   "value": null,
+   "time": "2026-11-15T10:00:00Z"
+  }
+ ],
+ "expected": {
+  "labels": []
+ }
+}

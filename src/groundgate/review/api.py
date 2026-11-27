@@ -628,7 +628,7 @@ class Service:
         return check_claim(authorization, self.auth, int(self._clock().timestamp()))
 
     def _review(self, store: Any, actor: str, only: list[str] | None = None) -> Review:
-        return Review(store, actor, self._policy, clock=self._clock, only=only)
+        return Review(store, actor, self._policy, clock=self._clock, only=only, page=False)
 
     def skipped(self) -> list[str]:
         """A line for each packet of the store that gives no task, as ``Review.skipped``."""

@@ -112,8 +112,15 @@ def test_rate_vector(v: dict[str, Any]) -> None:
     assert audit.rate(v["routes"], v["covered"]) == v["expected"]["rate"]
 
 
+@pytest.mark.parametrize("v", of("answer"))
+def test_answer_vector(v: dict[str, Any]) -> None:
+    labels, why = audit.answer_labels(v["task"], v["answers"])
+    assert labels == v["expected"]["labels"]
+    assert (why is None) == bool(labels)
+
+
 def test_each_kind_has_a_vector() -> None:
-    assert {v["kind"] for v in VECTORS} == {"pick", "log", "tasks", "label", "rate"}
+    assert {v["kind"] for v in VECTORS} == {"pick", "log", "tasks", "label", "rate", "answer"}
 
 
 # ----------------------------------------------------------------- measure with --audit

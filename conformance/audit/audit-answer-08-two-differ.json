@@ -1,0 +1,28 @@
+{
+ "name": "audit-answer-08-two-differ",
+ "kind": "answer",
+ "description": "Two reviewers give different values: no label.",
+ "task": {
+  "document": "inv-0007",
+  "profile": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "field": "total",
+  "key": null
+ },
+ "answers": [
+  {
+   "reviewer": "ana",
+   "verdict": "correct",
+   "value": "90",
+   "time": "2026-11-15T10:00:00Z"
+  },
+  {
+   "reviewer": "bo",
+   "verdict": "not_in_document",
+   "value": null,
+   "time": "2026-11-15T10:00:00Z"
+  }
+ ],
+ "expected": {
+  "labels": []
+ }
+}

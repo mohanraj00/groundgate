@@ -1,0 +1,22 @@
+{
+ "name": "audit-answer-03-unsure",
+ "kind": "answer",
+ "description": "unsure gives no label.",
+ "task": {
+  "document": "inv-0007",
+  "profile": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "field": "total",
+  "key": null
+ },
+ "answers": [
+  {
+   "reviewer": "ana",
+   "verdict": "unsure",
+   "value": null,
+   "time": "2026-11-15T10:00:00Z"
+  }
+ ],
+ "expected": {
+  "labels": []
+ }
+}
