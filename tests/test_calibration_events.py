@@ -4,6 +4,7 @@ are written by hand."""
 
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import shutil
@@ -166,9 +167,8 @@ def test_the_events_steps(tmp_path: Path, capsys: pytest.CaptureFixture[str]) ->
         assert load_packet(store, PACKET).receipt  # suggest changed nothing in the store
 
 
-def _entelos_events(
-    checkout: Path, work: Path, facts: dict[tuple[str, str], dict[str, Any]]
-) -> list[dict[str, Any]]:
+def _entelos_run(checkout: Path, work: Path, flag: str, data: Any) -> list[dict[str, Any]]:
+    """Give ``data`` to the Go helper on the Host of the checkout, and read its output lines."""
     module = work / "entelos-seam"
     shutil.copytree(Path(__file__).with_name("entelos-seam"), module)
     lifecycle = checkout.resolve() / "src" / "lifecycle-core"
@@ -181,6 +181,21 @@ def _entelos_events(
         check=True,
         timeout=30,
     )
+    source, output = work / "input.json", work / "output.jsonl"
+    source.write_text(jcs(data), "utf-8")
+    subprocess.run(
+        ["go", "run", ".", flag, str(source), "-out", str(output)],
+        cwd=module,
+        env=go_env,
+        check=True,
+        timeout=120,
+    )
+    return [json.loads(line) for line in output.read_text("utf-8").splitlines()]
+
+
+def _entelos_events(
+    checkout: Path, work: Path, facts: dict[tuple[str, str], dict[str, Any]]
+) -> list[dict[str, Any]]:
     cited = []
     for (fact_digest, receipt_digest), fact in facts.items():
         citation = fact["citation"]
@@ -193,21 +208,11 @@ def _entelos_events(
             "outcome": "admitted", "codes": [],
             "data": {key: fact[key] for key in ("field", "key", "value", "unit")},
         })  # fmt: skip
-    evidence = work / "evidence.json"
-    evidence.write_text(jcs({
+    return _entelos_run(checkout, work, "-evidence", {
         "format": "entelos.evidence/1",
         "producer": {"id": "groundgate", "version": "1", "digest_scheme": "groundgate/facts@1"},
         "facts": cited,
-    }), "utf-8")  # fmt: skip
-    output = work / "decisions.jsonl"
-    subprocess.run(
-        ["go", "run", ".", "-evidence", str(evidence), "-out", str(output)],
-        cwd=module,
-        env=go_env,
-        check=True,
-        timeout=120,
-    )
-    return [json.loads(line) for line in output.read_text("utf-8").splitlines()]
+    })  # fmt: skip
 
 
 def test_entelos_decision_events(tmp_path: Path) -> None:
@@ -272,6 +277,81 @@ def test_entelos_decision_events(tmp_path: Path) -> None:
             for draft in WANT_DRAFTS["drafts"]
         ],
     }
+
+
+def _measured(version: str, bounds: dict[str, str]) -> tuple[bytes, bytes]:
+    """The report and the draft profile of one measure of ``fee-schedule``, in the formats of
+    ``calibrate measure``. A person wrote each bound."""
+    gold = "sha256:" + "9" * 64
+    draft = {
+        "groundgate_profile": 1, "id": "fee-schedule", "version": version,
+        "schema": {"fields": {"amount": {"type": "number", "unit": "USD"}}},
+        "routes": [
+            {"field": "amount", "route": route, "status": "measured", "date": "2026-11-20",
+             "documents": 200, "bound": bound}
+            for route, bound in bounds.items()
+        ],
+        "gold_sha256": gold,
+    }  # fmt: skip
+    report = {
+        "groundgate_calibration_report": 1, "date": "2026-11-20", "target": "0.1",
+        "gold_sha256": gold, "split_sha256": "sha256:" + "8" * 64,
+        "fields": {"amount": {"routes": {
+            route: {"admitted": 200, "errors": 0, "error_rate": "0", "bound": bound,
+                    "unscored": 0, "status": "measured"}
+            for route, bound in bounds.items()
+        }}},
+        "draft_profile": check_profile(draft).entry(),
+    }  # fmt: skip
+    return (json.dumps(report) + "\n").encode(), (json.dumps(draft) + "\n").encode()
+
+
+def test_entelos_profile_promotion(tmp_path: Path) -> None:
+    """The promotion of a measure is the evidence of a promotion decision in entelos (#747)."""
+    checkout = os.environ.get("GROUNDGATE_ENTELOS")
+    if not checkout:
+        pytest.skip("Set GROUNDGATE_ENTELOS to a checkout of entelos v0.7.0.")
+    made: list[dict[str, Any]] = []
+    base = ""
+    for version, cleared in (("2.0.0", "0.0310"), ("2.1.0", "0.0612")):
+        folder = tmp_path / version
+        folder.mkdir()
+        report, draft = _measured(version, {"checked": "0.0183", "cleared": cleared})
+        (folder / "report.json").write_bytes(report)
+        (folder / "profile.json").write_bytes(draft)
+        main([
+            "promotion", "--report", str(folder / "report.json"),
+            "--profile", str(folder / "profile.json"), "--collection", "extraction-profiles",
+            "--base", base, "--out", str(folder / "out"),
+        ])  # fmt: skip
+        manifest = (folder / "out" / "manifest.json").read_bytes()
+        summary = json.loads((folder / "out" / "summary.json").read_text("utf-8"))
+        made.append({"manifest": manifest.decode("utf-8"), "summary": summary})
+        # the next version changes this proposal: its base is the reference of this manifest
+        base = "sha256:" + hashlib.sha256(manifest).hexdigest()
+        made[-1]["ref"] = base
+
+    accepted, refused = _entelos_run(
+        Path(checkout), tmp_path, "-promotions", {"limit": 500, "promotions": made}
+    )
+    for got, want, largest in ((accepted, made[0], 310), (refused, made[1], 612)):
+        # the Host takes the manifest text of groundgate, and it keeps the summary
+        assert got["candidate_ref"] == want["ref"]
+        assert got["summary"] == want["summary"]
+        assert got["read"]["promotion"] == "valid"
+        assert got["read"]["inputs"] == {
+            "measure_gold_digest": "sha256:" + "9" * 64, "measure_max_bound_bp": largest,
+        }  # fmt: skip
+        assert got["decision"]["kind"] == "policy"
+    assert accepted["decision"]["disposition"] == "accept"
+    assert refused["decision"]["disposition"] == "reject"
+    assert refused["decision"]["reason"] == (
+        "The largest bound, 612 basis points, is above the limit of 500."
+    )
+    # the stored summary shows which route is above the limit
+    assert [r for r in refused["summary"]["routes"] if r["bound_bp"] > 500] == [
+        {"field": "amount", "route": "cleared", "bound_bp": 612}
+    ]
 
 
 def test_suggest_reads_only_the_events_of_its_profile_version(tmp_path: Path) -> None:
