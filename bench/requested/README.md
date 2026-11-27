@@ -111,6 +111,34 @@ document bound.
 A slice with no effective value trials has no combined bound. The report states this default;
 it does not claim to estimate within-document correlation from zero errors.
 
+### Each proposer and agreement
+
+`bench/requested/proposers.py` gives the admitted error rate for each proposer and for agreement
+(#511, design note `docs/design/document-model.md` section 13). It never mixes them. Each
+distinct admitted value of a slot goes to one group:
+
+- `proposer:<id>`: only candidates of that proposer admitted it.
+- `unnamed`: only candidates with no proposer admitted it. In the runner, that is the model.
+- `agreement`: candidates of two or more proposers admitted it.
+
+The groups add up to the admits and escapes of `results.json`. Each group has the totals, each
+kind, each field and each kind/field pair, with the bounds of `results.json`. "Only found" counts
+the right values that only the proposers of one group proposed, by their best final outcome. For
+the structure reader, these are the fields that only it found. A miss has no proposer, so a group
+has no miss rate.
+
+The script writes `proposers.json` and `PROPOSERS.md` beside the results of a split, and `--check`
+fails if they would change. It never changes `results.json` or `RESULTS.md`:
+
+```bash
+uv run python bench/requested/proposers.py --set bench/<set> --split heldout
+uv run python bench/requested/proposers.py --set bench/<set> --split heldout --check
+```
+
+A run projection keeps the `proposer` of each final decision from #511 on. The projections of
+earlier runs have no proposer, so all their admits are in `unnamed`. A measure of the structure
+reader and of agreement needs a new run, on documents that the rules were not written from.
+
 ## Baseline and seal
 
 I freeze the current one-pass prompt and the app feedback loop configuration, including model
