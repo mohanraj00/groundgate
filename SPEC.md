@@ -2071,9 +2071,9 @@ code and no place. So it is the same for a field with an admitted value and a fi
 and no other task has this form. The packet does not name the profile, so the profile must
 decide the text and the candidates of the packet to the decisions of the packet receipt, and
 give the log entry of the document. A label task takes the verdicts `correct`, `not_in_document`
-and `unsure`. A label task of a closed set field does not take `correct` yet, so only
-`not_in_document` and `unsure` give it an answer (#696). Its answer settles no slot and changes no decision and no receipt. The last answer
-of each reviewer gives one audit label:
+and `unsure`. For a closed set field, `correct` names one option of the field (§4.20, #696). Its
+answer settles no slot and changes no decision and no receipt. The last answer of each reviewer
+gives one audit label:
 
 - `correct`: `value` is the canonical value of the decision of the correction. The gate decides
   the correction with no other candidate of the packet. A correction that the gate rejects, or
@@ -2272,19 +2272,15 @@ escape. Only the list takes a query. A query on another path gives `bad_request`
 | `server_error` | 500 | The service failed. The response gives no store data. |
 
 **The tasks of the API** are the `task@1` objects of the store that their packet gives, when
-the receipt of the packet matches its inputs. Two kinds of task are not tasks of the API in
-version 1, and they get no task ID:
-
-- a calibrate label task (docs/design/review.md §11);
-- a task with the mode `audit` and the item `closed_set`.
+the receipt of the packet matches its inputs. A calibrate label task (docs/design/review.md
+§11) is not a task of the API in version 1, and it gets no task ID.
 
 A task with the mode `audit` is a **blind task**. The actor gets the document, the field and
 the key, and never the proposed value (§4.18). No response gives its value, its unit, its
 evidence, its places, its codes, its item or its question, and no response gives the outcome of
 the gate for its slot. This applies before and after the answer.
 
-A label task of the blind audit (§4.18) is a blind task of the API, except for a closed set
-field. It holds no decision, so it is the same for a field with an admitted value and a field
+A label task of the blind audit (§4.18) is a blind task of the API. It holds no decision, so it is the same for a field with an admitted value and a field
 with none. Its answer is a label: it settles no slot, so it never makes a task of the review
 group open or not open. `groundgate calibrate audit tasks` writes the label tasks of a packet
 before its review tasks, as the order below requires.
@@ -2469,11 +2465,14 @@ and one walk never gives a task two times.
 
 ```json
 {"api": "groundgate-review/1", "task": "task:...", "document": "inv-0007", "mode": "review",
- "field": "total", "key": null, "definition": "The total of the invoice.", "answered": null,
- "body": {"format": "task@1", "...": "..."}, "statements": null}
+ "field": "total", "key": null, "definition": "The total of the invoice.", "options": null,
+ "answered": null, "body": {"format": "task@1", "...": "..."}, "statements": null}
 ```
 
-`definition` is the description of the field in the schema, or null. `answered` is the verdict of
+`definition` is the description of the field in the schema, or null. `options` is the list of
+the options of a closed set field (§2.3) in schema order, and null for each other field. A blind
+task gives it too. The list comes from the schema, not from a candidate, so it tells nothing of
+the proposed value. `answered` is the verdict of
 the latest answer of the actor to this task, or null. `body` is the `task@1` object of the store
 without each key of the store and each index of the receipt, with its question, its choices, its
 evidence and its places. For a blind task, `body` is null.
@@ -2534,6 +2533,15 @@ A blind task takes only `correct`, `not_in_document` and `unsure`. Each other ve
 a value that the actor did not get, and it gives `bad_answer`. So does a `choice`. For a blind task,
 `parts_disagree` comes only from the text and the value of the actor, and never from the
 proposed value.
+
+A blind task of a closed set field names one option with `correct` (#696). `value` is the option,
+and `span` is the place in the text that gives it. With no `value`, the service reads the value
+from the span. The gate checks the candidate of the actor as each other correction of a blind
+task. So a value that is not an option of the field gives `correction_rejected` with the code
+`OPTION_INVALID` (§3, step 5), and the value must be in the text of the span (step 10). A
+closed set task that is not blind still takes no `correct`, because its choices give the
+options that the gate found. No response gives the proposed option: the `body` and the
+`record` of a blind task stay null.
 
 The response has the status 201:
 

@@ -35,6 +35,7 @@
  "sources": {},
  "expected": {
   "served": true,
+  "options": null,
   "mode": "review",
   "field": "summary",
   "key": null,

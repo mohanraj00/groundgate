@@ -78,7 +78,7 @@ from .blind import blind_tasks, is_label_task
 from .labels import QUESTIONS, label_tasks
 from .model_text import all_model_texts, check_model_text, model_text_task, statement_views
 from .resolve import (
-    CLOSED_SET_VERDICTS,
+    CLOSED_SET_REFUSAL,
     CORRECTIONS,
     EVERY_TASK,
     VERDICTS,
@@ -87,6 +87,7 @@ from .resolve import (
     _check,
     _correct,
     _read,
+    closed_set_verdicts,
     resolve,
 )
 from .tasks import (
@@ -534,6 +535,7 @@ class Review:
             "task": tk,
             "document": doc.document,
             "item": task["item"],
+            "mode": task["mode"],
             "question": task["question"],
             # the question of a calibrate task holds the description already
             "definition": None
@@ -933,7 +935,7 @@ class Review:
             raise Refused(400, "a calibrate task takes no correction")
         if tk in doc.texts:
             raise Refused(400, "a model text task takes no correction")
-        if task["item"] == "closed_set":
+        if task["item"] == "closed_set" and task["mode"] != "audit":
             raise Refused(400, "a closed_set task takes no correction: the options are closed")
         if not isinstance(verdict, str) or verdict not in CORRECTIONS:
             raise Refused(400, "the verdict must be correct or adjust_span")
@@ -989,10 +991,8 @@ class Review:
             raise Refused(400, "the verdict is not an answer verdict")
         if tk in doc.labels and verdict in CORRECTIONS:
             raise Refused(400, "a calibrate task takes no correction")
-        if task["item"] == "closed_set" and verdict not in CLOSED_SET_VERDICTS:
-            raise Refused(
-                400, "a closed_set task takes only confirm, choose, not_in_document and unsure"
-            )
+        if task["item"] == "closed_set" and verdict not in closed_set_verdicts(task):
+            raise Refused(400, CLOSED_SET_REFUSAL[task["mode"] == "audit"])
         if tk in doc.texts and verdict != "confirm":
             raise Refused(400, "an answer to a model text task has the verdict confirm")
         candidate = None

@@ -434,7 +434,8 @@ def test_the_list_and_a_review_task_and_its_document(reviewing: Served) -> None:
     ]
     assert status == 200 and task == {
         "api": "groundgate-review/1", "task": revenue, "document": "doc-1", "mode": "review",
-        "field": "revenue", "key": None, "definition": None, "answered": None, "body": stored,
+        "field": "revenue", "key": None, "definition": None, "options": None, "answered": None,
+            "body": stored,
         "statements": None,
     }  # fmt: skip
     # the evidence of each choice is a span of the document text in UTF-8 bytes
@@ -655,7 +656,7 @@ def test_a_blind_audit_task_never_shows_the_proposed_value(served: Served) -> No
     seen = [call("GET", "/v1/tasks"), call("GET", f"/v1/tasks/{blind}")]
     assert json.loads(seen[1][2]) == {
         "api": "groundgate-review/1", "task": blind, "document": "doc-1", "mode": "audit",
-        "field": "net_income", "key": None, "definition": "The profit after tax.",
+        "field": "net_income", "key": None, "definition": "The profit after tax.", "options": None,
         "answered": None, "body": None, "statements": None,
     }  # fmt: skip
     # a blind task takes no verdict about a shown value

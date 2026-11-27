@@ -76,6 +76,7 @@
  },
  "expected": {
   "served": true,
+  "options": null,
   "mode": "review",
   "field": "total_revenue",
   "key": "2025",

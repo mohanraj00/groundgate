@@ -1,0 +1,42 @@
+{
+ "name": "task-09-blind-closed-set-label",
+ "kind": "task",
+ "description": "A label task of a closed set field has no decision. It gives the same response as the audit task with a decision.",
+ "task": {
+  "format": "task@1",
+  "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+  "slot": {
+   "field": "billing",
+   "key": null,
+   "decisions": []
+  },
+  "item": "closed_set",
+  "mode": "audit",
+  "template": "closed_set@1",
+  "question": "Which option is the billing?",
+  "parts": [
+   "field"
+  ],
+  "codes": [],
+  "choices": [],
+  "places": [],
+  "options": [
+   "monthly",
+   "quarterly",
+   "annual"
+  ]
+ },
+ "sources": {},
+ "expected": {
+  "served": true,
+  "options": [
+   "monthly",
+   "quarterly",
+   "annual"
+  ],
+  "mode": "audit",
+  "field": "billing",
+  "key": null,
+  "body": null
+ }
+}

@@ -1,0 +1,68 @@
+{
+ "name": "task-08-blind-closed-set",
+ "kind": "task",
+ "description": "An audit task for a closed set is blind. The response gives the options of the field in schema order, from the schema, and no body: no proposed option, no evidence, no place, no item and no question.",
+ "task": {
+  "format": "task@1",
+  "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+  "slot": {
+   "field": "billing",
+   "key": null,
+   "decisions": [
+    2
+   ]
+  },
+  "item": "closed_set",
+  "mode": "audit",
+  "template": "closed_set@1",
+  "question": "Is annual the billing, and does no other option fit?",
+  "parts": [
+   "option",
+   "field"
+  ],
+  "codes": [],
+  "choices": [
+   {
+    "decision": 2,
+    "value": "annual",
+    "unit": null,
+    "shown": "annual",
+    "evidence": {
+     "start": 300,
+     "end": 318
+    }
+   }
+  ],
+  "places": [
+   {
+    "start": 300,
+    "end": 318,
+    "page": null,
+    "box": null
+   }
+  ],
+  "options": [
+   "monthly",
+   "quarterly",
+   "annual"
+  ]
+ },
+ "sources": {
+  "2": {
+   "source": "document",
+   "ref": null
+  }
+ },
+ "expected": {
+  "served": true,
+  "options": [
+   "monthly",
+   "quarterly",
+   "annual"
+  ],
+  "mode": "audit",
+  "field": "billing",
+  "key": null,
+  "body": null
+ }
+}
