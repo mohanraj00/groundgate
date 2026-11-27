@@ -15,7 +15,7 @@ from typing import Any
 import pytest
 
 import groundgate as gg
-from groundgate.pack import BUILT_IN_SHA256, built_in_pack, pack_digest
+from groundgate.pack import BUILT_IN_SHA256, RETIRED, built_in_pack, pack_digest
 
 REPO = Path(__file__).resolve().parents[1]
 BENCH = REPO / "bench"
@@ -185,6 +185,16 @@ def test_spec_lists_each_built_in_pack_with_its_digest() -> None:
         )
     )
     assert listed == {(pid, v, sha) for (pid, v), sha in BUILT_IN_SHA256.items()}
+
+
+def test_spec_lists_each_retired_built_in_version() -> None:
+    spec = (REPO / "SPEC.md").read_text(encoding="utf-8").split("### 4.8")[1].split("### 4.9")[0]
+    head = "Retired built-in versions of this spec version:"
+    (line,) = [x for x in spec.splitlines() if x.startswith(head)]
+    rest = line.removeprefix(head).strip()
+    listed = set() if rest == "none." else set(re.findall(r"`([a-z0-9-]+)` `([0-9.]+)`", rest))
+    assert listed == RETIRED
+    assert listed <= set(BUILT_IN_SHA256)  # a retired version stays in the table
 
 
 def test_a_field_can_take_a_built_in_template_and_give_its_keys() -> None:

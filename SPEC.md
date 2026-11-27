@@ -12,7 +12,8 @@ outcome `needs_verification`, and each value of it that passed gets `RECORD_NOT_
 packet with no `corroborate` proposer, or with no rejected candidate of one at a member, gets no
 other change. A receipt of spec 0.12 still verifies and replays under the rules of spec 0.12,
 with groundgate 0.17.0, the last release of spec 0.12. A release of spec 0.13 names that release
-for a receipt of spec 0.12 and checks nothing more (§8.6).
+for a receipt of spec 0.12 and checks nothing more (§8.6). Spec 0.13 also gives the rule that retires a built-in
+pack version (§4.8). It retires no version, so this rule changes no decision and no receipt.
 
 Spec 0.12 was released with groundgate 0.14.0, in the `v0.14.0` tag. groundgate 0.15.0 adds §4.10 to
 §4.17 to spec 0.12: the profile, the value kinds `date`, `record` and `passage`, closed
@@ -1429,6 +1430,16 @@ built-in packs of this spec version. Each file is `src/groundgate/packs/<id>/<ve
 | `annual-reports` | `1.0.0` | kind | `finance` | `sha256:ca2433ec6dd249581310c977b29a54b4c70aa65acd3561701285a2f4ccf150e7` |
 | `component-datasheets` | `1.0.0` | kind | `electronics` | `sha256:3b0ac7d8b1dff0f25a33078c668739086b027704e75b7d4deba9a6ebf9c27538` |
 | `benefit-summaries` | `1.0.0` | kind | | `sha256:a01109e7c7a72e248012161d8fe16b1937a77e09c328a6cdcbfd0e9d41ebe3d2` |
+
+A built-in version is **retired** when the list below names it. Only a new spec version retires a
+built-in version (§8.1), because a schema that names it was valid and becomes invalid. The packet
+is invalid when its schema names a retired version, or when a kind pack that it names needs one. A retired
+version stays in the table above and in the package, and `verify` still loads it, so a receipt
+that names it still verifies. The spec version that retires a version names it in the list, gives
+the reason in the changelog, and adds vectors for the refusal. These vectors are written by hand
+before the code.
+
+Retired built-in versions of this spec version: none.
 
 No built-in pack has a status row, so each route that it gives is `draft`. `electronics` gives
 the unit forms of `C`, `V` and `mA` (§4.3). The kind packs give field templates (§4.9) and no

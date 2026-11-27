@@ -5,6 +5,11 @@ spec version, and receipts name the spec version they were decided under.
 
 ## Unreleased
 
+- SPEC §4.8 gives the rule that retires a built-in pack version. Only a new spec version
+  retires a version, because a schema that names it becomes invalid. `admit` refuses a retired
+  version, and `verify` still reads a receipt that names it. 1.0 freezes the spec, so the rule
+  is in the text now. Spec 0.13 retires no version, so no decision and no receipt changes
+  (#373).
 - The benchmark disables web search, apps, browser use and computer use for `codex`. It gives
   `codex` and `claude` only the `PATH`, `HOME` and `CODEX_HOME` environment variables. This change
   applies to new runs only (#422).

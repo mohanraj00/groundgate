@@ -279,7 +279,9 @@ claim of at least three kinds (#277) is a claim about the core and the set, not 
 
 Only a built-in pack can have a `measured` row. The app's own pack has only `draft` rows, the
 same rule as in locale-packs.md §4. `retired` is not a row: it marks a whole built-in version in
-the package's list of digests. `admit` refuses a retired version, and `verify` still loads it.
+the package's list of digests. `admit` refuses a retired version, and `verify` still loads it. Only
+a new spec version retires a version. [SPEC §4.8](../../SPEC.md#48-vocabulary-packs) gives the rule
+and lists the retired versions.
 
 In 0.10 no pack has a `measured` row. The format holds the table now, so that 0.11 can add rows
 in a new pack version when the tools of extensions.md §7 give the bounds. The base pack has no
