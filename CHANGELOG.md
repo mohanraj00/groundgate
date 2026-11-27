@@ -78,7 +78,12 @@ spec version, and receipts name the spec version they were decided under.
   the options of the field from the schema, and never the proposed option. The answer names one
   option with `correct`: `value` is the option and `span` is the text that gives it. The gate
   checks it as each other correction, so a value that is not an option gets `OPTION_INVALID`.
-  The page takes the same answer with the key `n` (#696).
+  The page takes the same answer with the key `n`. The target of a closed set correction is
+  now its span and its option, so two options at one span do not agree. This changes no
+  decision and no receipt. It applies when an answer log is resolved again: `review resolve`,
+  `review measures`, the review page and `export --resolution`. No stored answer of an earlier
+  version changes its resolution, because `resolve` refused each closed set `correct` before
+  (#696).
 
 ## 0.17.0 (2026-11-19)
 

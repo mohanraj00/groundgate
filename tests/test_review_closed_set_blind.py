@@ -105,8 +105,8 @@ def test_the_api_serves_a_blind_closed_set_task_with_the_options_only(
 def test_a_blind_option_corrects_the_slot_and_the_admitted_option_keeps_it_admitted(
     tmp_path: Path,
 ) -> None:
-    # Rule 4 gives the target of a closed set as its span, as for text. So the admitted option at
-    # the admitted span keeps the slot admitted, and the same option at another span corrects
+    # Rule 4 gives the target of a closed set as its span and its option. So the admitted option
+    # at the admitted span keeps the slot admitted, and the same option at another span corrects
     # the slot to the same value.
     for name, words, value, expected in (
         ("other", "quarterly", None, ("corrected", "quarterly")),
@@ -121,6 +121,55 @@ def test_a_blind_option_corrects_the_slot_and_the_admitted_option_keeps_it_admit
                  "reason_seen": False, "keys": 0, "ms": 0, "value": value, **at(words)}
             )  # fmt: skip
         assert status(root, k) == expected, name
+
+
+TWO = "Billing is monthly, not quarterly.\n"  # one span gives two options
+
+
+def test_two_options_at_one_span_are_two_targets(tmp_path: Path) -> None:
+    # Rule 4 gives the target of a closed set as its span and its option. The gate admits
+    # quarterly with the full sentence as evidence. ana names monthly at that same span, and bob
+    # names quarterly at it.
+    root = tmp_path / "store"
+    sentence = {"start": 0, "end": len(TWO) - 1}
+    cands = [{"id": "a", "field": "billing", "value": "quarterly",
+              "evidence": [{"text": TWO.strip()}]}]  # fmt: skip
+    with FolderStore(root) as store:
+        k, receipt = admit_packet(store, TWO, SCHEMA, cands, None, "doc-1", None)
+        (decision,) = receipt.to_dict()["decisions"]
+        assert (decision["outcome"], decision["evidence"]) == ("admitted", sentence)
+        ((tk, _),) = write_tasks(store, k, EVERY).tasks
+        receipt_key = json.loads(store.get("packet@1", k))["receipt"]
+        packet_receipt = store.get("receipt@1", receipt_key)
+        for name, value in (("ana", "monthly"), ("bob", "quarterly")):
+            Review(store, name, EVERY, clock=lambda: CLOCK).write(
+                {"task": tk, "verdict": "correct", "decision": None, "codes_kept": [],
+                 "reason_seen": False, "keys": 0, "ms": 0, "value": value, **sentence}
+            )  # fmt: skip
+        slots = {}
+        for names in (["ana"], ["bob"], ["ana", "bob"]):
+            resolved = write_resolution(store, k, None, names)
+            assert resolved.resolution is not None
+            (slots[" ".join(names)],) = resolved.resolution["slots"]
+        # the blind case of the finding: another option at the admitted span corrects the slot
+        assert (slots["ana"]["status"], slots["ana"]["value"]) == ("corrected", "monthly")
+        # the admitted option at the admitted span keeps the slot admitted (rule 7)
+        assert (slots["bob"]["status"], slots["bob"]["value"]) == ("admitted", "quarterly")
+        # two reviewers with different options at one span do not agree
+        assert (slots["ana bob"]["status"], slots["ana bob"]["value"]) == ("disputed", None)
+        # no decision and no receipt changes: the packet receipt keeps its bytes, and the receipt
+        # of the correction is the receipt that the gate gives for the candidate of ana
+        assert store.get("receipt@1", receipt_key) == packet_receipt
+        assert slots["bob"]["receipt"] == slots["ana bob"]["receipt"] == receipt_key
+        corrected = json.loads(store.get("receipt@1", slots["ana"]["receipt"]))
+        (found,) = corrected["decisions"]
+        assert (found["outcome"], found["value"], found["evidence"]) == (
+            "admitted", "monthly", sentence)  # fmt: skip
+        alone = [{"id": "x", "field": "billing", "value": "monthly", "evidence": [sentence]}]
+        _, direct = admit_packet(store, TWO, SCHEMA, alone, None, "doc-1", None)
+        (same,) = direct.to_dict()["decisions"]
+        decided = ("outcome", "value", "evidence", "codes")
+        assert [same[m] for m in decided] == [found[m] for m in decided]
 
 
 def test_the_page_checks_a_blind_option_and_a_review_task_still_takes_no_correction(

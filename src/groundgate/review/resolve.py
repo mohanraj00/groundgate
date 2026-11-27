@@ -592,11 +592,13 @@ def _read(
 
 def _target(task: Mapping[str, Any], d: Mapping[str, Any], slot: Slot) -> tuple[Any, ...]:
     """What a decision gives for the slot (rule 4): the value, the unit and the key of a
-    number, or the reference and the span of other text."""
+    number, the reference, the span and the option of a closed set, or the reference and the
+    span of other text. One span can give two options (#696), so the option is in the target."""
     if task["item"] == "number":
         return (d["value"], d.get("unit"), slot.key)
     span = d.get("evidence") or {}
-    return (d.get("ref"), span.get("start"), span.get("end"))
+    where = (d.get("ref"), span.get("start"), span.get("end"))
+    return (*where, d.get("value")) if task["item"] == "closed_set" else where
 
 
 def _correct(

@@ -261,7 +261,8 @@ logs. It reads no clock and calls no model. The same inputs give the same bytes.
    `confirm`.
 4. Two answers agree when they have the same verdict and the same target. The target of
    `choose` is the decision. The target of `correct` and `adjust_span` is the canonical value,
-   unit and key for a number, and the start and end for text. `not_in_document` has no target.
+   unit and key for a number, the start, the end and the option for a closed set (#696), and
+   the start and end for other text. `not_in_document` has no target.
 5. A slot resolves when at least `agree` reviewers give answers that agree, and no reviewer
    gives an answer that disagrees.
 6. If two answers disagree, the slot is `disputed`. The latest answer of a lead settles a
@@ -397,9 +398,20 @@ so each place of that document gets a crop. The crop comes from the source in th
   checks it with steps 5 and 10 of SPEC §3. A value that is not an option gets
   `OPTION_INVALID`. The page asks it with the key `n`. A closed set review task still refuses
   `correct`, because its choices hold each option that the gate found. Rule 4 gives the target
-  of a closed set as its span, as for text. So under rule 7, the admitted option keeps the slot
-  `admitted` only at the span of the admitted decision. The same option at another span
-  corrects the slot to the same value.
+  of a closed set as its span and its option, because one span can give two options. So under
+  rule 7, the admitted option keeps the slot `admitted` only at the span of the admitted
+  decision. Another option at that span corrects the slot, and the same option at another span
+  corrects the slot to the same value. Two reviewers who name different options at one span
+  do not agree.
+- **When the closed set target applies.** The rule changes no decision and no receipt. It
+  changes only the status that the resolution gives. A stored `resolution@1` object does not
+  change. These code paths resolve the answer logs again, and they use the new rule:
+  `groundgate review resolve` (it writes a new `resolution@1` object), `groundgate review
+  measures`, the page of `groundgate review serve`, and `groundgate export --resolution`, which
+  resolves again and compares the result with the stored object. `groundgate store rebuild` builds only the
+  views, and it does not resolve. Before #696, `resolve` refused each `correct` on a closed set
+  task, and the target of `choose` is the decision. So no stored answer of an earlier version
+  gets a different resolution, and no stored resolution stops to match its inputs.
 - A **model text** task comes from an input that the app gives: the model text and its
   statements, each with a cited span. The core never admits model text (#285). A statement is
   not a candidate. The resolution gives the verdict of each statement, not a value. Section
