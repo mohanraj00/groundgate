@@ -90,6 +90,10 @@ spec version, and receipts name the spec version they were decided under.
   `review measures`, the review page and `export --resolution`. No stored answer of an earlier
   version changes its resolution, because `resolve` refused each closed set `correct` before
   (#696).
+- `bench/release1` has its member list from publisher metadata: 30 chapters of the USGS
+  Mineral Commodity Summaries 2026, 30 appellate opinions from 11 courts and 30 committee
+  reports from 18 committees, with at most one report for each bill. The owner approved the
+  list. No document body is downloaded yet (#748).
 
 ## 0.17.0 (2026-11-19)
 
