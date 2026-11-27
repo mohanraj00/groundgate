@@ -1,0 +1,1785 @@
+{
+ "issue": 748,
+ "selected": "2026-11-27",
+ "rule": "bench/release1/select.py",
+ "metadata": [
+  "https://www.govinfo.gov/sitemap/USCOURTS/USCOURTS_{court}_2025_sitemap.xml",
+  "https://www.govinfo.gov/sitemap/CRPT_2025_sitemap.xml",
+  "https://www.govinfo.gov/metadata/pkg/{package}/mods.xml"
+ ],
+ "body_read": false,
+ "download_approved": null,
+ "note": "Kind 1 (patents) has no members. The USPTO bulk data now needs an API key of the USPTO Open Data Portal. The owner supplies a key or picks a spare kind.",
+ "kinds": {
+  "opinions": {
+   "members": [
+    {
+     "package": "USCOURTS-ca1-24-02002",
+     "court": "ca1",
+     "court_type": "Appellate",
+     "case": "24-02002",
+     "title": "US v. Amado",
+     "date_issued": "2025-10-17",
+     "pages": 24,
+     "granules": 1
+    },
+    {
+     "package": "USCOURTS-ca1-24-01330",
+     "court": "ca1",
+     "court_type": "Appellate",
+     "case": "24-01330",
+     "title": "Phimmady v. Bondi",
+     "date_issued": "2025-02-10",
+     "pages": 17,
+     "granules": 1
+    },
+    {
+     "package": "USCOURTS-ca2-22-02166",
+     "court": "ca2",
+     "court_type": "Appellate",
+     "case": "22-02166",
+     "title": "In Re: Fairfield Sentry Limited",
+     "date_issued": "2025-08-05",
+     "pages": 51,
+     "granules": 1
+    },
+    {
+     "package": "USCOURTS-ca2-22-02510",
+     "court": "ca2",
+     "court_type": "Appellate",
+     "case": "22-02510",
+     "title": "In Re: Fairfield Sentry Limited",
+     "date_issued": "2025-08-05",
+     "pages": 51,
+     "granules": 1
+    },
+    {
+     "package": "USCOURTS-ca3-24-01724",
+     "court": "ca3",
+     "court_type": "Appellate",
+     "case": "24-01724",
+     "title": "Isaac Carranza-Cortez, et al v. Attorney General United States of America",
+     "date_issued": "2025-01-22",
+     "pages": 17,
+     "granules": 1
+    },
+    {
+     "package": "USCOURTS-ca3-23-02284",
+     "court": "ca3",
+     "court_type": "Appellate",
+     "case": "23-02284",
+     "title": "Secretary United States Department of Labor v. Nursing Home Care Management Inc., et al",
+     "date_issued": "2025-01-31",
+     "pages": 24,
+     "granules": 1
+    },
+    {
+     "package": "USCOURTS-ca3-23-02773",
+     "court": "ca3",
+     "court_type": "Appellate",
+     "case": "23-02773",
+     "title": "USA v. Rufus Williams",
+     "date_issued": "2025-05-08",
+     "pages": 12,
+     "granules": 1
+    },
+    {
+     "package": "USCOURTS-ca4-24-04340",
+     "court": "ca4",
+     "court_type": "Appellate",
+     "case": "24-04340",
+     "title": "US v. Jerry Stull",
+     "date_issued": "2025-08-08",
+     "pages": 6,
+     "granules": 1
+    },
+    {
+     "package": "USCOURTS-ca4-23-04713",
+     "court": "ca4",
+     "court_type": "Appellate",
+     "case": "23-04713",
+     "title": "US v. Kevin Jones",
+     "date_issued": "2025-10-24",
+     "pages": 6,
+     "granules": 1
+    },
+    {
+     "package": "USCOURTS-ca4-22-02192",
+     "court": "ca4",
+     "court_type": "Appellate",
+     "case": "22-02192",
+     "title": "Matthew Linger v. Commissioner of Social Security",
+     "date_issued": "2025-01-07",
+     "pages": 15,
+     "granules": 1
+    },
+    {
+     "package": "USCOURTS-ca5-24-20329",
+     "court": "ca5",
+     "court_type": "Appellate",
+     "case": "24-20329",
+     "title": "Penthol v. Vertex Energy",
+     "date_issued": "2025-08-14",
+     "pages": 19,
+     "granules": 1
+    },
+    {
+     "package": "USCOURTS-ca5-24-40662",
+     "court": "ca5",
+     "court_type": "Appellate",
+     "case": "24-40662",
+     "title": "Frosch v. Alsobrook",
+     "date_issued": "2025-06-03",
+     "pages": 8,
+     "granules": 1
+    },
+    {
+     "package": "USCOURTS-ca5-24-10439",
+     "court": "ca5",
+     "court_type": "Appellate",
+     "case": "24-10439",
+     "title": "Triumphant Gold v. Matloff",
+     "date_issued": "2025-10-08",
+     "pages": 48,
+     "granules": 1
+    },
+    {
+     "package": "USCOURTS-ca6-23-05673",
+     "court": "ca6",
+     "court_type": "Appellate",
+     "case": "23-05673",
+     "title": "Percy Brown v. Louisville-Jefferson Co, KY, et al",
+     "date_issued": "2025-04-30",
+     "pages": 17,
+     "granules": 1
+    },
+    {
+     "package": "USCOURTS-ca6-24-01848",
+     "court": "ca6",
+     "court_type": "Appellate",
+     "case": "24-01848",
+     "title": "Tina McPherson v. Suburban Ann Arbor, LLC",
+     "date_issued": "2025-04-21",
+     "pages": 9,
+     "granules": 1
+    },
+    {
+     "package": "USCOURTS-ca6-24-03726",
+     "court": "ca6",
+     "court_type": "Appellate",
+     "case": "24-03726",
+     "title": "Cincom Systems Inc v. LabWare, Inc.",
+     "date_issued": "2025-09-26",
+     "pages": 20,
+     "granules": 1
+    },
+    {
+     "package": "USCOURTS-ca7-23-02447",
+     "court": "ca7",
+     "court_type": "Appellate",
+     "case": "23-02447",
+     "title": "Linda Thompson v. Army and Air Force Exchange Service",
+     "date_issued": "2025-01-08",
+     "pages": 11,
+     "granules": 1
+    },
+    {
+     "package": "USCOURTS-ca7-24-01570",
+     "court": "ca7",
+     "court_type": "Appellate",
+     "case": "24-01570",
+     "title": "Cheryl Lane, et al v. Stericycle, Inc.",
+     "date_issued": "2025-12-23",
+     "pages": 13,
+     "granules": 1
+    },
+    {
+     "package": "USCOURTS-ca7-24-03039",
+     "court": "ca7",
+     "court_type": "Appellate",
+     "case": "24-03039",
+     "title": "USA v. Austin Koeckeritz",
+     "date_issued": "2025-11-10",
+     "pages": 6,
+     "granules": 1
+    },
+    {
+     "package": "USCOURTS-ca9-24-1641",
+     "court": "ca9",
+     "court_type": "Appellate",
+     "case": "24-1641",
+     "title": "USA V. JUSTUS",
+     "date_issued": "2025-12-19",
+     "pages": 18,
+     "granules": 1
+    },
+    {
+     "package": "USCOURTS-ca9-23-15999",
+     "court": "ca9",
+     "court_type": "Appellate",
+     "case": "23-15999",
+     "title": "Katherine Chabolla v. ClassPass, Inc., et al",
+     "date_issued": "2025-02-27",
+     "pages": 50,
+     "granules": 1
+    },
+    {
+     "package": "USCOURTS-ca10-24-01215",
+     "court": "ca10",
+     "court_type": "Appellate",
+     "case": "24-01215",
+     "title": "United States v. Clark",
+     "date_issued": "2025-08-01",
+     "pages": 18,
+     "granules": 1
+    },
+    {
+     "package": "USCOURTS-ca10-24-06117",
+     "court": "ca10",
+     "court_type": "Appellate",
+     "case": "24-06117",
+     "title": "Davenport v. Pata, et al",
+     "date_issued": "2025-06-20",
+     "pages": 15,
+     "granules": 1
+    },
+    {
+     "package": "USCOURTS-ca10-24-02124",
+     "court": "ca10",
+     "court_type": "Appellate",
+     "case": "24-02124",
+     "title": "Chavez v. State of New Mexico",
+     "date_issued": "2025-01-24",
+     "pages": 8,
+     "granules": 1
+    },
+    {
+     "package": "USCOURTS-ca11-23-10887",
+     "court": "ca11",
+     "court_type": "Appellate",
+     "case": "23-10887",
+     "title": "Robert Kleckley v. State of Florida",
+     "date_issued": "2025-07-01",
+     "pages": 15,
+     "granules": 1
+    },
+    {
+     "package": "USCOURTS-ca11-24-13668",
+     "court": "ca11",
+     "court_type": "Appellate",
+     "case": "24-13668",
+     "title": "Jorge Fajardo Zumba v. U.S. Attorney General",
+     "date_issued": "2025-12-17",
+     "pages": 6,
+     "granules": 1
+    },
+    {
+     "package": "USCOURTS-ca11-23-11302",
+     "court": "ca11",
+     "court_type": "Appellate",
+     "case": "23-11302",
+     "title": "Aishly Foy v. Sheriff of Jefferson County, Alabama, et al",
+     "date_issued": "2025-03-03",
+     "pages": 18,
+     "granules": 1
+    },
+    {
+     "package": "USCOURTS-ca13-23-01663",
+     "court": "ca13",
+     "court_type": "Appellate",
+     "case": "23-01663",
+     "title": "Stupp Corporation v. US",
+     "date_issued": "2025-04-23",
+     "pages": 10,
+     "granules": 1
+    },
+    {
+     "package": "USCOURTS-ca13-24-01997",
+     "court": "ca13",
+     "court_type": "Appellate",
+     "case": "24-01997",
+     "title": "Aljindi v. US",
+     "date_issued": "2025-02-10",
+     "pages": 12,
+     "granules": 1
+    },
+    {
+     "package": "USCOURTS-ca13-24-01035",
+     "court": "ca13",
+     "court_type": "Appellate",
+     "case": "24-01035",
+     "title": "In re: Shafovaloff",
+     "date_issued": "2025-06-27",
+     "pages": 7,
+     "granules": 1
+    }
+   ],
+   "rejected": [
+    {
+     "package": "USCOURTS-ca2-22-03094",
+     "reason": "2 documents in the package, not 1"
+    },
+    {
+     "package": "USCOURTS-ca4-25-06580",
+     "reason": "2 pages"
+    },
+    {
+     "package": "USCOURTS-ca4-25-01202",
+     "reason": "2 pages"
+    },
+    {
+     "package": "USCOURTS-ca4-24-06884",
+     "reason": "2 pages"
+    },
+    {
+     "package": "USCOURTS-ca4-24-07014",
+     "reason": "4 pages"
+    },
+    {
+     "package": "USCOURTS-ca4-25-01676",
+     "reason": "2 pages"
+    },
+    {
+     "package": "USCOURTS-ca4-24-04323",
+     "reason": "4 pages"
+    },
+    {
+     "package": "USCOURTS-ca5-25-20007",
+     "reason": "3 pages"
+    },
+    {
+     "package": "USCOURTS-ca5-25-30252",
+     "reason": "5 pages"
+    },
+    {
+     "package": "USCOURTS-ca5-24-30642",
+     "reason": "4 pages"
+    },
+    {
+     "package": "USCOURTS-ca5-24-51027",
+     "reason": "2 pages"
+    },
+    {
+     "package": "USCOURTS-ca5-25-60182",
+     "reason": "5 pages"
+    },
+    {
+     "package": "USCOURTS-ca5-24-10357",
+     "reason": "3 pages"
+    },
+    {
+     "package": "USCOURTS-ca7-24-02300",
+     "reason": "3 pages"
+    },
+    {
+     "package": "USCOURTS-ca7-24-01824",
+     "reason": "3 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-24-01595",
+     "reason": "1 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-24-02158",
+     "reason": "1 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-24-03274",
+     "reason": "1 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-24-01733",
+     "reason": "1 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-25-01876",
+     "reason": "3 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-24-02082",
+     "reason": "2 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-25-01949",
+     "reason": "2 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-23-03483",
+     "reason": "1 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-24-01386",
+     "reason": "1 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-24-02377",
+     "reason": "2 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-24-02360",
+     "reason": "1 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-24-02221",
+     "reason": "1 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-24-02634",
+     "reason": "1 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-24-02440",
+     "reason": "1 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-24-01854",
+     "reason": "1 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-24-01410",
+     "reason": "1 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-24-02804",
+     "reason": "1 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-24-01166",
+     "reason": "1 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-23-03739",
+     "reason": "1 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-24-01296",
+     "reason": "1 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-24-01311",
+     "reason": "1 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-23-03032",
+     "reason": "1 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-24-01977",
+     "reason": "1 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-23-02993",
+     "reason": "1 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-24-03006",
+     "reason": "2 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-24-02831",
+     "reason": "1 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-24-03512",
+     "reason": "1 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-24-01032",
+     "reason": "1 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-24-01328",
+     "reason": "1 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-23-02967",
+     "reason": "2 documents in the package, not 1"
+    },
+    {
+     "package": "USCOURTS-ca8-24-02650",
+     "reason": "1 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-24-02924",
+     "reason": "1 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-24-03425",
+     "reason": "2 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-24-02245",
+     "reason": "1 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-24-02845",
+     "reason": "1 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-24-02534",
+     "reason": "1 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-23-03504",
+     "reason": "1 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-24-02444",
+     "reason": "1 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-24-02038",
+     "reason": "1 pages"
+    },
+    {
+     "package": "USCOURTS-ca8-24-02187",
+     "reason": "1 pages"
+    },
+    {
+     "package": "USCOURTS-ca10-25-06015",
+     "reason": "1 pages"
+    },
+    {
+     "package": "USCOURTS-ca10-24-05143",
+     "reason": "1 pages"
+    },
+    {
+     "package": "USCOURTS-ca10-25-01063",
+     "reason": "2 pages"
+    },
+    {
+     "package": "USCOURTS-ca4-25-06292",
+     "reason": "3 pages"
+    },
+    {
+     "package": "USCOURTS-ca4-24-07075",
+     "reason": "4 pages"
+    },
+    {
+     "package": "USCOURTS-ca4-25-04232",
+     "reason": "3 pages"
+    },
+    {
+     "package": "USCOURTS-ca6-24-05098",
+     "reason": "3 pages"
+    },
+    {
+     "package": "USCOURTS-ca7-24-01524",
+     "reason": "2 documents in the package, not 1"
+    }
+   ]
+  },
+  "reports": {
+   "members": [
+    {
+     "package": "CRPT-119hrpt259",
+     "chamber": "HOUSE",
+     "doc_class": "HRPT",
+     "committee": "hsvr00",
+     "committee_name": "Committee on Veterans' Affairs",
+     "bill": "HR 3951",
+     "title": "RURAL VETERANS' IMPROVED ACCESS TO BENEFITS ACT OF 2025",
+     "date_issued": "2025-09-09",
+     "pages": 13
+    },
+    {
+     "package": "CRPT-119hrpt320",
+     "chamber": "HOUSE",
+     "doc_class": "HRPT",
+     "committee": "hspw00",
+     "committee_name": "Committee on Transportation and Infrastructure",
+     "bill": "HR 744",
+     "title": "DISASTER MANAGEMENT COSTS MODERNIZATION ACT",
+     "date_issued": "2025-10-03",
+     "pages": 8
+    },
+    {
+     "package": "CRPT-119hrpt316",
+     "chamber": "HOUSE",
+     "doc_class": "HRPT",
+     "committee": "hsgo00",
+     "committee_name": "Committee on Oversight and Government Reform",
+     "bill": "HR 5179",
+     "title": "DISTRICT OF COLUMBIA ATTORNEY GENERAL APPOINTMENT REFORM ACT OF 2025",
+     "date_issued": "2025-09-30",
+     "pages": 9
+    },
+    {
+     "package": "CRPT-119hrpt390",
+     "chamber": "HOUSE",
+     "doc_class": "HRPT",
+     "committee": "hsba00",
+     "committee_name": "Committee on Financial Services",
+     "bill": "HR 1013",
+     "title": "RETIREMENT FAIRNESS FOR CHARITIES AND EDUCATIONAL INSTITUTIONS ACT OF 2025",
+     "date_issued": "2025-11-28",
+     "pages": 74
+    },
+    {
+     "package": "CRPT-119hrpt185",
+     "chamber": "HOUSE",
+     "doc_class": "HRPT",
+     "committee": "hsif00",
+     "committee_name": "Committee on Energy and Commerce",
+     "bill": "HR 3015",
+     "title": "NATIONAL COAL COUNCIL REESTABLISHMENT ACT",
+     "date_issued": "2025-07-02",
+     "pages": 11
+    },
+    {
+     "package": "CRPT-119hrpt360",
+     "chamber": "HOUSE",
+     "doc_class": "HRPT",
+     "committee": "hswm00",
+     "committee_name": "Committee on Ways and Means",
+     "bill": "HR 5345",
+     "title": "IMPROVING SOCIAL SECURITY'S SERVICE TO VICTIMS OF IDENTITY THEFT ACT",
+     "date_issued": "2025-10-31",
+     "pages": 12
+    },
+    {
+     "package": "CRPT-119hrpt387",
+     "chamber": "HOUSE",
+     "doc_class": "HRPT",
+     "committee": "hsii00",
+     "committee_name": "Committee on Natural Resources",
+     "bill": "HR 4090",
+     "title": "CRITICAL MINERAL DOMINANCE ACT",
+     "date_issued": "2025-11-25",
+     "pages": 16
+    },
+    {
+     "package": "CRPT-119hrpt383",
+     "chamber": "HOUSE",
+     "doc_class": "HRPT",
+     "committee": "hssm00",
+     "committee_name": "Committee on Small Business",
+     "bill": "HR 4305",
+     "title": "DESTROYING UNNECESSARY, MISALIGNED, AND PROHIBITIVE RED TAPE ACT",
+     "date_issued": "2025-11-21",
+     "pages": 17
+    },
+    {
+     "package": "CRPT-119hrpt413",
+     "chamber": "HOUSE",
+     "doc_class": "HRPT",
+     "committee": "hsed00",
+     "committee_name": "Committee on Education and Workforce",
+     "bill": "HR 2270",
+     "title": "EMPOWERING EMPLOYER CHILD AND ELDER CARE SOLUTIONS ACT",
+     "date_issued": "2025-12-18",
+     "pages": 26
+    },
+    {
+     "package": "CRPT-119hrpt233",
+     "chamber": "HOUSE",
+     "doc_class": "HRPT",
+     "committee": "hsag00",
+     "committee_name": "Committee on Agriculture",
+     "bill": "HR 4550",
+     "title": "UNITED STATES GRAIN STANDARDS REAUTHORIZATION ACT OF 2025",
+     "date_issued": "2025-09-03",
+     "pages": 26
+    },
+    {
+     "package": "CRPT-119hrpt347",
+     "chamber": "HOUSE",
+     "doc_class": "HRPT",
+     "committee": "hsju00",
+     "committee_name": "Committee on the Judiciary",
+     "bill": "HR 4323",
+     "title": "TRAFFICKING SURVIVORS RELIEF ACT",
+     "date_issued": "2025-10-17",
+     "pages": 22
+    },
+    {
+     "package": "CRPT-119hrpt323",
+     "chamber": "HOUSE",
+     "doc_class": "HRPT",
+     "committee": "hshm00",
+     "committee_name": "Committee on Homeland Security",
+     "bill": "HR 4071",
+     "title": "COMBATTING INTERNATIONAL DRUG TRAFFICKING AND HUMAN SMUGGLING PARTNERSHIP ACT OF 2025",
+     "date_issued": "2025-10-03",
+     "pages": 21
+    },
+    {
+     "package": "CRPT-119hrpt161",
+     "chamber": "HOUSE",
+     "doc_class": "HRPT",
+     "committee": "hsap00",
+     "committee_name": "Committee on Appropriations",
+     "bill": "HR 3944",
+     "title": "MILITARY CONSTRUCTION, VETERANS AFFAIRS, AND RELATED AGENCIES APPROPRIATIONS BILL, 2026",
+     "date_issued": "2025-06-10",
+     "pages": 132
+    },
+    {
+     "package": "CRPT-119hrpt239",
+     "chamber": "HOUSE",
+     "doc_class": "HRPT",
+     "committee": "hspw00",
+     "committee_name": "Committee on Transportation and Infrastructure",
+     "bill": "HR 3425",
+     "title": "PERSONNEL OVERSIGHT AND SHIFT TRACKING ACT OF 2025",
+     "date_issued": "2025-09-08",
+     "pages": 8
+    },
+    {
+     "package": "CRPT-119hrpt305",
+     "chamber": "HOUSE",
+     "doc_class": "HRPT",
+     "committee": "hsvr00",
+     "committee_name": "Committee on Veterans' Affairs",
+     "bill": "HR 2954",
+     "title": "VETERANS' TRANSITION TO TRUCKING ACT OF 2025",
+     "date_issued": "2025-09-19",
+     "pages": 10
+    },
+    {
+     "package": "CRPT-119srpt26",
+     "chamber": "SENATE",
+     "doc_class": "SRPT",
+     "committee": "sscm00",
+     "committee_name": "Committee on Commerce, Science, and Transportation",
+     "bill": "S 258",
+     "title": "TORNADO OBSERVATIONS RESEARCH AND NOTIFICATION ASSESSMENT FOR DEVELOPMENT OF OPERATIONS ACT",
+     "date_issued": "2025-06-02",
+     "pages": 14
+    },
+    {
+     "package": "CRPT-119srpt89",
+     "chamber": "SENATE",
+     "doc_class": "SRPT",
+     "committee": "ssva00",
+     "committee_name": "Committee on Veterans' Affairs",
+     "bill": "S 1318",
+     "title": "FALLEN SERVICEMEMBERS RELIGIOUS HERITAGE RESTORATION ACT",
+     "date_issued": "2025-10-22",
+     "pages": 9
+    },
+    {
+     "package": "CRPT-119srpt95",
+     "chamber": "SENATE",
+     "doc_class": "SRPT",
+     "committee": "slia00",
+     "committee_name": "Committee on Indian Affairs",
+     "bill": "S 640",
+     "title": "TECHNICAL CORRECTIONS TO THE NORTHWESTERN NEW MEXICO RURAL WATER PROJECTS ACT, TAOS PUEBLO INDIAN WATER RIGHTS SETTLEMENT ACT, AND AAMODT LITIGATION SETTLEMENT ACT",
+     "date_issued": "2025-11-04",
+     "pages": 8
+    },
+    {
+     "package": "CRPT-119srpt43",
+     "chamber": "SENATE",
+     "doc_class": "SRPT",
+     "committee": "ssap00",
+     "committee_name": "Committee on Appropriations",
+     "bill": "HR 3944",
+     "title": "MILITARY CONSTRUCTION, VETERANS AFFAIRS, AND RELATED AGENCIES APPROPRIATION BILL, 2026",
+     "date_issued": "2025-07-17",
+     "pages": 118
+    },
+    {
+     "package": "CRPT-119srpt51",
+     "chamber": "SENATE",
+     "doc_class": "SRPT",
+     "committee": "slin00",
+     "committee_name": "Select Committee on Intelligence",
+     "bill": "S 2342",
+     "title": "INTELLIGENCE AUTHORIZATION ACT FOR FISCAL YEAR 2026",
+     "date_issued": "2025-07-29",
+     "pages": 28
+    },
+    {
+     "package": "CRPT-119srpt15",
+     "chamber": "SENATE",
+     "doc_class": "SRPT",
+     "committee": "sscm00",
+     "committee_name": "Committee on Commerce, Science, and Transportation",
+     "bill": "S 314",
+     "title": "HOTEL FEES TRANSPARENCY ACT OF 2025",
+     "date_issued": "2025-04-28",
+     "pages": 12
+    },
+    {
+     "package": "CRPT-119srpt27",
+     "chamber": "SENATE",
+     "doc_class": "SRPT",
+     "committee": "sscm00",
+     "committee_name": "Committee on Commerce, Science, and Transportation",
+     "bill": "S 433",
+     "title": "NATIONAL MANUFACTURING ADVISORY COUNCIL ACT",
+     "date_issued": "2025-06-02",
+     "pages": 8
+    },
+    {
+     "package": "CRPT-119srpt33",
+     "chamber": "SENATE",
+     "doc_class": "SRPT",
+     "committee": "sscm00",
+     "committee_name": "Committee on Commerce, Science, and Transportation",
+     "bill": "S 278",
+     "title": "KIDS OFF SOCIAL MEDIA ACT",
+     "date_issued": "2025-06-30",
+     "pages": 22
+    },
+    {
+     "package": "CRPT-119srpt84",
+     "chamber": "SENATE",
+     "doc_class": "SRPT",
+     "committee": "sscm00",
+     "committee_name": "Committee on Commerce, Science, and Transportation",
+     "bill": "S 1492",
+     "title": "DEPLOYING AMERICAN BLOCKCHAINS ACT OF 2025",
+     "date_issued": "2025-10-21",
+     "pages": 8
+    },
+    {
+     "package": "CRPT-119srpt50",
+     "chamber": "SENATE",
+     "doc_class": "SRPT",
+     "committee": "sscm00",
+     "committee_name": "Committee on Commerce, Science, and Transportation",
+     "bill": "S 389",
+     "title": "SETTING CONSUMER STANDARDS FOR LITHIUM-ION BATTERIES ACT",
+     "date_issued": "2025-07-29",
+     "pages": 10
+    },
+    {
+     "package": "CRPT-119srpt14",
+     "chamber": "SENATE",
+     "doc_class": "SRPT",
+     "committee": "sscm00",
+     "committee_name": "Committee on Commerce, Science, and Transportation",
+     "bill": "S 98",
+     "title": "RURAL BROADBAND PROTECTION ACT OF 2025",
+     "date_issued": "2025-04-28",
+     "pages": 9
+    },
+    {
+     "package": "CRPT-119srpt58",
+     "chamber": "SENATE",
+     "doc_class": "SRPT",
+     "committee": "sscm00",
+     "committee_name": "Committee on Commerce, Science, and Transportation",
+     "bill": "S 841",
+     "title": "ROMANCE SCAM PREVENTION ACT",
+     "date_issued": "2025-09-02",
+     "pages": 9
+    },
+    {
+     "package": "CRPT-119srpt54",
+     "chamber": "SENATE",
+     "doc_class": "SRPT",
+     "committee": "slia00",
+     "committee_name": "Committee on Indian Affairs",
+     "bill": "S 761",
+     "title": "TRUTH AND HEALING COMMISSION ON INDIAN BOARDING SCHOOL POLICIES ACT OF 2025",
+     "date_issued": "2025-07-31",
+     "pages": 29
+    },
+    {
+     "package": "CRPT-119srpt65",
+     "chamber": "SENATE",
+     "doc_class": "SRPT",
+     "committee": "sscm00",
+     "committee_name": "Committee on Commerce, Science, and Transportation",
+     "bill": "S 428",
+     "title": "SITUATIONAL AWARENESS OF FLYING ELEMENTS IN ORBIT ACT",
+     "date_issued": "2025-09-29",
+     "pages": 12
+    },
+    {
+     "package": "CRPT-119srpt4",
+     "chamber": "SENATE",
+     "doc_class": "SRPT",
+     "committee": "sscm00",
+     "committee_name": "Committee on Commerce, Science, and Transportation",
+     "bill": "S 195",
+     "title": "AMERICAN MUSIC TOURISM ACT OF 2025",
+     "date_issued": "2025-03-14",
+     "pages": 12
+    }
+   ],
+   "rejected": [
+    {
+     "package": "CRPT-119hrpt355",
+     "reason": "4 pages"
+    },
+    {
+     "package": "CRPT-118hrpt975",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119hrpt2",
+     "reason": "a rule for floor consideration"
+    },
+    {
+     "package": "CRPT-119hrpt312",
+     "reason": "6 pages"
+    },
+    {
+     "package": "CRPT-119hrpt247",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-119hrpt149",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-118hrpt965",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119hrpt64",
+     "reason": "5 pages"
+    },
+    {
+     "package": "CRPT-119hrpt284",
+     "reason": "4 pages"
+    },
+    {
+     "package": "CRPT-119hrpt298",
+     "reason": "a rule for floor consideration"
+    },
+    {
+     "package": "CRPT-119hrpt174",
+     "reason": "4 pages"
+    },
+    {
+     "package": "CRPT-119hrpt372",
+     "reason": "a rule for floor consideration"
+    },
+    {
+     "package": "CRPT-119hrpt283",
+     "reason": "6 pages"
+    },
+    {
+     "package": "CRPT-119hrpt159",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-119hrpt172",
+     "reason": "253 pages"
+    },
+    {
+     "package": "CRPT-119hrpt183",
+     "reason": "4 pages"
+    },
+    {
+     "package": "CRPT-119hrpt74",
+     "reason": "5 pages"
+    },
+    {
+     "package": "CRPT-119hrpt173",
+     "reason": "238 pages"
+    },
+    {
+     "package": "CRPT-118hrpt974",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119hrpt10",
+     "reason": "not a report on one bill"
+    },
+    {
+     "package": "CRPT-119hrpt157",
+     "reason": "5 pages"
+    },
+    {
+     "package": "CRPT-119hrpt160",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-119hrpt391",
+     "reason": "a rule for floor consideration"
+    },
+    {
+     "package": "CRPT-118hrpt979",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119hrpt236",
+     "reason": "196 pages"
+    },
+    {
+     "package": "CRPT-119hrpt281",
+     "reason": "4 pages"
+    },
+    {
+     "package": "CRPT-119hrpt62",
+     "reason": "4 pages"
+    },
+    {
+     "package": "CRPT-119hrpt396",
+     "reason": "5 pages"
+    },
+    {
+     "package": "CRPT-119hrpt210",
+     "reason": "6 pages"
+    },
+    {
+     "package": "CRPT-119hrpt289",
+     "reason": "5 pages"
+    },
+    {
+     "package": "CRPT-119hrpt151",
+     "reason": "a rule for floor consideration"
+    },
+    {
+     "package": "CRPT-119hrpt212",
+     "reason": "385 pages"
+    },
+    {
+     "package": "CRPT-119hrpt270",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-118hrpt969",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119hrpt230",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-119hrpt141",
+     "reason": "6 pages"
+    },
+    {
+     "package": "CRPT-119hrpt278",
+     "reason": "6 pages"
+    },
+    {
+     "package": "CRPT-119hrpt9",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119hrpt108",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119hrpt153",
+     "reason": "5 pages"
+    },
+    {
+     "package": "CRPT-119hrpt218",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119hrpt32",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-119hrpt271",
+     "reason": "424 pages"
+    },
+    {
+     "package": "CRPT-119hrpt125",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-119hrpt59",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119hrpt31",
+     "reason": "6 pages"
+    },
+    {
+     "package": "CRPT-119hrpt241",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-119hrpt198",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-119hrpt83",
+     "reason": "a rule for floor consideration"
+    },
+    {
+     "package": "CRPT-119hrpt199",
+     "reason": "a rule for floor consideration"
+    },
+    {
+     "package": "CRPT-119hrpt389",
+     "reason": "189 pages"
+    },
+    {
+     "package": "CRPT-118hrpt973",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119hrpt214",
+     "reason": "457 pages"
+    },
+    {
+     "package": "CRPT-119hrpt155",
+     "reason": "4 pages"
+    },
+    {
+     "package": "CRPT-119hrpt293",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-119hrpt105",
+     "reason": "a rule for floor consideration"
+    },
+    {
+     "package": "CRPT-119hrpt106",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119hrpt398",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-119hrpt356",
+     "reason": "4 pages"
+    },
+    {
+     "package": "CRPT-119hrpt139",
+     "reason": "not a report on one bill"
+    },
+    {
+     "package": "CRPT-119hrpt354",
+     "reason": "5 pages"
+    },
+    {
+     "package": "CRPT-119hrpt333",
+     "reason": "254 pages"
+    },
+    {
+     "package": "CRPT-119hrpt286",
+     "reason": "5 pages"
+    },
+    {
+     "package": "CRPT-119hrpt50",
+     "reason": "a rule for floor consideration"
+    },
+    {
+     "package": "CRPT-119hrpt128",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-119hrpt358",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-119hrpt152",
+     "reason": "a rule for floor consideration"
+    },
+    {
+     "package": "CRPT-119hrpt127",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-119hrpt191",
+     "reason": "5 pages"
+    },
+    {
+     "package": "CRPT-119hrpt304",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119hrpt184",
+     "reason": "5 pages"
+    },
+    {
+     "package": "CRPT-119hrpt272",
+     "reason": "267 pages"
+    },
+    {
+     "package": "CRPT-119hrpt291",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-119hrpt4",
+     "reason": "158 pages"
+    },
+    {
+     "package": "CRPT-119hrpt299",
+     "reason": "a rule for floor consideration"
+    },
+    {
+     "package": "CRPT-119hrpt381",
+     "reason": "6 pages"
+    },
+    {
+     "package": "CRPT-119hrpt197",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-119hrpt54",
+     "reason": "3 pages"
+    },
+    {
+     "package": "CRPT-119hrpt280",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-119hrpt72",
+     "reason": "6 pages"
+    },
+    {
+     "package": "CRPT-119hrpt154",
+     "reason": "5 pages"
+    },
+    {
+     "package": "CRPT-119hrpt156",
+     "reason": "5 pages"
+    },
+    {
+     "package": "CRPT-119hrpt288",
+     "reason": "5 pages"
+    },
+    {
+     "package": "CRPT-118hrpt972",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119hrpt219",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119hrpt71",
+     "reason": "6 pages"
+    },
+    {
+     "package": "CRPT-119hrpt195",
+     "reason": "5 pages"
+    },
+    {
+     "package": "CRPT-119hrpt67",
+     "reason": "6 pages"
+    },
+    {
+     "package": "CRPT-119hrpt61",
+     "reason": "6 pages"
+    },
+    {
+     "package": "CRPT-119hrpt269",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-118hrpt968",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119hrpt3",
+     "reason": "a rule for floor consideration"
+    },
+    {
+     "package": "CRPT-119hrpt277",
+     "reason": "5 pages"
+    },
+    {
+     "package": "CRPT-119hrpt232",
+     "reason": "a rule for floor consideration"
+    },
+    {
+     "package": "CRPT-119hrpt15",
+     "reason": "a rule for floor consideration"
+    },
+    {
+     "package": "CRPT-119hrpt231",
+     "reason": "688 pages"
+    },
+    {
+     "package": "CRPT-119hrpt34",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-119hrpt73",
+     "reason": "6 pages"
+    },
+    {
+     "package": "CRPT-119hrpt209",
+     "reason": "a rule for floor consideration"
+    },
+    {
+     "package": "CRPT-119hrpt17",
+     "reason": "not a report on one bill"
+    },
+    {
+     "package": "CRPT-119hrpt336",
+     "reason": "6 pages"
+    },
+    {
+     "package": "CRPT-119hrpt208",
+     "reason": "a rule for floor consideration"
+    },
+    {
+     "package": "CRPT-119hrpt380",
+     "reason": "a rule for floor consideration"
+    },
+    {
+     "package": "CRPT-118hrpt971",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119hrpt5",
+     "reason": "a rule for floor consideration"
+    },
+    {
+     "package": "CRPT-119hrpt1",
+     "reason": "a rule for floor consideration"
+    },
+    {
+     "package": "CRPT-119hrpt223",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-119hrpt213",
+     "reason": "263 pages"
+    },
+    {
+     "package": "CRPT-119hrpt314",
+     "reason": "5 pages"
+    },
+    {
+     "package": "CRPT-119hrpt290",
+     "reason": "5 pages"
+    },
+    {
+     "package": "CRPT-119hrpt248",
+     "reason": "not a report on one bill"
+    },
+    {
+     "package": "CRPT-119hrpt307",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119hrpt292",
+     "reason": "5 pages"
+    },
+    {
+     "package": "CRPT-119hrpt255",
+     "reason": "a rule for floor consideration"
+    },
+    {
+     "package": "CRPT-119hrpt215",
+     "reason": "302 pages"
+    },
+    {
+     "package": "CRPT-119hrpt399",
+     "reason": "a rule for floor consideration"
+    },
+    {
+     "package": "CRPT-119hrpt56",
+     "reason": "a rule for floor consideration"
+    },
+    {
+     "package": "CRPT-118hrpt970",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-118hrpt978",
+     "reason": "426 pages"
+    },
+    {
+     "package": "CRPT-119hrpt179",
+     "reason": "a rule for floor consideration"
+    },
+    {
+     "package": "CRPT-119hrpt294",
+     "reason": "5 pages"
+    },
+    {
+     "package": "CRPT-119hrpt8",
+     "reason": "a rule for floor consideration"
+    },
+    {
+     "package": "CRPT-119hrpt238",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-118hrpt976",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119hrpt66",
+     "reason": "6 pages"
+    },
+    {
+     "package": "CRPT-119hrpt313",
+     "reason": "6 pages"
+    },
+    {
+     "package": "CRPT-119hrpt75",
+     "reason": "6 pages"
+    },
+    {
+     "package": "CRPT-119hrpt53",
+     "reason": "3 pages"
+    },
+    {
+     "package": "CRPT-119hrpt113",
+     "reason": "a rule for floor consideration"
+    },
+    {
+     "package": "CRPT-119hrpt411",
+     "reason": "a rule for floor consideration"
+    },
+    {
+     "package": "CRPT-119hrpt7",
+     "reason": "not a report on one bill"
+    },
+    {
+     "package": "CRPT-119hrpt187",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-118hrpt977",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119hrpt77",
+     "reason": "5 pages"
+    },
+    {
+     "package": "CRPT-118hrpt966",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119hrpt55",
+     "reason": "3 pages"
+    },
+    {
+     "package": "CRPT-119hrpt194",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-118hrpt967",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119hrpt130",
+     "reason": "a rule for floor consideration"
+    },
+    {
+     "package": "CRPT-119hrpt52",
+     "reason": "3 pages"
+    },
+    {
+     "package": "CRPT-119hrpt302",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119hrpt158",
+     "reason": "4 pages"
+    },
+    {
+     "package": "CRPT-119hrpt51",
+     "reason": "3 pages"
+    },
+    {
+     "package": "CRPT-119hrpt287",
+     "reason": "4 pages"
+    },
+    {
+     "package": "CRPT-119hrpt275",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-119hrpt167",
+     "reason": "a rule for floor consideration"
+    },
+    {
+     "package": "CRPT-119hrpt38",
+     "reason": "a rule for floor consideration"
+    },
+    {
+     "package": "CRPT-119hrpt11",
+     "reason": "not a report on one bill"
+    },
+    {
+     "package": "CRPT-119hrpt89",
+     "reason": "a rule for floor consideration"
+    },
+    {
+     "package": "CRPT-119hrpt162",
+     "reason": "297 pages"
+    },
+    {
+     "package": "CRPT-119hrpt76",
+     "reason": "5 pages"
+    },
+    {
+     "package": "CRPT-119hrpt39",
+     "reason": "6 pages"
+    },
+    {
+     "package": "CRPT-118hrpt964",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119hrpt276",
+     "reason": "6 pages"
+    },
+    {
+     "package": "CRPT-119hrpt168",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119hrpt49",
+     "reason": "a rule for floor consideration"
+    },
+    {
+     "package": "CRPT-119hrpt395",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119hrpt126",
+     "reason": "6 pages"
+    },
+    {
+     "package": "CRPT-119hrpt146",
+     "reason": "6 pages"
+    },
+    {
+     "package": "CRPT-119hrpt357",
+     "reason": "6 pages"
+    },
+    {
+     "package": "CRPT-119hrpt217",
+     "reason": "164 pages"
+    },
+    {
+     "package": "CRPT-119hrpt63",
+     "reason": "186 pages"
+    },
+    {
+     "package": "CRPT-119hrpt95",
+     "reason": "a rule for floor consideration"
+    },
+    {
+     "package": "CRPT-119hrpt190",
+     "reason": "4 pages"
+    },
+    {
+     "package": "CRPT-119hrpt410",
+     "reason": "a rule for floor consideration"
+    },
+    {
+     "package": "CRPT-119hrpt182",
+     "reason": "4 pages"
+    },
+    {
+     "package": "CRPT-119hrpt297",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119hrpt192",
+     "reason": "4 pages"
+    },
+    {
+     "package": "CRPT-119hrpt229",
+     "reason": "6 pages"
+    },
+    {
+     "package": "CRPT-119hrpt88",
+     "reason": "5 pages"
+    },
+    {
+     "package": "CRPT-119hrpt177",
+     "reason": "5 pages"
+    },
+    {
+     "package": "CRPT-119hrpt245",
+     "reason": "6 pages"
+    },
+    {
+     "package": "CRPT-119hrpt285",
+     "reason": "5 pages"
+    },
+    {
+     "package": "CRPT-119srpt39",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119srpt77",
+     "reason": "4 pages"
+    },
+    {
+     "package": "CRPT-119srpt37",
+     "reason": "208 pages"
+    },
+    {
+     "package": "CRPT-119srpt72",
+     "reason": "6 pages"
+    },
+    {
+     "package": "CRPT-119srpt52",
+     "reason": "240 pages"
+    },
+    {
+     "package": "CRPT-119srpt53",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-119srpt47",
+     "reason": "237 pages"
+    },
+    {
+     "package": "CRPT-119srpt20",
+     "reason": "5 pages"
+    },
+    {
+     "package": "CRPT-119srpt13",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-119srpt3",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119srpt96",
+     "reason": "6 pages"
+    },
+    {
+     "package": "CRPT-119srpt48",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-119srpt55",
+     "reason": "451 pages"
+    },
+    {
+     "package": "CRPT-119srpt36",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-119srpt35",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119srpt79",
+     "reason": "5 pages"
+    },
+    {
+     "package": "CRPT-119srpt70",
+     "reason": "6 pages"
+    },
+    {
+     "package": "CRPT-119srpt30",
+     "reason": "6 pages"
+    },
+    {
+     "package": "CRPT-119srpt94",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-119srpt7",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119srpt87",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-119srpt81",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-119srpt78",
+     "reason": "6 pages"
+    },
+    {
+     "package": "CRPT-119srpt22",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-119srpt24",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-119srpt6",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119srpt46",
+     "reason": "219 pages"
+    },
+    {
+     "package": "CRPT-119srpt2",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119srpt18",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-119srpt60",
+     "reason": "6 pages"
+    },
+    {
+     "package": "CRPT-119srpt64",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-119srpt93",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-119srpt29",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119srpt75",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-119srpt76",
+     "reason": "5 pages"
+    },
+    {
+     "package": "CRPT-119srpt5",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119srpt1",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119srpt10",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119srpt71",
+     "reason": "6 pages"
+    },
+    {
+     "package": "CRPT-119srpt44",
+     "reason": "223 pages"
+    },
+    {
+     "package": "CRPT-119srpt40",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-119srpt32",
+     "reason": "7 pages"
+    },
+    {
+     "package": "CRPT-119srpt25",
+     "reason": "6 pages"
+    },
+    {
+     "package": "CRPT-119srpt90",
+     "reason": "5 pages"
+    },
+    {
+     "package": "CRPT-119srpt31",
+     "reason": "no primary bill"
+    },
+    {
+     "package": "CRPT-119srpt8",
+     "reason": "no primary bill"
+    }
+   ]
+  }
+ }
+}

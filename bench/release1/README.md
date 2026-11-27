@@ -1,7 +1,8 @@
 # The 1.0 release set: three new kinds
 
-Status: design. The kinds, the fields and the field rules wait for the owner approval in #748.
-No member is chosen and no document body is downloaded.
+Status: member list. The owner approved the kinds and the member choice from metadata on
+2026-11-27 (#748). `members.json` has 30 opinions and 30 reports. Kind 1 has no members yet.
+No document body is downloaded. The download waits for the owner approval of the list.
 
 This set gives the numbers of exit conditions 1 and 2 of #277: the admitted error rate with
 a bound for each field and each kind, the miss rate, and the share of right values sent to
@@ -135,9 +136,40 @@ The member rule spreads each kind across sources of different layouts: CPC secti
 patents, circuits for opinions, and committees and the two chambers for reports. I record the
 rule before the choice, and I never read a body to choose.
 
+## The member choice
+
+`select.py` chose the members on 2026-11-27 from the govinfo sitemaps and the MODS record of
+each package. It read 555 metadata records and no document body. The order of the candidates
+in each group is the SHA-256 of a fixed tag, a line feed and the package id.
+`members.json` keeps each member and each rejected candidate with its reason.
+
+Kind 2, opinions of 2025:
+
+- Courts: the 11 regional circuits and the Federal Circuit (`ca13`). govinfo has no 2025
+  sitemap for the DC Circuit.
+- A member is from an appellate court, has 1 document in its package, has 6 to 60 pages and
+  was issued in 2025.
+- The rule takes 2 members from each court first. Then it takes one more at a time from the
+  courts with the most 2025 packages, until there are 30. It examines 40 candidates of a court
+  at most.
+- The result: 11 courts, 2 or 3 members each, 6 to 51 pages. The Eighth Circuit has no
+  member. Its first 40 candidates have fewer than 6 pages, because most of its packages are
+  short orders.
+
+Kind 3, reports of 2025:
+
+- A member is an HRPT or SRPT report on one bill, with a primary bill and a committee, and
+  has 8 to 150 pages. Reports of the House Rules Committee and the Senate Rules Committee are
+  out, and so are titles that are not about one bill (activity reports, allocations,
+  oversight plans, conference reports).
+- The rule takes one report from each committee first, then a second pass, until there are 15
+  for each chamber.
+- The result: 15 House and 15 Senate reports from 18 committees, 8 to 132 pages.
+
+Kind 1, patents: the USPTO bulk data now needs an API key of the USPTO Open Data Portal. The
+old bulk data site did not answer on 2026-11-27. I made no request with a key.
+
 ## Open decisions
 
-1. The three kinds: 1, 2 and 3, or a spare in place of one of them.
-2. The fields and the field rules of each kind.
-3. The approval to select members from metadata as this section says. The member list then
-   goes to the owner before any download.
+1. Kind 1: the owner supplies a USPTO Open Data Portal key, or picks spare A or spare B.
+2. The approval of the member lists of kinds 2 and 3 before any download.
