@@ -311,3 +311,17 @@ def test_the_page_checks_a_label_task_with_the_persons_candidate_only(tmp_path: 
              "reason_seen": False, "keys": 0, "ms": 0, **span}
         )  # fmt: skip
     assert record["candidate"]["value"] == "8"
+
+
+def test_audit_labels_writes_no_file_through_a_link(tmp_path: Path) -> None:
+    b = Blind(tmp_path)
+    b.tasks()
+    b.answer("ana", "not_in_document")
+    outside = tmp_path / "outside.txt"
+    outside.write_text("keep\n", "utf-8")
+    (b.audit / "labels.jsonl.tmp").symlink_to(outside)
+    b.labels()
+    assert outside.read_text("utf-8") == "keep\n"
+    assert not (b.audit / "labels.jsonl").is_symlink()
+    assert b.last_labels(1) == [_label(None, "ana")]
+    assert sorted(p.name for p in b.audit.glob("*.tmp")) == ["labels.jsonl.tmp"]

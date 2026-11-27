@@ -2071,7 +2071,8 @@ code and no place. So it is the same for a field with an admitted value and a fi
 and no other task has this form. The packet does not name the profile, so the profile must
 decide the text and the candidates of the packet to the decisions of the packet receipt, and
 give the log entry of the document. A label task takes the verdicts `correct`, `not_in_document`
-and `unsure`. Its answer settles no slot and changes no decision and no receipt. The last answer
+and `unsure`. A label task of a closed set field does not take `correct` yet, so only
+`not_in_document` and `unsure` give it an answer (#696). Its answer settles no slot and changes no decision and no receipt. The last answer
 of each reviewer gives one audit label:
 
 - `correct`: `value` is the canonical value of the decision of the correction. The gate decides

@@ -11,8 +11,10 @@ profile digest of the label tasks of each document.
 
 from __future__ import annotations
 
+import contextlib
 import json
 import os
+import tempfile
 import unicodedata
 from collections.abc import Mapping
 from dataclasses import dataclass
@@ -258,9 +260,15 @@ def write_labels(root: Path, store_dir: Path) -> Labels:
     lines = [*kept, *(jcs(label) for label in found.added)]
     data = "".join(line + "\n" for line in lines)
     if data != text:
-        tmp = path.with_name(path.name + ".tmp")
-        with open(tmp, "w", encoding="utf-8", newline="") as f:
-            f.write(data)
-        os.replace(tmp, path)
+        # a new file with a random name (O_EXCL), so the write follows no link
+        fd, tmp = tempfile.mkstemp(prefix=".labels.", suffix=".tmp", dir=root)
+        try:
+            with os.fdopen(fd, "w", encoding="utf-8", newline="") as f:
+                f.write(data)
+            os.replace(tmp, path)
+        except BaseException:
+            with contextlib.suppress(OSError):
+                os.unlink(tmp)
+            raise
     added = [label for label in found.added if jcs(label) not in have]
     return Labels(added, found.none, found.slots, removed)
