@@ -5,12 +5,263 @@
  "metadata": [
   "https://www.govinfo.gov/sitemap/USCOURTS/USCOURTS_{court}_2025_sitemap.xml",
   "https://www.govinfo.gov/sitemap/CRPT_2025_sitemap.xml",
-  "https://www.govinfo.gov/metadata/pkg/{package}/mods.xml"
+  "https://www.govinfo.gov/metadata/pkg/{package}/mods.xml",
+  "https://pubs.usgs.gov/periodicals/mcs2026/ (the index, and a HEAD request for each chapter)"
  ],
  "body_read": false,
  "download_approved": null,
- "note": "Kind 1 (patents) has no members. The USPTO bulk data now needs an API key of the USPTO Open Data Portal. The owner supplies a key or picks a spare kind.",
+ "note": "The owner picked spare A, the USGS Mineral Commodity Summaries 2026, as kind 1 in place of patents on 2026-11-27.",
  "kinds": {
+  "minerals": {
+   "members": [
+    {
+     "package": "mcs2026-rubidium.pdf",
+     "commodity": "rubidium",
+     "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-rubidium.pdf",
+     "bytes": 114816,
+     "etag": "\"1c080-64a1c507a5c80\"",
+     "last_modified": "Thu, 05 Feb 2026 23:48:50 GMT"
+    },
+    {
+     "package": "mcs2026-germanium.pdf",
+     "commodity": "germanium",
+     "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-germanium.pdf",
+     "bytes": 137591,
+     "etag": "\"21977-64a1c502e1140\"",
+     "last_modified": "Thu, 05 Feb 2026 23:48:45 GMT"
+    },
+    {
+     "package": "mcs2026-cesium.pdf",
+     "commodity": "cesium",
+     "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-cesium.pdf",
+     "bytes": 115622,
+     "etag": "\"1c3a6-64a1c501ecf00\"",
+     "last_modified": "Thu, 05 Feb 2026 23:48:44 GMT"
+    },
+    {
+     "package": "mcs2026-helium.pdf",
+     "commodity": "helium",
+     "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-helium.pdf",
+     "bytes": 173837,
+     "etag": "\"2a70d-64a1c503d5380\"",
+     "last_modified": "Thu, 05 Feb 2026 23:48:46 GMT"
+    },
+    {
+     "package": "mcs2026-iron-steel.pdf",
+     "commodity": "iron-steel",
+     "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-iron-steel.pdf",
+     "bytes": 142994,
+     "etag": "\"22e92-64a1c503d5380\"",
+     "last_modified": "Thu, 05 Feb 2026 23:48:46 GMT"
+    },
+    {
+     "package": "mcs2026-clays.pdf",
+     "commodity": "clays",
+     "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-clays.pdf",
+     "bytes": 142332,
+     "etag": "\"22bfc-64a1c501ecf00\"",
+     "last_modified": "Thu, 05 Feb 2026 23:48:44 GMT"
+    },
+    {
+     "package": "mcs2026-molybdenum.pdf",
+     "commodity": "molybdenum",
+     "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-molybdenum.pdf",
+     "bytes": 748728,
+     "etag": "\"b6cb8-64f82dc61be80\"",
+     "last_modified": "Wed, 15 Apr 2026 17:15:22 GMT"
+    },
+    {
+     "package": "mcs2026-phosphate.pdf",
+     "commodity": "phosphate",
+     "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-phosphate.pdf",
+     "bytes": 135903,
+     "etag": "\"212df-64a1c506b1a40\"",
+     "last_modified": "Thu, 05 Feb 2026 23:48:49 GMT"
+    },
+    {
+     "package": "mcs2026-tin.pdf",
+     "commodity": "tin",
+     "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-tin.pdf",
+     "bytes": 138207,
+     "etag": "\"21bdf-64a1c50a82340\"",
+     "last_modified": "Thu, 05 Feb 2026 23:48:53 GMT"
+    },
+    {
+     "package": "mcs2026-garnet.pdf",
+     "commodity": "garnet",
+     "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-garnet.pdf",
+     "bytes": 137888,
+     "etag": "\"21aa0-64a1c502e1140\"",
+     "last_modified": "Thu, 05 Feb 2026 23:48:45 GMT"
+    },
+    {
+     "package": "mcs2026-nickel.pdf",
+     "commodity": "nickel",
+     "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-nickel.pdf",
+     "bytes": 142529,
+     "etag": "\"22cc1-64a1c505bd800\"",
+     "last_modified": "Thu, 05 Feb 2026 23:48:48 GMT"
+    },
+    {
+     "package": "mcs2026-rhenium.pdf",
+     "commodity": "rhenium",
+     "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-rhenium.pdf",
+     "bytes": 140270,
+     "etag": "\"223ee-64a1c507a5c80\"",
+     "last_modified": "Thu, 05 Feb 2026 23:48:50 GMT"
+    },
+    {
+     "package": "mcs2026-tantalum.pdf",
+     "commodity": "tantalum",
+     "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-tantalum.pdf",
+     "bytes": 172719,
+     "etag": "\"2a2af-64a1c5098e100\"",
+     "last_modified": "Thu, 05 Feb 2026 23:48:52 GMT"
+    },
+    {
+     "package": "mcs2026-perlite.pdf",
+     "commodity": "perlite",
+     "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-perlite.pdf",
+     "bytes": 161573,
+     "etag": "\"27725-64a1c506b1a40\"",
+     "last_modified": "Thu, 05 Feb 2026 23:48:49 GMT"
+    },
+    {
+     "package": "mcs2026-diamond.pdf",
+     "commodity": "diamond",
+     "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-diamond.pdf",
+     "bytes": 138566,
+     "etag": "\"21d46-64a1c502e1140\"",
+     "last_modified": "Thu, 05 Feb 2026 23:48:45 GMT"
+    },
+    {
+     "package": "mcs2026-indium.pdf",
+     "commodity": "indium",
+     "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-indium.pdf",
+     "bytes": 134495,
+     "etag": "\"20d5f-64a1c503d5380\"",
+     "last_modified": "Thu, 05 Feb 2026 23:48:46 GMT"
+    },
+    {
+     "package": "mcs2026-mercury.pdf",
+     "commodity": "mercury",
+     "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-mercury.pdf",
+     "bytes": 136681,
+     "etag": "\"215e9-64a1c505bd800\"",
+     "last_modified": "Thu, 05 Feb 2026 23:48:48 GMT"
+    },
+    {
+     "package": "mcs2026-iodine.pdf",
+     "commodity": "iodine",
+     "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-iodine.pdf",
+     "bytes": 131862,
+     "etag": "\"20316-64a1c503d5380\"",
+     "last_modified": "Thu, 05 Feb 2026 23:48:46 GMT"
+    },
+    {
+     "package": "mcs2026-sand-industrial.pdf",
+     "commodity": "sand-industrial",
+     "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-sand-industrial.pdf",
+     "bytes": 135799,
+     "etag": "\"21277-64a1c50899ec0\"",
+     "last_modified": "Thu, 05 Feb 2026 23:48:51 GMT"
+    },
+    {
+     "package": "mcs2026-silver.pdf",
+     "commodity": "silver",
+     "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-silver.pdf",
+     "bytes": 138760,
+     "etag": "\"21e08-64a1c50899ec0\"",
+     "last_modified": "Thu, 05 Feb 2026 23:48:51 GMT"
+    },
+    {
+     "package": "mcs2026-zirconium-hafnium.pdf",
+     "commodity": "zirconium-hafnium",
+     "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-zirconium-hafnium.pdf",
+     "bytes": 119691,
+     "etag": "\"1d38b-64a1c50b76580\"",
+     "last_modified": "Thu, 05 Feb 2026 23:48:54 GMT"
+    },
+    {
+     "package": "mcs2026-gold.pdf",
+     "commodity": "gold",
+     "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-gold.pdf",
+     "bytes": 138864,
+     "etag": "\"21e70-64a1c503d5380\"",
+     "last_modified": "Thu, 05 Feb 2026 23:48:46 GMT"
+    },
+    {
+     "package": "mcs2026-arsenic.pdf",
+     "commodity": "arsenic",
+     "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-arsenic.pdf",
+     "bytes": 137655,
+     "etag": "\"219b7-64a1c500f8cc0\"",
+     "last_modified": "Thu, 05 Feb 2026 23:48:43 GMT"
+    },
+    {
+     "package": "mcs2026-mica.pdf",
+     "commodity": "mica",
+     "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-mica.pdf",
+     "bytes": 139826,
+     "etag": "\"22232-64a1c505bd800\"",
+     "last_modified": "Thu, 05 Feb 2026 23:48:48 GMT"
+    },
+    {
+     "package": "mcs2026-cobalt.pdf",
+     "commodity": "cobalt",
+     "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-cobalt.pdf",
+     "bytes": 140201,
+     "etag": "\"223a9-64a1c501ecf00\"",
+     "last_modified": "Thu, 05 Feb 2026 23:48:44 GMT"
+    },
+    {
+     "package": "mcs2026-magnesium-metal.pdf",
+     "commodity": "magnesium-metal",
+     "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-magnesium-metal.pdf",
+     "bytes": 139855,
+     "etag": "\"2224f-64a1c505bd800\"",
+     "last_modified": "Thu, 05 Feb 2026 23:48:48 GMT"
+    },
+    {
+     "package": "mcs2026-pumice.pdf",
+     "commodity": "pumice",
+     "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-pumice.pdf",
+     "bytes": 133387,
+     "etag": "\"2090b-64a1c507a5c80\"",
+     "last_modified": "Thu, 05 Feb 2026 23:48:50 GMT"
+    },
+    {
+     "package": "mcs2026-feldspar.pdf",
+     "commodity": "feldspar",
+     "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-feldspar.pdf",
+     "bytes": 135974,
+     "etag": "\"21326-64a1c502e1140\"",
+     "last_modified": "Thu, 05 Feb 2026 23:48:45 GMT"
+    },
+    {
+     "package": "mcs2026-chromium.pdf",
+     "commodity": "chromium",
+     "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-chromium.pdf",
+     "bytes": 139309,
+     "etag": "\"2202d-64a1c501ecf00\"",
+     "last_modified": "Thu, 05 Feb 2026 23:48:44 GMT"
+    },
+    {
+     "package": "mcs2026-rare-earths-heavy.pdf",
+     "commodity": "rare-earths-heavy",
+     "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-rare-earths-heavy.pdf",
+     "bytes": 129492,
+     "etag": "\"1f9d4-64a1c507a5c80\"",
+     "last_modified": "Thu, 05 Feb 2026 23:48:50 GMT"
+    }
+   ],
+   "rejected": [
+    {
+     "package": "mcs2026-appendixes.pdf",
+     "reason": "not a commodity chapter"
+    }
+   ]
+  },
   "opinions": {
    "members": [
     {

@@ -1,9 +1,11 @@
 """Choose the members of the 1.0 release set from publisher metadata only (#748).
 
-The script reads the govinfo sitemaps and the MODS record of each package that it examines.
-It never reads a document body. The order of the candidates is a SHA-256 of a fixed tag and the
-package id, so the rule, not a person, picks each member. The rule is in this file before the
-choice, and ``members.json`` records it with each member and each rejected candidate.
+The script reads the govinfo sitemaps, the MODS record of each package that it examines, the
+file index of the USGS Mineral Commodity Summaries 2026 and the HTTP headers (HEAD) of its
+chapter files. It never reads a document body. The order of the candidates is a SHA-256 of a
+fixed tag and the package id, so the rule, not a person, picks each member. The rule is in this
+file before the choice, and ``members.json`` records it with each member and each rejected
+candidate.
 
     uv run python bench/release1/select.py --cache /path/outside/the/repo/release1-metadata
 """
@@ -42,6 +44,9 @@ REPORTS_EACH_CHAMBER = 15
 RULES_COMMITTEE = {"hsru00", "ssra00"}
 TITLE_OUT = re.compile(r"^PROVIDING FOR|CONFERENCE REPORT|ACTIVIT|ALLOCATION|OVERSIGHT PLAN", re.I)
 MAX_READS = 800
+MCS = "https://pubs.usgs.gov/periodicals/mcs2026/"
+MINERALS = 30
+NOT_A_CHAPTER = {"mcs2026-appendixes.pdf"}
 
 
 def order(tag: str, package: str) -> str:
@@ -72,6 +77,28 @@ class Metadata:
         raw = self.get(SITEMAP.format(name=name), f"{name.replace('/', '_')}.xml")
         locs = [e.text or "" for e in ET.fromstring(raw).iterfind("s:url/s:loc", NS)]
         return sorted({loc.rsplit("/", 1)[1] for loc in locs})
+
+    def head(self, url: str, name: str) -> Row:
+        """The size, the entity tag and the date of change of a file, from a HEAD request."""
+        path = self.cache / name
+        if path.exists():
+            cached: Row = json.loads(path.read_text())
+            return cached
+        if self.reads >= MAX_READS:
+            raise SystemExit(f"more than {MAX_READS} metadata reads")
+        self.reads += 1
+        req = urllib.request.Request(
+            url, method="HEAD", headers={"User-Agent": "groundgate-bench/1"}
+        )
+        with urllib.request.urlopen(req, timeout=60) as r:
+            row = {
+                "bytes": int(r.headers.get("Content-Length") or 0),
+                "etag": r.headers.get("ETag") or "",
+                "last_modified": r.headers.get("Last-Modified") or "",
+            }
+        path.write_text(json.dumps(row))
+        time.sleep(0.5)
+        return row
 
     def mods(self, package: str) -> ET.Element:
         return ET.fromstring(self.get(MODS.format(package=package), f"{package}.mods.xml"))
@@ -253,8 +280,38 @@ def reports(meta: Metadata, named: set[str], rejected: list[Row]) -> list[Row]:
     return out
 
 
+def minerals(meta: Metadata, named: set[str], rejected: list[Row]) -> list[Row]:
+    index = meta.get(MCS, "mcs2026-index.html").decode()
+    files = sorted(set(re.findall(r'href="(mcs2026-[a-z0-9_.-]+\.pdf)"', index)))
+    cands = sorted((f for f in files if f not in named), key=lambda f: order("mineral", f))
+    got: list[Row] = []
+    first: dict[str, str] = {}
+    for name in cands:
+        if len(got) == MINERALS:
+            break
+        if name in NOT_A_CHAPTER:
+            rejected.append({"package": name, "reason": "not a commodity chapter"})
+            continue
+        # The index keeps an earlier version of a revised chapter as NAME_ver.N.pdf.
+        if "_ver." in name:
+            current = name.split("_ver.")[0] + ".pdf"
+            rejected.append({"package": name, "reason": f"an earlier version of {current}"})
+            continue
+        h = meta.head(MCS + name, name + ".head.json")
+        if h["etag"] and h["etag"] in first:
+            rejected.append({"package": name, "reason": f"the same file as {first[h['etag']]}"})
+            continue
+        if h["etag"]:
+            first[h["etag"]] = name
+        commodity = name.removeprefix("mcs2026-").removesuffix(".pdf")
+        got.append({"package": name, "commodity": commodity, "url": MCS + name, **h})
+    return got
+
+
 def named_in_bench() -> set[str]:
-    pat = re.compile(r"(?:USCOURTS-[a-z0-9]+-[0-9-]+|CRPT-[0-9]+[hs]rpt[0-9]+)")
+    pat = re.compile(
+        r"(?:USCOURTS-[a-z0-9]+-[0-9-]+|CRPT-[0-9]+[hs]rpt[0-9]+|mcs2026-[a-z0-9_.-]+\.pdf)"
+    )
     found: set[str] = set()
     for f in (ROOT / "bench").rglob("*"):
         if f.is_relative_to(HERE):  # this set names its own members
@@ -272,17 +329,22 @@ def main(argv: list[str] | None = None) -> int:
         ap.error("--cache must be outside the repository")
     meta = Metadata(args.cache)
     named = named_in_bench()
-    rejected: dict[str, list[Row]] = {"opinions": [], "reports": []}
+    rejected: dict[str, list[Row]] = {"minerals": [], "opinions": [], "reports": []}
     chosen = {
+        "minerals": minerals(meta, named, rejected["minerals"]),
         "opinions": opinions(meta, named, rejected["opinions"]),
         "reports": reports(meta, named, rejected["reports"]),
     }
     path = HERE / "members.json"
     body = json.loads(path.read_text()) if path.exists() else {}
-    for kind in ("opinions", "reports"):
-        body.setdefault("kinds", {}).setdefault(kind, {})
-        body["kinds"][kind]["members"] = chosen[kind]
-        body["kinds"][kind]["rejected"] = rejected[kind]
+    old = body.get("kinds", {})
+    body["kinds"] = {}
+    for kind in ("minerals", "opinions", "reports"):
+        body["kinds"][kind] = {
+            **old.get(kind, {}),
+            "members": chosen[kind],
+            "rejected": rejected[kind],
+        }
     path.write_text(json.dumps(body, indent=1, ensure_ascii=False) + "\n")
     for kind, ms in chosen.items():
         print(f"{kind}: {len(ms)} members, {len(rejected[kind])} rejected")

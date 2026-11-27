@@ -1,8 +1,9 @@
 # The 1.0 release set: three new kinds
 
 Status: member list. The owner approved the kinds and the member choice from metadata on
-2026-11-27 (#748). `members.json` has 30 opinions and 30 reports. Kind 1 has no members yet.
-No document body is downloaded. The download waits for the owner approval of the list.
+2026-11-27 (#748). On the same day the owner picked spare A, the USGS Mineral Commodity
+Summaries, as kind 1 in place of patents. `members.json` has 30 chapters, 30 opinions and 30
+reports. No document body is downloaded. The download waits for the owner approval of the list.
 
 This set gives the numbers of exit conditions 1 and 2 of #277: the admitted error rate with
 a bound for each field and each kind, the miss rate, and the share of right values sent to
@@ -48,7 +49,10 @@ Each kind has four fields, one of each value kind where the layout permits. Each
 one slot for each field, so a kind with 30 members has 120 slots. A seed draws no slot: each
 field asks for the one value that the field rule names.
 
-### 1. US patent grants
+### Not chosen: US patent grants
+
+The owner replaced this kind with spare A on 2026-11-27, because the USPTO bulk data now needs
+an API key. The plan stays here as a record.
 
 - Source: the USPTO weekly full text of patent grants, XML with no images
   (bulkdata.uspto.gov). A member is one grant of one weekly file.
@@ -96,14 +100,31 @@ field asks for the one value that the field rule names.
 | `cbo_total` | number | The total of the CBO cost estimate over its full period, in the unit that the table states. Absent if the report has no CBO estimate. |
 | `cbo_table` | record | The rows of the CBO table of estimated budgetary effects, one record for each row, with one member for each column header. Absent if the report has no such table. |
 
-### Spare A: USGS Mineral Commodity Summaries
+### 1. USGS Mineral Commodity Summaries (spare A, chosen 2026-11-27)
 
-- Source: the 2026 Mineral Commodity Summaries of USGS (pubs.usgs.gov). A member is one
-  commodity chapter of two pages.
-- Terms: USGS products are works of the US government. The USGS copyright page refused a
-  scripted fetch on 2026-11-27, so I must read it by hand before the owner decides.
-- Fields: `us_production` (number), `salient_statistics` (record), `events_trends` (passage)
-  and `world_reserves` (number). This kind has no date field.
+- Source: the Mineral Commodity Summaries 2026 of USGS
+  (https://pubs.usgs.gov/periodicals/mcs2026/). A member is one commodity chapter, one PDF
+  file of the index.
+- Terms: I read the USGS page "Copyrights and Credits" by hand on 2026-11-27
+  (https://www.usgs.gov/information-policies-and-instructions/copyrights-and-credits). It says
+  that USGS-authored or produced data and information are in the US public domain. Some
+  non-USGS images and graphics are used with permission and are generally marked as
+  copyrighted. USGS asks for credit, for example "Credit: U.S. Geological Survey". The source
+  check flags each notice, and a member with a notice is on hold.
+
+| Field | Kind | Field rule |
+|---|---|---|
+| `us_production` | number | The first production value of the latest year in the table "Salient Statistics, United States", with the unit of the table. Absent if the table withholds the value (W) or gives none. |
+| `world_reserves` | number | The world total of the reserves column in the table "World Mine Production and Reserves", with its unit. Absent if the table states no world total. |
+| `events_trends` | passage | The full text of the section "Events, Trends, and Issues". |
+| `salient_statistics` | record | The rows of the table "Salient Statistics, United States", one record for each row, with the member `item` and one member for each year column. |
+
+This kind has no date field. I expect a chapter to state years, not dates: the year columns
+of its tables and the years in its text. The only dates in the metadata are the dates of the
+files and of the release, and almost all chapters share them. A date field would ask for
+the same value in almost each chapter, so it measures nothing. The fourth field is a second number of a different
+table. I opened no chapter to choose the fields. If the download shows a date that each
+chapter states, the owner can change this field before any label.
 
 ### Spare B: notices of funding opportunity
 
@@ -127,8 +148,8 @@ field asks for the one value that the field rule names.
 
 The metadata for the member choice:
 
-- kind 1: the weekly file list of the USPTO bulk data, and the bibliographic data of the grants
-  of one week (patent number, title, CPC class, claim count of the metadata);
+- kind 1: the file index of the Mineral Commodity Summaries 2026 and a HEAD request for each
+  chapter (size, entity tag, date of change);
 - kinds 2 and 3: the govinfo collection and package summary API (court, date, title, page
   count, bill number).
 
@@ -175,10 +196,21 @@ Kind 3, reports of 2025:
   119hrpt161 and the Senate report 119srpt43. They are two texts of two committees, with
   different dates and page counts, so the rule keeps both.
 
-Kind 1, patents: the USPTO bulk data now needs an API key of the USPTO Open Data Portal. The
-old bulk data site did not answer on 2026-11-27. I made no request with a key.
+Kind 1, USGS chapters of 2026:
+
+- The candidates are the files `mcs2026-NAME.pdf` of the index. The appendixes are out. A file
+  `NAME_ver.N.pdf` is an earlier version of a revised chapter, so it is out. A file with the
+  same entity tag as an earlier member is the same file, so it is out.
+- The rule takes the first 30 candidates in hash order. A chapter has the same layout as each
+  other chapter, so the rule does not spread them across groups.
+- The result: 30 chapters, 114 to 173 KB, except molybdenum (748 KB). USGS revised the
+  molybdenum chapter on 2026-04-15 (version 1.2 of the release, one sentence on the price).
+  The member is the current file.
+
+USPTO patents: the USPTO bulk data now needs an API key of the USPTO Open Data Portal. The old
+bulk data site did not answer on 2026-11-27. I made no request with a key.
 
 ## Open decisions
 
-1. Kind 1: the owner supplies a USPTO Open Data Portal key, or picks spare A or spare B.
-2. The approval of the member lists of kinds 2 and 3 before any download.
+1. The fields of kind 1.
+2. The approval of the member lists of the three kinds before any download.

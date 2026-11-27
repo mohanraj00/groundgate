@@ -38,7 +38,14 @@ def test_the_member_list_comes_from_metadata_only() -> None:
     for m in reports:
         assert m["bill"] and m["committee"] not in ("hsru00", "ssra00")
         assert 8 <= m["pages"] <= 150
-    rejected = body["kinds"]["opinions"]["rejected"] + body["kinds"]["reports"]["rejected"]
+    minerals = body["kinds"]["minerals"]["members"]
+    assert len(minerals) == 30 and len({m["package"] for m in minerals}) == 30
+    assert len({m["etag"] for m in minerals}) == 30
+    for m in minerals:
+        assert m["url"] == "https://pubs.usgs.gov/periodicals/mcs2026/" + m["package"]
+        assert "_ver." not in m["package"] and m["package"] != "mcs2026-appendixes.pdf"
+    ids += [m["package"] for m in minerals]
+    rejected = [r for k in body["kinds"].values() for r in k["rejected"]]
     assert not {r["package"] for r in rejected} & set(ids)
 
 
@@ -67,3 +74,26 @@ def test_the_members_have_no_twins_and_the_set_does_not_exclude_itself() -> None
             twins.add(m["package"], m)
     names = mod.named_in_bench()
     assert not names & {m["package"] for k in body["kinds"].values() for m in k["members"]}
+
+
+def test_the_usgs_rule_skips_the_appendixes_old_versions_and_copies() -> None:
+    mod = select()
+    names = ["abrasives", "appendixes", "tin", "tin_ver.1.2", "zinc"]
+    index = "".join(f'<a href="mcs2026-{n}.pdf">x</a>' for n in names)
+    etags = {"mcs2026-abrasives.pdf": "a", "mcs2026-tin.pdf": "t", "mcs2026-zinc.pdf": "a"}
+
+    class Meta:
+        def get(self, url: str, name: str) -> bytes:
+            return index.encode()
+
+        def head(self, url: str, name: str) -> dict[str, object]:
+            return {"bytes": 1, "etag": etags[url.rsplit("/", 1)[1]], "last_modified": ""}
+
+    rejected: list[dict[str, str]] = []
+    got = mod.minerals(Meta(), set(), rejected)
+    reasons = {r["package"]: r["reason"] for r in rejected}
+    assert reasons["mcs2026-appendixes.pdf"] == "not a commodity chapter"
+    assert reasons["mcs2026-tin_ver.1.2.pdf"] == "an earlier version of mcs2026-tin.pdf"
+    chosen = {m["package"] for m in got}
+    assert "mcs2026-tin.pdf" in chosen and len(chosen) == 2
+    assert {"mcs2026-abrasives.pdf", "mcs2026-zinc.pdf"} & set(reasons)
