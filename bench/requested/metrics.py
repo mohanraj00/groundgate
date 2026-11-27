@@ -46,6 +46,9 @@ SPLIT_METHOD = "family-hash/1"
 # slot as a wrong absence, so a run that writes more absences pays for each wrong one.
 SCORE_RULES = ("requested-score/1", "requested-score/2")
 WRONG_ABSENCE_RULE = "requested-score/2"
+# The counters that version 2 adds: each explicit not-found on a non-excluded slot, and each one on
+# a present slot.
+ABSENCE_COUNTERS = ("reported_absences", "wrong_absences")
 
 
 # The runner writes groundgate-run/6 from #554 on, and groundgate-run/5 from #494 to #554. The
@@ -272,7 +275,7 @@ def summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
         if not row["excluded"]:
             docs[row["doc"]]["admitted"] += row["admitted"]
             docs[row["doc"]]["wrong"] += row["escapes"]
-    counters = COUNTERS + (("wrong_absences",) if wrong else ())
+    counters = COUNTERS + (ABSENCE_COUNTERS if wrong else ())
     counts = {name: sum(r[name] for r in rows) for name in counters}
     n, e = counts["admitted"], counts["escapes"]
     effect = max(1, max((d["admitted"] for d in docs.values()), default=0))
@@ -286,10 +289,10 @@ def summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
     db = upper95(wrong_docs, admit_docs)
     extra = {}
     if wrong:
-        # Each explicit not-found on a non-excluded slot is a hit on an absent slot or a wrong
-        # absence on a present slot. Version 1 never fills this rate.
-        reported = counts["absence_hits"] + counts["wrong_absences"]
-        extra["absence_error_rate"] = ratio(counts["wrong_absences"], reported)
+        # All explicit not-found entries on non-excluded slots, also on an absent slot with an
+        # admitted value, which version 1 does not count as an absence hit. Version 1 never
+        # fills this rate.
+        extra["absence_error_rate"] = ratio(counts["wrong_absences"], counts["reported_absences"])
     return (
         counts
         | extra
@@ -346,9 +349,7 @@ def measure(
     if set(outputs) - set(doc_ids):
         raise ValueError("run contains unknown documents")
     check_split_rule(manifest)
-    counters = COUNTERS + (
-        ("wrong_absences",) if score_rule(manifest) == WRONG_ABSENCE_RULE else ()
-    )
+    counters = COUNTERS + (ABSENCE_COUNTERS if score_rule(manifest) == WRONG_ABSENCE_RULE else ())
     limited = {"search_limit" in d for d in run_docs}
     if len(limited) > 1:
         raise ValueError("either every run document has a search_limit count or none has")
@@ -449,9 +450,10 @@ def measure(
             row["admitted"] = len(admitted)
             row["escapes"] = len(admitted - wanted)
             row["catches"] = len(reviewed - wanted - admitted)
-            if "wrong_absences" in row and state == "present":
+            if "wrong_absences" in row:
+                row["reported_absences"] = int((name, skey) in nf)
                 # A wrong absence counts even when the right value is also admitted.
-                row["wrong_absences"] = int((name, skey) in nf)
+                row["wrong_absences"] = int(state == "present" and (name, skey) in nf)
             if state == "absent" and not admitted:
                 row["absence_hits"] = int((name, skey) in nf)
                 row["hits"] += row["absence_hits"]

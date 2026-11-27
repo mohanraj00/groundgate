@@ -92,8 +92,9 @@ reported separately. Unclear slots are excluded and counted. Duplicate proposals
 A manifest can name its scoring rule in `score_rule` (#485). A manifest without it is
 `requested-score/1`, so the published results of bench/requested to bench/requested4 do not
 change. Under `requested-score/2`, an explicit not-found on a present slot is a wrong absence. It
-counts also when the right value is admitted. Each slice then adds `wrong_absences` and the
-absence error: wrong absences over all explicit not-found entries on absent and present slots.
+counts also when the right value is admitted. Each slice then adds `reported_absences`, the
+explicit not-found entries on absent and present slots, also beside an admitted value, and
+`wrong_absences`. The absence error is wrong absences over reported absences.
 `results.json` names the rule, and `RESULTS.md` adds the two columns. A not-found on an unclear
 slot stays excluded. The other counts are those of version 1.
 

@@ -736,12 +736,24 @@ def test_rule_2_counts_a_not_found_on_a_present_slot_as_a_wrong_absence() -> Non
     # The unclear slot stays excluded, with or without a not_found.
     assert out["by_field"]["unclear"]["wrong_absences"] == 0
     assert out["by_field"]["unclear"]["absence_error_rate"]["n"] == 0
+    assert total["reported_absences"] == 3
     # The other counts are those of version 1.
     m.pop("score_rule")
     old = measure(m, labels, run, "heldout")["total"]
-    assert {
-        k: v for k, v in total.items() if k not in {"wrong_absences", "absence_error_rate"}
-    } == old
+    added = {"reported_absences", "wrong_absences", "absence_error_rate"}
+    assert {k: v for k, v in total.items() if k not in added} == old
+
+
+def test_rule_2_counts_a_not_found_on_an_absent_slot_with_an_admitted_value() -> None:
+    m, labels, run = data()
+    m["score_rule"] = "requested-score/2"
+    run["documents"][0]["decisions"] = [decision("absent", "0")]
+    run["documents"][0]["not_found"] = [{"field": "name"}, {"field": "absent"}]
+    out = measure(m, labels, run, "heldout")
+    # The admitted value is an escape, and the not-found on the absent slot is no wrong absence.
+    assert out["total"]["absence_hits"] == 0 and out["total"]["escapes"] == 1
+    assert out["total"]["absence_error_rate"] == {"k": 1, "n": 2, "rate": 0.5}
+    assert out["by_field"]["absent"]["absence_error_rate"] == {"k": 0, "n": 1, "rate": 0.0}
 
 
 @pytest.mark.parametrize("rule", ["requested-score/3", 2, None, ""])
