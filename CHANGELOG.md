@@ -80,6 +80,10 @@ spec version, and receipts name the spec version they were decided under.
   `calibrate audit labels` makes a `groundgate_audit_label` of each answer, and
   `calibrate measure --audit` counts it. A label task settles no slot and changes no receipt.
   A blind `correct` with the admitted value keeps the slot `admitted` (#695).
+- `bench/release1` has its member list from publisher metadata: 30 chapters of the USGS
+  Mineral Commodity Summaries 2026, 30 appellate opinions from 11 courts and 30 committee
+  reports from 18 committees, with at most one report for each bill. The owner approved the
+  list. No document body is downloaded yet (#748).
 
 ## 0.17.0 (2026-11-19)
 
