@@ -92,13 +92,13 @@ def score(slots: list[Json], labels: dict[str, Json], answers: dict[str, Answer]
     }
 
 
-def markdown(results: Json) -> str:
+def markdown(results: Json, intro: str | None = None) -> str:
     run = results["run"]
     lines = [
         "# Regulatory held-out results",
         "",
         f"The run covers {len(run['documents'])} held-out parts. "
-        "This family has its own bound for #686. The bound for #548 is separate.",
+        + (intro or "This family has its own bound for #686. The bound for #548 is separate."),
         "",
         "The miss rate counts labels with a value that got no admitted right value. "
         "The bound is the one-sided 95% upper bound on the admitted error rate.",

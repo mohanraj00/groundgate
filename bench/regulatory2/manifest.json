@@ -1,0 +1,10 @@
+{
+ "format": "regulatory-fields/1",
+ "status": "draft",
+ "claim": "#750",
+ "selection_complete": false,
+ "selection_note": "I selected the 14 CFR parts of members.json from publisher metadata only: the eCFR title list, the eCFR structure API of 2026-11-24 and the cfr_references of the Federal Register API. No part is in bench/regulatory or in a file under bench/, and no Federal Register document that bench/ names amends one of them. Selection never used a document body, a value or a model output. The owner approval of the download is open in #750.",
+ "label_method": "The method of bench/regulatory: two blind label passes, pass a by Claude Code and pass b by Codex, each with the slots and the named sections only. A second blind check by the other harness on each absence. The owner decides each disagreement with bench/label/decide.py. passes.py seal writes labels.json before any benchmark model output on this set.",
+ "source_use": "Each member is a US government work and is cited by its point-in-time eCFR versioner URL and SHA-256. The XML and the reader text stay in local work storage; sources.py downloads the same bytes again.",
+ "documents": []
+}

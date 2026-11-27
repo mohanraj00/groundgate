@@ -7,6 +7,9 @@ test: a ``table_value`` cell must hold a digit, so that a number field never ask
 cell. The seed is the split seed of ``manifest.json``:
 
     uv run python bench/regulatory/slots.py --sources DIR    # writes slots.json
+    uv run python bench/regulatory/slots.py --sources DIR --set bench/regulatory2
+
+A set folder with a ``members.json`` also gets the pin of its slots in its ``manifest.json``.
 
 The script makes no model call and reads no label.
 """
@@ -235,8 +238,17 @@ def request_text(s: dict[str, Any]) -> str:
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--sources", type=Path, required=True, help="the XML of sources.py")
+    ap.add_argument("--set", type=Path, help="the set folder (default: this folder)")
     args = ap.parse_args(argv)
-    manifest = json.loads((HERE / "manifest.json").read_text())
+    here = args.set or HERE
+    manifest = json.loads((here / "manifest.json").read_text())
+    if not manifest.get("selection_complete"):
+        ap.error(f"{here}: the selection is not complete")
+    if (here / "members.json").exists():
+        if "labels" in manifest:
+            ap.error(f"{here}: the labels are sealed, so the slots are frozen")
+        if not json.loads((here / "members.json").read_text()).get("notice_review"):
+            ap.error(f"{here}: read the notice matches and write notice_review first")
     seed = manifest["split_rule"]["seed"]
     slots = []
     for d in manifest["documents"]:
@@ -255,10 +267,21 @@ def main(argv: list[str] | None = None) -> int:
         "schema": SCHEMA,
         "slots": [{"slot": s.pop("slot"), **s} for s in slots],
     }
-    (HERE / "slots.json").write_text(json.dumps(out, indent=1, ensure_ascii=False) + "\n")
+    raw = (json.dumps(out, indent=1, ensure_ascii=False) + "\n").encode()
+    (here / "slots.json").write_bytes(raw)
     by: dict[str, int] = {}
     for s in slots:
         by[f"{s['split']} {s['field']}"] = by.get(f"{s['split']} {s['field']}", 0) + 1
+    if (here / "members.json").exists():
+        manifest["slots"] = {
+            "file": "slots.json",
+            "count": len(slots),
+            "calibration": sum(s["split"] == "calibration" for s in slots),
+            "heldout": sum(s["split"] == "heldout" for s in slots),
+            "sha256": "sha256:" + hashlib.sha256(raw).hexdigest(),
+        }
+        text = json.dumps(manifest, indent=1, ensure_ascii=False) + "\n"
+        (here / "manifest.json").write_text(text)
     print(len(slots), "slots", json.dumps(by, sort_keys=True))
     return 0
 
