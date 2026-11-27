@@ -31,6 +31,7 @@ import argparse
 import hashlib
 import importlib.metadata
 import json
+import os
 import re
 import subprocess
 import sys
@@ -51,6 +52,8 @@ SET = HERE  # the benchmark set: gold, docs and runs (--set)
 KEY_SPAN = False  # ask a keyed prompt for the key span (--key-span)
 ROLES = False  # ask for the words that each part of a value rests on (--roles, #141)
 HOME = str(Path.home())
+CLI_ENVIRONMENT = ("PATH", "HOME", "CODEX_HOME")
+CODEX_DISABLED = ("apps", "browser_use", "browser_use_external", "computer_use", "in_app_browser")
 
 KIND = {
     "fda": "the dosage sections of an FDA drug label",
@@ -361,6 +364,10 @@ AGY_PREFIX = (
 )
 
 
+def _cli_environment() -> dict[str, str]:
+    return {name: os.environ[name] for name in CLI_ENVIRONMENT if name in os.environ}
+
+
 def _strip_fence(out: str) -> str:
     out = out.strip()
     if out.startswith("```"):
@@ -414,7 +421,11 @@ class CLIModel(base_model.BaseLanguageModel):
             self.empty,
             "-c",
             "project_doc_max_bytes=0",
+            "-c",
+            'web_search="disabled"',
         ]
+        for feature in CODEX_DISABLED:
+            cmd += ["--disable", feature]
         if self.effort:
             cmd += ["-c", f'model_reasoning_effort="{self.effort}"']
         return [*cmd, "-"]
@@ -428,6 +439,7 @@ class CLIModel(base_model.BaseLanguageModel):
             text=True,
             timeout=600,
             check=False,
+            env=_cli_environment(),
         )
         reply, tools, error = "", 0, proc.stderr[-300:]
         messages: list[str] = []
@@ -491,6 +503,7 @@ class CLIModel(base_model.BaseLanguageModel):
                 timeout=600,
                 check=False,
                 cwd=self.empty,
+                env=None if self.provider == "agy" else _cli_environment(),
             )
             out = proc.stdout
             if (
@@ -615,7 +628,12 @@ def main() -> None:
         kw["model"] = CLIModel(args.provider, args.model, args.workers, args.effort)
     cli = {"agy": "agy", "codex": "codex", "claude-cli": "claude"}.get(args.provider)
     cli_version = (
-        subprocess.run([cli, "--version"], capture_output=True, text=True).stdout.strip()
+        subprocess.run(
+            [cli, "--version"],
+            capture_output=True,
+            text=True,
+            env=_cli_environment() if cli in ("codex", "claude") else None,
+        ).stdout.strip()
         if cli
         else None
     )

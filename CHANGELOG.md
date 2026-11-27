@@ -5,6 +5,9 @@ spec version, and receipts name the spec version they were decided under.
 
 ## Unreleased
 
+- The benchmark disables web search, apps, browser use and computer use for `codex`. It gives
+  `codex` and `claude` only the `PATH`, `HOME` and `CODEX_HOME` environment variables. This change
+  applies to new runs only (#422).
 - An optional CI job reads decision events from entelos v0.7.0. The test makes one
   `calibration_event@1` record for each approval, rejection and correction. A replay gives
   the same profile drafts (#677).
