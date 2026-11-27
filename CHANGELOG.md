@@ -5,6 +5,11 @@ spec version, and receipts name the spec version they were decided under.
 
 ## Unreleased
 
+- `calibrate promotion` reads one report of `calibrate measure` and its draft profile. It
+  writes the content manifest of a profile promotion of entelos v0.7.0, with the items
+  `measure` and `profile`, and the `entelos.measure/1` summary, with each bound in basis
+  points, rounded up. It refuses a route that is not measured. The optional CI job `entelos`
+  checks one accepted and one refused promotion on the release (#747).
 - `bench/score.py --requested --check` passes on `bench/requested` without the local
   diagnostics export. It rescores the primary part, keeps the committed diagnostics, and
   says that it did not rescore them. With `--diagnostics`, it checks all of it (#381).

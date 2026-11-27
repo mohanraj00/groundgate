@@ -531,3 +531,114 @@ checkout. The test skips when this variable has no value.
 GROUNDGATE_ENTELOS="/path/to/entelos-v0.7.0" \
   uv run pytest tests/test_calibration_events.py::test_entelos_decision_events -rs
 ```
+
+## promotion: a profile version as an outside decision
+
+An approver outside groundgate can decide if a profile version goes into use. `calibrate
+promotion` makes one measure the evidence of that decision
+([#747](https://github.com/mohanraj00/groundgate/issues/747)). It writes the two texts of a
+profile promotion of entelos v0.7.0. Groundgate decides nothing here: the limit of each bound
+is a value of the policy of the approver.
+
+```bash
+groundgate calibrate measure --profile fee-schedule.json --gold G --split S --out DIR
+groundgate calibrate promotion --report DIR/report.json --profile DIR/profile.json \
+    --collection extraction-profiles [--base REF] --out OUT
+```
+
+The step reads the report and the draft profile of one `calibrate measure` run. It reads each
+file one time, and it calls no model. `OUT` gets two files. The step refuses an `OUT` that
+has one of them.
+
+`OUT/manifest.json` is the content manifest of the promotion, format `entelos.content/1`:
+
+```json
+{"format":"entelos.content/1","collection":"extraction-profiles","partition":"fee-schedule",
+ "base":"","items":[
+  {"item_id":"measure","digest":"sha256:...","size":5120,"media_type":"application/json"},
+  {"item_id":"profile","digest":"sha256:...","size":2048,"media_type":"application/json"}],
+ "metadata":{"profile_id":"fee-schedule","profile_version":"2.0.0"}}
+```
+
+- The file is the exact manifest text, on one line, with no line break at its end. The
+  candidate reference of the approver is the SHA-256 of this text. Give the bytes of the file
+  with no change.
+- `--collection` is the collection of your profile promotions. The partition is the profile
+  id. `--base` is the candidate reference of the proposal that this version changes. Without
+  `--base`, the base is empty: the first proposal of a profile.
+- The digest of an item is the SHA-256 of the bytes of `report.json` or of `profile.json`, and
+  `size` is the count of those bytes. Give the approver the same bytes. This digest of the
+  profile is not the profile digest of SPEC §4.10, which each receipt names.
+
+`OUT/summary.json` is the measure summary, format `entelos.measure/1`. The qualification runner
+of your application gives it to the approver:
+
+```json
+{"format": "entelos.measure/1",
+ "profile_digest": "sha256:...", "measure_digest": "sha256:...",
+ "gold_digest": "sha256:...", "labels_digest": "sha256:...",
+ "routes": [{"field": "amount", "route": "checked", "bound_bp": 183},
+            {"field": "amount", "route": "cleared", "bound_bp": 310}]}
+```
+
+- `profile_digest` and `measure_digest` are the digests of the two items.
+- `gold_digest` is the `gold_sha256` of the report.
+- `labels_digest` is the `audit_sha256` of the report when the measure counted the labels of
+  an audit set. Without `--audit`, each label of the measure is in the gold set, and
+  `labels_digest` is the `gold_sha256` too.
+- `bound_bp` is the bound in basis points, rounded up. So the summary never shows a bound
+  below the bound of the report: `0.0183` gives 183, and `0.050001` gives 501.
+
+`groundgate.calibrate.promotion.promotion(report_bytes, profile_bytes, collection, base)` gives
+the manifest text and the summary with no file.
+
+### What the step refuses
+
+The summary has one row for each route with an admitted value. These are the rows of the
+route table of the draft profile. The step refuses the report in these cases, and it names
+the route:
+
+- A route has the status `draft`: its bound is not below the target of the measure. With the
+  default target, the step refuses a bound of 0.05 or more, and the approver sees only lower
+  bounds. If the approver applies the limit, measure with a higher `--target`.
+- A route has an `unscored` count above 0: no label covers one of its admitted values.
+- No route has an admitted value.
+- The profile is not the draft profile of the report. Promote the `profile.json` that the
+  measure wrote. If you change it, measure the changed profile first.
+- The route table or the gold set digest of the profile does not agree with the report.
+
+### Test with entelos
+
+The optional `entelos` CI job also runs `test_entelos_profile_promotion` on the release tag
+`v0.7.0`. The test makes two versions of the profile `fee-schedule`. A person wrote the bounds
+of the two reports, and each report has the target 0.1. The Go Host gets each manifest text
+as a content proposal, and it gets the summary from its qualification runner. The base of
+the second manifest is the SHA-256 of the first manifest text, and the Host gives the same
+candidate reference.
+
+- Version `2.0.0` has the bounds 0.0183 and 0.0310. The promotion read of the Host gives
+  `valid` and the largest bound, 310. With a limit of 500, the policy accepts.
+- Version `2.1.0` has the bound 0.0612 on `amount`/`cleared`. The promotion read gives 612. The
+  policy records a reject decision, and its reason names the bound and the limit.
+
+No Host of entelos v0.7.0 writes a policy verdict. So the policy of the test is a program of
+the test. It applies the limit to the inputs of the promotion read, and it records its
+verdict as an actor of the kind `policy`.
+
+```bash
+GROUNDGATE_ENTELOS="/path/to/entelos-v0.7.0" \
+  uv run pytest tests/test_calibration_events.py::test_entelos_profile_promotion -rs
+```
+
+### Limits
+
+- A route with no admitted value on the test part has no row in the summary. The approver
+  sees no bound for it.
+- The report gives each bound with 4 decimal places, rounded to the nearest. The step reads
+  that text. It does not calculate the bound again.
+- The step does not read the gold set, the split or the audit set. It trusts the digests of
+  the report.
+- The summary does not name the split or the first day of the audit labels. The report has
+  them, and `measure_digest` names the report.
+- The digests are identities of bytes. They are not signatures. The qualification runner of
+  your application must calculate the two item digests from the bytes that it reads.
