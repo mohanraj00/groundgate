@@ -76,10 +76,20 @@ spec version, and receipts name the spec version they were decided under.
 - The blind audit pick of SPEC §4.18 now asks its tasks in the review step.
   `calibrate audit tasks` writes one label task to the store for each field and key of a
   picked document. A label task has no decision, so it is the same with and without an
-  admitted value. The review API gives it as a blind task, except for a closed set field.
+  admitted value. The review API gives it as a blind task.
   `calibrate audit labels` makes a `groundgate_audit_label` of each answer, and
   `calibrate measure --audit` counts it. A label task settles no slot and changes no receipt.
   A blind `correct` with the admitted value keeps the slot `admitted` (#695).
+- The review API gives an audit task of a closed set field as a blind task. The response gives
+  the options of the field from the schema, and never the proposed option. The answer names one
+  option with `correct`: `value` is the option and `span` is the text that gives it. The gate
+  checks it as each other correction, so a value that is not an option gets `OPTION_INVALID`.
+  The page takes the same answer with the key `n`. The target of a closed set correction is
+  now its span and its option, so two options at one span do not agree. This changes no
+  decision and no receipt. It applies when an answer log is resolved again: `review resolve`,
+  `review measures`, the review page and `export --resolution`. No stored answer of an earlier
+  version changes its resolution, because `resolve` refused each closed set `correct` before
+  (#696).
 - `bench/release1` has its member list from publisher metadata: 30 chapters of the USGS
   Mineral Commodity Summaries 2026, 30 appellate opinions from 11 courts and 30 committee
   reports from 18 committees, with at most one report for each bill. The owner approved the

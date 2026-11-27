@@ -53,6 +53,21 @@ CORRECTIONS = frozenset({"correct", "adjust_span"})
 VERDICTS = frozenset({"confirm", "choose", "not_in_document", "unsure", "wrong"}) | CORRECTIONS
 # §7: the option list is closed, so a closed_set task takes no typed value and no new span
 CLOSED_SET_VERDICTS = frozenset({"confirm", "choose", "not_in_document", "unsure"})
+CLOSED_SET_REFUSAL = (
+    "a closed_set task takes only confirm, choose, not_in_document and unsure",
+    "a closed_set audit task takes only confirm, choose, correct, not_in_document and unsure",
+)
+
+
+def closed_set_verdicts(task: Mapping[str, Any]) -> frozenset[str]:
+    """The verdicts of a closed_set task (§7). A task with the mode ``audit`` is blind in the
+    review API, so it also takes ``correct``: the value names one option of the field, and the
+    gate checks it as each other correction (SPEC §4.20, #696)."""
+    if task.get("mode") == "audit":
+        return CLOSED_SET_VERDICTS | {"correct"}
+    return CLOSED_SET_VERDICTS
+
+
 CHAIN = frozenset({"sequence", "previous", "entry_sha256"})  # the store adds these members
 # The members of each answer format before the store adds the chain members. answer@2 adds the
 # verdict wrong and the member field_keys (§5.3).
@@ -439,8 +454,8 @@ def _check(
     blind = is_label_task(task)  # SPEC §4.18: the answer is a label and settles no slot
     if blind and verdict not in BLIND_VERDICTS:
         raise fail("a label task of the blind audit takes only correct, not_in_document, unsure")
-    if task["item"] == "closed_set" and verdict not in CLOSED_SET_VERDICTS:
-        raise fail("a closed_set task takes only confirm, choose, not_in_document and unsure")
+    if task["item"] == "closed_set" and verdict not in closed_set_verdicts(task):
+        raise fail(CLOSED_SET_REFUSAL[task["mode"] == "audit"])
     choices = [c["decision"] for c in task["choices"]]
     decision = record["decision"]
     if verdict == "choose":
@@ -577,11 +592,13 @@ def _read(
 
 def _target(task: Mapping[str, Any], d: Mapping[str, Any], slot: Slot) -> tuple[Any, ...]:
     """What a decision gives for the slot (rule 4): the value, the unit and the key of a
-    number, or the reference and the span of other text."""
+    number, the reference, the span and the option of a closed set, or the reference and the
+    span of other text. One span can give two options (#696), so the option is in the target."""
     if task["item"] == "number":
         return (d["value"], d.get("unit"), slot.key)
     span = d.get("evidence") or {}
-    return (d.get("ref"), span.get("start"), span.get("end"))
+    where = (d.get("ref"), span.get("start"), span.get("end"))
+    return (*where, d.get("value")) if task["item"] == "closed_set" else where
 
 
 def _correct(

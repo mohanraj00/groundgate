@@ -23,6 +23,9 @@ give data that depends on its hidden candidate, so ``group`` gives each actor on
 tasks of a packet: one blind task, or the other tasks. The check of a correction of a blind task
 reads no other candidate of the packet (``left_out``).
 
+A blind task of a closed set field gives the options of the field, and its ``correct`` names one
+of them (#696). The options come from the schema, so they tell nothing of the proposed value.
+
 No response gives a key of the store. A store key is a hash of its content, and the object of
 a blind task holds the proposed value. So does its packet, and the key of each other task of
 that packet is a hash over the packet key. With one such key, a person could test a guess of
@@ -335,15 +338,19 @@ def task_view(
     task: Mapping[str, Any], sources: Mapping[int, Mapping[str, Any]] | Sequence[Any] = ()
 ) -> dict[str, Any] | None:
     """The members of a task response that come from the ``task@1`` object, or None for a task
-    that is not a task of the API: a calibrate label task and an audit task for a closed set.
+    that is not a task of the API: a calibrate label task.
     ``sources`` holds the decisions of the receipt, by their index: each choice gets the
     ``source`` and the ``ref`` of its decision.
 
     The ``body`` has no key of the store and no index of the receipt: its slot has no
     ``decisions``, and each choice has ``choice``, its number in the task, in place of
-    ``decision``. A task with the mode ``audit`` is blind, so its ``body`` is None."""
+    ``decision``. A task with the mode ``audit`` is blind, so its ``body`` is None.
+
+    ``options`` is the option list of a closed set field in schema order, and None for each
+    other task. The list comes from the schema, not from a candidate, so a blind task gives it
+    too: its answer names one option (#696)."""
     blind = task["mode"] == "audit"
-    if task["template"] in QUESTIONS or (blind and task["item"] == "closed_set"):
+    if task["template"] in QUESTIONS:
         return None
     body = None
     if not blind:
@@ -361,6 +368,7 @@ def task_view(
         "mode": task["mode"],
         "field": task["slot"]["field"],
         "key": task["slot"]["key"],
+        "options": list(task["options"]) if task["item"] == "closed_set" else None,
         "body": body,
     }
 
@@ -757,6 +765,7 @@ class Service:
                 "field": view["field"],
                 "key": view["key"],
                 "definition": None if model_text else doc.schema.fields[slot.field].description,
+                "options": view["options"],
                 "answered": mine[-1].get("verdict") if mine else None,
                 "body": view["body"],
                 # the task holds no model text: the statements come from the model-text@1 input

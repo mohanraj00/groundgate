@@ -1,0 +1,141 @@
+{
+ "name": "task-10-review-closed-set",
+ "kind": "task",
+ "description": "A review task for a closed set gives the options in the response and in its body. The body marks no option: its choices give the values.",
+ "task": {
+  "format": "task@1",
+  "packet": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+  "slot": {
+   "field": "billing",
+   "key": null,
+   "decisions": [
+    1,
+    2
+   ]
+  },
+  "item": "closed_set",
+  "mode": "review",
+  "template": "closed_set@1",
+  "question": "Which option is the billing?",
+  "parts": [
+   "option",
+   "field"
+  ],
+  "codes": [
+   "CONFLICTING_CANDIDATES"
+  ],
+  "choices": [
+   {
+    "decision": 1,
+    "value": "monthly",
+    "unit": null,
+    "shown": "monthly",
+    "evidence": {
+     "start": 280,
+     "end": 298
+    }
+   },
+   {
+    "decision": 2,
+    "value": "annual",
+    "unit": null,
+    "shown": "annual",
+    "evidence": {
+     "start": 300,
+     "end": 318
+    }
+   }
+  ],
+  "places": [
+   {
+    "start": 300,
+    "end": 318,
+    "page": null,
+    "box": null
+   }
+  ],
+  "options": [
+   "monthly",
+   "quarterly",
+   "annual"
+  ]
+ },
+ "sources": {
+  "1": {
+   "source": "document",
+   "ref": null
+  },
+  "2": {
+   "source": "document",
+   "ref": null
+  }
+ },
+ "expected": {
+  "served": true,
+  "options": [
+   "monthly",
+   "quarterly",
+   "annual"
+  ],
+  "mode": "review",
+  "field": "billing",
+  "key": null,
+  "body": {
+   "format": "task@1",
+   "slot": {
+    "field": "billing",
+    "key": null
+   },
+   "item": "closed_set",
+   "mode": "review",
+   "template": "closed_set@1",
+   "question": "Which option is the billing?",
+   "parts": [
+    "option",
+    "field"
+   ],
+   "codes": [
+    "CONFLICTING_CANDIDATES"
+   ],
+   "choices": [
+    {
+     "choice": 1,
+     "value": "monthly",
+     "unit": null,
+     "shown": "monthly",
+     "evidence": {
+      "start": 280,
+      "end": 298
+     },
+     "source": "document",
+     "ref": null
+    },
+    {
+     "choice": 2,
+     "value": "annual",
+     "unit": null,
+     "shown": "annual",
+     "evidence": {
+      "start": 300,
+      "end": 318
+     },
+     "source": "document",
+     "ref": null
+    }
+   ],
+   "places": [
+    {
+     "start": 300,
+     "end": 318,
+     "page": null,
+     "box": null
+    }
+   ],
+   "options": [
+    "monthly",
+    "quarterly",
+    "annual"
+   ]
+  }
+ }
+}

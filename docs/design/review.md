@@ -235,9 +235,8 @@ store as **label tasks**:
   profile must decide the text and the candidates of the packet to the decisions of the packet
   receipt. The command refuses a packet with a review task in the store.
 - A label task takes `correct`, `not_in_document` and `unsure`. Its answer is a label (§6.1
-  rule 9). A closed set task takes no `correct`, so a label task of a closed set field has no
-  answer with a value yet (#696). `groundgate calibrate audit labels` maps the answers to `groundgate_audit_label`
-  records, and `calibrate measure --audit` counts them (SPEC §4.18). The command makes the
+  rule 9). For a closed set field, `correct` names one option (§7, #696).
+  `groundgate calibrate audit labels` maps the answers to `groundgate_audit_label` records, and `calibrate measure --audit` counts them (SPEC §4.18). The command makes the
   labels of the label tasks in `labels.jsonl` equal to the current answers. So a later
   `unsure` takes out the label of an earlier `correct`.
 - The page leaves out the label tasks of a packet that has another task, and its start lines
@@ -247,7 +246,7 @@ store as **label tasks**:
 - The schema of the packet must be the schema of the profile. The page and the API check a
   correction to a label task with the person's candidate only, as `audit labels` does.
 
-The review API gives a label task as a blind task, except for a closed set field (#696).
+The review API gives a label task as a blind task.
 
 ## 6. The resolution rules
 
@@ -262,7 +261,8 @@ logs. It reads no clock and calls no model. The same inputs give the same bytes.
    `confirm`.
 4. Two answers agree when they have the same verdict and the same target. The target of
    `choose` is the decision. The target of `correct` and `adjust_span` is the canonical value,
-   unit and key for a number, and the start and end for text. `not_in_document` has no target.
+   unit and key for a number, the start, the end and the option for a closed set (#696), and
+   the start and end for other text. `not_in_document` has no target.
 5. A slot resolves when at least `agree` reviewers give answers that agree, and no reviewer
    gives an answer that disagrees.
 6. If two answers disagree, the slot is `disputed`. The latest answer of a lead settles a
@@ -370,7 +370,7 @@ In format 1, the field type selects the kind. A `number` or `integer` field give
 | `number` | the amount as written and in full, scale, sign, unit, field, key | the page with the value in a box | all six verdicts | yes |
 | `text` | the entity and its role: "Is 'Example Holdings Ltd' the lessor, not the lessee?" | the full sentence, with a mark at each end of the span | all six verdicts | yes |
 | `span` | the start and the end | the start and the end with their context, and the middle closed | all six verdicts; the arrow keys move an end | yes |
-| `closed_set` | the option, and that no other option fits | the quote and the option list; one key chooses another option | `confirm`, `choose`, `not_in_document`, `unsure` | yes, from 0.15 (#530) |
+| `closed_set` | the option, and that no other option fits | the quote and the option list; one key chooses another option | `confirm`, `choose`, `not_in_document`, `unsure`; an audit task also takes `correct` | yes, from 0.15 (#530) |
 | `model_text` | each statement | the model text beside the source; each statement next to its cited span, with the words that differ marked | `statements`: `supported`, `unsupported` or `unsure` for each | from an input (#531) |
 | `structure` | each node of a page | the page with the nodes in boxes; accept or correct in bulk | `nodes`: the nodes accepted and corrected | no |
 
@@ -392,6 +392,26 @@ so each place of that document gets a crop. The crop comes from the source in th
   chooses the option of another candidate. The options are a closed list, so the task takes
   no typed value and no new span: the page and `resolve` refuse `correct`, `adjust_span` and
   `wrong`. `answer@1` does not change.
+- An **audit task of a closed set** also takes `correct` (#696). The review API does not give
+  the actor the proposed option (SPEC §4.20), so the actor names one option: the value is the
+  option, and the span is the text that gives it. This is a normal correction, and the gate
+  checks it with steps 5 and 10 of SPEC §3. A value that is not an option gets
+  `OPTION_INVALID`. The page asks it with the key `n`. A closed set review task still refuses
+  `correct`, because its choices hold each option that the gate found. Rule 4 gives the target
+  of a closed set as its span and its option, because one span can give two options. So under
+  rule 7, the admitted option keeps the slot `admitted` only at the span of the admitted
+  decision. Another option at that span corrects the slot, and the same option at another span
+  corrects the slot to the same value. Two reviewers who name different options at one span
+  do not agree.
+- **When the closed set target applies.** The rule changes no decision and no receipt. It
+  changes only the status that the resolution gives. A stored `resolution@1` object does not
+  change. These code paths resolve the answer logs again, and they use the new rule:
+  `groundgate review resolve` (it writes a new `resolution@1` object), `groundgate review
+  measures`, the page of `groundgate review serve`, and `groundgate export --resolution`, which
+  resolves again and compares the result with the stored object. `groundgate store rebuild` builds only the
+  views, and it does not resolve. Before #696, `resolve` refused each `correct` on a closed set
+  task, and the target of `choose` is the decision. So no stored answer of an earlier version
+  gets a different resolution, and no stored resolution stops to match its inputs.
 - A **model text** task comes from an input that the app gives: the model text and its
   statements, each with a cited span. The core never admits model text (#285). A statement is
   not a candidate. The resolution gives the verdict of each statement, not a value. Section
@@ -675,9 +695,10 @@ the contract: the operations, the errors and the claim check. This section gives
   reference, and the offsets alone do not tell. Each choice has the `source` and the `ref` of
   its decision. Version 1 gives the document text only, so a client shows a passage only for
   the source `document`. The text of a reference is not in version 1 (#702).
-- **Two kinds of task are not in version 1.** A calibrate label task shows its value on
-  purpose, and `calibrate label` serves it. An audit task for a closed set has no blind answer,
-  because `answer@2` has no member for an option.
+- **A calibrate label task is not in version 1.** It shows its value on purpose, and
+  `calibrate label` serves it. An audit task for a closed set is a blind task: its `correct`
+  names one option as its `value`, so `answer@1` holds it with no new member (#696). The task
+  response gives the options of the field, from the schema.
 - **Each actor gets one group of a packet (#703).** Each rule above closed one path from the
   data of a packet to the hidden value of a blind task. They did not close the class. A review
   task can have a code from a relation with the hidden candidate, a statement of a model text
