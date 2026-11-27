@@ -77,21 +77,21 @@
  ],
  "expected": {
   "receipt": {
-   "groundgate": "0.12",
+   "groundgate": "0.13",
    "document": {
     "id": "report-7",
-    "sha256": "sha256:0dcd9e08ea62096df24e2ba89db4dfeeae540dabe3d73a5e50b50c8854a79cbf",
+    "sha256": "sha256:e6ca5a8b186d4f83d11227f093c547fedd7f3572d81ce9293097c3c859205ac4",
     "source": "https://example.org/report",
     "doubt_sha256": null
    },
    "references": [],
    "packs": [],
-   "schema_sha256": "sha256:fabdf15288eeb2d162b48528447fb738c86b284bd98731091e5120da9066e555",
-   "policy_sha256": "sha256:92f2e20399c00a6cff7da2c08bac06bb108a3a46fd92e60b981295103a8a6f4e",
+   "schema_sha256": "sha256:cbe3b83724ad642061bf930571e81983ae9e4c18175f51e4b4d7282060974874",
+   "policy_sha256": "sha256:5821d11e48837f67639e6db5e307b099d3864324eb6d6c5220b01f5f7f6c4232",
    "decisions": [
     {
      "candidate_id": "o3",
-     "candidate_sha256": "sha256:0d4f9abfc7ba37a44cd95cddb86320e256fa14b3771a5ed82b339577928eda82",
+     "candidate_sha256": "sha256:2a70f9e85e29213223fc8171401f3aca0b242f07ebb4a3e67e7620e920eeec83",
      "field": "fee",
      "key": null,
      "proposer": null,
@@ -113,8 +113,36 @@
      "packs": []
     },
     {
+     "candidate_id": "o2",
+     "candidate_sha256": "sha256:a9c9d1d34add2fa27749e6fdd9f27803510c8008f5118819a9adceed82a17a34",
+     "field": "fee",
+     "key": null,
+     "proposer": "model-a",
+     "outcome": "admitted",
+     "codes": [],
+     "value": "90",
+     "unit": "USD",
+     "source": "document",
+     "ref": null,
+     "url": null,
+     "evidence": {
+      "start": 31,
+      "end": 34
+     },
+     "parts": [
+      {
+       "role": "field",
+       "start": 27,
+       "end": 30,
+       "passed": true
+      }
+     ],
+     "missing": [],
+     "packs": []
+    },
+    {
      "candidate_id": "o1",
-     "candidate_sha256": "sha256:45bd31082564016ed196e3386a6a423e37f5f7f2ee94fcbeb8d9a8e6bcbb3995",
+     "candidate_sha256": "sha256:bb49b669c74a5aded4fb6b80ac8b40d3a0f118fc62febb40d05595498e15eca6",
      "field": "revenue",
      "key": null,
      "proposer": null,
@@ -147,34 +175,6 @@
       "statements": [],
       "currency": []
      }
-    },
-    {
-     "candidate_id": "o2",
-     "candidate_sha256": "sha256:f9d2680f1f4dcc9de67c9b3ef1d974fae1663ad7e4a2f0dd03376251f9b4b615",
-     "field": "fee",
-     "key": null,
-     "proposer": "model-a",
-     "outcome": "admitted",
-     "codes": [],
-     "value": "90",
-     "unit": "USD",
-     "source": "document",
-     "ref": null,
-     "url": null,
-     "evidence": {
-      "start": 31,
-      "end": 34
-     },
-     "parts": [
-      {
-       "role": "field",
-       "start": 27,
-       "end": 30,
-       "passed": true
-      }
-     ],
-     "missing": [],
-     "packs": []
     }
    ],
    "coverage": [
@@ -189,7 +189,7 @@
     "needs_verification": 1,
     "rejected": 1
    },
-   "receipt_sha256": "sha256:110a500d6527c75eb60a1ef35c58eb05dc59a9b2799b679f1aed665cc8b92570"
+   "receipt_sha256": "sha256:9dd21af0454008140e23140bdf6766a3f396fd1f24ad807b05278bfc0c2ce0e4"
   }
  }
 }

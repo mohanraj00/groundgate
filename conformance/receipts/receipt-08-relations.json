@@ -76,21 +76,21 @@
  ],
  "expected": {
   "receipt": {
-   "groundgate": "0.12",
+   "groundgate": "0.13",
    "document": {
     "id": null,
-    "sha256": "sha256:0926c0310cf46ccc418a4b0b562069e643664dbbb6a625d042e9b3f98f395039",
+    "sha256": "sha256:47e06042bf69ed9167c84ade1c0be524e942999162e15a265fc7278a0fc87a13",
     "source": null,
     "doubt_sha256": null
    },
    "references": [],
    "packs": [],
-   "schema_sha256": "sha256:e44d76a286f424d0163d9e5a3329e174e1a31430ef8e9a2870689762cbe6aafd",
-   "policy_sha256": "sha256:92f2e20399c00a6cff7da2c08bac06bb108a3a46fd92e60b981295103a8a6f4e",
+   "schema_sha256": "sha256:2d1c9022f8ddb6f3d65b2b76c6a5fec8d3dc5f7a15982d840346e827bdce756f",
+   "policy_sha256": "sha256:5821d11e48837f67639e6db5e307b099d3864324eb6d6c5220b01f5f7f6c4232",
    "decisions": [
     {
      "candidate_id": "t2",
-     "candidate_sha256": "sha256:18ad74ba47b3a5cb4e43d26a24d674c55d4a11da904d57ea763094accc15e86d",
+     "candidate_sha256": "sha256:060a5fac32e439a76eb315afa954b7935b2d8bab1e8721997acd22c77ac2b3c3",
      "field": "rent",
      "key": null,
      "proposer": null,
@@ -111,7 +111,7 @@
     },
     {
      "candidate_id": "t3",
-     "candidate_sha256": "sha256:77b833ef1c0f58f3883d5bd601bb221dd6196e2fb5be73780fba06230fac0a3d",
+     "candidate_sha256": "sha256:524e7a1d334025515a273be0215ff2caf4dfd684ca34b8ec690388dc50e4559f",
      "field": "fees",
      "key": null,
      "proposer": null,
@@ -132,7 +132,7 @@
     },
     {
      "candidate_id": "t1",
-     "candidate_sha256": "sha256:aa78b34bc6b5d6eba376839d9f0db1d7f24aef75fa1bc1607641d3c5197dafd0",
+     "candidate_sha256": "sha256:9b742e597c263b28da889aee5f5234de4c1b06976faf4d5b7b90cdfef62236f9",
      "field": "total",
      "key": null,
      "proposer": null,
@@ -168,7 +168,7 @@
     "needs_verification": 0,
     "rejected": 0
    },
-   "receipt_sha256": "sha256:4fe67a47d9e5db83b3047ae2cd8d9a06342aa4b917b81cbc157c0142c1f68469"
+   "receipt_sha256": "sha256:33d94412cf6dca6f793030f9196fc2822aa58a5b51e0a31497d10919738d8109"
   }
  }
 }

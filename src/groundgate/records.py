@@ -14,6 +14,7 @@ RECORD_CODES = (  # SPEC §4.12 order; it is part of every receipt hash
     "RECORD_MEMBER_MISSING",
     "RECORD_MEMBER_CONFLICT",
     "RECORD_SOURCE_MIXED",
+    "RECORD_MEMBER_REJECTED",
     "SET_REPLACES_NOTHING",
     "SET_DUPLICATE",
     "SET_CONFLICT",
@@ -44,6 +45,7 @@ class _Record:
     ref: str | None = None
     position: int | None = None  # the position of its text in the document set
     replaced: bool = False
+    rejected: tuple[tuple[str, tuple[str, ...]], ...] = ()
 
 
 def decide(
@@ -51,12 +53,15 @@ def decide(
     ids: Sequence[tuple[str, str]],
     values: Mapping[tuple[str, str], Sequence[Value]],
     positions: Mapping[str, int],
+    rejected: Mapping[tuple[str, str], Mapping[str, set[str]]] | None = None,
 ) -> tuple[tuple[RecordLine, ...], tuple[CheckResult, ...]]:
     """The record lines, sorted by field and record, and the check results, sorted by id.
 
     ``ids`` holds each (record field, record id) that a decision names. ``values`` holds the
     decisions that passed of each record. ``positions`` maps a reference id to its position in
-    the document set; the document has the position 0."""
+    the document set; the document has the position 0. ``rejected`` maps a record to the codes
+    of each member that has a rejected decision of a corroborate proposer (spec 0.13, #736)."""
+    rejected = rejected or {}
     records: dict[tuple[str, str], _Record] = {}
     for fid, rid in sorted(set(ids)):
         rf = schema.records[fid]
@@ -65,6 +70,13 @@ def decide(
         for v in got:
             by[v.member].add(v.value)
         r = _Record(fid, rid, got, set(), {})
+        r.rejected = tuple(
+            (m, tuple(sorted(codes)))
+            for m in rf.members
+            if (codes := rejected.get((fid, rid), {}).get(m))
+        )
+        if r.rejected:
+            r.codes.add("RECORD_MEMBER_REJECTED")
         for member in rf.members:
             seen = by.get(member, set())
             r.members[member] = next(iter(seen)) if len(seen) == 1 else None
@@ -132,6 +144,7 @@ def decide(
                 r.ref,
                 r.replaced,
                 tuple(r.members.items()),
+                r.rejected,
             )
         )
     checks = tuple(CheckResult(cid, tuple(sorted(found[cid]))) for cid in sorted(found))

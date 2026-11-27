@@ -353,4 +353,11 @@ def test_the_page_gives_no_label_task_next_to_another_task(tmp_path: Path, polic
     service = Service(root, ISSUERS, clock=lambda: CLOCK, id_key=KEY)
     with serving(api.server(service), {"Authorization": claim()}) as call:
         listed = json.loads(call("GET", "/v1/tasks")[2])
-    assert id_of(tk) in [t["task"] for t in listed["tasks"]]
+        # With two blind tasks, the group of ana is the first one in the order of the task IDs,
+        # and an ID is an HMAC of a task key. So the label task is open or not_assigned, and
+        # never not_found: it is a task of the API.
+        seen = call("GET", f"/v1/tasks/{id_of(tk)}")
+    listed_ids = [t["task"] for t in listed["tasks"]]
+    if policy == "review":
+        assert id_of(tk) in listed_ids
+    assert seen[0] == 200 or error(seen) == (403, "not_assigned")

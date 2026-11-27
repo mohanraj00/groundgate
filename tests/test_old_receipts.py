@@ -40,11 +40,22 @@ def _receipt(name: str, sha256: str) -> dict[str, object]:
 
 
 def test_a_receipt_of_an_earlier_release_with_the_same_spec_version_verifies() -> None:
-    """Rule 1: release 0.14.0 made this receipt under spec 0.12, and this release verifies it."""
-    receipt = _receipt("receipt-0.14.0.json", RECEIPT_0_14_0)
-    assert receipt["groundgate"] == SPEC_VERSION == "0.12"
+    """Rule 1: a receipt of an earlier release with the same spec version verifies. No release
+    of spec 0.13 is out yet, so the receipt comes from this release with its version kept."""
+    receipt = gg.admit(*_inputs()).to_dict()
+    assert receipt["groundgate"] == SPEC_VERSION == "0.13"
     result = gg.verify(receipt, *_inputs())
     assert result.ok, result.problems
+
+
+def test_a_receipt_of_spec_0_12_names_its_last_release() -> None:
+    """Rule 3 for the spec before this one (#736): release 0.14.0 made this receipt under spec
+    0.12, and the last release of spec 0.12 is 0.17.0."""
+    receipt = _receipt("receipt-0.14.0.json", RECEIPT_0_14_0)
+    assert gg.verify(receipt, *_inputs()).problems == (
+        "receipt was decided under spec 0.12; this groundgate implements 0.13. groundgate "
+        "0.17.0 implements spec 0.12: verify the receipt with that release (SPEC 8.6)",
+    )
 
 
 def test_a_receipt_of_an_older_spec_version_names_its_release() -> None:
@@ -54,7 +65,7 @@ def test_a_receipt_of_an_older_spec_version_names_its_release() -> None:
     result = gg.verify(receipt, *_inputs())
     assert not result.ok
     assert result.problems == (
-        "receipt was decided under spec 0.11; this groundgate implements 0.12. groundgate "
+        "receipt was decided under spec 0.11; this groundgate implements 0.13. groundgate "
         "0.11.0 implements spec 0.11: verify the receipt with that release (SPEC 8.6)",
     )
     changed = {**receipt, "receipt_sha256": "sha256:" + "0" * 64}
@@ -66,7 +77,7 @@ def test_a_spec_version_with_no_known_release_names_no_release(version: object) 
     assert release_of(version) is None
     result = gg.verify({"groundgate": version}, *_inputs())
     assert result.problems == (
-        f"receipt was decided under spec {version}; this groundgate implements 0.12",
+        f"receipt was decided under spec {version}; this groundgate implements 0.13",
     )
 
 
@@ -86,7 +97,9 @@ def _changelog_releases() -> dict[str, list[str]]:
 
 def test_the_release_table_agrees_with_the_changelog() -> None:
     by_spec = _changelog_releases()
-    assert SPEC_VERSION in by_spec
+    unreleased = (REPO / "CHANGELOG.md").read_text(encoding="utf-8").split("\n## ")[1]
+    # A new spec version is in "Unreleased" until its first release.
+    assert SPEC_VERSION in by_spec or f"\n- Spec {SPEC_VERSION}." in unreleased
     assert SPEC_VERSION not in SPEC_RELEASES
     assert set(SPEC_RELEASES) == set(by_spec) - {SPEC_VERSION}
     for spec, release in SPEC_RELEASES.items():
