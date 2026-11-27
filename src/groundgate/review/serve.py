@@ -74,7 +74,7 @@ from ..text import (
     tokens,
     using,
 )
-from .blind import blind_tasks
+from .blind import blind_tasks, is_label_task
 from .labels import QUESTIONS, label_tasks
 from .model_text import all_model_texts, check_model_text, model_text_task, statement_views
 from .resolve import (
@@ -927,8 +927,11 @@ class Review:
             return AnswerError(self.reviewer, None, message)
 
         decisions = doc.packet.receipt["decisions"]
+        # a label task of the blind audit: the check reads the person's candidate only
+        hide = range(len(decisions)) if is_label_task(task) else ()
         try:
-            found = _correct(slot, candidate, doc.packet, decisions, _admit_only(doc.packet), fail)
+            found = _correct(slot, candidate, doc.packet, decisions, _admit_only(doc.packet),
+                             fail, hide)  # fmt: skip
         except AnswerError as exc:
             raise Refused(400, exc.reason) from exc
         d = found.decision
@@ -1002,6 +1005,8 @@ class Review:
             record["format"] = "answer@2"
             record["field_keys"] = body.get("field_keys")
         decisions = doc.packet.receipt["decisions"]
+        if is_label_task(task):  # the person's candidate only, as ``audit labels`` reads it
+            hide = range(len(decisions))
         try:
             checked = _check(self.reviewer, record, doc.by_key, doc.schema, doc.ids,
                              chained=False, labels=doc.labels)  # fmt: skip

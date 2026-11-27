@@ -29,7 +29,7 @@ from groundgate.canonical import jcs
 from groundgate.model import Schema
 from groundgate.review import api
 from groundgate.review.api import Service
-from groundgate.review.blind import blind_tasks, is_label_task
+from groundgate.review.blind import blind_tasks, is_label_task, write_blind_tasks
 from groundgate.review.resolve import write_resolution
 from groundgate.review.serve import Review
 from groundgate.store import FolderStore
@@ -194,6 +194,25 @@ def test_the_last_answer_of_each_reviewer_counts_and_two_values_give_no_label(
     assert out == "no label: d1 items: the reviewers give different values\nadded 0 labels\n"
 
 
+def test_a_later_answer_takes_out_the_label_of_an_earlier_answer(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    b = Blind(tmp_path)
+    b.tasks()
+    before = (b.audit / "labels.jsonl").read_text("utf-8")
+    b.answer("ana", "correct", start=7, end=8)
+    b.labels()
+    assert b.last_labels(1) == [_label("7", "ana")]
+    b.answer("ana", "unsure")  # the last answer of ana gives no label now
+    capsys.readouterr()
+    b.labels()
+    assert capsys.readouterr().out == (
+        "no label: d1 items: no answer gives a label\nremoved 1 labels\nadded 0 labels\n"
+    )
+    assert (b.audit / "labels.jsonl").read_text("utf-8") == before
+    assert b.case.run("out")["audit"]["documents"] == 29
+
+
 def test_a_label_task_settles_no_slot_and_changes_no_receipt(tmp_path: Path) -> None:
     b = Blind(tmp_path)
     b.tasks()
@@ -224,6 +243,12 @@ def test_the_label_tasks_need_a_picked_document_and_its_profile(tmp_path: Path) 
     with FolderStore(b.store) as s:
         k, _ = admit_packet(s, TEXT, SCHEMA, [], None, "d1")  # 0 items, not 1
     with pytest.raises(SystemExit, match="does not decide the packet"):
+        main(["audit", "tasks", "--audit", str(b.audit), "--store", str(b.store),
+              "--packet", k, "--name", "d1", "--profile", str(b.case.profile)])  # fmt: skip
+    with FolderStore(b.store) as s:
+        wide = {"fields": {**SCHEMA["fields"], "boxes": {"type": "integer"}}}
+        k, _ = admit_packet(s, TEXT, wide, CANDIDATES, None, "d1")  # a field more
+    with pytest.raises(SystemExit, match="is not the schema of the profile"):
         main(["audit", "tasks", "--audit", str(b.audit), "--store", str(b.store),
               "--packet", k, "--name", "d1", "--profile", str(b.case.profile)])  # fmt: skip
     assert not (b.audit / "blind.jsonl").exists()
@@ -267,3 +292,22 @@ def test_a_blind_correct_with_the_admitted_value_keeps_the_slot_admitted(
         "310000",
         packet_receipt,
     )
+
+
+def test_the_page_checks_a_label_task_with_the_persons_candidate_only(tmp_path: Path) -> None:
+    """The other candidates of the packet stay out of the check of a label task, as in
+    ``audit labels``. Here the admitted candidate 7 would conflict with the answer 8."""
+    text = "Items: 7. Items: 8.\n"
+    eight = text.index("8")
+    with FolderStore(tmp_path / "store") as s:
+        k, _ = admit_packet(s, text, SCHEMA, CANDIDATES, None, "d1")
+        ((tk, _),) = write_blind_tasks(s, k)
+        review = Review(s, "ana", clock=lambda: CLOCK)
+        span = {"start": eight, "end": eight + 1}
+        checked = review.check({"task": tk, "verdict": "correct", **span})
+        assert (checked["outcome"], checked["codes"]) == ("admitted", [])
+        record, _ = review.write(
+            {"task": tk, "verdict": "correct", "decision": None, "codes_kept": [],
+             "reason_seen": False, "keys": 0, "ms": 0, **span}
+        )  # fmt: skip
+    assert record["candidate"]["value"] == "8"

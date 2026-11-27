@@ -11,6 +11,8 @@ profile digest of the label tasks of each document.
 
 from __future__ import annotations
 
+import json
+import os
 import unicodedata
 from collections.abc import Mapping
 from dataclasses import dataclass
@@ -109,6 +111,8 @@ def write_tasks(
             packet, schema, _, problems = checked_packet(store, packet_key)
             if problems or schema is None:
                 raise AuditError(f"the packet {packet_key} does not match its receipt")
+            if schema != check_profile(profile).schema:
+                raise AuditError("the schema of the packet is not the schema of the profile")
             again = admit(packet.text, None, packet.candidates, None, name, packet.judgments,
                           profile=profile).to_dict()  # fmt: skip
             entry = next(e for e in entries if e.get("document") == name)
@@ -148,11 +152,15 @@ def write_tasks(
 
 @dataclass(frozen=True)
 class Labels:
-    """The result of ``write_labels``: the new labels, and a line for each task with answers
-    that gives no label."""
+    """The result of ``store_labels`` and ``write_labels``: the labels (new labels for
+    ``write_labels``), a line for each task with answers that gives no label, the slots
+    ``(document, field, key)`` of the label tasks, and the count of lines that
+    ``write_labels`` took out."""
 
     added: list[dict[str, Any]]
     none: list[str]
+    slots: frozenset[tuple[str, str, str | None]] = frozenset()
+    removed: int = 0
 
 
 def store_labels(root: Path, store_dir: Path) -> Labels:
@@ -174,6 +182,7 @@ def store_labels(root: Path, store_dir: Path) -> Labels:
 
     out: list[dict[str, Any]] = []
     none: list[str] = []
+    slots: set[tuple[str, str, str | None]] = set()
     try:
         with FolderStore(store_dir) as store:
             names, _ = store.log_names()
@@ -206,6 +215,7 @@ def store_labels(root: Path, store_dir: Path) -> Labels:
                              "time": r["time"]}
                         )  # fmt: skip
                 for tk, (slot, _task) in own.items():
+                    slots.add((doc, slot.field, slot.key))
                     if tk not in given:
                         continue
                     task = {"document": doc, "profile": b["profile"], "field": slot.field,
@@ -219,20 +229,38 @@ def store_labels(root: Path, store_dir: Path) -> Labels:
         raise AuditError(str(exc)) from None
     except (StoreError, PacketError, ValueError, KeyError, TypeError) as exc:
         raise AuditError(str(exc)) from None
-    return Labels(out, none)
+    return Labels(out, none, frozenset(slots))
 
 
 def write_labels(root: Path, store_dir: Path) -> Labels:
-    """Add each label of ``store_labels`` that ``labels.jsonl`` does not have, in order."""
+    """Make the labels of the label tasks in ``labels.jsonl`` equal to ``store_labels``. The
+    answers in the store own the slots of the label tasks: a line for such a slot that the
+    current answers do not give goes out, for example after a later ``unsure``. The other
+    lines stay, with their bytes and in their order, and the labels of the store come after
+    them. The new file replaces the old file in one step."""
     read_seed(root)
     path = root / "labels.jsonl"
     if path.is_symlink():
         raise AuditError(f"{path} is a link; an audit set holds its own files")
     text = _text(path) if path.exists() else ""
-    have = {jcs(label) for label in read_labels(text)}
+    have = {jcs(label) for label in read_labels(text)}  # each line is a label
     found = store_labels(root, store_dir)
+    now = {jcs(label) for label in found.added}
+    kept: list[str] = []
+    removed = 0
+    for line in text.splitlines():
+        if line.strip():
+            obj = json.loads(line)
+            if (obj["document"], obj["field"], obj["key"]) in found.slots:
+                removed += jcs(obj) not in now
+                continue
+        kept.append(line)
+    lines = [*kept, *(jcs(label) for label in found.added)]
+    data = "".join(line + "\n" for line in lines)
+    if data != text:
+        tmp = path.with_name(path.name + ".tmp")
+        with open(tmp, "w", encoding="utf-8", newline="") as f:
+            f.write(data)
+        os.replace(tmp, path)
     added = [label for label in found.added if jcs(label) not in have]
-    with open(path, "a", encoding="utf-8", newline="") as f:
-        for label in added:
-            f.write(jcs(label) + "\n")
-    return Labels(added, found.none)
+    return Labels(added, found.none, found.slots, removed)

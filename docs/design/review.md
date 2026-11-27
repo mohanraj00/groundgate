@@ -236,7 +236,11 @@ store as **label tasks**:
   receipt. The command refuses a packet with a review task in the store.
 - A label task takes `correct`, `not_in_document` and `unsure`. Its answer is a label (§6.1
   rule 9). `groundgate calibrate audit labels` maps the answers to `groundgate_audit_label`
-  records, and `calibrate measure --audit` counts them (SPEC §4.18).
+  records, and `calibrate measure --audit` counts them (SPEC §4.18). The command makes the
+  labels of the label tasks in `labels.jsonl` equal to the current answers. So a later
+  `unsure` takes out the label of an earlier `correct`.
+- The schema of the packet must be the schema of the profile. The page and the API check a
+  correction to a label task with the person's candidate only, as `audit labels` does.
 
 The review API gives a label task as a blind task, except for a closed set field (#696).
 

@@ -542,6 +542,8 @@ def main(args: argparse.Namespace) -> None:
             found = write_labels(args.audit, args.store)
             for line in found.none:
                 print(f"no label: {line}")
+            if found.removed:
+                print(f"removed {found.removed} labels")
             print(f"added {len(found.added)} labels")
         elif args.audit_step == "rate":
             entry = write_rate(args.audit, args.report)

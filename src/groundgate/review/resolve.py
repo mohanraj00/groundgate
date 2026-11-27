@@ -596,8 +596,8 @@ def _correct(
     """Run ``admit`` for a correction (§6.2): the candidates of the packet without those of the
     slot and with the person's candidate, and the judgments without those of the removed
     candidates. ``hide`` holds the receipt indexes of more decisions whose candidates the call
-    leaves out: the review API gives the other blind tasks of the packet (SPEC §4.20). The
-    resolution gives none."""
+    leaves out: the review API gives the other blind tasks of the packet (SPEC §4.20), and a
+    label task of the blind audit gives each decision. The resolution gives none."""
     removed = {decisions[i]["candidate_sha256"] for i in (*slot.decisions, *hide)}
     kept, gone = [], set()
     for c in packet.candidates:

@@ -2082,7 +2082,9 @@ of each reviewer gives one audit label:
 
 `labeler` is the reviewer, `date` is the UTC day of the answer `time`, and `profile` is the
 digest of the log entry. When two reviewers give different values, the task gets no label. An
-answer of the review step stays a suggestion: only this mapping makes a label of it.
+answer of the review step stays a suggestion: only this mapping makes a label of it. The
+answers own the labels of their tasks. `groundgate calibrate audit labels` takes out a label of
+a label task that the current answers do not give, and keeps the other labels of the file.
 
 A label counts for a measure of a profile only when its `profile` is the digest of that
 profile, and its document is in the pick of the seed and the log. A label with another profile
