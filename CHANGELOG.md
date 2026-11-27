@@ -12,6 +12,9 @@ spec version, and receipts name the spec version they were decided under.
   `requested-score/2`, a not-found on a present slot is a wrong absence, and each slice
   gives the wrong absences and the absence error. A set without `score_rule` keeps
   version 1, so no published number changes (#485).
+- `bench/requested/proposers.py` gives the admitted error rate for each proposer and for
+  agreement, with no mix of the groups. A run projection now keeps the `proposer` of each
+  final decision. No published number changes; the measure needs a new run (#511).
 - `bench/score.py --requested --check` passes on `bench/requested` without the local
   diagnostics export. It rescores the primary part, keeps the committed diagnostics, and
   says that it did not rescore them. With `--diagnostics`, it checks all of it (#381).

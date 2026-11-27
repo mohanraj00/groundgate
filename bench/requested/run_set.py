@@ -607,10 +607,15 @@ def _prompts(result: Json) -> list[Any]:
 
 
 def _projection(decision: Json) -> Json:
-    return {
+    out = {
         k: decision[k]
         for k in ("candidate_id", "field", "key", "value", "unit", "outcome", "codes")
     }
+    # The proposer of the decision, for the measure of each proposer (#511). A decision with no
+    # proposer keeps the projection of earlier runs.
+    if decision.get("proposer") is not None:
+        out["proposer"] = decision["proposer"]
+    return out
 
 
 def storage_outcomes(rounds: list[Json], schema: Json) -> list[Json]:
