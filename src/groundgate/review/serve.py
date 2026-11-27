@@ -229,6 +229,7 @@ class _Doc:
     # the model-text@1 objects of the packet with their keys, and each one by its task key (§7)
     inputs: list[tuple[str, dict[str, Any]]] = field(default_factory=list)
     texts: dict[str, dict[str, Any]] = field(default_factory=dict)
+    held: int = 0  # the label tasks that the page leaves out (SPEC §4.18)
 
 
 def _named(record: Mapping[str, Any]) -> bool:
@@ -315,7 +316,12 @@ class Review:
             except Exception as exc:  # a packet in the store is untrusted input (§9)
                 self.skipped.append(f"packet {pk}: {_printable(str(exc))}")
                 continue
-            other = len(found[pk]) - len(doc.tasks)
+            if doc.held:
+                self.skipped.append(
+                    f"packet {pk}: {doc.held} label tasks of the blind audit, because the packet "
+                    "has tasks that show a value"
+                )
+            other = len(found[pk]) - len(doc.tasks) - doc.held
             if other:
                 self.skipped.append(f"packet {pk}: {other} task objects of another packet")
             self.docs[pk] = doc
@@ -353,6 +359,16 @@ class Review:
             labels = label_tasks(pk, packet.receipt, packet.text, schema,
                                  references=packet.references, layout=layout,
                                  raw_schema=packet.schema)  # fmt: skip
+        tasks = sorted(k for k in set(stored) if k in by_key or k in labels)
+        # SPEC §4.18: a label task is blind. So the page does not give it next to a task of
+        # the packet that shows a value, such as a choice of a review task.
+        label = [k for k in tasks if k not in labels and is_label_task(by_key[k][1])]
+        shown = any(
+            k in labels or k in texts or by_key[k][1].get("mode") != "audit"
+            for k in tasks
+            if k not in label
+        )
+        held = label if shown else []
         document = packet.receipt.get("document", {}).get("id")
         doc = _Doc(
             key=pk,
@@ -362,7 +378,8 @@ class Review:
             units=_Units(packet.text),
             by_key=by_key,
             labels=labels,
-            tasks=sorted(k for k in set(stored) if k in by_key or k in labels),
+            tasks=[k for k in tasks if k not in held],
+            held=len(held),
             ids=[c.get("id") for c in packet.candidates if isinstance(c, Mapping)],
             document="" if document is None else _printable(document),
             inputs=inputs,

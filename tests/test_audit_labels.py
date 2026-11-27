@@ -13,6 +13,7 @@ from test_review_http import (
     CLOCK,
     ISSUERS,
     KEY,
+    NO_AUDIT,
     at,
     claim,
     error,
@@ -32,6 +33,7 @@ from groundgate.review.api import Service
 from groundgate.review.blind import blind_tasks, is_label_task, write_blind_tasks
 from groundgate.review.resolve import write_resolution
 from groundgate.review.serve import Review
+from groundgate.review.tasks import write_tasks
 from groundgate.store import FolderStore
 from groundgate.store.packets import admit_packet
 
@@ -325,3 +327,20 @@ def test_audit_labels_writes_no_file_through_a_link(tmp_path: Path) -> None:
     assert not (b.audit / "labels.jsonl").is_symlink()
     assert b.last_labels(1) == [_label(None, "ana")]
     assert sorted(p.name for p in b.audit.glob("*.tmp")) == ["labels.jsonl.tmp"]
+
+
+def test_the_page_gives_no_label_task_next_to_a_task_that_shows_a_value(tmp_path: Path) -> None:
+    text = "Items: 7. Items: 8.\n"
+    two = [*CANDIDATES, {"id": "c2", "field": "items", "value": 8, "evidence": {"text": "8"}}]
+    with FolderStore(tmp_path / "store") as s:
+        k, _ = admit_packet(s, text, SCHEMA, two, None, "d1")  # the two values conflict
+        ((tk, _),) = write_blind_tasks(s, k)
+        assert Review(s, "ana", clock=lambda: CLOCK).docs[k].tasks == [tk]
+        written = write_tasks(s, k, NO_AUDIT).tasks  # a review task with the choices 7 and 8
+        assert [(t["mode"], len(t["choices"])) for _, t in written] == [("review", 2)]
+        review = Review(s, "ana", clock=lambda: CLOCK)
+    assert review.docs[k].tasks == [written[0][0]]
+    assert review.skipped == [
+        f"packet {k}: 1 label tasks of the blind audit, because the packet has tasks "
+        "that show a value"
+    ]
