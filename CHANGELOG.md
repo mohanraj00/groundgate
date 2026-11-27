@@ -75,8 +75,8 @@ spec version, and receipts name the spec version they were decided under.
   spec 0.12 still verifies and replays under the 0.12 rules with 0.17.0 (#736 cause 2).
 - `bench/release1` has its member list from publisher metadata: 30 chapters of the USGS
   Mineral Commodity Summaries 2026, 30 appellate opinions from 11 courts and 30 committee
-  reports from 18 committees. No document body is downloaded, and the download waits for the
-  owner (#748).
+  reports from 18 committees, with at most one report for each bill. The owner approved the
+  list. No document body is downloaded yet (#748).
 
 ## 0.17.0 (2026-11-19)
 

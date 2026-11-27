@@ -23,7 +23,7 @@ def select() -> ModuleType:
 def test_the_member_list_comes_from_metadata_only() -> None:
     body = json.loads((SET / "members.json").read_text())
     assert body["body_read"] is False
-    assert body["download_approved"] is None
+    assert body["download_approved"] == "2026-11-27"
     assert not (SET / "manifest.json").exists()
     opinions = body["kinds"]["opinions"]["members"]
     reports = body["kinds"]["reports"]["members"]
@@ -62,6 +62,15 @@ def test_a_document_in_two_packages_is_one_member() -> None:
     twins.add("CRPT-119hrpt1", report)
     assert twins.problem({**report}) == "the same document as CRPT-119hrpt1"
     assert twins.problem({**report, "pages": 13}) is None
+
+
+def test_one_bill_gives_one_member() -> None:
+    twins = select().Twins()
+    house = {"title": "A BILL", "date_issued": "2025-06-10", "pages": 132, "bill": "HR 3944"}
+    twins.add("CRPT-119hrpt161", house)
+    senate = {"title": "A BILL", "date_issued": "2025-07-17", "pages": 118, "bill": "HR 3944"}
+    assert twins.problem(senate) == "the same bill as CRPT-119hrpt161"
+    assert twins.problem({**senate, "bill": "HR 3945"}) is None
 
 
 def test_the_members_have_no_twins_and_the_set_does_not_exclude_itself() -> None:

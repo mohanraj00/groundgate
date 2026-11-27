@@ -9,7 +9,7 @@
   "https://pubs.usgs.gov/periodicals/mcs2026/ (the index, and a HEAD request for each chapter)"
  ],
  "body_read": false,
- "download_approved": null,
+ "download_approved": "2026-11-27",
  "note": "The owner picked spare A, the USGS Mineral Commodity Summaries 2026, as kind 1 in place of patents on 2026-11-27.",
  "kinds": {
   "minerals": {
@@ -1059,15 +1059,15 @@
      "pages": 8
     },
     {
-     "package": "CRPT-119srpt43",
+     "package": "CRPT-119srpt38",
      "chamber": "SENATE",
      "doc_class": "SRPT",
      "committee": "ssap00",
      "committee_name": "Committee on Appropriations",
-     "bill": "HR 3944",
-     "title": "MILITARY CONSTRUCTION, VETERANS AFFAIRS, AND RELATED AGENCIES APPROPRIATION BILL, 2026",
-     "date_issued": "2025-07-17",
-     "pages": 118
+     "bill": "S 2257",
+     "title": "LEGISLATIVE BRANCH APPROPRIATIONS, 2026",
+     "date_issued": "2025-07-10",
+     "pages": 62
     },
     {
      "package": "CRPT-119srpt51",
@@ -1989,6 +1989,10 @@
      "reason": "no primary bill"
     },
     {
+     "package": "CRPT-119srpt43",
+     "reason": "the same bill as CRPT-119hrpt161"
+    },
+    {
      "package": "CRPT-119srpt46",
      "reason": "219 pages"
     },
@@ -2070,5 +2074,6 @@
     }
    ]
   }
- }
+ },
+ "approval": "The owner approved the list on 2026-11-27 with the words \"Yes, keep one\": one report on HR 3944 stays."
 }

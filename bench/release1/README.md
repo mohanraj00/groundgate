@@ -3,7 +3,8 @@
 Status: member list. The owner approved the kinds and the member choice from metadata on
 2026-11-27 (#748). On the same day the owner picked spare A, the USGS Mineral Commodity
 Summaries, as kind 1 in place of patents. `members.json` has 30 chapters, 30 opinions and 30
-reports. No document body is downloaded. The download waits for the owner approval of the list.
+reports. On 2026-11-27 the owner approved the list with the words "Yes, keep one" (one report
+on HR 3944). No document body is downloaded yet.
 
 This set gives the numbers of exit conditions 1 and 2 of #277: the admitted error rate with
 a bound for each field and each kind, the miss rate, and the share of right values sent to
@@ -189,12 +190,16 @@ Kind 3, reports of 2025:
   oversight plans, conference reports).
 - The same twin rule applies: the same title, date of issue and page count is out. No report
   of the list has a twin.
+- One bill gives at most one member. A report on the same primary bill as an earlier member is
+  out, also if it comes from the other chamber. The first report in the selection order stays.
 - The rule takes one report from each committee first, then a second pass, until there are 15
   for each chamber.
-- The result: 15 House and 15 Senate reports from 18 committees, 8 to 132 pages. Two members
-  are on the same bill, HR 3944 (military construction appropriations): the House report
-  119hrpt161 and the Senate report 119srpt43. They are two texts of two committees, with
-  different dates and page counts, so the rule keeps both.
+- The result: 15 House and 15 Senate reports from 18 committees, 8 to 132 pages. The first
+  list had two reports on HR 3944 (military construction appropriations): the House report
+  119hrpt161 and the Senate report 119srpt43. On 2026-11-27 the owner chose to keep one. The
+  House report is first in the selection order, so it stays. The Senate report is out, and
+  the next Senate candidate, 119srpt38 (S 2257, legislative branch appropriations, 62 pages),
+  takes its place.
 
 Kind 1, USGS chapters of 2026:
 
@@ -210,7 +215,7 @@ Kind 1, USGS chapters of 2026:
 USPTO patents: the USPTO bulk data now needs an API key of the USPTO Open Data Portal. The old
 bulk data site did not answer on 2026-11-27. I made no request with a key.
 
-## Open decisions
+## Decisions
 
-1. The fields of kind 1.
-2. The approval of the member lists of the three kinds before any download.
+1. The fields of kind 1 and the member lists of the three kinds: the owner approved them on
+   2026-11-27 ("Yes, keep one"), on the #748 comment that holds the lists and the field set.

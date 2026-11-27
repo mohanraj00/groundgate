@@ -141,6 +141,9 @@ class Twins:
 
     A package is a twin of an earlier member if it has the same docket entry in the same court,
     or the same title, date of issue and page count. Only the first member stays.
+
+    One bill gives at most one member: a report on the same primary bill as an earlier member
+    is out, also if a committee of the other chamber wrote it.
     """
 
     def __init__(self) -> None:
@@ -153,11 +156,15 @@ class Twins:
         ]
         if m.get("entry"):
             out.append(("entry", m["court"], m["entry"]))
+        if m.get("bill"):
+            out.append(("bill", m["bill"]))
         return out
 
     def problem(self, m: Row) -> str | None:
         for key in self.keys(m):
             if key in self.first:
+                if key[0] == "bill":
+                    return f"the same bill as {self.first[key]}"
                 return f"the same document as {self.first[key]}"
         return None
 
