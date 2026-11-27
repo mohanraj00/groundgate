@@ -71,18 +71,26 @@ def source_set(tmp_path: Path, approved: str | None) -> tuple[Path, Path]:
     return here, out
 
 
-def test_the_committed_member_list_is_new_and_waits_for_approval() -> None:
+def test_the_committed_member_list_is_new_and_has_its_source_checks() -> None:
     body = json.loads((HERE / "members.json").read_text())
     config = sources.set_config(HERE)
     assert config.from_file and config.calibration == 0
-    assert config.download_approved is None
+    assert config.download_approved == "2026-11-27" and config.notice_review
     assert len(config.members) == body["splits"]["heldout"] == 14
     first = {sources.member_id(t, p) for t, p, _, _ in sources.MEMBERS}
     second = {sources.member_id(t, p) for t, p, _, _ in config.members}
     spares = {sources.member_id(m["title"], m["part"]) for m in body["spares"]}
     assert not first & second and not first & spares and not second & spares
     manifest = json.loads((HERE / "manifest.json").read_text())
-    assert manifest["selection_complete"] is False and manifest["documents"] == []
+    docs = manifest["documents"]
+    assert manifest["selection_complete"] is True
+    assert [d["id"] for d in docs] == [sources.member_id(t, p) for t, p, _, _ in config.members]
+    assert {(d["selection_status"], d["split"]) for d in docs} == {("frozen_member", "heldout")}
+    seed = sources.split_seed([d["source_sha256"] for d in docs])
+    assert manifest["split_rule"]["seed"] == seed
+    checks = json.loads((HERE / "source_checks.json").read_text())["documents"]
+    assert [c["id"] for c in checks] == [d["id"] for d in docs]
+    assert all(not c["problems"] and c["notice"]["review"] == body["notice_review"] for c in checks)
     assert not (HERE / "slots.json").exists() and not (HERE / "labels.json").exists()
 
 

@@ -1,0 +1,430 @@
+{
+ "format": "regulatory-source-checks/1",
+ "date": "2026-11-24",
+ "documents": [
+  {
+   "id": "cfr-9-130",
+   "source": "https://www.ecfr.gov/api/versioner/v1/full/2026-11-24/title-9.xml?part=130",
+   "identity": {
+    "citation": "9 CFR Part 130",
+    "heading": "PART 130—USER FEES",
+    "date": "2026-11-24"
+   },
+   "sections": 7,
+   "sections_listed": 7,
+   "tables": 1,
+   "text_characters": 32935,
+   "text_sha256": "sha256:31b2901e441f96989c2286089f9870523c699785556be45042f9174dd27e0e50",
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 336,
+     "of": 165,
+     "and": 126,
+     "to": 119,
+     "for": 130
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": "I read each match on 2026-11-27. No notice of the publisher is in the sources. 13 parts have no match. The 41 matches of 36 CFR 1258 are regulation text about the fees for records reproductions of NARA."
+   },
+   "problems": []
+  },
+  {
+   "id": "cfr-10-903",
+   "source": "https://www.ecfr.gov/api/versioner/v1/full/2026-11-24/title-10.xml?part=903",
+   "identity": {
+    "citation": "10 CFR Part 903",
+    "heading": "PART 903—POWER AND TRANSMISSION RATES",
+    "date": "2026-11-24"
+   },
+   "sections": 12,
+   "sections_listed": 12,
+   "tables": 0,
+   "text_characters": 21788,
+   "text_sha256": "sha256:39bc5369b4f4ed88af7f967b55f2d51023c926c79fb153f7d9ca849aeea690eb",
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 287,
+     "of": 110,
+     "and": 123,
+     "to": 52,
+     "for": 62
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": "I read each match on 2026-11-27. No notice of the publisher is in the sources. 13 parts have no match. The 41 matches of 36 CFR 1258 are regulation text about the fees for records reproductions of NARA."
+   },
+   "problems": []
+  },
+  {
+   "id": "cfr-12-8",
+   "source": "https://www.ecfr.gov/api/versioner/v1/full/2026-11-24/title-12.xml?part=8",
+   "identity": {
+    "citation": "12 CFR Part 8",
+    "heading": "PART 8—ASSESSMENT OF FEES",
+    "date": "2026-11-24"
+   },
+   "sections": 5,
+   "sections_listed": 5,
+   "tables": 1,
+   "text_characters": 24813,
+   "text_sha256": "sha256:26a928fdccbb000923287c5e0635753ce4ce0a0ee4fc5a22ceeac2b781cf08db",
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 276,
+     "of": 192,
+     "and": 131,
+     "to": 85,
+     "for": 41
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": "I read each match on 2026-11-27. No notice of the publisher is in the sources. 13 parts have no match. The 41 matches of 36 CFR 1258 are regulation text about the fees for records reproductions of NARA."
+   },
+   "problems": []
+  },
+  {
+   "id": "cfr-14-389",
+   "source": "https://www.ecfr.gov/api/versioner/v1/full/2026-11-24/title-14.xml?part=389",
+   "identity": {
+    "citation": "14 CFR Part 389",
+    "heading": "PART 389—FEES AND CHARGES FOR SPECIAL SERVICES",
+    "date": "2026-11-24"
+   },
+   "sections": 13,
+   "sections_listed": 13,
+   "tables": 1,
+   "text_characters": 11759,
+   "text_sha256": "sha256:917c7b3e983aa2b21db5bdab65bf5c0cb7a668b6bf91c5eccb566e7532271334",
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 71,
+     "of": 68,
+     "and": 51,
+     "to": 30,
+     "for": 65
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": "I read each match on 2026-11-27. No notice of the publisher is in the sources. 13 parts have no match. The 41 matches of 36 CFR 1258 are regulation text about the fees for records reproductions of NARA."
+   },
+   "problems": []
+  },
+  {
+   "id": "cfr-18-381",
+   "source": "https://www.ecfr.gov/api/versioner/v1/full/2026-11-24/title-18.xml?part=381",
+   "identity": {
+    "citation": "18 CFR Part 381",
+    "heading": "PART 381—FEES",
+    "date": "2026-11-24"
+   },
+   "sections": 20,
+   "sections_listed": 20,
+   "tables": 2,
+   "text_characters": 18216,
+   "text_sha256": "sha256:d2654ce57b1a96a801239bd30df0d066fa7c11ef3cf0ac0f2708d71722536fb2",
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 250,
+     "of": 137,
+     "and": 44,
+     "to": 65,
+     "for": 87
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": "I read each match on 2026-11-27. No notice of the publisher is in the sources. 13 parts have no match. The 41 matches of 36 CFR 1258 are regulation text about the fees for records reproductions of NARA."
+   },
+   "problems": []
+  },
+  {
+   "id": "cfr-21-1150",
+   "source": "https://www.ecfr.gov/api/versioner/v1/full/2026-11-24/title-21.xml?part=1150",
+   "identity": {
+    "citation": "21 CFR Part 1150",
+    "heading": "PART 1150—USER FEES",
+    "date": "2026-11-24"
+   },
+   "sections": 9,
+   "sections_listed": 9,
+   "tables": 0,
+   "text_characters": 13449,
+   "text_sha256": "sha256:86debbc3ff1c4fb853d48475982fda8a6b3a3c2f6e9f46358d1e24625651f511",
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 171,
+     "of": 97,
+     "and": 64,
+     "to": 42,
+     "for": 60
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": "I read each match on 2026-11-27. No notice of the publisher is in the sources. 13 parts have no match. The 41 matches of 36 CFR 1258 are regulation text about the fees for records reproductions of NARA."
+   },
+   "problems": []
+  },
+  {
+   "id": "cfr-22-22",
+   "source": "https://www.ecfr.gov/api/versioner/v1/full/2026-11-24/title-22.xml?part=22",
+   "identity": {
+    "citation": "22 CFR Part 22",
+    "heading": "PART 22—SCHEDULE OF FEES FOR CONSULAR SERVICES—DEPARTMENT OF STATE AND FOREIGN SERVICE",
+    "date": "2026-11-24"
+   },
+   "sections": 7,
+   "sections_listed": 7,
+   "tables": 1,
+   "text_characters": 23982,
+   "text_sha256": "sha256:7c74df28e176df9008895fb600bcd731e33ddc5f9b683a0eaca8617bfb8e6033",
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 153,
+     "of": 180,
+     "and": 87,
+     "to": 74,
+     "for": 82
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": "I read each match on 2026-11-27. No notice of the publisher is in the sources. 13 parts have no match. The 41 matches of 36 CFR 1258 are regulation text about the fees for records reproductions of NARA."
+   },
+   "problems": []
+  },
+  {
+   "id": "cfr-25-514",
+   "source": "https://www.ecfr.gov/api/versioner/v1/full/2026-11-24/title-25.xml?part=514",
+   "identity": {
+    "citation": "25 CFR Part 514",
+    "heading": "PART 514—FEES",
+    "date": "2026-11-24"
+   },
+   "sections": 17,
+   "sections_listed": 17,
+   "tables": 0,
+   "text_characters": 13286,
+   "text_sha256": "sha256:fc10e467e2b668dd000b134eb3baf886485155ecfaaea604a72118b4fb897249",
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 219,
+     "of": 113,
+     "and": 43,
+     "to": 52,
+     "for": 40
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": "I read each match on 2026-11-27. No notice of the publisher is in the sources. 13 parts have no match. The 41 matches of 36 CFR 1258 are regulation text about the fees for records reproductions of NARA."
+   },
+   "problems": []
+  },
+  {
+   "id": "cfr-29-4006",
+   "source": "https://www.ecfr.gov/api/versioner/v1/full/2026-11-24/title-29.xml?part=4006",
+   "identity": {
+    "citation": "29 CFR Part 4006",
+    "heading": "PART 4006—PREMIUM RATES",
+    "date": "2026-11-24"
+   },
+   "sections": 7,
+   "sections_listed": 7,
+   "tables": 0,
+   "text_characters": 27275,
+   "text_sha256": "sha256:851f6818326dfa73992d35de2fba573e3618c5dc7bf8aa28d67b33a506a7a3a0",
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 357,
+     "of": 199,
+     "and": 70,
+     "to": 64,
+     "for": 96
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": "I read each match on 2026-11-27. No notice of the publisher is in the sources. 13 parts have no match. The 41 matches of 36 CFR 1258 are regulation text about the fees for records reproductions of NARA."
+   },
+   "problems": []
+  },
+  {
+   "id": "cfr-36-1258",
+   "source": "https://www.ecfr.gov/api/versioner/v1/full/2026-11-24/title-36.xml?part=1258",
+   "identity": {
+    "citation": "36 CFR Part 1258",
+    "heading": "PART 1258—FEES",
+    "date": "2026-11-24"
+   },
+   "sections": 9,
+   "sections_listed": 9,
+   "tables": 0,
+   "text_characters": 14909,
+   "text_sha256": "sha256:1a686c49f8b781561f88a61ea6bafd87b1d18142df447c695ce76fa21655d819",
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 163,
+     "of": 95,
+     "and": 75,
+     "to": 64,
+     "for": 44
+    }
+   },
+   "notice": {
+    "matches": 41,
+    "examples": [
+     "affixing a seal to copies certifying the copies are a valid reproduction of a file; this service is available for an additional",
+     "; benefits; rent; communication and utilities; printing and reproductions; consulting and other services; payments to other agen",
+     "dential Libraries. Fee means the price researchers pay for reproductions of records. Certification of records is also a reprodu"
+    ],
+    "review": "I read each match on 2026-11-27. No notice of the publisher is in the sources. 13 parts have no match. The 41 matches of 36 CFR 1258 are regulation text about the fees for records reproductions of NARA."
+   },
+   "problems": []
+  },
+  {
+   "id": "cfr-40-1027",
+   "source": "https://www.ecfr.gov/api/versioner/v1/full/2026-11-24/title-40.xml?part=1027",
+   "identity": {
+    "citation": "40 CFR Part 1027",
+    "heading": "PART 1027—FEES FOR VEHICLE AND ENGINE COMPLIANCE PROGRAMS",
+    "date": "2026-11-24"
+   },
+   "sections": 11,
+   "sections_listed": 11,
+   "tables": 4,
+   "text_characters": 28111,
+   "text_sha256": "sha256:2409faaf0d333d748b65078d58d07a05ff47f5ff1cf9c4e452fa32dd99a6e4d4",
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 274,
+     "of": 131,
+     "and": 112,
+     "to": 83,
+     "for": 131
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": "I read each match on 2026-11-27. No notice of the publisher is in the sources. 13 parts have no match. The 41 matches of 36 CFR 1258 are regulation text about the fees for records reproductions of NARA."
+   },
+   "problems": []
+  },
+  {
+   "id": "cfr-43-3834",
+   "source": "https://www.ecfr.gov/api/versioner/v1/full/2026-11-24/title-43.xml?part=3834",
+   "identity": {
+    "citation": "43 CFR Part 3834",
+    "heading": "PART 3834—REQUIRED FEES FOR MINING CLAIMS OR SITES",
+    "date": "2026-11-24"
+   },
+   "sections": 9,
+   "sections_listed": 9,
+   "tables": 0,
+   "text_characters": 3757,
+   "text_sha256": "sha256:12398d9f69a68cab4990f0bd99eebc5b5eb89efa754481bbffa573525ce063d4",
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 45,
+     "of": 11,
+     "and": 15,
+     "to": 6,
+     "for": 12
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": "I read each match on 2026-11-27. No notice of the publisher is in the sources. 13 parts have no match. The 41 matches of 36 CFR 1258 are regulation text about the fees for records reproductions of NARA."
+   },
+   "problems": []
+  },
+  {
+   "id": "cfr-49-594",
+   "source": "https://www.ecfr.gov/api/versioner/v1/full/2026-11-24/title-49.xml?part=594",
+   "identity": {
+    "citation": "49 CFR Part 594",
+    "heading": "PART 594—SCHEDULE OF FEES AUTHORIZED BY 49 U.S.C. 30141",
+    "date": "2026-11-24"
+   },
+   "sections": 10,
+   "sections_listed": 10,
+   "tables": 0,
+   "text_characters": 17054,
+   "text_sha256": "sha256:90fdfa62df56c881935a2b25b008020870a071b07b671d502bf5a6a6dda715b2",
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 185,
+     "of": 127,
+     "and": 80,
+     "to": 69,
+     "for": 50
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": "I read each match on 2026-11-27. No notice of the publisher is in the sources. 13 parts have no match. The 41 matches of 36 CFR 1258 are regulation text about the fees for records reproductions of NARA."
+   },
+   "problems": []
+  },
+  {
+   "id": "cfr-49-1510",
+   "source": "https://www.ecfr.gov/api/versioner/v1/full/2026-11-24/title-49.xml?part=1510",
+   "identity": {
+    "citation": "49 CFR Part 1510",
+    "heading": "PART 1510—PASSENGER CIVIL AVIATION SECURITY SERVICE FEES",
+    "date": "2026-11-24"
+   },
+   "sections": 11,
+   "sections_listed": 11,
+   "tables": 0,
+   "text_characters": 12597,
+   "text_sha256": "sha256:466489679cf45a7dc1eeca9efb507d3e7c82bc4b6a86e33534ccfc32bdfd34a7",
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 130,
+     "of": 67,
+     "and": 47,
+     "to": 29,
+     "for": 29
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": "I read each match on 2026-11-27. No notice of the publisher is in the sources. 13 parts have no match. The 41 matches of 36 CFR 1258 are regulation text about the fees for records reproductions of NARA."
+   },
+   "problems": []
+  }
+ ]
+}

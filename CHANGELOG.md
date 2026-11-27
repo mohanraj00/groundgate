@@ -94,6 +94,9 @@ spec version, and receipts name the spec version they were decided under.
   Mineral Commodity Summaries 2026, 30 appellate opinions from 11 courts and 30 committee
   reports from 18 committees, with at most one report for each bill. The owner approved the
   list. No document body is downloaded yet (#748).
+- `bench/regulatory2` has its 14 sources. The owner approved the download on 2026-11-27.
+  Each part passes the source checks, and no source has a notice of the publisher. The
+  slots and the labels are not drawn yet (#750).
 
 ## 0.17.0 (2026-11-19)
 
