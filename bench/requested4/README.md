@@ -509,6 +509,27 @@ items, and no column item and no marker item. So the column rule passes only whe
 holds a column word of the field. A fair measure of the column terms needs candidates from a
 runner that can cite a column item.
 
+### Terms from calibration events (#547)
+
+The calibration events of #642 are a second source of term suggestions.
+`groundgate calibrate events suggest` writes a `term` draft for each corrected alias of one
+profile version. A draft is a suggestion only. `requested.event_terms` adds only the drafts that
+a person approves to a terms file, after the terms that the file already has. It makes no model
+call and reads no document. Each added alias records its packet, its line and the origin of its
+event. A draft that is not approved, or that names an alias that the field already has, adds
+nothing and is listed under `not_added`.
+
+```bash
+PYTHONPATH=bench uv run python -m requested.event_terms --set bench/requested4 --kind sbc \
+    --drafts drafts.json --approval approval.json --terms bench/requested4/terms-547.json \
+    --out terms-547-events.json
+```
+
+The approval file is `{"approved_on": "YYYY-MM-DD", "approver": NAME, "terms": [{"field": F,
+"alias": A}]}`. The replay above then reads the output with `--terms`. No run of this set has a
+profile or recorded events yet, so this step has no result. It needs a profile for each kind, the
+recorded decisions of an approver, and a person's approval of each term.
+
 ## The runner with column and marker items (#556)
 
 This is a development check of #554, not the 0.14 claim. Only the held-out set
