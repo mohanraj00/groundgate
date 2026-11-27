@@ -11,6 +11,7 @@ import pytest
 from test_calibrate_audit import DIGEST, PROFILE, Case
 from test_review_http import (
     CLOCK,
+    EVERY,
     ISSUERS,
     KEY,
     NO_AUDIT,
@@ -329,18 +330,27 @@ def test_audit_labels_writes_no_file_through_a_link(tmp_path: Path) -> None:
     assert sorted(p.name for p in b.audit.glob("*.tmp")) == ["labels.jsonl.tmp"]
 
 
-def test_the_page_gives_no_label_task_next_to_a_task_that_shows_a_value(tmp_path: Path) -> None:
+@pytest.mark.parametrize("policy", ["review", "audit"])
+def test_the_page_gives_no_label_task_next_to_another_task(tmp_path: Path, policy: str) -> None:
+    """A review task shows the choices 7 and 8, and an audit task of the review policy shows
+    the choice 7 on the page. The review API keeps the label task: its groups keep it apart."""
     text = "Items: 7. Items: 8.\n"
     two = [*CANDIDATES, {"id": "c2", "field": "items", "value": 8, "evidence": {"text": "8"}}]
-    with FolderStore(tmp_path / "store") as s:
-        k, _ = admit_packet(s, text, SCHEMA, two, None, "d1")  # the two values conflict
+    root = tmp_path / "store"
+    with FolderStore(root) as s:
+        given = two if policy == "review" else CANDIDATES  # two values conflict
+        k, _ = admit_packet(s, text, SCHEMA, given, None, "d1")
         ((tk, _),) = write_blind_tasks(s, k)
         assert Review(s, "ana", clock=lambda: CLOCK).docs[k].tasks == [tk]
-        written = write_tasks(s, k, NO_AUDIT).tasks  # a review task with the choices 7 and 8
-        assert [(t["mode"], len(t["choices"])) for _, t in written] == [("review", 2)]
+        written = write_tasks(s, k, NO_AUDIT if policy == "review" else EVERY).tasks
+        assert [(t["mode"], len(t["choices"])) for _, t in written] == [
+            ("review", 2) if policy == "review" else ("audit", 1)
+        ]
         review = Review(s, "ana", clock=lambda: CLOCK)
     assert review.docs[k].tasks == [written[0][0]]
-    assert review.skipped == [
-        f"packet {k}: 1 label tasks of the blind audit, because the packet has tasks "
-        "that show a value"
-    ]
+    assert review.skipped == [f"packet {k}: 1 label tasks of the blind audit, because the "
+                              "packet has other tasks"]  # fmt: skip
+    service = Service(root, ISSUERS, clock=lambda: CLOCK, id_key=KEY)
+    with serving(api.server(service), {"Authorization": claim()}) as call:
+        listed = json.loads(call("GET", "/v1/tasks")[2])
+    assert id_of(tk) in [t["task"] for t in listed["tasks"]]

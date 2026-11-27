@@ -240,8 +240,10 @@ store as **label tasks**:
   records, and `calibrate measure --audit` counts them (SPEC §4.18). The command makes the
   labels of the label tasks in `labels.jsonl` equal to the current answers. So a later
   `unsure` takes out the label of an earlier `correct`.
-- The page leaves out the label tasks of a packet that has a task that shows a value, such as
-  the choices of a review task, and its start lines say so.
+- The page leaves out the label tasks of a packet that has another task, and its start lines
+  say so. The page has no blind group, and another task can show a value, such as the choices
+  of a review task or an audit task. The review API keeps the label tasks, because its groups
+  keep the blind tasks apart (§4.20).
 - The schema of the packet must be the schema of the profile. The page and the API check a
   correction to a label task with the person's candidate only, as `audit labels` does.
 

@@ -260,6 +260,7 @@ class Review:
         *,
         clock: Callable[[], datetime] | None = None,
         only: Collection[str] | None = None,
+        page: bool = True,
     ) -> None:
         if not isinstance(reviewer, str) or not reviewer.strip():
             raise ValueError("a reviewer name must have a character that is not a space")
@@ -275,6 +276,7 @@ class Review:
         self.skipped: list[str] = []
         self.tickets: dict[str, tuple[str, str | None]] = {}  # frame ticket -> packet, value
         self.crops: dict[str, tuple[str, int, tuple[float, ...]]] = {}  # -> source, page, box
+        self._page = page  # False for the review API: it keeps each task and its groups
         self._only = None if only is None else frozenset(only)  # calibrate label: its tasks
         self._load()
 
@@ -319,7 +321,7 @@ class Review:
             if doc.held:
                 self.skipped.append(
                     f"packet {pk}: {doc.held} label tasks of the blind audit, because the packet "
-                    "has tasks that show a value"
+                    "has other tasks"
                 )
             other = len(found[pk]) - len(doc.tasks) - doc.held
             if other:
@@ -360,15 +362,12 @@ class Review:
                                  references=packet.references, layout=layout,
                                  raw_schema=packet.schema)  # fmt: skip
         tasks = sorted(k for k in set(stored) if k in by_key or k in labels)
-        # SPEC §4.18: a label task is blind. So the page does not give it next to a task of
-        # the packet that shows a value, such as a choice of a review task.
+        # SPEC §4.18: a label task is blind. The page gives no group of blind tasks, and each
+        # other task can show a value, such as the choices of a review or an audit task. So the
+        # page gives a label task only when the packet has no other task. The review API keeps
+        # each task: its groups keep the blind tasks apart (§4.20).
         label = [k for k in tasks if k not in labels and is_label_task(by_key[k][1])]
-        shown = any(
-            k in labels or k in texts or by_key[k][1].get("mode") != "audit"
-            for k in tasks
-            if k not in label
-        )
-        held = label if shown else []
+        held = label if self._page and len(label) < len(tasks) else []
         document = packet.receipt.get("document", {}).get("id")
         doc = _Doc(
             key=pk,
