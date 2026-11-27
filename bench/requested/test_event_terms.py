@@ -81,7 +81,8 @@ def test_only_approved_term_drafts_add_aliases_after_the_approved_terms() -> Non
     assert out["issue"] == 547 and base["fields"]["sbc"]["specialist_copay"]["aliases"] == [
         "Specialist"
     ]
-    events = out["events"]
+    assert len(out["events"]) == 1
+    events = out["events"][0]
     assert events["drafts_sha256"] == digest(raw) and events["profile"] == PROFILE
     assert [t["alias"] for t in events["added"]] == ["Specialist copay", "Family deductible"]
     assert events["added"][0]["origin"] == ORIGIN and events["added"][0]["line"] == 3
@@ -103,7 +104,7 @@ def test_a_known_alias_adds_nothing() -> None:
         MANIFEST, "sbc", raw, approval(("specialist_copay", "specialist VISIT")), None
     )
     assert out["fields"] == {"sbc": {}}
-    assert out["events"]["not_added"][0]["reason"] == "the field already has this alias"
+    assert out["events"][0]["not_added"][0]["reason"] == "the field already has this alias"
 
 
 @pytest.mark.parametrize(
@@ -125,6 +126,29 @@ def test_a_known_alias_adds_nothing() -> None:
 def test_bad_drafts_or_approvals_are_refused(raw: bytes, ok: bytes, message: str) -> None:
     with pytest.raises(ValueError, match=message):
         event_terms(MANIFEST, "sbc", raw, ok, None)
+
+
+def test_a_second_run_keeps_the_records_of_the_first() -> None:
+    first = event_terms(
+        MANIFEST,
+        "sbc",
+        drafts(term("specialist_copay", "Office visit")),
+        approval(("specialist_copay", "Office visit")),
+        None,
+    )
+    raw = drafts(term("deductible_family", "Family deductible"))
+    out = event_terms(
+        MANIFEST, "sbc", raw, approval(("deductible_family", "Family deductible")), first
+    )
+    assert out["fields"]["sbc"] == {
+        "specialist_copay": {"aliases": ["Office visit"]},
+        "deductible_family": {"aliases": ["Family deductible"]},
+    }
+    assert out["events"][0] == first["events"][0]
+    assert [b["added"][0]["alias"] for b in out["events"]] == ["Office visit", "Family deductible"]
+    assert out["events"][1]["drafts_sha256"] == digest(raw)
+    with pytest.raises(ValueError, match="list of batches"):
+        event_terms(MANIFEST, "sbc", raw, approval(), first | {"events": {}})
 
 
 def test_unknown_kind_and_unknown_term_member_are_refused() -> None:

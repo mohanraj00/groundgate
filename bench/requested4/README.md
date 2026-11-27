@@ -517,7 +517,8 @@ profile version. A draft is a suggestion only. `requested.event_terms` adds only
 a person approves to a terms file, after the terms that the file already has. It makes no model
 call and reads no document. Each added alias records its packet, its line and the origin of its
 event. A draft that is not approved, or that names an alias that the field already has, adds
-nothing and is listed under `not_added`.
+nothing and is listed under `not_added`. Each run appends one batch to `events`, so a terms file that
+earlier runs made keeps their records.
 
 ```bash
 PYTHONPATH=bench uv run python -m requested.event_terms --set bench/requested4 --kind sbc \

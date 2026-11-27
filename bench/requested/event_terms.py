@@ -8,7 +8,8 @@ This script makes no model call and reads no document. It takes the drafts, the 
 approval file and, if given, an approved terms file such as `terms-547.json`. It writes a terms
 file for `requested.replay_terms`: the approved aliases of the drafts are added to the aliases of
 their fields, after the aliases that the terms file already has. Each added alias records its
-draft: the packet, the line and the origin of the event. A draft that the approval file does not
+draft: the packet, the line and the origin of the event. Each run appends one batch to `events`,
+so a terms file made by earlier runs keeps their records. A draft that the approval file does not
 name is listed as not approved and adds nothing.
 
     PYTHONPATH=bench uv run python -m requested.event_terms --set bench/requested4 --kind sbc \\
@@ -104,6 +105,9 @@ def event_terms(
     out = json.loads(json.dumps(terms)) if terms is not None else {"fields": {}}
     if not isinstance(out.get("fields"), dict):
         raise ValueError("the terms file needs fields")
+    batches = out.get("events", [])
+    if not isinstance(batches, list):
+        raise ValueError("the events of a terms file must be a list of batches")
     entries = out["fields"].setdefault(kind, {})
     added, refused = [], []
     for d in found:
@@ -125,7 +129,8 @@ def event_terms(
             continue
         entries[d["field"]] = entry | {"aliases": [*entry.get("aliases", []), d["alias"]]}
         added.append(term)
-    out["events"] = {
+    # Each run adds one batch, so the provenance of earlier batches stays.
+    batch = {
         "drafts_sha256": digest(drafts_raw),
         "profile": drafts["profile"],
         "kind": kind,
@@ -133,6 +138,7 @@ def event_terms(
         "added": added,
         "not_added": refused,
     }
+    out["events"] = [*batches, batch]
     return out
 
 
@@ -154,7 +160,7 @@ def main(argv: list[str] | None = None) -> int:
     except (ValueError, KeyError) as exc:
         ap.error(str(exc))
     args.out.write_text(json.dumps(out, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
-    events = out["events"]
+    events = out["events"][-1]
     print(f"{len(events['added'])} added, {len(events['not_added'])} not added", file=sys.stderr)
     return 0
 
