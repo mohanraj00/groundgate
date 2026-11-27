@@ -971,9 +971,11 @@ class RecordLine:
     ref: str | None
     replaced: bool
     members: tuple[tuple[str, str | None], ...]  # (member, value) in the order of the schema
+    # (member, codes) of the rejected decisions of a corroborate proposer (spec 0.13, #736)
+    rejected: tuple[tuple[str, tuple[str, ...]], ...] = ()
 
     def to_dict(self) -> dict[str, Any]:
-        return {
+        out: dict[str, Any] = {
             "field": self.field,
             "record": self.record,
             "outcome": self.outcome,
@@ -983,6 +985,9 @@ class RecordLine:
             "replaced": self.replaced,
             "members": dict(self.members),
         }
+        if self.rejected:  # only with RECORD_MEMBER_REJECTED (SPEC §5)
+            out["rejected"] = {m: list(codes) for m, codes in self.rejected}
+        return out
 
 
 @dataclass(frozen=True)

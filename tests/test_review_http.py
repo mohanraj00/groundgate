@@ -426,8 +426,8 @@ def test_the_list_and_a_review_task_and_its_document(reviewing: Served) -> None:
     # the body is the task object without its packet key and without an index of the receipt:
     # each choice has its number in the task, and the source of its evidence
     assert stored.pop("packet") == k
-    assert stored["slot"].pop("decisions") == [1, 2]
-    assert [choice.pop("decision") for choice in stored["choices"]] == [1, 2]
+    assert stored["slot"].pop("decisions") == [0, 1]
+    assert [choice.pop("decision") for choice in stored["choices"]] == [0, 1]
     stored["choices"] = [
         {"choice": number, **choice, "source": "document", "ref": None}
         for number, choice in enumerate(stored["choices"], 1)
@@ -556,7 +556,7 @@ def test_an_answer_through_the_api_and_through_review_serve_give_identical_recor
     answers: list[tuple[dict[str, Any], dict[str, Any]]] = [
         # the verdict wrong gives an answer@2 record
         ({"task": tasks["revenue"], "verdict": "wrong"}, {"task": revenue, "verdict": "wrong"}),
-        ({"task": tasks["revenue"], "verdict": "choose", "decision": 1},
+        ({"task": tasks["revenue"], "verdict": "choose", "decision": 0},
          {"task": revenue, "verdict": "choose", "choice": 1}),
         ({"task": tasks["revenue"], "verdict": "correct", **u16(number),
           "codes_kept": ["SCALE_WORD"]},
@@ -598,7 +598,7 @@ def test_an_answer_through_the_api_and_through_review_serve_give_identical_recor
     # the response gives the record without its task key and without the members of the store,
     # and with the number of the choice in place of the index of the decision
     left_out = ("task", "decision", "sequence", "previous", "entry_sha256")
-    assert [r["decision"] for r in stored] == [None, 1, None, None]
+    assert [r["decision"] for r in stored] == [None, 0, None, None]
     for response, record in zip(written, stored, strict=True):
         assert record["task"] == tasks["revenue"]
         assert response == {
@@ -751,7 +751,8 @@ def test_no_response_gives_an_index_of_the_receipt(tmp_path: Path) -> None:
         candidates = [
             {"id": "c1", "field": "revenue", "value": "10", "evidence": span("Revenue was 10")},
             {"id": "c2", "field": "revenue", "value": "20", "evidence": span("Revenue was 20")},
-            {"id": "n5", "field": "tax", "value": value, "evidence": span(f"Tax was {value}")},
+            # the id gives other indexes for the two values under the digests of spec 0.13
+            {"id": "n19", "field": "tax", "value": value, "evidence": span(f"Tax was {value}")},
         ]
         root = tmp_path / value
         with FolderStore(root) as store:

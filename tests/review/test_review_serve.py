@@ -178,7 +178,7 @@ def test_the_server_refuses_each_request_of_section_9(served: Served) -> None:
         (call("POST", "/api/answer", {**good, "task": "../../logs"}), 400),
         # rule 8: an answer that its task does not permit
         (call("POST", "/api/answer", answer(tasks["revenue"], "confirm")), 400),
-        (call("POST", "/api/answer", answer(tasks["revenue"], "choose", decision=0)), 400),
+        (call("POST", "/api/answer", answer(tasks["revenue"], "choose", decision=2)), 400),
         (call("POST", "/api/answer", answer(tasks["revenue"], "choose", decision="0")), 400),
         (call("POST", "/api/answer", answer(tasks["revenue"], "accept")), 400),
         (call("POST", "/api/answer", answer(tasks["net_income"], "unsure", decision=1)), 400),
@@ -373,7 +373,7 @@ def test_the_reason_is_closed_until_the_person_asks(served: Served) -> None:
     assert [c["quote"] for c in view["choices"]] == ["4,200 thousand", "4,200 thousand"]
     assert view["view"]["blocks"][0]["marks"] == [[12, 26, "value", [1, 2]]]
     reason = json.loads(call("GET", f"/api/reason/{tasks['revenue']}")[2])
-    assert [c["code"] for c in reason["codes"]] == ["CONFLICTING_CANDIDATES", "SCALE_WORD"]
+    assert [c["code"] for c in reason["codes"]] == ["SCALE_WORD", "CONFLICTING_CANDIDATES"]
     assert [c["outcome"] for c in reason["choices"]] == ["needs_verification"] * 2
 
 

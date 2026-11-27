@@ -111,21 +111,46 @@
  ],
  "expected": {
   "receipt": {
-   "groundgate": "0.12",
+   "groundgate": "0.13",
    "document": {
     "id": null,
-    "sha256": "sha256:ca1e3ecfa3f2aa3948a7bdcaaa7aef798ca59e3624b36ba2915a7f49059ad3a9",
+    "sha256": "sha256:e9c502bae9673214fa1330a5141315b856f7fd74e941cb23c1bb64d8a394c7cc",
     "source": null,
-    "doubt_sha256": "sha256:69655e282af461ab65c541a5e5e2aa356ae97e5cb13740e0c869a410f32b1923"
+    "doubt_sha256": "sha256:9e02bc8f546f572785cf0613c29d89406010ae50f17d4ad69e660f3b6f445e24"
    },
    "references": [],
    "packs": [],
-   "schema_sha256": "sha256:25bca12b34d116af0da28877a430702b2c8794a381c7eaa3aa50b60a1a91e476",
-   "policy_sha256": "sha256:3f61c16da9f13e6af5d05500d681f4cfde6741aa2ef5303dd025f54498472383",
+   "schema_sha256": "sha256:3a8f795b9953419ea000d3509ed3daca28c88fcf7f459e0b73698c5d29d1554e",
+   "policy_sha256": "sha256:077b78927a5aabfbcf240c4456042d4d6d26e1b85ab6c28a884f3312dbc03333",
    "decisions": [
     {
+     "candidate_id": "b2",
+     "candidate_sha256": "sha256:506fbe4f09cda701cfebe90a207288ea6be9b1d471fb49709b8a7f2f5c9bb668",
+     "field": "max_dose",
+     "key": "heart failure",
+     "proposer": null,
+     "outcome": "admitted",
+     "codes": [
+      "MODEL_CLEARED"
+     ],
+     "value": "40",
+     "unit": "mg",
+     "source": "document",
+     "ref": null,
+     "url": null,
+     "evidence": {
+      "start": 148,
+      "end": 153
+     },
+     "parts": [],
+     "missing": [
+      "key"
+     ],
+     "packs": []
+    },
+    {
      "candidate_id": "b1",
-     "candidate_sha256": "sha256:cca9a2734ebf118e39aafce04c19c0c8a0764f269d9d991f50ff388a504a8294",
+     "candidate_sha256": "sha256:6cd71a66f4a46a8857fc169c0b6b02c315b55366ac7f5e42cd967b47a31d3ec9",
      "field": "adjusted_dose",
      "key": "acute myocardial infarction",
      "proposer": null,
@@ -148,55 +173,30 @@
       "key"
      ],
      "packs": []
-    },
-    {
-     "candidate_id": "b2",
-     "candidate_sha256": "sha256:f50a28e099a6659fc6e6d908b9c4ab0e7a64d1e3c689c8737940491b0d650d2b",
-     "field": "max_dose",
-     "key": "heart failure",
-     "proposer": null,
-     "outcome": "admitted",
-     "codes": [
-      "MODEL_CLEARED"
-     ],
-     "value": "40",
-     "unit": "mg",
-     "source": "document",
-     "ref": null,
-     "url": null,
-     "evidence": {
-      "start": 148,
-      "end": 153
-     },
-     "parts": [],
-     "missing": [
-      "key"
-     ],
-     "packs": []
     }
    ],
    "coverage": [],
    "judgments": [
     {
-     "candidate_sha256": "sha256:cca9a2734ebf118e39aafce04c19c0c8a0764f269d9d991f50ff388a504a8294",
-     "question": "field_match",
-     "p": 0.1
-    },
-    {
-     "candidate_sha256": "sha256:cca9a2734ebf118e39aafce04c19c0c8a0764f269d9d991f50ff388a504a8294",
-     "question": "key",
-     "answer": "acute myocardial infarction",
-     "p": 0.99
-    },
-    {
-     "candidate_sha256": "sha256:f50a28e099a6659fc6e6d908b9c4ab0e7a64d1e3c689c8737940491b0d650d2b",
+     "candidate_sha256": "sha256:506fbe4f09cda701cfebe90a207288ea6be9b1d471fb49709b8a7f2f5c9bb668",
      "question": "field_match",
      "p": 0.5
     },
     {
-     "candidate_sha256": "sha256:f50a28e099a6659fc6e6d908b9c4ab0e7a64d1e3c689c8737940491b0d650d2b",
+     "candidate_sha256": "sha256:506fbe4f09cda701cfebe90a207288ea6be9b1d471fb49709b8a7f2f5c9bb668",
      "question": "key",
      "answer": "heart failure",
+     "p": 0.99
+    },
+    {
+     "candidate_sha256": "sha256:6cd71a66f4a46a8857fc169c0b6b02c315b55366ac7f5e42cd967b47a31d3ec9",
+     "question": "field_match",
+     "p": 0.1
+    },
+    {
+     "candidate_sha256": "sha256:6cd71a66f4a46a8857fc169c0b6b02c315b55366ac7f5e42cd967b47a31d3ec9",
+     "question": "key",
+     "answer": "acute myocardial infarction",
      "p": 0.99
     }
    ],
@@ -205,7 +205,7 @@
     "needs_verification": 1,
     "rejected": 0
    },
-   "receipt_sha256": "sha256:ccc7cf78dd4634d8d497adc5526749a7c52a0fde9345cb49ba3cbd36baacb0c2"
+   "receipt_sha256": "sha256:3c2a0409636ebee872f649cc7426dfbf1bcc3b40cb749feffc7ac456a082c6c0"
   }
  }
 }
