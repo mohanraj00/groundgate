@@ -15,6 +15,9 @@ spec version, and receipts name the spec version they were decided under.
 - `bench/requested/proposers.py` gives the admitted error rate for each proposer and for
   agreement, with no mix of the groups. A run projection now keeps the `proposer` of each
   final decision. No published number changes; the measure needs a new run (#511).
+- `bench/requested/event_terms.py` adds the approved `term` drafts of the calibration events
+  to a terms file for the replay of #547. It makes no model call. Each added alias records its
+  event (#547).
 - `bench/score.py --requested --check` passes on `bench/requested` without the local
   diagnostics export. It rescores the primary part, keeps the committed diagnostics, and
   says that it did not rescore them. With `--diagnostics`, it checks all of it (#381).
@@ -59,6 +62,11 @@ spec version, and receipts name the spec version they were decided under.
   the check. A plain text input does not change. The spec version and the conformance vectors
   stay the same. The runner and its structure reader are not part of the specification
   ([SPEC §2.4](SPEC.md#24-policy)), and `admit` decides the same candidates as before.
+- `calibrate promotion` reads one report of `calibrate measure` and its draft profile. It
+  writes the content manifest of a profile promotion of entelos v0.7.0, with the items
+  `measure` and `profile`, and the `entelos.measure/1` summary, with each bound in basis
+  points, rounded up. It refuses a route that is not measured. The optional CI job `entelos`
+  checks one accepted and one refused promotion on the release (#747).
 - Spec 0.13. If the gate rejects the value of a `corroborate` proposer for a member, the
   record goes to review with the new code `RECORD_MEMBER_REJECTED`. The record line names
   the codes in `rejected`. A cell with no candidate stays null. A decision that the rule

@@ -303,10 +303,13 @@ jobs:
           cache: false
       - uses: astral-sh/setup-uv@1db35dd8eee11c5894872e0b383ae6c406cf738d # v10.4.0
       - run: uv sync --python 3.12
-      - name: Test the decision events of the release
+      - name: Test the decision events and the profile promotion of the release
         env:
           GROUNDGATE_ENTELOS: ${{ github.workspace }}/_entelos
-        run: uv run pytest tests/test_calibration_events.py::test_entelos_decision_events -rs
+        run: >-
+          uv run pytest -rs
+          tests/test_calibration_events.py::test_entelos_decision_events
+          tests/test_calibration_events.py::test_entelos_profile_promotion
   # The required check. Add each project job to needs. A skipped job passes. A failed or cancelled job fails.
   ci-ok:
     needs: [changes, check, lint, test, package, langextract]

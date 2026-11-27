@@ -10,6 +10,8 @@
         --calibration W [W2] --out J            # recorded judgments (spec 0.4 and later)
     groundgate calibrate measure --profile P --gold G --split S --out DIR  # a profile on a gold set
     groundgate calibrate audit pick --audit A [--profile P]  # the blind audit sample (SPEC §4.18)
+    groundgate calibrate promotion --report R --profile P --collection C --out OUT  # for an
+                                                # outside decision on the profile version
 
 D holds <doc>.txt files, C holds <doc>.json files with each document's candidates in the
 candidate format of the installed groundgate's spec, and S is a schema of that spec. W keeps
@@ -34,7 +36,7 @@ from typing import Any
 
 from groundgate.canonical import SPEC_VERSION
 
-from . import audit, events, judges, label, measure
+from . import audit, events, judges, label, measure, promotion
 from . import questions as q
 from .stats import CEILINGS, needed
 
@@ -613,6 +615,7 @@ def main(argv: list[str] | None = None, prog: str = "groundgate calibrate") -> N
     measure.add_parser(sub)
     audit.add_parser(sub)
     events.add_parser(sub)
+    promotion.add_parser(sub)
     args = ap.parse_args(argv)
     for option, name in (("--reviewer", "reviewer"), ("--set", "set_name")):
         value = getattr(args, name, None)
@@ -636,6 +639,9 @@ def main(argv: list[str] | None = None, prog: str = "groundgate calibrate") -> N
         return
     if args.cmd == "events":
         events.main(args)
+        return
+    if args.cmd == "promotion":
+        promotion.main(args)
         return
     w = Work(args.work)
     if args.cmd == "sample":
