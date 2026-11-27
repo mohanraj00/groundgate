@@ -21,7 +21,8 @@
      "title": "US v. Amado",
      "date_issued": "2025-10-17",
      "pages": 24,
-     "granules": 1
+     "granules": 1,
+     "entry": ""
     },
     {
      "package": "USCOURTS-ca1-24-01330",
@@ -31,7 +32,8 @@
      "title": "Phimmady v. Bondi",
      "date_issued": "2025-02-10",
      "pages": 17,
-     "granules": 1
+     "granules": 1,
+     "entry": ""
     },
     {
      "package": "USCOURTS-ca2-22-02166",
@@ -41,17 +43,19 @@
      "title": "In Re: Fairfield Sentry Limited",
      "date_issued": "2025-08-05",
      "pages": 51,
-     "granules": 1
+     "granules": 1,
+     "entry": "3646899"
     },
     {
-     "package": "USCOURTS-ca2-22-02510",
+     "package": "USCOURTS-ca2-23-00903",
      "court": "ca2",
      "court_type": "Appellate",
-     "case": "22-02510",
-     "title": "In Re: Fairfield Sentry Limited",
-     "date_issued": "2025-08-05",
-     "pages": 51,
-     "granules": 1
+     "case": "23-00903",
+     "title": "Uviles v. City of New York",
+     "date_issued": "2025-02-26",
+     "pages": 20,
+     "granules": 1,
+     "entry": "3641293"
     },
     {
      "package": "USCOURTS-ca3-24-01724",
@@ -61,7 +65,8 @@
      "title": "Isaac Carranza-Cortez, et al v. Attorney General United States of America",
      "date_issued": "2025-01-22",
      "pages": 17,
-     "granules": 1
+     "granules": 1,
+     "entry": ""
     },
     {
      "package": "USCOURTS-ca3-23-02284",
@@ -71,7 +76,8 @@
      "title": "Secretary United States Department of Labor v. Nursing Home Care Management Inc., et al",
      "date_issued": "2025-01-31",
      "pages": 24,
-     "granules": 1
+     "granules": 1,
+     "entry": ""
     },
     {
      "package": "USCOURTS-ca3-23-02773",
@@ -81,7 +87,8 @@
      "title": "USA v. Rufus Williams",
      "date_issued": "2025-05-08",
      "pages": 12,
-     "granules": 1
+     "granules": 1,
+     "entry": ""
     },
     {
      "package": "USCOURTS-ca4-24-04340",
@@ -91,7 +98,8 @@
      "title": "US v. Jerry Stull",
      "date_issued": "2025-08-08",
      "pages": 6,
-     "granules": 1
+     "granules": 1,
+     "entry": "1001819687"
     },
     {
      "package": "USCOURTS-ca4-23-04713",
@@ -101,7 +109,8 @@
      "title": "US v. Kevin Jones",
      "date_issued": "2025-10-24",
      "pages": 6,
-     "granules": 1
+     "granules": 1,
+     "entry": "1001865969"
     },
     {
      "package": "USCOURTS-ca4-22-02192",
@@ -111,7 +120,8 @@
      "title": "Matthew Linger v. Commissioner of Social Security",
      "date_issued": "2025-01-07",
      "pages": 15,
-     "granules": 1
+     "granules": 1,
+     "entry": "1001698274"
     },
     {
      "package": "USCOURTS-ca5-24-20329",
@@ -121,7 +131,8 @@
      "title": "Penthol v. Vertex Energy",
      "date_issued": "2025-08-14",
      "pages": 19,
-     "granules": 1
+     "granules": 1,
+     "entry": ""
     },
     {
      "package": "USCOURTS-ca5-24-40662",
@@ -131,7 +142,8 @@
      "title": "Frosch v. Alsobrook",
      "date_issued": "2025-06-03",
      "pages": 8,
-     "granules": 1
+     "granules": 1,
+     "entry": ""
     },
     {
      "package": "USCOURTS-ca5-24-10439",
@@ -141,7 +153,8 @@
      "title": "Triumphant Gold v. Matloff",
      "date_issued": "2025-10-08",
      "pages": 48,
-     "granules": 1
+     "granules": 1,
+     "entry": ""
     },
     {
      "package": "USCOURTS-ca6-23-05673",
@@ -151,7 +164,8 @@
      "title": "Percy Brown v. Louisville-Jefferson Co, KY, et al",
      "date_issued": "2025-04-30",
      "pages": 17,
-     "granules": 1
+     "granules": 1,
+     "entry": ""
     },
     {
      "package": "USCOURTS-ca6-24-01848",
@@ -161,7 +175,8 @@
      "title": "Tina McPherson v. Suburban Ann Arbor, LLC",
      "date_issued": "2025-04-21",
      "pages": 9,
-     "granules": 1
+     "granules": 1,
+     "entry": ""
     },
     {
      "package": "USCOURTS-ca6-24-03726",
@@ -171,7 +186,8 @@
      "title": "Cincom Systems Inc v. LabWare, Inc.",
      "date_issued": "2025-09-26",
      "pages": 20,
-     "granules": 1
+     "granules": 1,
+     "entry": ""
     },
     {
      "package": "USCOURTS-ca7-23-02447",
@@ -181,7 +197,8 @@
      "title": "Linda Thompson v. Army and Air Force Exchange Service",
      "date_issued": "2025-01-08",
      "pages": 11,
-     "granules": 1
+     "granules": 1,
+     "entry": "7427734"
     },
     {
      "package": "USCOURTS-ca7-24-01570",
@@ -191,7 +208,8 @@
      "title": "Cheryl Lane, et al v. Stericycle, Inc.",
      "date_issued": "2025-12-23",
      "pages": 13,
-     "granules": 1
+     "granules": 1,
+     "entry": "7494652"
     },
     {
      "package": "USCOURTS-ca7-24-03039",
@@ -201,7 +219,8 @@
      "title": "USA v. Austin Koeckeritz",
      "date_issued": "2025-11-10",
      "pages": 6,
-     "granules": 1
+     "granules": 1,
+     "entry": "7486039"
     },
     {
      "package": "USCOURTS-ca9-24-1641",
@@ -211,7 +230,8 @@
      "title": "USA V. JUSTUS",
      "date_issued": "2025-12-19",
      "pages": 18,
-     "granules": 1
+     "granules": 1,
+     "entry": ""
     },
     {
      "package": "USCOURTS-ca9-23-15999",
@@ -221,7 +241,8 @@
      "title": "Katherine Chabolla v. ClassPass, Inc., et al",
      "date_issued": "2025-02-27",
      "pages": 50,
-     "granules": 1
+     "granules": 1,
+     "entry": "12922493"
     },
     {
      "package": "USCOURTS-ca10-24-01215",
@@ -231,7 +252,8 @@
      "title": "United States v. Clark",
      "date_issued": "2025-08-01",
      "pages": 18,
-     "granules": 1
+     "granules": 1,
+     "entry": "11202079"
     },
     {
      "package": "USCOURTS-ca10-24-06117",
@@ -241,7 +263,8 @@
      "title": "Davenport v. Pata, et al",
      "date_issued": "2025-06-20",
      "pages": 15,
-     "granules": 1
+     "granules": 1,
+     "entry": "11190675"
     },
     {
      "package": "USCOURTS-ca10-24-02124",
@@ -251,7 +274,8 @@
      "title": "Chavez v. State of New Mexico",
      "date_issued": "2025-01-24",
      "pages": 8,
-     "granules": 1
+     "granules": 1,
+     "entry": "11153166"
     },
     {
      "package": "USCOURTS-ca11-23-10887",
@@ -261,7 +285,8 @@
      "title": "Robert Kleckley v. State of Florida",
      "date_issued": "2025-07-01",
      "pages": 15,
-     "granules": 1
+     "granules": 1,
+     "entry": ""
     },
     {
      "package": "USCOURTS-ca11-24-13668",
@@ -271,7 +296,8 @@
      "title": "Jorge Fajardo Zumba v. U.S. Attorney General",
      "date_issued": "2025-12-17",
      "pages": 6,
-     "granules": 1
+     "granules": 1,
+     "entry": ""
     },
     {
      "package": "USCOURTS-ca11-23-11302",
@@ -281,7 +307,8 @@
      "title": "Aishly Foy v. Sheriff of Jefferson County, Alabama, et al",
      "date_issued": "2025-03-03",
      "pages": 18,
-     "granules": 1
+     "granules": 1,
+     "entry": ""
     },
     {
      "package": "USCOURTS-ca13-23-01663",
@@ -291,7 +318,8 @@
      "title": "Stupp Corporation v. US",
      "date_issued": "2025-04-23",
      "pages": 10,
-     "granules": 1
+     "granules": 1,
+     "entry": "1084449"
     },
     {
      "package": "USCOURTS-ca13-24-01997",
@@ -301,7 +329,8 @@
      "title": "Aljindi v. US",
      "date_issued": "2025-02-10",
      "pages": 12,
-     "granules": 1
+     "granules": 1,
+     "entry": "1068113"
     },
     {
      "package": "USCOURTS-ca13-24-01035",
@@ -311,13 +340,22 @@
      "title": "In re: Shafovaloff",
      "date_issued": "2025-06-27",
      "pages": 7,
-     "granules": 1
+     "granules": 1,
+     "entry": "1098909"
     }
    ],
    "rejected": [
     {
      "package": "USCOURTS-ca2-22-03094",
      "reason": "2 documents in the package, not 1"
+    },
+    {
+     "package": "USCOURTS-ca2-22-02510",
+     "reason": "the same document as USCOURTS-ca2-22-02166"
+    },
+    {
+     "package": "USCOURTS-ca2-22-02381",
+     "reason": "the same document as USCOURTS-ca2-22-02166"
     },
     {
      "package": "USCOURTS-ca4-25-06580",

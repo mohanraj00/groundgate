@@ -98,7 +98,45 @@ def opinion(root: ET.Element) -> Row:
         "date_issued": text(root, "m:originInfo/m:dateIssued"),
         "pages": pages(root),
         "granules": len(granules),
+        "entry": entry(granules),
     }
+
+
+def entry(granules: list[ET.Element]) -> str:
+    """The docket entry number of the opinion file, as the granule subtitle states it."""
+    sub = text(granules[0], "m:titleInfo/m:subTitle") if granules else ""
+    m = re.search(r"\[(\d+)\]", sub)
+    return m.group(1) if m else ""
+
+
+class Twins:
+    """One document can be filed in two packages: two dockets, or two report numbers.
+
+    A package is a twin of an earlier member if it has the same docket entry in the same court,
+    or the same title, date of issue and page count. Only the first member stays.
+    """
+
+    def __init__(self) -> None:
+        self.first: dict[tuple[str, ...], str] = {}
+
+    @staticmethod
+    def keys(m: Row) -> list[tuple[str, ...]]:
+        out: list[tuple[str, ...]] = [
+            ("same", m["title"].casefold(), m["date_issued"], str(m["pages"]))
+        ]
+        if m.get("entry"):
+            out.append(("entry", m["court"], m["entry"]))
+        return out
+
+    def problem(self, m: Row) -> str | None:
+        for key in self.keys(m):
+            if key in self.first:
+                return f"the same document as {self.first[key]}"
+        return None
+
+    def add(self, package: str, m: Row) -> None:
+        for key in self.keys(m):
+            self.first.setdefault(key, package)
 
 
 def opinion_problem(m: Row) -> str | None:
@@ -151,6 +189,7 @@ def opinions(meta: Metadata, named: set[str], rejected: list[Row]) -> list[Row]:
     queue = {c: iter(sorted(lists[c], key=lambda p: order("opinion", p))) for c in COURTS}
     seen = dict.fromkeys(COURTS, 0)
     got: dict[str, list[Row]] = {c: [] for c in COURTS}
+    twins = Twins()
 
     def one_more(court: str) -> bool:
         for package in queue[court]:
@@ -158,10 +197,11 @@ def opinions(meta: Metadata, named: set[str], rejected: list[Row]) -> list[Row]:
                 return False
             seen[court] += 1
             m = opinion(meta.mods(package))
-            why = opinion_problem(m)
+            why = opinion_problem(m) or twins.problem(m)
             if why:
                 rejected.append({"package": package, "reason": why})
                 continue
+            twins.add(package, m)
             got[court].append({"package": package, **m})
             return True
         return False
@@ -186,6 +226,7 @@ def opinions(meta: Metadata, named: set[str], rejected: list[Row]) -> list[Row]:
 def reports(meta: Metadata, named: set[str], rejected: list[Row]) -> list[Row]:
     pkgs = [p for p in meta.packages(f"CRPT_{YEAR}") if p not in named]
     out = []
+    twins = Twins()
     for tag in ("hrpt", "srpt"):
         cands = sorted((p for p in pkgs if tag in p), key=lambda p: order("report", p))
         got: list[Row] = []
@@ -198,7 +239,7 @@ def reports(meta: Metadata, named: set[str], rejected: list[Row]) -> list[Row]:
                 if any(g["package"] == package for g in got):
                     continue
                 m = report(meta.mods(package))
-                why = report_problem(m)
+                why = report_problem(m) or twins.problem(m)
                 if why:
                     if one_each:
                         rejected.append({"package": package, "reason": why})
@@ -206,6 +247,7 @@ def reports(meta: Metadata, named: set[str], rejected: list[Row]) -> list[Row]:
                 if one_each and m["committee"] in used:
                     continue
                 used.add(m["committee"])
+                twins.add(package, m)
                 got.append({"package": package, **m})
         out += got
     return out
@@ -215,6 +257,8 @@ def named_in_bench() -> set[str]:
     pat = re.compile(r"(?:USCOURTS-[a-z0-9]+-[0-9-]+|CRPT-[0-9]+[hs]rpt[0-9]+)")
     found: set[str] = set()
     for f in (ROOT / "bench").rglob("*"):
+        if f.is_relative_to(HERE):  # this set names its own members
+            continue
         if f.is_file() and f.suffix in (".json", ".md", ".py", ".jsonl", ".txt"):
             found |= set(pat.findall(f.read_text(errors="ignore")))
     return found

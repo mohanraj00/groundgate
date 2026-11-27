@@ -139,7 +139,7 @@ rule before the choice, and I never read a body to choose.
 ## The member choice
 
 `select.py` chose the members on 2026-11-27 from the govinfo sitemaps and the MODS record of
-each package. It read 555 metadata records and no document body. The order of the candidates
+each package. The cache holds 13 sitemaps and 1,012 MODS records, and no document body. The order of the candidates
 in each group is the SHA-256 of a fixed tag, a line feed and the package id.
 `members.json` keeps each member and each rejected candidate with its reason.
 
@@ -149,6 +149,10 @@ Kind 2, opinions of 2025:
   sitemap for the DC Circuit.
 - A member is from an appellate court, has 1 document in its package, has 6 to 60 pages and
   was issued in 2025.
+- One opinion can be filed in two or more dockets. A package with the same docket entry
+  number in the same court as an earlier member, or the same title, date of issue and page
+  count, is out. In Re: Fairfield Sentry Limited has 3 packages in the Second Circuit, and the
+  set keeps the first.
 - The rule takes 2 members from each court first. Then it takes one more at a time from the
   courts with the most 2025 packages, until there are 30. It examines 40 candidates of a court
   at most.
@@ -162,9 +166,14 @@ Kind 3, reports of 2025:
   has 8 to 150 pages. Reports of the House Rules Committee and the Senate Rules Committee are
   out, and so are titles that are not about one bill (activity reports, allocations,
   oversight plans, conference reports).
+- The same twin rule applies: the same title, date of issue and page count is out. No report
+  of the list has a twin.
 - The rule takes one report from each committee first, then a second pass, until there are 15
   for each chamber.
-- The result: 15 House and 15 Senate reports from 18 committees, 8 to 132 pages.
+- The result: 15 House and 15 Senate reports from 18 committees, 8 to 132 pages. Two members
+  are on the same bill, HR 3944 (military construction appropriations): the House report
+  119hrpt161 and the Senate report 119srpt43. They are two texts of two committees, with
+  different dates and page counts, so the rule keeps both.
 
 Kind 1, patents: the USPTO bulk data now needs an API key of the USPTO Open Data Portal. The
 old bulk data site did not answer on 2026-11-27. I made no request with a key.
