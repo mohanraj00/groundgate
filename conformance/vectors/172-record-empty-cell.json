@@ -1,0 +1,178 @@
+{
+ "name": "172-record-empty-cell",
+ "description": "The toll cell of row 4 is empty, so neither the model nor the structure reader gives a candidate for it. No candidate is rejected, and the record is admitted with a null toll, as in spec 0.12 (spec 0.13, #736).",
+ "document": "Table 1. Tolls\nLock Toll\nSnell $12.50\nEisenhower n/a\nIroquois free\nBeauharnois\n",
+ "schema": {
+  "fields": {
+   "tolls": {
+    "type": "record",
+    "members": {
+     "lock": {
+      "type": "string",
+      "required": true
+     },
+     "toll": {
+      "type": "number",
+      "unit": "USD"
+     }
+    }
+   }
+  }
+ },
+ "policy": {
+  "proposers": {
+   "structure": "corroborate"
+  }
+ },
+ "candidates": [
+  {
+   "id": "m1a",
+   "field": "tolls.lock",
+   "value": "Snell",
+   "evidence": [
+    {
+     "start": 25,
+     "end": 30,
+     "text": "Snell"
+    }
+   ],
+   "record": "1",
+   "proposer": "model"
+  },
+  {
+   "id": "s1a",
+   "field": "tolls.lock",
+   "value": "Snell",
+   "evidence": [
+    {
+     "start": 25,
+     "end": 30,
+     "text": "Snell"
+    }
+   ],
+   "record": "1",
+   "proposer": "structure"
+  },
+  {
+   "id": "m1b",
+   "field": "tolls.toll",
+   "value": "12.50",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 31,
+     "end": 37,
+     "text": "$12.50"
+    }
+   ],
+   "record": "1",
+   "proposer": "model"
+  },
+  {
+   "id": "s1b",
+   "field": "tolls.toll",
+   "value": "12.50",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 31,
+     "end": 37,
+     "text": "$12.50"
+    }
+   ],
+   "record": "1",
+   "proposer": "structure"
+  },
+  {
+   "id": "m4a",
+   "field": "tolls.lock",
+   "value": "Beauharnois",
+   "evidence": [
+    {
+     "start": 67,
+     "end": 78,
+     "text": "Beauharnois"
+    }
+   ],
+   "record": "4",
+   "proposer": "model"
+  },
+  {
+   "id": "s4a",
+   "field": "tolls.lock",
+   "value": "Beauharnois",
+   "evidence": [
+    {
+     "start": 67,
+     "end": 78,
+     "text": "Beauharnois"
+    }
+   ],
+   "record": "4",
+   "proposer": "structure"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "proposer": "model"
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "proposer": "structure"
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "proposer": "model"
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "proposer": "structure"
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "proposer": "model"
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "proposer": "structure"
+   }
+  ],
+  "coverage": [],
+  "records": [
+   {
+    "field": "tolls",
+    "record": "1",
+    "outcome": "admitted",
+    "codes": [],
+    "members": {
+     "lock": "Snell",
+     "toll": "12.5"
+    },
+    "source": "document",
+    "ref": null,
+    "replaced": false
+   },
+   {
+    "field": "tolls",
+    "record": "4",
+    "outcome": "admitted",
+    "codes": [],
+    "members": {
+     "lock": "Beauharnois",
+     "toll": null
+    },
+    "source": "document",
+    "ref": null,
+    "replaced": false
+   }
+  ]
+ }
+}

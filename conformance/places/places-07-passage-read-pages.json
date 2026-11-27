@@ -130,7 +130,7 @@
    {
     "outcome": "admitted",
     "codes": [],
-    "passage_sha256": "sha256:33e8a061f55ddb4c6d4bc18b6f7380c6ee7f3d01b298b11430d1d3e7bb99fa53",
+    "passage_sha256": "sha256:b7e71ff43d7e42ff92e9d7ca8a6055d20c341dafa275debdbee51b3d7adb7c1f",
     "locator": {
      "page": 1,
      "box": [
@@ -144,7 +144,7 @@
    {
     "outcome": "admitted",
     "codes": [],
-    "passage_sha256": "sha256:2f7048fed39deda08734cd26227d05f1b5162aa351e9139961a4f6807d6aa8b1",
+    "passage_sha256": "sha256:79b95597381d231a82ab639619834d453681660750f5e708d6a02e2295ea8952",
     "locator": {
      "page": 3,
      "box": [
@@ -156,6 +156,6 @@
     }
    }
   ],
-  "places_sha256": "sha256:2dc039bd00eb2bcf47bcb91198be4a435fea5f1cdd08b1c85961c30b07803c51"
+  "places_sha256": "sha256:89a607d942479dfa1ae91a3dc1c4908f8ad20ed6c3f1292a57583d0cc6ffb767"
  }
 }

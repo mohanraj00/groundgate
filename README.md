@@ -332,8 +332,8 @@ contract. [conformance/README.md](conformance/README.md) describes each kind, an
 ## Receipts
 
 ```json
-{"groundgate": "0.12",
- "document": {"id": "irs-p590a-2025-pages-1-2", "sha256": "sha256:9c0bb3f8d04b...", "source": null,
+{"groundgate": "0.13",
+ "document": {"id": "irs-p590a-2025-pages-1-2", "sha256": "sha256:1ad1100eb23a...", "source": null,
               "doubt_sha256": null},
  "references": [],
  "packs": [],

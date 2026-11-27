@@ -159,8 +159,8 @@ print(stored["receipt_sha256"][:23])
 ```
 
 ```text
-0.12 lease-0417 {'admitted': 1, 'needs_verification': 2, 'rejected': 1}
-sha256:614289c6007c3bbb
+0.13 lease-0417 {'admitted': 1, 'needs_verification': 2, 'rejected': 1}
+sha256:3c2e4e61906583f9
 ```
 
 A receipt holds digests of its inputs, not the inputs. To verify it later, you need the same
@@ -200,14 +200,16 @@ The digests in the output are cut to 16 digits:
 False
 coverage differs from the re-derived receipt
 summary differs from the re-derived receipt
-decision for candidate sha256:4e69c2dee90ad28f... differs
-decision for candidate sha256:dc1fa1fede333704... differs
+decision for candidate sha256:5f56b9da70c6a816... differs
+decision for candidate sha256:771957679c3e5052... differs
+decision for candidate sha256:a43ec953a184740f... differs
+decision for candidate sha256:e4fc65c1226666e9... differs
 ```
 
 The changed rent is not in the text, so it is rejected. The required field `monthly_rent` then
 has no fact, so the coverage and the summary differ too. Decisions are sorted by the digest of
 their candidate. A changed candidate gets a new digest and can move other decisions. Here it
-moves one other decision, so two decisions differ.
+moves three other decisions, so four decisions differ.
 
 `verify` does not say which input changed. It says which part of the receipt differs. To find
 the changed input, compare the digest of each stored input with the receipt. For a candidate,
@@ -231,7 +233,7 @@ print(check.problems)
 
 ```text
 False
-('receipt was decided under spec 0.4; this groundgate implements 0.12. groundgate 0.4.0 implements spec 0.4: verify the receipt with that release (SPEC 8.6)',)
+('receipt was decided under spec 0.4; this groundgate implements 0.13. groundgate 0.4.0 implements spec 0.4: verify the receipt with that release (SPEC 8.6)',)
 ```
 
 `verify` checks nothing more, and the problem names the release that verifies the receipt. Run
@@ -287,7 +289,7 @@ print(packet[:23])
 ```
 
 ```text
-sha256:2455e4e6f090da7f
+sha256:84bb070e6eb2bdd6
 ```
 
 The same inputs give the same key. Later, `load_packet` gets each input back, and `verify`

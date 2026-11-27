@@ -6,7 +6,7 @@
  },
  "draft_profile": {
   "id": "rates-test",
-  "sha256": "sha256:4524e53eb10972f812fcda9ce9f37fbb56fc1cd86280bae70001b57a1925a7d4",
+  "sha256": "sha256:56c3ff9c7659193c241eb979f6d0590d0422a6bdc7abf44dde88db60403a5e40",
   "version": "1.0.1"
  },
  "fields": {
@@ -108,10 +108,10 @@
  },
  "profile": {
   "id": "rates-test",
-  "sha256": "sha256:9bf0a10d5ab7dafa37d40d68d1314d9032b6b0a0039ad186f7dfdf322c919021",
+  "sha256": "sha256:fc0d1aeb8fd0d6cfaaf48373c3a89896d9ff3cbc8d5e700e4093a9abce130899",
   "version": "1.0.0"
  },
- "spec": "0.12",
+ "spec": "0.13",
  "split_sha256": "sha256:524f2ad03c39ffd7f48a11d96da41a9a3d567de30a7ad0b2f61a9d883c573460",
  "target": "0.7"
 }

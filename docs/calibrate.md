@@ -315,7 +315,7 @@ With more than 100 different `p`, it rounds each `p` up to two decimal places fi
   and then replace your profile with it if you agree.
 
 ```json
-{"groundgate_calibration_report": 1, "spec": "0.12", "date": "2026-11-13",
+{"groundgate_calibration_report": 1, "spec": "0.13", "date": "2026-11-13",
  "profile": {"id": "rates-test", "version": "1.0.0", "sha256": "sha256:..."},
  "gold_sha256": "sha256:...", "split_sha256": "sha256:...",
  "documents": {"calibration": 4, "test": 6}, "target": "0.7",

@@ -1,0 +1,235 @@
+{
+ "name": "receipt-12-record-rejected",
+ "description": "A corroborate proposer gives `n/a` for the toll of a record (spec 0.13, #736). The gate rejects it, so the record line has `RECORD_MEMBER_REJECTED` and the member `rejected`, and the lock of the record goes to review. The other record line has no member `rejected`.",
+ "document": "Tolls\nSnell $12.50\nEisenhower n/a\n",
+ "schema": {
+  "fields": {
+   "tolls": {
+    "type": "record",
+    "members": {
+     "lock": {
+      "type": "string",
+      "required": true
+     },
+     "toll": {
+      "unit": "USD"
+     }
+    }
+   }
+  }
+ },
+ "policy": {
+  "proposers": {
+   "structure": "corroborate"
+  }
+ },
+ "candidates": [
+  {
+   "id": "t1",
+   "field": "tolls.lock",
+   "value": "Snell",
+   "record": "1",
+   "evidence": [
+    {
+     "start": 6,
+     "end": 11,
+     "text": "Snell"
+    }
+   ]
+  },
+  {
+   "id": "t2",
+   "field": "tolls.toll",
+   "value": "12.50",
+   "unit": "USD",
+   "record": "1",
+   "evidence": [
+    {
+     "start": 12,
+     "end": 18,
+     "text": "$12.50"
+    }
+   ]
+  },
+  {
+   "id": "t3",
+   "field": "tolls.lock",
+   "value": "Eisenhower",
+   "record": "2",
+   "evidence": [
+    {
+     "start": 19,
+     "end": 29,
+     "text": "Eisenhower"
+    }
+   ]
+  },
+  {
+   "id": "t4",
+   "field": "tolls.toll",
+   "value": "n/a",
+   "unit": "USD",
+   "record": "2",
+   "proposer": "structure",
+   "evidence": [
+    {
+     "start": 30,
+     "end": 33,
+     "text": "n/a"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "receipt": {
+   "groundgate": "0.13",
+   "document": {
+    "id": null,
+    "sha256": "sha256:df9bc584664983db7d92c784e113ee9b06d2ac54f7484de31837e30ccdc8929b",
+    "source": null,
+    "doubt_sha256": null
+   },
+   "references": [],
+   "packs": [],
+   "schema_sha256": "sha256:bd617accbec81d419de8c16523174790f4891b22ab0ffc6de36aeeb2b664f4d5",
+   "policy_sha256": "sha256:81105c8f705d7c4bc883de1e9e97273af4e0a4bf439d3ec31b752332ad3d2c82",
+   "decisions": [
+    {
+     "candidate_id": "t2",
+     "candidate_sha256": "sha256:1ce727d9e3d165c5c29e2cf50efdb61e6fb7a4af0a51c3ae332089aac9104174",
+     "field": "tolls.toll",
+     "key": null,
+     "proposer": null,
+     "outcome": "admitted",
+     "codes": [],
+     "value": "12.5",
+     "unit": "USD",
+     "source": "document",
+     "ref": null,
+     "url": null,
+     "evidence": {
+      "start": 12,
+      "end": 18
+     },
+     "parts": [],
+     "missing": [],
+     "packs": [],
+     "record": "1"
+    },
+    {
+     "candidate_id": "t3",
+     "candidate_sha256": "sha256:bdf95472b5e0285fe0fcb30553d9b3dab45746758697d1dd3a8597e9d10623c0",
+     "field": "tolls.lock",
+     "key": null,
+     "proposer": null,
+     "outcome": "needs_verification",
+     "codes": [
+      "RECORD_NOT_ADMITTED"
+     ],
+     "value": "Eisenhower",
+     "unit": null,
+     "source": "document",
+     "ref": null,
+     "url": null,
+     "evidence": {
+      "start": 19,
+      "end": 29
+     },
+     "parts": [],
+     "missing": [],
+     "packs": [],
+     "record": "2"
+    },
+    {
+     "candidate_id": "t4",
+     "candidate_sha256": "sha256:c912e1a4a27585bab168169a3e4861e0ef5da0e4b1f27480a76e4c7fbc53970f",
+     "field": "tolls.toll",
+     "key": null,
+     "proposer": "structure",
+     "outcome": "rejected",
+     "codes": [
+      "NULL_STRING_LITERAL"
+     ],
+     "value": null,
+     "unit": "USD",
+     "source": "document",
+     "ref": null,
+     "url": null,
+     "evidence": {
+      "start": 30,
+      "end": 33
+     },
+     "parts": [],
+     "missing": [],
+     "packs": [],
+     "record": "2"
+    },
+    {
+     "candidate_id": "t1",
+     "candidate_sha256": "sha256:f5de52975abee9a8b983e4c6912bb58db89dd658761d54324c1ef473c6983d26",
+     "field": "tolls.lock",
+     "key": null,
+     "proposer": null,
+     "outcome": "admitted",
+     "codes": [],
+     "value": "Snell",
+     "unit": null,
+     "source": "document",
+     "ref": null,
+     "url": null,
+     "evidence": {
+      "start": 6,
+      "end": 11
+     },
+     "parts": [],
+     "missing": [],
+     "packs": [],
+     "record": "1"
+    }
+   ],
+   "coverage": [],
+   "judgments": [],
+   "records": [
+    {
+     "field": "tolls",
+     "record": "1",
+     "outcome": "admitted",
+     "codes": [],
+     "source": "document",
+     "ref": null,
+     "replaced": false,
+     "members": {
+      "lock": "Snell",
+      "toll": "12.5"
+     }
+    },
+    {
+     "field": "tolls",
+     "record": "2",
+     "outcome": "needs_verification",
+     "codes": [
+      "RECORD_MEMBER_REJECTED"
+     ],
+     "source": "document",
+     "ref": null,
+     "replaced": false,
+     "members": {
+      "lock": "Eisenhower",
+      "toll": null
+     },
+     "rejected": {
+      "toll": [
+       "NULL_STRING_LITERAL"
+      ]
+     }
+    }
+   ],
+   "summary": {
+    "admitted": 2,
+    "needs_verification": 1,
+    "rejected": 1
+   },
+   "receipt_sha256": "sha256:858bb098ade6a0c22004061663e2b9b5ff79e76f45ce4b4d2a57dfc8ad90847b"
+  }
+ }
+}

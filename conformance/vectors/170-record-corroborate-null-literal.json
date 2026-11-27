@@ -1,0 +1,211 @@
+{
+ "name": "170-record-corroborate-null-literal",
+ "description": "The structure reader is a corroborate proposer. It gives each cell with text, and the model gives the cells that it reads. In row 2 the toll cell has the text n/a. Step 3 rejects the structure candidate with NULL_STRING_LITERAL, and the model gives no toll. The record gets RECORD_MEMBER_REJECTED and goes to review, and its member rejected gives the code. Each value of row 2 that passed gets RECORD_NOT_ADMITTED. Row 1 is admitted (spec 0.13, #736).",
+ "document": "Table 1. Tolls\nLock Toll\nSnell $12.50\nEisenhower n/a\nIroquois free\nBeauharnois\n",
+ "schema": {
+  "fields": {
+   "tolls": {
+    "type": "record",
+    "members": {
+     "lock": {
+      "type": "string",
+      "required": true
+     },
+     "toll": {
+      "type": "number",
+      "unit": "USD"
+     }
+    }
+   }
+  }
+ },
+ "policy": {
+  "proposers": {
+   "structure": "corroborate"
+  }
+ },
+ "candidates": [
+  {
+   "id": "m1a",
+   "field": "tolls.lock",
+   "value": "Snell",
+   "evidence": [
+    {
+     "start": 25,
+     "end": 30,
+     "text": "Snell"
+    }
+   ],
+   "record": "1",
+   "proposer": "model"
+  },
+  {
+   "id": "s1a",
+   "field": "tolls.lock",
+   "value": "Snell",
+   "evidence": [
+    {
+     "start": 25,
+     "end": 30,
+     "text": "Snell"
+    }
+   ],
+   "record": "1",
+   "proposer": "structure"
+  },
+  {
+   "id": "m1b",
+   "field": "tolls.toll",
+   "value": "12.50",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 31,
+     "end": 37,
+     "text": "$12.50"
+    }
+   ],
+   "record": "1",
+   "proposer": "model"
+  },
+  {
+   "id": "s1b",
+   "field": "tolls.toll",
+   "value": "12.50",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 31,
+     "end": 37,
+     "text": "$12.50"
+    }
+   ],
+   "record": "1",
+   "proposer": "structure"
+  },
+  {
+   "id": "m2a",
+   "field": "tolls.lock",
+   "value": "Eisenhower",
+   "evidence": [
+    {
+     "start": 38,
+     "end": 48,
+     "text": "Eisenhower"
+    }
+   ],
+   "record": "2",
+   "proposer": "model"
+  },
+  {
+   "id": "s2a",
+   "field": "tolls.lock",
+   "value": "Eisenhower",
+   "evidence": [
+    {
+     "start": 38,
+     "end": 48,
+     "text": "Eisenhower"
+    }
+   ],
+   "record": "2",
+   "proposer": "structure"
+  },
+  {
+   "id": "s2b",
+   "field": "tolls.toll",
+   "value": "n/a",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 49,
+     "end": 52,
+     "text": "n/a"
+    }
+   ],
+   "record": "2",
+   "proposer": "structure"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "proposer": "model"
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "proposer": "structure"
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "proposer": "model"
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "proposer": "structure"
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "RECORD_NOT_ADMITTED"
+    ],
+    "proposer": "model"
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "RECORD_NOT_ADMITTED"
+    ],
+    "proposer": "structure"
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "NULL_STRING_LITERAL"
+    ],
+    "proposer": "structure"
+   }
+  ],
+  "coverage": [],
+  "records": [
+   {
+    "field": "tolls",
+    "record": "1",
+    "outcome": "admitted",
+    "codes": [],
+    "members": {
+     "lock": "Snell",
+     "toll": "12.5"
+    },
+    "source": "document",
+    "ref": null,
+    "replaced": false
+   },
+   {
+    "field": "tolls",
+    "record": "2",
+    "outcome": "needs_verification",
+    "codes": [
+     "RECORD_MEMBER_REJECTED"
+    ],
+    "members": {
+     "lock": "Eisenhower",
+     "toll": null
+    },
+    "source": "document",
+    "ref": null,
+    "replaced": false,
+    "rejected": {
+     "toll": [
+      "NULL_STRING_LITERAL"
+     ]
+    }
+   }
+  ]
+ }
+}

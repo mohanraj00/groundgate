@@ -2035,6 +2035,7 @@ def _records(
     ids: list[tuple[str, str]] = []
     values: dict[tuple[str, str], list[Value]] = defaultdict(list)
     passed: dict[tuple[str, str], list[_Passed]] = defaultdict(list)
+    rejected: dict[tuple[str, str], dict[str, set[str]]] = defaultdict(lambda: defaultdict(set))
     for _, _, cand, p in results:
         rid = _record_id(ctx, cand)
         if rid is None:
@@ -2043,6 +2044,10 @@ def _records(
         f = ctx.schema.fields[cand["field"]]
         assert f.record is not None
         ids.append((f.record, rid))
+        who = _proposer(cand)
+        if isinstance(p, _Reject) and ctx.policy.proposers.get(who or "") == "corroborate":
+            # a cell with text that the gate cannot take (SPEC §4.12, spec 0.13, #736)
+            rejected[f.record, rid][f.name.split(".", 1)[1]].add(p.code)
         if isinstance(p, _Passed):
             ref = None if p.at is None else p.at.item.ref
             member = f.name.split(".", 1)[1]
@@ -2050,7 +2055,7 @@ def _records(
             text = (p.source, ref)
             values[f.record, rid].append(Value(member, p.value, text, p.source, ref, doubtful))
             passed[f.record, rid].append(p)
-    lines, checks = decide_records(ctx.schema, ids, values, positions)
+    lines, checks = decide_records(ctx.schema, ids, values, positions, rejected)
     for line in lines:
         if line.outcome != "admitted":
             for p in passed[line.field, line.record]:

@@ -1,12 +1,26 @@
-# groundgate specification v0.12
+# groundgate specification v0.13
 
-Status: released with groundgate 0.14.0, in the `v0.14.0` tag. groundgate 0.15.0 adds §4.10 to
-§4.17 to this version: the profile, the value kinds `date`, `record` and `passage`, closed
+Status: draft, for the next release of groundgate. Version string: `groundgate/0.13`.
+
+Spec 0.13 changes one decision (#736). A candidate of a `corroborate` proposer (§2.4) at a
+member of a record that is rejected sends its record to review (§4.12, `RECORD_MEMBER_REJECTED`).
+Each other decision of a packet keeps the outcome, the codes, the values and the members that
+spec 0.12 gives it. For such a decision, the receipt differs only in the version string: the
+member `groundgate` is `0.13`, and each digest changes because its prefix holds the version
+string (§6). A record that the new rule changes gets the code, the member `rejected` and the
+outcome `needs_verification`, and each value of it that passed gets `RECORD_NOT_ADMITTED`. A
+packet with no `corroborate` proposer, or with no rejected candidate of one at a member, gets no
+other change. A receipt of spec 0.12 still verifies and replays under the rules of spec 0.12,
+with groundgate 0.17.0, the last release of spec 0.12. A release of spec 0.13 names that release
+for a receipt of spec 0.12 and checks nothing more (§8.6).
+
+Spec 0.12 was released with groundgate 0.14.0, in the `v0.14.0` tag. groundgate 0.15.0 adds §4.10 to
+§4.17 to spec 0.12: the profile, the value kinds `date`, `record` and `passage`, closed
 options and the packet members `pin`, `places`, `completeness` and `outline`. A packet that
 uses none of them is decided as in 0.14.0 and gets the same receipt, so the version string does
 not change. groundgate 0.16.0 adds §5.2, the `facts@2` export of a reviewed packet, §4.18,
 the blind audit sample, and §4.19, the calibration events. groundgate 0.17.0 adds §4.20, the
-review API. They change no decision and no receipt. Version string: `groundgate/0.12`. Spec 0.11 was released with
+review API. They change no decision and no receipt. Version string of spec 0.12: `groundgate/0.12`. Spec 0.11 was released with
 groundgate 0.11.0 and is in the `v0.11.0` tag. Spec 0.10 is in the `v0.10.0` tag. Spec 0.9 is in the `v0.9.0` tag,
 spec 0.8 in the `v0.8.0` tag, spec 0.7 in the `v0.7.0` tag, spec 0.6 in the `v0.6.0` tag, spec
 0.5 in the `v0.5.0` tag, spec 0.4 in the `v0.4.0` tag, spec 0.3 in the `v0.3.0` tag, spec 0.2 in
@@ -1677,6 +1691,15 @@ are, in this order:
 | `RECORD_MEMBER_MISSING` | A required member has no decision that passed, or the record has no decision that passed. |
 | `RECORD_MEMBER_CONFLICT` | Two decisions of one member passed with two canonical values. |
 | `RECORD_SOURCE_MIXED` | The decisions that passed are in two or more texts. |
+| `RECORD_MEMBER_REJECTED` | A decision of a member is rejected, and its candidate has a `proposer` that the policy maps to `corroborate` (§2.4). Spec 0.13, #736. |
+
+`RECORD_MEMBER_REJECTED` reads the rejected decisions of the record also, the decisions with
+the code `RECORD_INVALID` excepted, because they have no record. A proposer such as the structure
+reader proposes a value at each cell with text. When the gate rejects that value, for example as
+`n/a` (`NULL_STRING_LITERAL`, §4 step 3), the cell has text and the record has no value of that
+member. So the record goes to review. The `rejected` member of the record line (§5) gives the
+code of each such decision. A cell with no candidate gives no code: its member stays null. A
+rejected candidate of an `admit` proposer, or with no `proposer`, gives no code either.
 
 The checks of the document set (§4.13, step 15) can add `SET_REPLACES_NOTHING`,
 `SET_DUPLICATE` and `SET_CONFLICT`, in this order, after the codes above. The record
@@ -1687,8 +1710,8 @@ The checks of the document set (§4.13, step 15) can add `SET_REPLACES_NOTHING`,
    `needs_verification`.
 3. Otherwise `admitted`.
 
-So a record is admitted only when each required member has an admitted value, and each value
-that passed is admitted. After step 15, each decision that passed, of a record that is not
+So a record is admitted only when each required member has an admitted value, each value
+that passed is admitted, and no candidate of a `corroborate` proposer at a member is rejected. After step 15, each decision that passed, of a record that is not
 admitted, gets the flag `RECORD_NOT_ADMITTED` (§3.3). So a value of an incomplete or doubtful
 record never stays admitted alone.
 
@@ -1698,7 +1721,9 @@ says that no value of that member passed. It does not say that the cell in the s
 The gate checks each member value alone. It does not check that the member values of one record
 come from the same row. The gate reads only the records that the candidates name. So it does not
 check that the records are all the rows of a table. An app that needs the whole table, or an empty cell, gets that from
-the structure of the table, or sends the table to review (#736).
+the structure of the table, or sends the table to review (#736). With a `corroborate`
+proposer that reads the structure, a cell with text that has no value goes to review
+(`NOT_CORROBORATED` and `RECORD_MEMBER_REJECTED`).
 
 ### 4.13 Document sets (step 15)
 
@@ -2527,7 +2552,7 @@ of each error code.
 ## 5. Receipt
 
 ```json
-{"groundgate": "0.12",
+{"groundgate": "0.13",
  "document": {"id": null, "sha256": "sha256:...", "source": null, "doubt_sha256": null},
  "references": [],
  "packs": [],
@@ -2560,7 +2585,7 @@ Receipt members:
 
 | Member | Type | Present | Value and order |
 |---|---|---|---|
-| `groundgate` | string | always | The spec version, `0.12`. |
+| `groundgate` | string | always | The spec version, `0.13`. |
 | `document` | object | always | `id`, `sha256`, `source` and `doubt_sha256`. Each one is always present. |
 | `references` | list | always | One entry for each reference of the packet, sorted by `id`. |
 | `packs` | list | always | One entry for each pack that the packet reads besides the base pack, sorted by `id`. |
@@ -2605,13 +2630,14 @@ Decision members:
 | `passage_sha256` | digest or null | the decision is of a `passage` field (§4.17) | The digest of the passage text, or null for a rejected decision. |
 | `locator` | object or null | the packet gives places (§4.15) | `page` and `box`, or null. |
 
-Three entries of a list have a member that is not always present:
+Four entries of a list have a member that is not always present:
 
 | Member | Entry of | Present |
 |---|---|---|
 | `set` | `references` | the reference is in the document set (§4.13) |
 | `answer` | `judgments` | the question is `key` |
 | `cut` | `headers` of `evidence_units` | the form is cut |
+| `rejected` | `records` | the record line has `RECORD_MEMBER_REJECTED` (§4.12, spec 0.13) |
 
 `document.id` is the document id that the caller gives, or null. It is a label of the app:
 groundgate copies it and reads nothing from it. Give a string: the reference implementation
@@ -2760,6 +2786,18 @@ are null when the record has no value that passed, or has `RECORD_SOURCE_MIXED`.
 true when a `replace` check replaced the record (§4.13). `members` has each member of the field
 with its value (§4.12), or null.
 
+A record line with the code `RECORD_MEMBER_REJECTED` has the member `rejected` (spec 0.13,
+#736). It maps each member with such a rejected decision to the codes of these decisions, each
+code once, in code point order:
+
+```json
+{"field": "tolls", "record": "3", "outcome": "needs_verification",
+ "codes": ["RECORD_MEMBER_REJECTED"], "source": "document", "ref": null, "replaced": false,
+ "members": {"lock": "Snell", "toll": null}, "rejected": {"toll": ["NULL_STRING_LITERAL"]}}
+```
+
+A record line without this code has no member `rejected`.
+
 When the schema has checks (§4.13), the receipt has a member `checks`: each check as
 `{"id", "holds", "records"}`, sorted by `id`. `records` lists the ids of the records that the
 check gave a code, in code point order. `holds` is true when the list is empty. A receipt of a
@@ -2804,7 +2842,8 @@ vector: each member is equal, and `receipt_sha256` is the same. An implementatio
 read profiles, pins or places leaves out the vectors that give one. The vectors hold each
 member of the tables above one or more times, and the vector `receipt-01-required-members` has
 only the members that are always present. A release that keeps the spec version only adds
-receipt vectors. It does not change a vector and does not remove one.
+receipt vectors. It does not change a vector and does not remove one. A new spec version
+changes each vector, because the member `groundgate` and each digest change.
 
 ### 5.1 Admitted facts export
 
@@ -2931,10 +2970,10 @@ strings escaped as ECMAScript `JSON.stringify` does, numbers serialised as ECMAS
 `Number.prototype.toString`. NaN and infinities are not permitted. Integers outside
 [-(2^53-1), 2^53-1] are not permitted (they are not exactly representable).
 
-`digest(kind, obj) = "sha256:" + hex(SHA-256("groundgate/0.12:" + kind + "\0" + JCS(obj)))`, where
+`digest(kind, obj) = "sha256:" + hex(SHA-256("groundgate/0.13:" + kind + "\0" + JCS(obj)))`, where
 the prefix is ASCII and `JCS(obj)` is UTF-8.
 
-## 7. Non-goals for v0.12
+## 7. Non-goals for v0.13
 
 Semantic correctness (whether the sentence describes the field) by groundgate itself: a recorded
 `field_match` judgment can only add doubt, and a field item checks only the field's own aliases.
@@ -2953,8 +2992,8 @@ version of each format. Each one changes for its own reason.
 ### 8.1 The spec version
 
 The spec version names the decisions: the function from a packet to its receipt. It is
-`MAJOR.MINOR`, and this document is version 0.12. A receipt holds it in the member `groundgate`
-(§5), and each digest of §6 holds it in the prefix `groundgate/0.12:`. So a receipt of one spec
+`MAJOR.MINOR`, and this document is version 0.13. A receipt holds it in the member `groundgate`
+(§5), and each digest of §6 holds it in the prefix `groundgate/0.13:`. So a receipt of one spec
 version is never equal to a receipt of another.
 
 A release gets a new spec version when it changes the receipt of a packet that the spec version
@@ -3165,7 +3204,8 @@ These are the releases on PyPI that implement each spec version:
 | 0.9 | 0.9.0 | 0.9.0 |
 | 0.10 | 0.10.0 | 0.10.0 |
 | 0.11 | 0.11.0 | 0.11.0 |
-| 0.12 | 0.14.0 and later | this release |
+| 0.12 | 0.14.0 to 0.17.0 | 0.17.0 |
+| 0.13 | the next release and later | this release |
 
 The tags `v0.12.0` and `v0.13.0` also implement spec 0.11. They are not on PyPI.
 
@@ -3257,7 +3297,7 @@ from release 0.15.0 and `source_format` from release 0.16.0. `reading@1` has onl
 A **packet** names the inputs and the receipt of one `admit` call:
 
 ```json
-{"format": "packet@1", "spec": "0.12",
+{"format": "packet@1", "spec": "0.13",
  "document": {"id": "lease-0417", "source": null, "text": "sha256:..."},
  "reading": "sha256:...",
  "schema": "sha256:...", "policy": "sha256:...",

@@ -34,21 +34,21 @@
  ],
  "expected": {
   "receipt": {
-   "groundgate": "0.12",
+   "groundgate": "0.13",
    "document": {
     "id": null,
-    "sha256": "sha256:c54f98f7603a47362d3a5b7ef0bce9b1a6a6a3508eae83f86d2df1f08947c969",
+    "sha256": "sha256:fd4e0aa0154b74fa17e38bedd0397a328303b1a94f58413686cf9fed94b2ed32",
     "source": null,
     "doubt_sha256": null
    },
    "references": [],
    "packs": [],
-   "schema_sha256": "sha256:531607d84a8e5cf8422ba14e0223b57dd4085bdf3a627974529acab72d998a6d",
-   "policy_sha256": "sha256:92f2e20399c00a6cff7da2c08bac06bb108a3a46fd92e60b981295103a8a6f4e",
+   "schema_sha256": "sha256:6c4d7d8e36c98d8cb3bd04c6d83778d970f43fa8393e084a033bb496ee93d059",
+   "policy_sha256": "sha256:5821d11e48837f67639e6db5e307b099d3864324eb6d6c5220b01f5f7f6c4232",
    "decisions": [
     {
      "candidate_id": "w2",
-     "candidate_sha256": "sha256:34259ce3652b7e9d377db5212ff94b5880955704b2f30a3e6025a353aa6f0755",
+     "candidate_sha256": "sha256:296517bf24e2a5df483472f85212dff74adcb25d42b8e30d4649317cf285b2a8",
      "field": "usd",
      "key": null,
      "proposer": null,
@@ -114,7 +114,7 @@
     "needs_verification": 1,
     "rejected": 0
    },
-   "receipt_sha256": "sha256:32f806105978a81d8f63cc7c65b97dc8e376ad0170fa733bb813796324a21c69"
+   "receipt_sha256": "sha256:d27baed75bd252b717aa682b8427456e37966ecc06fb8ab8146ba48c717873c1"
   }
  }
 }
