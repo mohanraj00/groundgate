@@ -67,6 +67,9 @@ spec version, and receipts name the spec version they were decided under.
   `measure` and `profile`, and the `entelos.measure/1` summary, with each bound in basis
   points, rounded up. It refuses a route that is not measured. The optional CI job `entelos`
   checks one accepted and one refused promotion on the release (#747).
+- `bench/regulatory2` has its 14 sources. The owner approved the download on 2026-11-27.
+  Each part passes the source checks, and no source has a notice of the publisher. The
+  slots and the labels are not drawn yet (#750).
 
 ## 0.17.0 (2026-11-19)
 
