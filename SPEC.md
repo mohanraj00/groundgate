@@ -2064,6 +2064,26 @@ review answer or the decision of an approver is not an audit label. A label file
 canonical JSON label on each line, as the audit log has its entries. The last label of one
 document, field and key counts.
 
+**The label tasks in a store.** The review step (§4.20) asks the audit tasks of a picked
+document as label tasks. A label task is a `task@1` of the packet of the document with the
+mode `audit` and a slot with no decision (docs/design/review.md §5.5). It has no choice, no
+code and no place. So it is the same for a field with an admitted value and a field with none,
+and no other task has this form. The packet does not name the profile, so the profile must
+decide the text and the candidates of the packet to the decisions of the packet receipt, and
+give the log entry of the document. A label task takes the verdicts `correct`, `not_in_document`
+and `unsure`. Its answer settles no slot and changes no decision and no receipt. The last answer
+of each reviewer gives one audit label:
+
+- `correct`: `value` is the canonical value of the decision of the correction. The gate decides
+  the correction with no other candidate of the packet. A correction that the gate rejects, or
+  that has a code that the answer does not keep, gives no label.
+- `not_in_document`: `value` is null.
+- `unsure`: no label.
+
+`labeler` is the reviewer, `date` is the UTC day of the answer `time`, and `profile` is the
+digest of the log entry. When two reviewers give different values, the task gets no label. An
+answer of the review step stays a suggestion: only this mapping makes a label of it.
+
 A label counts for a measure of a profile only when its `profile` is the digest of that
 profile, and its document is in the pick of the seed and the log. A label with another profile
 digest does not count. A label of a document that is not in the pick, or whose digest is not
@@ -2091,7 +2111,8 @@ decreases to 2% while the bound of each route stays below the target, and it inc
 10% when a bound passes the target or the profile version changes.
 
 The vectors in `conformance/audit/` give the pick of a seed and a log, the tasks of a document,
-valid and invalid labels and logs, and the rate of a measure.
+valid and invalid labels and logs, the labels of the answers to a label task, and the rate of a
+measure.
 
 ### 4.19 Calibration events
 
@@ -2258,6 +2279,12 @@ A task with the mode `audit` is a **blind task**. The actor gets the document, t
 the key, and never the proposed value (§4.18). No response gives its value, its unit, its
 evidence, its places, its codes, its item or its question, and no response gives the outcome of
 the gate for its slot. This applies before and after the answer.
+
+A label task of the blind audit (§4.18) is a blind task of the API, except for a closed set
+field. It holds no decision, so it is the same for a field with an admitted value and a field
+with none. Its answer is a label: it settles no slot, so it never makes a task of the review
+group open or not open. `groundgate calibrate audit tasks` writes the label tasks of a packet
+before its review tasks, as the order below requires.
 
 **Groups.** The answer to a blind task is independent only when its actor gets nothing that
 depends on the hidden candidates of the packet. The other tasks of a packet can give such data.

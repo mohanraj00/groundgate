@@ -1,0 +1,28 @@
+{
+ "name": "audit-answer-05-last-unsure",
+ "kind": "answer",
+ "description": "The last answer of a reviewer counts: an unsure after a value gives no label.",
+ "task": {
+  "document": "inv-0007",
+  "profile": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "field": "total",
+  "key": null
+ },
+ "answers": [
+  {
+   "reviewer": "ana",
+   "verdict": "correct",
+   "value": "90",
+   "time": "2026-11-15T10:00:00Z"
+  },
+  {
+   "reviewer": "ana",
+   "verdict": "unsure",
+   "value": null,
+   "time": "2026-11-16T08:30:00Z"
+  }
+ ],
+ "expected": {
+  "labels": []
+ }
+}

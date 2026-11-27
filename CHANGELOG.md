@@ -62,6 +62,13 @@ spec version, and receipts name the spec version they were decided under.
   the check. A plain text input does not change. The spec version and the conformance vectors
   stay the same. The runner and its structure reader are not part of the specification
   ([SPEC §2.4](SPEC.md#24-policy)), and `admit` decides the same candidates as before.
+- The blind audit pick of SPEC §4.18 now asks its tasks in the review step.
+  `calibrate audit tasks` writes one label task to the store for each field and key of a
+  picked document. A label task has no decision, so it is the same with and without an
+  admitted value. The review API gives it as a blind task, except for a closed set field.
+  `calibrate audit labels` makes a `groundgate_audit_label` of each answer, and
+  `calibrate measure --audit` counts it. A label task settles no slot and changes no receipt.
+  A blind `correct` with the admitted value keeps the slot `admitted` (#695).
 
 ## 0.17.0 (2026-11-19)
 

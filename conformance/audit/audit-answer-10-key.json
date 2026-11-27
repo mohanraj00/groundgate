@@ -1,0 +1,33 @@
+{
+ "name": "audit-answer-10-key",
+ "kind": "answer",
+ "description": "A label task of one key gives a label of that key.",
+ "task": {
+  "document": "inv-0007",
+  "profile": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "field": "rate",
+  "key": "express"
+ },
+ "answers": [
+  {
+   "reviewer": "ana",
+   "verdict": "correct",
+   "value": "12.5",
+   "time": "2026-11-15T10:00:00Z"
+  }
+ ],
+ "expected": {
+  "labels": [
+   {
+    "groundgate_audit_label": 1,
+    "document": "inv-0007",
+    "profile": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "field": "rate",
+    "key": "express",
+    "value": "12.5",
+    "labeler": "ana",
+    "date": "2026-11-15"
+   }
+  ]
+ }
+}

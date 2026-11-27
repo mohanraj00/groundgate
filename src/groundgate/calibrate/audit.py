@@ -3,6 +3,8 @@
     groundgate calibrate audit add  --audit A --name DOC --receipt R
     groundgate calibrate audit pick --audit A [--profile P] [--out FILE]
     groundgate calibrate audit rate --audit A --report DIR/report.json
+    groundgate calibrate audit tasks --audit A --store S --packet P --name DOC --profile F
+    groundgate calibrate audit labels --audit A --store S
 
 The audit set (format 1) is a directory:
 
@@ -12,12 +14,16 @@ The audit set (format 1) is a directory:
     A/docs/<doc>.txt          the text of each labelled document, in Unicode NFC
     A/candidates/<doc>.json   the recorded candidates of the extractor
     A/judgments/<doc>.json    optional: the recorded judgments
+    A/blind.jsonl             the packet and the profile of the label tasks of each document
 
 The pick is a function of the seed and the log only. It reads no clock and no label, so a replay
 gives the same documents. A task names a document and a field, and never a proposed value.
 ``calibrate measure --audit A`` counts the audit labels with the gold set labels. A review
 answer or the decision of an approver is not a label: ``check_label`` refuses each record with
 a member that the label format does not list.
+
+``tasks`` writes the label tasks of a picked document to the store of the review step, and
+``labels`` makes the labels of their answers (docs/design/review.md §5.5).
 """
 
 from __future__ import annotations
@@ -457,6 +463,47 @@ def write_rate(root: Path, report_path: Path) -> dict[str, Any]:
     return entry
 
 
+# ------------------------------------------------------------- the answers to label tasks
+
+_TIME = re.compile(r"([0-9]{4}-[0-9]{2}-[0-9]{2})T[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]+)?Z\Z")
+
+
+def answer_labels(
+    task: Mapping[str, Any], answers: Sequence[Mapping[str, Any]]
+) -> tuple[list[dict[str, Any]], str | None]:
+    """The audit labels of the answers to one label task (SPEC §4.18), and why there is no
+    label, or None. ``task`` has the document, the profile digest, the field and the key.
+    ``answers`` holds each answer in log order, with the reviewer, the verdict, the time, and
+    the value: for ``correct``, the canonical value of the decision of the correction, or null
+    when the correction does not count.
+
+    The last answer of each reviewer counts. ``correct`` gives its value, ``not_in_document``
+    gives null, and ``unsure`` gives no label. The date is the UTC day of the time. If two
+    reviewers give different values, no reviewer gives a label."""
+    last = {a["reviewer"]: a for a in answers}
+    given: dict[str, tuple[str | None, str]] = {}
+    for reviewer in sorted(last):
+        a = last[reviewer]
+        when = _TIME.match(a["time"]) if isinstance(a["time"], str) else None
+        if when is None:
+            continue
+        if a["verdict"] == "not_in_document":
+            given[reviewer] = (None, when.group(1))
+        elif a["verdict"] == "correct" and isinstance(a["value"], str):
+            given[reviewer] = (a["value"], when.group(1))
+    if len({value for value, _ in given.values()}) > 1:
+        return [], "the reviewers give different values"
+    if not given:
+        return [], "no answer gives a label"
+    head = {"groundgate_audit_label": LABEL_FORMAT, "document": task["document"],
+            "profile": task["profile"], "field": task["field"], "key": task["key"]}  # fmt: skip
+    labels = [
+        check_label({**head, "value": value, "labeler": reviewer, "date": day})
+        for reviewer, (value, day) in given.items()
+    ]
+    return labels, None
+
+
 def add_parser(sub: Any) -> None:
     p = sub.add_parser("audit", help="the blind audit sample of a profile (SPEC 4.18)")
     steps = p.add_subparsers(dest="audit_step", required=True)
@@ -468,7 +515,14 @@ def add_parser(sub: Any) -> None:
     k.add_argument("--out", type=Path, help="write the pick here instead of stdout")
     r = steps.add_parser("rate", help="add the audit rate of a measure report to the audit log")
     r.add_argument("--report", type=Path, required=True, help="report.json of measure --audit")
-    for s in (a, k, r):
+    t = steps.add_parser("tasks", help="write the label tasks of a picked document to a store")
+    t.add_argument("--store", type=Path, required=True, help="the store of the review step")
+    t.add_argument("--packet", required=True, help="the store key of the packet of the document")
+    t.add_argument("--name", required=True, help="the document name in the audit log")
+    t.add_argument("--profile", type=Path, required=True, help="the profile of the log entry")
+    b = steps.add_parser("labels", help="add the labels of the answers to the label tasks")
+    b.add_argument("--store", type=Path, required=True, help="the store of the review step")
+    for s in (a, k, r, t, b):
         s.add_argument("--audit", type=Path, required=True, help="the audit set directory")
 
 
@@ -477,6 +531,18 @@ def main(args: argparse.Namespace) -> None:
         if args.audit_step == "add":
             entry = add(args.audit, args.name, args.receipt)
             print(f"added {entry['document']} with {entry['items']} items")
+        elif args.audit_step == "tasks":
+            from .blind import write_labels, write_tasks
+
+            keys = write_tasks(args.audit, args.store, args.packet, args.name, args.profile)
+            print(f"wrote {len(keys)} label tasks of {args.name}")
+        elif args.audit_step == "labels":
+            from .blind import write_labels
+
+            found = write_labels(args.audit, args.store)
+            for line in found.none:
+                print(f"no label: {line}")
+            print(f"added {len(found.added)} labels")
         elif args.audit_step == "rate":
             entry = write_rate(args.audit, args.report)
             print(f"the audit rate of {entry['profile']} is {entry['rate']}")

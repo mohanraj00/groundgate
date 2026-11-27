@@ -74,6 +74,7 @@ from ..text import (
     tokens,
     using,
 )
+from .blind import blind_tasks
 from .labels import QUESTIONS, label_tasks
 from .model_text import all_model_texts, check_model_text, model_text_task, statement_views
 from .resolve import (
@@ -338,6 +339,8 @@ class Review:
             slot = by_slot.get((s["field"], s["key"], tuple(s["decisions"])))
             if slot is not None:
                 by_key[_task_key(t)] = (slot, t)
+        for bkey, found in blind_tasks(pk, schema).items():  # SPEC §4.18: label tasks
+            by_key.setdefault(bkey, found)
         texts: dict[str, dict[str, Any]] = {}
         inputs = self._inputs.get(pk, [])
         for mkey, obj in inputs:  # a bad input raises: the packet gives no task (§9)

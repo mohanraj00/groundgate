@@ -1,0 +1,33 @@
+{
+ "name": "audit-answer-01-correct",
+ "kind": "answer",
+ "description": "A correct answer gives the canonical value of the decision of its correction.",
+ "task": {
+  "document": "inv-0007",
+  "profile": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "field": "total",
+  "key": null
+ },
+ "answers": [
+  {
+   "reviewer": "ana",
+   "verdict": "correct",
+   "value": "90",
+   "time": "2026-11-15T10:00:00Z"
+  }
+ ],
+ "expected": {
+  "labels": [
+   {
+    "groundgate_audit_label": 1,
+    "document": "inv-0007",
+    "profile": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "field": "total",
+    "key": null,
+    "value": "90",
+    "labeler": "ana",
+    "date": "2026-11-15"
+   }
+  ]
+ }
+}

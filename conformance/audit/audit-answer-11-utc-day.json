@@ -1,0 +1,33 @@
+{
+ "name": "audit-answer-11-utc-day",
+ "kind": "answer",
+ "description": "The date is the day of the UTC time, also with a fraction of a second.",
+ "task": {
+  "document": "inv-0007",
+  "profile": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "field": "total",
+  "key": null
+ },
+ "answers": [
+  {
+   "reviewer": "ana",
+   "verdict": "correct",
+   "value": "90",
+   "time": "2026-11-15T23:59:59.5Z"
+  }
+ ],
+ "expected": {
+  "labels": [
+   {
+    "groundgate_audit_label": 1,
+    "document": "inv-0007",
+    "profile": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "field": "total",
+    "key": null,
+    "value": "90",
+    "labeler": "ana",
+    "date": "2026-11-15"
+   }
+  ]
+ }
+}

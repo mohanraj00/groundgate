@@ -21,6 +21,8 @@ from ..codes import INFO
 from ..escape import escape
 from ..model import PacketError, Schema
 from ..read.layout import Layout
+from .blind import VERDICTS as BLIND_VERDICTS
+from .blind import blind_tasks, is_label_task
 from .labels import TEMPLATES, label_tasks
 from .model_text import (
     STATEMENT_VERDICTS,
@@ -109,7 +111,8 @@ class _Answer:
     reviewer: str
     verdict: str
     target: tuple[Any, ...] | None  # None: no answer (unsure, or a correction that does not count)
-    keeps: bool  # an audit answer that keeps the admitted value: unsure, or a confirm
+    keeps: bool  # an audit answer that keeps the admitted value: unsure, a confirm, or a
+    # correct with the admitted value (rule 7)
     decision: int | None = None
     correction: _Correction | None = None
 
@@ -206,6 +209,9 @@ def resolve(
         tkey_ = _store_key("task@1", task_)
         by_key[tkey_] = (slot_, task_)
         texts_.append((tkey_, slot_, task_))
+
+    for bkey, found_ in blind_tasks(packet_key, schema).items():  # labels, not slots
+        by_key.setdefault(bkey, found_)
 
     ids = [c.get("id") for c in packet.candidates if isinstance(c, Mapping)]
     latest: dict[str, dict[str, _Answer]] = {}  # task key -> reviewer -> latest answer
@@ -430,6 +436,9 @@ def _check(
         return _statements(name, sequence, task_key, slot, task, record, fail)
     if record["statements"] is not None or record["nodes"] is not None:
         raise fail("statements and nodes are only for a model text or a structure task")
+    blind = is_label_task(task)  # SPEC §4.18: the answer is a label and settles no slot
+    if blind and verdict not in BLIND_VERDICTS:
+        raise fail("a label task of the blind audit takes only correct, not_in_document, unsure")
     if task["item"] == "closed_set" and verdict not in CLOSED_SET_VERDICTS:
         raise fail("a closed_set task takes only confirm, choose, not_in_document and unsure")
     choices = [c["decision"] for c in task["choices"]]
@@ -442,6 +451,11 @@ def _check(
     if verdict not in CORRECTIONS and record["candidate"] is not None:
         raise fail(f"a {verdict} answer has no candidate")
     found = slot, task
+    if blind and field_keys is not None:
+        raise fail("only a calibrate key task takes field_keys")
+    if blind and verdict != "correct":
+        answer = _Answer(name, verdict, None, verdict == "unsure")
+        return _Checked(name, sequence, task_key, *found, answer, verdict, label=True)
     if label:
         return _label(name, sequence, task_key, slot, task, verdict, field_keys, schema, fail)
     if field_keys is not None:
@@ -483,7 +497,8 @@ def _check(
         memo = (task_key, jcs(candidate))
     except (TypeError, ValueError, RecursionError) as exc:
         raise fail(f"the candidate has no canonical JSON form: {exc}") from exc
-    return _Checked(name, sequence, task_key, *found, None, verdict, candidate, tuple(kept), memo)
+    return _Checked(name, sequence, task_key, *found, None, verdict, candidate, tuple(kept), memo,
+                    label=blind)  # fmt: skip
 
 
 def _label(
@@ -548,13 +563,25 @@ def _read(
         found["outcome"] == "admitted" or set(found["codes"]) - set(INFO) <= set(kept)
     )
     target: tuple[Any, ...] | None = None
+    keeps = False
     if counts:
-        if task["item"] == "number":  # rule 4
-            target = (verdict, found["value"], found.get("unit"), slot.key)
-        else:
-            span = found.get("evidence") or {}
-            target = (verdict, found.get("ref"), span.get("start"), span.get("end"))
-    return _Answer(c.name, verdict, target, False, None, correction)
+        target = (verdict, *_target(task, found, slot))
+        admitted = [decisions[i] for i in slot.decisions if decisions[i]["outcome"] == "admitted"]
+        # rule 7: a blind correct with the admitted value keeps it, as a confirm does
+        keeps = (
+            task["mode"] == "audit" and verdict == "correct" and len(admitted) == 1
+            and target[1:] == _target(task, admitted[0], slot)
+        )  # fmt: skip
+    return _Answer(c.name, verdict, target, keeps, None, correction)
+
+
+def _target(task: Mapping[str, Any], d: Mapping[str, Any], slot: Slot) -> tuple[Any, ...]:
+    """What a decision gives for the slot (rule 4): the value, the unit and the key of a
+    number, or the reference and the span of other text."""
+    if task["item"] == "number":
+        return (d["value"], d.get("unit"), slot.key)
+    span = d.get("evidence") or {}
+    return (d.get("ref"), span.get("start"), span.get("end"))
 
 
 def _correct(
