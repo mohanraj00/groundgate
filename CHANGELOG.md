@@ -8,6 +8,9 @@ spec version, and receipts name the spec version they were decided under.
 - The benchmark disables web search, apps, browser use and computer use for `codex`. It gives
   `codex` and `claude` only the `PATH`, `HOME` and `CODEX_HOME` environment variables. This change
   applies to new runs only (#422).
+- `bench/score.py --requested --check` passes on `bench/requested` without the local
+  diagnostics export. It rescores the primary part, keeps the committed diagnostics, and
+  says that it did not rescore them. With `--diagnostics`, it checks all of it (#381).
 - An optional CI job reads decision events from entelos v0.7.0. The test makes one
   `calibration_event@1` record for each approval, rejection and correction. A replay gives
   the same profile drafts (#677).
