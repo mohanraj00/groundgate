@@ -106,22 +106,22 @@
  ],
  "expected": {
   "receipt": {
-   "groundgate": "0.12",
+   "groundgate": "0.13",
    "document": {
     "id": null,
-    "sha256": "sha256:740c579754b22d959094cc23feee5828d5ffa55064e0cb20267df0e745c574ad",
+    "sha256": "sha256:58dc16275e8ee78d544a8bae2701b8781c2d46a870af9d038d2539c0ece5f0cb",
     "source": null,
     "doubt_sha256": null
    },
    "references": [
     {
      "id": "annex",
-     "sha256": "sha256:ea4e8674365b1a03552bd558bc174e4d0975d85c0348015e21d967b6b1354abc",
+     "sha256": "sha256:7c03fe56096f4357c01d0212b7800c2be8a7737721d35315ed5f71aad7e03b01",
      "source": null
     },
     {
      "id": "notice",
-     "sha256": "sha256:d28ec995757aa050fe826ac04f95a4f03a9e56bfc7a97f70682a7ea158e094e2",
+     "sha256": "sha256:15fcb37f48a2b0d8c69d28cc82a366d94c5f19d2666c97df5df1171e7f99f21f",
      "source": "https://example.org/notice"
     }
    ],
@@ -133,32 +133,12 @@
      "sha256": "sha256:822c91124cbd23f29e683873975d4f3f85f2207dbbb02ca3664f0ef74848162b"
     }
    ],
-   "schema_sha256": "sha256:7c740c15802f3c3f7e2a3264729f0b941b8829b582254493d474fa33fdde0d9e",
-   "policy_sha256": "sha256:d54bb904a3de257ec2de25c2784e996dd798a8722efbf7dcce0bf7d65c3f95a6",
+   "schema_sha256": "sha256:d1a8d609d5d64f880de0528f3823b93ea1e270a59932d87885ff75efacdf59ac",
+   "policy_sha256": "sha256:e4af5e2fe18dfe45d12adc8650096a2805951255ab223052e9ff7ed331ae3cfc",
    "decisions": [
     {
-     "candidate_id": "s3",
-     "candidate_sha256": "sha256:13a50e67ca88f05379f8b1a186c0de5780b3742930be0ea19a786fcc893852cd",
-     "field": "deposit",
-     "key": null,
-     "proposer": null,
-     "outcome": "admitted",
-     "codes": [
-      "ADMITTED_BY_POLICY"
-     ],
-     "value": "500",
-     "unit": "USD",
-     "source": "external",
-     "ref": null,
-     "url": "https://example.org/terms",
-     "evidence": null,
-     "parts": [],
-     "missing": [],
-     "packs": []
-    },
-    {
      "candidate_id": "s2",
-     "candidate_sha256": "sha256:4534ab5234e3472a107c84cef57bfaefee6df8d23490111f09fef47c646b3400",
+     "candidate_sha256": "sha256:0827eafb311d8c5305ccc9db696b006f71592e2d6e7929e3de4460990b03749a",
      "field": "late_fee",
      "key": null,
      "proposer": null,
@@ -178,29 +158,28 @@
      "packs": []
     },
     {
-     "candidate_id": "s1",
-     "candidate_sha256": "sha256:8cb80942e571e422903815091f03dd8c9e3d0c32aaf5305c6ca56eccc59b9bd1",
-     "field": "fee",
+     "candidate_id": "s3",
+     "candidate_sha256": "sha256:7540df9c3935baf6609f129190590a65c162490814c49e59e80a79ec3dff80a2",
+     "field": "deposit",
      "key": null,
      "proposer": null,
      "outcome": "admitted",
-     "codes": [],
-     "value": "90",
+     "codes": [
+      "ADMITTED_BY_POLICY"
+     ],
+     "value": "500",
      "unit": "USD",
-     "source": "document",
+     "source": "external",
      "ref": null,
-     "url": null,
-     "evidence": {
-      "start": 12,
-      "end": 15
-     },
+     "url": "https://example.org/terms",
+     "evidence": null,
      "parts": [],
      "missing": [],
      "packs": []
     },
     {
      "candidate_id": "s4",
-     "candidate_sha256": "sha256:cc0d50f5f8ad5d9dae7068c09209f5ff489df6b374ff2284769275202de76c10",
+     "candidate_sha256": "sha256:a92a2c732b9033aa4a5dc2b2a9636c01ef450345c0c33d1d74f86237d90fdecc",
      "field": "net_income",
      "key": null,
      "proposer": null,
@@ -219,6 +198,27 @@
      "packs": [
       "finance"
      ]
+    },
+    {
+     "candidate_id": "s1",
+     "candidate_sha256": "sha256:bbf717bed24f3d03c90fd53351b7a2a34f3de7065fb65d45b9fcddd251e91e1e",
+     "field": "fee",
+     "key": null,
+     "proposer": null,
+     "outcome": "admitted",
+     "codes": [],
+     "value": "90",
+     "unit": "USD",
+     "source": "document",
+     "ref": null,
+     "url": null,
+     "evidence": {
+      "start": 12,
+      "end": 15
+     },
+     "parts": [],
+     "missing": [],
+     "packs": []
     }
    ],
    "coverage": [],
@@ -228,7 +228,7 @@
     "needs_verification": 1,
     "rejected": 0
    },
-   "receipt_sha256": "sha256:dc09805a80f35eb5149fba83bc40de65b4f0b7703d568bfc8d5cb2eada474abf"
+   "receipt_sha256": "sha256:6b6c4adb07dc82b4f34d48488c979744889259d8b4fd8c1a32272ed222a1f589"
   }
  }
 }

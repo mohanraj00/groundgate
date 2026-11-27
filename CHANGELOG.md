@@ -67,6 +67,12 @@ spec version, and receipts name the spec version they were decided under.
   `measure` and `profile`, and the `entelos.measure/1` summary, with each bound in basis
   points, rounded up. It refuses a route that is not measured. The optional CI job `entelos`
   checks one accepted and one refused promotion on the release (#747).
+- Spec 0.13. If the gate rejects the value of a `corroborate` proposer for a member, the
+  record goes to review with the new code `RECORD_MEMBER_REJECTED`. The record line names
+  the codes in `rejected`. A cell with no candidate stays null. A decision that the rule
+  does not touch keeps its 0.12 result, and its receipt differs only in the version string:
+  `groundgate` is 0.13, and the digests that hold the version string change. A receipt of
+  spec 0.12 still verifies and replays under the 0.12 rules with 0.17.0 (#736 cause 2).
 
 ## 0.17.0 (2026-11-19)
 

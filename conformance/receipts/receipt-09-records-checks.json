@@ -103,72 +103,28 @@
  ],
  "expected": {
   "receipt": {
-   "groundgate": "0.12",
+   "groundgate": "0.13",
    "document": {
     "id": null,
-    "sha256": "sha256:1034ce7bef60f65ee5f0f2c53b6b37314793f9ba97428a31692773a73ec13f59",
+    "sha256": "sha256:1b026f7914cdbe8402f80efc7a63983b8c919e93d590f54517201c52031b0d81",
     "source": null,
     "doubt_sha256": null
    },
    "references": [
     {
      "id": "corrigendum",
-     "sha256": "sha256:a31a837bdfd1beaa67217a7d26adc89c5da65524c1af56c04bb3f8d547328168",
+     "sha256": "sha256:5ce5ef36245f177df55a5d2e86ce71a7a971fffed3681974ce4db32abfb7f1eb",
      "source": null,
      "set": 1
     }
    ],
    "packs": [],
-   "schema_sha256": "sha256:3860e6f0ee287fdd2be0ee86dd35e8a89071a11deeddd74f92bb77127b99ef93",
-   "policy_sha256": "sha256:92f2e20399c00a6cff7da2c08bac06bb108a3a46fd92e60b981295103a8a6f4e",
+   "schema_sha256": "sha256:db2c47665b94c9aa5f29205720bd2ddf7bf414b137f371447ac58ca3309ee37b",
+   "policy_sha256": "sha256:5821d11e48837f67639e6db5e307b099d3864324eb6d6c5220b01f5f7f6c4232",
    "decisions": [
     {
-     "candidate_id": "e1",
-     "candidate_sha256": "sha256:0538bf3805379138d7c1523859f38f9d01f337bbbac736858175bc174fba5010",
-     "field": "items.code",
-     "key": null,
-     "proposer": null,
-     "outcome": "admitted",
-     "codes": [],
-     "value": "B-200",
-     "unit": null,
-     "source": "document",
-     "ref": null,
-     "url": null,
-     "evidence": {
-      "start": 16,
-      "end": 21
-     },
-     "parts": [],
-     "missing": [],
-     "packs": [],
-     "record": "p1"
-    },
-    {
-     "candidate_id": "e4",
-     "candidate_sha256": "sha256:852fe725aa7350efce6793bb80b4292148beb526f9312cccac1b7fda5499e4b3",
-     "field": "items.unit_price",
-     "key": null,
-     "proposer": null,
-     "outcome": "admitted",
-     "codes": [],
-     "value": "14",
-     "unit": "USD",
-     "source": "reference",
-     "ref": "corrigendum",
-     "url": null,
-     "evidence": {
-      "start": 31,
-      "end": 37
-     },
-     "parts": [],
-     "missing": [],
-     "packs": [],
-     "record": "s1"
-    },
-    {
      "candidate_id": "e2",
-     "candidate_sha256": "sha256:dd389223f3b3491d55e9ff9183fc86529cd3f90d857ad31d671e22f1961b0094",
+     "candidate_sha256": "sha256:2cf73e98bb443444d29ffd33ce530d1662314d432e170ff7d4c6463931019542",
      "field": "items.unit_price",
      "key": null,
      "proposer": null,
@@ -190,7 +146,7 @@
     },
     {
      "candidate_id": "e3",
-     "candidate_sha256": "sha256:fd869bbb72f7de7c6b1d853aca4eedca1b75db886c7780ae518795f229143ef9",
+     "candidate_sha256": "sha256:98b41e547fe5d569f3df56adb752da9b607a636eb66d784c50a09f7425f7360e",
      "field": "items.code",
      "key": null,
      "proposer": null,
@@ -209,6 +165,50 @@
      "missing": [],
      "packs": [],
      "record": "s1"
+    },
+    {
+     "candidate_id": "e4",
+     "candidate_sha256": "sha256:bb813991b53b6b7d547f42955dfcd8b4857363034940a5122c4402632e0e2ab4",
+     "field": "items.unit_price",
+     "key": null,
+     "proposer": null,
+     "outcome": "admitted",
+     "codes": [],
+     "value": "14",
+     "unit": "USD",
+     "source": "reference",
+     "ref": "corrigendum",
+     "url": null,
+     "evidence": {
+      "start": 31,
+      "end": 37
+     },
+     "parts": [],
+     "missing": [],
+     "packs": [],
+     "record": "s1"
+    },
+    {
+     "candidate_id": "e1",
+     "candidate_sha256": "sha256:e5571581d736c7ae0715cb18abfb6e13c9a495db28747ac44e7da95859665051",
+     "field": "items.code",
+     "key": null,
+     "proposer": null,
+     "outcome": "admitted",
+     "codes": [],
+     "value": "B-200",
+     "unit": null,
+     "source": "document",
+     "ref": null,
+     "url": null,
+     "evidence": {
+      "start": 16,
+      "end": 21
+     },
+     "parts": [],
+     "missing": [],
+     "packs": [],
+     "record": "p1"
     }
    ],
    "coverage": [],
@@ -258,7 +258,7 @@
     "needs_verification": 0,
     "rejected": 0
    },
-   "receipt_sha256": "sha256:6e971f47bee888c0a0a01760d5472391ba5d32089be1852fdd5a74fc77d42cbf"
+   "receipt_sha256": "sha256:9b0f0e45c95dd9b0217fb35dcfda9ffd7db6ef80ffa24272cf4ff4384850ce0f"
   }
  }
 }

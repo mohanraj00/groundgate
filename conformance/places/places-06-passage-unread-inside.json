@@ -121,7 +121,7 @@
     "codes": [
      "PASSAGE_NOT_READ"
     ],
-    "passage_sha256": "sha256:00fb2a97abd8c32e9a9e67653ae88f45a5e05f58e746fa99e677498830c87c0b",
+    "passage_sha256": "sha256:feb7f97d17ff6a4fac01467efb64ed96f07a2be4bc5603a49e3556befda76b1c",
     "locator": {
      "page": 1,
      "box": [
@@ -133,6 +133,6 @@
     }
    }
   ],
-  "places_sha256": "sha256:2dc039bd00eb2bcf47bcb91198be4a435fea5f1cdd08b1c85961c30b07803c51"
+  "places_sha256": "sha256:89a607d942479dfa1ae91a3dc1c4908f8ad20ed6c3f1292a57583d0cc6ffb767"
  }
 }

@@ -710,7 +710,10 @@ value of a field. Then the receipt gets one line for each record in `records`
 
 A record is admitted only when each required member has an admitted value. A row without a
 required value is rejected `RECORD_MEMBER_MISSING`. A member with two values is
-`RECORD_MEMBER_CONFLICT`, and values from two texts are `RECORD_SOURCE_MIXED`. Each value of a
+`RECORD_MEMBER_CONFLICT`, and values from two texts are `RECORD_SOURCE_MIXED`. If the policy
+maps a proposer to `corroborate` and the gate rejects its value for a member, the record goes to
+review with `RECORD_MEMBER_REJECTED` (spec 0.13). An example is `n/a` in a cell that the
+structure reader proposes. The record line then names the codes in `rejected`. Each value of a
 record that is not admitted gets `RECORD_NOT_ADMITTED`, so it does not go to the export alone.
 
 A later document that amends the document, such as a corrigendum, is a reference with `set`: its

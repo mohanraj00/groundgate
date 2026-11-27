@@ -29,8 +29,8 @@ VECTORS = [json.loads(p.read_text("utf-8")) for p in sorted(ROOT.glob("*.json"))
 FIXTURE = Path(__file__).parent / "fixtures" / "approver"
 PROFILE = json.loads((FIXTURE / "profile.json").read_text("utf-8"))
 TEXT = (FIXTURE / "invoice.txt").read_text("utf-8")
-DIGEST = "sha256:982dd1d45fbd207c9e35803016652bbc56cc0c0d9fd5918ef7d794c1e6e1b18e"
-PACKET = "sha256:cd6842292fea8fc33b6d67004b5eda3a24a8d195e6e02f9d58e35f21f819ee07"
+DIGEST = "sha256:bee5f0692ae4083b4553985b398dd59dfacda812840598064e86dd97db08c54a"
+PACKET = "sha256:3da8b3fec5cafbec116431a29b9a141cfeb41ee633d68d692a827f40f7072952"
 ENTELOS_HOST = "github.com/mohanraj00/entelos/src/lifecycle-core"
 
 

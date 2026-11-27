@@ -1,8 +1,8 @@
 {
-  "groundgate": "0.12",
+  "groundgate": "0.13",
   "document": {
     "id": "INV-1000",
-    "sha256": "sha256:6f470b7c781da65cd484f15d4e55ff6f0de82a946f7289d2bee6712f0ff1a407",
+    "sha256": "sha256:94c417a7f3f97ef8fa6280ee1ff1f07e8e232dc7dedace67a6ab4699709a8ec2",
     "source": null,
     "doubt_sha256": null
   },
@@ -18,14 +18,14 @@
   "profile": {
     "id": "invoice",
     "version": "1.0.0",
-    "sha256": "sha256:9075e2f872f7daf99352518893a0f223a174f4e54106f3ae3bab5241f6ec6d4e"
+    "sha256": "sha256:97463eeb74ff7be0dfadaf693991be35d79c80fdbdd114805a6138fdfd0486de"
   },
-  "schema_sha256": "sha256:abc08e7250ff54c8e14886e39aaa3caef7cc061dfc37e90085e63cdba187d74e",
-  "policy_sha256": "sha256:e5b8aa520bfc0c63a89cf6849d599b3446f082e7aaf457d2f9c5f64ba5531d46",
+  "schema_sha256": "sha256:637e577e597bdc98a8f1cdbd58cc2309d8943141954aa9da0337687e865912ae",
+  "policy_sha256": "sha256:1f9c6767b2320b96f8687ccb2f98a0e5c978f6a4d1179c7f04601bddc9ecfe99",
   "decisions": [
     {
       "candidate_id": "INV-1000/tax",
-      "candidate_sha256": "sha256:6dac310393d6a8a38a05414b2e2bc5032e8facead6dbf9da977de75b9dc830ee",
+      "candidate_sha256": "sha256:2c7d2b03743da1135e38c76eba3a66af742847b696e23c426ed1b18dccee4962",
       "field": "tax",
       "key": null,
       "proposer": null,
@@ -54,27 +54,27 @@
       ]
     },
     {
-      "candidate_id": "INV-1000/total",
-      "candidate_sha256": "sha256:85e05bb724ffba4c2de030dcfc87bdf5587ef6b3dec5c24ace583c0caca1e499",
-      "field": "total",
+      "candidate_id": "INV-1000/subtotal",
+      "candidate_sha256": "sha256:4f9954f53906272f45da38b745bfc7b765c98cd93e3142fdf83f5a55c710b443",
+      "field": "subtotal",
       "key": null,
       "proposer": null,
       "outcome": "admitted",
       "codes": [],
-      "value": "5402.16",
+      "value": "5002",
       "unit": "USD",
       "source": "document",
       "ref": null,
       "url": null,
       "evidence": {
-        "start": 272,
-        "end": 281
+        "start": 227,
+        "end": 236
       },
       "parts": [
         {
           "role": "field",
-          "start": 261,
-          "end": 270,
+          "start": 217,
+          "end": 225,
           "passed": true
         }
       ],
@@ -85,7 +85,7 @@
     },
     {
       "candidate_id": "INV-1000/invoice_number",
-      "candidate_sha256": "sha256:a2f643d37ce7c4f0fb85d0637efac5af7fc1487a55df7eb000b6d411249abb4c",
+      "candidate_sha256": "sha256:8ef680d0e5dcfcb87f420b0a244474bc77ea6ff9eee29ac7bc31937331844a9e",
       "field": "invoice_number",
       "key": null,
       "proposer": null,
@@ -114,27 +114,27 @@
       ]
     },
     {
-      "candidate_id": "INV-1000/subtotal",
-      "candidate_sha256": "sha256:e1f25ac26c6498f13e10ff289ca1f785e6529cba446d72a197d2f1ba2361d4f5",
-      "field": "subtotal",
+      "candidate_id": "INV-1000/total",
+      "candidate_sha256": "sha256:fca78daf5c7d2ca2020cb74404fd881feed37cafa10a930e59896b103978dc6a",
+      "field": "total",
       "key": null,
       "proposer": null,
       "outcome": "admitted",
       "codes": [],
-      "value": "5002",
+      "value": "5402.16",
       "unit": "USD",
       "source": "document",
       "ref": null,
       "url": null,
       "evidence": {
-        "start": 227,
-        "end": 236
+        "start": 272,
+        "end": 281
       },
       "parts": [
         {
           "role": "field",
-          "start": 217,
-          "end": 225,
+          "start": 261,
+          "end": 270,
           "passed": true
         }
       ],
@@ -151,5 +151,5 @@
     "needs_verification": 0,
     "rejected": 0
   },
-  "receipt_sha256": "sha256:12c11966e4d537add2224244d9e9715c42cea170aec2f739df77835de474f1c2"
+  "receipt_sha256": "sha256:b92fe45a8c0a46dc8bb0d95c7e3f21ac25096c6c179842daa22794e16cb3eace"
 }

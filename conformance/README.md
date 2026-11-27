@@ -36,6 +36,9 @@ Each file in `vectors/` is a complete, language-agnostic test case:
 - `expected.coverage`: the coverage findings.
 - `expected.relations` (optional): the receipt's relation results (SPEC §5), in receipt order.
   A vector without it has a schema with no relations.
+- `expected.records` (optional): the receipt's record lines (SPEC §4.12, §5), in receipt order,
+  each with the members to compare. A line has `rejected` only when the receipt line has it
+  (spec 0.13). A vector without it has a schema with no record field.
 - `completeness` (optional): the packet's completeness (SPEC §4.16). `expected.completeness` is
   then the receipt's `completeness` member. A vector without it expects a receipt with no such
   member.
@@ -150,7 +153,9 @@ A receipt vector does not change. `receipts/SHA256SUMS` lists the SHA-256 of eac
 its line stays. The test cannot see a file that is removed together with its line: the review
 of this level 1 path sees that. Check a copy with `shasum -a 256 -c SHA256SUMS` in `receipts/`.
 A release that keeps the spec version only adds vectors: add the file and one line to the list,
-and change no other line. Do not write the list from a script.
+and change no other line. A new spec version changes each vector, because the member
+`groundgate` and each digest change: that PR changes each line. Do not write the list from a
+script.
 
 Files in `invalid/` are invalid packets. An implementation must refuse them (SPEC §2) and emit no
 receipt.

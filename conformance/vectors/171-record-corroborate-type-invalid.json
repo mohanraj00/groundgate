@@ -1,0 +1,211 @@
+{
+ "name": "171-record-corroborate-type-invalid",
+ "description": "The toll cell of row 3 has the text free, which is not a number. The structure candidate is rejected with TYPE_INVALID, so the record gets RECORD_MEMBER_REJECTED and goes to review. The rule reads each rejected candidate of a corroborate proposer at a member, not only a null literal (spec 0.13, #736).",
+ "document": "Table 1. Tolls\nLock Toll\nSnell $12.50\nEisenhower n/a\nIroquois free\nBeauharnois\n",
+ "schema": {
+  "fields": {
+   "tolls": {
+    "type": "record",
+    "members": {
+     "lock": {
+      "type": "string",
+      "required": true
+     },
+     "toll": {
+      "type": "number",
+      "unit": "USD"
+     }
+    }
+   }
+  }
+ },
+ "policy": {
+  "proposers": {
+   "structure": "corroborate"
+  }
+ },
+ "candidates": [
+  {
+   "id": "m1a",
+   "field": "tolls.lock",
+   "value": "Snell",
+   "evidence": [
+    {
+     "start": 25,
+     "end": 30,
+     "text": "Snell"
+    }
+   ],
+   "record": "1",
+   "proposer": "model"
+  },
+  {
+   "id": "s1a",
+   "field": "tolls.lock",
+   "value": "Snell",
+   "evidence": [
+    {
+     "start": 25,
+     "end": 30,
+     "text": "Snell"
+    }
+   ],
+   "record": "1",
+   "proposer": "structure"
+  },
+  {
+   "id": "m1b",
+   "field": "tolls.toll",
+   "value": "12.50",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 31,
+     "end": 37,
+     "text": "$12.50"
+    }
+   ],
+   "record": "1",
+   "proposer": "model"
+  },
+  {
+   "id": "s1b",
+   "field": "tolls.toll",
+   "value": "12.50",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 31,
+     "end": 37,
+     "text": "$12.50"
+    }
+   ],
+   "record": "1",
+   "proposer": "structure"
+  },
+  {
+   "id": "m3a",
+   "field": "tolls.lock",
+   "value": "Iroquois",
+   "evidence": [
+    {
+     "start": 53,
+     "end": 61,
+     "text": "Iroquois"
+    }
+   ],
+   "record": "3",
+   "proposer": "model"
+  },
+  {
+   "id": "s3a",
+   "field": "tolls.lock",
+   "value": "Iroquois",
+   "evidence": [
+    {
+     "start": 53,
+     "end": 61,
+     "text": "Iroquois"
+    }
+   ],
+   "record": "3",
+   "proposer": "structure"
+  },
+  {
+   "id": "s3b",
+   "field": "tolls.toll",
+   "value": "free",
+   "unit": "USD",
+   "evidence": [
+    {
+     "start": 62,
+     "end": 66,
+     "text": "free"
+    }
+   ],
+   "record": "3",
+   "proposer": "structure"
+  }
+ ],
+ "expected": {
+  "decisions": [
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "proposer": "model"
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "proposer": "structure"
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "proposer": "model"
+   },
+   {
+    "outcome": "admitted",
+    "codes": [],
+    "proposer": "structure"
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "RECORD_NOT_ADMITTED"
+    ],
+    "proposer": "model"
+   },
+   {
+    "outcome": "needs_verification",
+    "codes": [
+     "RECORD_NOT_ADMITTED"
+    ],
+    "proposer": "structure"
+   },
+   {
+    "outcome": "rejected",
+    "codes": [
+     "TYPE_INVALID"
+    ],
+    "proposer": "structure"
+   }
+  ],
+  "coverage": [],
+  "records": [
+   {
+    "field": "tolls",
+    "record": "1",
+    "outcome": "admitted",
+    "codes": [],
+    "members": {
+     "lock": "Snell",
+     "toll": "12.5"
+    },
+    "source": "document",
+    "ref": null,
+    "replaced": false
+   },
+   {
+    "field": "tolls",
+    "record": "3",
+    "outcome": "needs_verification",
+    "codes": [
+     "RECORD_MEMBER_REJECTED"
+    ],
+    "members": {
+     "lock": "Iroquois",
+     "toll": null
+    },
+    "source": "document",
+    "ref": null,
+    "replaced": false,
+    "rejected": {
+     "toll": [
+      "TYPE_INVALID"
+     ]
+    }
+   }
+  ]
+ }
+}
