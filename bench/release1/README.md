@@ -4,7 +4,8 @@ Status: member list. The owner approved the kinds and the member choice from met
 2026-11-27 (#748). On the same day the owner picked spare A, the USGS Mineral Commodity
 Summaries, as kind 1 in place of patents. `members.json` has 30 chapters, 30 opinions and 30
 reports. On 2026-11-27 the owner approved the list with the words "Yes, keep one" (one report
-on HR 3944). No document body is downloaded yet.
+on HR 3944). I downloaded the 90 PDFs on 2026-11-27, and all 90 pass the source checks.
+`manifest.json` pins each source and its split. The slots and the labels come next.
 
 This set gives the numbers of exit conditions 1 and 2 of #277: the admitted error rate with
 a bound for each field and each kind, the miss rate, and the share of right values sent to
@@ -214,6 +215,49 @@ Kind 1, USGS chapters of 2026:
 
 USPTO patents: the USPTO bulk data now needs an API key of the USPTO Open Data Portal. The old
 bulk data site did not answer on 2026-11-27. I made no request with a key.
+
+## Sources
+
+Each member is one PDF of its publisher: the chapter file of the USGS index, or the PDF
+rendition that the MODS record of the govinfo package names. The PDFs and the reader text stay
+in local work storage.
+
+```bash
+WORK=/path/outside/the/repo
+uv run python bench/release1/sources.py --out "$WORK/release1-sources" \
+  --meta "$WORK/release1-metadata" --fetch
+```
+
+The script refuses a list that the owner has not approved. It does these checks on each
+member:
+
+- identity: a USGS chapter has the size and the entity tag of the selection, names its
+  commodity on the first page, and names the series line "U.S. Geological Survey, Mineral
+  Commodity Summaries, February 2026". An opinion gives its docket on the first page. A report
+  gives its number, for example 119-161, on the first page;
+- the page count of a govinfo PDF is the page count of its MODS record;
+- the text is not empty, and it is English text;
+- each match of copyright, the copyright sign, "all rights reserved", "reproduc" or
+  "permission of" is a place for a person to read.
+
+It writes `manifest.json` and `source_checks.json`. A rerun with a changed PDF or a changed
+reader text fails before it writes a file.
+
+I downloaded the 90 PDFs on 2026-11-27. All 90 pass the checks, so no member is on hold, and
+`selection_complete` is true. 82 members have no notice match. I read each of the 53 matches of
+the other 8 members, and `notice_review` of `members.json` records each review. Each match is
+text of the source: the Copyright Act or copyright claims in three opinions, the Copyright
+Office budget and reproductive health services in two reports, a reproduced contract clause,
+the permission of a court, and cesium iodide for reproduction into new X-ray panels. No source
+has a notice of the publisher or of another owner.
+
+The seed is the SHA-256 of the 90 source digests in member order. The calibration members:
+
+| Kind | Calibration |
+|---|---|
+| minerals | rubidium, cesium, iron-steel, gold, magnesium-metal |
+| opinions | ca1 24-02002, ca4 24-04340, ca5 24-40662, ca11 24-13668, ca13 23-01663 |
+| reports | 119hrpt383, 119srpt51, 119srpt50, 119srpt58, 119srpt65 |
 
 ## Decisions
 

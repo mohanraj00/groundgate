@@ -10,7 +10,7 @@
                  "src/groundgate/report.py", "src/groundgate/escape.py", "src/groundgate/read/*",
                  "src/groundgate/extract/*", "src/groundgate/adapters/*", "src/groundgate/store/*",
                  "src/groundgate/review/*", "src/groundgate/calibrate/*"],
-  "level1": ["tools/claude_review.py", "SPEC.md", "conformance/*"],
+  "level1": ["tools/claude_review.py", "SPEC.md", "conformance/*", "CHANGELOG.md"],
   "generated": ["uv.lock", "conformance/vectors/*", "conformance/invalid/*", "examples/irs-590a/candidates.json",
                 "examples/irs-590a/receipt.json", "examples/irs-590a/report.html"]
 }

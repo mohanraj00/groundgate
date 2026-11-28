@@ -2075,5 +2075,15 @@
    ]
   }
  },
- "approval": "The owner approved the list on 2026-11-27 with the words \"Yes, keep one\": one report on HR 3944 stays."
+ "approval": "The owner approved the list on 2026-11-27 with the words \"Yes, keep one\": one report on HR 3944 stays.",
+ "notice_review": {
+  "mcs2026-cesium": "I read the 1 match on 2026-11-27: the chapter text says that cesium iodide is recovered for reproduction into new X-ray panels. No notice.",
+  "USCOURTS-ca2-22-02166": "I read the 1 match on 2026-11-27: the opinion says that creditors can need the permission of a foreign court. No notice.",
+  "USCOURTS-ca5-24-20329": "I read the 1 match on 2026-11-27: the opinion says that it reproduces sections of an agreement in the case. No notice.",
+  "USCOURTS-ca6-24-01848": "I read the 2 matches on 2026-11-27: the opinion cites the Copyright Act as an example of statutory damages. No notice.",
+  "USCOURTS-ca6-24-03726": "I read the 26 matches on 2026-11-27: the case is about a federal copyright claim on software. No notice.",
+  "USCOURTS-ca13-24-01997": "I read the 7 matches on 2026-11-27: the opinion is about the copyright claims of the appellant. No notice.",
+  "CRPT-119hrpt161": "I read the 3 matches on 2026-11-27: the report text is about reproductive health services for veterans. No notice.",
+  "CRPT-119srpt38": "I read the 12 matches on 2026-11-27: the report text is about the budget of the Copyright Office and the cost of reproduction of a report. No notice."
+ }
 }

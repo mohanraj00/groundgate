@@ -24,7 +24,6 @@ def test_the_member_list_comes_from_metadata_only() -> None:
     body = json.loads((SET / "members.json").read_text())
     assert body["body_read"] is False
     assert body["download_approved"] == "2026-11-27"
-    assert not (SET / "manifest.json").exists()
     opinions = body["kinds"]["opinions"]["members"]
     reports = body["kinds"]["reports"]["members"]
     assert len(opinions) == len(reports) == 30
@@ -106,3 +105,70 @@ def test_the_usgs_rule_skips_the_appendixes_old_versions_and_copies() -> None:
     chosen = {m["package"] for m in got}
     assert "mcs2026-tin.pdf" in chosen and len(chosen) == 2
     assert {"mcs2026-abrasives.pdf", "mcs2026-zinc.pdf"} & set(reasons)
+
+
+def sources() -> ModuleType:
+    spec = importlib.util.spec_from_file_location("release1_sources", SET / "sources.py")
+    assert spec and spec.loader
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def test_the_identity_check_needs_the_member_on_the_first_page() -> None:
+    identity = sources().identity
+    mineral = {"commodity": "iron-steel"}
+    head = "IRON AND STEEL\n(Data in thousand metric tons)"
+    end = head + "\nU.S. Geological Survey, Mineral Commodity Summaries,\nFebruary 2026"
+    assert identity("minerals", mineral, head, end) is None
+    assert identity("minerals", mineral, head, head) is not None
+    assert identity("minerals", {"commodity": "tin"}, head, end) is not None
+    opinion = {"case": "24-02002"}
+    assert identity("opinions", opinion, "United States Court of Appeals\nNo. 24-2002") is None
+    assert identity("opinions", opinion, "No. 24-20021") is not None
+    report = {"package": "CRPT-119hrpt161"}
+    assert identity("reports", report, "Report\n119\u2013161\nMILITARY") is None
+    assert identity("reports", report, "Report 119\u20131610") is not None
+
+
+def test_the_download_waits_for_the_owner(tmp_path: Path, monkeypatch) -> None:
+    mod = sources()
+    body = json.loads((SET / "members.json").read_text())
+    body["download_approved"] = None
+    here = tmp_path / "set"
+    here.mkdir()
+    (here / "members.json").write_text(json.dumps(body))
+    monkeypatch.setattr(mod, "HERE", here)
+    try:
+        mod.main(["--out", str(tmp_path / "out"), "--meta", str(tmp_path / "meta")])
+    except SystemExit as exc:
+        assert exc.code == 2
+    else:
+        raise AssertionError("the script did not refuse")
+    assert not (here / "manifest.json").exists()
+
+
+def test_the_manifest_pins_each_member_and_the_split_follows_the_seed() -> None:
+    body = json.loads((SET / "members.json").read_text())
+    manifest = json.loads((SET / "manifest.json").read_text())
+    checks = json.loads((SET / "source_checks.json").read_text())["documents"]
+    mod = sources()
+    docs = manifest["documents"]
+    want = [
+        m["package"].removesuffix(".pdf") for k in mod.KINDS for m in body["kinds"][k]["members"]
+    ]
+    assert [d["id"] for d in docs] == want
+    assert manifest["selection_complete"] is True
+    assert all(d["selection_status"] == "frozen_member" for d in docs)
+    assert all(not c["problems"] for c in checks)
+    for c in checks:
+        assert bool(c["notice"]["matches"]) == bool(c["notice"]["review"]), c["id"]
+    seed = mod.split_seed([d["source_sha256"] for d in docs])
+    assert manifest["split_rule"]["seed"] == seed
+    for kind in mod.KINDS:
+        ids = [d["id"] for d in docs if d["kind"] == kind]
+        assert mod.split(ids, seed, 5) == {d["id"]: d["split"] for d in docs if d["kind"] == kind}
+        assert Counter(d["split"] for d in docs if d["kind"] == kind) == {
+            "calibration": 5,
+            "heldout": 25,
+        }
