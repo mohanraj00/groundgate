@@ -51,6 +51,7 @@
  },
  "expected": {
   "served": true,
+  "options": null,
   "mode": "audit",
   "field": "indication",
   "key": null,

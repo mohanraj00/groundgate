@@ -7,8 +7,8 @@
  "splits": {
   "heldout": 14
  },
- "download_approved": null,
- "notice_review": null,
+ "download_approved": "2026-11-27",
+ "notice_review": "I read each match on 2026-11-27. No notice of the publisher is in the sources. 13 parts have no match. The 41 matches of 36 CFR 1258 are regulation text about the fees for records reproductions of NARA.",
  "report_intro": "This split is the second held-out split of the regulatory family (#750). It measures #735 and #736 cause 1. The profile is calibrated on the 5 calibration parts of bench/regulatory.",
  "selection": {
   "date": "2026-11-27",
