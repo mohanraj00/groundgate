@@ -32,7 +32,7 @@ Install [uv](https://docs.astral.sh/uv/), then get the code:
 ```bash
 git clone https://github.com/mohanraj00/groundgate.git
 cd groundgate
-uv sync --no-dev
+uv sync
 ```
 
 Save this as `quickstart.py`, and run it with `uv run python quickstart.py`:
