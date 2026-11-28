@@ -54,7 +54,8 @@ BUILT_IN_SHA256 = {
 BUILT_IN = frozenset({BASE_ID, *(pid for pid, _ in BUILT_IN_SHA256)})  # (SPEC §4.8, L7)
 # the released built-in versions that ``admit`` refuses. A retired version stays in
 # BUILT_IN_SHA256 and in the wheel, and ``verify`` still loads it, so that an old receipt that
-# names it still verifies (docs/design/packs.md §6, §11). No version is retired in 0.10.
+# names it still verifies (docs/design/packs.md §6, §11). Only a new spec version retires a
+# version, and SPEC §4.8 lists it (#373). Spec 0.13 retires no version.
 RETIRED: frozenset[tuple[str, str]] = frozenset()
 
 FORMAT = 1
