@@ -3152,8 +3152,8 @@ Formats of the calibration tools, in [docs/calibrate.md](docs/calibrate.md):
 | `groundgate_split`, `groundgate-split/1` | 1 | "The split file, format 1" and "The output" |
 | `groundgate_calibration_report` | 1 | "The output" |
 | `groundgate_audit` | 1 | "The audit set, format 1" |
-| `groundgate_audit_pick` | 1 | "The log and the pick" describes the pick. Only the code names this member of the output of `audit pick`: `src/groundgate/calibrate/audit.py`. |
-| `groundgate-audit-set/1` | 1 | The prefix of the digest of an audit set. Only the code defines it: `src/groundgate/calibrate/audit.py`. |
+| `groundgate_audit_pick` | 1 | "The log and the pick", the output of `audit pick` |
+| `groundgate-audit-set/1` | 1 | "The audit set, format 1", the prefix of the audit set digest |
 | `groundgate_profile_drafts` | 1 | "The drafts" |
 
 Kinds of the store, in §9. "store.md" is the design note, [docs/design/store.md](docs/design/store.md):
@@ -3207,7 +3207,7 @@ Views and reports:
 | Format | Version | Defined in |
 |---|---|---|
 | `review-queue@1`, `latest-resolutions@1`, `review-measures@1`, `calibrate-labels@1` | 1 | store.md §7.4 |
-| `reading-cache@1` | 1 | store.md §7.4 describes the view `views/readings.json`. Only the code names the format: `src/groundgate/store/maintain.py`. |
+| `reading-cache@1` | 1 | Internal. 1.0 does not freeze this format, and a release can change it with no new spec version. `store rebuild` makes the view `views/readings.json` again, and `read --store` reads a cache in another format, or a row that does not agree, as a miss. store.md §7.4 describes the view. |
 | `groundgate-store-vectors@1`, `store-report@1` | 1 | [conformance/store/README.md](conformance/store/README.md) |
 
 ### 8.6 A receipt of another spec version
