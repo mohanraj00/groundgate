@@ -1274,5 +1274,12 @@
    "license": "A report of a committee of Congress: a US government work (17 U.S.C. 105).",
    "text_sha256": "sha256:eb035e461a9c88c89e6eaa427a1fd75152df8a9065406be666f47050f60114e2"
   }
- ]
+ ],
+ "slots": {
+  "file": "slots.json",
+  "count": 360,
+  "calibration": 60,
+  "heldout": 300,
+  "sha256": "sha256:d434c505b98dcafc8acaec4e613bc3deef43d70a73ecad2d1c0dd40cf7ec8abb"
+ }
 }

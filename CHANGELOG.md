@@ -100,6 +100,9 @@ spec version, and receipts name the spec version they were decided under.
 - `bench/regulatory2` has its 14 sources. The owner approved the download on 2026-11-27.
   Each part passes the source checks, and no source has a notice of the publisher. The
   slots and the labels are not drawn yet (#750).
+- `bench/release1/labels.py` gives each of the 90 members one slot for each field, 360 slots,
+  and runs the blind label passes of `bench/regulatory` on the reader text of each PDF. No
+  label pass has run yet (#748).
 
 ## 0.17.0 (2026-11-19)
 

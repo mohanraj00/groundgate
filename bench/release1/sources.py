@@ -152,8 +152,8 @@ def main(argv: list[str] | None = None) -> int:
     review = body.get("notice_review", {})
     args.out.mkdir(parents=True, exist_ok=True)
     manifest_path = HERE / "manifest.json"
-    manifest = json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
-    pinned = {d["id"]: d for d in manifest.get("documents", [])}
+    old_manifest = json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
+    pinned = {d["id"]: d for d in old_manifest.get("documents", [])}
     docs, checks, files, changed = [], [], {}, []
     for kind in KINDS:
         for member in body["kinds"][kind]["members"]:
@@ -223,6 +223,8 @@ def main(argv: list[str] | None = None) -> int:
         },
         "documents": docs,
     }
+    # a rerun keeps the pins of labels.py and passes.py
+    manifest.update({k: v for k, v in old_manifest.items() if k in ("slots", "labels")})
     manifest_path.write_text(json.dumps(manifest, indent=1, ensure_ascii=False) + "\n")
     out = {"format": "release1-source-checks/1", "documents": checks}
     (HERE / "source_checks.json").write_text(json.dumps(out, indent=1, ensure_ascii=False) + "\n")

@@ -33,6 +33,7 @@ import sys
 import tempfile
 import time
 import xml.etree.ElementTree as ET
+from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor
 from datetime import date
 from decimal import Decimal, InvalidOperation
@@ -109,11 +110,25 @@ def prompt(slots: list[dict[str, Any]], raw: bytes, schema: dict[str, Any], cita
     return "\n\n".join(parts)
 
 
-def claude(text: str) -> str:
+class NotPinned(Exception):
+    """A source file that is not the pinned source."""
+
+
+def xml_prompt(
+    sources: Path, slots: list[dict[str, Any]], schema: dict[str, Any], doc: dict[str, Any]
+) -> str:
+    """The prompt for the slots of one part, from the pinned XML of the part."""
+    raw = (sources / f"{slots[0]['id']}.xml").read_bytes()
+    if "sha256:" + hashlib.sha256(raw).hexdigest() != doc["source_sha256"]:
+        raise NotPinned("the XML is not the pinned source")
+    return prompt(slots, raw, schema, doc["citation"])
+
+
+def claude(text: str, system: str = SYSTEM) -> str:
     cmd = [
         "claude", "-p", "--model", CLAUDE_MODEL, "--tools", "", "--strict-mcp-config",
         "--disable-slash-commands", "--setting-sources", "", "--no-session-persistence",
-        "--system-prompt", SYSTEM, "--output-format", "json",
+        "--system-prompt", system, "--output-format", "json",
     ]  # fmt: skip
     proc = subprocess.run(cmd, input=text, capture_output=True, text=True, timeout=TIMEOUT)
     if proc.returncode != 0:
@@ -121,7 +136,7 @@ def claude(text: str) -> str:
     return str(json.loads(proc.stdout)["result"])
 
 
-def codex(text: str) -> str:
+def codex(text: str, system: str = SYSTEM) -> str:
     with tempfile.TemporaryDirectory(prefix="groundgate-label-") as empty:
         out = Path(empty) / "answer.txt"
         cmd = [
@@ -132,7 +147,7 @@ def codex(text: str) -> str:
         ]  # fmt: skip
         proc = subprocess.run(
             cmd,
-            input=SYSTEM + "\n\nDo not run commands and do not read files.\n\n" + text,
+            input=system + "\n\nDo not run commands and do not read files.\n\n" + text,
             capture_output=True,
             text=True,
             timeout=TIMEOUT,
@@ -187,7 +202,12 @@ def load(work: Path, name: str) -> dict[str, Any]:
     return out
 
 
-def run(args: argparse.Namespace) -> int:
+def run(
+    args: argparse.Namespace,
+    prompt_of: Callable[..., str] = xml_prompt,
+    system: str = SYSTEM,
+) -> int:
+    """Run a pass. Another set family gives its own ``prompt_of`` and ``system``."""
     here = getattr(args, "set", None) or HERE
     data = json.loads((here / "slots.json").read_text())
     manifest = {d["id"]: d for d in json.loads((here / "manifest.json").read_text())["documents"]}
@@ -215,13 +235,13 @@ def run(args: argparse.Namespace) -> int:
         path = args.work / f"{name}.json"
         if path.exists():
             return f"{name}: kept"
-        raw = (args.sources / f"{ss[0]['id']}.xml").read_bytes()
-        if "sha256:" + hashlib.sha256(raw).hexdigest() != manifest[ss[0]["id"]]["source_sha256"]:
-            return f"{name}: the XML is not the pinned source"
-        text = prompt(ss, raw, schema, manifest[ss[0]["id"]]["citation"])
+        try:
+            text = prompt_of(args.sources, ss, schema, manifest[ss[0]["id"]])
+        except NotPinned as e:
+            return f"{name}: {e}"
         for attempt in range(2):
             try:
-                reply = (claude if harness == "claude" else codex)(text)
+                reply = (claude if harness == "claude" else codex)(text, system)
                 answers = parse(reply)
                 if set(answers) != {s["slot"] for s in ss}:
                     raise ValueError("the reply does not answer each slot")

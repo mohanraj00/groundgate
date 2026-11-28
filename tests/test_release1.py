@@ -8,6 +8,8 @@ from collections import Counter
 from pathlib import Path
 from types import ModuleType
 
+import pytest
+
 ROOT = Path(__file__).resolve().parents[1]
 SET = ROOT / "bench" / "release1"
 
@@ -172,3 +174,63 @@ def test_the_manifest_pins_each_member_and_the_split_follows_the_seed() -> None:
             "calibration": 5,
             "heldout": 25,
         }
+
+
+def labels() -> ModuleType:
+    spec = importlib.util.spec_from_file_location("release1_labels", SET / "labels.py")
+    assert spec and spec.loader
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def test_each_member_has_one_slot_for_each_field_and_the_manifest_pins_them() -> None:
+    lab = labels()
+    manifest = json.loads((SET / "manifest.json").read_text())
+    raw = (SET / "slots.json").read_bytes()
+    body = json.loads(raw)
+    assert manifest["slots"]["sha256"] == lab.sha(raw)
+    assert body["slots"] == lab.make_slots(manifest)
+    assert (manifest["slots"]["calibration"], manifest["slots"]["heldout"]) == (60, 300)
+    assert Counter(s["id"] for s in body["slots"]) == {d["id"]: 4 for d in manifest["documents"]}
+    # the field rules are the rules of the README that the owner approved
+    readme = (SET / "README.md").read_text()
+    for field, rule in body["schema"].items():
+        assert f"| `{field}` | {rule['type']} | {rule['description']} |" in readme
+
+
+def test_a_pass_reads_only_the_pinned_pdf_text(tmp_path: Path) -> None:
+    lab = labels()
+    doc = {"id": "x", "kind": "reports", "source_sha256": lab.sha(b"pdf")}
+    (tmp_path / "reports").mkdir()
+    (tmp_path / "reports" / "x.pdf").write_bytes(b"pdf")
+    (tmp_path / "reports" / "x.txt").write_bytes(b"Purpose of the bill.")
+    slot = {"slot": "l001", "kind": "passage", "field": "purpose", "request_text": "purpose of x"}
+    doc["text_sha256"] = lab.sha(b"another text")
+    with pytest.raises(lab.passes.NotPinned, match="reader text"):
+        lab.pdf_prompt(tmp_path, [slot], lab.SCHEMA, doc)
+    doc["text_sha256"] = lab.sha(b"Purpose of the bill.")
+    text = lab.pdf_prompt(tmp_path, [slot], lab.SCHEMA, doc)
+    assert "<<<\nPurpose of the bill.\n>>>" in text and lab.SCHEMA["purpose"]["description"] in text
+    (tmp_path / "reports" / "x.pdf").write_bytes(b"changed")
+    with pytest.raises(lab.passes.NotPinned, match="PDF"):
+        lab.pdf_prompt(tmp_path, [slot], lab.SCHEMA, doc)
+
+
+def test_a_pass_writes_the_answers_of_each_slot(tmp_path: Path, monkeypatch) -> None:
+    lab = labels()
+    seen: list[tuple[str, str]] = []
+
+    def fake(text: str, system: str) -> str:
+        seen.append((text, system))
+        answers = [{"slot": s, "status": "absent"} for s in ("l001", "l002", "l003", "l004")]
+        return json.dumps({"slots": answers})
+
+    monkeypatch.setattr(lab, "reader_text", lambda sources, doc: "the chapter text")
+    monkeypatch.setattr(lab.passes, "claude", fake)
+    work = tmp_path / "work"
+    args = ["run", "--pass", "a", "--sources", str(tmp_path), "--work", str(work)]
+    assert lab.main([*args, "--ids", "mcs2026-rubidium"]) == 0
+    got = json.loads((work / "pass-a" / "mcs2026-rubidium.json").read_text())
+    assert got["harness"] == "claude" and set(got["answers"]) == {"l001", "l002", "l003", "l004"}
+    assert len(seen) == 1 and seen[0][1] == lab.SYSTEM and "the chapter text" in seen[0][0]
