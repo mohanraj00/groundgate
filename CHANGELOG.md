@@ -10,6 +10,10 @@ spec version, and receipts name the spec version they were decided under.
   version, and `verify` still reads a receipt that names it. 1.0 freezes the spec, so the rule
   is in the text now. Spec 0.13 retires no version, so no decision and no receipt changes
   (#373).
+- docs/calibrate.md defines the output of `audit pick` (`groundgate_audit_pick`) and the audit
+  set digest (`groundgate-audit-set/1`), so 1.0 freezes both from a text. SPEC §8.5 says that
+  the reading cache `reading-cache@1` is internal, because `store rebuild` makes it again. No
+  decision and no receipt changes (#725).
 - The benchmark disables web search, apps, browser use and computer use for `codex`. It gives
   `codex` and `claude` only the `PATH`, `HOME` and `CODEX_HOME` environment variables. This change
   applies to new runs only (#422).

@@ -366,6 +366,15 @@ The page for the audit task is not part of this command. It is a separate issue.
 - `A/docs/<doc>.txt`, `A/candidates/<doc>.json` and the optional `A/judgments/<doc>.json`:
   the recorded inputs of each labelled document, as in a gold set.
 
+The audit set digest is `sha256` of `groundgate-audit-set/1:` and the canonical JSON of
+`{"groundgate_audit": 1, "seed", "log", "labels", "files": {doc: {"text", "candidates",
+"judgments"}}}`. `log` and `labels` are the `sha256` of the bytes of `A/log.jsonl` and of
+`A/labels.jsonl`. If there is no labels file, `labels` is the `sha256` of no bytes. `files` has
+each picked document with a label that the measure keeps ("The measure and the rate"). Each
+member of `files` is the `sha256` of the bytes of that file, and `judgments` is null when the
+document has no judgment file. Each digest has the form `sha256:<64 hex digits>`. The report of
+`calibrate measure --audit A` gives this digest as `audit.audit_sha256`.
+
 ```bash
 groundgate calibrate audit add  --audit A --name DOC --receipt receipt.json
 groundgate calibrate audit pick --audit A [--profile P] [--out pick.json]
@@ -401,6 +410,24 @@ task for each field, and one for each key of a field with keys.
 
 A task gives the document and the field only. It has no proposed value, no evidence and no
 outcome, and a field with an admitted value gets the same task as a field with none.
+
+The output of `audit pick` is format 1 of `groundgate_audit_pick`:
+
+```json
+{"groundgate_audit_pick": 1, "seed": "2026-11-audit",
+ "picks": [{"document": "inv-0007", "profile": "sha256:...", "rate": "0.1", "reason": "minimum"}]}
+```
+
+- `seed` is the seed of `A/audit.json`.
+- `picks` has one object for each picked document, in log order. `rate` is the rate of its
+  profile version at that entry, `"0.1"` or `"0.02"`. `reason` is `minimum` if the profile
+  version had less than 30 picked items before the document, and `rate` if not.
+- With `--profile P`, the member `tasks` lists the tasks of each picked document of `P`, in
+  the order of `picks`. The tasks of one document are in the order of the field names, then
+  of the key names. A record field gets no task.
+
+The command writes the object as JSON with an indent of one space. A reader parses the JSON,
+so the white space is not part of the format.
 
 ### The labels
 
