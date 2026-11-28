@@ -1,7 +1,7 @@
 # Regulatory texts: a second held-out split
 
 Status: the owner approved the member list on 2026-11-27 (#750). The 14 sources pass their
-checks. The slots and the labels are not drawn yet.
+checks. The 65 slots are drawn and pinned. The label passes come next.
 
 The held-out split of [`bench/regulatory`](../regulatory/README.md) is spent: the 0.17 claim
 (#686) and the escape analysis (#709) used it. #735 changed how the bench ends a section
@@ -96,6 +96,12 @@ into `manifest.json`. A draw reads the structure only: section headings, defined
 table captions, row positions and column headers. The upper limit is 98 slots: 28
 `section_text`, 14 `definition`, 28 `table_value`, 14 `table_rows` and 14 `effective_date`.
 A part with no definitions section or no table gets fewer slots.
+
+I drew the slots on 2026-11-28 with no model call. The draw gave 65 slots: 28
+`section_text`, 7 `definition`, 12 `table_value`, 4 `table_rows` and 14 `effective_date`. 7
+parts have no definitions section with a defined term in italics. 8 parts have no table with
+a number cell, and 2 more have no table with 2 to 30 body rows. The manifest pins
+[`slots.json`](slots.json) with its digest.
 
 ## Labels
 
