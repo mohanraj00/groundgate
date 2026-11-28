@@ -35,37 +35,18 @@ GitHub holds the CI run of a first-time contributor until a person with write ac
 If one of these is in the diff and the issue does not ask for it, do not approve the run. Ask
 for the reason, and add `changes-requested`. If the diff is clean, approve the run.
 
-## 3. The label `maintainer-approved`
+## 3. Protected paths
 
-The check `outside-pr-paths` fails a fork PR that changes `.github/`, `CHANGELOG.md`, `SPEC.md`
-or `conformance/`, or a `.claude/`, `.codex/`, `.mcp.json`, `AGENTS.md` or `CLAUDE.md` (also the
-`.local.md` and `.override.md` forms) in any directory. It comes from
-[outside-pr-paths.yml](../../.github/workflows/outside-pr-paths.yml) on `main`, on
-`pull_request_target`, so a fork PR cannot change it. It never checks out the PR code, and
-GitHub does not hold its runs for approval.
+A fork PR must not change `.github/`, `CHANGELOG.md`, `SPEC.md` or `conformance/`, or a
+`.agents/`, `.claude/`, `.codex/`, `.mcp.json`, `AGENTS.md`, `CLAUDE.md` or `GEMINI.md` (also the
+`.local.md` and `.override.md` forms) in any directory, unless the owner approved it. These are
+level 1 paths of the shared gates and of [.github/gates.json](../../.github/gates.json).
 
-- The check is a required check in the ruleset on `main`. On the fork PR #447, it ran on the PR
-  head, and the merge waited until its last run passed.
-- Only the maintainer adds or removes `maintainer-approved`. The job accepts the label only if
-  the login `mohanraj00` added it. AGENTS.md says that an agent never adds or removes it.
-- The label covers the PR head at the time it is added. If the head changed before the job ran,
-  the job fails.
-- The label counts only in the run that adding it starts. Any other event, such as a push, a
-  reopen, an edit, or a change to another label, checks the files without it, so the check can
-  go red.
-- If the maintainer approved the change on its issue, read the diff, and add
-  `maintainer-approved` last, after all other labels. After any other label change or push,
-  read the diff again, then remove the label and add it again.
+The `acceptance` check of the shared gates protects them. Its rules are in the Fork PRs section
+of [docs/STANDARD.md](../STANDARD.md):
 
-Residual risks:
-
-- The agents use the maintainer's login, so the label check cannot tell an agent from the
-  maintainer. Only the rule in AGENTS.md stops an agent. A second account for the agents is a
-  later choice of the maintainer.
-- The label covers the head at the time it is added, not a commit that the maintainer named. If
-  the author pushes after the maintainer's last read and before the label, the label covers a
-  head that the maintainer did not read. Check the head commit on the PR page right before you
-  add the label.
+- The linked issue has the label `accepted`. Only the owner adds it.
+- The owner approves the current head and base in stage 2. A push removes this approval.
 
 ## 4. Review
 
@@ -90,7 +71,3 @@ Each outside PR ends in one of these ways:
   closing comment says that the author can reopen it.
 
 Remove `changes-requested` when the author pushes the changes. Keep `external` on the PR.
-
-Each of these label changes runs `outside-pr-paths` again without the approval. On a PR that
-needs `maintainer-approved`, add `maintainer-approved` last. Merge only after the run of the last
-label change passes. Before that, GitHub blocks the merge.

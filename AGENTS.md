@@ -31,7 +31,6 @@ this file.
 - Who merges a PR is in the Approvals section of [docs/STANDARD.md](docs/STANDARD.md). The macOS
   jobs are not required.
 - Outside PRs (from forks) follow [docs/maintainers/outside-prs.md](docs/maintainers/outside-prs.md).
-- An agent never adds or removes the label `maintainer-approved`.
 - One agent runs each milestone: it gives each issue to an agent, keeps the milestone's plan issue
   current, and finishes what is left. The maintainer names the runner.
 - `CLAUDE.local.md` holds local rules that are not in git. If it is there, read it before you

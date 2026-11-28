@@ -33,12 +33,11 @@ and these steps make it fast:
 3. Open the PR. CI runs on the PR after I read the diff and approve the run.
 4. Do not edit `CHANGELOG.md`. Put the changelog line in a `## Changelog` section of the PR body
    instead, or write "none" if users will not notice the change.
-5. Do not change `.github/`, `SPEC.md` or `conformance/`, or a `.claude/`, `.codex/`,
-   `.mcp.json`, `AGENTS.md` or `CLAUDE.md` (also the `.local.md` and `.override.md` forms) in any
-   directory, unless the maintainer approved it on an issue. The check `outside-pr-paths` fails a
-   fork PR that changes these paths or `CHANGELOG.md`, until I add the label
-   `maintainer-approved`. After each new push, I read the new diff, then remove the label and add
-   it again.
+5. Do not change `.github/`, `CHANGELOG.md`, `SPEC.md` or `conformance/`, or a `.agents/`,
+   `.claude/`, `.codex/`, `.mcp.json`, `AGENTS.md`, `CLAUDE.md` or `GEMINI.md` (also the
+   `.local.md` and `.override.md` forms) in any directory, unless the maintainer approved it on
+   an issue. The `acceptance` check fails a fork PR that changes these paths, until the issue has
+   the label `accepted` and I approve the current head.
 
 What happens next is in [docs/maintainers/outside-prs.md](docs/maintainers/outside-prs.md): who
 reviews the PR, the labels, and when an open PR closes.

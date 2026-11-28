@@ -5,6 +5,9 @@ spec version, and receipts name the spec version they were decided under.
 
 ## Unreleased
 
+- CI pins the shared gates `v2026.11.0`. The `outside-pr-paths` check is gone: the
+  `acceptance` check of the shared gates now protects the same paths of a fork PR, and
+  `CHANGELOG.md` is a level 1 path (#771).
 - The benchmark disables web search, apps, browser use and computer use for `codex`. It gives
   `codex` and `claude` only the `PATH`, `HOME` and `CODEX_HOME` environment variables. This change
   applies to new runs only (#422).
