@@ -344,6 +344,61 @@ def vectors(key_of: KeyOf = key, jcs_of: JcsOf = jcs) -> list[Vector]:
         get("text@1", k, error="not-found"),
         read(["deleted"], result=[gone, again]),
     )
+
+    # check_manifest
+    text = key_of("text@1", _TEXT)
+    source = key_of("source@1", _TEXT)
+    reading_1: dict[str, Any] = {
+        "format": "reading@1",
+        "source": "sha256:" + "1" * 64,
+        "reader": {"name": "groundgate.read", "version": "0.13.0"},
+        "options": {"pages": None},
+        "text": text,
+        "layout": "sha256:" + "2" * 64,
+        "document": "sha256:" + "3" * 64,
+    }
+    reading_2: dict[str, Any] = {
+        "format": "reading@2",
+        "source": source,
+        "reader": {"name": "groundgate.read", "version": "0.17.0"},
+        "options": {"pages": None},
+        "text": text,
+        "layout": None,
+        "document": None,
+        "warnings": [],
+        "completeness": {"status": "complete", "missing": []},
+        "source_format": "text",
+    }
+    packet_nulls: dict[str, Any] = {
+        "format": "packet@1",
+        "spec": "0.13",
+        "document": {"id": None, "source": None, "text": text},
+        "reading": None,
+        "schema": key_of("schema@1", _SCHEMA),
+        "policy": None,
+        "references": [],
+        "packs": [],
+        "candidates": key_of("candidates@1", b"[]"),
+        "judgments": None,
+        "receipt": "sha256:" + "4" * 64,
+        "run": None,
+    }
+    packet_pin: dict[str, Any] = {
+        **packet_nulls,
+        "document": {"id": "lease-0417", "source": source, "text": text},
+        "reading": key_of("reading@2", jcs_of(reading_2).encode("utf-8")),
+        "pin": "sha256:" + "5" * 64,
+    }
+    for name, manifest, about in (
+        ("reading-1", reading_1, "The reading has layout and document keys."),
+        ("reading-2", reading_2, "The reading has null layout and document members."),
+        ("packet-nulls", packet_nulls, "The packet has null values in all nullable members."),
+        ("packet-pin", packet_pin, "The packet has a source pin key."),
+    ):
+        kind = manifest["format"]
+        data = jcs_of(manifest).encode("utf-8")
+        k = key_of(kind, data)
+        add("check_manifest", name, about, put(kind, data, result=k), get(kind, k, result=data))
     return out
 
 
@@ -545,6 +600,11 @@ def check_forget(make: Make, vecs: list[Vector] | None = None) -> None:
     _run_check("check_forget", make, vecs)
 
 
+def check_manifest(make: Make, vecs: list[Vector] | None = None) -> None:
+    """``put`` gives the key of each manifest. ``get`` gives the same bytes."""
+    _run_check("check_manifest", make, vecs)
+
+
 CHECKS: tuple[Callable[..., None], ...] = (
     check_put_get,
     check_put_refuses,
@@ -554,6 +614,7 @@ CHECKS: tuple[Callable[..., None], ...] = (
     check_chain,
     check_append_refuses,
     check_forget,
+    check_manifest,
 )
 
 

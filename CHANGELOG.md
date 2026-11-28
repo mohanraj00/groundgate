@@ -5,6 +5,8 @@ spec version, and receipts name the spec version they were decided under.
 
 ## Unreleased
 
+- The store contract has four new vectors for the reading and packet manifests in SPEC §9.3.
+  They check the key from `put` and the bytes from `get` (#727).
 - The benchmark disables web search, apps, browser use and computer use for `codex`. It gives
   `codex` and `claude` only the `PATH`, `HOME` and `CODEX_HOME` environment variables. This change
   applies to new runs only (#422).

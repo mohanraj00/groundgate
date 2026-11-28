@@ -29,14 +29,16 @@ def key_of(kind: str, data: bytes) -> str:
 
 
 def jcs_of(value: Any) -> str:
-    """RFC 8785 for the values of the vectors: objects, ASCII strings, small integers and null.
-    Sorted members with no spaces give the same text for these values."""
+    """Use RFC 8785 for objects, arrays, ASCII strings, small integers and null."""
 
     def plain(v: Any) -> None:
         if isinstance(v, dict):
             for m, x in v.items():
                 plain(m)
                 plain(x)
+        elif isinstance(v, list):
+            for item in v:
+                plain(item)
         elif isinstance(v, str):
             if not v.isascii():
                 raise ValueError(f"{v!r} is not ASCII")

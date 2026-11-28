@@ -117,6 +117,20 @@ the lowercase hex digits of the SHA-256 digest.
   `reason` and `time`, plus the three chain members. A `forget(key, reason)` call adds no other
   member.
 
+## Manifests
+
+`check_manifest` runs four vectors for the manifests in SPEC §9.3. `put` gives the key of
+each manifest. `get` gives the same bytes.
+
+- `manifest/reading-1` has all `reading@1` members, with keys for `layout` and `document`.
+- `manifest/reading-2` has null `layout` and `document` members. It has `completeness` and
+  `source_format`.
+- `manifest/packet-nulls` has null values in all nullable `packet@1` members.
+- `manifest/packet-pin` has a `pin` member with a source pin key.
+
+Each vector stores only its manifest. `store check` checks the manifest members and the
+objects that the manifest names.
+
 ## Forget
 
 These rules have vectors in `check_forget`:
