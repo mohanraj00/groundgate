@@ -1,0 +1,5 @@
+[
+  {"field": "ira_limit", "value": "7000", "unit": "USD", "evidence": [{"text": "$7,000"}]},
+  {"field": "ira_limit", "value": "70000", "unit": "USD", "evidence": [{"text": "$7,000"}]},
+  {"field": "phaseout_start", "value": "79000", "unit": "USD", "evidence": [{"text": "$79,000"}]}
+]

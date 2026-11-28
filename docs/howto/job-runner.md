@@ -1,5 +1,7 @@
 # Run groundgate under a job runner
 
+Release: main, before 1.0.0 (spec 0.13).
+
 A job runner starts a process, gives it limits and removes it when it ends. A container, a batch
 queue and a cluster job are job runners. This page runs an extraction as such a job, and it keeps
 a receipt that verifies after the job ends.

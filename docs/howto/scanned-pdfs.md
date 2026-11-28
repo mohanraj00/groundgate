@@ -1,5 +1,7 @@
 # Read scanned PDFs
 
+Release: main, before 1.0.0 (spec 0.13).
+
 A scanned page is an image. It has no text layer, so `groundgate read` gives no text for it
 until OCR reads the image. An OCR word can be wrong, and the text is then the reader's text, not
 the printed page. This page shows how to read a scan, what groundgate does with the words that

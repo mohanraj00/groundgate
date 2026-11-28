@@ -1,5 +1,7 @@
 # Read documents, and DOCX and XLSX files
 
+Release: main, before 1.0.0 (spec 0.13).
+
 `groundgate read` turns a file into the text that the extractor and `admit` both read. With
 `--document`, it also writes `document@1`: the same text plus a list of nodes, such as the
 headings, the tables and the cells. This page shows how to read a file with its nodes, what the

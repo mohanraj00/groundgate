@@ -1,5 +1,7 @@
 # Read tasks and send answers over HTTP
 
+Release: main, before 1.0.0 (spec 0.13).
+
 `groundgate review serve` gives a person a page for the review tasks of a store
 ([review.md](review.md), part 9). The review API gives the same tasks to a program. A script, a
 job or your own page lists the open tasks, reads a task with its document, and sends an answer.
@@ -48,8 +50,9 @@ the first record. The review page example also accepts `--first-agree N` and use
 with `agree` set to 1.
 
 The server uses `state/review-api.lock` to permit one review API server per store.
-If a crash leaves this file in the store, the next start stops with an error.
-Delete this file only when no review API server runs on this store.
+The server removes the file only when it stops on Ctrl-C (SIGINT). If a crash or a SIGTERM
+leaves this file in the store, the next start stops with an error. Delete this file only when no
+review API server runs on this store.
 
 ## 2. List the tasks, read one, and answer it
 

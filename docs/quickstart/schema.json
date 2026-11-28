@@ -1,0 +1,6 @@
+{
+  "fields": {
+    "ira_limit": {"type": "integer", "unit": "USD"},
+    "phaseout_start": {"type": "integer", "unit": "USD"}
+  }
+}

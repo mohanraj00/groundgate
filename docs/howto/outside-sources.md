@@ -1,5 +1,7 @@
 # Use references, web sources and the model's knowledge
 
+Release: main, before 1.0.0 (spec 0.13).
+
 Some right values are not in the document. A notice says "your standard deduction is in the rate
 table", and the number is in the table. groundgate accepts three other sources of evidence:
 

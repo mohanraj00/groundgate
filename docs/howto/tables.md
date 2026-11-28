@@ -1,5 +1,7 @@
 # Check values in financial tables
 
+Release: main, before 1.0.0 (spec 0.13).
+
 A financial table puts many similar numbers close together. A right value needs its row, its
 column, its scale and often its sign. Each of these parts is at a different place in the table.
 This page shows how to make groundgate check every part. The table and the numbers are made up.

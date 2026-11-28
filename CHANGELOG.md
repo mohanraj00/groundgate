@@ -5,6 +5,9 @@ spec version, and receipts name the spec version they were decided under.
 
 ## Unreleased
 
+- The docs have one page for each command (`docs/cli/`) and each public function (`docs/api/`),
+  each with an example that runs. The README is shorter and has a quickstart that runs from a
+  clean checkout. Each page names the release that it describes (#772).
 - CI pins the shared gates `v2026.11.0`. The `outside-pr-paths` check is gone: the
   `acceptance` check of the shared gates now protects the same paths of a fork PR, and
   `CHANGELOG.md` is a level 1 path (#771).

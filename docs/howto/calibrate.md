@@ -1,5 +1,7 @@
 # Measure a judge's thresholds
 
+Release: main, before 1.0.0 (spec 0.13).
+
 A judge is a model that answers one question about a value. groundgate never runs a judge. It
 reads the judge's answers as recorded judgments, and the policy sets the threshold at which an
 answer counts. A threshold belongs to one model and one kind of document, so groundgate ships

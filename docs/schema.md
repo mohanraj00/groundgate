@@ -1,5 +1,7 @@
 # How to write a schema
 
+Release: main, before 1.0.0 (spec 0.13).
+
 The schema tells groundgate what each field means: its type, its unit, its bounds, and how the
 text may state it. groundgate checks every candidate value against its field. A good schema
 admits a right value and sends a doubtful one to a person. This page shows how to write one.

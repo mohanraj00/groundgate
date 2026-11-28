@@ -1,5 +1,7 @@
 # Review flagged facts and keep receipts
 
+Release: main, before 1.0.0 (spec 0.13).
+
 groundgate admits what it can check and sends the rest to a person. This page shows how to give
 that person a review page, how to keep the receipts, and how to verify a receipt later. The lease
 text and the numbers are made up.
@@ -127,8 +129,8 @@ groundgate verify receipt.json doc.txt schema.json candidates.json
 groundgate report receipt.json doc.txt schema.json candidates.json -o report.html
 ```
 
-Give `verify` and `report` the same `--policy`, `--judgments`, `--references` and
-`--document-source` that you gave `admit`. `verify` prints "receipt verified" and exits 0, or
+Give `verify` and `report` each input option that you gave `admit`, such as `--policy`,
+`--judgments`, `--references`, `--document-source`, `--pack`, `--pin` and `--doubt`. `verify` prints "receipt verified" and exits 0, or
 prints each problem and exits 1. Invalid input exits 2.
 
 With a store, you keep one key, not five files. `read --store` writes the source, the text and
@@ -270,7 +272,7 @@ The card gives the codes and the cited text. For each common code, the person ch
 
 If the same code comes back on many facts, change the input, not the review. The
 [guide](../guide.md#when-a-fact-is-rejected-or-flagged) says what to change for each code. The
-page [Send reasons back to the extractor](feedback.md) shows how to ask the extractor for the
+page [Run extraction and evidence repairs](feedback.md) shows how to ask the extractor for the
 missing parts.
 
 ## 8. Keep the inputs in a store

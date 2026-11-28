@@ -1,5 +1,7 @@
 # Use only the core: admit, verify and the receipt
 
+Release: main, before 1.0.0 (spec 0.13).
+
 groundgate is one package, but you do not need all of it. If your app already has a reader, a
 model loop and a review queue, you need three things: `admit`, `verify` and the receipt. They are
 in the core, and the core has no dependencies. This page uses only them.
