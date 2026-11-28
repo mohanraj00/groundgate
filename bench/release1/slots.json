@@ -1,0 +1,3296 @@
+{
+ "format": "release1-slots/1",
+ "draw": "no draw: one slot for each field of each member, in manifest order",
+ "schema": {
+  "us_production": {
+   "type": "number",
+   "description": "The first production value of the latest year in the table \"Salient Statistics, United States\", with the unit of the table. Absent if the table withholds the value (W) or gives none."
+  },
+  "world_reserves": {
+   "type": "number",
+   "description": "The world total of the reserves column in the table \"World Mine Production and Reserves\", with its unit. Absent if the table states no world total."
+  },
+  "events_trends": {
+   "type": "passage",
+   "description": "The full text of the section \"Events, Trends, and Issues\"."
+  },
+  "salient_statistics": {
+   "type": "record",
+   "description": "The rows of the table \"Salient Statistics, United States\", one record for each row, with the member `item` and one member for each year column."
+  },
+  "decision_date": {
+   "type": "date",
+   "description": "The date on which the court filed or decided the opinion, as the opinion states it."
+  },
+  "disposition": {
+   "type": "passage",
+   "description": "The last paragraph of the opinion of the court that states its disposition (for example affirmed, reversed or remanded)."
+  },
+  "award_amount": {
+   "type": "number",
+   "description": "The one sum of money that the judgment awards or affirms, with its currency. If the opinion states no such sum, or more than one, the field is absent."
+  },
+  "panel": {
+   "type": "record",
+   "description": "The judges of the panel that the caption or the first page names, one record for each, with the members `name` and `role` (author, concurring or dissenting; null if not stated)."
+  },
+  "report_date": {
+   "type": "date",
+   "description": "The date on which the report was submitted or ordered printed, as its first page states it."
+  },
+  "purpose": {
+   "type": "passage",
+   "description": "The text of the section on the purpose and summary of the bill."
+  },
+  "cbo_total": {
+   "type": "number",
+   "description": "The total of the CBO cost estimate over its full period, in the unit that the table states. Absent if the report has no CBO estimate."
+  },
+  "cbo_table": {
+   "type": "record",
+   "description": "The rows of the CBO table of estimated budgetary effects, one record for each row, with one member for each column header. Absent if the report has no such table."
+  }
+ },
+ "slots": [
+  {
+   "slot": "l001",
+   "id": "mcs2026-rubidium",
+   "split": "calibration",
+   "doc_kind": "minerals",
+   "field": "us_production",
+   "kind": "number",
+   "request_text": "The value of us_production in mcs2026-rubidium, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l002",
+   "id": "mcs2026-rubidium",
+   "split": "calibration",
+   "doc_kind": "minerals",
+   "field": "world_reserves",
+   "kind": "number",
+   "request_text": "The value of world_reserves in mcs2026-rubidium, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l003",
+   "id": "mcs2026-rubidium",
+   "split": "calibration",
+   "doc_kind": "minerals",
+   "field": "events_trends",
+   "kind": "passage",
+   "request_text": "The value of events_trends in mcs2026-rubidium, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l004",
+   "id": "mcs2026-rubidium",
+   "split": "calibration",
+   "doc_kind": "minerals",
+   "field": "salient_statistics",
+   "kind": "record",
+   "request_text": "The value of salient_statistics in mcs2026-rubidium, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l005",
+   "id": "mcs2026-germanium",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "us_production",
+   "kind": "number",
+   "request_text": "The value of us_production in mcs2026-germanium, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l006",
+   "id": "mcs2026-germanium",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "world_reserves",
+   "kind": "number",
+   "request_text": "The value of world_reserves in mcs2026-germanium, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l007",
+   "id": "mcs2026-germanium",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "events_trends",
+   "kind": "passage",
+   "request_text": "The value of events_trends in mcs2026-germanium, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l008",
+   "id": "mcs2026-germanium",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "salient_statistics",
+   "kind": "record",
+   "request_text": "The value of salient_statistics in mcs2026-germanium, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l009",
+   "id": "mcs2026-cesium",
+   "split": "calibration",
+   "doc_kind": "minerals",
+   "field": "us_production",
+   "kind": "number",
+   "request_text": "The value of us_production in mcs2026-cesium, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l010",
+   "id": "mcs2026-cesium",
+   "split": "calibration",
+   "doc_kind": "minerals",
+   "field": "world_reserves",
+   "kind": "number",
+   "request_text": "The value of world_reserves in mcs2026-cesium, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l011",
+   "id": "mcs2026-cesium",
+   "split": "calibration",
+   "doc_kind": "minerals",
+   "field": "events_trends",
+   "kind": "passage",
+   "request_text": "The value of events_trends in mcs2026-cesium, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l012",
+   "id": "mcs2026-cesium",
+   "split": "calibration",
+   "doc_kind": "minerals",
+   "field": "salient_statistics",
+   "kind": "record",
+   "request_text": "The value of salient_statistics in mcs2026-cesium, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l013",
+   "id": "mcs2026-helium",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "us_production",
+   "kind": "number",
+   "request_text": "The value of us_production in mcs2026-helium, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l014",
+   "id": "mcs2026-helium",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "world_reserves",
+   "kind": "number",
+   "request_text": "The value of world_reserves in mcs2026-helium, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l015",
+   "id": "mcs2026-helium",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "events_trends",
+   "kind": "passage",
+   "request_text": "The value of events_trends in mcs2026-helium, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l016",
+   "id": "mcs2026-helium",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "salient_statistics",
+   "kind": "record",
+   "request_text": "The value of salient_statistics in mcs2026-helium, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l017",
+   "id": "mcs2026-iron-steel",
+   "split": "calibration",
+   "doc_kind": "minerals",
+   "field": "us_production",
+   "kind": "number",
+   "request_text": "The value of us_production in mcs2026-iron-steel, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l018",
+   "id": "mcs2026-iron-steel",
+   "split": "calibration",
+   "doc_kind": "minerals",
+   "field": "world_reserves",
+   "kind": "number",
+   "request_text": "The value of world_reserves in mcs2026-iron-steel, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l019",
+   "id": "mcs2026-iron-steel",
+   "split": "calibration",
+   "doc_kind": "minerals",
+   "field": "events_trends",
+   "kind": "passage",
+   "request_text": "The value of events_trends in mcs2026-iron-steel, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l020",
+   "id": "mcs2026-iron-steel",
+   "split": "calibration",
+   "doc_kind": "minerals",
+   "field": "salient_statistics",
+   "kind": "record",
+   "request_text": "The value of salient_statistics in mcs2026-iron-steel, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l021",
+   "id": "mcs2026-clays",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "us_production",
+   "kind": "number",
+   "request_text": "The value of us_production in mcs2026-clays, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l022",
+   "id": "mcs2026-clays",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "world_reserves",
+   "kind": "number",
+   "request_text": "The value of world_reserves in mcs2026-clays, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l023",
+   "id": "mcs2026-clays",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "events_trends",
+   "kind": "passage",
+   "request_text": "The value of events_trends in mcs2026-clays, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l024",
+   "id": "mcs2026-clays",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "salient_statistics",
+   "kind": "record",
+   "request_text": "The value of salient_statistics in mcs2026-clays, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l025",
+   "id": "mcs2026-molybdenum",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "us_production",
+   "kind": "number",
+   "request_text": "The value of us_production in mcs2026-molybdenum, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l026",
+   "id": "mcs2026-molybdenum",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "world_reserves",
+   "kind": "number",
+   "request_text": "The value of world_reserves in mcs2026-molybdenum, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l027",
+   "id": "mcs2026-molybdenum",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "events_trends",
+   "kind": "passage",
+   "request_text": "The value of events_trends in mcs2026-molybdenum, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l028",
+   "id": "mcs2026-molybdenum",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "salient_statistics",
+   "kind": "record",
+   "request_text": "The value of salient_statistics in mcs2026-molybdenum, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l029",
+   "id": "mcs2026-phosphate",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "us_production",
+   "kind": "number",
+   "request_text": "The value of us_production in mcs2026-phosphate, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l030",
+   "id": "mcs2026-phosphate",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "world_reserves",
+   "kind": "number",
+   "request_text": "The value of world_reserves in mcs2026-phosphate, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l031",
+   "id": "mcs2026-phosphate",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "events_trends",
+   "kind": "passage",
+   "request_text": "The value of events_trends in mcs2026-phosphate, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l032",
+   "id": "mcs2026-phosphate",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "salient_statistics",
+   "kind": "record",
+   "request_text": "The value of salient_statistics in mcs2026-phosphate, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l033",
+   "id": "mcs2026-tin",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "us_production",
+   "kind": "number",
+   "request_text": "The value of us_production in mcs2026-tin, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l034",
+   "id": "mcs2026-tin",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "world_reserves",
+   "kind": "number",
+   "request_text": "The value of world_reserves in mcs2026-tin, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l035",
+   "id": "mcs2026-tin",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "events_trends",
+   "kind": "passage",
+   "request_text": "The value of events_trends in mcs2026-tin, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l036",
+   "id": "mcs2026-tin",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "salient_statistics",
+   "kind": "record",
+   "request_text": "The value of salient_statistics in mcs2026-tin, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l037",
+   "id": "mcs2026-garnet",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "us_production",
+   "kind": "number",
+   "request_text": "The value of us_production in mcs2026-garnet, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l038",
+   "id": "mcs2026-garnet",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "world_reserves",
+   "kind": "number",
+   "request_text": "The value of world_reserves in mcs2026-garnet, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l039",
+   "id": "mcs2026-garnet",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "events_trends",
+   "kind": "passage",
+   "request_text": "The value of events_trends in mcs2026-garnet, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l040",
+   "id": "mcs2026-garnet",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "salient_statistics",
+   "kind": "record",
+   "request_text": "The value of salient_statistics in mcs2026-garnet, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l041",
+   "id": "mcs2026-nickel",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "us_production",
+   "kind": "number",
+   "request_text": "The value of us_production in mcs2026-nickel, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l042",
+   "id": "mcs2026-nickel",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "world_reserves",
+   "kind": "number",
+   "request_text": "The value of world_reserves in mcs2026-nickel, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l043",
+   "id": "mcs2026-nickel",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "events_trends",
+   "kind": "passage",
+   "request_text": "The value of events_trends in mcs2026-nickel, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l044",
+   "id": "mcs2026-nickel",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "salient_statistics",
+   "kind": "record",
+   "request_text": "The value of salient_statistics in mcs2026-nickel, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l045",
+   "id": "mcs2026-rhenium",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "us_production",
+   "kind": "number",
+   "request_text": "The value of us_production in mcs2026-rhenium, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l046",
+   "id": "mcs2026-rhenium",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "world_reserves",
+   "kind": "number",
+   "request_text": "The value of world_reserves in mcs2026-rhenium, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l047",
+   "id": "mcs2026-rhenium",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "events_trends",
+   "kind": "passage",
+   "request_text": "The value of events_trends in mcs2026-rhenium, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l048",
+   "id": "mcs2026-rhenium",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "salient_statistics",
+   "kind": "record",
+   "request_text": "The value of salient_statistics in mcs2026-rhenium, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l049",
+   "id": "mcs2026-tantalum",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "us_production",
+   "kind": "number",
+   "request_text": "The value of us_production in mcs2026-tantalum, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l050",
+   "id": "mcs2026-tantalum",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "world_reserves",
+   "kind": "number",
+   "request_text": "The value of world_reserves in mcs2026-tantalum, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l051",
+   "id": "mcs2026-tantalum",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "events_trends",
+   "kind": "passage",
+   "request_text": "The value of events_trends in mcs2026-tantalum, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l052",
+   "id": "mcs2026-tantalum",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "salient_statistics",
+   "kind": "record",
+   "request_text": "The value of salient_statistics in mcs2026-tantalum, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l053",
+   "id": "mcs2026-perlite",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "us_production",
+   "kind": "number",
+   "request_text": "The value of us_production in mcs2026-perlite, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l054",
+   "id": "mcs2026-perlite",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "world_reserves",
+   "kind": "number",
+   "request_text": "The value of world_reserves in mcs2026-perlite, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l055",
+   "id": "mcs2026-perlite",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "events_trends",
+   "kind": "passage",
+   "request_text": "The value of events_trends in mcs2026-perlite, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l056",
+   "id": "mcs2026-perlite",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "salient_statistics",
+   "kind": "record",
+   "request_text": "The value of salient_statistics in mcs2026-perlite, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l057",
+   "id": "mcs2026-diamond",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "us_production",
+   "kind": "number",
+   "request_text": "The value of us_production in mcs2026-diamond, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l058",
+   "id": "mcs2026-diamond",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "world_reserves",
+   "kind": "number",
+   "request_text": "The value of world_reserves in mcs2026-diamond, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l059",
+   "id": "mcs2026-diamond",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "events_trends",
+   "kind": "passage",
+   "request_text": "The value of events_trends in mcs2026-diamond, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l060",
+   "id": "mcs2026-diamond",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "salient_statistics",
+   "kind": "record",
+   "request_text": "The value of salient_statistics in mcs2026-diamond, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l061",
+   "id": "mcs2026-indium",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "us_production",
+   "kind": "number",
+   "request_text": "The value of us_production in mcs2026-indium, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l062",
+   "id": "mcs2026-indium",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "world_reserves",
+   "kind": "number",
+   "request_text": "The value of world_reserves in mcs2026-indium, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l063",
+   "id": "mcs2026-indium",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "events_trends",
+   "kind": "passage",
+   "request_text": "The value of events_trends in mcs2026-indium, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l064",
+   "id": "mcs2026-indium",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "salient_statistics",
+   "kind": "record",
+   "request_text": "The value of salient_statistics in mcs2026-indium, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l065",
+   "id": "mcs2026-mercury",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "us_production",
+   "kind": "number",
+   "request_text": "The value of us_production in mcs2026-mercury, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l066",
+   "id": "mcs2026-mercury",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "world_reserves",
+   "kind": "number",
+   "request_text": "The value of world_reserves in mcs2026-mercury, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l067",
+   "id": "mcs2026-mercury",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "events_trends",
+   "kind": "passage",
+   "request_text": "The value of events_trends in mcs2026-mercury, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l068",
+   "id": "mcs2026-mercury",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "salient_statistics",
+   "kind": "record",
+   "request_text": "The value of salient_statistics in mcs2026-mercury, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l069",
+   "id": "mcs2026-iodine",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "us_production",
+   "kind": "number",
+   "request_text": "The value of us_production in mcs2026-iodine, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l070",
+   "id": "mcs2026-iodine",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "world_reserves",
+   "kind": "number",
+   "request_text": "The value of world_reserves in mcs2026-iodine, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l071",
+   "id": "mcs2026-iodine",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "events_trends",
+   "kind": "passage",
+   "request_text": "The value of events_trends in mcs2026-iodine, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l072",
+   "id": "mcs2026-iodine",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "salient_statistics",
+   "kind": "record",
+   "request_text": "The value of salient_statistics in mcs2026-iodine, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l073",
+   "id": "mcs2026-sand-industrial",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "us_production",
+   "kind": "number",
+   "request_text": "The value of us_production in mcs2026-sand-industrial, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l074",
+   "id": "mcs2026-sand-industrial",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "world_reserves",
+   "kind": "number",
+   "request_text": "The value of world_reserves in mcs2026-sand-industrial, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l075",
+   "id": "mcs2026-sand-industrial",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "events_trends",
+   "kind": "passage",
+   "request_text": "The value of events_trends in mcs2026-sand-industrial, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l076",
+   "id": "mcs2026-sand-industrial",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "salient_statistics",
+   "kind": "record",
+   "request_text": "The value of salient_statistics in mcs2026-sand-industrial, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l077",
+   "id": "mcs2026-silver",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "us_production",
+   "kind": "number",
+   "request_text": "The value of us_production in mcs2026-silver, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l078",
+   "id": "mcs2026-silver",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "world_reserves",
+   "kind": "number",
+   "request_text": "The value of world_reserves in mcs2026-silver, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l079",
+   "id": "mcs2026-silver",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "events_trends",
+   "kind": "passage",
+   "request_text": "The value of events_trends in mcs2026-silver, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l080",
+   "id": "mcs2026-silver",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "salient_statistics",
+   "kind": "record",
+   "request_text": "The value of salient_statistics in mcs2026-silver, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l081",
+   "id": "mcs2026-zirconium-hafnium",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "us_production",
+   "kind": "number",
+   "request_text": "The value of us_production in mcs2026-zirconium-hafnium, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l082",
+   "id": "mcs2026-zirconium-hafnium",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "world_reserves",
+   "kind": "number",
+   "request_text": "The value of world_reserves in mcs2026-zirconium-hafnium, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l083",
+   "id": "mcs2026-zirconium-hafnium",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "events_trends",
+   "kind": "passage",
+   "request_text": "The value of events_trends in mcs2026-zirconium-hafnium, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l084",
+   "id": "mcs2026-zirconium-hafnium",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "salient_statistics",
+   "kind": "record",
+   "request_text": "The value of salient_statistics in mcs2026-zirconium-hafnium, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l085",
+   "id": "mcs2026-gold",
+   "split": "calibration",
+   "doc_kind": "minerals",
+   "field": "us_production",
+   "kind": "number",
+   "request_text": "The value of us_production in mcs2026-gold, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l086",
+   "id": "mcs2026-gold",
+   "split": "calibration",
+   "doc_kind": "minerals",
+   "field": "world_reserves",
+   "kind": "number",
+   "request_text": "The value of world_reserves in mcs2026-gold, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l087",
+   "id": "mcs2026-gold",
+   "split": "calibration",
+   "doc_kind": "minerals",
+   "field": "events_trends",
+   "kind": "passage",
+   "request_text": "The value of events_trends in mcs2026-gold, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l088",
+   "id": "mcs2026-gold",
+   "split": "calibration",
+   "doc_kind": "minerals",
+   "field": "salient_statistics",
+   "kind": "record",
+   "request_text": "The value of salient_statistics in mcs2026-gold, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l089",
+   "id": "mcs2026-arsenic",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "us_production",
+   "kind": "number",
+   "request_text": "The value of us_production in mcs2026-arsenic, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l090",
+   "id": "mcs2026-arsenic",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "world_reserves",
+   "kind": "number",
+   "request_text": "The value of world_reserves in mcs2026-arsenic, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l091",
+   "id": "mcs2026-arsenic",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "events_trends",
+   "kind": "passage",
+   "request_text": "The value of events_trends in mcs2026-arsenic, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l092",
+   "id": "mcs2026-arsenic",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "salient_statistics",
+   "kind": "record",
+   "request_text": "The value of salient_statistics in mcs2026-arsenic, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l093",
+   "id": "mcs2026-mica",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "us_production",
+   "kind": "number",
+   "request_text": "The value of us_production in mcs2026-mica, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l094",
+   "id": "mcs2026-mica",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "world_reserves",
+   "kind": "number",
+   "request_text": "The value of world_reserves in mcs2026-mica, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l095",
+   "id": "mcs2026-mica",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "events_trends",
+   "kind": "passage",
+   "request_text": "The value of events_trends in mcs2026-mica, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l096",
+   "id": "mcs2026-mica",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "salient_statistics",
+   "kind": "record",
+   "request_text": "The value of salient_statistics in mcs2026-mica, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l097",
+   "id": "mcs2026-cobalt",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "us_production",
+   "kind": "number",
+   "request_text": "The value of us_production in mcs2026-cobalt, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l098",
+   "id": "mcs2026-cobalt",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "world_reserves",
+   "kind": "number",
+   "request_text": "The value of world_reserves in mcs2026-cobalt, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l099",
+   "id": "mcs2026-cobalt",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "events_trends",
+   "kind": "passage",
+   "request_text": "The value of events_trends in mcs2026-cobalt, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l100",
+   "id": "mcs2026-cobalt",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "salient_statistics",
+   "kind": "record",
+   "request_text": "The value of salient_statistics in mcs2026-cobalt, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l101",
+   "id": "mcs2026-magnesium-metal",
+   "split": "calibration",
+   "doc_kind": "minerals",
+   "field": "us_production",
+   "kind": "number",
+   "request_text": "The value of us_production in mcs2026-magnesium-metal, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l102",
+   "id": "mcs2026-magnesium-metal",
+   "split": "calibration",
+   "doc_kind": "minerals",
+   "field": "world_reserves",
+   "kind": "number",
+   "request_text": "The value of world_reserves in mcs2026-magnesium-metal, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l103",
+   "id": "mcs2026-magnesium-metal",
+   "split": "calibration",
+   "doc_kind": "minerals",
+   "field": "events_trends",
+   "kind": "passage",
+   "request_text": "The value of events_trends in mcs2026-magnesium-metal, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l104",
+   "id": "mcs2026-magnesium-metal",
+   "split": "calibration",
+   "doc_kind": "minerals",
+   "field": "salient_statistics",
+   "kind": "record",
+   "request_text": "The value of salient_statistics in mcs2026-magnesium-metal, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l105",
+   "id": "mcs2026-pumice",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "us_production",
+   "kind": "number",
+   "request_text": "The value of us_production in mcs2026-pumice, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l106",
+   "id": "mcs2026-pumice",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "world_reserves",
+   "kind": "number",
+   "request_text": "The value of world_reserves in mcs2026-pumice, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l107",
+   "id": "mcs2026-pumice",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "events_trends",
+   "kind": "passage",
+   "request_text": "The value of events_trends in mcs2026-pumice, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l108",
+   "id": "mcs2026-pumice",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "salient_statistics",
+   "kind": "record",
+   "request_text": "The value of salient_statistics in mcs2026-pumice, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l109",
+   "id": "mcs2026-feldspar",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "us_production",
+   "kind": "number",
+   "request_text": "The value of us_production in mcs2026-feldspar, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l110",
+   "id": "mcs2026-feldspar",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "world_reserves",
+   "kind": "number",
+   "request_text": "The value of world_reserves in mcs2026-feldspar, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l111",
+   "id": "mcs2026-feldspar",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "events_trends",
+   "kind": "passage",
+   "request_text": "The value of events_trends in mcs2026-feldspar, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l112",
+   "id": "mcs2026-feldspar",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "salient_statistics",
+   "kind": "record",
+   "request_text": "The value of salient_statistics in mcs2026-feldspar, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l113",
+   "id": "mcs2026-chromium",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "us_production",
+   "kind": "number",
+   "request_text": "The value of us_production in mcs2026-chromium, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l114",
+   "id": "mcs2026-chromium",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "world_reserves",
+   "kind": "number",
+   "request_text": "The value of world_reserves in mcs2026-chromium, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l115",
+   "id": "mcs2026-chromium",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "events_trends",
+   "kind": "passage",
+   "request_text": "The value of events_trends in mcs2026-chromium, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l116",
+   "id": "mcs2026-chromium",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "salient_statistics",
+   "kind": "record",
+   "request_text": "The value of salient_statistics in mcs2026-chromium, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l117",
+   "id": "mcs2026-rare-earths-heavy",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "us_production",
+   "kind": "number",
+   "request_text": "The value of us_production in mcs2026-rare-earths-heavy, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l118",
+   "id": "mcs2026-rare-earths-heavy",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "world_reserves",
+   "kind": "number",
+   "request_text": "The value of world_reserves in mcs2026-rare-earths-heavy, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l119",
+   "id": "mcs2026-rare-earths-heavy",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "events_trends",
+   "kind": "passage",
+   "request_text": "The value of events_trends in mcs2026-rare-earths-heavy, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l120",
+   "id": "mcs2026-rare-earths-heavy",
+   "split": "heldout",
+   "doc_kind": "minerals",
+   "field": "salient_statistics",
+   "kind": "record",
+   "request_text": "The value of salient_statistics in mcs2026-rare-earths-heavy, a chapter of the USGS Mineral Commodity Summaries 2026"
+  },
+  {
+   "slot": "l121",
+   "id": "USCOURTS-ca1-24-02002",
+   "split": "calibration",
+   "doc_kind": "opinions",
+   "field": "decision_date",
+   "kind": "date",
+   "request_text": "The value of decision_date in USCOURTS-ca1-24-02002, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l122",
+   "id": "USCOURTS-ca1-24-02002",
+   "split": "calibration",
+   "doc_kind": "opinions",
+   "field": "disposition",
+   "kind": "passage",
+   "request_text": "The value of disposition in USCOURTS-ca1-24-02002, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l123",
+   "id": "USCOURTS-ca1-24-02002",
+   "split": "calibration",
+   "doc_kind": "opinions",
+   "field": "award_amount",
+   "kind": "number",
+   "request_text": "The value of award_amount in USCOURTS-ca1-24-02002, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l124",
+   "id": "USCOURTS-ca1-24-02002",
+   "split": "calibration",
+   "doc_kind": "opinions",
+   "field": "panel",
+   "kind": "record",
+   "request_text": "The value of panel in USCOURTS-ca1-24-02002, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l125",
+   "id": "USCOURTS-ca1-24-01330",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "decision_date",
+   "kind": "date",
+   "request_text": "The value of decision_date in USCOURTS-ca1-24-01330, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l126",
+   "id": "USCOURTS-ca1-24-01330",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "disposition",
+   "kind": "passage",
+   "request_text": "The value of disposition in USCOURTS-ca1-24-01330, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l127",
+   "id": "USCOURTS-ca1-24-01330",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "award_amount",
+   "kind": "number",
+   "request_text": "The value of award_amount in USCOURTS-ca1-24-01330, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l128",
+   "id": "USCOURTS-ca1-24-01330",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "panel",
+   "kind": "record",
+   "request_text": "The value of panel in USCOURTS-ca1-24-01330, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l129",
+   "id": "USCOURTS-ca2-22-02166",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "decision_date",
+   "kind": "date",
+   "request_text": "The value of decision_date in USCOURTS-ca2-22-02166, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l130",
+   "id": "USCOURTS-ca2-22-02166",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "disposition",
+   "kind": "passage",
+   "request_text": "The value of disposition in USCOURTS-ca2-22-02166, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l131",
+   "id": "USCOURTS-ca2-22-02166",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "award_amount",
+   "kind": "number",
+   "request_text": "The value of award_amount in USCOURTS-ca2-22-02166, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l132",
+   "id": "USCOURTS-ca2-22-02166",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "panel",
+   "kind": "record",
+   "request_text": "The value of panel in USCOURTS-ca2-22-02166, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l133",
+   "id": "USCOURTS-ca2-23-00903",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "decision_date",
+   "kind": "date",
+   "request_text": "The value of decision_date in USCOURTS-ca2-23-00903, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l134",
+   "id": "USCOURTS-ca2-23-00903",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "disposition",
+   "kind": "passage",
+   "request_text": "The value of disposition in USCOURTS-ca2-23-00903, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l135",
+   "id": "USCOURTS-ca2-23-00903",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "award_amount",
+   "kind": "number",
+   "request_text": "The value of award_amount in USCOURTS-ca2-23-00903, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l136",
+   "id": "USCOURTS-ca2-23-00903",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "panel",
+   "kind": "record",
+   "request_text": "The value of panel in USCOURTS-ca2-23-00903, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l137",
+   "id": "USCOURTS-ca3-24-01724",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "decision_date",
+   "kind": "date",
+   "request_text": "The value of decision_date in USCOURTS-ca3-24-01724, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l138",
+   "id": "USCOURTS-ca3-24-01724",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "disposition",
+   "kind": "passage",
+   "request_text": "The value of disposition in USCOURTS-ca3-24-01724, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l139",
+   "id": "USCOURTS-ca3-24-01724",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "award_amount",
+   "kind": "number",
+   "request_text": "The value of award_amount in USCOURTS-ca3-24-01724, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l140",
+   "id": "USCOURTS-ca3-24-01724",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "panel",
+   "kind": "record",
+   "request_text": "The value of panel in USCOURTS-ca3-24-01724, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l141",
+   "id": "USCOURTS-ca3-23-02284",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "decision_date",
+   "kind": "date",
+   "request_text": "The value of decision_date in USCOURTS-ca3-23-02284, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l142",
+   "id": "USCOURTS-ca3-23-02284",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "disposition",
+   "kind": "passage",
+   "request_text": "The value of disposition in USCOURTS-ca3-23-02284, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l143",
+   "id": "USCOURTS-ca3-23-02284",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "award_amount",
+   "kind": "number",
+   "request_text": "The value of award_amount in USCOURTS-ca3-23-02284, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l144",
+   "id": "USCOURTS-ca3-23-02284",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "panel",
+   "kind": "record",
+   "request_text": "The value of panel in USCOURTS-ca3-23-02284, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l145",
+   "id": "USCOURTS-ca3-23-02773",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "decision_date",
+   "kind": "date",
+   "request_text": "The value of decision_date in USCOURTS-ca3-23-02773, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l146",
+   "id": "USCOURTS-ca3-23-02773",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "disposition",
+   "kind": "passage",
+   "request_text": "The value of disposition in USCOURTS-ca3-23-02773, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l147",
+   "id": "USCOURTS-ca3-23-02773",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "award_amount",
+   "kind": "number",
+   "request_text": "The value of award_amount in USCOURTS-ca3-23-02773, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l148",
+   "id": "USCOURTS-ca3-23-02773",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "panel",
+   "kind": "record",
+   "request_text": "The value of panel in USCOURTS-ca3-23-02773, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l149",
+   "id": "USCOURTS-ca4-24-04340",
+   "split": "calibration",
+   "doc_kind": "opinions",
+   "field": "decision_date",
+   "kind": "date",
+   "request_text": "The value of decision_date in USCOURTS-ca4-24-04340, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l150",
+   "id": "USCOURTS-ca4-24-04340",
+   "split": "calibration",
+   "doc_kind": "opinions",
+   "field": "disposition",
+   "kind": "passage",
+   "request_text": "The value of disposition in USCOURTS-ca4-24-04340, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l151",
+   "id": "USCOURTS-ca4-24-04340",
+   "split": "calibration",
+   "doc_kind": "opinions",
+   "field": "award_amount",
+   "kind": "number",
+   "request_text": "The value of award_amount in USCOURTS-ca4-24-04340, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l152",
+   "id": "USCOURTS-ca4-24-04340",
+   "split": "calibration",
+   "doc_kind": "opinions",
+   "field": "panel",
+   "kind": "record",
+   "request_text": "The value of panel in USCOURTS-ca4-24-04340, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l153",
+   "id": "USCOURTS-ca4-23-04713",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "decision_date",
+   "kind": "date",
+   "request_text": "The value of decision_date in USCOURTS-ca4-23-04713, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l154",
+   "id": "USCOURTS-ca4-23-04713",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "disposition",
+   "kind": "passage",
+   "request_text": "The value of disposition in USCOURTS-ca4-23-04713, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l155",
+   "id": "USCOURTS-ca4-23-04713",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "award_amount",
+   "kind": "number",
+   "request_text": "The value of award_amount in USCOURTS-ca4-23-04713, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l156",
+   "id": "USCOURTS-ca4-23-04713",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "panel",
+   "kind": "record",
+   "request_text": "The value of panel in USCOURTS-ca4-23-04713, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l157",
+   "id": "USCOURTS-ca4-22-02192",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "decision_date",
+   "kind": "date",
+   "request_text": "The value of decision_date in USCOURTS-ca4-22-02192, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l158",
+   "id": "USCOURTS-ca4-22-02192",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "disposition",
+   "kind": "passage",
+   "request_text": "The value of disposition in USCOURTS-ca4-22-02192, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l159",
+   "id": "USCOURTS-ca4-22-02192",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "award_amount",
+   "kind": "number",
+   "request_text": "The value of award_amount in USCOURTS-ca4-22-02192, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l160",
+   "id": "USCOURTS-ca4-22-02192",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "panel",
+   "kind": "record",
+   "request_text": "The value of panel in USCOURTS-ca4-22-02192, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l161",
+   "id": "USCOURTS-ca5-24-20329",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "decision_date",
+   "kind": "date",
+   "request_text": "The value of decision_date in USCOURTS-ca5-24-20329, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l162",
+   "id": "USCOURTS-ca5-24-20329",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "disposition",
+   "kind": "passage",
+   "request_text": "The value of disposition in USCOURTS-ca5-24-20329, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l163",
+   "id": "USCOURTS-ca5-24-20329",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "award_amount",
+   "kind": "number",
+   "request_text": "The value of award_amount in USCOURTS-ca5-24-20329, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l164",
+   "id": "USCOURTS-ca5-24-20329",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "panel",
+   "kind": "record",
+   "request_text": "The value of panel in USCOURTS-ca5-24-20329, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l165",
+   "id": "USCOURTS-ca5-24-40662",
+   "split": "calibration",
+   "doc_kind": "opinions",
+   "field": "decision_date",
+   "kind": "date",
+   "request_text": "The value of decision_date in USCOURTS-ca5-24-40662, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l166",
+   "id": "USCOURTS-ca5-24-40662",
+   "split": "calibration",
+   "doc_kind": "opinions",
+   "field": "disposition",
+   "kind": "passage",
+   "request_text": "The value of disposition in USCOURTS-ca5-24-40662, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l167",
+   "id": "USCOURTS-ca5-24-40662",
+   "split": "calibration",
+   "doc_kind": "opinions",
+   "field": "award_amount",
+   "kind": "number",
+   "request_text": "The value of award_amount in USCOURTS-ca5-24-40662, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l168",
+   "id": "USCOURTS-ca5-24-40662",
+   "split": "calibration",
+   "doc_kind": "opinions",
+   "field": "panel",
+   "kind": "record",
+   "request_text": "The value of panel in USCOURTS-ca5-24-40662, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l169",
+   "id": "USCOURTS-ca5-24-10439",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "decision_date",
+   "kind": "date",
+   "request_text": "The value of decision_date in USCOURTS-ca5-24-10439, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l170",
+   "id": "USCOURTS-ca5-24-10439",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "disposition",
+   "kind": "passage",
+   "request_text": "The value of disposition in USCOURTS-ca5-24-10439, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l171",
+   "id": "USCOURTS-ca5-24-10439",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "award_amount",
+   "kind": "number",
+   "request_text": "The value of award_amount in USCOURTS-ca5-24-10439, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l172",
+   "id": "USCOURTS-ca5-24-10439",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "panel",
+   "kind": "record",
+   "request_text": "The value of panel in USCOURTS-ca5-24-10439, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l173",
+   "id": "USCOURTS-ca6-23-05673",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "decision_date",
+   "kind": "date",
+   "request_text": "The value of decision_date in USCOURTS-ca6-23-05673, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l174",
+   "id": "USCOURTS-ca6-23-05673",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "disposition",
+   "kind": "passage",
+   "request_text": "The value of disposition in USCOURTS-ca6-23-05673, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l175",
+   "id": "USCOURTS-ca6-23-05673",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "award_amount",
+   "kind": "number",
+   "request_text": "The value of award_amount in USCOURTS-ca6-23-05673, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l176",
+   "id": "USCOURTS-ca6-23-05673",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "panel",
+   "kind": "record",
+   "request_text": "The value of panel in USCOURTS-ca6-23-05673, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l177",
+   "id": "USCOURTS-ca6-24-01848",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "decision_date",
+   "kind": "date",
+   "request_text": "The value of decision_date in USCOURTS-ca6-24-01848, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l178",
+   "id": "USCOURTS-ca6-24-01848",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "disposition",
+   "kind": "passage",
+   "request_text": "The value of disposition in USCOURTS-ca6-24-01848, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l179",
+   "id": "USCOURTS-ca6-24-01848",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "award_amount",
+   "kind": "number",
+   "request_text": "The value of award_amount in USCOURTS-ca6-24-01848, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l180",
+   "id": "USCOURTS-ca6-24-01848",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "panel",
+   "kind": "record",
+   "request_text": "The value of panel in USCOURTS-ca6-24-01848, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l181",
+   "id": "USCOURTS-ca6-24-03726",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "decision_date",
+   "kind": "date",
+   "request_text": "The value of decision_date in USCOURTS-ca6-24-03726, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l182",
+   "id": "USCOURTS-ca6-24-03726",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "disposition",
+   "kind": "passage",
+   "request_text": "The value of disposition in USCOURTS-ca6-24-03726, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l183",
+   "id": "USCOURTS-ca6-24-03726",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "award_amount",
+   "kind": "number",
+   "request_text": "The value of award_amount in USCOURTS-ca6-24-03726, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l184",
+   "id": "USCOURTS-ca6-24-03726",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "panel",
+   "kind": "record",
+   "request_text": "The value of panel in USCOURTS-ca6-24-03726, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l185",
+   "id": "USCOURTS-ca7-23-02447",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "decision_date",
+   "kind": "date",
+   "request_text": "The value of decision_date in USCOURTS-ca7-23-02447, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l186",
+   "id": "USCOURTS-ca7-23-02447",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "disposition",
+   "kind": "passage",
+   "request_text": "The value of disposition in USCOURTS-ca7-23-02447, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l187",
+   "id": "USCOURTS-ca7-23-02447",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "award_amount",
+   "kind": "number",
+   "request_text": "The value of award_amount in USCOURTS-ca7-23-02447, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l188",
+   "id": "USCOURTS-ca7-23-02447",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "panel",
+   "kind": "record",
+   "request_text": "The value of panel in USCOURTS-ca7-23-02447, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l189",
+   "id": "USCOURTS-ca7-24-01570",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "decision_date",
+   "kind": "date",
+   "request_text": "The value of decision_date in USCOURTS-ca7-24-01570, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l190",
+   "id": "USCOURTS-ca7-24-01570",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "disposition",
+   "kind": "passage",
+   "request_text": "The value of disposition in USCOURTS-ca7-24-01570, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l191",
+   "id": "USCOURTS-ca7-24-01570",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "award_amount",
+   "kind": "number",
+   "request_text": "The value of award_amount in USCOURTS-ca7-24-01570, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l192",
+   "id": "USCOURTS-ca7-24-01570",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "panel",
+   "kind": "record",
+   "request_text": "The value of panel in USCOURTS-ca7-24-01570, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l193",
+   "id": "USCOURTS-ca7-24-03039",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "decision_date",
+   "kind": "date",
+   "request_text": "The value of decision_date in USCOURTS-ca7-24-03039, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l194",
+   "id": "USCOURTS-ca7-24-03039",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "disposition",
+   "kind": "passage",
+   "request_text": "The value of disposition in USCOURTS-ca7-24-03039, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l195",
+   "id": "USCOURTS-ca7-24-03039",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "award_amount",
+   "kind": "number",
+   "request_text": "The value of award_amount in USCOURTS-ca7-24-03039, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l196",
+   "id": "USCOURTS-ca7-24-03039",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "panel",
+   "kind": "record",
+   "request_text": "The value of panel in USCOURTS-ca7-24-03039, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l197",
+   "id": "USCOURTS-ca9-24-1641",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "decision_date",
+   "kind": "date",
+   "request_text": "The value of decision_date in USCOURTS-ca9-24-1641, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l198",
+   "id": "USCOURTS-ca9-24-1641",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "disposition",
+   "kind": "passage",
+   "request_text": "The value of disposition in USCOURTS-ca9-24-1641, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l199",
+   "id": "USCOURTS-ca9-24-1641",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "award_amount",
+   "kind": "number",
+   "request_text": "The value of award_amount in USCOURTS-ca9-24-1641, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l200",
+   "id": "USCOURTS-ca9-24-1641",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "panel",
+   "kind": "record",
+   "request_text": "The value of panel in USCOURTS-ca9-24-1641, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l201",
+   "id": "USCOURTS-ca9-23-15999",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "decision_date",
+   "kind": "date",
+   "request_text": "The value of decision_date in USCOURTS-ca9-23-15999, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l202",
+   "id": "USCOURTS-ca9-23-15999",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "disposition",
+   "kind": "passage",
+   "request_text": "The value of disposition in USCOURTS-ca9-23-15999, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l203",
+   "id": "USCOURTS-ca9-23-15999",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "award_amount",
+   "kind": "number",
+   "request_text": "The value of award_amount in USCOURTS-ca9-23-15999, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l204",
+   "id": "USCOURTS-ca9-23-15999",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "panel",
+   "kind": "record",
+   "request_text": "The value of panel in USCOURTS-ca9-23-15999, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l205",
+   "id": "USCOURTS-ca10-24-01215",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "decision_date",
+   "kind": "date",
+   "request_text": "The value of decision_date in USCOURTS-ca10-24-01215, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l206",
+   "id": "USCOURTS-ca10-24-01215",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "disposition",
+   "kind": "passage",
+   "request_text": "The value of disposition in USCOURTS-ca10-24-01215, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l207",
+   "id": "USCOURTS-ca10-24-01215",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "award_amount",
+   "kind": "number",
+   "request_text": "The value of award_amount in USCOURTS-ca10-24-01215, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l208",
+   "id": "USCOURTS-ca10-24-01215",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "panel",
+   "kind": "record",
+   "request_text": "The value of panel in USCOURTS-ca10-24-01215, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l209",
+   "id": "USCOURTS-ca10-24-06117",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "decision_date",
+   "kind": "date",
+   "request_text": "The value of decision_date in USCOURTS-ca10-24-06117, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l210",
+   "id": "USCOURTS-ca10-24-06117",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "disposition",
+   "kind": "passage",
+   "request_text": "The value of disposition in USCOURTS-ca10-24-06117, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l211",
+   "id": "USCOURTS-ca10-24-06117",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "award_amount",
+   "kind": "number",
+   "request_text": "The value of award_amount in USCOURTS-ca10-24-06117, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l212",
+   "id": "USCOURTS-ca10-24-06117",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "panel",
+   "kind": "record",
+   "request_text": "The value of panel in USCOURTS-ca10-24-06117, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l213",
+   "id": "USCOURTS-ca10-24-02124",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "decision_date",
+   "kind": "date",
+   "request_text": "The value of decision_date in USCOURTS-ca10-24-02124, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l214",
+   "id": "USCOURTS-ca10-24-02124",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "disposition",
+   "kind": "passage",
+   "request_text": "The value of disposition in USCOURTS-ca10-24-02124, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l215",
+   "id": "USCOURTS-ca10-24-02124",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "award_amount",
+   "kind": "number",
+   "request_text": "The value of award_amount in USCOURTS-ca10-24-02124, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l216",
+   "id": "USCOURTS-ca10-24-02124",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "panel",
+   "kind": "record",
+   "request_text": "The value of panel in USCOURTS-ca10-24-02124, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l217",
+   "id": "USCOURTS-ca11-23-10887",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "decision_date",
+   "kind": "date",
+   "request_text": "The value of decision_date in USCOURTS-ca11-23-10887, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l218",
+   "id": "USCOURTS-ca11-23-10887",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "disposition",
+   "kind": "passage",
+   "request_text": "The value of disposition in USCOURTS-ca11-23-10887, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l219",
+   "id": "USCOURTS-ca11-23-10887",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "award_amount",
+   "kind": "number",
+   "request_text": "The value of award_amount in USCOURTS-ca11-23-10887, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l220",
+   "id": "USCOURTS-ca11-23-10887",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "panel",
+   "kind": "record",
+   "request_text": "The value of panel in USCOURTS-ca11-23-10887, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l221",
+   "id": "USCOURTS-ca11-24-13668",
+   "split": "calibration",
+   "doc_kind": "opinions",
+   "field": "decision_date",
+   "kind": "date",
+   "request_text": "The value of decision_date in USCOURTS-ca11-24-13668, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l222",
+   "id": "USCOURTS-ca11-24-13668",
+   "split": "calibration",
+   "doc_kind": "opinions",
+   "field": "disposition",
+   "kind": "passage",
+   "request_text": "The value of disposition in USCOURTS-ca11-24-13668, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l223",
+   "id": "USCOURTS-ca11-24-13668",
+   "split": "calibration",
+   "doc_kind": "opinions",
+   "field": "award_amount",
+   "kind": "number",
+   "request_text": "The value of award_amount in USCOURTS-ca11-24-13668, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l224",
+   "id": "USCOURTS-ca11-24-13668",
+   "split": "calibration",
+   "doc_kind": "opinions",
+   "field": "panel",
+   "kind": "record",
+   "request_text": "The value of panel in USCOURTS-ca11-24-13668, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l225",
+   "id": "USCOURTS-ca11-23-11302",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "decision_date",
+   "kind": "date",
+   "request_text": "The value of decision_date in USCOURTS-ca11-23-11302, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l226",
+   "id": "USCOURTS-ca11-23-11302",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "disposition",
+   "kind": "passage",
+   "request_text": "The value of disposition in USCOURTS-ca11-23-11302, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l227",
+   "id": "USCOURTS-ca11-23-11302",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "award_amount",
+   "kind": "number",
+   "request_text": "The value of award_amount in USCOURTS-ca11-23-11302, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l228",
+   "id": "USCOURTS-ca11-23-11302",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "panel",
+   "kind": "record",
+   "request_text": "The value of panel in USCOURTS-ca11-23-11302, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l229",
+   "id": "USCOURTS-ca13-23-01663",
+   "split": "calibration",
+   "doc_kind": "opinions",
+   "field": "decision_date",
+   "kind": "date",
+   "request_text": "The value of decision_date in USCOURTS-ca13-23-01663, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l230",
+   "id": "USCOURTS-ca13-23-01663",
+   "split": "calibration",
+   "doc_kind": "opinions",
+   "field": "disposition",
+   "kind": "passage",
+   "request_text": "The value of disposition in USCOURTS-ca13-23-01663, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l231",
+   "id": "USCOURTS-ca13-23-01663",
+   "split": "calibration",
+   "doc_kind": "opinions",
+   "field": "award_amount",
+   "kind": "number",
+   "request_text": "The value of award_amount in USCOURTS-ca13-23-01663, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l232",
+   "id": "USCOURTS-ca13-23-01663",
+   "split": "calibration",
+   "doc_kind": "opinions",
+   "field": "panel",
+   "kind": "record",
+   "request_text": "The value of panel in USCOURTS-ca13-23-01663, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l233",
+   "id": "USCOURTS-ca13-24-01997",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "decision_date",
+   "kind": "date",
+   "request_text": "The value of decision_date in USCOURTS-ca13-24-01997, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l234",
+   "id": "USCOURTS-ca13-24-01997",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "disposition",
+   "kind": "passage",
+   "request_text": "The value of disposition in USCOURTS-ca13-24-01997, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l235",
+   "id": "USCOURTS-ca13-24-01997",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "award_amount",
+   "kind": "number",
+   "request_text": "The value of award_amount in USCOURTS-ca13-24-01997, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l236",
+   "id": "USCOURTS-ca13-24-01997",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "panel",
+   "kind": "record",
+   "request_text": "The value of panel in USCOURTS-ca13-24-01997, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l237",
+   "id": "USCOURTS-ca13-24-01035",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "decision_date",
+   "kind": "date",
+   "request_text": "The value of decision_date in USCOURTS-ca13-24-01035, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l238",
+   "id": "USCOURTS-ca13-24-01035",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "disposition",
+   "kind": "passage",
+   "request_text": "The value of disposition in USCOURTS-ca13-24-01035, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l239",
+   "id": "USCOURTS-ca13-24-01035",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "award_amount",
+   "kind": "number",
+   "request_text": "The value of award_amount in USCOURTS-ca13-24-01035, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l240",
+   "id": "USCOURTS-ca13-24-01035",
+   "split": "heldout",
+   "doc_kind": "opinions",
+   "field": "panel",
+   "kind": "record",
+   "request_text": "The value of panel in USCOURTS-ca13-24-01035, an opinion of a US court of appeals"
+  },
+  {
+   "slot": "l241",
+   "id": "CRPT-119hrpt259",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "report_date",
+   "kind": "date",
+   "request_text": "The value of report_date in CRPT-119hrpt259, a committee report of Congress"
+  },
+  {
+   "slot": "l242",
+   "id": "CRPT-119hrpt259",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "purpose",
+   "kind": "passage",
+   "request_text": "The value of purpose in CRPT-119hrpt259, a committee report of Congress"
+  },
+  {
+   "slot": "l243",
+   "id": "CRPT-119hrpt259",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_total",
+   "kind": "number",
+   "request_text": "The value of cbo_total in CRPT-119hrpt259, a committee report of Congress"
+  },
+  {
+   "slot": "l244",
+   "id": "CRPT-119hrpt259",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_table",
+   "kind": "record",
+   "request_text": "The value of cbo_table in CRPT-119hrpt259, a committee report of Congress"
+  },
+  {
+   "slot": "l245",
+   "id": "CRPT-119hrpt320",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "report_date",
+   "kind": "date",
+   "request_text": "The value of report_date in CRPT-119hrpt320, a committee report of Congress"
+  },
+  {
+   "slot": "l246",
+   "id": "CRPT-119hrpt320",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "purpose",
+   "kind": "passage",
+   "request_text": "The value of purpose in CRPT-119hrpt320, a committee report of Congress"
+  },
+  {
+   "slot": "l247",
+   "id": "CRPT-119hrpt320",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_total",
+   "kind": "number",
+   "request_text": "The value of cbo_total in CRPT-119hrpt320, a committee report of Congress"
+  },
+  {
+   "slot": "l248",
+   "id": "CRPT-119hrpt320",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_table",
+   "kind": "record",
+   "request_text": "The value of cbo_table in CRPT-119hrpt320, a committee report of Congress"
+  },
+  {
+   "slot": "l249",
+   "id": "CRPT-119hrpt316",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "report_date",
+   "kind": "date",
+   "request_text": "The value of report_date in CRPT-119hrpt316, a committee report of Congress"
+  },
+  {
+   "slot": "l250",
+   "id": "CRPT-119hrpt316",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "purpose",
+   "kind": "passage",
+   "request_text": "The value of purpose in CRPT-119hrpt316, a committee report of Congress"
+  },
+  {
+   "slot": "l251",
+   "id": "CRPT-119hrpt316",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_total",
+   "kind": "number",
+   "request_text": "The value of cbo_total in CRPT-119hrpt316, a committee report of Congress"
+  },
+  {
+   "slot": "l252",
+   "id": "CRPT-119hrpt316",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_table",
+   "kind": "record",
+   "request_text": "The value of cbo_table in CRPT-119hrpt316, a committee report of Congress"
+  },
+  {
+   "slot": "l253",
+   "id": "CRPT-119hrpt390",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "report_date",
+   "kind": "date",
+   "request_text": "The value of report_date in CRPT-119hrpt390, a committee report of Congress"
+  },
+  {
+   "slot": "l254",
+   "id": "CRPT-119hrpt390",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "purpose",
+   "kind": "passage",
+   "request_text": "The value of purpose in CRPT-119hrpt390, a committee report of Congress"
+  },
+  {
+   "slot": "l255",
+   "id": "CRPT-119hrpt390",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_total",
+   "kind": "number",
+   "request_text": "The value of cbo_total in CRPT-119hrpt390, a committee report of Congress"
+  },
+  {
+   "slot": "l256",
+   "id": "CRPT-119hrpt390",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_table",
+   "kind": "record",
+   "request_text": "The value of cbo_table in CRPT-119hrpt390, a committee report of Congress"
+  },
+  {
+   "slot": "l257",
+   "id": "CRPT-119hrpt185",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "report_date",
+   "kind": "date",
+   "request_text": "The value of report_date in CRPT-119hrpt185, a committee report of Congress"
+  },
+  {
+   "slot": "l258",
+   "id": "CRPT-119hrpt185",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "purpose",
+   "kind": "passage",
+   "request_text": "The value of purpose in CRPT-119hrpt185, a committee report of Congress"
+  },
+  {
+   "slot": "l259",
+   "id": "CRPT-119hrpt185",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_total",
+   "kind": "number",
+   "request_text": "The value of cbo_total in CRPT-119hrpt185, a committee report of Congress"
+  },
+  {
+   "slot": "l260",
+   "id": "CRPT-119hrpt185",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_table",
+   "kind": "record",
+   "request_text": "The value of cbo_table in CRPT-119hrpt185, a committee report of Congress"
+  },
+  {
+   "slot": "l261",
+   "id": "CRPT-119hrpt360",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "report_date",
+   "kind": "date",
+   "request_text": "The value of report_date in CRPT-119hrpt360, a committee report of Congress"
+  },
+  {
+   "slot": "l262",
+   "id": "CRPT-119hrpt360",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "purpose",
+   "kind": "passage",
+   "request_text": "The value of purpose in CRPT-119hrpt360, a committee report of Congress"
+  },
+  {
+   "slot": "l263",
+   "id": "CRPT-119hrpt360",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_total",
+   "kind": "number",
+   "request_text": "The value of cbo_total in CRPT-119hrpt360, a committee report of Congress"
+  },
+  {
+   "slot": "l264",
+   "id": "CRPT-119hrpt360",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_table",
+   "kind": "record",
+   "request_text": "The value of cbo_table in CRPT-119hrpt360, a committee report of Congress"
+  },
+  {
+   "slot": "l265",
+   "id": "CRPT-119hrpt387",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "report_date",
+   "kind": "date",
+   "request_text": "The value of report_date in CRPT-119hrpt387, a committee report of Congress"
+  },
+  {
+   "slot": "l266",
+   "id": "CRPT-119hrpt387",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "purpose",
+   "kind": "passage",
+   "request_text": "The value of purpose in CRPT-119hrpt387, a committee report of Congress"
+  },
+  {
+   "slot": "l267",
+   "id": "CRPT-119hrpt387",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_total",
+   "kind": "number",
+   "request_text": "The value of cbo_total in CRPT-119hrpt387, a committee report of Congress"
+  },
+  {
+   "slot": "l268",
+   "id": "CRPT-119hrpt387",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_table",
+   "kind": "record",
+   "request_text": "The value of cbo_table in CRPT-119hrpt387, a committee report of Congress"
+  },
+  {
+   "slot": "l269",
+   "id": "CRPT-119hrpt383",
+   "split": "calibration",
+   "doc_kind": "reports",
+   "field": "report_date",
+   "kind": "date",
+   "request_text": "The value of report_date in CRPT-119hrpt383, a committee report of Congress"
+  },
+  {
+   "slot": "l270",
+   "id": "CRPT-119hrpt383",
+   "split": "calibration",
+   "doc_kind": "reports",
+   "field": "purpose",
+   "kind": "passage",
+   "request_text": "The value of purpose in CRPT-119hrpt383, a committee report of Congress"
+  },
+  {
+   "slot": "l271",
+   "id": "CRPT-119hrpt383",
+   "split": "calibration",
+   "doc_kind": "reports",
+   "field": "cbo_total",
+   "kind": "number",
+   "request_text": "The value of cbo_total in CRPT-119hrpt383, a committee report of Congress"
+  },
+  {
+   "slot": "l272",
+   "id": "CRPT-119hrpt383",
+   "split": "calibration",
+   "doc_kind": "reports",
+   "field": "cbo_table",
+   "kind": "record",
+   "request_text": "The value of cbo_table in CRPT-119hrpt383, a committee report of Congress"
+  },
+  {
+   "slot": "l273",
+   "id": "CRPT-119hrpt413",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "report_date",
+   "kind": "date",
+   "request_text": "The value of report_date in CRPT-119hrpt413, a committee report of Congress"
+  },
+  {
+   "slot": "l274",
+   "id": "CRPT-119hrpt413",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "purpose",
+   "kind": "passage",
+   "request_text": "The value of purpose in CRPT-119hrpt413, a committee report of Congress"
+  },
+  {
+   "slot": "l275",
+   "id": "CRPT-119hrpt413",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_total",
+   "kind": "number",
+   "request_text": "The value of cbo_total in CRPT-119hrpt413, a committee report of Congress"
+  },
+  {
+   "slot": "l276",
+   "id": "CRPT-119hrpt413",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_table",
+   "kind": "record",
+   "request_text": "The value of cbo_table in CRPT-119hrpt413, a committee report of Congress"
+  },
+  {
+   "slot": "l277",
+   "id": "CRPT-119hrpt233",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "report_date",
+   "kind": "date",
+   "request_text": "The value of report_date in CRPT-119hrpt233, a committee report of Congress"
+  },
+  {
+   "slot": "l278",
+   "id": "CRPT-119hrpt233",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "purpose",
+   "kind": "passage",
+   "request_text": "The value of purpose in CRPT-119hrpt233, a committee report of Congress"
+  },
+  {
+   "slot": "l279",
+   "id": "CRPT-119hrpt233",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_total",
+   "kind": "number",
+   "request_text": "The value of cbo_total in CRPT-119hrpt233, a committee report of Congress"
+  },
+  {
+   "slot": "l280",
+   "id": "CRPT-119hrpt233",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_table",
+   "kind": "record",
+   "request_text": "The value of cbo_table in CRPT-119hrpt233, a committee report of Congress"
+  },
+  {
+   "slot": "l281",
+   "id": "CRPT-119hrpt347",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "report_date",
+   "kind": "date",
+   "request_text": "The value of report_date in CRPT-119hrpt347, a committee report of Congress"
+  },
+  {
+   "slot": "l282",
+   "id": "CRPT-119hrpt347",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "purpose",
+   "kind": "passage",
+   "request_text": "The value of purpose in CRPT-119hrpt347, a committee report of Congress"
+  },
+  {
+   "slot": "l283",
+   "id": "CRPT-119hrpt347",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_total",
+   "kind": "number",
+   "request_text": "The value of cbo_total in CRPT-119hrpt347, a committee report of Congress"
+  },
+  {
+   "slot": "l284",
+   "id": "CRPT-119hrpt347",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_table",
+   "kind": "record",
+   "request_text": "The value of cbo_table in CRPT-119hrpt347, a committee report of Congress"
+  },
+  {
+   "slot": "l285",
+   "id": "CRPT-119hrpt323",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "report_date",
+   "kind": "date",
+   "request_text": "The value of report_date in CRPT-119hrpt323, a committee report of Congress"
+  },
+  {
+   "slot": "l286",
+   "id": "CRPT-119hrpt323",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "purpose",
+   "kind": "passage",
+   "request_text": "The value of purpose in CRPT-119hrpt323, a committee report of Congress"
+  },
+  {
+   "slot": "l287",
+   "id": "CRPT-119hrpt323",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_total",
+   "kind": "number",
+   "request_text": "The value of cbo_total in CRPT-119hrpt323, a committee report of Congress"
+  },
+  {
+   "slot": "l288",
+   "id": "CRPT-119hrpt323",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_table",
+   "kind": "record",
+   "request_text": "The value of cbo_table in CRPT-119hrpt323, a committee report of Congress"
+  },
+  {
+   "slot": "l289",
+   "id": "CRPT-119hrpt161",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "report_date",
+   "kind": "date",
+   "request_text": "The value of report_date in CRPT-119hrpt161, a committee report of Congress"
+  },
+  {
+   "slot": "l290",
+   "id": "CRPT-119hrpt161",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "purpose",
+   "kind": "passage",
+   "request_text": "The value of purpose in CRPT-119hrpt161, a committee report of Congress"
+  },
+  {
+   "slot": "l291",
+   "id": "CRPT-119hrpt161",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_total",
+   "kind": "number",
+   "request_text": "The value of cbo_total in CRPT-119hrpt161, a committee report of Congress"
+  },
+  {
+   "slot": "l292",
+   "id": "CRPT-119hrpt161",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_table",
+   "kind": "record",
+   "request_text": "The value of cbo_table in CRPT-119hrpt161, a committee report of Congress"
+  },
+  {
+   "slot": "l293",
+   "id": "CRPT-119hrpt239",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "report_date",
+   "kind": "date",
+   "request_text": "The value of report_date in CRPT-119hrpt239, a committee report of Congress"
+  },
+  {
+   "slot": "l294",
+   "id": "CRPT-119hrpt239",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "purpose",
+   "kind": "passage",
+   "request_text": "The value of purpose in CRPT-119hrpt239, a committee report of Congress"
+  },
+  {
+   "slot": "l295",
+   "id": "CRPT-119hrpt239",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_total",
+   "kind": "number",
+   "request_text": "The value of cbo_total in CRPT-119hrpt239, a committee report of Congress"
+  },
+  {
+   "slot": "l296",
+   "id": "CRPT-119hrpt239",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_table",
+   "kind": "record",
+   "request_text": "The value of cbo_table in CRPT-119hrpt239, a committee report of Congress"
+  },
+  {
+   "slot": "l297",
+   "id": "CRPT-119hrpt305",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "report_date",
+   "kind": "date",
+   "request_text": "The value of report_date in CRPT-119hrpt305, a committee report of Congress"
+  },
+  {
+   "slot": "l298",
+   "id": "CRPT-119hrpt305",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "purpose",
+   "kind": "passage",
+   "request_text": "The value of purpose in CRPT-119hrpt305, a committee report of Congress"
+  },
+  {
+   "slot": "l299",
+   "id": "CRPT-119hrpt305",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_total",
+   "kind": "number",
+   "request_text": "The value of cbo_total in CRPT-119hrpt305, a committee report of Congress"
+  },
+  {
+   "slot": "l300",
+   "id": "CRPT-119hrpt305",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_table",
+   "kind": "record",
+   "request_text": "The value of cbo_table in CRPT-119hrpt305, a committee report of Congress"
+  },
+  {
+   "slot": "l301",
+   "id": "CRPT-119srpt26",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "report_date",
+   "kind": "date",
+   "request_text": "The value of report_date in CRPT-119srpt26, a committee report of Congress"
+  },
+  {
+   "slot": "l302",
+   "id": "CRPT-119srpt26",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "purpose",
+   "kind": "passage",
+   "request_text": "The value of purpose in CRPT-119srpt26, a committee report of Congress"
+  },
+  {
+   "slot": "l303",
+   "id": "CRPT-119srpt26",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_total",
+   "kind": "number",
+   "request_text": "The value of cbo_total in CRPT-119srpt26, a committee report of Congress"
+  },
+  {
+   "slot": "l304",
+   "id": "CRPT-119srpt26",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_table",
+   "kind": "record",
+   "request_text": "The value of cbo_table in CRPT-119srpt26, a committee report of Congress"
+  },
+  {
+   "slot": "l305",
+   "id": "CRPT-119srpt89",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "report_date",
+   "kind": "date",
+   "request_text": "The value of report_date in CRPT-119srpt89, a committee report of Congress"
+  },
+  {
+   "slot": "l306",
+   "id": "CRPT-119srpt89",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "purpose",
+   "kind": "passage",
+   "request_text": "The value of purpose in CRPT-119srpt89, a committee report of Congress"
+  },
+  {
+   "slot": "l307",
+   "id": "CRPT-119srpt89",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_total",
+   "kind": "number",
+   "request_text": "The value of cbo_total in CRPT-119srpt89, a committee report of Congress"
+  },
+  {
+   "slot": "l308",
+   "id": "CRPT-119srpt89",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_table",
+   "kind": "record",
+   "request_text": "The value of cbo_table in CRPT-119srpt89, a committee report of Congress"
+  },
+  {
+   "slot": "l309",
+   "id": "CRPT-119srpt95",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "report_date",
+   "kind": "date",
+   "request_text": "The value of report_date in CRPT-119srpt95, a committee report of Congress"
+  },
+  {
+   "slot": "l310",
+   "id": "CRPT-119srpt95",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "purpose",
+   "kind": "passage",
+   "request_text": "The value of purpose in CRPT-119srpt95, a committee report of Congress"
+  },
+  {
+   "slot": "l311",
+   "id": "CRPT-119srpt95",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_total",
+   "kind": "number",
+   "request_text": "The value of cbo_total in CRPT-119srpt95, a committee report of Congress"
+  },
+  {
+   "slot": "l312",
+   "id": "CRPT-119srpt95",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_table",
+   "kind": "record",
+   "request_text": "The value of cbo_table in CRPT-119srpt95, a committee report of Congress"
+  },
+  {
+   "slot": "l313",
+   "id": "CRPT-119srpt38",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "report_date",
+   "kind": "date",
+   "request_text": "The value of report_date in CRPT-119srpt38, a committee report of Congress"
+  },
+  {
+   "slot": "l314",
+   "id": "CRPT-119srpt38",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "purpose",
+   "kind": "passage",
+   "request_text": "The value of purpose in CRPT-119srpt38, a committee report of Congress"
+  },
+  {
+   "slot": "l315",
+   "id": "CRPT-119srpt38",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_total",
+   "kind": "number",
+   "request_text": "The value of cbo_total in CRPT-119srpt38, a committee report of Congress"
+  },
+  {
+   "slot": "l316",
+   "id": "CRPT-119srpt38",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_table",
+   "kind": "record",
+   "request_text": "The value of cbo_table in CRPT-119srpt38, a committee report of Congress"
+  },
+  {
+   "slot": "l317",
+   "id": "CRPT-119srpt51",
+   "split": "calibration",
+   "doc_kind": "reports",
+   "field": "report_date",
+   "kind": "date",
+   "request_text": "The value of report_date in CRPT-119srpt51, a committee report of Congress"
+  },
+  {
+   "slot": "l318",
+   "id": "CRPT-119srpt51",
+   "split": "calibration",
+   "doc_kind": "reports",
+   "field": "purpose",
+   "kind": "passage",
+   "request_text": "The value of purpose in CRPT-119srpt51, a committee report of Congress"
+  },
+  {
+   "slot": "l319",
+   "id": "CRPT-119srpt51",
+   "split": "calibration",
+   "doc_kind": "reports",
+   "field": "cbo_total",
+   "kind": "number",
+   "request_text": "The value of cbo_total in CRPT-119srpt51, a committee report of Congress"
+  },
+  {
+   "slot": "l320",
+   "id": "CRPT-119srpt51",
+   "split": "calibration",
+   "doc_kind": "reports",
+   "field": "cbo_table",
+   "kind": "record",
+   "request_text": "The value of cbo_table in CRPT-119srpt51, a committee report of Congress"
+  },
+  {
+   "slot": "l321",
+   "id": "CRPT-119srpt15",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "report_date",
+   "kind": "date",
+   "request_text": "The value of report_date in CRPT-119srpt15, a committee report of Congress"
+  },
+  {
+   "slot": "l322",
+   "id": "CRPT-119srpt15",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "purpose",
+   "kind": "passage",
+   "request_text": "The value of purpose in CRPT-119srpt15, a committee report of Congress"
+  },
+  {
+   "slot": "l323",
+   "id": "CRPT-119srpt15",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_total",
+   "kind": "number",
+   "request_text": "The value of cbo_total in CRPT-119srpt15, a committee report of Congress"
+  },
+  {
+   "slot": "l324",
+   "id": "CRPT-119srpt15",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_table",
+   "kind": "record",
+   "request_text": "The value of cbo_table in CRPT-119srpt15, a committee report of Congress"
+  },
+  {
+   "slot": "l325",
+   "id": "CRPT-119srpt27",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "report_date",
+   "kind": "date",
+   "request_text": "The value of report_date in CRPT-119srpt27, a committee report of Congress"
+  },
+  {
+   "slot": "l326",
+   "id": "CRPT-119srpt27",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "purpose",
+   "kind": "passage",
+   "request_text": "The value of purpose in CRPT-119srpt27, a committee report of Congress"
+  },
+  {
+   "slot": "l327",
+   "id": "CRPT-119srpt27",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_total",
+   "kind": "number",
+   "request_text": "The value of cbo_total in CRPT-119srpt27, a committee report of Congress"
+  },
+  {
+   "slot": "l328",
+   "id": "CRPT-119srpt27",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_table",
+   "kind": "record",
+   "request_text": "The value of cbo_table in CRPT-119srpt27, a committee report of Congress"
+  },
+  {
+   "slot": "l329",
+   "id": "CRPT-119srpt33",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "report_date",
+   "kind": "date",
+   "request_text": "The value of report_date in CRPT-119srpt33, a committee report of Congress"
+  },
+  {
+   "slot": "l330",
+   "id": "CRPT-119srpt33",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "purpose",
+   "kind": "passage",
+   "request_text": "The value of purpose in CRPT-119srpt33, a committee report of Congress"
+  },
+  {
+   "slot": "l331",
+   "id": "CRPT-119srpt33",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_total",
+   "kind": "number",
+   "request_text": "The value of cbo_total in CRPT-119srpt33, a committee report of Congress"
+  },
+  {
+   "slot": "l332",
+   "id": "CRPT-119srpt33",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_table",
+   "kind": "record",
+   "request_text": "The value of cbo_table in CRPT-119srpt33, a committee report of Congress"
+  },
+  {
+   "slot": "l333",
+   "id": "CRPT-119srpt84",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "report_date",
+   "kind": "date",
+   "request_text": "The value of report_date in CRPT-119srpt84, a committee report of Congress"
+  },
+  {
+   "slot": "l334",
+   "id": "CRPT-119srpt84",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "purpose",
+   "kind": "passage",
+   "request_text": "The value of purpose in CRPT-119srpt84, a committee report of Congress"
+  },
+  {
+   "slot": "l335",
+   "id": "CRPT-119srpt84",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_total",
+   "kind": "number",
+   "request_text": "The value of cbo_total in CRPT-119srpt84, a committee report of Congress"
+  },
+  {
+   "slot": "l336",
+   "id": "CRPT-119srpt84",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_table",
+   "kind": "record",
+   "request_text": "The value of cbo_table in CRPT-119srpt84, a committee report of Congress"
+  },
+  {
+   "slot": "l337",
+   "id": "CRPT-119srpt50",
+   "split": "calibration",
+   "doc_kind": "reports",
+   "field": "report_date",
+   "kind": "date",
+   "request_text": "The value of report_date in CRPT-119srpt50, a committee report of Congress"
+  },
+  {
+   "slot": "l338",
+   "id": "CRPT-119srpt50",
+   "split": "calibration",
+   "doc_kind": "reports",
+   "field": "purpose",
+   "kind": "passage",
+   "request_text": "The value of purpose in CRPT-119srpt50, a committee report of Congress"
+  },
+  {
+   "slot": "l339",
+   "id": "CRPT-119srpt50",
+   "split": "calibration",
+   "doc_kind": "reports",
+   "field": "cbo_total",
+   "kind": "number",
+   "request_text": "The value of cbo_total in CRPT-119srpt50, a committee report of Congress"
+  },
+  {
+   "slot": "l340",
+   "id": "CRPT-119srpt50",
+   "split": "calibration",
+   "doc_kind": "reports",
+   "field": "cbo_table",
+   "kind": "record",
+   "request_text": "The value of cbo_table in CRPT-119srpt50, a committee report of Congress"
+  },
+  {
+   "slot": "l341",
+   "id": "CRPT-119srpt14",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "report_date",
+   "kind": "date",
+   "request_text": "The value of report_date in CRPT-119srpt14, a committee report of Congress"
+  },
+  {
+   "slot": "l342",
+   "id": "CRPT-119srpt14",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "purpose",
+   "kind": "passage",
+   "request_text": "The value of purpose in CRPT-119srpt14, a committee report of Congress"
+  },
+  {
+   "slot": "l343",
+   "id": "CRPT-119srpt14",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_total",
+   "kind": "number",
+   "request_text": "The value of cbo_total in CRPT-119srpt14, a committee report of Congress"
+  },
+  {
+   "slot": "l344",
+   "id": "CRPT-119srpt14",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_table",
+   "kind": "record",
+   "request_text": "The value of cbo_table in CRPT-119srpt14, a committee report of Congress"
+  },
+  {
+   "slot": "l345",
+   "id": "CRPT-119srpt58",
+   "split": "calibration",
+   "doc_kind": "reports",
+   "field": "report_date",
+   "kind": "date",
+   "request_text": "The value of report_date in CRPT-119srpt58, a committee report of Congress"
+  },
+  {
+   "slot": "l346",
+   "id": "CRPT-119srpt58",
+   "split": "calibration",
+   "doc_kind": "reports",
+   "field": "purpose",
+   "kind": "passage",
+   "request_text": "The value of purpose in CRPT-119srpt58, a committee report of Congress"
+  },
+  {
+   "slot": "l347",
+   "id": "CRPT-119srpt58",
+   "split": "calibration",
+   "doc_kind": "reports",
+   "field": "cbo_total",
+   "kind": "number",
+   "request_text": "The value of cbo_total in CRPT-119srpt58, a committee report of Congress"
+  },
+  {
+   "slot": "l348",
+   "id": "CRPT-119srpt58",
+   "split": "calibration",
+   "doc_kind": "reports",
+   "field": "cbo_table",
+   "kind": "record",
+   "request_text": "The value of cbo_table in CRPT-119srpt58, a committee report of Congress"
+  },
+  {
+   "slot": "l349",
+   "id": "CRPT-119srpt54",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "report_date",
+   "kind": "date",
+   "request_text": "The value of report_date in CRPT-119srpt54, a committee report of Congress"
+  },
+  {
+   "slot": "l350",
+   "id": "CRPT-119srpt54",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "purpose",
+   "kind": "passage",
+   "request_text": "The value of purpose in CRPT-119srpt54, a committee report of Congress"
+  },
+  {
+   "slot": "l351",
+   "id": "CRPT-119srpt54",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_total",
+   "kind": "number",
+   "request_text": "The value of cbo_total in CRPT-119srpt54, a committee report of Congress"
+  },
+  {
+   "slot": "l352",
+   "id": "CRPT-119srpt54",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_table",
+   "kind": "record",
+   "request_text": "The value of cbo_table in CRPT-119srpt54, a committee report of Congress"
+  },
+  {
+   "slot": "l353",
+   "id": "CRPT-119srpt65",
+   "split": "calibration",
+   "doc_kind": "reports",
+   "field": "report_date",
+   "kind": "date",
+   "request_text": "The value of report_date in CRPT-119srpt65, a committee report of Congress"
+  },
+  {
+   "slot": "l354",
+   "id": "CRPT-119srpt65",
+   "split": "calibration",
+   "doc_kind": "reports",
+   "field": "purpose",
+   "kind": "passage",
+   "request_text": "The value of purpose in CRPT-119srpt65, a committee report of Congress"
+  },
+  {
+   "slot": "l355",
+   "id": "CRPT-119srpt65",
+   "split": "calibration",
+   "doc_kind": "reports",
+   "field": "cbo_total",
+   "kind": "number",
+   "request_text": "The value of cbo_total in CRPT-119srpt65, a committee report of Congress"
+  },
+  {
+   "slot": "l356",
+   "id": "CRPT-119srpt65",
+   "split": "calibration",
+   "doc_kind": "reports",
+   "field": "cbo_table",
+   "kind": "record",
+   "request_text": "The value of cbo_table in CRPT-119srpt65, a committee report of Congress"
+  },
+  {
+   "slot": "l357",
+   "id": "CRPT-119srpt4",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "report_date",
+   "kind": "date",
+   "request_text": "The value of report_date in CRPT-119srpt4, a committee report of Congress"
+  },
+  {
+   "slot": "l358",
+   "id": "CRPT-119srpt4",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "purpose",
+   "kind": "passage",
+   "request_text": "The value of purpose in CRPT-119srpt4, a committee report of Congress"
+  },
+  {
+   "slot": "l359",
+   "id": "CRPT-119srpt4",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_total",
+   "kind": "number",
+   "request_text": "The value of cbo_total in CRPT-119srpt4, a committee report of Congress"
+  },
+  {
+   "slot": "l360",
+   "id": "CRPT-119srpt4",
+   "split": "heldout",
+   "doc_kind": "reports",
+   "field": "cbo_table",
+   "kind": "record",
+   "request_text": "The value of cbo_table in CRPT-119srpt4, a committee report of Congress"
+  }
+ ]
+}

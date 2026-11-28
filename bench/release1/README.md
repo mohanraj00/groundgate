@@ -5,7 +5,7 @@ Status: member list. The owner approved the kinds and the member choice from met
 Summaries, as kind 1 in place of patents. `members.json` has 30 chapters, 30 opinions and 30
 reports. On 2026-11-27 the owner approved the list with the words "Yes, keep one" (one report
 on HR 3944). I downloaded the 90 PDFs on 2026-11-27, and all 90 pass the source checks.
-`manifest.json` pins each source and its split. The slots and the labels come next.
+`manifest.json` pins each source, its split and the 360 slots. The label passes come next.
 
 This set gives the numbers of exit conditions 1 and 2 of #277: the admitted error rate with
 a bound for each field and each kind, the miss rate, and the share of right values sent to
@@ -258,6 +258,55 @@ The seed is the SHA-256 of the 90 source digests in member order. The calibratio
 | minerals | rubidium, cesium, iron-steel, gold, magnesium-metal |
 | opinions | ca1 24-02002, ca4 24-04340, ca5 24-40662, ca11 24-13668, ca13 23-01663 |
 | reports | 119hrpt383, 119srpt51, 119srpt50, 119srpt58, 119srpt65 |
+
+## Slots
+
+Each member gets one slot for each field of its kind, so no seed draws a slot. The set has 360
+slots: 60 calibration and 300 held-out, 100 held-out slots for each kind. `slots.json` has the
+slots and the field rules, and `manifest.json` pins its digest:
+
+```bash
+uv run python bench/release1/labels.py slots
+```
+
+The script makes no model call and reads no document. It refuses a sealed set.
+
+Kind 1 keeps its four fields. The field note above lets the owner add a date field if each
+chapter states a date. I counted the full dates (month, day and year) in the reader text of
+the 30 chapters: 21 chapters state none. So no date field asks for a value that each chapter
+has.
+
+## Labels
+
+The labels use the method of `bench/regulatory/passes.py`, with one change of input. A member is
+one PDF, so each pass gets the reader text of the whole PDF in place of the XML of a section.
+Nothing else goes in: no answer of the other pass, no output of groundgate and no model output
+of a benchmark run.
+
+```bash
+SRC="$WORK/release1-sources"
+uv run python bench/release1/labels.py run --pass a --sources "$SRC" --work "$WORK/release1-labels"
+uv run python bench/release1/labels.py run --pass b --sources "$SRC" --work "$WORK/release1-labels"
+uv run python bench/release1/labels.py run --pass absence --sources "$SRC" --work "$WORK/release1-labels"
+uv run python bench/regulatory/passes.py compare --work "$WORK/release1-labels" --set bench/release1
+uv run python bench/release1/labels.py decide --sources "$SRC" --work "$WORK/release1-labels"
+uv run python bench/regulatory/passes.py seal --work "$WORK/release1-labels" --set bench/release1
+```
+
+1. Pass a is Claude Code (`claude -p`, no tools). Pass b is Codex (`codex exec`, a read-only
+   sandbox in an empty folder). Each pass makes one call for each member, 90 calls.
+2. Each slot that a pass marks absent gets a second blind check by a new agent of the other
+   harness, one call for each slot.
+3. `compare` writes the agreements and the disagreements. The owner decides each disagreement
+   on the local page of `bench/label/decide.py`, and `seal` writes `labels.json` and its
+   digest.
+
+Each call checks the PDF and the reader text against the pins of `manifest.json` first. The
+reader text of the 90 members has 3.1 million characters, so each pass sends about 0.8 million
+tokens.
+
+The decision page is `bench/label/decide.py`, not `groundgate review serve`. So #768 (the
+content key of a blind task on the page of `review serve`) does not apply to these labels.
 
 ## Decisions
 
