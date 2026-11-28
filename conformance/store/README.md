@@ -128,8 +128,9 @@ each manifest. `get` gives the same bytes.
 - `manifest/packet-nulls` has null values in all nullable `packet@1` members.
 - `manifest/packet-pin` has a `pin` member with a source pin key.
 
-Each vector stores only its manifest. `store check` checks the manifest members and the
-objects that the manifest names.
+Each vector stores only its manifest, and it checks only the key and the bytes. The keys in a
+manifest are not in the store, and no vector reads them. The `groundgate store check` command
+checks the manifest members and the objects that a manifest names (see `docs/design/store.md`).
 
 ## Forget
 
