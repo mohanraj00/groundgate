@@ -1345,6 +1345,98 @@
      ]
     }
    ]
+  },
+  {
+   "id": "manifest/reading-1",
+   "check": "check_manifest",
+   "about": "The reading has layout and document keys.",
+   "steps": [
+    {
+     "op": "put",
+     "kind": "reading@1",
+     "data": {
+      "utf8": "{\"document\":\"sha256:3333333333333333333333333333333333333333333333333333333333333333\",\"format\":\"reading@1\",\"layout\":\"sha256:2222222222222222222222222222222222222222222222222222222222222222\",\"options\":{\"pages\":null},\"reader\":{\"name\":\"groundgate.read\",\"version\":\"0.13.0\"},\"source\":\"sha256:1111111111111111111111111111111111111111111111111111111111111111\",\"text\":\"sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175\"}"
+     },
+     "result": "sha256:79feba4fe2dfbe1c5bc71c66317b064820a26cee6b3cc2f4d806bcc8a182feca"
+    },
+    {
+     "op": "get",
+     "kind": "reading@1",
+     "key": "sha256:79feba4fe2dfbe1c5bc71c66317b064820a26cee6b3cc2f4d806bcc8a182feca",
+     "result": {
+      "utf8": "{\"document\":\"sha256:3333333333333333333333333333333333333333333333333333333333333333\",\"format\":\"reading@1\",\"layout\":\"sha256:2222222222222222222222222222222222222222222222222222222222222222\",\"options\":{\"pages\":null},\"reader\":{\"name\":\"groundgate.read\",\"version\":\"0.13.0\"},\"source\":\"sha256:1111111111111111111111111111111111111111111111111111111111111111\",\"text\":\"sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175\"}"
+     }
+    }
+   ]
+  },
+  {
+   "id": "manifest/reading-2",
+   "check": "check_manifest",
+   "about": "The reading has null layout and document members.",
+   "steps": [
+    {
+     "op": "put",
+     "kind": "reading@2",
+     "data": {
+      "utf8": "{\"completeness\":{\"missing\":[],\"status\":\"complete\"},\"document\":null,\"format\":\"reading@2\",\"layout\":null,\"options\":{\"pages\":null},\"reader\":{\"name\":\"groundgate.read\",\"version\":\"0.17.0\"},\"source\":\"sha256:541200f72d3a49d30c49e9e9018902075a46f21868efc82e0b32bfae75ac634d\",\"source_format\":\"text\",\"text\":\"sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175\",\"warnings\":[]}"
+     },
+     "result": "sha256:23deaa75870ecfb7a16f314c89a2cb46625cf6282d5af89eb46fa053a0520c36"
+    },
+    {
+     "op": "get",
+     "kind": "reading@2",
+     "key": "sha256:23deaa75870ecfb7a16f314c89a2cb46625cf6282d5af89eb46fa053a0520c36",
+     "result": {
+      "utf8": "{\"completeness\":{\"missing\":[],\"status\":\"complete\"},\"document\":null,\"format\":\"reading@2\",\"layout\":null,\"options\":{\"pages\":null},\"reader\":{\"name\":\"groundgate.read\",\"version\":\"0.17.0\"},\"source\":\"sha256:541200f72d3a49d30c49e9e9018902075a46f21868efc82e0b32bfae75ac634d\",\"source_format\":\"text\",\"text\":\"sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175\",\"warnings\":[]}"
+     }
+    }
+   ]
+  },
+  {
+   "id": "manifest/packet-nulls",
+   "check": "check_manifest",
+   "about": "The packet has null values in all nullable members.",
+   "steps": [
+    {
+     "op": "put",
+     "kind": "packet@1",
+     "data": {
+      "utf8": "{\"candidates\":\"sha256:bbf4aeaa1cdce5ba86ed1f79b7a1e9e73ded88bf2cf0092d1c1d7bc17ad18c56\",\"document\":{\"id\":null,\"source\":null,\"text\":\"sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175\"},\"format\":\"packet@1\",\"judgments\":null,\"packs\":[],\"policy\":null,\"reading\":null,\"receipt\":\"sha256:4444444444444444444444444444444444444444444444444444444444444444\",\"references\":[],\"run\":null,\"schema\":\"sha256:1f828fc16d1059559d7ca5a065081c951e4563bd7f3322b0b47cf8c5e813ccd0\",\"spec\":\"0.13\"}"
+     },
+     "result": "sha256:2ac7911011a681ee6b92552c6979eb3d4d8c91da8da1a1169605847cb4df371a"
+    },
+    {
+     "op": "get",
+     "kind": "packet@1",
+     "key": "sha256:2ac7911011a681ee6b92552c6979eb3d4d8c91da8da1a1169605847cb4df371a",
+     "result": {
+      "utf8": "{\"candidates\":\"sha256:bbf4aeaa1cdce5ba86ed1f79b7a1e9e73ded88bf2cf0092d1c1d7bc17ad18c56\",\"document\":{\"id\":null,\"source\":null,\"text\":\"sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175\"},\"format\":\"packet@1\",\"judgments\":null,\"packs\":[],\"policy\":null,\"reading\":null,\"receipt\":\"sha256:4444444444444444444444444444444444444444444444444444444444444444\",\"references\":[],\"run\":null,\"schema\":\"sha256:1f828fc16d1059559d7ca5a065081c951e4563bd7f3322b0b47cf8c5e813ccd0\",\"spec\":\"0.13\"}"
+     }
+    }
+   ]
+  },
+  {
+   "id": "manifest/packet-pin",
+   "check": "check_manifest",
+   "about": "The packet has a source pin key.",
+   "steps": [
+    {
+     "op": "put",
+     "kind": "packet@1",
+     "data": {
+      "utf8": "{\"candidates\":\"sha256:bbf4aeaa1cdce5ba86ed1f79b7a1e9e73ded88bf2cf0092d1c1d7bc17ad18c56\",\"document\":{\"id\":\"lease-0417\",\"source\":\"sha256:541200f72d3a49d30c49e9e9018902075a46f21868efc82e0b32bfae75ac634d\",\"text\":\"sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175\"},\"format\":\"packet@1\",\"judgments\":null,\"packs\":[],\"pin\":\"sha256:5555555555555555555555555555555555555555555555555555555555555555\",\"policy\":null,\"reading\":\"sha256:23deaa75870ecfb7a16f314c89a2cb46625cf6282d5af89eb46fa053a0520c36\",\"receipt\":\"sha256:4444444444444444444444444444444444444444444444444444444444444444\",\"references\":[],\"run\":null,\"schema\":\"sha256:1f828fc16d1059559d7ca5a065081c951e4563bd7f3322b0b47cf8c5e813ccd0\",\"spec\":\"0.13\"}"
+     },
+     "result": "sha256:3e534adef584190b5992c1a7f147ecc87864b5b717ae048df9c459d55c526f2e"
+    },
+    {
+     "op": "get",
+     "kind": "packet@1",
+     "key": "sha256:3e534adef584190b5992c1a7f147ecc87864b5b717ae048df9c459d55c526f2e",
+     "result": {
+      "utf8": "{\"candidates\":\"sha256:bbf4aeaa1cdce5ba86ed1f79b7a1e9e73ded88bf2cf0092d1c1d7bc17ad18c56\",\"document\":{\"id\":\"lease-0417\",\"source\":\"sha256:541200f72d3a49d30c49e9e9018902075a46f21868efc82e0b32bfae75ac634d\",\"text\":\"sha256:464bde6e087c8fcb69f29ecd5009a7093fbbab950979258a90f72ad1465e9175\"},\"format\":\"packet@1\",\"judgments\":null,\"packs\":[],\"pin\":\"sha256:5555555555555555555555555555555555555555555555555555555555555555\",\"policy\":null,\"reading\":\"sha256:23deaa75870ecfb7a16f314c89a2cb46625cf6282d5af89eb46fa053a0520c36\",\"receipt\":\"sha256:4444444444444444444444444444444444444444444444444444444444444444\",\"references\":[],\"run\":null,\"schema\":\"sha256:1f828fc16d1059559d7ca5a065081c951e4563bd7f3322b0b47cf8c5e813ccd0\",\"spec\":\"0.13\"}"
+     }
+    }
+   ]
   }
  ]
 }

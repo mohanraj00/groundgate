@@ -5,6 +5,8 @@ spec version, and receipts name the spec version they were decided under.
 
 ## Unreleased
 
+- The store contract has four new vectors for the reading and packet manifests in SPEC §9.3.
+  They check the key from `put` and the bytes from `get` (#727).
 - CI pins the shared gates `v2026.11.0`. The `outside-pr-paths` check is gone: the
   `acceptance` check of the shared gates now protects the same paths of a fork PR, and
   `CHANGELOG.md` is a level 1 path (#771).
