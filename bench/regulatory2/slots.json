@@ -1,0 +1,829 @@
+{
+ "format": "regulatory-slots/1",
+ "seed": "sha256:d11c47546a603e8a8fd25e24f9b1c2993a789a7415ffb588ce76212de07aa781",
+ "draw": "for each part and field, the candidates with the lowest sha256 of seed, id, field and the candidate key, one a line with LF",
+ "schema": {
+  "section_text": {
+   "type": "passage",
+   "description": "The full text of the named section, without its heading and without the source note in brackets at its end."
+  },
+  "definition": {
+   "type": "passage",
+   "description": "The definition of the named term in the named definitions section: the text after the term, to the end of its paragraph and of the paragraphs that continue it."
+  },
+  "table_value": {
+   "type": "number",
+   "description": "The number in the named cell of the named table, with the unit or the currency that the column header or the cell states. A cell with more than one number has no value."
+  },
+  "table_rows": {
+   "type": "record",
+   "description": "The body rows of the named table, one record for each row, with one member for each column header. An empty cell is null."
+  },
+  "effective_date": {
+   "type": "date",
+   "formats": [
+    "YYYY-MM-DD"
+   ],
+   "description": "The date from which the named section, or the rate or fee that it sets, applies, if the section text states one. A date of a source note in brackets is not an effective date."
+  }
+ },
+ "slots": [
+  {
+   "slot": "r001",
+   "split": "heldout",
+   "id": "cfr-9-130",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 130.7 Penalties for nonpayment or late payment."
+   },
+   "request_text": "The text of § 130.7 Penalties for nonpayment or late payment."
+  },
+  {
+   "slot": "r002",
+   "split": "heldout",
+   "id": "cfr-9-130",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 130.6 Payment of user fees."
+   },
+   "request_text": "The text of § 130.6 Payment of user fees."
+  },
+  {
+   "slot": "r003",
+   "split": "heldout",
+   "id": "cfr-9-130",
+   "field": "definition",
+   "kind": "passage",
+   "request": {
+    "section": "§ 130.1 Definitions.",
+    "term": "APHIS representative"
+   },
+   "request_text": "The definition of the term “APHIS representative” in § 130.1 Definitions."
+  },
+  {
+   "slot": "r004",
+   "split": "heldout",
+   "id": "cfr-9-130",
+   "field": "table_value",
+   "kind": "number",
+   "request": {
+    "section": "§ 130.6 Payment of user fees.",
+    "table": "Table 1 to Paragraph (b)(3)(i)—Overtime for Flat Rate User Fees 1 2",
+    "row": 3,
+    "row_label": "Rate for commercial airline inspection services 4",
+    "column": "Overtime rates by hour / Beginning Oct. 1, 2017"
+   },
+   "request_text": "The number in Table 1 to Paragraph (b)(3)(i)—Overtime for Flat Rate User Fees 1 2 (§ 130.6 Payment of user fees.), body row 3 (first cell: “Rate for commercial airline inspection services 4”), column “Overtime rates by hour / Beginning Oct. 1, 2017”"
+  },
+  {
+   "slot": "r005",
+   "split": "heldout",
+   "id": "cfr-9-130",
+   "field": "table_value",
+   "kind": "number",
+   "request": {
+    "section": "§ 130.6 Payment of user fees.",
+    "table": "Table 1 to Paragraph (b)(3)(i)—Overtime for Flat Rate User Fees 1 2",
+    "row": 1,
+    "row_label": "Rate for inspection, testing, certification or quarantine of animals, animal products or other commodities 3",
+    "column": "Overtime rates by hour / Oct. 1, 2016-Sept. 30, 2017"
+   },
+   "request_text": "The number in Table 1 to Paragraph (b)(3)(i)—Overtime for Flat Rate User Fees 1 2 (§ 130.6 Payment of user fees.), body row 1 (first cell: “Rate for inspection, testing, certification or quarantine of animals, animal products or other commodities 3”), column “Overtime rates by hour / Oct. 1, 2016-Sept. 30, 2017”"
+  },
+  {
+   "slot": "r006",
+   "split": "heldout",
+   "id": "cfr-9-130",
+   "field": "table_rows",
+   "kind": "record",
+   "request": {
+    "section": "§ 130.6 Payment of user fees.",
+    "name": "Table 1 to Paragraph (b)(3)(i)—Overtime for Flat Rate User Fees 1 2",
+    "columns": [
+     "Service provided",
+     "Outside of the employee's normal tour of duty",
+     "Overtime rates by hour / Nov. 2, 2015-Sept. 30, 2016",
+     "Overtime rates by hour / Oct. 1, 2016-Sept. 30, 2017",
+     "Overtime rates by hour / Beginning Oct. 1, 2017"
+    ]
+   },
+   "request_text": "The body rows of Table 1 to Paragraph (b)(3)(i)—Overtime for Flat Rate User Fees 1 2 (§ 130.6 Payment of user fees.), with the members “Service provided”; “Outside of the employee's normal tour of duty”; “Overtime rates by hour / Nov. 2, 2015-Sept. 30, 2016”; “Overtime rates by hour / Oct. 1, 2016-Sept. 30, 2017”; “Overtime rates by hour / Beginning Oct. 1, 2017”"
+  },
+  {
+   "slot": "r007",
+   "split": "heldout",
+   "id": "cfr-9-130",
+   "field": "effective_date",
+   "kind": "date",
+   "request": {
+    "section": "§ 130.6 Payment of user fees."
+   },
+   "request_text": "The effective date of § 130.6 Payment of user fees."
+  },
+  {
+   "slot": "r008",
+   "split": "heldout",
+   "id": "cfr-10-903",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 903.2 Definitions."
+   },
+   "request_text": "The text of § 903.2 Definitions."
+  },
+  {
+   "slot": "r009",
+   "split": "heldout",
+   "id": "cfr-10-903",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 903.16 Public comment forums."
+   },
+   "request_text": "The text of § 903.16 Public comment forums."
+  },
+  {
+   "slot": "r010",
+   "split": "heldout",
+   "id": "cfr-10-903",
+   "field": "effective_date",
+   "kind": "date",
+   "request": {
+    "section": "§ 903.23 Rate extensions."
+   },
+   "request_text": "The effective date of § 903.23 Rate extensions."
+  },
+  {
+   "slot": "r011",
+   "split": "heldout",
+   "id": "cfr-12-8",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 8.1 Scope and application."
+   },
+   "request_text": "The text of § 8.1 Scope and application."
+  },
+  {
+   "slot": "r012",
+   "split": "heldout",
+   "id": "cfr-12-8",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 8.8 Notice of Office of the Comptroller of the Currency fees and assessments."
+   },
+   "request_text": "The text of § 8.8 Notice of Office of the Comptroller of the Currency fees and assessments."
+  },
+  {
+   "slot": "r013",
+   "split": "heldout",
+   "id": "cfr-12-8",
+   "field": "table_value",
+   "kind": "number",
+   "request": {
+    "section": "§ 8.2 Semiannual assessment.",
+    "table": "Table 1 to Paragraph (a)",
+    "row": 13,
+    "row_label": "40,000",
+    "column": "If the national bank's or Federal savings association's total assets (consolidated domestic and foreign subsidiaries) are: / But not over—"
+   },
+   "request_text": "The number in Table 1 to Paragraph (a) (§ 8.2 Semiannual assessment.), body row 13 (first cell: “40,000”), column “If the national bank's or Federal savings association's total assets (consolidated domestic and foreign subsidiaries) are: / But not over—”"
+  },
+  {
+   "slot": "r014",
+   "split": "heldout",
+   "id": "cfr-12-8",
+   "field": "table_value",
+   "kind": "number",
+   "request": {
+    "section": "§ 8.2 Semiannual assessment.",
+    "table": "Table 1 to Paragraph (a)",
+    "row": 12,
+    "row_label": "20,000",
+    "column": "If the national bank's or Federal savings association's total assets (consolidated domestic and foreign subsidiaries) are: / But not over—"
+   },
+   "request_text": "The number in Table 1 to Paragraph (a) (§ 8.2 Semiannual assessment.), body row 12 (first cell: “20,000”), column “If the national bank's or Federal savings association's total assets (consolidated domestic and foreign subsidiaries) are: / But not over—”"
+  },
+  {
+   "slot": "r015",
+   "split": "heldout",
+   "id": "cfr-12-8",
+   "field": "table_rows",
+   "kind": "record",
+   "request": {
+    "section": "§ 8.2 Semiannual assessment.",
+    "name": "Table 1 to Paragraph (a)",
+    "columns": [
+     "If the national bank's or Federal savings association's total assets (consolidated domestic and foreign subsidiaries) are: / Over—",
+     "If the national bank's or Federal savings association's total assets (consolidated domestic and foreign subsidiaries) are: / But not over—",
+     "The semiannual assessment is: / This amount—base amount",
+     "The semiannual assessment is: / Plus marginal rates",
+     "The semiannual assessment is: / Of excess over—"
+    ]
+   },
+   "request_text": "The body rows of Table 1 to Paragraph (a) (§ 8.2 Semiannual assessment.), with the members “If the national bank's or Federal savings association's total assets (consolidated domestic and foreign subsidiaries) are: / Over—”; “If the national bank's or Federal savings association's total assets (consolidated domestic and foreign subsidiaries) are: / But not over—”; “The semiannual assessment is: / This amount—base amount”; “The semiannual assessment is: / Plus marginal rates”; “The semiannual assessment is: / Of excess over—”"
+  },
+  {
+   "slot": "r016",
+   "split": "heldout",
+   "id": "cfr-12-8",
+   "field": "effective_date",
+   "kind": "date",
+   "request": {
+    "section": "§ 8.2 Semiannual assessment."
+   },
+   "request_text": "The effective date of § 8.2 Semiannual assessment."
+  },
+  {
+   "slot": "r017",
+   "split": "heldout",
+   "id": "cfr-14-389",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 389.25 Schedule of processing fees."
+   },
+   "request_text": "The text of § 389.25 Schedule of processing fees."
+  },
+  {
+   "slot": "r018",
+   "split": "heldout",
+   "id": "cfr-14-389",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 389.13 Fees for services."
+   },
+   "request_text": "The text of § 389.13 Fees for services."
+  },
+  {
+   "slot": "r019",
+   "split": "heldout",
+   "id": "cfr-14-389",
+   "field": "table_value",
+   "kind": "number",
+   "request": {
+    "section": "§ 389.25 Schedule of processing fees.",
+    "table": "table 1 of § 389.25 Schedule of processing fees.",
+    "row": 11,
+    "row_label": "9",
+    "column": "Document"
+   },
+   "request_text": "The number in table 1 of § 389.25 Schedule of processing fees., body row 11 (first cell: “9”), column “Document”"
+  },
+  {
+   "slot": "r020",
+   "split": "heldout",
+   "id": "cfr-14-389",
+   "field": "table_value",
+   "kind": "number",
+   "request": {
+    "section": "§ 389.25 Schedule of processing fees.",
+    "table": "table 1 of § 389.25 Schedule of processing fees.",
+    "row": 45,
+    "row_label": "39",
+    "column": "column 3"
+   },
+   "request_text": "The number in table 1 of § 389.25 Schedule of processing fees., body row 45 (first cell: “39”), column “column 3”"
+  },
+  {
+   "slot": "r021",
+   "split": "heldout",
+   "id": "cfr-14-389",
+   "field": "effective_date",
+   "kind": "date",
+   "request": {
+    "section": "§ 389.23 Application for waiver or modification of fees."
+   },
+   "request_text": "The effective date of § 389.23 Application for waiver or modification of fees."
+  },
+  {
+   "slot": "r022",
+   "split": "heldout",
+   "id": "cfr-18-381",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 381.102 Definitions."
+   },
+   "request_text": "The text of § 381.102 Definitions."
+  },
+  {
+   "slot": "r023",
+   "split": "heldout",
+   "id": "cfr-18-381",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 381.108 Exemptions."
+   },
+   "request_text": "The text of § 381.108 Exemptions."
+  },
+  {
+   "slot": "r024",
+   "split": "heldout",
+   "id": "cfr-18-381",
+   "field": "table_value",
+   "kind": "number",
+   "request": {
+    "section": "§ 381.303 Review of a Department of Energy remedial order.",
+    "table": "table 1 of § 381.303 Review of a Department of Energy remedial order.",
+    "row": 2,
+    "row_label": "$0 to $9,999",
+    "column": "Fee"
+   },
+   "request_text": "The number in table 1 of § 381.303 Review of a Department of Energy remedial order., body row 2 (first cell: “$0 to $9,999”), column “Fee”"
+  },
+  {
+   "slot": "r025",
+   "split": "heldout",
+   "id": "cfr-18-381",
+   "field": "table_value",
+   "kind": "number",
+   "request": {
+    "section": "§ 381.304 Review of Department of Energy denial of adjustment.",
+    "table": "table 1 of § 381.304 Review of Department of Energy denial of adjustment.",
+    "row": 3,
+    "row_label": "$10,000 to $29,999",
+    "column": "Fee"
+   },
+   "request_text": "The number in table 1 of § 381.304 Review of Department of Energy denial of adjustment., body row 3 (first cell: “$10,000 to $29,999”), column “Fee”"
+  },
+  {
+   "slot": "r026",
+   "split": "heldout",
+   "id": "cfr-18-381",
+   "field": "table_rows",
+   "kind": "record",
+   "request": {
+    "section": "§ 381.304 Review of Department of Energy denial of adjustment.",
+    "name": "table 1 of § 381.304 Review of Department of Energy denial of adjustment.",
+    "columns": [
+     "column 1",
+     "Fee"
+    ]
+   },
+   "request_text": "The body rows of table 1 of § 381.304 Review of Department of Energy denial of adjustment., with the members “column 1”; “Fee”"
+  },
+  {
+   "slot": "r027",
+   "split": "heldout",
+   "id": "cfr-18-381",
+   "field": "effective_date",
+   "kind": "date",
+   "request": {
+    "section": "§ 381.403 Petitions for rate approval pursuant to § 284.123(b)(2)."
+   },
+   "request_text": "The effective date of § 381.403 Petitions for rate approval pursuant to § 284.123(b)(2)."
+  },
+  {
+   "slot": "r028",
+   "split": "heldout",
+   "id": "cfr-21-1150",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 1150.17 Penalties."
+   },
+   "request_text": "The text of § 1150.17 Penalties."
+  },
+  {
+   "slot": "r029",
+   "split": "heldout",
+   "id": "cfr-21-1150",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 1150.5 Required information."
+   },
+   "request_text": "The text of § 1150.5 Required information."
+  },
+  {
+   "slot": "r030",
+   "split": "heldout",
+   "id": "cfr-21-1150",
+   "field": "definition",
+   "kind": "passage",
+   "request": {
+    "section": "§ 1150.3 Definitions.",
+    "term": "Class of tobacco products"
+   },
+   "request_text": "The definition of the term “Class of tobacco products” in § 1150.3 Definitions."
+  },
+  {
+   "slot": "r031",
+   "split": "heldout",
+   "id": "cfr-21-1150",
+   "field": "effective_date",
+   "kind": "date",
+   "request": {
+    "section": "§ 1150.7 Yearly class allocation."
+   },
+   "request_text": "The effective date of § 1150.7 Yearly class allocation."
+  },
+  {
+   "slot": "r032",
+   "split": "heldout",
+   "id": "cfr-22-22",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 22.5 Remittances to Foreign Service posts."
+   },
+   "request_text": "The text of § 22.5 Remittances to Foreign Service posts."
+  },
+  {
+   "slot": "r033",
+   "split": "heldout",
+   "id": "cfr-22-22",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 22.4 Requests for services, Foreign Service."
+   },
+   "request_text": "The text of § 22.4 Requests for services, Foreign Service."
+  },
+  {
+   "slot": "r034",
+   "split": "heldout",
+   "id": "cfr-22-22",
+   "field": "table_value",
+   "kind": "number",
+   "request": {
+    "section": "§ 22.1 Schedule of fees.",
+    "table": "Schedule of Fees for Consular Services",
+    "row": 46,
+    "row_label": "20. Filing Nonimmigrant Visa Petition Based on Blanket L Petition (collected for USCIS and subject to change)",
+    "column": "Fee"
+   },
+   "request_text": "The number in Schedule of Fees for Consular Services (§ 22.1 Schedule of fees.), body row 46 (first cell: “20. Filing Nonimmigrant Visa Petition Based on Blanket L Petition (collected for USCIS and subject to change)”), column “Fee”"
+  },
+  {
+   "slot": "r035",
+   "split": "heldout",
+   "id": "cfr-22-22",
+   "field": "table_value",
+   "kind": "number",
+   "request": {
+    "section": "§ 22.1 Schedule of fees.",
+    "table": "Schedule of Fees for Consular Services",
+    "row": 71,
+    "row_label": "26. Nonimmigrant Visa Appointment Expedite Fee (per person)",
+    "column": "Fee"
+   },
+   "request_text": "The number in Schedule of Fees for Consular Services (§ 22.1 Schedule of fees.), body row 71 (first cell: “26. Nonimmigrant Visa Appointment Expedite Fee (per person)”), column “Fee”"
+  },
+  {
+   "slot": "r036",
+   "split": "heldout",
+   "id": "cfr-22-22",
+   "field": "effective_date",
+   "kind": "date",
+   "request": {
+    "section": "§ 22.7 Collection and return of fees."
+   },
+   "request_text": "The effective date of § 22.7 Collection and return of fees."
+  },
+  {
+   "slot": "r037",
+   "split": "heldout",
+   "id": "cfr-25-514",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 514.8 Where should fees, quarterly statements, and other communications about fees be sent?"
+   },
+   "request_text": "The text of § 514.8 Where should fees, quarterly statements, and other communications about fees be sent?"
+  },
+  {
+   "slot": "r038",
+   "split": "heldout",
+   "id": "cfr-25-514",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 514.15 May tribes submit fingerprint cards to the Commission for processing?"
+   },
+   "request_text": "The text of § 514.15 May tribes submit fingerprint cards to the Commission for processing?"
+  },
+  {
+   "slot": "r039",
+   "split": "heldout",
+   "id": "cfr-25-514",
+   "field": "effective_date",
+   "kind": "date",
+   "request": {
+    "section": "§ 514.8 Where should fees, quarterly statements, and other communications about fees be sent?"
+   },
+   "request_text": "The effective date of § 514.8 Where should fees, quarterly statements, and other communications about fees be sent?"
+  },
+  {
+   "slot": "r040",
+   "split": "heldout",
+   "id": "cfr-29-4006",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 4006.7 Premium rate for certain terminated single-employer plans."
+   },
+   "request_text": "The text of § 4006.7 Premium rate for certain terminated single-employer plans."
+  },
+  {
+   "slot": "r041",
+   "split": "heldout",
+   "id": "cfr-29-4006",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 4006.3 Premium rate."
+   },
+   "request_text": "The text of § 4006.3 Premium rate."
+  },
+  {
+   "slot": "r042",
+   "split": "heldout",
+   "id": "cfr-29-4006",
+   "field": "definition",
+   "kind": "passage",
+   "request": {
+    "section": "§ 4006.2 Definitions.",
+    "term": "Participant"
+   },
+   "request_text": "The definition of the term “Participant” in § 4006.2 Definitions."
+  },
+  {
+   "slot": "r043",
+   "split": "heldout",
+   "id": "cfr-29-4006",
+   "field": "effective_date",
+   "kind": "date",
+   "request": {
+    "section": "§ 4006.4 Determination of unfunded vested benefits."
+   },
+   "request_text": "The effective date of § 4006.4 Determination of unfunded vested benefits."
+  },
+  {
+   "slot": "r044",
+   "split": "heldout",
+   "id": "cfr-36-1258",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 1258.12 When does NARA provide records reproductions without charge?"
+   },
+   "request_text": "The text of § 1258.12 When does NARA provide records reproductions without charge?"
+  },
+  {
+   "slot": "r045",
+   "split": "heldout",
+   "id": "cfr-36-1258",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 1258.18 Where can I find NARA's current fees and information on how to order reproductions?"
+   },
+   "request_text": "The text of § 1258.18 Where can I find NARA's current fees and information on how to order reproductions?"
+  },
+  {
+   "slot": "r046",
+   "split": "heldout",
+   "id": "cfr-36-1258",
+   "field": "definition",
+   "kind": "passage",
+   "request": {
+    "section": "§ 1258.2 What definitions apply to the regulations in this part?",
+    "term": "Accession"
+   },
+   "request_text": "The definition of the term “Accession” in § 1258.2 What definitions apply to the regulations in this part?"
+  },
+  {
+   "slot": "r047",
+   "split": "heldout",
+   "id": "cfr-36-1258",
+   "field": "effective_date",
+   "kind": "date",
+   "request": {
+    "section": "§ 1258.4 What costs make up the NARA fees?"
+   },
+   "request_text": "The effective date of § 1258.4 What costs make up the NARA fees?"
+  },
+  {
+   "slot": "r048",
+   "split": "heldout",
+   "id": "cfr-40-1027",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 1027.101 To whom do these requirements apply?"
+   },
+   "request_text": "The text of § 1027.101 To whom do these requirements apply?"
+  },
+  {
+   "slot": "r049",
+   "split": "heldout",
+   "id": "cfr-40-1027",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 1027.115 What special provisions apply for certification related to nonroad and stationary engines?"
+   },
+   "request_text": "The text of § 1027.115 What special provisions apply for certification related to nonroad and stationary engines?"
+  },
+  {
+   "slot": "r050",
+   "split": "heldout",
+   "id": "cfr-40-1027",
+   "field": "definition",
+   "kind": "passage",
+   "request": {
+    "section": "§ 1027.150 What definitions apply to this part?",
+    "term": "Application for Certification"
+   },
+   "request_text": "The definition of the term “Application for Certification” in § 1027.150 What definitions apply to this part?"
+  },
+  {
+   "slot": "r051",
+   "split": "heldout",
+   "id": "cfr-40-1027",
+   "field": "table_value",
+   "kind": "number",
+   "request": {
+    "section": "§ 1027.105 How much are the fees?",
+    "table": "table 1 of § 1027.105 How much are the fees?",
+    "row": 1,
+    "row_label": "(i) Light-duty vehicles, light-duty trucks, medium-duty passenger vehicle, and complete heavy-duty highway vehicles",
+    "column": "Fee"
+   },
+   "request_text": "The number in table 1 of § 1027.105 How much are the fees?, body row 1 (first cell: “(i) Light-duty vehicles, light-duty trucks, medium-duty passenger vehicle, and complete heavy-duty highway vehicles”), column “Fee”"
+  },
+  {
+   "slot": "r052",
+   "split": "heldout",
+   "id": "cfr-40-1027",
+   "field": "table_value",
+   "kind": "number",
+   "request": {
+    "section": "§ 1027.105 How much are the fees?",
+    "table": "table 3 of § 1027.105 How much are the fees?",
+    "row": 8,
+    "row_label": "(viii) All other",
+    "column": "L"
+   },
+   "request_text": "The number in table 3 of § 1027.105 How much are the fees?, body row 8 (first cell: “(viii) All other”), column “L”"
+  },
+  {
+   "slot": "r053",
+   "split": "heldout",
+   "id": "cfr-40-1027",
+   "field": "table_rows",
+   "kind": "record",
+   "request": {
+    "section": "§ 1027.105 How much are the fees?",
+    "name": "table 3 of § 1027.105 How much are the fees?",
+    "columns": [
+     "Engine or vehicle category",
+     "Op",
+     "L"
+    ]
+   },
+   "request_text": "The body rows of table 3 of § 1027.105 How much are the fees?, with the members “Engine or vehicle category”; “Op”; “L”"
+  },
+  {
+   "slot": "r054",
+   "split": "heldout",
+   "id": "cfr-40-1027",
+   "field": "effective_date",
+   "kind": "date",
+   "request": {
+    "section": "§ 1027.105 How much are the fees?"
+   },
+   "request_text": "The effective date of § 1027.105 How much are the fees?"
+  },
+  {
+   "slot": "r055",
+   "split": "heldout",
+   "id": "cfr-43-3834",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 3834.21 How will BLM adjust the location and maintenance fees?"
+   },
+   "request_text": "The text of § 3834.21 How will BLM adjust the location and maintenance fees?"
+  },
+  {
+   "slot": "r056",
+   "split": "heldout",
+   "id": "cfr-43-3834",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 3834.22 How will I know that BLM has adjusted location and maintenance fees?"
+   },
+   "request_text": "The text of § 3834.22 How will I know that BLM has adjusted location and maintenance fees?"
+  },
+  {
+   "slot": "r057",
+   "split": "heldout",
+   "id": "cfr-43-3834",
+   "field": "effective_date",
+   "kind": "date",
+   "request": {
+    "section": "§ 3834.10 Paying maintenance, location, and oil shale fees."
+   },
+   "request_text": "The effective date of § 3834.10 Paying maintenance, location, and oil shale fees."
+  },
+  {
+   "slot": "r058",
+   "split": "heldout",
+   "id": "cfr-49-594",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 594.8 Fee for importing a vehicle pursuant to a determination by the Administrator."
+   },
+   "request_text": "The text of § 594.8 Fee for importing a vehicle pursuant to a determination by the Administrator."
+  },
+  {
+   "slot": "r059",
+   "split": "heldout",
+   "id": "cfr-49-594",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 594.4 Definitions."
+   },
+   "request_text": "The text of § 594.4 Definitions."
+  },
+  {
+   "slot": "r060",
+   "split": "heldout",
+   "id": "cfr-49-594",
+   "field": "definition",
+   "kind": "passage",
+   "request": {
+    "section": "§ 594.4 Definitions.",
+    "term": "Administrator"
+   },
+   "request_text": "The definition of the term “Administrator” in § 594.4 Definitions."
+  },
+  {
+   "slot": "r061",
+   "split": "heldout",
+   "id": "cfr-49-594",
+   "field": "effective_date",
+   "kind": "date",
+   "request": {
+    "section": "§ 594.8 Fee for importing a vehicle pursuant to a determination by the Administrator."
+   },
+   "request_text": "The effective date of § 594.8 Fee for importing a vehicle pursuant to a determination by the Administrator."
+  },
+  {
+   "slot": "r062",
+   "split": "heldout",
+   "id": "cfr-49-1510",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 1510.21 Enforcement."
+   },
+   "request_text": "The text of § 1510.21 Enforcement."
+  },
+  {
+   "slot": "r063",
+   "split": "heldout",
+   "id": "cfr-49-1510",
+   "field": "section_text",
+   "kind": "passage",
+   "request": {
+    "section": "§ 1510.11 Handling of security service fees."
+   },
+   "request_text": "The text of § 1510.11 Handling of security service fees."
+  },
+  {
+   "slot": "r064",
+   "split": "heldout",
+   "id": "cfr-49-1510",
+   "field": "definition",
+   "kind": "passage",
+   "request": {
+    "section": "§ 1510.3 Definitions.",
+    "term": "Foreign air transportation"
+   },
+   "request_text": "The definition of the term “Foreign air transportation” in § 1510.3 Definitions."
+  },
+  {
+   "slot": "r065",
+   "split": "heldout",
+   "id": "cfr-49-1510",
+   "field": "effective_date",
+   "kind": "date",
+   "request": {
+    "section": "§ 1510.1 Applicability and purpose."
+   },
+   "request_text": "The effective date of § 1510.1 Applicability and purpose."
+  }
+ ]
+}

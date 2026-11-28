@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+import hashlib
 import importlib
 import json
 import sys
+from collections import Counter
 from collections.abc import Iterator
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
@@ -91,7 +93,27 @@ def test_the_committed_member_list_is_new_and_has_its_source_checks() -> None:
     checks = json.loads((HERE / "source_checks.json").read_text())["documents"]
     assert [c["id"] for c in checks] == [d["id"] for d in docs]
     assert all(not c["problems"] and c["notice"]["review"] == body["notice_review"] for c in checks)
-    assert not (HERE / "slots.json").exists() and not (HERE / "labels.json").exists()
+    assert not (HERE / "labels.json").exists() and "labels" not in manifest
+
+
+def test_the_committed_slots_follow_the_draw_rule_and_the_manifest_pins_them() -> None:
+    raw = (HERE / "slots.json").read_bytes()
+    body = json.loads(raw)
+    manifest = json.loads((HERE / "manifest.json").read_text())
+    assert manifest["slots"] == {
+        "file": "slots.json", "count": len(body["slots"]), "calibration": 0,
+        "heldout": len(body["slots"]), "sha256": "sha256:" + hashlib.sha256(raw).hexdigest(),
+    }  # fmt: skip
+    assert body["seed"] == manifest["split_rule"]["seed"] and body["schema"] == slots.SCHEMA
+    rows = body["slots"]
+    assert [s["slot"] for s in rows] == [f"r{n:03d}" for n in range(1, len(rows) + 1)]
+    ids = [d["id"] for d in manifest["documents"]]
+    assert [s["id"] for s in rows] == sorted((s["id"] for s in rows), key=ids.index)
+    for d in ids:
+        got = Counter(s["field"] for s in rows if s["id"] == d)
+        assert all(got[f] <= k for f, (_, k) in slots.FIELDS.items()), d
+    assert {s["split"] for s in rows} == {"heldout"}
+    assert all(s["request_text"] == slots.request_text(s) for s in rows)
 
 
 def test_sources_refuse_a_set_without_the_download_approval(tmp_path: Path) -> None:

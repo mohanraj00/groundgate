@@ -270,5 +270,12 @@
   "code_sha256": "sha256:097e6ff8ed15b37800c65faefbec82181ba1ff8de6c723e2b8ecde4ee0575366",
   "code_digest_method": "sha256 over sorted src/groundgate/read/*.py lines \"name NUL sha256(file) LF\"",
   "note": "Text files stay in local work storage with the XML. Only their hashes are published."
+ },
+ "slots": {
+  "file": "slots.json",
+  "count": 65,
+  "calibration": 0,
+  "heldout": 65,
+  "sha256": "sha256:8c335ff4e5c42174c2f0299e95bc067c6c93de2a4bb222dcd55fa8c98c53272d"
  }
 }

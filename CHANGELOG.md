@@ -106,6 +106,9 @@ spec version, and receipts name the spec version they were decided under.
 - `bench/release1/labels.py` gives each of the 90 members one slot for each field, 360 slots,
   and runs the blind label passes of `bench/regulatory` on the reader text of each PDF. No
   label pass has run yet (#748).
+- `bench/regulatory2` has its 65 slots, drawn from the structure of the 14 parts with the
+  seed of the split and no model call. `manifest.json` pins them. No label pass has run yet
+  (#750).
 
 ## 0.17.0 (2026-11-19)
 
