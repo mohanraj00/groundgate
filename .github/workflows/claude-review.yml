@@ -47,7 +47,7 @@ jobs:
       merge_base: ${{ steps.gate.outputs.merge_base }}
     steps:
       - id: gate
-        uses: mohanraj00/.github/gates@4d0656c141e5a5969bd72a5fe10636cc8dd9d524 # Replace with the SHA of the gates action of the project.
+        uses: mohanraj00/.github/gates@05c2fba15c81b4d3a35ebad71cb5b14dbda050d3 # Replace with the SHA of the gates action of the project.
         with:
           check: claude-review
   review:
