@@ -137,6 +137,12 @@ def check(kind: str, member: dict[str, Any], raw: bytes, etag: str | None) -> di
     }
 
 
+def pin_keys(docs: list[dict[str, Any]]) -> list[tuple[Any, ...]]:
+    """The fields of each member that the slots and the labels depend on."""
+    keys = ("id", "kind", "split", "selection_status", "source_sha256", "text_sha256")
+    return [tuple(d.get(k) for k in keys) for d in docs]
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--out", type=Path, required=True, help="local work storage for the PDFs")
@@ -193,6 +199,10 @@ def main(argv: list[str] | None = None) -> int:
         print(f"the source or the reader text is not the pinned one: {' '.join(changed)}")
         print("nothing was written; give --repin only for a new freeze that the owner approved")
         return 1
+    if changed and "labels" in old_manifest:
+        print(f"the labels are sealed on the pinned sources: {' '.join(changed)}")
+        print("nothing was written; remove the label freeze of the owner first")
+        return 1
     for path, raw in files.items():
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_bytes(raw)
@@ -223,8 +233,11 @@ def main(argv: list[str] | None = None) -> int:
         },
         "documents": docs,
     }
-    # a rerun keeps the pins of labels.py and passes.py
-    manifest.update({k: v for k, v in old_manifest.items() if k in ("slots", "labels")})
+    # a rerun keeps the pins of labels.py and passes.py only for the same members and splits
+    if pin_keys(docs) == pin_keys(old_manifest.get("documents", [])):
+        manifest.update({k: v for k, v in old_manifest.items() if k in ("slots", "labels")})
+    elif "slots" in old_manifest:
+        print("the members or their splits changed, so the slots pin is removed")
     manifest_path.write_text(json.dumps(manifest, indent=1, ensure_ascii=False) + "\n")
     out = {"format": "release1-source-checks/1", "documents": checks}
     (HERE / "source_checks.json").write_text(json.dumps(out, indent=1, ensure_ascii=False) + "\n")

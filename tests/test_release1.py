@@ -176,6 +176,48 @@ def test_the_manifest_pins_each_member_and_the_split_follows_the_seed() -> None:
         }
 
 
+def test_a_repin_keeps_the_slots_only_for_the_same_members(tmp_path: Path, monkeypatch) -> None:
+    mod = sources()
+    here, out = tmp_path / "set", tmp_path / "out"
+    here.mkdir()
+    (here / "members.json").write_text((SET / "members.json").read_text())
+    body = json.loads((SET / "members.json").read_text())
+    for kind in mod.KINDS:
+        for m in body["kinds"][kind]["members"]:
+            path = out / kind / (m["package"].removesuffix(".pdf") + ".pdf")
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(b"%PDF- " + m["package"].encode())
+
+    def check(kind, member, raw, etag):
+        text = raw.decode()
+        return {"text": text, "pages": 1, "text_sha256": mod.sha(text.encode()), "problems": [],
+                "notice": {"matches": []}}  # fmt: skip
+
+    monkeypatch.setattr(mod, "HERE", here)
+    monkeypatch.setattr(mod, "check", check)
+    monkeypatch.setattr(mod, "pdf_url", lambda kind, member, meta: "https://example.invalid/")
+    args = ["--out", str(out), "--meta", str(tmp_path / "meta")]
+    manifest = here / "manifest.json"
+
+    def pins(extra: dict) -> None:
+        manifest.write_text(json.dumps({**json.loads(manifest.read_text()), **extra}))
+
+    assert mod.main(args) == 0
+    pins({"slots": {"count": 1}})
+    assert mod.main(args) == 0
+    assert json.loads(manifest.read_text())["slots"] == {"count": 1}
+    first = next((out / "minerals").glob("*.pdf"))
+    first.write_bytes(b"%PDF- a new freeze")
+    assert mod.main(args) == 1
+    assert mod.main([*args, "--repin"]) == 0
+    assert "slots" not in json.loads(manifest.read_text())
+    pins({"slots": {"count": 1}, "labels": {"file": "labels.json"}})
+    first.write_bytes(b"%PDF- one more freeze")
+    before = manifest.read_text()
+    assert mod.main([*args, "--repin"]) == 1
+    assert manifest.read_text() == before
+
+
 def labels() -> ModuleType:
     spec = importlib.util.spec_from_file_location("release1_labels", SET / "labels.py")
     assert spec and spec.loader
