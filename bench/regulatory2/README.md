@@ -1,6 +1,7 @@
 # Regulatory texts: a second held-out split
 
-Status: the member list waits for the owner approval in #750. No document body is downloaded.
+Status: the owner approved the member list on 2026-11-27 (#750). The 14 sources pass their
+checks. The slots and the labels are not drawn yet.
 
 The held-out split of [`bench/regulatory`](../regulatory/README.md) is spent: the 0.17 claim
 (#686) and the escape analysis (#709) used it. #735 changed how the bench ends a section
@@ -55,8 +56,8 @@ a member. I read no document body. A HEAD request on the versioner URL of each m
 spare gave HTTP 200 with an XML type.
 
 [`members.json`](members.json) holds the list, the metadata URLs and the rule. Its
-`download_approved` stays null until the owner approves the list, and `sources.py` refuses a
-set with no approval.
+`download_approved` is the date of the owner approval, 2026-11-27. `sources.py` refuses a set
+with no approval.
 
 ## Sources
 
@@ -72,6 +73,11 @@ The command does the checks of `bench/regulatory`: the identity, the section cou
 the language and the printed notices. It writes `manifest.json` and `source_checks.json`
 here. I read each notice match and write the review into `notice_review` of `members.json`
 before the slots. `selection_complete` becomes true only when no member is on hold.
+
+I downloaded the 14 parts on 2026-11-27. All 14 pass the checks, so no spare comes in, and
+`selection_complete` is true. 13 parts have no notice match. 36 CFR 1258 has 41 matches. I
+read each of them: each is regulation text about the fees for records reproductions of NARA.
+No source has a notice of the publisher.
 
 ## Split and seed
 
