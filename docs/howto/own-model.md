@@ -1,5 +1,7 @@
 # Check your own model's extractions
 
+Release: main, before 1.0.0 (spec 0.13).
+
 Your model reads a document and proposes facts. groundgate stands between the model and your
 store. It gives each fact one of three outcomes and writes a receipt that records each decision.
 This page builds that step for a short benefits notice with four fields. The model reads two
@@ -323,7 +325,7 @@ get the same decision.
 
 ## Next
 
-- [Send reasons back to the extractor](feedback.md): ask the model again when a fact is flagged
+- [Run extraction and evidence repairs](feedback.md): ask the model again when a fact is flagged
   or rejected for a reason that a better citation can fix.
 - [Check values in tables](tables.md): cite the scale, the unit, the row and the column.
 - [Use evidence from outside the document](outside-sources.md): references, web pages and the

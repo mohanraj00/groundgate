@@ -1,5 +1,7 @@
 # Run extraction and evidence repairs
 
+Release: main, before 1.0.0 (spec 0.13).
+
 `groundgate.extract` owns the extraction loop. Your app gives it text, a schema and one function
 that takes a prompt and returns a raw JSON reply. The runner makes bounded calls, admits the
 candidates and repairs only the evidence that each code permits. `admit` stays deterministic

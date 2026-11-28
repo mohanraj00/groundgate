@@ -1,5 +1,7 @@
 # Keep pack files with receipts
 
+Release: main, before 1.0.0 (spec 0.13).
+
 A receipt names each pack that decided it, by id, version and digest. It does not hold the pack.
 To verify the receipt later, `verify` needs each pack again with the same digest. groundgate
 holds its built-in packs. Your own packs are your files, so you keep them. This page shows a

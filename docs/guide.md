@@ -1,5 +1,7 @@
 # Guide
 
+Release: main, before 1.0.0 (spec 0.13).
+
 This page is the reference. For a task, start with the [how-to guides](README.md).
 
 groundgate takes these inputs and returns a receipt:
@@ -35,9 +37,9 @@ import unicodedata
 text = unicodedata.normalize("NFC", text)
 ```
 
-To get text from a file, use `groundgate.read.read(path, pages=None, ocr=False)` or
-`groundgate read` on the command line. It reads PDF (with `groundgate[pdf]`), HTML, XML and
-plain text and returns an `Extracted` with `text` (NFC), `layout` (PDFs only) and `warnings`. It
+To get text from a file, use [`groundgate.read.read()`](api/read.md) or
+[`groundgate read`](cli/read.md) on the command line. It reads PDF (with `groundgate[pdf]`),
+HTML, XML, DOCX, XLSX and plain text, and returns an `Extracted` with `text` (NFC), `layout` (PDFs only) and `warnings`. It
 drops text a reader can't see, and for PDFs records the page and box of every word so the report
 can show page numbers.
 
@@ -69,10 +71,10 @@ never in the current folder. One read sends at most 200 pages to OCR. For a long
 fewer pages with `pages` (`--pages`). If pdfminer and pypdfium2 count a different number of pages
 in the PDF, OCR cannot match a page to its number, and `read` stops with an error.
 
-`groundgate.read.document.read_document(path, pages=None, ocr=False)` gives the same `Extracted` and also a
+[`groundgate.read.document.read_document()`](api/read-document.md) gives the same `Extracted` and also a
 `Document`: the `document@1` model of docs/design/document-model.md. It is the same text plus a flat
 list of nodes, each a UTF-8 byte span into the text: `heading`, `paragraph`, `list`, `item`,
-`table`, `row` and `cell`. Each node has a `basis`: `markup` for HTML and XML, `layout` for PDF
+`table`, `row` and `cell`. Each node has a `basis`: `markup` for HTML, XML, DOCX and XLSX, `layout` for PDF
 blocks, PDF tables, OCR paragraphs and the paragraphs of a text file, and `rules` for a PDF table
 with drawn rules. `doubt` lists the byte span of each OCR word with a confidence below 1, and the
 confidence from 0 to 1. A doubt is information only, as a node is.
@@ -610,60 +612,16 @@ was admitted or flagged.
 
 ## Python API
 
-```python
-import groundgate as gg
+Each function has its own page with its full signature, an example and its errors:
+[gg.admit()](api/admit.md), [gg.verify()](api/verify.md),
+[gg.extractor_schema()](api/extractor-schema.md), [gg.candidate_schema()](api/candidate-schema.md),
+[gg.feedback_message()](api/feedback-message.md), [gg.load_pack()](api/load-pack.md),
+[gg.digest()](api/digest.md) and [gg.jcs()](api/jcs.md). [docs/README.md](README.md#functions)
+lists the functions of the other modules.
 
-receipt = gg.admit(
-    text,
-    schema,
-    candidates,
-    policy=None,
-    document_id=None,
-    judgments=None,
-    references=None,
-    document_source=None,
-    packs=(),
-)
-receipt.decisions  # tuple of gg.Decision
-receipt.coverage  # tuple of (field, "REQUIRED_FIELD_MISSING")
-receipt.references  # tuple of (id, sha256, source)
-receipt.to_dict()  # the JSON receipt, including receipt_sha256
-
-decision = receipt.decisions[0]
-candidate = next(c for c in candidates if gg.digest("candidate", c) == decision.candidate_sha256)
-message = gg.feedback_message(decision, candidate, schema, text=text, references=None)
-# text for the extractor, or None when a new answer cannot fix the decision
-
-receipt_dict = receipt.to_dict()  # or the stored JSON
-check = gg.verify(
-    receipt_dict,
-    text,
-    schema,
-    candidates,
-    policy=None,
-    judgments=None,
-    references=None,
-    document_source=None,
-    packs=(),
-    pack_dir=None,
-)
-check.ok, check.problems  # True, () when the receipt re-derives exactly
-```
-
-`references`, `document_source` and `packs` are keyword-only. `schema` and `policy` can be dicts or
-`gg.Schema` / `gg.Policy`. Invalid inputs raise `gg.PacketError`. In Python, `Decision.evidence`
-and `Part.span` are `(start, end)` tuples, and `to_dict()` writes them as `{"start", "end"}`.
-`gg.candidate_schema()` and `gg.extractor_schema(schema, reference_ids=None)` return the JSON
-Schemas of [Candidates](#candidates) and [The extractor's output](#the-extractors-output). `gg.digest(kind, obj)` and `gg.jcs(obj)` are the hashing primitives, if you
-need to compute a candidate's hash yourself.
-
-`gg.feedback_message(decision, candidate, schema, text=None, references=None, packs=())` builds a
-message for the extractor from one decision. Pass the candidate that the decision decided, the
-same schema and packs and, for a missing key, the document text or references that you gave
-`admit`.
-It returns `None` for an admitted decision or when a new answer cannot fix the reasons.
-It raises `ValueError` when the candidate's digest does not match the decision.
-See [Send reasons back to the extractor](howto/feedback.md) for a feedback loop.
+`schema` and `policy` can be dicts or `gg.Schema` and `gg.Policy`. Invalid inputs raise
+`gg.PacketError`. In Python, `Decision.evidence` and `Part.span` are `(start, end)` tuples, and
+`to_dict()` writes them as `{"start", "end"}`.
 
 `packs` are your own vocabulary packs (SPEC §4.8): words that the text rules read in addition to
 the base pack, such as a scale word "lac". `gg.load_pack(path)` reads a pack file and runs the
@@ -921,63 +879,18 @@ from groundgate.report import render
 html = render(receipt_dict, text, candidates, schema=schema, policy=policy, judgments=judgments)
 ```
 
-With `schema` (and `policy`, `judgments`, `references`, `document_source`, `packs` and
-`pack_dir`, if you used them), the page re-derives the receipt first and says whether it matched. `layout=` and `title=` are optional. The page is one self-contained HTML file with no scripts.
+With `schema` and each other input that you gave `admit`, such as `policy`, `judgments`,
+`references`, `document_source`, `packs`, `doubt`, `pin`, `places`, `completeness` and `outline`,
+the page re-derives the receipt first and says whether it matched. `layout=` and `title=` are
+optional. [render()](api/render.md) has the full signature. The page is one self-contained HTML file with no scripts.
 
 ## Command line
 
-```bash
-groundgate read FILE [--pages 1-3,7] [-o doc.txt] [--layout layout.json] [--document doc.json]
-groundgate admit   DOC SCHEMA CANDIDATES [--policy P] [--judgments J] [--document-id ID] [-o receipt.json]
-groundgate admit   --docs D --candidates C --schema S --out R [--policy P] [--judgments J]
-groundgate verify  RECEIPT DOC SCHEMA CANDIDATES [--policy P] [--judgments J] [--pack-dir DIR]
-groundgate report  RECEIPT DOC SCHEMA CANDIDATES [--policy P] [--judgments J] [--pack-dir DIR] [--layout L] [--title T] [-o report.html]
-groundgate schema  SCHEMA [--references R] [-o extractor.schema.json]
-groundgate schema check SCHEMA
-groundgate calibrate STEP ...      # experimental: sample, split, label, ask, report, judge
-```
-
-`admit`, `verify` and `report` also take `--references R`, `--document-source URL` and
-`--pack FILE`, once for each pack. `verify` and `report` also take `--pack-dir DIR`, a folder of
-pack files. `schema` and `schema check` also take `--pack FILE`. `schema`
-writes the extractor schema, with the ids of the references in `R` as its refs. `schema check`
-prints the settings that make a check fail every time, or pass for the wrong key or field
-([Check a schema](schema.md#check-a-schema)). `DOC` may be `-` for standard input. Exit codes:
-0 success, 1 the receipt does not match its inputs or `schema check` has a finding, 2 invalid
-input.
-
-`groundgate calibrate` measures a judge's thresholds on your own documents. It is experimental.
-[The calibrate reference](calibrate.md) gives each step and its options. A step that stops
-prints the reason and exits with 1. A usage error exits with 2.
-
-`groundgate admit --docs D --candidates C --schema S --out R` processes a folder of documents.
-`D` holds `<doc>.txt` files, and `C` holds matching `<doc>.json` arrays of candidates. Only names
-that end in `.txt` (lower case) directly in `D` are read, in filename order. Two names equal in
-any letter case stop the run. A missing candidate file stops the run. `[]` means the document
-has no candidates. The document id in each receipt is `<doc>`.
-
-One `--policy` file and one `--references` file apply to the whole batch. With `--judgments J`,
-`J` is a folder of matching `<doc>.json` arrays, as `groundgate calibrate judge` writes them. Each
-document needs its judgment file. `[]` means no judgments. `--document-source`, if given, applies
-to every document. Positional inputs, `--document-id` and `--output` cannot be used in batch mode.
-
-`R/<doc>.json` is the same receipt that one `admit` call produces with that document id.
-`R/summary.json` has a `documents` object keyed by `<doc>` and a `totals` object. Each document
-entry and `totals` have `outcomes` counts (`admitted`, `needs_verification`, `rejected`) and `codes`
-counts. Codes include every decision code, including information codes, and every coverage
-finding. An empty candidate list adds no outcomes, but can add coverage codes. The CLI prints the
-total outcome and code counts as tables. `summary.txt`, in any letter case, is reserved because
-its receipt could overwrite `summary.json`. An empty document folder is an error. Input errors
-stop the run before it writes any output.
-
-With `--store DIR`, batch admit also writes one packet for each document to the store, as
-`admit --store` does for one document. Each document entry in `R/summary.json` then has a
-`packet` member with the packet key, and `groundgate verify --store DIR KEY` checks it. The
-receipts in `R` stay the same. The packets are written after all the inputs are valid, so an
-input error writes no packet. `--out` cannot be the store folder, and `--reading` cannot be used
-in batch mode.
-
-In Python, a loop over `gg.admit` does the same, and the API has no batch function.
+Each command has its own page with its options, an example, the output and the exit codes.
+[docs/README.md](README.md#commands) lists them. The exit codes of each command except
+`calibrate`: 0 success, 1 the receipt does not match its inputs or a check has a finding, 2
+invalid input or an input that is not in the store. `groundgate calibrate` is experimental, and
+[calibrate.md](calibrate.md) gives each step.
 
 ## Receipts
 

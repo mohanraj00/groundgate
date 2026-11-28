@@ -7,82 +7,35 @@
 
 **LLMs propose facts. groundgate decides which ones you can trust.**
 
-## The problem
+Release: main, before 1.0.0 (spec 0.13).
 
-LLMs extract most values from a document correctly, but not all. In the benchmark below, 4,233 of
-4,350 extractions were correct. Each of the other 117, about 1 in 37, cited a real place in the
-document. So nothing on the page tells you which values are wrong.
+An LLM extracts most values from a document correctly, but not all. A wrong value often cites a
+real place in the document, so a check of the quote does not find it. groundgate checks the
+value itself: the number, its sign, its scale, its unit and its key, against the text that the
+value cites. It uses fixed rules and no model in the decision.
 
-Grounded extraction tools check that the quoted text exists in the source. They do not check the
-value that you store: a scale word that the model dropped, a sign it missed, or the limit from the
-next line.
-
-## The solution
-
-groundgate is a deterministic admission layer for LLM document extraction. It checks each
-proposed value against the text that the value cites, with fixed rules and no model in the
-decision. You give it a document, a schema, and the facts an extractor proposed. Every fact comes
-back with one of three outcomes:
+You give groundgate a document, a schema and the facts that an extractor proposed. Each fact
+gets one of three outcomes:
 
 - **admitted**: every check passed;
-- **needs_verification**: nothing failed, but a person should look, and the decision says where;
+- **needs_verification**: nothing failed, but a person must look, and the codes say why;
 - **rejected**: a check failed, with a stable reason code.
 
-Every run writes a receipt with hashes of every input. Anyone can re-derive it byte for byte.
-
-The goal of the project, and the two numbers that judge each rule, are in
-[CONSTITUTION.md](CONSTITUTION.md#purpose).
-
-![The groundgate review page for IRS Publication 590-A. Left: a Roth IRA limit flagged QUALIFIED_VALUE because the model cited the spousal-deduction sentence ("more than $236,000"). Right: the source text, with that citation outlined in amber and the correct Roth sentence, admitted, highlighted in green below it.](docs/report.png)
-
-## Why this exists
-
-Grounded extraction tools check that the quoted **text** exists in the source. They don't check
-the **value** you store. LangExtract is the clearest example, and a good tool. It aligns each
-`extraction_text` to the source and reports `MATCH_EXACT`, `MATCH_FUZZY` and so on. It never
-looks at the attributes that hold the typed value.
-
-A real case from the benchmark: IRS Publication 560 states two limits a few lines apart.
-
-```text
-The limit on elective deferrals, other than catch-up contributions, is $23,500 for 2025 ...
-The limit on salary reduction contributions, other than catch-up contributions, is $16,500 for 2025 ...
-```
-
-The first is the 401(k) limit. The second is the SIMPLE plan limit. Asked for the 2025 elective
-deferral limit, 4 of 14 runs proposed both, and LangExtract marked both quotes `MATCH_EXACT`.
-groundgate sent both to a person with `CONFLICTING_CANDIDATES`, because two proposals for one
-field disagree. In Publication 15-B, one model stored "$1 million" as 1, also an exact match, and
-groundgate flagged it `SCALE_WORD`.
-
-The same gap shows up on the document I used while building the library. I ran Gemini 3.6 Flash and GPT-OSS 120B through
-LangExtract on two pages of IRS Publication 590-A. LangExtract aligned all 48 extractions as
-`MATCH_EXACT`. groundgate then:
-
-- **rejected** Gemini's reading of a misprinted `$252,0000` as 2,520,000;
-- **flagged** three GPT-OSS facts: two took a Roth IRA limit from the spousal-deduction
-  sentence, where the numbers match but the text says "more than" where the field says "at
-  least", and one is a right value next to an "or more" that the schema did not declare;
-- **listed** a required field both models missed;
-- **admitted** 44 facts, all with the right value.
-
-One admitted fact still cites the wrong rule. Its number is correct, its comparator matches, and
-no span check can tell. I checked every decision by hand; the details are in
-[examples/irs-590a](examples/irs-590a), which is also the page in the screenshot.
-
-I measured the gap on purpose before writing the library. On 51 facts from two public-domain
-government documents, LangExtract's strictest setting (`MATCH_EXACT` only) accepted **100%** of
-planted value and unit errors whose quote was correct. groundgate caught **all** of them and
-rejected **none** of the correct facts. The method and full tables are in
-[spikes/m0_5](spikes/m0_5/README.md).
-
-LangExtract locates the text. groundgate checks the number in it.
+Each run writes a receipt with a hash of each input. Anyone can derive the receipt again, byte for
+byte. groundgate is for developers who store values that an LLM extracts from documents, such as
+limits, amounts, doses and dates, and who must know which values a person has to check.
 
 ## Quickstart
 
+Install [uv](https://docs.astral.sh/uv/), then get the code:
+
 ```bash
-pip install groundgate
+git clone https://github.com/mohanraj00/groundgate.git
+cd groundgate
+uv sync --no-dev
 ```
+
+Save this as `quickstart.py`, and run it with `uv run python quickstart.py`:
 
 ```python
 import groundgate as gg
@@ -120,107 +73,42 @@ admitted            ira_limit       7000
 True
 ```
 
-The core has no dependencies. `groundgate[pdf]` adds pdfminer.six for PDF text,
-`groundgate[ocr]` adds pypdfium2 to OCR scanned pages with the `tesseract` program (opt-in), and
-`groundgate[langextract]` installs LangExtract. [docs/](docs/README.md) has a guide to writing a
-schema, a how-to guide for each task, and [the reference](docs/guide.md). An evidence item can also give UTF-8 byte offsets
-(`start`, `end`), and it can cite the sign, scale, unit, field or key of the value (spec 0.5).
-
-If your app has its own reader, model loop and review queue, you need only `admit`, `verify` and
-the receipt. [docs/howto/core-only.md](docs/howto/core-only.md) shows that path with no extra.
-
-### With your own model
-
-`gg.extractor_schema(schema)` turns your schema into a JSON Schema for the model's structured
-output, so the model sends only your fields, units and keys, and quotes its evidence.
-[docs/howto/own-model.md](docs/howto/own-model.md) goes from a document to a receipt, and
-[docs/howto/feedback.md](docs/howto/feedback.md) sends the reasons back to the model.
-
-### With LangExtract
-
-```python
-import langextract as lx
-from groundgate.adapters.langextract import admit_document
-
-result = lx.extract(text_or_documents=text, prompt_description=prompt, examples=examples)
-receipt = admit_document(result, schema)
-```
-
-Each extraction's `value` and `unit` attributes are checked at the place LangExtract aligned its
-`extraction_text`. The attributes `sign_text`, `scale_text`, `unit_text`, `field_text` and
-`key_text` become role items. `field_text` can be a list, such as a row label and a column
-header, for up to 8 field items. `source_url` (with `source_quote` and `source_retrieved`) or
-`knowledge` becomes outside evidence. An extraction that LangExtract could not align, with no
-outside evidence, is rejected `NO_EVIDENCE`.
-
-### From the command line
+The same check from the command line, with the files in [docs/quickstart/](docs/quickstart):
 
 ```bash
-groundgate read p590a.pdf --pages 1-2 -o doc.txt --layout layout.json
-groundgate admit   doc.txt schema.json candidates.json -o receipt.json
-groundgate admit   --docs docs --candidates candidates --schema schema.json --out receipts
-groundgate verify  receipt.json doc.txt schema.json candidates.json
-groundgate report  receipt.json doc.txt schema.json candidates.json --layout layout.json -o report.html
-groundgate schema  schema.json -o extractor.schema.json
-groundgate schema check schema.json
+uv run groundgate admit docs/quickstart/doc.txt docs/quickstart/schema.json docs/quickstart/candidates.json -o receipt.json
+uv run groundgate verify receipt.json docs/quickstart/doc.txt docs/quickstart/schema.json docs/quickstart/candidates.json
 ```
 
-`read` turns a PDF, HTML, XML, DOCX, XLSX or text file into the NFC text everything else reads,
-and records the page and box of every word of a PDF. Text a reader can't see (proof marks drawn
-off the page, hidden HTML, hidden runs, sheets, rows and columns) is dropped, and superscripts are marked so that 10⁹ reads `10^9`, never `109`.
-`admit`, `verify` and `report` read the document from a pipe when DOC is `-`, and also take
-`--references`, `--document-source` and `--pack`. `report` refuses to render a receipt that doesn't
-re-derive from its inputs. `schema` writes the extractor schema, and `schema check` prints the
-settings that make a check fail every time, or pass for the wrong key or field
-([Check a schema](docs/schema.md#check-a-schema)).
-[examples/irs-590a](examples/irs-590a) runs the whole pipeline on an IRS publication with cached model output, so it reproduces without an API key.
+```text
+receipt verified
+```
 
-For a scanned PDF, I save the doubt list with `read --ocr --document doc.json` and pass
-`--doubt doc.json` to `admit`, `verify` and `report`. A JSON array of doubt spans works too.
+`receipt.json` has the three decisions and their codes. `verify` decides again from the inputs
+and fails on each difference. In your own project, `pip install groundgate` installs the same
+package. The core has no dependencies. The extras `groundgate[pdf]`, `groundgate[ocr]` and
+`groundgate[langextract]` add PDF text, OCR of scanned pages and the LangExtract adapter.
 
-For a batch, `--docs` holds `<doc>.txt` files and `--candidates` holds matching `<doc>.json`
-candidate arrays. If I give `--doubt DIR`, I put a matching `<doc>.json` doubt list or document
-model in that folder for each document. I use `[]` for a document with no doubt spans.
-`--out` receives one receipt per document and `summary.json` with outcome and
-code counts per document and in total, and the CLI prints the totals. With `--store DIR`, each
-document also gets a packet, and `summary.json` names its key. The
-[guide](docs/guide.md#command-line) describes missing and empty candidate files, shared policy
-and references, per-document judgments, and the batch options and summary format.
+## Next
 
-### Calibrate a new document family
-
-A profile holds the terms and the thresholds of one document family
-([SPEC §4.10](SPEC.md)). `groundgate calibrate measure` measures a profile on your own gold set.
-It calls no model.
-
-1. Write a profile: the schema of your fields and, if you use a judge, its policy.
-2. Collect documents of the family. Put each text in `gold/docs/<doc>.txt`.
-3. Run your extractor one time. Record its candidates in `gold/candidates/<doc>.json`, and the
-   judgments of your judge in `gold/judgments/<doc>.json`.
-4. Label each field of each document by hand, before you look at a decision. Write the labels
-   to `gold/labels.json`. For a field with keys, give one label for each key.
-5. Write a split file that puts each document in the `calibration` part or the `test` part.
-6. Run the measure:
-
-   ```bash
-   groundgate calibrate measure --profile invoice.json --gold ./gold --split split.json --out run1
-   ```
-
-7. Read `run1/REPORT.md`. For each field and route, it gives the admitted error rate with its
-   upper bound, the review share and the miss rate. A route is `measured` only when its bound
-   is below the target.
-8. Read `run1/profile.json`, the draft profile change. If you agree, use it as the next version
-   of your profile.
-
-[docs/calibrate.md](docs/calibrate.md#measure-a-profile-on-your-gold-set) defines the gold set,
-the split file and the report.
+- [docs/README.md](docs/README.md): a how-to page for each task, and one page for each command
+  and each function.
+- [docs/schema.md](docs/schema.md): write a schema for your documents.
+- [docs/howto/own-model.md](docs/howto/own-model.md): from a document and your own model to a
+  receipt.
+- [docs/guide.md](docs/guide.md): the reference for each input, each policy key and each code.
+- [SPEC.md](SPEC.md): the rules of each decision. [conformance/](conformance) has the vectors
+  that another implementation must pass.
+- [examples/irs-590a](examples/irs-590a): the full pipeline on an IRS publication, with cached
+  model output, so it runs again with no API key.
 
 ## Benchmark
 
 Seven models (Gemini, GPT and Claude, each through its own CLI) ran through LangExtract on 30
 public-domain FDA drug labels, NTSB accident reports and IRS publications, at two chunk sizes. A
-person checked every gold fact. These are spec 0.1's numbers on the first set, as published. Of 4,350 extractions, 117 were wrong: the wrong value, a value
-for a field the document doesn't state, the wrong unit, or not a number.
+person checked each gold fact. These are the published numbers of spec 0.1 on the first set. Of
+4,350 extractions, 117 were wrong: the wrong value, a value for a field that the document does not
+state, the wrong unit, or not a number.
 
 ![Pooled over all 14 runs: MATCH_EXACT accepted 98% of wrong extractions without review, groundgate 6.8%. Of correct extractions citing the right place, MATCH_EXACT rejected 4.6%, groundgate 0.3%. groundgate sent 12% of extractions to a person.](bench/charts/summary.svg)
 
@@ -233,7 +121,7 @@ for a field the document doesn't state, the wrong unit, or not a number.
 
 A gold fact is one value that a document states for a field, so a field with 12 strengths counts
 12 times, and each fact counts once in each run. groundgate admits fewer right facts than
-`MATCH_EXACT`, and lets in 8 wrong values instead of 115. With the reviews, 96.5% (3,742/3,878)
+`MATCH_EXACT`, and admits 8 wrong values instead of 115. With the reviews, 96.5% (3,742/3,878)
 of gold facts get a right value.
 
 The goal is fewer misses on the fields that an app asks for, with 0 escapes. This table has one
@@ -258,194 +146,47 @@ silent miss for which the model proposed the right value. The rows use different
 rows on one set and one split compare directly: 0.12 and 0.13. The development split is for
 tuning, so its rows are not a claim.
 
-Each set, with its tables, method and caveats: [bench/README.md](bench/README.md). The write-up,
-with what got through and why:
+[bench/README.md](bench/README.md) has each set, with its tables, method and limits. The write-up
+tells which wrong values got through, and why:
 [Grounding is a contract, not a citation](https://mohanraj00.github.io/tech/grounding-is-a-contract/).
-
-## What it checks
-
-Checks run in a fixed order. The first failure rejects the fact.
-
-| Code | Rejects when |
-|---|---|
-| `CANDIDATE_INVALID` | the candidate is malformed |
-| `FIELD_UNKNOWN` | the field is not in the schema |
-| `NULL_STRING_LITERAL` | the value is `"null"`, `"none"`, `"nil"` or `"n/a"`, in any case |
-| `TYPE_INVALID` | the value does not parse as the field's type |
-| `RANGE_INVALID` | the value is outside the field's bounds |
-| `UNIT_INVALID` | the unit is not the field's unit |
-| `KEY_INVALID` | the field is keyed by condition, and the key is missing or not one of its keys |
-| `NO_EVIDENCE` | the evidence has no value item and no outside item |
-| `SPAN_INVALID` | the span is outside the document or splits a character |
-| `OPTION_INVALID` | the value is not one of the options of a closed string field |
-| `PASSAGE_NOT_AT_HEADING` | a passage span does not start at a heading of the outline |
-| `PASSAGE_LABEL_MISMATCH` | the heading at the start of a passage does not have the label |
-| `PASSAGE_CUT_SHORT` | a passage span ends before the end of its section |
-| `PASSAGE_OVERRUN` | a passage span ends after the end of its section |
-| `SOURCE_NOT_READ` | the quoted value text is not in the document, and the reading of the source is partial or has no text |
-| `QUOTE_NOT_FOUND` | the quoted value text is not in the document, or in the reference it cites |
-| `VALUE_NOT_IN_EVIDENCE` | no number in the span equals the value, with the sign and scale the evidence gives |
-| `UNIT_NOT_IN_EVIDENCE` | the value is there, but with another unit |
-| `SOURCE_REJECTED` | only outside evidence supports the value, and the policy rejects it |
-
-A fact that passes every check can still be flagged for a person:
-
-| Code | Flags when |
-|---|---|
-| `NON_VERBATIM_EVIDENCE` | the quote differs from the text at the span |
-| `QUALIFIED_VALUE` | "up to", "approximately", "or more" changes the value, and the schema didn't declare it |
-| `SCALE_WORD` | "million", "lakh" and similar follow the value, and the value was given unscaled |
-| `PART_MISSING` | the value needs a sign, a scale or a unit that no evidence item supports |
-| `SIGN_DROPPED` | a positive amount matches a number printed with a minus sign, as 3266 at "-3,266" (spec 0.12) |
-| `SIGN_CITATION_INVALID`, `SCALE_CITATION_INVALID`, `UNIT_CITATION_INVALID`, `FIELD_CITATION_INVALID` | a cited part fails its check |
-| `KEY_NOT_AT_VALUE` | the text puts no key, or another key, at the value, such as another indication's heading |
-| `KEY_CITATION_INVALID` | the cited key item does not name the key |
-| `COLUMN_NOT_AT_VALUE` | the field has `columns`, and the value is not in a column of the field (spec 0.12) |
-| `MARKER_OTHER_FIELD` | a marker word of another field, such as "family", is next to the value (spec 0.12) |
-| `READ_DOUBT` | a cited item is on a word that the reader, such as OCR, read with a low confidence (spec 0.12) |
-| `PASSAGE_NOT_READ` | on a `passage` field, the reading is not complete, and a page that gave no text can be in the section |
-| `EVIDENCE_QUOTED`, `EVIDENCE_STATED` | only an external quote, or the extractor's own knowledge, supports the value |
-| `LOW_CONFIDENCE` | the extractor's confidence is below the policy minimum |
-| `CONFLICTING_CANDIDATES` | another proposal for the same field and key has a different value |
-| `NOT_CORROBORATED` | the policy says that this proposer needs a second proposer, and no other proposer gives the value at this span (spec 0.12) |
-| `OTHER_SPAN` | another proposer gives the same value at a span that does not overlap, and one of the two needs a second proposer (spec 0.12) |
-| `RELATION_FAILED` | a relation of the schema, such as a total and its parts, does not add up |
-| `MODEL_DOUBT` | a recorded judgment of the policy's judge doubts the value |
-
-Number matching is collision-safe. The span `500 mg` inside `1,500 mg` never reads as 500, a span
-that stops at `29.` inside `29.97` never reads as 29, and a malformed number like the `$252,0000`
-printed in IRS Publication 590-A never equals 252,000 or 2,520,000. When a span misses the value
-but its quote occurs exactly once elsewhere with the right value and unit, groundgate moves the
-evidence there and records `EVIDENCE_REANCHORED`. Other info codes say how a fact passed:
-`VALUE_DERIVED` (the evidence gave the sign or scale), `KEY_CITED` (a key item put the key at the
-value in a table), `ADMITTED_BY_POLICY` (the policy admits its outside evidence) and
-`MODEL_CLEARED` (a recorded judgment cleared `KEY_NOT_AT_VALUE`).
-
-The rules are in [SPEC.md](SPEC.md). [SPEC §8](SPEC.md#8-versions) says which change gives a new
-spec version, a new package version or a new version of a format. [conformance/](conformance) holds
-language-neutral vectors, so another implementation can prove it agrees: vectors that pin every
-code, invalid packets that an implementation must refuse, and vectors for profiles, source pins,
-places, exports, blind audits, calibration events, the review API, full receipts and the store
-contract. [conformance/README.md](conformance/README.md) describes each kind, and
-`uv run python conformance/build.py` prints how many vectors of each kind it wrote.
-
-## Receipts
-
-```json
-{"groundgate": "0.13",
- "document": {"id": "irs-p590a-2025-pages-1-2", "sha256": "sha256:1ad1100eb23a...", "source": null,
-              "doubt_sha256": null},
- "references": [],
- "packs": [],
- "schema_sha256": "sha256:...", "policy_sha256": "sha256:...",
- "decisions": [{"candidate_id": "Gemini_3.6_Flash_Medium/0", "field": "ira_limit_2025", "key": null,
-                "outcome": "admitted", "codes": [], "value": "7000", "unit": "USD",
-                "source": "document", "ref": null, "url": null,
-                "evidence": {"start": 2317, "end": 2323}, "parts": [], "missing": [], "packs": [],
-                "candidate_sha256": "sha256:c64383ff..."},
-               "..."],
- "coverage": [{"field": "roth_phaseout_single_2025_end", "code": "REQUIRED_FIELD_MISSING"}],
- "judgments": [],
- "summary": {"admitted": 44, "needs_verification": 3, "rejected": 1},
- "receipt_sha256": "sha256:..."}
-```
-
-Hashes are SHA-256 over RFC 8785 canonical JSON, so a receipt means the same thing in any
-language. `groundgate verify` re-runs every decision from the inputs and fails on any difference:
-a changed document, schema, policy, candidate or outcome.
 
 ## What it does not do
 
-- **It does not judge meaning.** If the model reports a number that really is in the sentence but
-  belongs to another field, every span check passes: a model that reads an age-50 limit of $8,000
-  as the IRA limit cites a real "$8,000" with the right unit. A second proposer plus
-  `CONFLICTING_CANDIDATES` catches it only when the models disagree, and in the benchmark they
-  mostly agreed: six of the eight escapes were this case. When the field depends on a condition
-  the schema can name, such as a drug's indications, a keyed field checks it (spec 0.2).
+- **It does not judge meaning.** If the model reports a number that is in the sentence but
+  belongs to another field, each span check passes. A second proposer and
+  `CONFLICTING_CANDIDATES` find it only when the models disagree. In the benchmark, six of the
+  eight escapes were this case. If the field depends on a condition that the schema can name, a
+  keyed field checks it.
 - **English number formats only.** A decimal comma (`1.234,56`), space groups (`1 234`) and
   number words (`five`) have no value, so a fact that cites them is rejected. The
-  [guide](docs/guide.md#how-values-are-read) lists what is read. Locale packs for other formats
-  are a design ([docs/design/locale-packs.md](docs/design/locale-packs.md), #60).
-- **OCR is opt-in.** `groundgate read --ocr` OCRs a scanned PDF page with the `tesseract` program.
-  OCR reads English only, extracts no table structure from scans, and reads at most 200 pages
-  in one run. When I give `admit` the doubt list, a candidate that cites a word with confidence
-  below `policy.min_read_confidence` gets `READ_DOUBT` and goes to review.
-- **No model calls in the decision.** groundgate never asks an LLM whether an LLM was right.
-  Since spec 0.4, it reads a judge's answers only as recorded inputs, so a receipt still re-derives
-  byte for byte. This judge block is experimental: its one measure on real extractor output is the key
-  clear on 10-K filings (#120). `groundgate calibrate` (#112, experimental) measures the
-  thresholds on your own documents.
-  [How to measure a judge's thresholds](docs/howto/calibrate.md) runs it from start to end.
+  [guide](docs/guide.md#how-values-are-read) lists what groundgate reads.
+- **OCR is optional.** `groundgate read --ocr` reads English only, extracts no table structure
+  from scans, and reads at most 200 pages in one run.
+- **No model calls in the decision.** groundgate reads the answers of a judge only as recorded
+  inputs, so a receipt still derives again byte for byte. The judge block is experimental.
 - **Too many reviews on requested fields.** On the development split of `bench/requested4`,
   0.14 admits no wrong value (0 escapes) and rejects 2 right values, but it sends 69 of the 122
   stated values to review against a target of 35 or fewer. Its miss rate is 60.66% (74 of 122)
   against a target of 40% or less
   ([bench/requested4/development-646/RESULTS.md](bench/requested4/development-646/RESULTS.md)).
-  0.15 adds the document-family profile (#639) and its measure on a gold set of your own
-  (#640). I did not run `bench/requested4` for 0.15, 0.16 or 0.17, so these are still the
-  numbers of 0.14. 0.16 seals 76 labels for a held-out regulatory text family (#641). 0.17 runs
-  its 9 held-out parts one time (#686): 28 right admitted values, 6 escapes and 4 reviews on
-  50 slots, a miss rate of 28.21% and a one-sided 95% upper bound of 31.89% on the admitted
-  error rate ([bench/regulatory/RESULTS.md](bench/regulatory/RESULTS.md)).
-- **An admitted passage or table is not checked as a whole.** An admitted `passage` is the whole
-  section of the reader's outline, with each note that the outline does not mark as a heading.
-  Each member value of an admitted `record` that is not null passed its own checks. But the gate
-  does not check that these values come from one row, or that the records are all the rows of the
-  table. A null member does not say that the cell is empty. In the regulatory
-  held-out run of 0.17, 4 of 22 admitted passages and 2 of 5 admitted tables were escapes. The
-  one-sided 95% upper bounds on the admitted error rate are 36.91% for `passage` and 81.07% for
-  `record`. `number` had 0 escapes on 7 admitted values. The causes are in
-  [bench/regulatory/ESCAPES.md](bench/regulatory/ESCAPES.md), and the fixes are #735 and #736.
-  If a passage or a table must be exact, send it to review until a new held-out measure
-  supports admission.
+  I did not run `bench/requested4` for 0.15, 0.16 or 0.17. On the held-out regulatory text
+  family, 0.17 gives 28 right admitted values, 6 escapes and 4 reviews on 50 slots, a miss rate
+  of 28.21% and a one-sided 95% upper bound of 31.89% on the admitted error rate
+  ([bench/regulatory/RESULTS.md](bench/regulatory/RESULTS.md)).
+- **An admitted passage or table is not checked as a whole.** Each member value of an admitted
+  `record` passed its own checks, but the gate does not check that the values come from one row,
+  or that the records are all the rows of the table. In the regulatory held-out run of 0.17, 4 of
+  22 admitted passages and 2 of 5 admitted tables were escapes. The one-sided 95% upper bounds on
+  the admitted error rate are 36.91% for `passage` and 81.07% for `record`
+  ([bench/regulatory/ESCAPES.md](bench/regulatory/ESCAPES.md)). If a passage or a table must be
+  exact, send it to review.
 
 ## Status
 
-Alpha. groundgate 0.17.0 implements spec v0.12. [CHANGELOG.md](CHANGELOG.md) lists what each version
-changes, with its measure. 0.17 adds the review API over HTTP with blind audit tasks (#649), a
-standalone review and audit page on that API (#647), a guide for a run under a job runner
-(#594), a bound by characters for the term scans of `calibrate events suggest` (#685), and the
-held-out claim of the regulatory text family (#686). 0.16 adds the `facts@2` export with review results and text selectors
-(#675), a blind audit sample with an adaptive rate (#643), calibration events from an outside
-approver (#642), the source format in `reading@2` (#570), the status of each built-in kind pack
-in `groundgate pack list` (#648), and the held-out regulatory text family (#641). 0.15 adds document-family profiles (#639) and `groundgate calibrate
-measure` (#640), the value kinds `date` (#612), `record` with checks across the documents of a
-set (#613) and `passage` (#638), closed options for a string field (#530), source pins (#616),
-the page and the box of each admitted value (#614), the completeness of each reading (#615),
-the record id in the export (#659) and the model text input of review (#531). 0.14 adds the structure reader as a second proposer (#510) and
-agreement between proposers (#509), column and marker words (#540), `SIGN_DROPPED` (#569),
-`READ_DOUBT` (#535), DOCX and XLSX reading (#529), and `groundgate export` (#584). 0.11 adds the store (#288, #402 to #405), the review step and its local
-page (#287, #408 to #412), and `groundgate calibrate` inside groundgate (#385). It reads currency
-headings and currency names (#367, #368, #423), refuses a bad field name (#359), and cuts large
-search regions in the extraction loop (#382). 0.10 adds vocabulary and kind packs (#333 to #339),
-relations across fields (#321), currency scales and heading units (#301, #313, #315, #365), up to 8
-field items for one value (#300), label cells (#316), dash variants in aliases (#317), and the
-runner rules of #318 and #319. 0.9 moves the reader to `groundgate.read` (#289), adds the extraction
-loop `groundgate.extract` (#281), keeps an empty table cell in its column and refuses ambiguous
-column keys (#280), and keeps PDF running heads out of tables and blank cells in their column
-(#279). 0.8 writes PDF table rows as lines with tabs (#230), scales a value by its scale item
-(#242), takes the value's occurrence where the field item passes (#249), lets a title key reach a
-table with one number column (#250), puts a string value at its first occurrence in its span (#140),
-and offers the role `key` only on a field with keys (#256). 0.7 passes a unit item that is away from
-the number only at a unit place of the value (#164). 0.6 passes a unit item that repeats the unit
-(#145), reads `between` with words before an `and` range (#159) and a scale heading over a table
-(#162), and adds a `description` to each field (#171). 0.6.1 adds `gg.feedback_message` (#173). 0.5
-makes the evidence a list of items (#141): a value can cite its sign, scale, unit, field and key,
-and outside sources, under the app's policy, and `gg.candidate_schema()` (#147) gives the
-candidate's JSON Schema. 0.5.1 adds `gg.extractor_schema` and `groundgate schema` (#148), a JSON
-Schema for a model's structured output. 0.5.2 adds `groundgate schema check` (#168) and batch
-`admit` (#169). 0.4 added recorded judgments (#116), an experimental way for a judge's answers to
-clear a key flag or add doubt, with no model call in the decision. 0.3 brought a wider change rule
-(#51), abbreviation dots that no longer end a sentence for qualifiers (#63, #77), Indian digit
-grouping (#59), ASCII digits (#94), and keys that stop at a label line (#52) or read a table by its
-lines (#87). A receipt names the spec version it was decided under, and only that version verifies
-it. A later release with the same spec version verifies it too. For a receipt of an older spec
-version, `verify` names the release to install ([SPEC §8.6](SPEC.md#86-a-receipt-of-another-spec-version)).
-
-[Locale packs](docs/design/locale-packs.md) for number formats outside English are a design,
-not yet code. Of the [hybrid decisions](docs/design/hybrid-decisions.md) design, 0.4 has the
-recorded judgments for the key and field questions, and the review step of 0.11 has the audit
-sample (#409). Model-proposed locations are not code yet.
+Alpha. The main branch implements spec 0.13. groundgate 0.17.0 on PyPI is the last release of
+spec 0.12. A receipt names the spec version that decided it, and only a release with that spec
+version verifies it. [CHANGELOG.md](CHANGELOG.md) lists what
+each version changes, with its measure.
 
 ## License
 
