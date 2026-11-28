@@ -1,0 +1,2286 @@
+{
+ "format": "release1-source-checks/1",
+ "documents": [
+  {
+   "id": "mcs2026-rubidium",
+   "kind": "minerals",
+   "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-rubidium.pdf",
+   "pages": 2,
+   "text_characters": 8871,
+   "text_sha256": "sha256:0af897d943ccba0b219c74df4b181eec11e308a8bcede5b951f9542381414ba5",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 41,
+     "of": 37,
+     "and": 47,
+     "to": 16,
+     "for": 23
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "mcs2026-germanium",
+   "kind": "minerals",
+   "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-germanium.pdf",
+   "pages": 2,
+   "text_characters": 8439,
+   "text_sha256": "sha256:e8d337f18319e60f76716592c32adfe527ee161d3642635e6ef745c217ecc4a6",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 39,
+     "of": 29,
+     "and": 44,
+     "to": 31,
+     "for": 23
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "mcs2026-cesium",
+   "kind": "minerals",
+   "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-cesium.pdf",
+   "pages": 2,
+   "text_characters": 10188,
+   "text_sha256": "sha256:a5d593da36803abc4d1c9672bf940ff68516cd877f89a9864ec730681079a517",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 46,
+     "of": 38,
+     "and": 70,
+     "to": 21,
+     "for": 27
+    }
+   },
+   "notice": {
+    "matches": 1,
+    "examples": [
+     "t recovered cesium iodide during the production process for reproduction into new panels, which was believed to now be the indus"
+    ],
+    "review": "I read the 1 match on 2026-11-27: the chapter text says that cesium iodide is recovered for reproduction into new X-ray panels. No notice."
+   },
+   "problems": []
+  },
+  {
+   "id": "mcs2026-helium",
+   "kind": "minerals",
+   "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-helium.pdf",
+   "pages": 2,
+   "text_characters": 8194,
+   "text_sha256": "sha256:2712af5569b3ad9908ce1ef6310cccd69616c20a5411ca6e408b69de7c085096",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 20,
+     "of": 20,
+     "and": 42,
+     "to": 16,
+     "for": 24
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "mcs2026-iron-steel",
+   "kind": "minerals",
+   "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-iron-steel.pdf",
+   "pages": 2,
+   "text_characters": 7799,
+   "text_sha256": "sha256:7950b8bc9e389259593f3ca4ac7d73d23173b11d5107761296dbd532d97c1952",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 24,
+     "of": 35,
+     "and": 40,
+     "to": 10,
+     "for": 14
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "mcs2026-clays",
+   "kind": "minerals",
+   "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-clays.pdf",
+   "pages": 2,
+   "text_characters": 6038,
+   "text_sha256": "sha256:3ecc39ea3f74238996974c30ba2eb12aad6e5ec3fbc00bae322f59ff7494eeb0",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 10,
+     "of": 16,
+     "and": 41,
+     "to": 8,
+     "for": 5
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "mcs2026-molybdenum",
+   "kind": "minerals",
+   "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-molybdenum.pdf",
+   "pages": 2,
+   "text_characters": 7701,
+   "text_sha256": "sha256:3a7f85a2bca61e97b6caa99c956920c7f968cc400be8f3058ad229eb52e6fe22",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 19,
+     "of": 28,
+     "and": 49,
+     "to": 12,
+     "for": 14
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "mcs2026-phosphate",
+   "kind": "minerals",
+   "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-phosphate.pdf",
+   "pages": 2,
+   "text_characters": 6911,
+   "text_sha256": "sha256:d302c36bb342fcb2848c70cdd3b69783715f86770135aece3842d3be9406ee95",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 35,
+     "of": 24,
+     "and": 30,
+     "to": 17,
+     "for": 13
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "mcs2026-tin",
+   "kind": "minerals",
+   "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-tin.pdf",
+   "pages": 2,
+   "text_characters": 6962,
+   "text_sha256": "sha256:41b058b5913fd9e1b3bcf319582b603bc85711d1ad37fab3300d8df71d03f6bb",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 27,
+     "of": 18,
+     "and": 37,
+     "to": 8,
+     "for": 25
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "mcs2026-garnet",
+   "kind": "minerals",
+   "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-garnet.pdf",
+   "pages": 2,
+   "text_characters": 7503,
+   "text_sha256": "sha256:fe110fd37f18f393164d8e4b13c4b4822d5b444d929d92d50135941facd731b9",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 27,
+     "of": 31,
+     "and": 45,
+     "to": 14,
+     "for": 13
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "mcs2026-nickel",
+   "kind": "minerals",
+   "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-nickel.pdf",
+   "pages": 2,
+   "text_characters": 8071,
+   "text_sha256": "sha256:55e9b9918c451c7671d628ad82bfeae02a971f0a5bc91dda375efd4cbb5ca1ee",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 30,
+     "of": 26,
+     "and": 39,
+     "to": 16,
+     "for": 14
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "mcs2026-rhenium",
+   "kind": "minerals",
+   "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-rhenium.pdf",
+   "pages": 2,
+   "text_characters": 8962,
+   "text_sha256": "sha256:d757aadb8738646c9a322ec2da2ee16f803746feae07aa126fc4a16f98dadea3",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 37,
+     "of": 28,
+     "and": 49,
+     "to": 21,
+     "for": 20
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "mcs2026-tantalum",
+   "kind": "minerals",
+   "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-tantalum.pdf",
+   "pages": 2,
+   "text_characters": 7395,
+   "text_sha256": "sha256:abd6e6cc25408644f8ff97ba17f42f71040de5ea580d11c45f6bce1a7ebdd1a1",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 23,
+     "of": 20,
+     "and": 55,
+     "to": 13,
+     "for": 25
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "mcs2026-perlite",
+   "kind": "minerals",
+   "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-perlite.pdf",
+   "pages": 2,
+   "text_characters": 5152,
+   "text_sha256": "sha256:9a94fb7d699d766fb14a8ec8c4129516f37c515ef59fa2189c48ea4396c1fbb4",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 16,
+     "of": 16,
+     "and": 30,
+     "to": 15,
+     "for": 9
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "mcs2026-diamond",
+   "kind": "minerals",
+   "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-diamond.pdf",
+   "pages": 2,
+   "text_characters": 7083,
+   "text_sha256": "sha256:57a09c8617f7d6a100cc9bf2a97247945e8ba86399e5437e12457419143dc77a",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 25,
+     "of": 37,
+     "and": 45,
+     "to": 10,
+     "for": 14
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "mcs2026-indium",
+   "kind": "minerals",
+   "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-indium.pdf",
+   "pages": 2,
+   "text_characters": 5862,
+   "text_sha256": "sha256:5ef9a29dbfbbf85adf25c182eed3fe221ff775021b88b986ce93f72b7339b8f1",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 16,
+     "of": 16,
+     "and": 24,
+     "to": 13,
+     "for": 17
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "mcs2026-mercury",
+   "kind": "minerals",
+   "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-mercury.pdf",
+   "pages": 2,
+   "text_characters": 7571,
+   "text_sha256": "sha256:6b55a21863e6d1776640b0895accf4810f616784059582144b51cf474a4c09bc",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 41,
+     "of": 35,
+     "and": 48,
+     "to": 13,
+     "for": 14
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "mcs2026-iodine",
+   "kind": "minerals",
+   "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-iodine.pdf",
+   "pages": 2,
+   "text_characters": 4735,
+   "text_sha256": "sha256:a2f723b90943ac313361fa4c631afdc939baa15c5d4a27d92bbd3aaacee6b5cd",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 17,
+     "of": 21,
+     "and": 28,
+     "to": 15,
+     "for": 10
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "mcs2026-sand-industrial",
+   "kind": "minerals",
+   "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-sand-industrial.pdf",
+   "pages": 2,
+   "text_characters": 7461,
+   "text_sha256": "sha256:2f584928b7c670c75dd1cdbf96143ff3174cee4021ab916c4ca4854181839721",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 31,
+     "of": 41,
+     "and": 59,
+     "to": 13,
+     "for": 14
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "mcs2026-silver",
+   "kind": "minerals",
+   "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-silver.pdf",
+   "pages": 2,
+   "text_characters": 7908,
+   "text_sha256": "sha256:349db6eb673238bf25753f13348bc7a66fec928dbc61e9a18ecac298a794f4db",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 28,
+     "of": 26,
+     "and": 61,
+     "to": 10,
+     "for": 19
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "mcs2026-zirconium-hafnium",
+   "kind": "minerals",
+   "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-zirconium-hafnium.pdf",
+   "pages": 2,
+   "text_characters": 7313,
+   "text_sha256": "sha256:f5381ec0ec8ac107f34dcd62196e083cac63f2333ab49e6245bde8422a50c8ba",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 12,
+     "of": 20,
+     "and": 57,
+     "to": 4,
+     "for": 10
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "mcs2026-gold",
+   "kind": "minerals",
+   "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-gold.pdf",
+   "pages": 2,
+   "text_characters": 7377,
+   "text_sha256": "sha256:9a230e2cf0d8a9910a8070f32fe6ff15bfcfe761f986f2fb2eb9c841f281c7a0",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 41,
+     "of": 38,
+     "and": 48,
+     "to": 7,
+     "for": 9
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "mcs2026-arsenic",
+   "kind": "minerals",
+   "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-arsenic.pdf",
+   "pages": 2,
+   "text_characters": 7912,
+   "text_sha256": "sha256:7cf76f2911a21ce471fd143a967ab688724f5ef6ca35bf995dec700b749cf92e",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 26,
+     "of": 33,
+     "and": 42,
+     "to": 11,
+     "for": 20
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "mcs2026-mica",
+   "kind": "minerals",
+   "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-mica.pdf",
+   "pages": 2,
+   "text_characters": 6993,
+   "text_sha256": "sha256:db2ffbe5fdfc649aef053cd898865c1a833b0f2cd75b5d36cbc21db88d69a594",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 24,
+     "of": 30,
+     "and": 43,
+     "to": 13,
+     "for": 15
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "mcs2026-cobalt",
+   "kind": "minerals",
+   "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-cobalt.pdf",
+   "pages": 2,
+   "text_characters": 7493,
+   "text_sha256": "sha256:dd876551b96b092d31ebcd89669d8b48aa87fdec9d26be2a77f3181db4899816",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 28,
+     "of": 27,
+     "and": 41,
+     "to": 7,
+     "for": 26
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "mcs2026-magnesium-metal",
+   "kind": "minerals",
+   "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-magnesium-metal.pdf",
+   "pages": 2,
+   "text_characters": 7468,
+   "text_sha256": "sha256:e59cf5de49b9d7ff4da50f8730f1fa8ea898557f6c37bc9ecdf6c742730b50e6",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 34,
+     "of": 31,
+     "and": 44,
+     "to": 23,
+     "for": 23
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "mcs2026-pumice",
+   "kind": "minerals",
+   "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-pumice.pdf",
+   "pages": 2,
+   "text_characters": 5302,
+   "text_sha256": "sha256:3dde396bd76065615b752258f6effcb8cbfa8988cb50b79831d64fd426ec55ad",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 22,
+     "of": 19,
+     "and": 48,
+     "to": 13,
+     "for": 6
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "mcs2026-feldspar",
+   "kind": "minerals",
+   "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-feldspar.pdf",
+   "pages": 2,
+   "text_characters": 5336,
+   "text_sha256": "sha256:ca07805b190e9a565b755581afa499fbd7530fc90625799bae370528111cb1c3",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 14,
+     "of": 19,
+     "and": 38,
+     "to": 14,
+     "for": 12
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "mcs2026-chromium",
+   "kind": "minerals",
+   "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-chromium.pdf",
+   "pages": 2,
+   "text_characters": 7224,
+   "text_sha256": "sha256:f4ff3f10fe83863e7bb877f633d32a2dd1da2ee6ec4591f54f12736c84ee3372",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 19,
+     "of": 16,
+     "and": 38,
+     "to": 8,
+     "for": 15
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "mcs2026-rare-earths-heavy",
+   "kind": "minerals",
+   "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-rare-earths-heavy.pdf",
+   "pages": 2,
+   "text_characters": 5598,
+   "text_sha256": "sha256:94ef987988a414ba472de48834380fff1a7e490ff76f3142e50232c8c88f8be3",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 12,
+     "of": 13,
+     "and": 36,
+     "to": 11,
+     "for": 8
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "USCOURTS-ca1-24-02002",
+   "kind": "opinions",
+   "source": "https://www.govinfo.gov/content/pkg/USCOURTS-ca1-24-02002/pdf/USCOURTS-ca1-24-02002-0.pdf",
+   "pages": 24,
+   "text_characters": 35749,
+   "text_sha256": "sha256:8f9afc47193f31a6e8f377231e3b3f820640930f34484613a1651860bb57194c",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 384,
+     "of": 113,
+     "and": 160,
+     "to": 116,
+     "for": 34
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "USCOURTS-ca1-24-01330",
+   "kind": "opinions",
+   "source": "https://www.govinfo.gov/content/pkg/USCOURTS-ca1-24-01330/pdf/USCOURTS-ca1-24-01330-0.pdf",
+   "pages": 17,
+   "text_characters": 27016,
+   "text_sha256": "sha256:8acdc63ac8072f76c9583ecc5c1214aff7b2e0eb5ae20b9cac0d60b19203c21b",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 231,
+     "of": 106,
+     "and": 45,
+     "to": 112,
+     "for": 36
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "USCOURTS-ca2-22-02166",
+   "kind": "opinions",
+   "source": "https://www.govinfo.gov/content/pkg/USCOURTS-ca2-22-02166/pdf/USCOURTS-ca2-22-02166-0.pdf",
+   "pages": 51,
+   "text_characters": 100728,
+   "text_sha256": "sha256:dd44e1caf9b07c6ac8ce00c886d3e31963ffc7571d2bf8b5af748fd53ae78bb3",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 1278,
+     "of": 491,
+     "and": 223,
+     "to": 407,
+     "for": 110
+    }
+   },
+   "notice": {
+    "matches": 1,
+    "examples": [
+     "rties.” This might force U.S. secured creditors to seek the permission of the foreign bankruptcy court to liquidate their collateral,"
+    ],
+    "review": "I read the 1 match on 2026-11-27: the opinion says that creditors can need the permission of a foreign court. No notice."
+   },
+   "problems": []
+  },
+  {
+   "id": "USCOURTS-ca2-23-00903",
+   "kind": "opinions",
+   "source": "https://www.govinfo.gov/content/pkg/USCOURTS-ca2-23-00903/pdf/USCOURTS-ca2-23-00903-0.pdf",
+   "pages": 20,
+   "text_characters": 36086,
+   "text_sha256": "sha256:8ff57e6d7f79e47f23ac9a7ae23d9127a3af9023981fee1973c32b9e18c2e821",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 445,
+     "of": 205,
+     "and": 105,
+     "to": 149,
+     "for": 48
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "USCOURTS-ca3-24-01724",
+   "kind": "opinions",
+   "source": "https://www.govinfo.gov/content/pkg/USCOURTS-ca3-24-01724/pdf/USCOURTS-ca3-24-01724-0.pdf",
+   "pages": 17,
+   "text_characters": 28071,
+   "text_sha256": "sha256:ecd0475f98ebc623e81e0c984668964220ac0c1669e3a159df12599ff1fa6a9a",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 229,
+     "of": 115,
+     "and": 90,
+     "to": 126,
+     "for": 37
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "USCOURTS-ca3-23-02284",
+   "kind": "opinions",
+   "source": "https://www.govinfo.gov/content/pkg/USCOURTS-ca3-23-02284/pdf/USCOURTS-ca3-23-02284-0.pdf",
+   "pages": 24,
+   "text_characters": 38414,
+   "text_sha256": "sha256:bbf8db8179357ef692896cb8d2be1b0f35996a795ad78f9b027854c1dc6f5472",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 339,
+     "of": 133,
+     "and": 108,
+     "to": 161,
+     "for": 89
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "USCOURTS-ca3-23-02773",
+   "kind": "opinions",
+   "source": "https://www.govinfo.gov/content/pkg/USCOURTS-ca3-23-02773/pdf/USCOURTS-ca3-23-02773-0.pdf",
+   "pages": 12,
+   "text_characters": 21072,
+   "text_sha256": "sha256:70e834862924d942cb557805506b2144d66c694967844185fa9845b62b424ae6",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 174,
+     "of": 80,
+     "and": 63,
+     "to": 110,
+     "for": 41
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "USCOURTS-ca4-24-04340",
+   "kind": "opinions",
+   "source": "https://www.govinfo.gov/content/pkg/USCOURTS-ca4-24-04340/pdf/USCOURTS-ca4-24-04340-0.pdf",
+   "pages": 6,
+   "text_characters": 9984,
+   "text_sha256": "sha256:0e51a4f9bdd920f3ca8744b6593eeee3cbf3c61b0f39f8764f1a61f662014655",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 102,
+     "of": 39,
+     "and": 31,
+     "to": 47,
+     "for": 22
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "USCOURTS-ca4-23-04713",
+   "kind": "opinions",
+   "source": "https://www.govinfo.gov/content/pkg/USCOURTS-ca4-23-04713/pdf/USCOURTS-ca4-23-04713-0.pdf",
+   "pages": 6,
+   "text_characters": 8830,
+   "text_sha256": "sha256:5ee946032ed4f7a2a8576f10e2f4e763223a6ab0341892bc9fe2d385d268cbbe",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 73,
+     "of": 46,
+     "and": 18,
+     "to": 46,
+     "for": 17
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "USCOURTS-ca4-22-02192",
+   "kind": "opinions",
+   "source": "https://www.govinfo.gov/content/pkg/USCOURTS-ca4-22-02192/pdf/USCOURTS-ca4-22-02192-0.pdf",
+   "pages": 15,
+   "text_characters": 25979,
+   "text_sha256": "sha256:3e13b17e852c751685d1770ae740a0a5883ad8147928d828650f5d81d37c9b40",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 206,
+     "of": 76,
+     "and": 118,
+     "to": 105,
+     "for": 47
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "USCOURTS-ca5-24-20329",
+   "kind": "opinions",
+   "source": "https://www.govinfo.gov/content/pkg/USCOURTS-ca5-24-20329/pdf/USCOURTS-ca5-24-20329-0.pdf",
+   "pages": 19,
+   "text_characters": 37342,
+   "text_sha256": "sha256:2edc98c787ba6ac2b741b25a38cd767a5ac1f900ee6c2f8e3a63acc2c879a51d",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 319,
+     "of": 189,
+     "and": 132,
+     "to": 124,
+     "for": 45
+    }
+   },
+   "notice": {
+    "matches": 1,
+    "examples": [
+     "of fees. To start, Sections 7.1(b), (c), (d), and 7.2 are reproduced below: 7.1 Early Termination Events. This Agreement is s"
+    ],
+    "review": "I read the 1 match on 2026-11-27: the opinion says that it reproduces sections of an agreement in the case. No notice."
+   },
+   "problems": []
+  },
+  {
+   "id": "USCOURTS-ca5-24-40662",
+   "kind": "opinions",
+   "source": "https://www.govinfo.gov/content/pkg/USCOURTS-ca5-24-40662/pdf/USCOURTS-ca5-24-40662-0.pdf",
+   "pages": 8,
+   "text_characters": 12603,
+   "text_sha256": "sha256:c834e616894e20c93045787f29ad74fe80a50e2f296dfbaac2dc07ecd5c2bf86",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 123,
+     "of": 53,
+     "and": 30,
+     "to": 37,
+     "for": 10
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "USCOURTS-ca5-24-10439",
+   "kind": "opinions",
+   "source": "https://www.govinfo.gov/content/pkg/USCOURTS-ca5-24-10439/pdf/USCOURTS-ca5-24-10439-0.pdf",
+   "pages": 48,
+   "text_characters": 97783,
+   "text_sha256": "sha256:9b7eda9537dbf6b8f8696101d7d86c0b9cb811794e639819b65c75d106ebfff0",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 826,
+     "of": 481,
+     "and": 305,
+     "to": 419,
+     "for": 94
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "USCOURTS-ca6-23-05673",
+   "kind": "opinions",
+   "source": "https://www.govinfo.gov/content/pkg/USCOURTS-ca6-23-05673/pdf/USCOURTS-ca6-23-05673-0.pdf",
+   "pages": 17,
+   "text_characters": 42972,
+   "text_sha256": "sha256:31c00a62c01036374851c9caaca7e8d6befade9ecbef0658e1c59ab8c7bcba2c",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 401,
+     "of": 193,
+     "and": 150,
+     "to": 106,
+     "for": 54
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "USCOURTS-ca6-24-01848",
+   "kind": "opinions",
+   "source": "https://www.govinfo.gov/content/pkg/USCOURTS-ca6-24-01848/pdf/USCOURTS-ca6-24-01848-0.pdf",
+   "pages": 9,
+   "text_characters": 19428,
+   "text_sha256": "sha256:9711b44bd58fdfeba15eed873c15f25b7496ca2e5c239f8730477ff2daa6bd2f",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 177,
+     "of": 45,
+     "and": 61,
+     "to": 75,
+     "for": 39
+    }
+   },
+   "notice": {
+    "matches": 2,
+    "examples": [
+     "ss money. 251 U.S. at 63–64 (quotation omitted). Under the Copyright Act, as another example, copyright owners may choose to re",
+     "tion omitted). Under the Copyright Act, as another example, copyright owners may choose to recover “statutory damages” between $"
+    ],
+    "review": "I read the 2 matches on 2026-11-27: the opinion cites the Copyright Act as an example of statutory damages. No notice."
+   },
+   "problems": []
+  },
+  {
+   "id": "USCOURTS-ca6-24-03726",
+   "kind": "opinions",
+   "source": "https://www.govinfo.gov/content/pkg/USCOURTS-ca6-24-03726/pdf/USCOURTS-ca6-24-03726-0.pdf",
+   "pages": 20,
+   "text_characters": 42522,
+   "text_sha256": "sha256:7a37d2eb0d5167e506fed9f3a8fec2f99dd19031b11d81f4d43646ddb322ea0d",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 302,
+     "of": 155,
+     "and": 102,
+     "to": 180,
+     "for": 47
+    }
+   },
+   "notice": {
+    "matches": 26,
+    "examples": [
+     "t Judges. BOGGS, Circuit Judge. This case concerns federal copyright and state trade-secret claims brought by Plaintiff-Appella",
+     "er the Ohio Uniform Trade Secrets Act (OUTSA) and a federal copyright claim. LabWare moved for summary judgment on both claims a",
+     "ftware, Inc., along with related assets (including several copyright registrations). Seagull immediately licensed back certain r",
+     "enrichment, but the district court allowed Cincom’s federal copyright-infringement and state trade-secret claims (under the Ohio",
+     "claim is time-barred by OUTSA’s statute of limitations. B. Copyright Infringement Claim Cincom’s second claim on appeal is that"
+    ],
+    "review": "I read the 26 matches on 2026-11-27: the case is about a federal copyright claim on software. No notice."
+   },
+   "problems": []
+  },
+  {
+   "id": "USCOURTS-ca7-23-02447",
+   "kind": "opinions",
+   "source": "https://www.govinfo.gov/content/pkg/USCOURTS-ca7-23-02447/pdf/USCOURTS-ca7-23-02447-0.pdf",
+   "pages": 11,
+   "text_characters": 18515,
+   "text_sha256": "sha256:5be1cd10c08c1880e5597ab830a3a1faa9589ced20378a6e2ccd6905817f7841",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 148,
+     "of": 67,
+     "and": 36,
+     "to": 92,
+     "for": 18
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "USCOURTS-ca7-24-01570",
+   "kind": "opinions",
+   "source": "https://www.govinfo.gov/content/pkg/USCOURTS-ca7-24-01570/pdf/USCOURTS-ca7-24-01570-0.pdf",
+   "pages": 13,
+   "text_characters": 22978,
+   "text_sha256": "sha256:9f7349e7b741dbacd9c09d77d379125baf4ceed714f7c554b5a6b582546062e1",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 194,
+     "of": 83,
+     "and": 74,
+     "to": 83,
+     "for": 32
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "USCOURTS-ca7-24-03039",
+   "kind": "opinions",
+   "source": "https://www.govinfo.gov/content/pkg/USCOURTS-ca7-24-03039/pdf/USCOURTS-ca7-24-03039-0.pdf",
+   "pages": 6,
+   "text_characters": 14070,
+   "text_sha256": "sha256:c1f8eed09b35fb3f53da0578c5b5820c5c30529d860cac26acf978e58b858890",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 136,
+     "of": 64,
+     "and": 50,
+     "to": 60,
+     "for": 22
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "USCOURTS-ca9-24-1641",
+   "kind": "opinions",
+   "source": "https://www.govinfo.gov/content/pkg/USCOURTS-ca9-24-1641/pdf/USCOURTS-ca9-24-1641-0.pdf",
+   "pages": 18,
+   "text_characters": 28590,
+   "text_sha256": "sha256:f12d144b8df7e09ca9bf08f9729b1227ed4aecf5024d2675a838fd3423fa0203",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 360,
+     "of": 97,
+     "and": 126,
+     "to": 129,
+     "for": 36
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "USCOURTS-ca9-23-15999",
+   "kind": "opinions",
+   "source": "https://www.govinfo.gov/content/pkg/USCOURTS-ca9-23-15999/pdf/USCOURTS-ca9-23-15999-0.pdf",
+   "pages": 50,
+   "text_characters": 71886,
+   "text_sha256": "sha256:af93945c774dfd6702d3615fcd90bd7b2b9dbc3afac5a2574a6634730c5d69ba",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 724,
+     "of": 402,
+     "and": 290,
+     "to": 314,
+     "for": 65
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "USCOURTS-ca10-24-01215",
+   "kind": "opinions",
+   "source": "https://www.govinfo.gov/content/pkg/USCOURTS-ca10-24-01215/pdf/USCOURTS-ca10-24-01215-0.pdf",
+   "pages": 18,
+   "text_characters": 30974,
+   "text_sha256": "sha256:190f1276399d486f11b54f93913aef99131aa6f7c4b2c5ee945dc2347fa2d80e",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 385,
+     "of": 126,
+     "and": 68,
+     "to": 124,
+     "for": 33
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "USCOURTS-ca10-24-06117",
+   "kind": "opinions",
+   "source": "https://www.govinfo.gov/content/pkg/USCOURTS-ca10-24-06117/pdf/USCOURTS-ca10-24-06117-0.pdf",
+   "pages": 15,
+   "text_characters": 25141,
+   "text_sha256": "sha256:75b44ec96c9c857f08a6809f996d9fe060e0e921bd7487c7adf3fcd82253b3bf",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 165,
+     "of": 73,
+     "and": 74,
+     "to": 112,
+     "for": 53
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "USCOURTS-ca10-24-02124",
+   "kind": "opinions",
+   "source": "https://www.govinfo.gov/content/pkg/USCOURTS-ca10-24-02124/pdf/USCOURTS-ca10-24-02124-0.pdf",
+   "pages": 8,
+   "text_characters": 10365,
+   "text_sha256": "sha256:fc7e36d01772c02dff5e51aa0415b797d13143d3ada8ebcd1e1a096dd583b853",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 74,
+     "of": 44,
+     "and": 32,
+     "to": 30,
+     "for": 23
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "USCOURTS-ca11-23-10887",
+   "kind": "opinions",
+   "source": "https://www.govinfo.gov/content/pkg/USCOURTS-ca11-23-10887/pdf/USCOURTS-ca11-23-10887-0.pdf",
+   "pages": 15,
+   "text_characters": 23854,
+   "text_sha256": "sha256:eb3015311a1aaae459694913db942654e0747f06b574f49b91937367c3a2c234",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 231,
+     "of": 102,
+     "and": 85,
+     "to": 72,
+     "for": 26
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "USCOURTS-ca11-24-13668",
+   "kind": "opinions",
+   "source": "https://www.govinfo.gov/content/pkg/USCOURTS-ca11-24-13668/pdf/USCOURTS-ca11-24-13668-0.pdf",
+   "pages": 6,
+   "text_characters": 8321,
+   "text_sha256": "sha256:7ba85f431bad46830d3019164f7af3d1df14f8c53699f11b6a771ea5189ce8d3",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 44,
+     "of": 47,
+     "and": 12,
+     "to": 43,
+     "for": 13
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "USCOURTS-ca11-23-11302",
+   "kind": "opinions",
+   "source": "https://www.govinfo.gov/content/pkg/USCOURTS-ca11-23-11302/pdf/USCOURTS-ca11-23-11302-0.pdf",
+   "pages": 18,
+   "text_characters": 27036,
+   "text_sha256": "sha256:de39c991c7fcad466261ce3089633236c2b00446e23f535db5230096cda50b81",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 273,
+     "of": 146,
+     "and": 116,
+     "to": 118,
+     "for": 39
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "USCOURTS-ca13-23-01663",
+   "kind": "opinions",
+   "source": "https://www.govinfo.gov/content/pkg/USCOURTS-ca13-23-01663/pdf/USCOURTS-ca13-23-01663-0.pdf",
+   "pages": 10,
+   "text_characters": 14170,
+   "text_sha256": "sha256:98d6e8d656664e5bb9ac14e4151c2519b0269b7343dc5c88e69d74e83ba1b23e",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 92,
+     "of": 61,
+     "and": 44,
+     "to": 64,
+     "for": 25
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "USCOURTS-ca13-24-01997",
+   "kind": "opinions",
+   "source": "https://www.govinfo.gov/content/pkg/USCOURTS-ca13-24-01997/pdf/USCOURTS-ca13-24-01997-0.pdf",
+   "pages": 12,
+   "text_characters": 22401,
+   "text_sha256": "sha256:28de7c54a67a29a4c3b1e00712fd1ae295aea54f0204abc5cf9e0ce3814a15e5",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 197,
+     "of": 89,
+     "and": 73,
+     "to": 70,
+     "for": 48
+    }
+   },
+   "notice": {
+    "matches": 7,
+    "examples": [
+     "nst the federal government for allegedly infringing on his “copyrighted property” by engaging in and publishing research on this",
+     "r “employment discrimination,” “in- tellectual property and copyright[] law[] violations” result- ing from the government’s alleg",
+     "ourt to consider whether Dr. Aljindi had stated a claim for copyright infringement. Id. at *3–4. On remand, the Claims Court hel",
+     "ms Court held that the complaint did not support a claim of copyright infringement on which relief could be granted, because the",
+     "f could be granted, because the allegations “relate[d] to uncopyrightable ideas” and to the uncopyrightable 1 We use the names a"
+    ],
+    "review": "I read the 7 matches on 2026-11-27: the opinion is about the copyright claims of the appellant. No notice."
+   },
+   "problems": []
+  },
+  {
+   "id": "USCOURTS-ca13-24-01035",
+   "kind": "opinions",
+   "source": "https://www.govinfo.gov/content/pkg/USCOURTS-ca13-24-01035/pdf/USCOURTS-ca13-24-01035-0.pdf",
+   "pages": 7,
+   "text_characters": 10550,
+   "text_sha256": "sha256:d8a97b4c5dd56c4a3c9506c7ce826dc5a6a776658bb1e7010caa6e5137271e64",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 110,
+     "of": 41,
+     "and": 34,
+     "to": 27,
+     "for": 9
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "CRPT-119hrpt259",
+   "kind": "reports",
+   "source": "https://www.govinfo.gov/content/pkg/CRPT-119hrpt259/pdf/CRPT-119hrpt259.pdf",
+   "pages": 13,
+   "text_characters": 36096,
+   "text_sha256": "sha256:90253dfe8094b8cdae1af7eba497ac8e14255dcfdc780dbf00a93c40096e8914",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 325,
+     "of": 292,
+     "and": 96,
+     "to": 138,
+     "for": 66
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "CRPT-119hrpt320",
+   "kind": "reports",
+   "source": "https://www.govinfo.gov/content/pkg/CRPT-119hrpt320/pdf/CRPT-119hrpt320.pdf",
+   "pages": 8,
+   "text_characters": 20469,
+   "text_sha256": "sha256:efcd03f9a689b79fbfc9a51e993c2f38122561f0cc2e4f44d46c85330ac4b437",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 183,
+     "of": 135,
+     "and": 75,
+     "to": 82,
+     "for": 50
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "CRPT-119hrpt316",
+   "kind": "reports",
+   "source": "https://www.govinfo.gov/content/pkg/CRPT-119hrpt316/pdf/CRPT-119hrpt316.pdf",
+   "pages": 9,
+   "text_characters": 20713,
+   "text_sha256": "sha256:d93d2b1cf0dc1b85fb2b50599cba083ca14208d03f7650adcf18c50a8d50c78f",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 277,
+     "of": 203,
+     "and": 66,
+     "to": 53,
+     "for": 44
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "CRPT-119hrpt390",
+   "kind": "reports",
+   "source": "https://www.govinfo.gov/content/pkg/CRPT-119hrpt390/pdf/CRPT-119hrpt390.pdf",
+   "pages": 74,
+   "text_characters": 221816,
+   "text_sha256": "sha256:fca6fa23326b8db86a56295a21533ec19c7dd68508e01013600eda50fc7af1d2",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 2065,
+     "of": 1867,
+     "and": 675,
+     "to": 692,
+     "for": 364
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "CRPT-119hrpt185",
+   "kind": "reports",
+   "source": "https://www.govinfo.gov/content/pkg/CRPT-119hrpt185/pdf/CRPT-119hrpt185.pdf",
+   "pages": 11,
+   "text_characters": 23379,
+   "text_sha256": "sha256:8d79b9edf9d2f8ea08a22d26fc99226d10f7771ae75f6b5dadfc71a1a7f819fc",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 209,
+     "of": 111,
+     "and": 101,
+     "to": 70,
+     "for": 31
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "CRPT-119hrpt360",
+   "kind": "reports",
+   "source": "https://www.govinfo.gov/content/pkg/CRPT-119hrpt360/pdf/CRPT-119hrpt360.pdf",
+   "pages": 12,
+   "text_characters": 34094,
+   "text_sha256": "sha256:cf724a0e072000137c32d2fae3b718822c77804d593c966246f136a9bf8e7f4e",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 281,
+     "of": 201,
+     "and": 98,
+     "to": 141,
+     "for": 32
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "CRPT-119hrpt387",
+   "kind": "reports",
+   "source": "https://www.govinfo.gov/content/pkg/CRPT-119hrpt387/pdf/CRPT-119hrpt387.pdf",
+   "pages": 16,
+   "text_characters": 27820,
+   "text_sha256": "sha256:c3cdb916bc7fa7aa58c9072aa9b5a42d22b40b23cf3bc711063791e8b849cc35",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 296,
+     "of": 204,
+     "and": 124,
+     "to": 125,
+     "for": 29
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "CRPT-119hrpt383",
+   "kind": "reports",
+   "source": "https://www.govinfo.gov/content/pkg/CRPT-119hrpt383/pdf/CRPT-119hrpt383.pdf",
+   "pages": 17,
+   "text_characters": 36717,
+   "text_sha256": "sha256:0a850a37e547b85a28553917915516383c952ff71dd4931f826df1b511be421e",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 397,
+     "of": 234,
+     "and": 142,
+     "to": 155,
+     "for": 65
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "CRPT-119hrpt413",
+   "kind": "reports",
+   "source": "https://www.govinfo.gov/content/pkg/CRPT-119hrpt413/pdf/CRPT-119hrpt413.pdf",
+   "pages": 26,
+   "text_characters": 73829,
+   "text_sha256": "sha256:a1630c6a8c518d48b42e302543284fb3abb1de747b0052d818765e7cf2cf26f4",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 647,
+     "of": 458,
+     "and": 267,
+     "to": 239,
+     "for": 180
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "CRPT-119hrpt233",
+   "kind": "reports",
+   "source": "https://www.govinfo.gov/content/pkg/CRPT-119hrpt233/pdf/CRPT-119hrpt233.pdf",
+   "pages": 26,
+   "text_characters": 79326,
+   "text_sha256": "sha256:fc5d8dd5fe4b9929094617418befa4f55ca219742ec2cb5541e8d18e2fbc150f",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 898,
+     "of": 636,
+     "and": 327,
+     "to": 342,
+     "for": 168
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "CRPT-119hrpt347",
+   "kind": "reports",
+   "source": "https://www.govinfo.gov/content/pkg/CRPT-119hrpt347/pdf/CRPT-119hrpt347.pdf",
+   "pages": 22,
+   "text_characters": 67915,
+   "text_sha256": "sha256:722f793ed522754d287495fc04f584f0533337ab95d26ddb7fa952119fc56c15",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 763,
+     "of": 487,
+     "and": 191,
+     "to": 242,
+     "for": 148
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "CRPT-119hrpt323",
+   "kind": "reports",
+   "source": "https://www.govinfo.gov/content/pkg/CRPT-119hrpt323/pdf/CRPT-119hrpt323-pt1.pdf",
+   "pages": 21,
+   "text_characters": 51168,
+   "text_sha256": "sha256:ef8984be09e5fe9caa422118df114c304226af0f7e8f33499fd0dff97052d2c8",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 498,
+     "of": 363,
+     "and": 393,
+     "to": 188,
+     "for": 56
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "CRPT-119hrpt161",
+   "kind": "reports",
+   "source": "https://www.govinfo.gov/content/pkg/CRPT-119hrpt161/pdf/CRPT-119hrpt161.pdf",
+   "pages": 132,
+   "text_characters": 328029,
+   "text_sha256": "sha256:a0ee69670cfe0a559ce1ba25570a8cecae61549c452385e1e9e00424f481bccf",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 3055,
+     "of": 1565,
+     "and": 1426,
+     "to": 1644,
+     "for": 775
+    }
+   },
+   "notice": {
+    "matches": 3,
+    "examples": [
+     "Ds), especially copper IUDs, on women Veterans receiving VA reproduc- tive health services. The study should focus on physical a",
+     ". Allows the use of Medical Services funding for as- sisted reproductive technology treatment and adoption reimburse- ment for v",
+     "or partners, under certain conditions, to receive assisted reproductive technology services and adoption reimburse- ment. Lang"
+    ],
+    "review": "I read the 3 matches on 2026-11-27: the report text is about reproductive health services for veterans. No notice."
+   },
+   "problems": []
+  },
+  {
+   "id": "CRPT-119hrpt239",
+   "kind": "reports",
+   "source": "https://www.govinfo.gov/content/pkg/CRPT-119hrpt239/pdf/CRPT-119hrpt239.pdf",
+   "pages": 8,
+   "text_characters": 27032,
+   "text_sha256": "sha256:9daccf2481ae59b354e257b5598d4585dd617e5f3bf2aaae0465aea186d15a95",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 192,
+     "of": 159,
+     "and": 110,
+     "to": 98,
+     "for": 24
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "CRPT-119hrpt305",
+   "kind": "reports",
+   "source": "https://www.govinfo.gov/content/pkg/CRPT-119hrpt305/pdf/CRPT-119hrpt305.pdf",
+   "pages": 10,
+   "text_characters": 25830,
+   "text_sha256": "sha256:a36e99f5b4ba970da4ee02e0a0bf64f33e8f4f8e930c81dd059b0771ebbcc18e",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 223,
+     "of": 234,
+     "and": 79,
+     "to": 88,
+     "for": 55
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "CRPT-119srpt26",
+   "kind": "reports",
+   "source": "https://www.govinfo.gov/content/pkg/CRPT-119srpt26/pdf/CRPT-119srpt26.pdf",
+   "pages": 14,
+   "text_characters": 33447,
+   "text_sha256": "sha256:1edb353b0f2582c1a8ebfbfde28380243ed7ee1bd25eaf00e4de31acd3796485",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 235,
+     "of": 129,
+     "and": 231,
+     "to": 107,
+     "for": 46
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "CRPT-119srpt89",
+   "kind": "reports",
+   "source": "https://www.govinfo.gov/content/pkg/CRPT-119srpt89/pdf/CRPT-119srpt89.pdf",
+   "pages": 9,
+   "text_characters": 23984,
+   "text_sha256": "sha256:d7a470f783d472ffb5c8be8221c6e5fa02948c5be01ba1e51cc573e448daad68",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 216,
+     "of": 131,
+     "and": 132,
+     "to": 90,
+     "for": 41
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "CRPT-119srpt95",
+   "kind": "reports",
+   "source": "https://www.govinfo.gov/content/pkg/CRPT-119srpt95/pdf/CRPT-119srpt95.pdf",
+   "pages": 8,
+   "text_characters": 19131,
+   "text_sha256": "sha256:4ae40701ecb2b27ce5ccef3e03eff5975ab8876ca3d6ea64c9587c740f7bd5ab",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 213,
+     "of": 84,
+     "and": 59,
+     "to": 71,
+     "for": 22
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "CRPT-119srpt38",
+   "kind": "reports",
+   "source": "https://www.govinfo.gov/content/pkg/CRPT-119srpt38/pdf/CRPT-119srpt38.pdf",
+   "pages": 62,
+   "text_characters": 237120,
+   "text_sha256": "sha256:5f1bf47fc2f6abe2e28eb1765f6ff2f774c49c69a2f81107960600df1ae46048",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 1978,
+     "of": 983,
+     "and": 882,
+     "to": 695,
+     "for": 466
+    }
+   },
+   "notice": {
+    "matches": 12,
+    "examples": [
+     "........................................................ 43 Copyright Office ....................................................",
+     "ay be required to pay a reasonable fee to cover the cost of reproduction. Any moneys received by the Sec- retary shall be deposi",
+     "Congress houses the Congres- sional Research Service, U.S. Copyright Office, National Library Service for the Blind and Print Di",
+     "f the recommendation cannot or should not be achieved. 46 COPYRIGHT OFFICE SALARIES AND EXPENSES Appropriations, 2025 .......",
+     "............................. 57,537,000 The United States Copyright Office plays an important role in our Nation’s intellectual"
+    ],
+    "review": "I read the 12 matches on 2026-11-27: the report text is about the budget of the Copyright Office and the cost of reproduction of a report. No notice."
+   },
+   "problems": []
+  },
+  {
+   "id": "CRPT-119srpt51",
+   "kind": "reports",
+   "source": "https://www.govinfo.gov/content/pkg/CRPT-119srpt51/pdf/CRPT-119srpt51.pdf",
+   "pages": 28,
+   "text_characters": 81308,
+   "text_sha256": "sha256:c4a4842e2809874982d9486a09c7299adfdfe310055a221713dd27d0f3fac596",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 811,
+     "of": 549,
+     "and": 340,
+     "to": 458,
+     "for": 163
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "CRPT-119srpt15",
+   "kind": "reports",
+   "source": "https://www.govinfo.gov/content/pkg/CRPT-119srpt15/pdf/CRPT-119srpt15.pdf",
+   "pages": 12,
+   "text_characters": 31126,
+   "text_sha256": "sha256:da400ac18be9001ece37bd1e5679952950f383af8349d65e1b369eb839cda39f",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 262,
+     "of": 130,
+     "and": 123,
+     "to": 124,
+     "for": 45
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "CRPT-119srpt27",
+   "kind": "reports",
+   "source": "https://www.govinfo.gov/content/pkg/CRPT-119srpt27/pdf/CRPT-119srpt27.pdf",
+   "pages": 8,
+   "text_characters": 15725,
+   "text_sha256": "sha256:4fc651f607384355db0b5693b55f899c205c8ac4ea92434350b44b70c39203ec",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 175,
+     "of": 90,
+     "and": 68,
+     "to": 60,
+     "for": 22
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "CRPT-119srpt33",
+   "kind": "reports",
+   "source": "https://www.govinfo.gov/content/pkg/CRPT-119srpt33/pdf/CRPT-119srpt33.pdf",
+   "pages": 22,
+   "text_characters": 55622,
+   "text_sha256": "sha256:ad561d56ecb694812b4a392923fbb7cdd1cb903d1f05ed091355e66e830271c5",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 443,
+     "of": 329,
+     "and": 167,
+     "to": 230,
+     "for": 89
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "CRPT-119srpt84",
+   "kind": "reports",
+   "source": "https://www.govinfo.gov/content/pkg/CRPT-119srpt84/pdf/CRPT-119srpt84.pdf",
+   "pages": 8,
+   "text_characters": 17508,
+   "text_sha256": "sha256:eb15df9094072afcbd1a051f0cd09ca89ba06d975b24df74a2fed6b8a99f0a51",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 145,
+     "of": 88,
+     "and": 78,
+     "to": 62,
+     "for": 16
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "CRPT-119srpt50",
+   "kind": "reports",
+   "source": "https://www.govinfo.gov/content/pkg/CRPT-119srpt50/pdf/CRPT-119srpt50.pdf",
+   "pages": 10,
+   "text_characters": 22649,
+   "text_sha256": "sha256:aceee671cecbb065da64b0809949596bb2ea5d39eb4c376d98a7b4c733c95ed2",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 195,
+     "of": 94,
+     "and": 76,
+     "to": 77,
+     "for": 57
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "CRPT-119srpt14",
+   "kind": "reports",
+   "source": "https://www.govinfo.gov/content/pkg/CRPT-119srpt14/pdf/CRPT-119srpt14.pdf",
+   "pages": 9,
+   "text_characters": 20047,
+   "text_sha256": "sha256:ef992cce4bf86bd4222c6c9be15d0f8c632d4ee51fcbbc0ec0fb16db8bd7e8c2",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 183,
+     "of": 76,
+     "and": 69,
+     "to": 74,
+     "for": 54
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "CRPT-119srpt58",
+   "kind": "reports",
+   "source": "https://www.govinfo.gov/content/pkg/CRPT-119srpt58/pdf/CRPT-119srpt58.pdf",
+   "pages": 9,
+   "text_characters": 21084,
+   "text_sha256": "sha256:572bfdb2acc3bcdb1e335e60f44791e3922bf0afec940ec71504c25359d7a8ad",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 181,
+     "of": 99,
+     "and": 57,
+     "to": 79,
+     "for": 29
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "CRPT-119srpt54",
+   "kind": "reports",
+   "source": "https://www.govinfo.gov/content/pkg/CRPT-119srpt54/pdf/CRPT-119srpt54.pdf",
+   "pages": 29,
+   "text_characters": 93835,
+   "text_sha256": "sha256:230f777b21d89dde271b325a95e41d4b59555db2da790fa981af4bb4fdb96b7b",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 830,
+     "of": 510,
+     "and": 618,
+     "to": 330,
+     "for": 125
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "CRPT-119srpt65",
+   "kind": "reports",
+   "source": "https://www.govinfo.gov/content/pkg/CRPT-119srpt65/pdf/CRPT-119srpt65.pdf",
+   "pages": 12,
+   "text_characters": 26923,
+   "text_sha256": "sha256:da5d241f0c1e949a96f3f3a5aed50abd651f1cc624ae4782be50e0464d931973",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 253,
+     "of": 185,
+     "and": 147,
+     "to": 110,
+     "for": 42
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  },
+  {
+   "id": "CRPT-119srpt4",
+   "kind": "reports",
+   "source": "https://www.govinfo.gov/content/pkg/CRPT-119srpt4/pdf/CRPT-119srpt4.pdf",
+   "pages": 12,
+   "text_characters": 25622,
+   "text_sha256": "sha256:eb035e461a9c88c89e6eaa427a1fd75152df8a9065406be666f47050f60114e2",
+   "warnings": 0,
+   "language": {
+    "language": "English",
+    "word_counts": {
+     "the": 248,
+     "of": 126,
+     "and": 177,
+     "to": 121,
+     "for": 30
+    }
+   },
+   "notice": {
+    "matches": 0,
+    "examples": [],
+    "review": null
+   },
+   "problems": []
+  }
+ ]
+}
